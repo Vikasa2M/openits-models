@@ -1,0 +1,11 @@
+{
+  "openits-signal-control-events:preemption-cleared": {
+    "kind": "openits-signal-control-types:preempt-exit-interval",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence": "2",
+    "preempt-number": 1,
+    "type": "railroad",
+    "source-id": "rail-gate-14",
+    "occurred-at": "2026-07-11T14:06:30Z"
+  }
+}

@@ -1,0 +1,7 @@
+message Tagged {
+  string decoder = 1;
+  oneof tag {
+    uint32 a_code = 2;
+    string b_oid = 3;
+  }
+}

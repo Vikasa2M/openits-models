@@ -1,0 +1,29 @@
+{
+  "openits-perception-events:zone-interval-report": {
+    "kind": "openits-perception-types:pcp-zone-interval-report",
+    "source-device-id": "eb-travel-lanes-cam-03",
+    "occurred-at": "2026-07-11T14:05:00Z",
+    "sequence": "3",
+    "zone": [
+      {
+        "zone-id": "eb-travel-lanes",
+        "interval-start": "2026-07-11T14:00:00Z",
+        "interval-duration-s": 300,
+        "crossed-volume": 47,
+        "observed-count": 50,
+        "occupancy-percent": "34.5",
+        "average-speed-kmh": "88.3",
+        "class-count": [
+          {
+            "class": "openits-perception-types:object-passenger-vehicle",
+            "count": 42
+          },
+          {
+            "class": "openits-perception-types:object-truck",
+            "count": 5
+          }
+        ]
+      }
+    ]
+  }
+}

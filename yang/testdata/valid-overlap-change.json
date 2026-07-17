@@ -1,0 +1,9 @@
+{
+  "openits-signal-control-events:overlap-change": {
+    "kind": "openits-signal-control-types:overlap-begin-green",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence": "1",
+    "overlap-number": 3,
+    "occurred-at": "2026-07-11T14:05:00Z"
+  }
+}

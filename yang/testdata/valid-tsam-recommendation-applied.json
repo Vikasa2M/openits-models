@@ -1,0 +1,12 @@
+{
+  "openits-signal-control-events:tsam-recommendation-applied": {
+    "kind": "openits-signal-control-types:tsam-recommendation-applied",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence": "1",
+    "recommendation-id": "tsam-rec-00542",
+    "adjustment-type": "split-adjustment",
+    "magnitude-seconds": "2.5",
+    "phase-number": 2,
+    "occurred-at": "2026-07-11T14:05:00Z"
+  }
+}

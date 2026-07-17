@@ -1,0 +1,11 @@
+{
+  "openits-signal-control-events:tsam-mode-changed": {
+    "kind": "openits-signal-control-types:tsam-mode-changed",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence": "1",
+    "prior": "disabled",
+    "current": "active",
+    "reason": "operator-enabled",
+    "occurred-at": "2026-07-11T14:05:00Z"
+  }
+}

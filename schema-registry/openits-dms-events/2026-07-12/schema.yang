@@ -1,0 +1,94 @@
+module openits-dms-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:dms-events";
+  prefix openits-dms-events;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-dms {
+    prefix openits-dms;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Notifications for openits-dms.  Split into a companion module
+     so ygot's proto backend can generate protobuf from the base
+     module (ygot's proto generator fails on modules containing
+     notification statements).";
+
+  revision 2026-07-12 {
+    description
+      "Rename this module (file, module name, namespace, prefix) from
+       the legacy notifications-suffixed name to openits-dms-events: standardize every service notification module on the
+       events-suffixed name. Mechanical rename only — no notification
+       content changed; ce-types (service-derived, not module-derived)
+       and proto are unaffected. Repoint sign-fault-raised's
+       'category' base from the deleted gen-1
+       openits-dms:fault-category to
+       openits-dms-types:dms-fault-event-kind — breaking, since
+       identity names change, but wire-neutral since the wire
+       representation of an identityref is a string (pre-v1,
+       acceptable). Delete the deprecated per-service fault/mode
+       shims (sign-fault-raised, sign-fault-cleared,
+       sign-mode-changed), superseded by
+       openits-common-fault-events:{fault-raised,fault-cleared} and
+       openits-common-mode-events:mode-changed, discriminated by kind
+       derived from openits-dms-types.";
+    reference
+      "; RFC 7950 section 11 (breaking YANG evolution: identity
+       rename).";
+  }
+  revision 2026-07-10 {
+    description
+      "Replace the inline severity enumeration on sign-fault-raised
+       with the shared openits-types:fault-severity typedef. Member
+       set and order unchanged — wire-stable.";
+  }
+  revision 2026-06-12 {
+    description
+      "Deprecate sign-fault-raised, sign-fault-cleared, and
+       sign-mode-changed in favour of the cross-service
+       openits-common-fault-events fault-raised/fault-cleared and
+       openits-common-mode-events mode-changed notifications, which
+       carry a dms-classified kind identityref
+       (openits-dms-types:dms-fault-event-kind tree) plus wire-source
+       provenance. No emitter ever shipped for the deprecated
+       notifications; they remain for the deprecation window only.";
+  }
+  revision 2026-05-23 {
+    description
+      "Add the sign-fault-cleared notification as the companion to
+       sign-fault-raised. Closes the gap where the CE catalog declared
+       openits.dms.sign-fault-cleared.v1 with no YANG schema home.";
+  }
+  revision 2026-04-19 {
+    description "Initial release.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification message-activation-failed {
+    openits-types:arc-it-flow
+      "Roadway Equipment -> TMC : roadway equipment status";
+    description
+      "An attempt to activate a stored message on the sign failed.
+       Lets the TMC distinguish 'command accepted but never displayed'
+       from successful activation.";
+
+    leaf attempted-memory-type {
+      type openits-dms:message-memory-type;
+      description "Which memory bank the activation targeted (e.g., changeable, volatile, schedule).";
+    }
+    leaf attempted-slot-number { type uint16; description "Slot number within the targeted memory bank."; }
+    leaf reason                { type string; description "Sign-reported reason the activation failed (validation, conflict, hardware)."; }
+  }
+}

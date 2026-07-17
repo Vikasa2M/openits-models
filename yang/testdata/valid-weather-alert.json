@@ -1,0 +1,15 @@
+{
+  "openits-ess-events:weather-alert": {
+    "kind": "openits-ess-types:ess-weather-alert",
+    "source-device-id": "ess-us40-014",
+    "occurred-at": "2026-07-13T12:00:00Z",
+    "sequence": "1",
+    "threshold-id": "wind-gust-high",
+    "observed-value": "48.30",
+    "threshold-value": "45.00",
+    "unit": "meters-per-second",
+    "direction": "entered",
+    "human-description": "Sustained wind gusts exceeded the 45 mph advisory threshold.",
+    "sensor-id": "wind-1"
+  }
+}

@@ -1,0 +1,446 @@
+module openits-reversible-lane {
+  yang-version 1.1;
+  namespace "urn:openits:yang:reversible-lane";
+  prefix openits-rl;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "YANG data model for reversible-lane facilities — corridors,
+     bridges, and tunnels whose lanes carry traffic in either of two
+     opposing directions under operator control.
+
+     Aligned with ARC-IT 9.1 service package TM16 (Reversible Lane
+     Management).  Facilities of this class are typically driven by
+     a PLC exposing lane state through a register map; the model is
+     transport-independent, so SRTP, Modbus, DNP3, or NTCIP adapters
+     map onto it identically.  Wire provenance for register-decoded
+     events rides in the openits-types wire-source 'plc-register'
+     case.  Vendor-specific capabilities ride in vendor augment
+     modules per docs/06-extension-model.md, never in this module.
+
+     The facility is a four-state machine.  With direction-a =
+     northbound and direction-b = southbound, the operator-visible
+     states map to: Open NB (open + northbound), Open SB (open +
+     southbound), Closed, and In-Transition.  Directions are
+     configured per facility so east-west corridors use the same
+     model.
+
+     This is a safety-critical control model: `must` constraints
+     forbid a segment from displaying green-arrow to both directions
+     and require an open facility to name its open direction.
+     Conforming controllers MUST refuse writes that violate them.
+
+     Copyright (c) 2026.  Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.1.0";
+
+  revision 2026-07-10 {
+    description
+      "Replace the inline severity enumeration on the fault-inventory
+       list with the shared openits-types:fault-severity typedef.
+       Member set and order unchanged — wire-stable.
+
+       Also, add base openits-types:fault-event-kind to the
+       fault-category root so this service's faults are reachable by
+       fleet-wide derived-from-or-self(fault-event-kind) queries.
+       Additive (identity gains a base); no child renamed.";
+    reference "RFC 7950 section 11 (additive YANG evolution).";
+  }
+  revision 2026-07-07 {
+    description
+      "Initial revision.  Minimum viable model covering identity,
+       commanded state, live state machine, transition progress,
+       per-segment lane-control-signal heads and gates, interlocks,
+       and a live fault inventory.";
+    reference
+      "ARC-IT 9.1 Service Package TM16 (Reversible Lane Management);
+       MUTCD 11th Ed. Chapter 4M (Lane-Use Control Signals).";
+  }
+
+  /* --------------------------------------------------------------
+   * Typedefs
+   * -------------------------------------------------------------- */
+
+  typedef travel-direction {
+    type enumeration {
+      enum unknown    { value 0; }
+      enum northbound { value 1; }
+      enum southbound { value 2; }
+      enum eastbound  { value 3; }
+      enum westbound  { value 4; }
+    }
+    description "Cardinal direction of legal travel.";
+  }
+
+  typedef lane-flow-state {
+    type enumeration {
+      enum unknown       { value 0; }
+      enum closed        { value 1; }
+      enum open          { value 2; }
+      enum in-transition { value 3; }
+    }
+    description
+      "Facility state machine.  `open` is qualified by
+       open-direction; `in-transition` means the changeover
+       sequence (sweep, gate movement, LCS changeover) is running
+       and the facility is closed to new entries.";
+  }
+
+  typedef lcs-indication {
+    type enumeration {
+      enum unknown           { value 0; }
+      enum dark              { value 1; }
+      enum red-x             { value 2; }
+      enum yellow-x          { value 3; }
+      enum flashing-yellow-x { value 4; }
+      enum green-arrow       { value 5; }
+    }
+    description
+      "Lane-use control signal indication per MUTCD Chapter 4M.
+       yellow-x / flashing-yellow-x are the clearance indications
+       shown while a direction is being closed.";
+  }
+
+  typedef gate-state {
+    type enumeration {
+      enum unknown { value 0; }
+      enum open    { value 1; }
+      enum closed  { value 2; }
+      enum moving  { value 3; }
+      enum fault   { value 4; }
+    }
+    description "Physical barrier-gate position.";
+  }
+
+  /* --------------------------------------------------------------
+   * Identities
+   * -------------------------------------------------------------- */
+
+  identity fault-category {
+    base openits-types:fault-event-kind;
+    description "Root identity for reversible-lane fault taxonomies.";
+  }
+  identity fault-plc-communication {
+    base fault-category;
+    description
+      "Communication fault between gateway and the facility PLC.";
+  }
+  identity fault-interlock {
+    base fault-category;
+    description
+      "A safety interlock is unsatisfied or failed its self-check.";
+  }
+  identity fault-conflict {
+    base fault-category;
+    description
+      "Conflicting indications detected (e.g., green-arrow both
+       ways).";
+  }
+  identity fault-gate {
+    base fault-category;
+    description
+      "Barrier gate failed to reach its commanded position.";
+  }
+  identity fault-lcs-head {
+    base fault-category;
+    description
+      "A lane-control-signal head failed verification or lamp check.";
+  }
+  identity fault-power {
+    base fault-category;
+    description
+      "Power-supply or input-voltage fault at the facility.";
+  }
+
+  /* --------------------------------------------------------------
+   * Main tree
+   * -------------------------------------------------------------- */
+
+  container reversible-lane {
+    description
+      "Top-level container for a single reversible-lane facility.";
+
+    /* ----- identity ----- */
+    container identity {
+      description "Static identity of the facility.";
+
+      leaf facility-id {
+        type openits-types:device-id;
+        description "Agency-internal facility identifier (URN tail).";
+      }
+      leaf name {
+        type string;
+        description "Operator-facing facility name.";
+      }
+
+      uses openits-types:geo-location;
+
+      leaf road-reference {
+        type string;
+        description
+          "Free-form route reference (e.g., \"US-75 contraflow,
+           MP 3.1-8.4\").  Informational only.";
+      }
+
+      leaf direction-a {
+        type travel-direction;
+        must ". != 'unknown'" {
+          error-message "direction-a must be a concrete direction";
+        }
+        description
+          "First of the two opposing travel directions this facility
+           serves (e.g., northbound).";
+      }
+      leaf direction-b {
+        type travel-direction;
+        must ". != 'unknown' and . != ../direction-a" {
+          error-message
+            "direction-b must be a concrete direction distinct from direction-a";
+        }
+        description
+          "Second of the two opposing travel directions this
+           facility serves (e.g., southbound).";
+      }
+
+      leaf make     { type string; config false; description "PLC manufacturer reported by the facility."; }
+      leaf model    { type string; config false; description "PLC model reported by the facility."; }
+      leaf firmware { type string; config false; description "PLC firmware reported by the facility."; }
+    }
+
+    /* ----- control ----- */
+    container control {
+      openits-types:arc-it-flow
+        "TMC -> ITS Roadway Equipment : lane management control";
+      must "not(target-state = 'open') or boolean(target-direction)" {
+        error-message "an open target-state must name target-direction";
+      }
+      description
+        "Commanded facility state.  Writing these leaves requests a
+         changeover; the controller runs the transition sequence and
+         reports progress under `state`.  The controller MUST reject
+         writes while interlocks are unsatisfied.";
+
+      leaf target-state {
+        type enumeration {
+          enum closed { value 1; }
+          enum open   { value 2; }
+        }
+        description "Requested end state of the facility.";
+      }
+      leaf target-direction {
+        type travel-direction;
+        must ". = ../../identity/direction-a or . = ../../identity/direction-b" {
+          error-message
+            "target-direction must be one of the facility's configured directions";
+        }
+        description
+          "Requested open direction.  Meaningful only when
+           target-state is `open`.";
+      }
+      leaf transition-timeout-s {
+        type uint16 {
+          range "30..7200";
+        }
+        units "seconds";
+        default "900";
+        description
+          "Maximum allowed changeover duration.  Exceeding it raises
+           the transition-timeout notification and a fault-conflict /
+           fault-gate class fault as appropriate.";
+      }
+    }
+
+    /* ----- live state ----- */
+    container state {
+      config false;
+      openits-types:arc-it-flow
+        "ITS Roadway Equipment -> TMC : lane management status";
+      must "not(current-state = 'open') or "
+         + "(boolean(open-direction) and not(open-direction = 'unknown'))" {
+        error-message "an open facility must report its open direction";
+      }
+      description "Live facility state as read back from the PLC.";
+
+      leaf current-state {
+        type lane-flow-state;
+        description "Current position in the facility state machine.";
+      }
+      leaf open-direction {
+        type travel-direction;
+        description
+          "Direction currently open to traffic.  Present iff
+           current-state is `open`.";
+      }
+      leaf last-command-source {
+        type string;
+        description
+          "Actor (operator id, automation workflow) that issued the
+           most recent state command.";
+      }
+      leaf last-command-at {
+        type yang:date-and-time;
+        description "Wall-clock time of the most recent state command.";
+      }
+
+      container transition {
+        description
+          "Progress of the running changeover.  Empty when
+           current-state is not `in-transition`.";
+
+        leaf from-direction {
+          type travel-direction;
+          description "Direction that was open when the changeover started.";
+        }
+        leaf to-direction {
+          type travel-direction;
+          description "Direction (or closure) the changeover is moving toward.";
+        }
+        leaf started-at {
+          type yang:date-and-time;
+          description "Wall-clock time the changeover sequence started.";
+        }
+        leaf sequence-step {
+          type string;
+          description
+            "Controller-reported step name (e.g., \"clearance\",
+             \"sweep-verify\", \"gate-movement\", \"lcs-reverse\").
+             Vendor vocabulary; informational only.";
+        }
+      }
+    }
+
+    /* ----- segments ----- */
+    container segments {
+      config false;
+      openits-types:arc-it-flow
+        "ITS Roadway Equipment -> TMC : lane management status";
+      description
+        "Per-segment field-equipment readback.  One entry per
+         signed/gated section of the facility.";
+
+      list segment {
+        key "segment-id";
+        must "not(lcs-direction-a = 'green-arrow' and lcs-direction-b = 'green-arrow')" {
+          error-message
+            "a segment must never display green-arrow to both directions";
+        }
+        description "One gated / signed section of the facility.";
+
+        leaf segment-id {
+          type string {
+            length "1..64";
+          }
+          description "Facility-local segment identifier.";
+        }
+        leaf name {
+          type string;
+          description "Operator-facing segment description.";
+        }
+        leaf lcs-direction-a {
+          type lcs-indication;
+          description
+            "Lane-control-signal indication facing traffic travelling
+             in direction-a.";
+        }
+        leaf lcs-direction-b {
+          type lcs-indication;
+          description
+            "Lane-control-signal indication facing traffic travelling
+             in direction-b.";
+        }
+        leaf gate-state {
+          type gate-state;
+          description "Barrier-gate position for this segment, if gated.";
+        }
+      }
+    }
+
+    /* ----- interlocks ----- */
+    container interlocks {
+      config false;
+      openits-types:arc-it-flow
+        "ITS Roadway Equipment -> TMC : lane management status";
+      description
+        "Safety interlocks the PLC evaluates before honouring a
+         changeover command (sweep-complete confirmations, gate
+         position agreement, manual lockouts).";
+
+      leaf all-satisfied {
+        type boolean;
+        description "Every configured interlock is currently satisfied.";
+      }
+
+      list interlock {
+        key "interlock-id";
+        description "One entry per configured interlock.";
+
+        leaf interlock-id {
+          type string {
+            length "1..64";
+          }
+          description "Facility-local interlock identifier.";
+        }
+        leaf name {
+          type string;
+          description "Operator-facing interlock description.";
+        }
+        leaf satisfied {
+          type boolean;
+          description "The interlock currently permits a changeover.";
+        }
+      }
+    }
+
+    /* ----- fault inventory ----- */
+    container faults {
+      config false;
+      openits-types:arc-it-flow
+        "ITS Roadway Equipment -> Maintenance : equipment maintenance status";
+      description
+        "Live fault inventory.  Each entry mirrors a
+         `reversible-lane-fault-raised` notification and clears when
+         the condition resolves.";
+
+      list fault {
+        key "fault-id";
+        description "One entry per active fault at the facility.";
+
+        leaf fault-id {
+          type string;
+          description "Facility-local fault identifier; stable across raise/clear pairs.";
+        }
+        leaf category {
+          type identityref {
+            base fault-category;
+          }
+          description "Fault class (plc-communication / interlock / conflict / gate / lcs-head / power).";
+        }
+        leaf severity {
+          type openits-types:fault-severity;
+          description "Operator-visible severity escalation.";
+        }
+        leaf description {
+          type string;
+          description "Human-readable fault description from the controller.";
+        }
+        leaf first-observed {
+          type yang:date-and-time;
+          description "Wall-clock time the fault was first observed.";
+        }
+      }
+    }
+  }
+}

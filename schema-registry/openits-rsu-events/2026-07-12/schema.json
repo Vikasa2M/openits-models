@@ -1,0 +1,389 @@
+{
+  "rsu-broadcast-sample": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "broadcast": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "channel": {
+            "maximum": 184,
+            "minimum": 172,
+            "type": "integer"
+          },
+          "msg-id": {
+            "type": "string"
+          },
+          "msg-type": {
+            "enum": [
+              "map",
+              "other",
+              "psm",
+              "spat",
+              "srm",
+              "ssm",
+              "tim"
+            ],
+            "type": "string"
+          },
+          "priority": {
+            "maximum": 7,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "rate-hz": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "sample-window-s": {
+      "maximum": 3600,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "occurred-at",
+    "source-device-id"
+  ],
+  "type": "object"
+},
+  "rsu-certificate-expiring": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "certificate-id": {
+      "type": "string"
+    },
+    "certificate-type": {
+      "type": "string"
+    },
+    "days-until-expiry": {
+      "maximum": 65535,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "expiry-date": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "type": "string"
+    }
+  },
+  "type": "object"
+},
+  "rsu-channel-fault": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "channel": {
+      "maximum": 184,
+      "minimum": 172,
+      "type": "integer"
+    },
+    "device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "fault-type": {
+      "enum": [
+        "high-error-rate",
+        "interference",
+        "no-signal",
+        "rx-failure",
+        "tx-failure"
+      ],
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "type": "string"
+    }
+  },
+  "type": "object"
+},
+  "rsu-gps-status-change": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "new-status": {
+      "type": "string"
+    },
+    "previous-status": {
+      "type": "string"
+    },
+    "satellites": {
+      "maximum": 255,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "type": "string"
+    }
+  },
+  "type": "object"
+},
+  "rsu-security-event": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "event-type": {
+      "enum": [
+        "enrollment-failure",
+        "invalid-signature",
+        "misbehavior-detected",
+        "revoked-certificate",
+        "scms-connection-lost"
+      ],
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "type": "string"
+    }
+  },
+  "type": "object"
+},
+  "rsu-srm-received": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "approach": {
+      "maximum": 255,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "eta-seconds": {
+      "maximum": 65535,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "request-id": {
+      "type": "string"
+    },
+    "request-type": {
+      "type": "string"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "vehicle-class": {
+      "type": "string"
+    },
+    "vehicle-id": {
+      "type": "string"
+    }
+  },
+  "type": "object"
+},
+  "rsu-srm-status-change": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "new-status": {
+      "type": "string"
+    },
+    "previous-status": {
+      "type": "string"
+    },
+    "request-id": {
+      "type": "string"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "vehicle-id": {
+      "type": "string"
+    }
+  },
+  "type": "object"
+},
+  "rsu-tim-broadcast-state-changed": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "active-tim-count": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "changed-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "current": {
+      "enum": [
+        "active",
+        "fault",
+        "idle"
+      ],
+      "type": "string"
+    },
+    "prior": {
+      "enum": [
+        "active",
+        "fault",
+        "idle"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "current"
+  ],
+  "type": "object"
+},
+  "rsu-tim-broadcast": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "broadcast-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "channel": {
+      "maximum": 184,
+      "minimum": 172,
+      "type": "integer"
+    },
+    "msg-id": {
+      "type": "string"
+    },
+    "priority": {
+      "maximum": 7,
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "broadcast-at",
+    "msg-id"
+  ],
+  "type": "object"
+},
+  "rsu-tim-cleared": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "cleared-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "msg-id": {
+      "type": "string"
+    },
+    "reason": {
+      "enum": [
+        "cleared-by-operator",
+        "expired",
+        "other",
+        "rsu-restart",
+        "superseded"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "msg-id",
+    "reason"
+  ],
+  "type": "object"
+},
+  "rsu-tim-loaded": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "content-summary": {
+      "type": "string"
+    },
+    "duration-seconds": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "msg-id": {
+      "type": "string"
+    },
+    "observed-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "priority": {
+      "maximum": 7,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "source": {
+      "type": "string"
+    },
+    "start-time": {
+      "format": "date-time",
+      "type": "string"
+    }
+  },
+  "required": [
+    "msg-id"
+  ],
+  "type": "object"
+}
+}

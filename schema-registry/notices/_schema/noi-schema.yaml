@@ -1,0 +1,72 @@
+$schema: http://json-schema.org/draft-07/schema#
+title: OpenITS Notice of Implementation
+description: >
+  One NoI per (augment, implementer) pair. Filed under
+  schema-registry/notices/<augment>/<implementer>.yaml. Validated by
+  tools/noi-validator (make validate-noi).
+type: object
+additionalProperties: false
+required:
+  - augment
+  - revision
+  - implementer
+  - implementer_contact
+  - implementer_type
+  - first_observed
+properties:
+  augment:
+    type: string
+    description: Augment module name (matches yang/augments/<augment>.yang basename)
+    pattern: '^[a-z0-9]+(-[a-z0-9]+)+$'
+
+  revision:
+    type: string
+    description: Augment revision the implementer is implementing against
+    pattern: '^\d{4}-\d{2}-\d{2}$'
+
+  implementer:
+    type: string
+    description: >
+      Short identifier of the implementing organisation. For independence
+      checks, this is collapsed to its canonical org id via
+      organizations.yaml — see graduation rule.
+    pattern: '^[a-z][a-z0-9-]*$'
+
+  implementer_contact:
+    type: string
+    format: email
+    description: Email contact for graduation review correspondence.
+
+  implementer_type:
+    type: string
+    enum: [operator, vendor, conformance-reference]
+    description: >
+      operator = transportation agency running OpenITS in production;
+      vendor = product vendor shipping OpenITS-conforming hardware/software;
+      conformance-reference = in-tree pedagogical example or test fixture.
+
+  deployment_scale:
+    description: >
+      Either an integer (cabinets/devices in production) or a named
+      lifecycle stage.
+    oneOf:
+      - type: integer
+        minimum: 0
+      - type: string
+        enum: [test, internal, production]
+
+  first_observed:
+    type: string
+    format: date
+    description: First date this implementer began emitting/consuming the augment.
+
+  notes:
+    type: string
+    maxLength: 2000
+
+  proof_url:
+    type: string
+    format: uri
+    description: >
+      Optional link to a public artifact (PR, blog post, conformance
+      report) that corroborates the implementation claim.

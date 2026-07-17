@@ -1,0 +1,13 @@
+{
+  "openits-dms-events:message-activation-failed": {
+    "kind": "openits-dms-types:dms-message-activation-failed",
+    "source-device-id": "us40-dms-014",
+    "occurred-at": "2026-07-11T14:11:52Z",
+    "sequence": "1",
+    "attempted-memory-type": "changeable",
+    "attempted-slot-number": 42,
+    "reason": "Message validation failed: incompatible font size for target sign.",
+    "error-type": "unsupported-tag",
+    "error-position": 17
+  }
+}

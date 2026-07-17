@@ -1,0 +1,18 @@
+{
+  "openits-signal-control-events:detector-report": {
+    "kind": "openits-signal-control-types:sc-detector-report",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence": "1",
+    "interval-start": "2026-07-11T14:00:00Z",
+    "interval-duration-s": 300,
+    "detector": [
+      {
+        "detector-id": 12,
+        "phase-served": 2,
+        "volume": 84,
+        "occupancy": 17
+      }
+    ],
+    "occurred-at": "2026-07-11T14:05:00Z"
+  }
+}

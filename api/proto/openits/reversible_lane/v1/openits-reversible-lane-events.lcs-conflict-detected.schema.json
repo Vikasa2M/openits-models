@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string"
+    },
+    "lcs-direction-a": {
+      "enum": [
+        "dark",
+        "flashing-yellow-x",
+        "green-arrow",
+        "red-x",
+        "unknown",
+        "yellow-x"
+      ],
+      "type": "string"
+    },
+    "lcs-direction-b": {
+      "enum": [
+        "dark",
+        "flashing-yellow-x",
+        "green-arrow",
+        "red-x",
+        "unknown",
+        "yellow-x"
+      ],
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "segment-id": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+}

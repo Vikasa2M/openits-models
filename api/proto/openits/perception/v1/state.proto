@@ -1,0 +1,161 @@
+syntax = "proto3";
+
+package openits.perception.v1;
+
+option go_package = "github.com/openits/openits-models/pkg/proto/openits/perception/v1;perceptionv1";
+
+import "google/protobuf/timestamp.proto";
+
+message PerceptionSensor {
+  PerceptionSensorConfig config = 1;
+  PerceptionSensorState state = 2;
+  Configuration configuration = 3;
+  Objects objects = 4;
+  Zones zones = 5;
+  Diagnostics diagnostics = 6;
+  Incidents incidents = 7;
+  Faults faults = 8;
+}
+
+message PerceptionSensorConfig {
+  string elevation = 1;
+  uint32 heading = 2;
+  string id = 8;
+  string latitude = 3;
+  string longitude = 4;
+  string name = 5;
+  string road_reference = 6;
+}
+
+message PerceptionSensorState {
+  string elevation = 1;
+  string firmware = 2;
+  string firmware_build = 13;
+  string hardware_version = 14;
+  uint32 heading = 3;
+  string id = 12;
+  string latitude = 4;
+  string longitude = 5;
+  string make = 6;
+  string model = 7;
+  string name = 8;
+  string road_reference = 9;
+  string serial = 11;
+}
+
+message Configuration {
+  uint32 data_interval_s = 1;
+  repeated ConfigurationZone zone = 3;
+}
+
+message ConfigurationZone {
+  string zone_id = 1;
+  string name = 2;
+  ZoneFunction function = 3;
+  uint32 legal_heading = 4;
+  repeated Vertex vertex = 5;
+}
+
+enum ZoneFunction {
+  ZONE_FUNCTION_UNSPECIFIED = 0;
+  ZONE_FUNCTION_COUNT = 1;
+  ZONE_FUNCTION_PRESENCE = 2;
+  ZONE_FUNCTION_SPEED = 3;
+  ZONE_FUNCTION_INCIDENT = 4;
+  ZONE_FUNCTION_WRONG_WAY = 5;
+}
+
+message Vertex {
+  uint32 vertex_index = 1;
+  string latitude = 2;
+  string longitude = 3;
+}
+
+message Objects {
+  uint32 track_count = 1;
+  uint32 track_epoch = 3;
+  repeated Track track = 2;
+}
+
+message Track {
+  uint32 track_id = 1;
+  Lifecycle lifecycle = 10;
+  string class = 2;
+  uint32 class_confidence = 3;
+  string speed_kmh = 4;
+  google.protobuf.Timestamp observed_at = 5;
+  string elevation = 6;
+  uint32 heading = 7;
+  string latitude = 8;
+  string longitude = 9;
+}
+
+enum Lifecycle {
+  LIFECYCLE_TENTATIVE = 0;
+  LIFECYCLE_CONFIRMED = 1;
+  LIFECYCLE_COASTING = 2;
+}
+
+message Zones {
+  repeated ZonesZone zone = 1;
+}
+
+message ZonesZone {
+  string zone_id = 1;
+  uint32 occupancy_count = 2;
+  bool presence = 3;
+  string average_speed_kmh = 4;
+}
+
+message Diagnostics {
+  uint32 points_per_second = 8;
+  uint32 blockage_percent = 9;
+  string internal_temperature_c = 6;
+  string pose_drift_deg = 10;
+  uint64 uptime_s = 7;
+}
+
+message Incidents {
+  repeated Incident incident = 1;
+}
+
+message Incident {
+  string incident_id = 1;
+  string zone_id = 2;
+  string type = 3;
+  OpenitsPerceptionIncidentSeverity severity = 4;
+  uint32 track_id = 8;
+  string object_class = 9;
+  string speed_kmh = 10;
+  uint32 confidence = 11;
+  google.protobuf.Timestamp first_observed = 5;
+  string latitude = 6;
+  string longitude = 7;
+}
+
+enum OpenitsPerceptionIncidentSeverity {
+  OPENITS_PERCEPTION_INCIDENT_SEVERITY_MINOR = 0;
+  OPENITS_PERCEPTION_INCIDENT_SEVERITY_INTERMEDIATE = 1;
+  OPENITS_PERCEPTION_INCIDENT_SEVERITY_MAJOR = 2;
+}
+
+message Faults {
+  repeated Fault fault = 1;
+}
+
+message Fault {
+  string category = 1;
+  string description = 2;
+  string fault_id = 3;
+  google.protobuf.Timestamp first_observed = 4;
+  FaultSeverity severity = 5;
+}
+
+enum FaultSeverity {
+  FAULT_SEVERITY_INFO = 0;
+  FAULT_SEVERITY_WARNING = 1;
+  FAULT_SEVERITY_MINOR = 2;
+  FAULT_SEVERITY_MAJOR = 3;
+  FAULT_SEVERITY_CRITICAL = 4;
+}
+

@@ -1,0 +1,882 @@
+module openits-v2x-messaging {
+  yang-version 1.1;
+  namespace "urn:openits:yang:v2x-messaging";
+  prefix openits-v2x-messaging;
+
+  import openits-types {
+    prefix openits-types;
+  }
+  import openits-v2x-messaging-types {
+    prefix openits-v2x-messaging-types;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "V2X messaging capability: broadcast configuration and state for the
+     SAE J2735 message families a V2X unit sends/receives (SPaT, MAP,
+     TIM, BSM, PSM, SRM/SSM), plus a per-message-type broadcast-stats
+     list. A device profile with V2X messaging (e.g. openits-rsu) 'uses'
+     the 'messaging' grouping. Extracted from openits-rsu as part of the
+     capability-first re-architecture (docs/08-capability-architecture.md).
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.7.0";
+
+  revision 2026-07-17 {
+    description
+      "SRM/EVP grant authority (NTCIP 1211). Model where SRM grant decisions
+       are made rather than defaulting to a management-plane operator round-trip:
+       add srm-ssm/config/grant-authority (controller-prs | rsu-local-policy |
+       operator, default controller-prs — the deployable real-time PRS path);
+       add evp-auto-grant (default true — emergency-vehicle preemption is never
+       gated on PRS queueing or operator approval); and re-scope auto-approve-tsp
+       to rsu-local-policy (controller-prs forwards to asc-device instead). Add
+       grant provenance to active-requests/request: decision-authority (who
+       granted / denied — the NTCIP 1211 audit + TSP-grant-rate KPI) and
+       denial-reason.";
+    reference
+      "NTCIP 1211 (Signal Control and Prioritization); SAE J2735.";
+  }
+  revision 2026-07-16 {
+    description
+      "Message-content fidelity: replace the TIM itis-codes comma-separated
+       string with an ordered leaf-list of uint16 itis-code (SAE J2540.2 —
+       the encoder consumes structured codes, not a parsed string); harmonize
+       TIM priority to 0..7 (SAE J2735, was 1..7); bound MAP geometry-version
+       to 0..127 (SAE J2735 MsgCount, was an unbounded uint8). Pre-1.0
+       breaking (itis-codes retype).
+       Store-and-Repeat expiry semantics for TIM: add tim/config/suppress-expired
+       (stop re-broadcasting a TIM once its end-time passes; do not resume a
+       lapsed TIM after a comm outage), a must that a TIM message's end-time is
+       after its start-time, and per-message state broadcasting/expired so that
+       'a TIM past its end-time is still being broadcast' (post-outage stale
+       replay) becomes an expressible, observable defect. Distinguishes TIM
+       Store-and-Repeat from SPaT Immediate-Forward and backhaul store-and-forward
+       (NTCIP 1218; SAE J2735 TIM expiry).";
+    reference "NTCIP 1218; SAE J2735.";
+  }
+  revision 2026-07-15 {
+    description
+      "V2X safety gating (broadcast side): bound SPaT (100..1000 ms) and
+       MAP (500..5000 ms) broadcast-interval; default the SPaT/MAP/TIM
+       air-broadcast enables OFF (operator enables after validation, NTCIP
+       1218); add a SPaT max-data-age-ms freshness threshold + halted-stale
+       state; split intersection-id into a region+id container on SPaT and
+       MAP and require SPaT/MAP intersection consistency. BREAKING (pre-v1):
+       intersection-id becomes a container; broadcast defaults flip to
+       false.";
+  }
+  revision 2026-07-15 {
+    description
+      "Move the v2x-message-type and srm-request-type identity families to
+       the new openits-v2x-messaging-types module; repoint local uses.
+       BREAKING (pre-v1): those identityref values change module prefix to
+       openits-v2x-messaging-types.";
+  }
+  revision 2026-07-14 {
+    description
+      "Add srm-ssm/decisions: an operator approve/deny config list for active
+       SRM priority requests (replaces the retired rsu-approve-srm RPC).
+       Correlated to active-requests/request by id at runtime.";
+  }
+  revision 2026-07-13 {
+    description
+      "Initial revision. The V2X message broadcast subtree
+       (spat/map/tim/bsm/psm/srm-ssm config+state) and the
+       v2x-message-type-keyed message-stats list extracted from
+       openits-rsu into the 'messaging' grouping; the srm-request-type
+       identity hierarchy (SRM is a V2X message) moved here too.";
+  }
+
+  grouping messaging {
+    description
+      "V2X message broadcast configuration and state for a device.";
+
+    grouping intersection-ref {
+      description
+        "SAE J2735 intersection reference: region + intersection id. A flat
+         id loses the region qualifier J2735 carries.";
+      leaf region {
+        type uint16;
+        description "SAE J2735 intersection region id.";
+      }
+      leaf id {
+        type uint16;
+        description "SAE J2735 intersection id within the region.";
+      }
+    }
+
+    container messages {
+      description
+        "V2X message configuration and status";
+      must "not(spat/config/enabled = 'true' and map/config/enabled = 'true')"
+         + " or (spat/config/intersection/region = map/config/intersection/region"
+         + " and spat/config/intersection/id = map/config/intersection/id)" {
+        error-message
+          "When both SPaT and MAP are enabled they MUST advertise the same
+           intersection (region + id) — a SPaT/MAP intersection mismatch
+           makes an OBU apply timing to the wrong geometry.";
+      }
+      container spat {
+        description
+          "Signal Phase and Timing (SPaT) message";
+        container config {
+          description
+            "SPaT configuration";
+          leaf enabled {
+            type boolean;
+            default "false";
+            description
+              "SPaT broadcasting enabled. Disabled on fresh provision; an
+               operator MUST explicitly enable after validating source /
+               intersection / MAP (NTCIP 1218 practice).";
+          }
+          leaf broadcast-interval {
+            type uint16 {
+              range "100..1000";
+            }
+            units "milliseconds";
+            default "100";
+            description
+              "Broadcast interval";
+          }
+          leaf max-data-age-ms {
+            type uint16 {
+              range "100..2000";
+            }
+            units "milliseconds";
+            default "300";
+            description
+              "SPaT broadcasting MUST halt when the source ASC's SPaT
+               data age exceeds this, or when asc-connected is false.
+               NTCIP 1218 places SPaT in Immediate Forward so stale
+               controller data is never re-emitted (a wrong minEndTime /
+               eventState is a safety-of-life failure). This is the
+               configured threshold; the halt itself is runtime and
+               reported by state/halted-stale.";
+          }
+          leaf source-asc {
+            type openits-types:device-id;
+            description
+              "ASC device to source SPaT data from";
+          }
+          container intersection {
+            description "Advertised intersection (region + id).";
+            uses intersection-ref;
+          }
+          leaf include-timing-prediction {
+            type boolean;
+            default "true";
+            description
+              "Include timing predictions";
+          }
+        }
+        container state {
+          config false;
+          description
+            "SPaT state";
+          leaf broadcasting {
+            type boolean;
+            description
+              "Currently broadcasting";
+          }
+          leaf broadcast-count {
+            type uint64;
+            description
+              "Messages broadcast";
+          }
+          leaf last-broadcast {
+            type yang:date-and-time;
+            description
+              "Last broadcast timestamp";
+          }
+          leaf asc-connected {
+            type boolean;
+            description
+              "Connected to source ASC";
+          }
+          leaf halted-stale {
+            type boolean;
+            description
+              "True when SPaT broadcasting is currently halted because
+               the source data age exceeded max-data-age-ms or the ASC
+               is disconnected.";
+          }
+        }
+      }
+      container map {
+        description
+          "MAP (intersection geometry) message";
+        container config {
+          description
+            "MAP configuration";
+          leaf enabled {
+            type boolean;
+            default "false";
+            description
+              "MAP broadcasting enabled. Disabled on fresh provision; an
+               operator MUST explicitly enable after validating source /
+               intersection / MAP (NTCIP 1218 practice).";
+          }
+          leaf broadcast-interval {
+            type uint16 {
+              range "500..5000";
+            }
+            units "milliseconds";
+            default "1000";
+            description
+              "Broadcast interval";
+          }
+          container intersection {
+            description "Advertised intersection (region + id).";
+            uses intersection-ref;
+          }
+          leaf geometry-version {
+            type uint8 {
+              range "0..127";
+            }
+            description
+              "MAP geometry version — the layer-active MsgCount an OBU uses to
+               detect a geometry change (SAE J2735 MsgCount, range 0..127; a
+               plain uint8 wrongly admitted 128..255).";
+            reference "SAE J2735 (MsgCount).";
+          }
+        }
+        container state {
+          config false;
+          description
+            "MAP state";
+          leaf broadcasting {
+            type boolean;
+            description
+              "Currently broadcasting";
+          }
+          leaf broadcast-count {
+            type uint64;
+            description
+              "Messages broadcast";
+          }
+          container intersection {
+            description "Advertised intersection readback.";
+            uses intersection-ref;
+          }
+          leaf lane-count {
+            type uint8;
+            description
+              "Number of lanes defined";
+          }
+          leaf approach-count {
+            type uint8;
+            description
+              "Number of approaches defined";
+          }
+        }
+      }
+      container tim {
+        description
+          "Traveler Information Messages";
+        container config {
+          description
+            "TIM configuration";
+          leaf enabled {
+            type boolean;
+            default "false";
+            description
+              "TIM broadcasting enabled. Disabled on fresh provision; an
+               operator MUST explicitly enable after validating source /
+               intersection / MAP (NTCIP 1218 practice).";
+          }
+          leaf max-active-messages {
+            type uint8;
+            default "10";
+            description
+              "Maximum concurrent TIM messages";
+          }
+          leaf suppress-expired {
+            type boolean;
+            default "true";
+            description
+              "Store-and-Repeat policy: when true, the unit stops re-broadcasting
+               a TIM once its end-time passes and never resumes a lapsed TIM
+               after a comm outage — the correct behaviour, so a stale advisory
+               is not replayed. TIM broadcasting is Store-and-Repeat (the RSU
+               caches and re-broadcasts on a schedule), distinct from SPaT's
+               Immediate-Forward (no caching) and the backhaul store-and-forward
+               of uplink telemetry (NTCIP 1218).";
+          }
+        }
+        container active {
+          description
+            "Active TIM messages";
+          list message {
+            key "id";
+            description
+              "Active TIM message";
+            leaf id {
+              type string {
+                length "1..32";
+              }
+              description
+                "TIM message identifier";
+            }
+            container config {
+              description
+                "TIM message configuration";
+              must "not(start-time) or not(end-time) or end-time > start-time" {
+                error-message
+                  "end-time must be after start-time; a TIM's broadcast window
+                   must be forward in time (SAE J2735 start-time + duration).";
+              }
+              leaf name {
+                type string;
+                description
+                  "Message name";
+              }
+              leaf enabled {
+                type boolean;
+                default "false";
+                description
+                  "Message is enabled. Disabled on fresh provision; an
+                   operator MUST explicitly enable after validating source /
+                   intersection / MAP (NTCIP 1218 practice).";
+              }
+              leaf priority {
+                type uint8 {
+                  range "0..7";
+                }
+                default "4";
+                description
+                  "TIM message priority (SAE J2735 range 0..7). Harmonized to
+                   0..7 to match the on-air range and the event side (was
+                   1..7, which excluded the valid lowest priority).";
+              }
+              leaf start-time {
+                type yang:date-and-time;
+                description
+                  "Start broadcasting";
+              }
+              leaf end-time {
+                type yang:date-and-time;
+                description
+                  "Stop broadcasting";
+              }
+              leaf-list itis-code {
+                type uint16;
+                ordered-by user;
+                description
+                  "ITIS codes carried by the TIM, in display order (SAE
+                   J2540.2). A leaf-list of structured uint16 codes, not a
+                   comma-separated string: the on-air encoder consumes the
+                   codes directly, so a parsed free-text field is both
+                   lossy and a parsing hazard.";
+                reference "SAE J2540.2 (ITIS phrase codes); SAE J2735 (TIM).";
+              }
+              leaf text {
+                type string;
+                description
+                  "Human-readable text";
+              }
+              container region {
+                description
+                  "Geographic region";
+                uses openits-types:geo-location;
+                leaf radius {
+                  type uint32;
+                  units "meters";
+                  description
+                    "Region radius";
+                }
+                leaf direction {
+                  type openits-types:heading-degrees;
+                  description
+                    "Heading filter";
+                }
+                leaf direction-tolerance {
+                  type uint16;
+                  units "degrees";
+                  description
+                    "Heading tolerance";
+                }
+              }
+            }
+            container state {
+              config false;
+              description
+                "TIM state";
+              leaf broadcast-count {
+                type uint64;
+                description
+                  "Times broadcast";
+              }
+              leaf last-broadcast {
+                type yang:date-and-time;
+                description
+                  "Last broadcast";
+              }
+              leaf broadcasting {
+                type boolean;
+                description
+                  "This TIM is currently being re-broadcast (Store-and-Repeat).";
+              }
+              leaf expired {
+                type boolean;
+                description
+                  "The message's end-time has passed. Store-and-Repeat must
+                   stop at expiry, so broadcasting = true AND expired = true is
+                   a defect: replaying a stale advisory (e.g. after a comm
+                   outage the unit resumed re-broadcasting a TIM whose window
+                   already closed). Separating these leaves is what makes that
+                   post-outage stale-replay expressible and observable.";
+              }
+            }
+          }
+        }
+      }
+      container bsm {
+        description
+          "Basic Safety Message receive/forward";
+        container config {
+          description
+            "BSM configuration";
+          leaf receive-enabled {
+            type boolean;
+            default "true";
+            description
+              "BSM receive enabled";
+          }
+          leaf forward-enabled {
+            type boolean;
+            default "false";
+            description
+              "Forward BSMs to central";
+          }
+          leaf forward-destination {
+            type inet:host;
+            description
+              "Forward destination address";
+          }
+          leaf forward-port {
+            type inet:port-number;
+            description
+              "Forward destination port";
+          }
+          leaf filter-by-region {
+            type boolean;
+            default "true";
+            description
+              "Filter by geographic region";
+          }
+          leaf region-radius {
+            type uint32;
+            units "meters";
+            default "500";
+            description
+              "Region radius for filtering";
+          }
+        }
+        container state {
+          config false;
+          description
+            "BSM state";
+          leaf received-count {
+            type uint64;
+            description
+              "BSMs received";
+          }
+          leaf forwarded-count {
+            type uint64;
+            description
+              "BSMs forwarded";
+          }
+          leaf unique-vehicles-1min {
+            type uint32;
+            description
+              "Unique vehicles in last minute";
+          }
+          leaf unique-vehicles-1hr {
+            type uint32;
+            description
+              "Unique vehicles in last hour";
+          }
+          leaf average-speed {
+            type openits-types:speed-kmh;
+            description
+              "Average vehicle speed";
+          }
+          leaf last-received {
+            type yang:date-and-time;
+            description
+              "Last BSM received";
+          }
+        }
+      }
+      container psm {
+        description
+          "Personal Safety Message receive";
+        container config {
+          description
+            "PSM configuration";
+          leaf enabled {
+            type boolean;
+            default "true";
+            description
+              "PSM receive enabled";
+          }
+          leaf alert-asc {
+            type boolean;
+            default "true";
+            description
+              "Alert ASC of pedestrians";
+          }
+        }
+        container state {
+          config false;
+          description
+            "PSM state";
+          leaf received-count {
+            type uint64;
+            description
+              "PSMs received";
+          }
+          leaf pedestrians-detected-1min {
+            type uint32;
+            description
+              "Pedestrians in last minute";
+          }
+          leaf pedestrians-detected-1hr {
+            type uint32;
+            description
+              "Unique pedestrians in last hour";
+          }
+          leaf last-received {
+            type yang:date-and-time;
+            description
+              "Last PSM received";
+          }
+          leaf invalid-count {
+            type uint64;
+            description
+              "Invalid PSMs rejected";
+          }
+        }
+      }
+      container srm-ssm {
+        description
+          "Signal Request/Status Messages for TSP/EVP";
+        container config {
+          description
+            "SRM/SSM configuration";
+          leaf srm-receive-enabled {
+            type boolean;
+            default "true";
+            description
+              "Receive SRMs from vehicles";
+          }
+          leaf ssm-broadcast-enabled {
+            type boolean;
+            default "true";
+            description
+              "Broadcast SSMs";
+          }
+          leaf forward-to-asc {
+            type boolean;
+            default "true";
+            description
+              "Forward requests to ASC";
+          }
+          leaf asc-device {
+            type openits-types:device-id;
+            description
+              "Target ASC for requests";
+          }
+          leaf grant-authority {
+            type enumeration {
+              enum controller-prs {
+                description
+                  "Grant decisions are made by the signal controller's Priority
+                   Request Server (PRS): the RSU forwards received SRMs to the
+                   controller (asc-device), which arbitrates competing priority
+                   and preemption requests in real time and returns grants. The
+                   deployable NTCIP 1211 path — arbitration at the intersection,
+                   not a management-plane round-trip.";
+              }
+              enum rsu-local-policy {
+                description
+                  "The RSU applies its own local grant policy (e.g.
+                   auto-approve-tsp) with no controller PRS. For standalone
+                   deployments without an NTCIP 1211 PRS.";
+              }
+              enum operator {
+                description
+                  "Grants are made by a management-plane operator via the
+                   decisions list. Highest latency; unsuitable for time-critical
+                   requests and never appropriate for EVP (see evp-auto-grant).";
+              }
+            }
+            default "controller-prs";
+            description
+              "Where SRM grant authority lives (NTCIP 1211). Names the decision
+               locus explicitly so the deployable real-time path (controller
+               PRS) is the default, rather than an operator round-trip being the
+               effective default.";
+          }
+          leaf evp-auto-grant {
+            type boolean;
+            default "true";
+            description
+              "Emergency-vehicle preemption requests (request-type
+               srm-preemption-request) are granted immediately regardless of
+               grant-authority — an approaching emergency vehicle must never
+               wait on PRS queueing or operator approval. Set false only where a
+               separate interlock arbitrates preemption.";
+          }
+          leaf auto-approve-tsp {
+            type boolean;
+            default "false";
+            description
+              "Applies only when grant-authority is rsu-local-policy: auto-grant
+               transit signal priority (srm-priority-request) without operator
+               involvement. Ignored under controller-prs (the PRS decides) and
+               operator (the operator decides).";
+          }
+          leaf max-active-requests {
+            type uint8;
+            default "5";
+            description
+              "Max concurrent requests";
+          }
+        }
+        container state {
+          config false;
+          description
+            "SRM/SSM state";
+          leaf srm-received {
+            type uint64;
+            description
+              "SRMs received";
+          }
+          leaf ssm-broadcast {
+            type uint64;
+            description
+              "SSMs broadcast";
+          }
+          leaf active-requests {
+            type uint8;
+            description
+              "Currently active requests";
+          }
+          leaf approved-requests {
+            type uint64;
+            description
+              "Total approved requests";
+          }
+          leaf denied-requests {
+            type uint64;
+            description
+              "Total denied requests";
+          }
+        }
+        container active-requests {
+          config false;
+          description
+            "Currently active priority requests";
+          list request {
+            key "id";
+            description
+              "Active request";
+            leaf id {
+              type string;
+              description
+                "Request ID";
+            }
+            leaf vehicle-id {
+              type string;
+              description
+                "Requesting vehicle";
+            }
+            leaf request-type {
+              type identityref {
+                base openits-v2x-messaging-types:srm-request-type;
+              }
+              description
+                "Request type";
+            }
+            leaf approach {
+              type uint8;
+              description
+                "Approach lane";
+            }
+            leaf eta-seconds {
+              type uint16;
+              description
+                "ETA in seconds";
+            }
+            leaf received-at {
+              type yang:date-and-time;
+              description
+                "Request received time";
+            }
+            leaf status {
+              type enumeration {
+                enum pending {
+                  description
+                    "Pending approval";
+                }
+                enum approved {
+                  description
+                    "Approved";
+                }
+                enum active {
+                  description
+                    "Currently active";
+                }
+                enum completed {
+                  description
+                    "Completed";
+                }
+                enum denied {
+                  description
+                    "Denied";
+                }
+              }
+              description
+                "Request status";
+            }
+            leaf priority {
+              type uint8 {
+                range "1..7";
+              }
+              description
+                "Request priority level (1-7)";
+            }
+            leaf vehicle-class {
+              type string;
+              description
+                "Vehicle class (BUS, EMERGENCY, etc.)";
+            }
+            leaf decision-authority {
+              type enumeration {
+                enum none {
+                  description "No decision yet (status pending).";
+                }
+                enum controller-prs {
+                  description
+                    "Granted or denied by the controller PRS (NTCIP 1211).";
+                }
+                enum rsu-local {
+                  description "Decided by the RSU's local grant policy.";
+                }
+                enum operator {
+                  description "Decided by a management-plane operator.";
+                }
+                enum evp-auto {
+                  description
+                    "Auto-granted as an EVP preemption (evp-auto-grant).";
+                }
+              }
+              description
+                "Which authority granted or denied this request — the
+                 provenance the SSM and the NTCIP 1211 audit / TSP-grant-rate
+                 KPI need. 'none' while the request is still pending.";
+            }
+            leaf denial-reason {
+              type string;
+              description
+                "Reason a request was denied (status 'denied'). Without it the
+                 TSP grant rate is computable but not explainable.";
+            }
+          }
+        }
+        container decisions {
+          description
+            "Operator approve/deny decisions for active SRM priority requests.
+             Correlated to active-requests/request by id at runtime; the device
+             applies the decision and reflects it in the request's status. A
+             decision present with the request still 'pending' means
+             not-yet-applied.";
+          list decision {
+            key "request-id";
+            description "A decision for one active priority request.";
+            leaf request-id {
+              type string;
+              description
+                "Id of the active request being decided (matches
+                 ../../active-requests/request/id). A plain string, not a
+                 leafref: the target inventory is config-false, so config must
+                 not depend on it for validation.";
+            }
+            leaf action {
+              type enumeration {
+                enum approve { description "Approve the request."; }
+                enum deny    { description "Deny the request."; }
+              }
+              mandatory true;
+              description "Approve or deny the priority request.";
+            }
+            leaf reason {
+              type string;
+              description "Operator-supplied reason for the decision.";
+            }
+          }
+        }
+      }
+      container message-stats {
+        config false;
+        description
+          "Per-V2X-message-type broadcast statistics. Replaces the
+           former per-channel queue-depths / message-counts blocks (a
+           messaging concern, not a radio one), keyed by message type.";
+        list per-message-type {
+          key "message-type";
+          description "Broadcast statistics for one V2X message type.";
+          leaf message-type {
+            type identityref { base openits-v2x-messaging-types:v2x-message-type; }
+            description "The V2X message type these statistics are for.";
+          }
+          leaf queue-depth     { type uint32; description "Current outbound queue depth for this message type."; }
+          leaf tx-count        { type uint64; description "Messages of this type transmitted."; }
+          leaf rx-count        { type uint64; description "Messages of this type received."; }
+          leaf total-sent      { type uint64; description "Total messages of this type sent (TX types)."; }
+          leaf total-received  { type uint64; description "Total messages of this type received (RX types)."; }
+          leaf success         { type uint64; description "Successfully delivered (TX) or valid-and-processed (RX)."; }
+          leaf invalid         { type uint64; description "Invalid / rejected messages of this type."; }
+          leaf avg-latency-ms  { type uint32; units "milliseconds"; description "Average processing latency for this message type."; }
+          leaf rate-per-sec    { type uint32; description "Current rate for this message type."; }
+          leaf encoding-errors { type uint64; description "Encoding errors for this message type (TX)."; }
+          leaf decoding-errors { type uint64; description "Decoding errors for this message type (RX)."; }
+        }
+      }
+
+      container message-errors {
+        config false;
+        description
+          "Aggregate (not per-message-type) V2X messaging error counters:
+           security failures, message drops, and source-data errors.";
+        container security {
+          description "Message-security error counters.";
+          leaf sign-failures   { type uint64; description "Message signing failures."; }
+          leaf verify-failures { type uint64; description "Signature verification failures."; }
+          leaf cert-errors     { type uint64; description "Certificate errors."; }
+        }
+        container drops {
+          description "Message drop counters.";
+          leaf queue      { type uint64; description "Dropped due to queue full."; }
+          leaf timeout    { type uint64; description "Dropped due to timeout."; }
+          leaf congestion { type uint64; description "Dropped due to congestion."; }
+        }
+        leaf asc-data-errors { type uint64; description "Errors receiving data from the source ASC."; }
+      }
+    }
+  }
+}

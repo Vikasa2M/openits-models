@@ -1,0 +1,210 @@
+module openits-nema-common {
+  yang-version 1.1;
+  namespace "urn:openits:yang:nema-common";
+  prefix openits-nema;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Shared NEMA-adjacent typedefs and groupings used by multiple
+     openits device modules (signal control, ramp metering,
+     potentially traffic-responsive corridor control later).
+
+     Scope is deliberately narrow: phase-number, phase-timing with
+     its MUTCD-derived and engineering-floor `must`-constraints, and
+     nothing else.
+     Service-specific constructs (rings, barriers, coordination
+     plans, ramp-queue thresholds) remain in their home modules.
+
+     Copyright (c) 2026.  Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.2.0";
+
+  revision 2026-07-13 {
+    description
+      "Remove the leaf-level `must` on `ped-clear` (it enforced >=1 s
+       whenever walk was served, but a leaf `must` never evaluates
+       when the leaf itself is absent per RFC 7950 section 7.5.3 — a
+       walk-served phase with ped-clear entirely omitted still
+       validated). The presence-plus-floor check moves to the parent
+       `timing` container in openits-signal-control (companion bump),
+       which can see both walk and ped-clear by name. Also documents
+       walk's absent-vs-zero equivalence and dual-cites the MUTCD
+       2009/11th ed. pedestrian-interval section (4E.06 / 4I.06).";
+    reference "RFC 7950 section 7.5.3; MUTCD 2009 4E.06 / 11th ed. 4I.06.";
+  }
+  revision 2026-07-13 {
+    description
+      "Internationalize the vendor-neutral core: drop the US-specific
+       MUTCD numeric bounds from the phase-timing `must` expressions,
+       keeping only universal engineering-sanity constraints
+       (min-green >= 1, max-green >= min-green, yellow-change > 0,
+       red-clear >= 0, ped-clear >= 1 when walk served). The US MUTCD
+       numbers (yellow 3.0-6.0 s, red-clear <= 6.0 s, walk >= 4 s when
+       served) move to yang/deviations/openits-signal-control-mutcd.yang
+       so a non-US jurisdiction can store conformant timing. Also
+       removes the TODO(WG) markers from normative error-message text.";
+    reference
+      " (de-lock-in: MUTCD constraints advisory-in-core).";
+  }
+  revision 2026-07-10 {
+    description
+      "Correct the MUTCD phase-timing constraints to match MUTCD 11th ed.
+       (2023): yellow-change is 3.0-6.0 s (4F.17); red-clear has no MUTCD
+       minimum, 6.0 s ceiling only (4F.17); min-green is an engineering
+       floor (>=1 s), not a MUTCD mandate. Fix the max-green and ped-clear
+       'must' expressions to not misfire when the referenced sibling leaf is
+       absent. Correct the fabricated 4D.26 citations. Split phase-timing
+       into vehicle-phase-timing (min-green, max-green, yellow-change,
+       red-clear, passage) and phase-timing (uses vehicle-phase-timing,
+       adds walk/ped-clear), so ramp meters can consume vehicle timing
+       only and no longer inherit pedestrian-interval leaves that do not
+       apply to a freeway on-ramp.";
+    reference "MUTCD 11th ed. (2023) section 4F.17.";
+  }
+
+  revision 2026-04-19 {
+    description
+      "Initial release.  Extracted from openits-signal-control
+       2026-04-18 during milestone M9 so signal-control and
+       ramp-metering can share one source of truth for MUTCD
+       phase-timing minimums.  The values and error messages are
+       byte-for-byte equivalent to what signal-control shipped;
+       only the location moved.";
+    reference
+      "MUTCD 11th ed. 4F.17 (yellow/red clearance), 4E.06 (pedestrian
+       intervals).";
+  }
+
+  /* --------------------------------------------------------------
+   * Typedefs
+   * -------------------------------------------------------------- */
+
+  typedef phase-number {
+    type uint8 {
+      range "1..40";
+    }
+    description
+      "Vehicle or pedestrian phase identifier.  Range accommodates
+       NTCIP 1202 v03 (40 phases).  Most deployments use 1..8 or
+       1..16 in standard dual-ring configurations.  Ramp meters
+       typically use 1..2.";
+    reference "NTCIP 1202 v03 (phase numbering); NEMA TS-2 §6.3.2.";
+  }
+
+  /* --------------------------------------------------------------
+   * Groupings
+   * -------------------------------------------------------------- */
+
+  grouping vehicle-phase-timing {
+    description
+      "Vehicle change/clearance timing shared by signalized intersections
+       and traffic-metered ramps. Pedestrian intervals live in the
+       phase-timing grouping, which adds them on top of this one.";
+
+    leaf min-green {
+      type uint16;
+      units "seconds";
+      must ". >= 1" {
+        error-message
+          "Minimum green must be at least 1 second (operational floor "
+        + "forbidding a zero-length serve).";
+      }
+      description
+        "Minimum green time.  Core enforces a universal 1 s floor
+         forbidding a zero-length serve; MUTCD sets no universal
+         minimum-green value, so any larger jurisdiction-specific floor
+         is applied by deviation.";
+    }
+    leaf max-green {
+      type uint16;
+      units "seconds";
+      must ". > 0 and (not(../min-green) or . >= ../min-green)" {
+        error-message
+          "Maximum green must be non-zero and, when min-green is present, "
+        + ">= min-green, so the phase has a usable service interval.";
+      }
+      description
+        "Maximum green time.  Must be non-zero and, when min-green is
+         present, >= min-green so the phase has a usable service
+         interval.";
+    }
+    leaf yellow-change {
+      type decimal64 { fraction-digits 1; }
+      units "seconds";
+      must ". > 0.0" {
+        error-message
+          "Yellow change must be a positive interval.";
+      }
+      description
+        "Yellow change interval.  Core constrains only that it is
+         positive; jurisdiction-specific bounds live in a deviation.
+         The US MUTCD 11th ed. 4F.17 range (3.0-6.0 s) is applied by
+         yang/deviations/openits-signal-control-mutcd.yang; a stricter
+         >=4.0 s floor by openits-signal-control-mutcd-strict.yang.
+         Non-US jurisdictions (e.g. Vienna Convention, with a
+         red+amber phase and different clearance ranges) apply their
+         own deviation instead.";
+    }
+    leaf red-clear {
+      type decimal64 { fraction-digits 1; }
+      units "seconds";
+      must ". >= 0.0" {
+        error-message
+          "Red clearance must be non-negative.";
+      }
+      description
+        "All-red clearance interval.  Core constrains only that it is
+         non-negative; determined using engineering practices.  The US
+         MUTCD 11th ed. 4F.17 ceiling (<=6.0 s) is applied by
+         yang/deviations/openits-signal-control-mutcd.yang, not by the
+         vendor-neutral core.";
+    }
+    leaf passage {
+      type decimal64 { fraction-digits 1; }
+      units "seconds";
+      description "Vehicle passage / gap-out time.";
+    }
+  }
+
+  grouping phase-timing {
+    description
+      "Full signalized-intersection phase timing: vehicle timing plus
+       pedestrian walk/clearance intervals.";
+
+    uses vehicle-phase-timing;
+
+    leaf walk {
+      type uint16;
+      units "seconds";
+      description
+        "Walk interval for the associated pedestrian phase.  Absent or
+         zero both mean no pedestrian phase is served; a served phase
+         has walk > 0.  Core places no lower bound on a served walk
+         interval; the US MUTCD 2009 4E.06 / 11th ed. 4I.06 minimum
+         (>=4 s when served) is applied by
+         yang/deviations/openits-signal-control-mutcd.yang.";
+    }
+    leaf ped-clear {
+      type uint16;
+      units "seconds";
+      description
+        "Pedestrian clearance (flashing don't walk).  Required
+         whenever walk > 0; calculated from crossing distance at
+         3.5 ft/s per MUTCD 2009 4E.06 / 11th ed. 4I.06.  Presence
+         (and the >=1 s floor) is enforced by the parent `timing`
+         container's `must`, not here — a leaf-level `must` does not
+         evaluate when the leaf itself is absent (RFC 7950 §7.5.3), so
+         the check has to live where both walk and ped-clear are
+         visible.";
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "openits-ramp-metering:ramp-meter": {
+    "config": { "id": "i405-nb-western-ave" },
+    "control": {
+      "state": {
+        "mode": "openits-ramp-metering-types:mode-active",
+        "current-release-rate-vph": 0
+      }
+    }
+  }
+}

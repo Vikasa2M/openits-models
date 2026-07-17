@@ -1,0 +1,13 @@
+module leaf-fixture {
+  namespace "urn:test:leaf-fixture";
+  prefix lf;
+  import ietf-yang-types { prefix yang; }
+  notification sample {
+    leaf name { type string; }
+    leaf count { type uint16; }
+    leaf occurred-at { type yang:date-and-time; }
+    container detail {
+      leaf note { type string; }
+    }
+  }
+}

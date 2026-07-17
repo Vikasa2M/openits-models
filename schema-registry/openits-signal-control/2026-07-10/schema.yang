@@ -1,0 +1,477 @@
+module openits-signal-control {
+  yang-version 1.1;
+  namespace "urn:openits:yang:signal-control";
+  prefix openits-sc;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-nema-common {
+    prefix openits-nema;
+  }
+
+  import openits-signal-control-types {
+    prefix openits-sc-types;
+  }
+
+  organization
+    "ITS YANG Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "A YANG data model for roadside traffic signal controllers.
+
+     This module is designed to align with the ARC-IT (Architecture
+     Reference for Cooperative and Intelligent Transportation)
+     Traffic Signal Control service package, providing a transport-
+     independent replacement for the SNMP/MIB coupling of NTCIP 1202.
+
+     Nodes are annotated with the 'arc-it-flow' extension to document
+     which ARC-IT information flow each data element participates in.
+     Tooling can walk the module tree and emit coverage reports
+     against ARC-IT for conformance review.
+
+     Copyright (c) 2026.  Distributed under Apache 2.0.";
+
+  revision 2026-07-10 {
+    description
+      "Replace the inline severity enumeration on the active-fault
+       list with the shared openits-types:fault-severity typedef.
+       Member set and order unchanged — wire-stable.
+
+       Also, replace the inline controller-identity latitude/longitude
+       leaves with openits-types:geo-point. Already fraction-digits 7
+       and ranged — this consolidates onto the shared grouping without
+       a precision change. Member set and order unchanged.";
+  }
+  revision 2026-05-23 {
+    description
+      "Two same-day edits:
+       - Move preemption-type and controller-mode typedefs out to
+         openits-signal-control-types. This module now imports both
+         from openits-sc-types: rather than defining them inline.
+         Reachable schema nodes are unchanged from a consumer's
+         perspective; only the typedef's home module changes.
+       - Make `require-instance true` explicit on the three leafrefs
+         (detector.assigned-phases, coordination.active-plan,
+         split.phase-number). RFC 7950 §9.9.2 makes true the default;
+         explicit declarations are clearer to readers and tool authors.";
+  }
+  revision 2026-04-28 {
+    description
+      "Companion bump for the signal-control notifications companion
+       module@2026-04-28 which adds tsam-mode-changed and tsam-recommendation-applied.
+       The base module's data tree is byte-equivalent; the revision bump
+       keeps ce-dataschema URLs in lockstep with the notifications
+       companion so consumers fetch the right schema-registry directory.";
+  }
+  revision 2026-04-19 {
+    description
+      "Minor bump.  Two changes land together:
+
+       1. (M5 follow-through) Tightened phase-timing with six
+          MUTCD-derived `must`-constraints on min-green, max-green,
+          yellow-change, red-clear, walk, and ped-clear.  The
+          constraints were introduced in the 2026-04-18 snapshot but
+          their revision bump was deferred until this window; the
+          logic is unchanged.
+
+       2. (M9) Extracted phase-number typedef and phase-timing
+          grouping to a new openits-nema-common module so ramp
+          metering and signal control share one source of truth for
+          MUTCD minimums.  Reachable schema nodes are unchanged from
+          a consumer's perspective.";
+    reference
+      "MUTCD 4D.26 (vehicle change intervals), 4E.06 (pedestrian
+       intervals); ARC-IT 9.1 Service Package TI01; NTCIP 1202 v03.";
+  }
+
+  revision 2026-04-18 {
+    description
+      "Initial revision.  Minimum viable model covering phases,
+       detectors, coordination, preemption, operational status,
+       and faults.";
+    reference
+      "ARC-IT 9.1 Service Package: Traffic Signal Control (SU01)
+       NTCIP 1202 v03 (functional reference only; no wire compat)";
+  }
+
+  /* --------------------------------------------------------------
+   * Typedefs
+   * -------------------------------------------------------------- */
+
+  typedef ring-number {
+    type uint8 {
+      range "1..4";
+    }
+    description
+      "Ring identifier.  Standard dual-ring configuration is 1..2;
+       quad-ring installations use 1..4.";
+  }
+
+  typedef interval-type {
+    type enumeration {
+      enum green              { value 1; }
+      enum yellow-change      { value 2; }
+      enum red-clear          { value 3; }
+      enum red                { value 4; }
+      enum walk               { value 5; }
+      enum ped-clear          { value 6; }
+      enum dont-walk          { value 7; }
+      enum dark               { value 8; }
+      enum flashing-yellow    { value 9; }
+      enum flashing-red       { value 10; }
+    }
+    description
+      "Current interval a phase is displaying.";
+  }
+
+  typedef detector-type {
+    type enumeration {
+      enum vehicle-inductive-loop;
+      enum vehicle-video;
+      enum vehicle-radar;
+      enum vehicle-magnetometer;
+      enum pedestrian-pushbutton;
+      enum pedestrian-passive;
+      enum bicycle;
+      enum emergency-vehicle;
+      enum transit;
+    }
+    description
+      "Detector technology type.";
+  }
+
+  /* --------------------------------------------------------------
+   * Reusable groupings
+   * -------------------------------------------------------------- */
+
+  // `phase-timing` moved to openits-nema-common 2026-04-19; see
+  // openits-signal-control revision 2026-04-19 for the extract
+  // record.  Callers should `uses openits-nema:phase-timing` where
+  // they previously used a local phase-timing grouping.
+
+  grouping phase-runtime-state {
+    description "Runtime state of a single phase.";
+
+    leaf current-interval {
+      type interval-type;
+      config false;
+      description "What the phase is currently displaying.";
+    }
+    leaf interval-elapsed-ms {
+      type uint32;
+      units "milliseconds";
+      config false;
+      description "Elapsed time in the current interval.";
+    }
+    leaf next-phase {
+      type openits-nema:phase-number;
+      config false;
+      description "Next phase scheduled in the sequence.";
+    }
+  }
+
+  /* --------------------------------------------------------------
+   * Main tree
+   * -------------------------------------------------------------- */
+
+  container signal-controller {
+    description
+      "Top-level container representing a single instance of the
+       ARC-IT 'Roadway Signal Controller' subsystem.";
+
+    /* -- Identity & location -- */
+    container identity {
+      description "Controller identity and location.";
+
+      leaf controller-id {
+        type string;
+        description
+          "Unique identifier in the operating agency inventory.";
+      }
+      leaf intersection-name {
+        type string;
+        description "Human-readable intersection name.";
+      }
+      uses openits-types:geo-point;
+      leaf make        { type string; config false; description "Manufacturer name reported by the controller."; }
+      leaf model       { type string; config false; description "Model identifier reported by the controller."; }
+      leaf firmware    { type string; config false; description "Firmware version reported by the controller."; }
+    }
+
+    /* -- Phase configuration & state -- */
+    container phases {
+      openits-types:arc-it-flow
+        "TMC -> Roadway Signal Controller : signal control plan";
+
+      description
+        "Phase configuration.  Implements the ARC-IT
+         'signal control plan' information flow.";
+
+      list phase {
+        key "phase-number";
+        description "One entry per configured phase.";
+
+        leaf phase-number {
+          type openits-nema:phase-number;
+          description "Phase identifier within the controller.";
+        }
+        leaf enabled {
+          type boolean;
+          default "true";
+          description "Whether the phase participates in normal service.";
+        }
+        leaf ring {
+          type ring-number;
+          mandatory true;
+          description "Ring this phase belongs to.";
+        }
+        leaf barrier {
+          type uint8 { range "1..2"; }
+          description "Barrier group (NEMA dual-ring convention).";
+        }
+        container timing {
+          description "Phase timing parameters per NEMA-common phase-timing grouping.";
+          uses openits-nema:phase-timing;
+        }
+        container state {
+          config false;
+          description "Phase runtime state (current interval, elapsed time, next phase).";
+          uses phase-runtime-state;
+        }
+      }
+    }
+
+    /* -- Detectors -- */
+    container detectors {
+      openits-types:arc-it-flow
+        "Vehicle/Pedestrian -> Roadway Signal Controller : "
+      + "vehicle detection";
+
+      description
+        "Detector configuration and runtime state.  Implements the
+         inbound detection flow from vehicles and pedestrians.";
+
+      list detector {
+        key "detector-id";
+        description "One entry per detector channel installed on the controller.";
+
+        leaf detector-id {
+          type uint16;
+          description "Detector channel number on the controller (1-based).";
+        }
+        leaf type {
+          type detector-type;
+          mandatory true;
+          description "Detector technology (inductive-loop, video, radar, pedestrian-push-button, etc.).";
+        }
+        leaf-list assigned-phases {
+          type leafref {
+            path "../../../phases/phase/phase-number";
+            require-instance true;
+          }
+          description "Phase(s) this detector calls.";
+        }
+        leaf enabled {
+          type boolean;
+          default "true";
+          description "Whether this detector channel is currently in service.";
+        }
+        container state {
+          config false;
+          description "Runtime state of this detector channel.";
+          leaf active {
+            type boolean;
+            description
+              "True if the detector is currently sensing a call.";
+          }
+          leaf last-activation {
+            type yang:date-and-time;
+            description "Wall-clock time of the most recent detector activation.";
+          }
+          leaf actuation-count {
+            type yang:counter64;
+            description "Actuations since last reset.";
+          }
+          leaf fault {
+            type boolean;
+            description
+              "True if stuck-on, no-activity, or comms failure.";
+          }
+        }
+      }
+    }
+
+    /* -- Coordination -- */
+    container coordination {
+      openits-types:arc-it-flow
+        "TMC -> Roadway Signal Controller : "
+      + "signal coordination plan";
+
+      description
+        "Coordination and timing plan configuration.  Typically
+         driven by time-of-day schedule from the TMC.";
+
+      leaf active-plan {
+        type leafref {
+          path "../timing-plan/plan-id";
+          require-instance true;
+        }
+        config false;
+        description "Currently-running timing plan.";
+      }
+
+      list timing-plan {
+        key "plan-id";
+        description "One entry per timing plan available to the controller.";
+
+        leaf plan-id {
+          type uint8 { range "1..255"; }
+          description "Timing-plan identifier; used as key and by active-plan.";
+        }
+        leaf cycle-length {
+          type uint16;
+          units "seconds";
+          description "Total cycle length for the plan, in seconds.";
+        }
+        leaf offset {
+          type uint16;
+          units "seconds";
+          description "Offset from system master time reference.";
+        }
+        list split {
+          key "phase-number";
+          description "One entry per phase in this plan, naming its split time.";
+          leaf phase-number {
+            type leafref {
+              path "../../../../phases/phase/phase-number";
+              require-instance true;
+            }
+            description "Phase the split applies to.";
+          }
+          leaf split-seconds {
+            type uint16;
+            units "seconds";
+            description "Allocated time for this phase within the cycle, in seconds.";
+          }
+        }
+      }
+    }
+
+    /* -- Preemption / priority -- */
+    container preemption {
+      openits-types:arc-it-flow
+        "Emergency Vehicle / Rail -> Roadway Signal Controller : "
+      + "preemption request";
+
+      description
+        "Preemption and priority state.  Preemption (rail, emergency)
+         overrides normal operation; priority (transit, freight)
+         biases the phase sequence without overriding it.";
+
+      leaf active-type {
+        type openits-sc-types:preemption-type;
+        config false;
+        description "Type of active preemption / priority (none / railroad / EV / transit / freight).";
+      }
+      leaf active-since {
+        type yang:date-and-time;
+        config false;
+        description "Wall-clock time the active preemption / priority began.";
+      }
+      leaf source-id {
+        type string;
+        config false;
+        description
+          "Identifier of the vehicle or system that requested "
+        + "the preemption / priority.";
+      }
+    }
+
+    /* -- Operational status (outbound to TMC) -- */
+    container operational-status {
+      config false;
+      openits-types:arc-it-flow
+        "Roadway Signal Controller -> TMC : "
+      + "signal system operational status";
+
+      description
+        "Overall controller status reported upstream to the
+         Traffic Management Center.";
+
+      leaf mode {
+        type openits-sc-types:controller-mode;
+        description "Top-level operational mode of the controller (normal / coordinated / free / flash / etc.).";
+      }
+      leaf in-conflict-flash {
+        type boolean;
+        description
+          "True if the Malfunction Management Unit has forced flash
+           due to conflicting signal indications.";
+      }
+      leaf last-mode-change {
+        type yang:date-and-time;
+        description "Wall-clock time of the most recent controller-mode transition.";
+      }
+    }
+
+    /* -- Faults (outbound to maintenance) -- */
+    container faults {
+      config false;
+      openits-types:arc-it-flow
+        "Roadway Signal Controller -> Maintenance : "
+      + "signal fault data";
+
+      description
+        "Active faults.  Exported via the ARC-IT
+         'signal fault data' flow to maintenance systems.";
+
+      list active-fault {
+        key "fault-id";
+        description "One entry per active fault on the controller.";
+
+        leaf fault-id {
+          type string;
+          description "Controller-local fault identifier; stable across raise/clear pairs.";
+        }
+        leaf severity {
+          type openits-types:fault-severity;
+          description "Operator-visible severity escalation.";
+        }
+        leaf category {
+          type enumeration {
+            enum detector;
+            enum lamp;
+            enum conflict;
+            enum communication;
+            enum power;
+            enum cabinet;
+            enum software;
+          }
+          description "Fault class for the active fault.";
+        }
+        leaf description {
+          type string;
+          description "Human-readable fault description from the controller.";
+        }
+        leaf first-observed {
+          type yang:date-and-time;
+          description "Wall-clock time the fault was first observed at the controller.";
+        }
+      }
+    }
+  }
+
+  /* Notifications live in the signal-control notifications companion
+     module (openits-signal-control-events; split to work around
+     ygot's proto backend, which fails on modules containing
+     notification statements). */
+}

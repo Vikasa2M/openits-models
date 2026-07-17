@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package openits.ramp_metering.v1;
+
+option go_package = "github.com/openits/openits-models/pkg/proto/openits/v1;openitspb";
+
+message QueueOverrideActivated {
+  uint32 queue_length_vehicles = 1;
+  uint32 threshold_vehicles = 2;
+  uint32 plan_id = 3;
+}
+
+message QueueOverrideCleared {
+  uint32 queue_length_vehicles = 1;
+  uint32 plan_id = 2;
+}
+
+message ReleaseRateChanged {
+  uint32 previous_rate_vph = 1;
+  uint32 new_rate_vph = 2;
+  uint32 plan_id = 3;
+  string reason = 4;
+}
+

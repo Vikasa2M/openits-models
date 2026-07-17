@@ -1,0 +1,9 @@
+{
+  "module": "openits-common-fault-events",
+  "revision": "2026-07-12",
+  "files": [
+    "schema.yang",
+    "schema.proto",
+    "schema.json"
+  ]
+}

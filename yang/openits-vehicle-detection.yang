@@ -1,0 +1,233 @@
+module openits-vehicle-detection {
+  yang-version 1.1;
+  namespace "urn:openits:yang:vehicle-detection";
+  prefix openits-vehicle-detection;
+
+  import openits-types {
+    prefix openits-types;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Vehicle-detection capability: aggregate traffic analytics a device
+     derives from observing vehicles — counts by time window, speed
+     statistics, vehicle-class breakdown, and per-approach rollups. A
+     device that performs onboard vehicle detection (an RSU processing
+     BSMs, a smart traffic sensor, a perception sensor) 'uses' the
+     'vehicle-analytics' grouping, typically gated behind a device-level
+     feature since not every unit of a given type does detection.
+     Extracted from openits-rsu under the capability-first architecture
+     (docs/08-capability-architecture.md).
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.2.0";
+
+  revision 2026-07-15 {
+    description
+      "Make the BSM analytics self-describing: add a shared sample-basis
+       provenance (window-type, stats-window-seconds, sample-count,
+       penetration-estimate-pct, computed-at) so percentiles and
+       breakdowns are interpretable and counts are scalable by
+       penetration; add a count-basis enum and reframe the vehicle-count
+       descriptions so 'unique vehicles' is honest about BSM temporary-id
+       rotation. Additive — pure additions and clarified descriptions,
+       wire-compatible.";
+    reference "SAE J2735 / J2945; IEEE 1609.2 (BSM temporary-id rotation).";
+  }
+
+  revision 2026-07-13 {
+    description
+      "Initial revision. Aggregate vehicle-analytics grouping (counts,
+       speed metrics, class breakdown, per-approach rollups) extracted
+       from openits-rsu so onboard detection can be composed onto any
+       device that performs it.";
+  }
+
+  grouping vehicle-analytics {
+    description
+      "Aggregate vehicle-detection analytics for a device.";
+
+    container vehicle-analytics {
+      description
+        "V2X vehicle analytics from BSM data";
+      container sample-basis {
+        description
+          "Provenance shared by all analytics below: what window they
+           cover, how many observations back them, and the connected-
+           vehicle penetration behind them. BSM analytics are a sample of
+           the equipped fleet, not a census — these fields let a consumer
+           interpret, scale, or refuse the figures.";
+        leaf window-type {
+          type enumeration {
+            enum rolling  { description "A sliding window ending at computed-at."; }
+            enum tumbling { description "A fixed, non-overlapping window."; }
+          }
+          description
+            "Whether the stats aggregation window (stats-window-seconds)
+             slides or tumbles; the named vehicle counts are inherently
+             trailing windows.";
+        }
+        leaf stats-window-seconds {
+          type uint32;
+          units "seconds";
+          description
+            "The period the speed-metrics and vehicle-class-breakdown are
+             computed over. (The counts container carries its own named
+             windows.)";
+        }
+        leaf sample-count {
+          type uint32;
+          description
+            "Number of BSM observations backing the speed-metrics and
+             class-breakdown over stats-window-seconds. A percentile or
+             breakdown from a handful of samples is noise; this makes the
+             sample size explicit.";
+        }
+        leaf penetration-estimate-pct {
+          type openits-types:percentage-precise;
+          description
+            "Estimated connected-vehicle market penetration behind these
+             analytics. BSM-derived volumes scale by roughly 1/penetration
+             (at 6% penetration a fused volume is ~16x low), so a consumer
+             needs this to scale counts or refuse them.";
+        }
+        leaf computed-at {
+          type yang:date-and-time;
+          description "Wall-clock time this analytics snapshot was produced.";
+        }
+      }
+      container counts {
+        description
+          "Vehicle counts by time window";
+        leaf count-basis {
+          type enumeration {
+            enum unique-deduplicated  { description "De-duplicated to unique vehicles (requires infrastructure that tracks vehicles across BSM temporary-ID rotation)."; }
+            enum observation-sessions { description "Counts observation sessions between temporary-ID changes; a vehicle present across a rotation is counted more than once."; }
+            enum raw-messages         { description "Raw BSM message/observation count, no de-duplication."; }
+          }
+          description
+            "How the vehicle counts were derived. J2735/1609.2 rotate a
+             BSM temporary id (~5 min), so true unique-vehicle counts over
+             windows longer than that persistence are not computable from
+             BSMs alone unless external infrastructure bridges the
+             rotation — most deployments report observation-sessions.";
+        }
+        leaf vehicles-1min {
+          type uint32;
+          description
+            "Vehicles observed in the last minute. Within one minute a
+             vehicle usually keeps one BSM temporary id, so this
+             approximates unique vehicles; see count-basis.";
+        }
+        leaf vehicles-1hr {
+          type uint32;
+          description
+            "Vehicles observed in the last hour. Longer than BSM
+             temporary-id persistence (~5 min), so this counts
+             observation-sessions rather than unique vehicles unless
+             count-basis is unique-deduplicated.";
+        }
+        leaf vehicles-24hr {
+          type uint32;
+          description
+            "Vehicles observed in the last 24 hours. Well beyond BSM
+             temporary-id persistence — interpret per count-basis; a true
+             unique-vehicle count over 24 h is not computable from BSMs
+             alone.";
+        }
+      }
+      container speed-metrics {
+        description
+          "Speed statistics from BSM data. Meaningful only with an
+           adequate sample-basis/sample-count; a percentile from a
+           handful of BSMs is noise. The window is
+           sample-basis/stats-window-seconds.";
+        leaf average-kmh {
+          type openits-types:speed-kmh;
+          description
+            "Average vehicle speed";
+        }
+        leaf median-kmh {
+          type openits-types:speed-kmh;
+          description
+            "Median vehicle speed";
+        }
+        leaf percentile-85-kmh {
+          type openits-types:speed-kmh;
+          description
+            "85th percentile speed";
+        }
+        leaf percentile-95-kmh {
+          type openits-types:speed-kmh;
+          description
+            "95th percentile speed";
+        }
+      }
+      container vehicle-class-breakdown {
+        description
+          "Vehicle class breakdown (percentages). Percentages are of
+           classified observations over mixed, non-exclusive axes (a
+           transit bus is truck-sized and transit-role), so they do not
+           necessarily sum to 100; sample size is
+           sample-basis/sample-count. A unified classification scheme is
+           tracked separately.";
+        leaf passenger-pct {
+          type openits-types:percentage;
+          description
+            "Passenger vehicles percentage";
+        }
+        leaf truck-pct {
+          type openits-types:percentage;
+          description
+            "Trucks percentage";
+        }
+        leaf emergency-pct {
+          type openits-types:percentage;
+          description
+            "Emergency vehicles percentage";
+        }
+        leaf transit-pct {
+          type openits-types:percentage;
+          description
+            "Transit vehicles percentage";
+        }
+      }
+      list approach {
+        key "number";
+        description
+          "Per-approach vehicle analytics";
+        leaf number {
+          type uint8;
+          description
+            "Approach number";
+        }
+        leaf vehicles-1min {
+          type uint32;
+          description
+            "Vehicles in last minute. Follows the same count-basis as the
+             top-level counts; being a ~1-minute window it is within
+             typical BSM temporary-id persistence, so it approximates
+             unique vehicles.";
+        }
+        leaf average-speed-kmh {
+          type openits-types:speed-kmh;
+          description
+            "Average speed on approach";
+        }
+        leaf queue-vehicles {
+          type uint32;
+          description
+            "Estimated queue length in vehicles";
+        }
+      }
+    }
+  }
+}

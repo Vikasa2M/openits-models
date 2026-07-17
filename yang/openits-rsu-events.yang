@@ -1,0 +1,644 @@
+module openits-rsu-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:rsu-events";
+  prefix openits-rsu-events;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+  import openits-types {
+    prefix openits-types;
+  }
+  import openits-v2x-messaging-types {
+    prefix openits-v2x-messaging-types;
+  }
+  import openits-v2x-radio-types {
+    prefix openits-v2x-radio-types;
+  }
+  import openits-rsu-types {
+    prefix openits-rsu-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+  description
+    "Notifications for openits-rsu.  Split into a companion
+     module so ygot's proto backend can generate protobuf from
+     the base module (ygot's proto generator fails on modules
+     containing notification statements).";
+
+  openits-types:openits-version "0.5.0";
+
+  revision 2026-07-17 {
+    description
+      "Correct the msg-id semantics on the TIM notifications and the
+       broadcast-sample list. These leaves are per-instance correlators
+       (SAE J2735 TravelerInformation.packetID / UniqueMSGID), used to tie
+       rsu-tim-loaded / rsu-tim-cleared / rsu-tim-broadcast together and to
+       key the broadcast-sample list — they are NOT the J2735 msgID field,
+       which carries the message type (definitionally TIM here). Descriptions
+       only; no schema, wire, or field-number change.";
+  }
+  revision 2026-07-15 {
+    description
+      "Events cleanup + V2X types layering. Import the new V2X -types
+       modules instead of the capability cores (openits-v2x-radio,
+       openits-v2x-messaging). Make channel references technology-neutral
+       (channel-id + optional dsrc-channel-number) on rsu-channel-fault,
+       rsu-tim-broadcast, and rsu-broadcast-sample. Converge
+       rsu-broadcast-sample msg-type onto the v2x-message-type identity and
+       rsu-gps-status-change previous/new-status onto gps-fix-status.
+       kind bases are NOT tightened to a per-notification identity in this
+       revision: each per-notification 'kind' identity in openits-rsu-types
+       (rsu-srm-received-kind, etc.) is also the literal value every
+       fixture carries, and YANG identityref semantics require a value be
+       strictly derived from its base, not equal to it — so narrowing
+       'base' to that same identity would make every existing fixture
+       invalid. Left at rsu-event-kind / rsu-fault-event-kind pending a
+       design that adds a narrower leaf identity under each per-notification
+       kind (out of scope here: that lives in openits-rsu-types, not
+       touched by this revision). BREAKING (pre-v1): channel leaves
+       reshape; msg-type enum -> string; gps status strings -> enum; moved
+       identity values change module prefix.";
+  }
+  revision 2026-07-14 {
+    description
+      "Converge rsu-channel-fault/fault-type from an inline enum to an
+       identityref (openits-v2x-radio:channel-fault-type) — same
+       vocabulary as the channel state tree. BREAKING (pre-v1): the
+       fault-type proto field changes enum -> string.";
+  }
+  revision 2026-07-13 {
+    description
+      "Adopt the unified event contract: every notification now
+       'uses openits-types:event-header' (source-device-id,
+       occurred-at, sequence) and carries a mandatory 'kind'
+       identityref under openits-rsu-types:rsu-event-kind
+       (rsu-channel-fault under rsu-fault-event-kind instead).
+       Delete the ad-hoc per-notification device-id/timestamp leaves
+       now supplied by the header: device-id + timestamp
+       (rsu-srm-received, rsu-srm-status-change,
+       rsu-certificate-expiring, rsu-channel-fault,
+       rsu-gps-status-change, rsu-security-event), observed-at
+       (rsu-tim-loaded), cleared-at (rsu-tim-cleared), changed-at
+       (rsu-tim-broadcast-state-changed), broadcast-at
+       (rsu-tim-broadcast), and the bare source-device-id/occurred-at
+       pair (rsu-broadcast-sample, now supplied via the header
+       grouping instead). request-type (rsu-srm-received),
+       expiry-date (rsu-certificate-expiring), fault-type
+       (rsu-channel-fault), event-type (rsu-security-event), and
+       reason (rsu-tim-cleared) are unchanged payload leaves — 'kind'
+       names the notification, not the fault/event sub-type.
+       Breaking, pre-v1: every notification gains mandatory device
+       identity and sequence.";
+    reference "RFC 7950 section 11.";
+  }
+  revision 2026-07-13 {
+    description
+      "Repoint rsu-srm-received's request-type base to
+       openits-v2x-messaging:srm-request-type (the identity moved there
+       with the messages subtree in). Import openits-v2x-messaging.";
+  }
+  revision 2026-07-12 {
+    description
+      "Rename this module (file, module name, namespace, prefix) from
+       the legacy notifications-suffixed name to openits-rsu-events: standardize every service notification module on the
+       events-suffixed name. Mechanical rename only — no notification
+       content changed; ce-types (service-derived, not module-derived)
+       and proto are unaffected. Add rsu-broadcast-sample — a periodic
+       sample of the RSU's active-broadcast-set. Additive.";
+  }
+  revision 2026-07-10 {
+    description
+      "Rename SCREAMING_SNAKE_CASE identities to kebab-case per RFC 8407
+       (pre-v1 wire-facing change). Mechanical 1:1 transform; no identity
+       added or removed.";
+    reference "RFC 8407 section 4.3 (identifier naming).";
+  }
+  revision 2026-05-23 {
+    description
+      "Add the rsu-tim-broadcast notification — emitted per TIM air
+       transmission, distinct from the channel-state aggregate. Closes
+       the gap where the CE catalog declared
+       openits.rsu.rsu-tim-broadcast.v1 with no YANG schema home.";
+    reference "SAE J2735 (TIM broadcast emission).";
+  }
+  revision 2026-04-28 {
+    description
+      "Add TIM lifecycle notifications: rsu-tim-loaded,
+       rsu-tim-cleared, rsu-tim-broadcast-state-changed. Closes the
+       M16 carry-forward for V2X traveler messages. TSAM (Traffic
+       Signal Adaptive Management) is not a V2X message family and
+       lives on the signal-control service, not here.";
+  }
+  revision 2026-04-27 {
+    description
+      "Whitespace-only canonicalization to 2-space indentation
+       (M14 follow-up). No semantic content changes.";
+  }
+  revision 2026-04-19 {
+    description
+      "Initial split.  Content is equivalent to the notification
+       block previously embedded in openits-rsu@2024-12-26; see
+       openits-rsu revision 2026-04-19 for the removal
+       record.";
+  }
+
+  // =========================================================================
+  // RSU NOTIFICATIONS
+  // =========================================================================
+
+  notification rsu-srm-received {
+    openits-types:arc-it-flow "Vehicle -> Roadside Equipment : signal request message";
+    description
+      "Signal Request Message received from vehicle";
+    leaf kind {
+      type identityref {
+        base openits-rsu-types:rsu-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-rsu-types:rsu-srm-received-kind
+         for this notification.";
+    }
+    uses openits-types:event-header;
+    leaf request-id {
+      type string;
+      description
+        "Request identifier";
+    }
+    leaf vehicle-id {
+      type string;
+      description
+        "Requesting vehicle";
+    }
+    leaf request-type {
+      type identityref {
+        base openits-v2x-messaging-types:srm-request-type;
+      }
+      description
+        "Request type";
+    }
+    leaf approach {
+      type uint8;
+      description
+        "Approach lane";
+    }
+    leaf eta-seconds {
+      type uint16;
+      description
+        "ETA in seconds";
+    }
+    leaf vehicle-class {
+      type string;
+      description
+        "Vehicle class (emergency, transit, etc.)";
+    }
+  }
+
+  notification rsu-srm-status-change {
+    openits-types:arc-it-flow "Roadside Equipment -> TMC : roadside equipment status";
+    description
+      "Signal request status changed";
+    leaf kind {
+      type identityref {
+        base openits-rsu-types:rsu-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-rsu-types:rsu-srm-status-change-kind
+         for this notification.";
+    }
+    uses openits-types:event-header;
+    leaf request-id {
+      type string;
+      description "Request identifier from the original SRM.";
+    }
+    leaf vehicle-id {
+      type string;
+      description "Requesting vehicle identifier.";
+    }
+    leaf previous-status {
+      type string;
+      description "SRM lifecycle status before the change (e.g., pending, granted, denied).";
+    }
+    leaf new-status {
+      type string;
+      description "SRM lifecycle status after the change.";
+    }
+  }
+
+  notification rsu-certificate-expiring {
+    openits-types:arc-it-flow "Roadside Equipment -> Security Management : credential status";
+    description
+      "Certificate approaching expiration";
+    leaf kind {
+      type identityref {
+        base openits-rsu-types:rsu-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-rsu-types:rsu-certificate-expiring-kind
+         for this notification.";
+    }
+    uses openits-types:event-header;
+    leaf certificate-id {
+      type string;
+      description "Certificate identifier (SCMS-assigned).";
+    }
+    leaf certificate-type {
+      type string;
+      description "Certificate class (e.g., enrollment, pseudonym, application).";
+    }
+    leaf days-until-expiry {
+      type uint16;
+      description "Days until the certificate expires; tunable threshold per RSU policy.";
+    }
+    leaf expiry-date {
+      type yang:date-and-time;
+      description "Absolute expiry timestamp from the certificate's validity period.";
+    }
+  }
+
+  notification rsu-channel-fault {
+    openits-types:arc-it-flow "Roadside Equipment -> Maintenance : equipment maintenance status";
+    description
+      "Radio channel fault detected";
+    leaf kind {
+      type identityref {
+        base openits-rsu-types:rsu-fault-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-rsu-types:rsu-channel-fault-kind
+         for this notification.";
+    }
+    uses openits-types:event-header;
+    leaf channel-id {
+      type string;
+      description
+        "Technology-neutral channel identifier; correlates to the
+         v2x-radio channels/channel key. Opaque for C-V2X.";
+    }
+    leaf dsrc-channel-number {
+      type openits-v2x-radio-types:dsrc-channel;
+      description
+        "DSRC channel number (172-184) for a DSRC channel; absent for
+         C-V2X channels.";
+    }
+    leaf fault-type {
+      type identityref { base openits-v2x-radio-types:channel-fault-type; }
+      description "Type of channel fault (shares the channel state-tree vocabulary).";
+    }
+    leaf message {
+      type string;
+      description "Vendor-specific fault detail message.";
+    }
+  }
+
+  notification rsu-gps-status-change {
+    openits-types:arc-it-flow "Roadside Equipment -> TMC : roadside equipment status";
+    description
+      "GPS fix status changed";
+    leaf kind {
+      type identityref {
+        base openits-rsu-types:rsu-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-rsu-types:rsu-gps-status-change-kind
+         for this notification.";
+    }
+    uses openits-types:event-header;
+    leaf previous-status {
+      type openits-rsu-types:gps-fix-status;
+      description "GPS fix status before the change.";
+    }
+    leaf new-status {
+      type openits-rsu-types:gps-fix-status;
+      description "GPS fix status after the change.";
+    }
+    leaf satellites {
+      type uint8;
+      description "Satellite count in the new fix.";
+    }
+  }
+
+  notification rsu-security-event {
+    openits-types:arc-it-flow "Roadside Equipment -> Security Management : security event";
+    description
+      "Security-related event";
+    leaf kind {
+      type identityref {
+        base openits-rsu-types:rsu-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-rsu-types:rsu-security-event-kind
+         for this notification.";
+    }
+    uses openits-types:event-header;
+    leaf event-type {
+      type enumeration {
+        enum invalid-signature {
+          description
+            "Invalid message signature";
+        }
+        enum revoked-certificate {
+          description
+            "Message from revoked certificate";
+        }
+        enum scms-connection-lost {
+          description
+            "Lost SCMS connection";
+        }
+        enum enrollment-failure {
+          description
+            "Enrollment failure";
+        }
+        enum misbehavior-detected {
+          description
+            "Misbehavior detected";
+        }
+      }
+      description
+        "Security event type";
+    }
+    leaf source {
+      type string;
+      description "Source identifier associated with the security event (peer cert subject, message sender, etc.).";
+    }
+    leaf message {
+      type string;
+      description "Vendor-specific event detail message.";
+    }
+  }
+
+  // =========================================================================
+  // V2X traveler-message lifecycle (M16 follow-up)
+  //
+  // RSUs broadcast Traveler Information Messages (TIM) per SAE J2735. The
+  // events below capture the lifecycle: when a message is loaded for
+  // broadcast, when broadcasting starts/stops, and when a message expires
+  // or is cleared.
+  //
+  // Traffic Signal Adaptive Management (TSAM) is NOT a V2X message family —
+  // it's an adaptive-control feature that consumes SPaT and other signals
+  // to drive timing decisions. TSAM events live on the signal-control
+  // service, not here.
+  // =========================================================================
+
+  notification rsu-tim-loaded {
+    openits-types:arc-it-flow "Traffic Management Center -> Roadside Equipment : traveler information";
+    description
+      "A Traveler Information Message was loaded onto the RSU. Emitted
+       on receipt of the load (before broadcast begins). Carries the
+       J2735 packetID and the activation window so consumers can audit
+       what was loaded vs what reached the air.";
+
+    leaf kind {
+      type identityref {
+        base openits-rsu-types:rsu-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-rsu-types:rsu-tim-loaded-kind
+         for this notification.";
+    }
+    uses openits-types:event-header;
+    leaf msg-id {
+      type string;
+      mandatory true;
+      description
+        "Per-instance TIM identifier (SAE J2735 TravelerInformation.packetID,
+         a UniqueMSGID, hex-encoded). Not the J2735 message type (which is
+         definitionally TIM for this notification).";
+    }
+    leaf source {
+      type string;
+      description "Origin identifier of the TIM (TMC operator id, RSU id, etc.).";
+    }
+    leaf priority {
+      type uint8 {
+        range "0..7";
+      }
+      description "TIM priority per SAE J2735 (0 = lowest, 7 = highest).";
+    }
+    leaf duration-seconds {
+      type uint32;
+      units "seconds";
+      description "Expected broadcast duration. Zero = until cleared.";
+    }
+    leaf start-time {
+      type yang:date-and-time;
+      description "Scheduled broadcast start; absent = immediate.";
+    }
+    leaf content-summary {
+      type string;
+      description
+        "Human-readable summary of the TIM payload for logging / audit.
+         Not authoritative — consumers needing the full payload fetch it
+         from the RSU's message store.";
+    }
+  }
+
+  notification rsu-tim-cleared {
+    openits-types:arc-it-flow "Roadside Equipment -> Traffic Management Center : traveler information status";
+    description
+      "A previously-loaded TIM stopped broadcasting. Distinguishes
+       expiration (duration elapsed) from explicit clear (operator
+       command) so audit logs reflect operator intent vs scheduled
+       lifecycle.";
+
+    leaf kind {
+      type identityref {
+        base openits-rsu-types:rsu-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-rsu-types:rsu-tim-cleared-kind
+         for this notification.";
+    }
+    uses openits-types:event-header;
+    leaf msg-id {
+      type string;
+      mandatory true;
+      description "TIM message id from the corresponding rsu-tim-loaded.";
+    }
+    leaf reason {
+      type enumeration {
+        enum expired {
+          description "Broadcast duration elapsed.";
+        }
+        enum cleared-by-operator {
+          description "Explicit operator clear command.";
+        }
+        enum superseded {
+          description "Replaced by a newer TIM at the same msg-id.";
+        }
+        enum rsu-restart {
+          description "RSU restarted; in-flight TIM did not survive.";
+        }
+        enum other;
+      }
+      mandatory true;
+      description "Why the TIM stopped broadcasting (expired / cleared / superseded / rsu-restart / other).";
+    }
+  }
+
+  notification rsu-tim-broadcast-state-changed {
+    openits-types:arc-it-flow "Roadside Equipment -> Traffic Management Center : traveler information status";
+    description
+      "Aggregate broadcast state for the RSU's TIM channel. Emitted on
+       transitions only (idle <-> active) so consumers can run cheap
+       state machines instead of polling.";
+
+    leaf kind {
+      type identityref {
+        base openits-rsu-types:rsu-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-rsu-types:rsu-tim-broadcast-state-changed-kind
+         for this notification.";
+    }
+    uses openits-types:event-header;
+    leaf prior {
+      type enumeration {
+        enum idle;
+        enum active;
+        enum fault;
+      }
+      description "Broadcast channel state before the transition.";
+    }
+    leaf current {
+      type enumeration {
+        enum idle;
+        enum active;
+        enum fault;
+      }
+      mandatory true;
+      description "Broadcast channel state after the transition.";
+    }
+    leaf active-tim-count {
+      type uint32;
+      description "Number of TIMs currently broadcasting.";
+    }
+  }
+
+  notification rsu-tim-broadcast {
+    openits-types:arc-it-flow "Roadside Equipment -> Vehicle : traveler information broadcast";
+    description
+      "A TIM was actually broadcast on the air interface. Distinct
+       from rsu-tim-broadcast-state-changed (which signals channel-state
+       transitions): this notification fires per broadcast emission and
+       carries the msg-id + transmission metadata so consumers can
+       audit which messages reached the air at what cadence.";
+
+    leaf kind {
+      type identityref {
+        base openits-rsu-types:rsu-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-rsu-types:rsu-tim-broadcast-kind
+         for this notification.";
+    }
+    uses openits-types:event-header;
+    leaf msg-id {
+      type string;
+      mandatory true;
+      description
+        "Per-instance TIM identifier (SAE J2735 TravelerInformation.packetID,
+         a UniqueMSGID, hex-encoded). Not the J2735 message type (which is
+         definitionally TIM for this notification).";
+    }
+    leaf channel-id {
+      type string;
+      description
+        "Technology-neutral channel identifier; correlates to the
+         v2x-radio channels/channel key. Opaque for C-V2X.";
+    }
+    leaf dsrc-channel-number {
+      type openits-v2x-radio-types:dsrc-channel;
+      description
+        "DSRC channel number (172-184) for a DSRC channel; absent for
+         C-V2X channels.";
+    }
+    leaf priority {
+      type uint8 {
+        range "0..7";
+      }
+      description "TIM priority per SAE J2735 (0 = lowest, 7 = highest).";
+    }
+  }
+
+  notification rsu-broadcast-sample {
+    openits-types:arc-it-flow
+      "Roadside Equipment -> TMC : roadside equipment status";
+    description
+      "Periodic sample of the RSU's active broadcast set — one entry per
+       message actively being broadcast, with its observed cadence — so
+       consumers can audit what the RSU is putting on the air without a
+       per-emission event stream. Distinct from rsu-tim-broadcast, which
+       fires per emission.";
+
+    leaf kind {
+      type identityref {
+        base openits-rsu-types:rsu-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-rsu-types:rsu-broadcast-sample-kind
+         for this notification.";
+    }
+    uses openits-types:event-header;
+    leaf sample-window-s {
+      type uint16 { range "1..3600"; }
+      units "seconds";
+      description "Window this sample aggregates over.";
+    }
+    list broadcast {
+      key "msg-id";
+      description "One entry per message actively broadcast during the window.";
+
+      leaf msg-id {
+        type string;
+        description
+          "Per-instance message identifier (SAE J2735 packetID / UniqueMSGID,
+           hex-encoded). The message type is carried separately in msg-type;
+           this is the instance correlator, not the J2735 message-type field.";
+      }
+      leaf msg-type {
+        type identityref {
+          base openits-v2x-messaging-types:v2x-message-type;
+        }
+        description "SAE J2735 message type being broadcast.";
+      }
+      leaf channel-id {
+        type string;
+        description
+          "Technology-neutral channel identifier; correlates to the
+           v2x-radio channels/channel key. Opaque for C-V2X.";
+      }
+      leaf dsrc-channel-number {
+        type openits-v2x-radio-types:dsrc-channel;
+        description
+          "DSRC channel number (172-184) for a DSRC channel; absent for
+           C-V2X channels.";
+      }
+      leaf rate-hz {
+        type decimal64 { fraction-digits 1; }
+        units "hertz";
+        description "Observed broadcast rate over the sample window.";
+      }
+      leaf priority {
+        type uint8 { range "0..7"; }
+        description "SAE J2735 priority (0 = lowest, 7 = highest).";
+      }
+    }
+  }
+
+}

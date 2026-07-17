@@ -1,0 +1,10 @@
+message Sample {
+  string name = 1;
+  uint32 count = 2;
+  google.protobuf.Timestamp occurred_at = 3;
+  Detail detail = 4;
+}
+
+message Detail {
+  string note = 1;
+}

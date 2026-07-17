@@ -1,0 +1,11 @@
+{
+  "openits-rsu-events:rsu-gps-status-change": {
+    "kind": "openits-rsu-types:rsu-gps-status-change-kind",
+    "source-device-id": "rsu-i35-mm214",
+    "occurred-at": "2026-07-11T14:05:00Z",
+    "sequence": "1",
+    "previous-status": "fix-3d",
+    "new-status": "fix-2d",
+    "satellites": 4
+  }
+}

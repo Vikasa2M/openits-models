@@ -1,0 +1,30 @@
+module rpc-fixture {
+  yang-version 1.1;
+  namespace "urn:openits:test:rpc";
+  prefix rpcfx;
+
+  // A trivial config/state root, standing in for a real service's tree
+  // (e.g. RSU's before cut B).
+  container widget {
+    container config {
+      leaf name { type string; }
+    }
+    container state {
+      config false;
+      leaf name { type string; }
+    }
+  }
+
+  // A top-level rpc statement sitting alongside the config/state tree.
+  // goyang gives this Kind == DirectoryEntry, the same as "widget" above —
+  // indistinguishable by Kind alone from a real container — with its
+  // input/output living under Entry.RPC rather than Entry.Dir.
+  rpc reboot-widget {
+    input {
+      leaf delay-seconds { type uint32; }
+    }
+    output {
+      leaf accepted { type boolean; }
+    }
+  }
+}

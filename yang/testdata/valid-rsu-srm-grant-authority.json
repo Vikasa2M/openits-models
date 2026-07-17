@@ -1,0 +1,12 @@
+{
+  "openits-rsu:rsu": {
+    "config": { "id": "rsu-prs-02", "name": "SRM grant-authority test (controller PRS)" },
+    "messages": {
+      "srm-ssm": { "config": {
+        "grant-authority": "controller-prs",
+        "asc-device": "asc-i35-mm214",
+        "evp-auto-grant": true
+      } }
+    }
+  }
+}

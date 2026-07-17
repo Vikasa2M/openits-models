@@ -1,0 +1,462 @@
+module openits-cctv {
+  yang-version 1.1;
+  namespace "urn:openits:yang:cctv";
+  prefix openits-cctv;
+
+  import openits-types {
+    prefix openits-types;
+  }
+  import openits-cctv-types {
+    prefix openits-cctv-types;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+  description
+    "NTCIP 1205 CCTV / PTZ camera management — the neutral field-device
+     model: identity and mounting, PTZ position / presets / tours,
+     stream/encoder status, enclosure environmental controls, and an
+     active-fault inventory. Stream/encoder status is the field-device side
+     (what the camera/encoder emits), distinct from a center-side VMS.
+
+     Vendor analytics calibration (e.g. TrafficVision detection-zone
+     calibration) is NOT camera management and stays in the vendor augments;
+     this is the neutral device model those augments extend. Joystick-
+     ownership arbitration (who holds control) lands in a follow-up revision.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  reference "NTCIP 1205.";
+
+  openits-types:openits-version "0.2.0";
+
+  revision 2026-07-17 {
+    description
+      "Initial revision: the neutral CCTV/PTZ device model — identity /
+       mounting (with co-located-device incident-verification association),
+       PTZ position + presets + tours (commanded recall/run with state
+       readback), stream/encoder status, enclosure environmental controls,
+       and a shared active-fault inventory. Plus joystick-ownership
+       arbitration: a control container pairing commanded control/config
+       (control-mode + a soft-arbitration holder: requested-by, priority,
+       lockout-timeout) with control/state readback (actual control-mode +
+       current-holder / held-priority / held-since / expires-at). Ownership
+       is last-writer-wins at the schema level (no command-status leaf); a
+       local override or a losing acquisition surfaces as config<->state
+       divergence plus, for the loser, a lockout-denied event.";
+    reference "NTCIP 1205.";
+  }
+
+  container camera {
+    description
+      "A single CCTV / PTZ camera and its field encoder (NTCIP 1205).";
+
+    /* ----- identity ----- */
+    container config {
+      description "Operator-provisioned camera identity and location.";
+      uses openits-types:device-identity-config;
+    }
+    container state {
+      config false;
+      description "Applied identity (mirror) plus device-reported hardware.";
+      uses openits-types:device-identity-config;
+      uses openits-types:device-hardware;
+    }
+
+    /* ----- mounting ----- */
+    container mounting {
+      description
+        "Physical mounting and the devices this camera verifies against.";
+      leaf structure {
+        type openits-cctv-types:mounting-structure;
+        description "Structure the camera is mounted on.";
+      }
+      leaf height-m {
+        type decimal64 {
+          fraction-digits 1;
+          range "0 .. 100";
+        }
+        units "meters";
+        description "Mounting height above grade.";
+      }
+      leaf-list co-located-device {
+        type openits-types:device-id;
+        description
+          "Devices co-located with this camera that an operator verifies
+           against it before dispatch — the incident-verification association
+           the ESS / perception / DMS models want (e.g. a signal controller,
+           ESS station, or DMS at the same site). Opaque device-ids, not
+           leafrefs: the referenced devices live in other services and may be
+           in another datastore.";
+      }
+    }
+
+    /* ----- PTZ ----- */
+    container ptz {
+      description "Pan / tilt / zoom position, presets, and tours.";
+
+      container capabilities {
+        config false;
+        description "Reported PTZ capabilities.";
+        leaf ptz-capable {
+          type boolean;
+          description "Camera supports pan/tilt/zoom (false = fixed camera).";
+        }
+        leaf max-presets {
+          type uint16;
+          description "Number of presets the camera can store.";
+        }
+        leaf pan-continuous {
+          type boolean;
+          description "Pan is continuous (360deg wrap) rather than bounded.";
+        }
+      }
+
+      container state {
+        config false;
+        description "Current PTZ position readback.";
+        leaf pan-degrees {
+          type decimal64 {
+            fraction-digits 1;
+            range "0 .. 360";
+          }
+          units "degrees";
+          description "Current pan angle, clockwise from the mounting reference.";
+        }
+        leaf tilt-degrees {
+          type decimal64 {
+            fraction-digits 1;
+            range "-90 .. 90";
+          }
+          units "degrees";
+          description "Current tilt angle (negative = below horizon).";
+        }
+        leaf zoom-percent {
+          type openits-types:percentage;
+          description "Current zoom as a percent of full optical zoom.";
+        }
+        leaf moving {
+          type boolean;
+          description "True while a pan/tilt/zoom move is executing.";
+        }
+      }
+
+      container presets {
+        description "Stored preset inventory and the commanded recall.";
+        list preset {
+          key "preset-id";
+          description "One stored PTZ preset.";
+          leaf preset-id {
+            type uint16;
+            description "Preset number (NTCIP 1205 presetGotoPosition).";
+          }
+          leaf name {
+            type string;
+            description "Operator label for the preset.";
+          }
+          leaf pan-degrees {
+            type decimal64 { fraction-digits 1; range "0 .. 360"; }
+            units "degrees";
+            description "Preset pan angle.";
+          }
+          leaf tilt-degrees {
+            type decimal64 { fraction-digits 1; range "-90 .. 90"; }
+            units "degrees";
+            description "Preset tilt angle.";
+          }
+          leaf zoom-percent {
+            type openits-types:percentage;
+            description "Preset zoom.";
+          }
+        }
+        leaf recall {
+          type leafref { path "../preset/preset-id"; }
+          description
+            "Commanded preset to recall (goto). The resulting motion reads
+             back in ptz/state; the recalled preset in presets/state. A
+             leafref — only a stored preset can be recalled.";
+        }
+        container state {
+          config false;
+          description "Preset recall readback.";
+          leaf active-preset {
+            type uint16;
+            description
+              "Preset the camera most recently recalled. Absent once the
+               camera has moved off-preset (manual PTZ since the recall).";
+          }
+        }
+      }
+
+      container tours {
+        description
+          "Preset tours (guard tours): ordered preset-dwell sequences.";
+        list tour {
+          key "tour-id";
+          description "One preset tour.";
+          leaf tour-id {
+            type uint16;
+            description "Tour identifier.";
+          }
+          leaf name {
+            type string;
+            description "Operator label for the tour.";
+          }
+          list stop {
+            key "sequence";
+            ordered-by user;
+            description "Ordered preset stops.";
+            leaf sequence {
+              type uint16;
+              description "Stop order within the tour.";
+            }
+            leaf preset-id {
+              type leafref { path "../../../../presets/preset/preset-id"; }
+              description "Preset to dwell at for this stop.";
+            }
+            leaf dwell-seconds {
+              type uint16 { range "1 .. 3600"; }
+              units "seconds";
+              description "Dwell time at this stop before advancing.";
+            }
+          }
+        }
+        leaf run {
+          type leafref { path "../tour/tour-id"; }
+          description
+            "Commanded tour to run. Clearing it stops the running tour. A
+             leafref — only a defined tour can be run.";
+        }
+        container state {
+          config false;
+          description "Tour run readback.";
+          leaf active-tour {
+            type uint16;
+            description "Tour currently running (absent = none).";
+          }
+          leaf run-state {
+            type openits-cctv-types:tour-run-state;
+            description "Whether a tour is stopped / running / paused.";
+          }
+          leaf current-stop {
+            type uint16;
+            description "Sequence number of the stop currently dwelling.";
+          }
+        }
+      }
+    }
+
+    /* ----- streams / encoder ----- */
+    container streams {
+      description
+        "Field-encoder video streams (device-side status — NOT the center
+         VMS). One entry per encoder output stream.";
+      list stream {
+        key "stream-id";
+        description "One encoder output stream.";
+        leaf stream-id {
+          type uint8;
+          description "Stream index on the encoder.";
+        }
+        container config {
+          description "Encoder settings for this stream.";
+          leaf codec {
+            type openits-cctv-types:video-codec;
+            description "Configured codec.";
+          }
+          leaf target-bitrate-kbps {
+            type uint32;
+            units "kilobits/second";
+            description "Configured target bitrate.";
+          }
+        }
+        container state {
+          config false;
+          description "Reported stream status.";
+          leaf width-px {
+            type uint16;
+            description "Encoded frame width in pixels.";
+          }
+          leaf height-px {
+            type uint16;
+            description "Encoded frame height in pixels.";
+          }
+          leaf codec {
+            type openits-cctv-types:video-codec;
+            description "Codec actually in use.";
+          }
+          leaf bitrate-kbps {
+            type uint32;
+            units "kilobits/second";
+            description "Measured bitrate.";
+          }
+          leaf frame-rate {
+            type decimal64 { fraction-digits 1; range "0 .. 120"; }
+            units "hertz";
+            description "Measured frame rate.";
+          }
+          leaf health {
+            type openits-cctv-types:stream-health;
+            description "Stream health (ok / degraded / down).";
+          }
+        }
+      }
+    }
+
+    /* ----- environmental ----- */
+    container environment {
+      description
+        "Enclosure environmental actuators (commanded) and readback.";
+      container config {
+        description "Commanded environmental actuators.";
+        leaf wiper {
+          type boolean;
+          description "Commanded wiper on/off.";
+        }
+        leaf washer {
+          type boolean;
+          description "Commanded washer spray.";
+        }
+        leaf heater-mode {
+          type enumeration {
+            enum off  { description "Heater disabled."; }
+            enum on   { description "Heater forced on."; }
+            enum auto { description "Heater thermostat-governed."; }
+          }
+          description "Enclosure heater mode.";
+        }
+      }
+      container state {
+        config false;
+        description "Environmental readback.";
+        leaf enclosure-temp-c {
+          type decimal64 { fraction-digits 1; range "-60 .. 85"; }
+          units "celsius";
+          description "Enclosure temperature.";
+        }
+        leaf wiper-active {
+          type boolean;
+          description "Wiper currently running.";
+        }
+        leaf heater-active {
+          type boolean;
+          description "Heater currently energized.";
+        }
+        leaf blower-active {
+          type boolean;
+          description "Blower / defog currently running.";
+        }
+      }
+    }
+
+    /* ----- faults ----- */
+    container faults {
+      config false;
+      description "Active-fault inventory (shared fault taxonomy).";
+      list fault {
+        key "fault-id";
+        description "One currently-active fault.";
+        uses openits-types:fault-entry;
+        leaf category {
+          type identityref {
+            base openits-cctv-types:cctv-fault-event-kind;
+          }
+          description "Fault category (base cctv-fault-event-kind).";
+        }
+      }
+    }
+
+    /* ----- control ownership (arbitration) ----- */
+    container control {
+      description
+        "Joystick-ownership arbitration (NTCIP 1205): who is driving the
+         camera. Two axes — a control-mode (central / local / override) and a
+         soft priority holder. Ownership is last-writer-wins at the schema
+         level: there is no command-status leaf. A field/local override, or a
+         write that loses to a higher-priority holder, is observable as
+         config<->state divergence; the losing acquisition additionally emits
+         a lockout-denied event.";
+      container config {
+        description "Commanded control ownership.";
+        leaf control-mode {
+          type identityref {
+            base openits-cctv-types:cctv-control-mode;
+          }
+          description
+            "Commanded control mode. A commanded control-central read back as
+             control-local means a field technician took local control at the
+             pole and central commands are not being honoured.";
+        }
+        container holder {
+          presence "A control-ownership request is asserted.";
+          description
+            "Soft-arbitration control request. The device / collector decides
+             whether to honour it against the current holder's priority; a
+             refusal leaves state/holder unchanged and emits lockout-denied.";
+          leaf requested-by {
+            type string;
+            mandatory true;
+            description "Identifier of the operator / subsystem requesting control.";
+          }
+          leaf priority {
+            type uint8 {
+              range "1 .. 255";
+            }
+            description
+              "Requested control priority. Honoured only if it exceeds the
+               current holder's held-priority (higher wins).";
+          }
+          leaf lockout-timeout-s {
+            type uint16;
+            units "seconds";
+            description
+              "Dead-man release: control auto-releases this many seconds after
+               the holder's last activity, freeing the camera without an
+               explicit release.";
+          }
+        }
+      }
+      container state {
+        config false;
+        description "Actual control ownership readback.";
+        leaf control-mode {
+          type identityref {
+            base openits-cctv-types:cctv-control-mode;
+          }
+          description
+            "Actual control mode. Divergence from config/control-mode means a
+             field / local override is in effect.";
+        }
+        container holder {
+          presence "Control is currently held by someone.";
+          description "Current control holder readback.";
+          leaf current-holder {
+            type string;
+            description "Identifier of the operator / subsystem currently holding control.";
+          }
+          leaf held-priority {
+            type uint8 {
+              range "1 .. 255";
+            }
+            description "Priority the current holder asserted.";
+          }
+          leaf held-since {
+            type yang:date-and-time;
+            description "When the current holder acquired control.";
+          }
+          leaf expires-at {
+            type yang:date-and-time;
+            description
+              "When control auto-releases (held-since + lockout-timeout-s)
+               absent renewed activity.";
+          }
+        }
+      }
+    }
+  }
+}

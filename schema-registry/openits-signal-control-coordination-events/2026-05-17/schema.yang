@@ -1,0 +1,79 @@
+module openits-signal-control-coordination-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:signal-control-coordination-events";
+  prefix openits-sc-coord;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-signal-control-types {
+    prefix openits-sc-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Signal-controller coordination notifications: split changes,
+     cycle-length, offset, pattern transitions, max-in-effect.";
+
+  revision 2026-05-17 {
+    description
+      "Initial revision. Hosts the coordination-change notification
+       migrated from openits-signal-control-notifications@2026-05-15.";
+    reference "ATSPM Indiana enumeration (coordination event codes).";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification coordination-change {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> ATSPM / TMC : coordination change";
+    description
+      "Coordination plan / cycle / offset / split changed. Collapses
+       ATSPM codes 134-149 (the 16 SplitNChange codes become one
+       notification with split-number as a field) plus 50-54
+       (MAX-in-effect transitions) and 131-133 (pattern / cycle /
+       offset). The 'kind' identityref names the specific change.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-coordination-event-kind; }
+      mandatory true;
+      description "Specific coordination-change identity from the Indiana taxonomy.";
+    }
+    leaf source-device-id {
+      type openits-types:device-id;
+      mandatory true;
+      description "Controller this coordination change pertains to.";
+    }
+    leaf change-kind {
+      type enumeration {
+        enum unspecified; enum pattern; enum cycle-length; enum offset; enum split;
+        enum max-1-in-effect; enum max-2-in-effect; enum dynamic-max-in-effect;
+        enum dynamic-max-step-up; enum dynamic-max-step-down;
+      }
+      description
+        "Which coordination dimension changed (pattern, cycle, offset, split, max-in-effect, etc.).";
+    }
+    leaf new-value      { type int32; description "Pattern / cycle / offset / split value depending on kind."; }
+    leaf split-number   { type uint8; description "Populated when change-kind=split."; }
+    leaf previous-value { type int32; description "Optional; some controllers report only the new value."; }
+    leaf occurred-at {
+      type yang:date-and-time;
+      mandatory true;
+      description "Wall-clock time the coordination change happened at the controller.";
+    }
+
+    uses openits-types:wire-source;
+  }
+}

@@ -1,0 +1,522 @@
+module openits-perception {
+  yang-version 1.1;
+  namespace "urn:openits:yang:perception";
+  prefix openits-pn;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-perception-types {
+    prefix openits-perception-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "YANG data model for roadside perception sensors — LiDAR and
+     tracking-radar units that emit object-level tracks (position,
+     speed, heading, classification) rather than per-lane aggregates.
+
+     Aligned with ARC-IT 9.1 service packages TM01 (Infrastructure-
+     Based Traffic Surveillance) and TM08 (Traffic Incident
+     Management System).  The model is vendor-neutral: it applies to
+     any sensor whose on-board perception pipeline produces tracked
+     objects and zone analytics.  There is no NTCIP analog — this is
+     a post-NTCIP device class.  Vendor-specific capabilities ride
+     in vendor augment modules per docs/06-extension-model.md, never
+     in this module.
+
+     Object classes and incident types are identity hierarchies, not
+     enums: perception vendors extend both via the identity-only
+     Tier-2 pattern (docs/06-extension-model.md) without touching
+     this module.  Closed physical sets remain enums.
+
+     Track lists are high-churn state; consumers needing full-rate
+     object data subscribe to the streamed state path rather than
+     polling.  Zone analytics and incidents are the operator-facing
+     product and ride as notifications.
+
+     Copyright (c) 2026.  Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.3.0";
+
+  revision 2026-07-16 {
+    description
+      "Perception semantics (same-day cuts):
+       (4a) Incident: complete the incident inventory so it truly mirrors
+       the zone-incident-detected notification — add track-id,
+       object-class, speed-kmh and confidence (previously dropped). Retype
+       incident severity from the equipment openits-types:fault-severity to
+       the traffic-impact openits-perception-types:incident-severity axis
+       (pre-1.0 breaking retype; incidents and device faults are not
+       comparable on one scale).
+       (4b) Tracks/zones: add a track lifecycle (tentative/confirmed/
+       coasting) and objects/track-epoch so ghost tracks and recycled
+       track-ids are distinguishable; require polygon zones to have >=3
+       vertices; require legal-heading on wrong-way zones (must); make the
+       state zones/zone/zone-id a leafref to a configured zone. Additive
+       except the leafref/must integrity tightening.";
+    reference "FHWA Traffic Incident Management (TIM).";
+  }
+  revision 2026-07-13 {
+    description
+      "Adopt the shared openits-types:fault-entry grouping in the
+       config-false faults list, replacing the inline fault-id +
+       severity + description + first-observed leaves. The
+       service-specific category identityref is unchanged.
+
+       Also: move the object-class (+ object-* leaves) and
+       incident-type (+ incident-* leaves) identity hierarchies out to
+       openits-perception-types; the state-tree identityref leaves now
+       reference them via the openits-perception-types: prefix.
+       object-class is additionally re-rooted as a standalone
+       classification identity (no longer under the event tree).
+
+       Also adopt the shared openits-types:device-hardware grouping
+       (make/model/firmware/serial) in the identity container,
+       replacing the inline config-false leaves.
+
+       Delete the local confidence-percent typedef; use the byte-
+       identical openits-types:percentage.";
+  }
+  revision 2026-07-11 {
+    description
+      "Move the fault taxonomy to gen-2: delete the gen-1
+       fault-category identity and its fault-blockage / fault-pose-
+       drift / fault-processing / fault-power / fault-communication /
+       fault-temperature children, replaced by the service-prefixed
+       perception-fault-event-kind tree in the new
+       openits-perception-types module. The perception-event-kind
+       service root also moves to openits-perception-types;
+       object-class and incident-type now base on
+       openits-perception-types:perception-event-kind. The
+       faults/fault 'category' leaf now bases on
+       openits-perception-types:perception-fault-event-kind. Breaking:
+       identity names change (e.g. fault-blockage ->
+       perception-fault-blockage); wire-neutral since the wire
+       representation of an identityref is a string (pre-v1,
+       acceptable).";
+    reference "RFC 7950 section 11 (breaking YANG evolution: identity rename).";
+  }
+  revision 2026-07-11 {
+    description
+      "Add the perception-event-kind service root and give the
+       service's event-kind roots that base, completing the service
+       dimension of the cross-service event-kind taxonomy. Additive
+       (identities gain a base); no identity renamed or removed.";
+    reference "RFC 7950 section 11 (additive YANG evolution).";
+  }
+  revision 2026-07-10 {
+    description
+      "Replace the inline severity enumeration on the incident and
+       fault-inventory lists with the shared
+       openits-types:fault-severity typedef. Member set and order
+       unchanged — wire-stable.
+
+       Also, replace inline latitude/longitude leaves with the shared
+       openits-types:geo-point / geo-location groupings:
+       - zone-config vertex and the incident-inventory entry carry
+         only lat/lon -> openits-types:geo-point (member set
+         unchanged).
+       - the live object-track entry already carried a 'heading' leaf
+         alongside lat/lon -> openits-types:geo-location, folding
+         'heading' into the grouping (repurposed as direction of
+         travel) and additively gaining an unset-by-default
+         'elevation' leaf the track schema did not previously have.
+       All three sites were already fraction-digits 7; no precision
+       change here.
+
+       Also, add base openits-types:fault-event-kind to the
+       fault-category root so this service's faults are reachable by
+       fleet-wide derived-from-or-self(fault-event-kind) queries.
+       Additive (identity gains a base); no child renamed.";
+    reference "RFC 7950 section 11 (additive YANG evolution).";
+  }
+  revision 2026-07-07 {
+    description
+      "Initial revision.  Minimum viable model covering identity,
+       zone configuration, live object tracks, per-zone analytics,
+       diagnostics, a live incident inventory, and a live fault
+       inventory.";
+    reference
+      "ARC-IT 9.1 Service Packages TM01 (Infrastructure-Based
+       Traffic Surveillance) and TM08 (Traffic Incident Management
+       System).";
+  }
+
+  /* --------------------------------------------------------------
+   * Typedefs
+   * -------------------------------------------------------------- */
+
+
+  typedef zone-function {
+    type enumeration {
+      enum count     { value 1; }
+      enum presence  { value 2; }
+      enum speed     { value 3; }
+      enum incident  { value 4; }
+      enum wrong-way { value 5; }
+    }
+    description
+      "Primary analytic a configured zone runs.  A zone MAY report
+       more than one analytic; this names the one it exists for.";
+  }
+
+  /* --------------------------------------------------------------
+   * Reusable groupings
+   * -------------------------------------------------------------- */
+
+  /* --------------------------------------------------------------
+   * Main tree
+   * -------------------------------------------------------------- */
+
+  container perception-sensor {
+    description
+      "Top-level container for a single roadside perception sensor.";
+
+    /* ----- identity ----- */
+    container config {
+      description "Intended sensor identity.";
+      uses openits-types:device-identity-config;
+    }
+    container state {
+      config false;
+      description "Applied identity (mirror) + device-reported hardware.";
+      uses openits-types:device-identity-config;
+      uses openits-types:device-hardware;
+    }
+
+    /* ----- configuration ----- */
+    container configuration {
+      description
+        "Writable sensor setup: analytics zones and reporting
+         cadence.";
+
+      leaf data-interval-s {
+        type uint16 {
+          range "10..3600";
+        }
+        units "seconds";
+        default "60";
+        description "Aggregation interval for per-zone analytics.";
+      }
+
+      list zone {
+        key "zone-id";
+        description
+          "Analytics zones evaluated by the on-board perception
+           pipeline.  Zone geometry is a WGS84 polygon.";
+        must "not(function = 'wrong-way') or legal-heading" {
+          error-message
+            "a zone whose function is wrong-way requires legal-heading to detect against";
+        }
+
+        leaf zone-id {
+          type string {
+            length "1..64";
+            pattern '[a-zA-Z0-9_-]+';
+          }
+          description "Sensor-local zone identifier.";
+        }
+        leaf name {
+          type string;
+          description "Operator-facing zone description.";
+        }
+        leaf function {
+          type zone-function;
+          description "Primary analytic this zone runs.";
+        }
+        leaf legal-heading {
+          type openits-types:heading-degrees;
+          description
+            "Compass heading of legal travel through the zone.
+             Required for wrong-way analytics.";
+        }
+
+        list vertex {
+          key "vertex-index";
+          min-elements 3;
+          description
+            "Ordered polygon vertices.  The polygon closes from the
+             last vertex back to the first.  A polygon needs at least
+             three vertices, so this list has a floor of 3.";
+
+          leaf vertex-index {
+            type uint8;
+            description "Position of this vertex in the ring, from 0.";
+          }
+          uses openits-types:geo-point;
+        }
+      }
+    }
+
+    /* ----- live object tracks ----- */
+    container objects {
+      config false;
+      openits-types:arc-it-flow
+        "ITS Roadway Equipment -> TMC : traffic images";
+      description
+        "Live tracked-object list.  High churn — entries appear and
+         disappear as objects enter and leave the field of view.";
+
+      leaf track-count {
+        type uint16;
+        description "Number of currently live tracks.";
+      }
+
+      leaf track-epoch {
+        type uint32;
+        description
+          "Monotonic epoch for the track-id namespace. track-id is
+           recycled once a track ends, so a track-id alone is ambiguous
+           over time; the sensor bumps track-epoch whenever the id space
+           wraps or resets (restart/reconfiguration). The pair
+           (track-epoch, track-id) is the stable identity a consumer keys
+           on to avoid conflating two different objects that reused an id.";
+      }
+
+      list track {
+        key "track-id";
+        description "One entry per live tracked object.";
+
+        leaf track-id {
+          type uint32;
+          description
+            "Pipeline-assigned track identifier.  Stable for the life of
+             the track; recycled afterwards — pair with track-epoch for a
+             time-stable identity.";
+        }
+        leaf lifecycle {
+          type enumeration {
+            enum tentative {
+              description
+                "Newly formed track, not yet confirmed by enough
+                 associations — may be a false detection. Consumers should
+                 NOT count tentative tracks in zone analytics.";
+            }
+            enum confirmed {
+              description
+                "Established track with a stable association history; the
+                 trustworthy state for counting and analytics.";
+            }
+            enum coasting {
+              description
+                "Track predicted/extrapolated through a gap with no fresh
+                 detection (occlusion or missed frame). Position is a
+                 forecast; a coasting track that never re-associates is a
+                 ghost and will be dropped.";
+            }
+          }
+          description
+            "Multi-object-tracking lifecycle state. Distinguishing
+             tentative/coasting from confirmed keeps ghost tracks out of
+             zone counts and analytics.";
+        }
+        leaf class {
+          type identityref {
+            base openits-perception-types:object-class;
+          }
+          description "Most recent classification of the object.";
+        }
+        leaf class-confidence {
+          type openits-types:percentage;
+          description "Classifier confidence for `class`.";
+        }
+        uses openits-types:geo-location {
+          description
+            "Track centroid position. `heading` here is the track's
+             direction of travel (repurposing geo-location's compass
+             heading); `elevation` is additive and unset unless a
+             future sensor pipeline reports it.";
+          refine heading {
+            description "Direction of travel of the track.";
+          }
+        }
+        leaf speed-kmh {
+          type openits-types:speed-kmh;
+          description "Ground speed of the track.";
+        }
+        leaf observed-at {
+          type yang:date-and-time;
+          description "Sensor-clock time of the most recent track update.";
+        }
+      }
+    }
+
+    /* ----- per-zone analytics ----- */
+    container zones {
+      config false;
+      openits-types:arc-it-flow
+        "ITS Roadway Equipment -> TMC : traffic flow";
+      description "Live analytics read back per configured zone.";
+
+      list zone {
+        key "zone-id";
+        description "Live analytics for one configured zone.";
+
+        leaf zone-id {
+          type leafref {
+            path "../../../configuration/zone/zone-id";
+          }
+          description
+            "The configured zone this entry reports on (leafref, so live
+             analytics can only be reported for a zone that exists in
+             configuration).";
+        }
+        leaf occupancy-count {
+          type uint16;
+          description "Objects currently inside the zone.";
+        }
+        leaf presence {
+          type boolean;
+          description "At least one object is currently inside the zone.";
+        }
+        leaf average-speed-kmh {
+          type openits-types:speed-kmh;
+          description "Mean speed of objects currently inside the zone.";
+        }
+      }
+    }
+
+    /* ----- diagnostics ----- */
+    container diagnostics {
+      config false;
+      openits-types:arc-it-flow
+        "ITS Roadway Equipment -> Maintenance : equipment maintenance status";
+      description "Sensor self-reported health metrics.";
+
+      leaf points-per-second {
+        type uint32;
+        units "points-per-second";
+        description "Current point-cloud output rate.";
+      }
+      leaf blockage-percent {
+        type openits-types:percentage;
+        description "Portion of the field of view currently occluded.";
+      }
+      leaf internal-temperature-c {
+        type decimal64 {
+          fraction-digits 1;
+          range "-60.0 .. 100.0";
+        }
+        units "celsius";
+        description "Internal enclosure temperature.";
+      }
+      leaf pose-drift-deg {
+        type decimal64 {
+          fraction-digits 2;
+          range "0.0 .. 90.0";
+        }
+        units "degrees";
+        description
+          "Estimated angular drift from the calibrated mounting
+           pose.";
+      }
+      leaf uptime-s {
+        type uint64;
+        units "seconds";
+        description "Time since the perception pipeline last restarted.";
+      }
+    }
+
+    /* ----- incident inventory ----- */
+    container incidents {
+      config false;
+      openits-types:arc-it-flow
+        "ITS Roadway Equipment -> TMC : incident information";
+      description
+        "Live incident inventory.  Each entry mirrors a
+         `zone-incident-detected` notification and clears when the
+         corresponding `zone-incident-cleared` fires.  The
+         operator-facing digital-twin of currently-active incidents.";
+
+      list incident {
+        key "incident-id";
+        description "One entry per active incident on the sensor.";
+
+        leaf incident-id {
+          type string;
+          description "Sensor-local incident identifier; stable across detect/clear pairs.";
+        }
+        leaf zone-id {
+          type string;
+          description "Zone the incident was detected in.";
+        }
+        leaf type {
+          type identityref {
+            base openits-perception-types:incident-type;
+          }
+          description
+            "Incident class (stopped-vehicle / wrong-way /
+             pedestrian / debris / spillback / near-miss / congestion
+             / slowed-traffic).";
+        }
+        leaf severity {
+          type openits-perception-types:incident-severity;
+          description
+            "Operational severity of the incident (traffic/safety impact),
+             on the incident-severity axis — NOT the equipment
+             fault-severity axis a device fault uses.";
+        }
+        leaf track-id {
+          type uint32;
+          description
+            "Primary track involved, when the incident is track-scoped
+             (mirrors the zone-incident-detected notification).";
+        }
+        leaf object-class {
+          type identityref {
+            base openits-perception-types:object-class;
+          }
+          description "Classification of the primary track.";
+        }
+        leaf speed-kmh {
+          type openits-types:speed-kmh;
+          description "Speed of the primary track at detection time.";
+        }
+        leaf confidence {
+          type openits-types:percentage;
+          description "Pipeline confidence in the detection.";
+        }
+        uses openits-types:geo-point;
+        leaf first-observed {
+          type yang:date-and-time;
+          description "Wall-clock time the incident was first observed.";
+        }
+      }
+    }
+
+    /* ----- fault inventory ----- */
+    container faults {
+      config false;
+      openits-types:arc-it-flow
+        "ITS Roadway Equipment -> Maintenance : equipment maintenance status";
+      description
+        "Live fault inventory.  Each entry mirrors a
+         `perception-fault-raised` notification and clears when the
+         condition resolves.";
+
+      list fault {
+        key "fault-id";
+        description "One entry per active fault on the sensor.";
+
+        uses openits-types:fault-entry;
+        leaf category {
+          type identityref {
+            base openits-perception-types:perception-fault-event-kind;
+          }
+          description "Fault class (blockage / pose-drift / processing / power / communication / temperature).";
+        }
+      }
+    }
+  }
+}

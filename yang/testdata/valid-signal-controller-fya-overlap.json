@@ -1,0 +1,28 @@
+{
+  "openits-signal-control:signal-controller": {
+    "config": { "id": "i35-exit-214", "name": "I-35 NB @ Exit 214" },
+    "state": { "id": "i35-exit-214", "name": "I-35 NB @ Exit 214", "make": "Econolite", "model": "Cobalt", "firmware": "Econolite Cobalt 9.2.3" },
+    "phases": {
+      "phase": [
+        { "phase-number": 2, "config": { "phase-number": 2, "ring": 1, "barrier": 1, "enabled": true, "timing": { "min-green": 5, "max-green": 45, "yellow-change": "3.5", "red-clear": "1.5" } } },
+        { "phase-number": 5, "config": { "phase-number": 5, "ring": 2, "barrier": 1, "enabled": true, "timing": { "min-green": 5, "max-green": 20, "yellow-change": "3.0", "red-clear": "1.5" } } }
+      ]
+    },
+    "overlaps": {
+      "overlap": [
+        {
+          "overlap-id": "ol-nb-left",
+          "config": {
+            "overlap-id": "ol-nb-left",
+            "name": "NB left FYA",
+            "type": "openits-signal-control-types:overlap-fya",
+            "included-phases": [5],
+            "trailing-green": "0.0", "trailing-yellow": "3.0", "trailing-red-clear": "1.0",
+            "fya": { "protected-left-phase": 5, "opposing-through-phase": 2 }
+          },
+          "state": { "current-interval": "flashing-yellow-arrow", "active": true }
+        }
+      ]
+    }
+  }
+}

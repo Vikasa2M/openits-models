@@ -1,0 +1,166 @@
+module openits-reversible-lane-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:reversible-lane-events";
+  prefix openits-rl-events;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-reversible-lane {
+    prefix openits-rl;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Notifications for openits-reversible-lane.  Split into a
+     companion module so ygot's proto backend can generate protobuf
+     from the base module (ygot's proto generator fails on modules
+     containing notification statements).";
+
+  openits-types:openits-version "0.1.0";
+
+  revision 2026-07-12 {
+    description
+      "Rename this module (file, module name, namespace, prefix) from
+       the legacy notifications-suffixed name to
+       openits-reversible-lane-events: standardize every
+       service notification module on the events-suffixed name.
+       Mechanical rename only — no notification content changed;
+       ce-types (service-derived, not module-derived) and proto are
+       unaffected. Delete the bespoke
+       reversible-lane-fault-raised/cleared notifications;
+       reversible-lane now emits
+       openits-common-fault-events:{fault-raised,fault-cleared} with
+       kind derived from
+       openits-reversible-lane-types:reversible-lane-fault-event-kind,
+       completing the orphan-service fault consolidation.";
+  }
+  revision 2026-07-11 {
+    description
+      "Repoint reversible-lane-fault-raised's 'category' base from the
+       deleted gen-1 openits-rl:fault-category to
+       openits-reversible-lane-types:reversible-lane-fault-event-kind.
+       Breaking: identity names change; wire-neutral since the wire
+       representation of an identityref is a string (pre-v1,
+       acceptable).";
+    reference "RFC 7950 section 11 (breaking YANG evolution: identity rename).";
+  }
+  revision 2026-07-10 {
+    description
+      "Replace the inline severity enumeration on
+       reversible-lane-fault-raised with the shared
+       openits-types:fault-severity typedef. Member set and order
+       unchanged — wire-stable.";
+  }
+  revision 2026-07-07 {
+    description "Initial release.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification lane-state-changed {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : lane management status";
+    description
+      "The facility state machine moved.  Emitted on every
+       transition, including entry to and exit from
+       `in-transition`.";
+
+    leaf previous-state {
+      type openits-rl:lane-flow-state;
+      description "State before the change.";
+    }
+    leaf previous-direction {
+      type openits-rl:travel-direction;
+      description "Open direction before the change, when previous-state was open.";
+    }
+    leaf new-state {
+      type openits-rl:lane-flow-state;
+      description "State after the change.";
+    }
+    leaf new-direction {
+      type openits-rl:travel-direction;
+      description "Open direction after the change, when new-state is open.";
+    }
+    leaf initiated-by {
+      type string;
+      description
+        "Actor (operator id, automation workflow, or local panel)
+         that initiated the change.";
+    }
+    leaf changed-at {
+      type yang:date-and-time;
+      description "Wall-clock time the controller committed the change.";
+    }
+  }
+
+  notification transition-timeout {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : lane management status";
+    description
+      "A changeover exceeded control/transition-timeout-s without
+       completing.  The facility remains in-transition (closed to new
+       entries) until an operator intervenes; a companion
+       openits-common-fault-events:fault-raised carries the fault
+       inventory entry.";
+
+    leaf from-direction {
+      type openits-rl:travel-direction;
+      description "Direction that was open when the changeover started.";
+    }
+    leaf to-direction {
+      type openits-rl:travel-direction;
+      description "Direction (or closure) the changeover was moving toward.";
+    }
+    leaf started-at {
+      type yang:date-and-time;
+      description "Wall-clock time the changeover sequence started.";
+    }
+    leaf timeout-s {
+      type uint16;
+      units "seconds";
+      description "The configured timeout that was exceeded.";
+    }
+    leaf sequence-step {
+      type string;
+      description "Controller-reported step the sequence stalled on.";
+    }
+  }
+
+  notification lcs-conflict-detected {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : lane management status";
+    description
+      "A segment read back conflicting indications — the
+       must-constraint case (green-arrow both directions) or any
+       vendor-detected conflicting display.  Safety-critical: the
+       controller is expected to drop the facility to closed / all
+       red-x and raise a critical fault-conflict fault.";
+
+    leaf segment-id {
+      type string;
+      description "Segment that read back the conflict.";
+    }
+    leaf lcs-direction-a {
+      type openits-rl:lcs-indication;
+      description "Indication read back facing direction-a.";
+    }
+    leaf lcs-direction-b {
+      type openits-rl:lcs-indication;
+      description "Indication read back facing direction-b.";
+    }
+  }
+
+}

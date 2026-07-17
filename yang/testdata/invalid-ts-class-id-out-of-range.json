@@ -1,0 +1,129 @@
+{
+  "openits-traffic-sensor:traffic-sensor": {
+    "config": {
+      "id": "i35-radar-mm214",
+      "name": "I-35 NB @ MP 214 radar",
+      "latitude": "30.2672000",
+      "longitude": "-97.7431000",
+      "heading": 185,
+      "road-reference": "I-35 NB @ MP 214"
+    },
+    "state": {
+      "id": "i35-radar-mm214",
+      "name": "I-35 NB @ MP 214 radar",
+      "latitude": "30.2672000",
+      "longitude": "-97.7431000",
+      "heading": 185,
+      "road-reference": "I-35 NB @ MP 214",
+      "make": "Wavetronix",
+      "model": "SmartSensor HD",
+      "firmware": "1.6.4",
+      "operational-status": "active"
+    },
+    "configuration": {
+      "data-interval-s": 60,
+      "lane-numbering-origin": "leftmost-in-travel",
+      "mounting-side": "roadside",
+      "classification-scheme": "openits-traffic-sensor-types:scheme-length-based",
+      "vehicle-class": [
+        {
+          "class-id": 1,
+          "name": "passenger",
+          "min-length-m": "0.0",
+          "max-length-m": "6.5"
+        },
+        {
+          "class-id": 2,
+          "name": "single-unit",
+          "min-length-m": "6.5",
+          "max-length-m": "12.0"
+        },
+        {
+          "class-id": 3,
+          "name": "combination",
+          "min-length-m": "12.0",
+          "max-length-m": "40.0"
+        }
+      ]
+    },
+    "lanes": {
+      "lane": [
+        {
+          "lane-id": 1,
+          "config": {
+            "lane-id": 1,
+            "name": "northbound-inside",
+            "travel-heading": 5,
+            "carriageway": "northbound",
+            "effective-zone-length-m": "3.0"
+          },
+          "state": {
+            "lane-id": 1,
+            "name": "northbound-inside",
+            "travel-heading": 5,
+            "carriageway": "northbound",
+            "operational-status": "active",
+            "interval": {
+              "interval-start": "2026-07-07T14:00:00Z",
+              "interval-duration-s": 60,
+              "volume": 42,
+              "occupancy": "8.5",
+              "speed-average-kmh": "98.4",
+              "speed-space-mean-kmh": "97.6",
+              "speed-85th-percentile-kmh": "109.2",
+              "headway-average-s": "2.1",
+              "gap-average-s": "1.6",
+              "density": "18.5",
+              "flow-rate-vph": 2520,
+              "data-quality": "valid",
+              "uptime-percent": "100.0",
+              "class-volume": [
+                {
+                  "class-id": 1,
+                  "volume": 39
+                },
+                {
+                  "class-id": 2,
+                  "volume": 2
+                },
+                {
+                  "class-id": 17,
+                  "volume": 1
+                }
+              ],
+              "unclassified-volume": 0,
+              "wrong-way-volume": 0,
+              "mean-vehicle-length-m": "4.85",
+              "speed-std-dev-kmh": "7.3"
+            },
+            "presence": {
+              "occupied": false,
+              "last-detection": "2026-07-07T14:00:58Z"
+            }
+          }
+        }
+      ]
+    },
+    "queues": {
+      "queue-zone": [
+        {
+          "zone-id": "nb-mainline",
+          "queueing": true,
+          "queue-duration-s": 45,
+          "queue-length-m": 120,
+          "back-of-queue-m": 140
+        }
+      ]
+    },
+    "diagnostics": {
+      "signal-quality": 97,
+      "internal-temperature-c": "41.5",
+      "uptime-s": "86400",
+      "last-self-test": "2026-07-07T12:00:00Z",
+      "calibration": {
+        "last-calibrated": "2026-06-01T09:00:00Z",
+        "status": "calibrated"
+      }
+    }
+  }
+}

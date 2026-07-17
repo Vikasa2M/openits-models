@@ -1,0 +1,12 @@
+{
+  "openits-signal-control-events:operational-status-report": {
+    "kind": "openits-signal-control-types:sc-operational-status-report",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence": "1",
+    "mode": "openits-signal-control-types:mode-coordinated",
+    "flash-active": false,
+    "last-mode-change": "2026-07-10T08:00:00Z",
+    "uptime-seconds": "431980",
+    "occurred-at": "2026-07-11T14:05:12Z"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string"
+    },
+    "new-status": {
+      "enum": [
+        "dgps",
+        "fix-2d",
+        "fix-3d",
+        "no-fix",
+        "rtk"
+      ],
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "previous-status": {
+      "enum": [
+        "dgps",
+        "fix-2d",
+        "fix-3d",
+        "no-fix",
+        "rtk"
+      ],
+      "type": "string"
+    },
+    "satellites": {
+      "maximum": 255,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+}

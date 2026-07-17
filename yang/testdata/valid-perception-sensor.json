@@ -1,0 +1,108 @@
+{
+  "openits-perception:perception-sensor": {
+    "config": {
+      "id": "loop12-lidar-04",
+      "name": "Loop 12 @ Skillman LiDAR",
+      "latitude": "32.8560000",
+      "longitude": "-96.7280000",
+      "heading": 90,
+      "road-reference": "Loop 12 EB @ Skillman"
+    },
+    "state": {
+      "id": "loop12-lidar-04",
+      "name": "Loop 12 @ Skillman LiDAR",
+      "latitude": "32.8560000",
+      "longitude": "-96.7280000",
+      "heading": 90,
+      "road-reference": "Loop 12 EB @ Skillman",
+      "make": "Seyond",
+      "model": "Falcon K",
+      "firmware": "2.3.1",
+      "serial": "FK-004217"
+    },
+    "configuration": {
+      "data-interval-s": 60,
+      "zone": [
+        {
+          "zone-id": "eb-travel-lanes",
+          "name": "EB travel lanes",
+          "function": "incident",
+          "legal-heading": 92,
+          "vertex": [
+            {
+              "vertex-index": 0,
+              "latitude": "32.8559000",
+              "longitude": "-96.7284000"
+            },
+            {
+              "vertex-index": 1,
+              "latitude": "32.8561000",
+              "longitude": "-96.7284000"
+            },
+            {
+              "vertex-index": 2,
+              "latitude": "32.8561000",
+              "longitude": "-96.7276000"
+            },
+            {
+              "vertex-index": 3,
+              "latitude": "32.8559000",
+              "longitude": "-96.7276000"
+            }
+          ]
+        }
+      ]
+    },
+    "objects": {
+      "track-count": 1,
+      "track": [
+        {
+          "track-id": 1042,
+          "class": "openits-perception-types:object-passenger-vehicle",
+          "class-confidence": 93,
+          "latitude": "32.8560400",
+          "longitude": "-96.7279200",
+          "speed-kmh": "87.3",
+          "heading": 91,
+          "observed-at": "2026-07-07T14:00:59Z",
+          "lifecycle": "confirmed"
+        }
+      ],
+      "track-epoch": 3
+    },
+    "zones": {
+      "zone": [
+        {
+          "zone-id": "eb-travel-lanes",
+          "occupancy-count": 1,
+          "presence": true,
+          "average-speed-kmh": "87.3"
+        }
+      ]
+    },
+    "incidents": {
+      "incident": [
+        {
+          "incident-id": "inc-2026-07-07-0007",
+          "zone-id": "eb-travel-lanes",
+          "type": "openits-perception-types:incident-stopped-vehicle",
+          "severity": "intermediate",
+          "track-id": 1809,
+          "object-class": "openits-perception-types:object-passenger-vehicle",
+          "speed-kmh": "0.0",
+          "confidence": 88,
+          "latitude": "32.8560200",
+          "longitude": "-96.7279600",
+          "first-observed": "2026-07-07T13:58:12Z"
+        }
+      ]
+    },
+    "diagnostics": {
+      "points-per-second": 640000,
+      "blockage-percent": 2,
+      "internal-temperature-c": "38.0",
+      "pose-drift-deg": "0.15",
+      "uptime-s": "432000"
+    }
+  }
+}

@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package openits.traffic_sensor.v1;
+
+option go_package = "github.com/openits/openits-models/pkg/proto/openits/traffic_sensor/v1;trafficsensorv1";
+
+import "google/protobuf/timestamp.proto";
+
+message QueueStateChanged {
+  string kind = 99;
+  string zone_id = 1;
+  bool queueing = 2;
+  uint32 queue_duration_s = 3;
+  google.protobuf.Timestamp queue_start = 4;
+  string observed_by = 5;
+  google.protobuf.Timestamp occurred_at = 6;
+  string owner = 7;
+  uint64 sequence = 8;
+  string source_device_id = 9;
+}
+
+message TrafficIntervalReport {
+  string kind = 99;
+  repeated TrafficIntervalReportLane lane = 1;
+  string observed_by = 2;
+  google.protobuf.Timestamp occurred_at = 3;
+  string owner = 4;
+  uint64 sequence = 5;
+  string source_device_id = 6;
+}
+
+message TrafficIntervalReportLane {
+  uint32 lane_id = 1;
+  string name = 2;
+  string carriageway = 3;
+  repeated TrafficIntervalReportLaneClassVolume class_volume = 4;
+  DataQuality data_quality = 15;
+  string density = 5;
+  uint32 flow_rate_vph = 6;
+  string gap_average_s = 7;
+  string headway_average_s = 8;
+  uint32 interval_duration_s = 9;
+  google.protobuf.Timestamp interval_start = 10;
+  string mean_vehicle_length_m = 19;
+  string occupancy = 11;
+  string speed_85th_percentile_kmh = 12;
+  string speed_average_kmh = 13;
+  string speed_space_mean_kmh = 16;
+  string speed_std_dev_kmh = 20;
+  uint32 unclassified_volume = 18;
+  string uptime_percent = 17;
+  uint32 volume = 14;
+  uint32 wrong_way_volume = 21;
+}
+
+message TrafficIntervalReportLaneClassVolume {
+  uint32 class_id = 1;
+  uint32 volume = 2;
+}
+
+enum DataQuality {
+  DATA_QUALITY_VALID = 0;
+  DATA_QUALITY_SUSPECT = 1;
+  DATA_QUALITY_INVALID = 2;
+}
+
+message TrafficSensorStatusReport {
+  string kind = 99;
+  string name = 1;
+  OperationalStatus operational_status = 4;
+  string inactive_reason = 5;
+  string latitude = 2;
+  string longitude = 3;
+  string observed_by = 6;
+  google.protobuf.Timestamp occurred_at = 7;
+  string owner = 8;
+  uint64 sequence = 9;
+  string source_device_id = 10;
+}
+
+enum OperationalStatus {
+  OPERATIONAL_STATUS_ACTIVE = 0;
+  OPERATIONAL_STATUS_INACTIVE = 1;
+  OPERATIONAL_STATUS_DEGRADED = 2;
+}
+

@@ -1,0 +1,201 @@
+{
+  "openits-dms:sign": {
+    "config": {
+      "id": "i35-mm214-nb-dms",
+      "name": "I-35 NB @ MM 214",
+      "latitude": "30.2672",
+      "longitude": "-97.7431"
+    },
+    "state": {
+      "id": "i35-mm214-nb-dms",
+      "name": "I-35 NB @ MM 214",
+      "latitude": "30.2672",
+      "longitude": "-97.7431",
+      "make": "Daktronics",
+      "model": "Vanguard VF-2320",
+      "firmware": "VX-4.3.2",
+      "technology": "led",
+      "sign-width-pixels": 144,
+      "sign-height-pixels": 27,
+      "capabilities": {
+        "sign-type": "full-matrix",
+        "character-height-pixels": 7,
+        "character-width-pixels": 0,
+        "color-capability": "color",
+        "max-pages": 3,
+        "beacon-capable": true,
+        "supported-multi-tags": [
+          "new-line",
+          "new-page",
+          "font",
+          "color-foreground",
+          "flash",
+          "page-time"
+        ],
+        "font": [
+          {
+            "font-number": 1,
+            "name": "default-7line",
+            "character-height-pixels": 7
+          }
+        ]
+      }
+    },
+    "messages": {
+      "slot": [
+        {
+          "memory-type": "changeable",
+          "slot-number": 1,
+          "config": {
+            "memory-type": "changeable",
+            "slot-number": 1,
+            "multi-string": "[jp3]CRASH AHEAD[nl]USE CAUTION",
+            "priority": 200,
+            "owner": "tmc-ops",
+            "crc": 2863311530
+          },
+          "state": {
+            "status": "valid"
+          }
+        },
+        {
+          "memory-type": "changeable",
+          "slot-number": 2,
+          "config": {
+            "memory-type": "changeable",
+            "slot-number": 2,
+            "multi-string": "COMM LOSS[nl]CONTACT TMC",
+            "priority": 50,
+            "owner": "tmc-ops",
+            "crc": 305419896
+          },
+          "state": {
+            "status": "valid"
+          }
+        },
+        {
+          "memory-type": "changeable",
+          "slot-number": 3,
+          "config": {
+            "memory-type": "changeable",
+            "slot-number": 3,
+            "multi-string": "",
+            "priority": 1,
+            "owner": "tmc-ops",
+            "crc": 0
+          },
+          "state": {
+            "status": "valid"
+          }
+        }
+      ]
+    },
+    "control": {
+      "config": {
+        "control-mode": "openits-dms-types:control-central",
+        "brightness-setpoint": 85,
+        "active-message": {
+          "memory-type": "changeable",
+          "slot-number": 1,
+          "duration-s": 1800,
+          "activation-priority": 200,
+          "crc": 2863311530,
+          "owner": "tmc-ops"
+        },
+        "fallback": {
+          "comm-loss-timeout-s": 300,
+          "comm-loss-memory-type": "changeable",
+          "comm-loss-slot-number": 2,
+          "end-of-duration-memory-type": "changeable",
+          "end-of-duration-slot-number": 3,
+          "power-loss-memory-type": "changeable",
+          "power-loss-slot-number": 3
+        },
+        "illumination-control": "photocell",
+        "default-page-on-time-s": "2.0",
+        "default-page-off-time-s": "0.0"
+      },
+      "state": {
+        "control-mode": "openits-dms-types:control-central",
+        "display-state": "openits-dms-types:mode-normal",
+        "last-mode-change": "2026-04-18T14:00:00Z",
+        "brightness-current": 80,
+        "brightness-setpoint": 85,
+        "active": {
+          "memory-type": "changeable",
+          "slot-number": 1,
+          "activated-at": "2026-04-18T14:05:12Z",
+          "expires-at": "2026-04-18T14:35:12Z",
+          "source": "tmc-ops",
+          "multi-string": "[jp3]CRASH AHEAD[nl]USE CAUTION",
+          "priority": 200,
+          "owner": "tmc-ops",
+          "crc": 2863311530,
+          "beacon": "none"
+        },
+        "comm-loss-active": false,
+        "power-loss-active": false,
+        "controller-uptime-s": 43200,
+        "illumination-control": "photocell",
+        "default-page-on-time-s": "2.0",
+        "default-page-off-time-s": "0.0",
+        "preempted": {
+          "memory-type": "changeable",
+          "slot-number": 4
+        }
+      }
+    },
+    "environment": {
+      "ambient-light-lux": 12000,
+      "cabinet-temperature-c": "32.5",
+      "humidity-percent": 40,
+      "door-open": false
+    },
+    "diagnostics": {
+      "pixels-total": 3888,
+      "pixels-failed": 4,
+      "lamps-total": 0,
+      "lamps-failed": 0,
+      "last-self-test": "2026-04-18T12:00:00Z",
+      "pixels-stuck-on": 1,
+      "pixels-stuck-off": 2
+    },
+    "schedule": {
+      "day-plan": [
+        {
+          "day-plan-id": 1,
+          "name": "weekday-am",
+          "action": [
+            {
+              "start-time": "06:00:00",
+              "memory-type": "changeable",
+              "slot-number": 2
+            },
+            {
+              "start-time": "09:00:00",
+              "memory-type": "blank",
+              "slot-number": 1
+            }
+          ]
+        }
+      ],
+      "schedule-entry": [
+        {
+          "schedule-id": 1,
+          "days-of-week": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday"
+          ],
+          "day-plan": 1
+        }
+      ],
+      "state": {
+        "active-day-plan-id": 1,
+        "next-action-at": "2026-04-19T09:00:00Z"
+      }
+    }
+  }
+}

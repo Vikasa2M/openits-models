@@ -1,0 +1,584 @@
+module openits-signal-control-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:signal-control-types";
+  prefix openits-sc-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Signal-control event-kind identity hierarchy. Derives from the
+     cross-service openits-types:device-event-kind root. Identities
+     here cover the ATSPM 'Indiana enumeration' codes that signal
+     controllers emit on the wire; per-domain event modules carry
+     identityref leaves pointing into this hierarchy.
+
+     New identities are additive. Removing or renaming an identity
+     is a breaking change and requires a major revision bump.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  revision 2026-05-23 {
+    description
+      "Two same-day changes:
+       - Move preemption-type and controller-mode typedefs from
+         openits-signal-control into this -types module. Sub-event
+         modules and notification companions now reference both
+         typedefs via openits-sc-types: rather than openits-sc:,
+         so they no longer need to import the service core. Wire
+         format unchanged; consumers re-import under the new prefix.
+       - Re-base sc-tsam-event-kind from sc-tsp-event-kind to
+         openits-types:tsam-event-kind + signal-control-event-kind
+         (peer-level dual classification). TSAM is agency-side
+         adaptive optimization, not transit priority; the prior
+         hierarchy conflated two distinct domains.";
+  }
+
+  revision 2026-05-18 {
+    description
+      "Phase 0c migration support:
+       - Add controller-fault-event-kind identity for HR-level
+         controller fault events (distinct from sc-fault-event-kind
+         which covers cabinet-level faults).
+       - Add sc-tsam-event-kind, tsam-mode-changed, and
+         tsam-recommendation-applied identities for the TSAM
+         notifications migrated to openits-signal-control-tsam-events.";
+  }
+
+  revision 2026-05-16 {
+    description
+      "Initial revision. Covers the ~90 Indiana enumeration codes
+       currently mapped by internal/atspm/decoders/indianamap. Codes
+       in the dropped-on-decode list (200+, 600+, 1200+, vendor-
+       specific bands) are not yet represented; they land in future
+       phases of the event-taxonomy expansion.";
+    reference "ATSPM Indiana enumeration (HR event-code vocabulary).";
+  }
+
+  /* --------------------------------------------------------------
+   * First-level bases (one per behavioral class)
+   * -------------------------------------------------------------- */
+
+  identity signal-control-event-kind {
+    base openits-types:device-event-kind;
+    description
+      "Root for signal-controller events. Behavioral-class sub-bases
+       (phase, detector, overlap, pedestrian, preemption, coordination,
+       tsp, external-io, fault, mode, comm-health) derive from this.";
+  }
+
+  /* Re-base the cross-service first-levels onto signal-control's root
+   * so consumers can filter 'all signal-control events' vs 'all events
+   * everywhere'. Identityref uses the most-derived match.
+   *
+   * Pattern: sc-{kind} is the signal-control-specific sub-base; it
+   * derives from BOTH openits-types:{kind}-event-kind AND
+   * signal-control-event-kind. Identities below derive from sc-{kind}.
+   */
+
+  identity sc-phase-event-kind {
+    base openits-types:phase-event-kind;
+    base signal-control-event-kind;
+    description "Signal-control phase events.";
+  }
+
+  identity sc-detector-event-kind {
+    base openits-types:detector-event-kind;
+    base signal-control-event-kind;
+    description "Signal-control vehicle/ped/TSP detector events.";
+  }
+
+  identity sc-overlap-event-kind {
+    base openits-types:overlap-event-kind;
+    base signal-control-event-kind;
+    description "Signal-control phase-overlap events.";
+  }
+
+  identity sc-pedestrian-event-kind {
+    base openits-types:pedestrian-event-kind;
+    base signal-control-event-kind;
+    description "Signal-control pedestrian-interval and ped-call events.";
+  }
+
+  identity sc-preemption-event-kind {
+    base openits-types:preemption-event-kind;
+    base signal-control-event-kind;
+    description "Signal-control preemption stage events.";
+  }
+
+  identity sc-coordination-event-kind {
+    base openits-types:coordination-event-kind;
+    base signal-control-event-kind;
+    description
+      "Signal-control coordination events (splits, cycle, offset,
+       pattern).";
+  }
+
+  identity sc-tsp-event-kind {
+    base openits-types:tsp-event-kind;
+    base signal-control-event-kind;
+    description
+      "Signal-control Transit Signal Priority cycle + detail events.";
+  }
+
+  identity sc-tsam-event-kind {
+    base openits-types:tsam-event-kind;
+    base signal-control-event-kind;
+    description
+      "TSAM (Traffic Signal Adaptive Management) events: mode
+       transitions and applied recommendations. Dual-classified
+       like the other sc-* event-kinds: by behavioral class
+       (tsam-event-kind) and by service (signal-control-event-kind).";
+  }
+
+  identity tsam-mode-changed {
+    base sc-tsam-event-kind;
+    description "TSAM engagement state changed.";
+  }
+
+  identity tsam-recommendation-applied {
+    base sc-tsam-event-kind;
+    description "TSAM produced a recommendation that was applied.";
+  }
+
+  identity sc-fault-event-kind {
+    base openits-types:fault-event-kind;
+    base signal-control-event-kind;
+    description "Signal-control faults (cabinet, MMU, conflict-flash, etc.).";
+  }
+
+  identity sc-mode-event-kind {
+    base openits-types:mode-event-kind;
+    base signal-control-event-kind;
+    description "Signal-control operational-mode transitions.";
+  }
+
+  identity sc-comm-health-event-kind {
+    base openits-types:comm-health-event-kind;
+    base signal-control-event-kind;
+    description
+      "Signal-control communication-health events. Placeholder
+       sub-base; leaf identities (time-drift, comm-attempt-window,
+       link-degraded/recovered) land in a future revision.";
+  }
+
+  identity sc-external-io-event-kind {
+    base openits-types:external-io-event-kind;
+    base signal-control-event-kind;
+    description
+      "Signal-control external-I/O events (external calls, test
+       inputs, special-function outputs). Placeholder sub-base; leaf
+       identities for Indiana codes 171-172, 176-180, 701-710 land
+       in a future revision.";
+  }
+
+  /* --------------------------------------------------------------
+   * Phase events (Indiana codes 1, 4-12, 14, 41-44)
+   * -------------------------------------------------------------- */
+
+  identity phase-begin-green {
+    base sc-phase-event-kind;
+    description "Indiana 1: phase began green.";
+  }
+  identity phase-gap-out {
+    base sc-phase-event-kind;
+    description "Indiana 4: phase terminated by gap-out.";
+  }
+  identity phase-max-out {
+    base sc-phase-event-kind;
+    description "Indiana 5: phase terminated by max-out.";
+  }
+  identity phase-force-off {
+    base sc-phase-event-kind;
+    description "Indiana 6: phase terminated by force-off.";
+  }
+  identity phase-begin-yellow {
+    base sc-phase-event-kind;
+    description "Indiana 8: phase entered yellow-change interval.";
+  }
+  identity phase-begin-red-clearance {
+    base sc-phase-event-kind;
+    description "Indiana 10: phase entered red-clearance interval.";
+  }
+  identity phase-begin-red {
+    base sc-phase-event-kind;
+    description "Indiana 11: phase fully red.";
+  }
+  identity phase-dark {
+    base sc-phase-event-kind;
+    description "Indiana 12: phase dark (no indication shown).";
+  }
+  identity phase-skipped {
+    base sc-phase-event-kind;
+    description "Indiana 14: phase skipped in the sequence.";
+  }
+  identity phase-hold-active {
+    base sc-phase-event-kind;
+    description "Indiana 41: hold activated on phase.";
+  }
+  identity phase-hold-released {
+    base sc-phase-event-kind;
+    description "Indiana 42: hold released on phase.";
+  }
+  identity phase-call-registered {
+    base sc-phase-event-kind;
+    description "Indiana 43: call registered for phase.";
+  }
+  identity phase-call-dropped {
+    base sc-phase-event-kind;
+    description "Indiana 44: call dropped for phase.";
+  }
+
+  /* --------------------------------------------------------------
+   * Pedestrian events (Indiana codes 21-26, 45, 67-70, 89-92)
+   * -------------------------------------------------------------- */
+
+  identity ped-begin-walk {
+    base sc-pedestrian-event-kind;
+    description "Indiana 21: pedestrian WALK interval began.";
+  }
+  identity ped-begin-change-interval {
+    base sc-pedestrian-event-kind;
+    description "Indiana 22: pedestrian change interval (FDW) began.";
+  }
+  identity ped-begin-solid-dont-walk {
+    base sc-pedestrian-event-kind;
+    description "Indiana 23: pedestrian solid DONT-WALK began.";
+  }
+  identity ped-dark {
+    base sc-pedestrian-event-kind;
+    description "Indiana 24: pedestrian indication dark.";
+  }
+  identity ped-extended-change-interval {
+    base sc-pedestrian-event-kind;
+    description "Indiana 25: pedestrian extended change interval.";
+  }
+  identity ped-oversized-served {
+    base sc-pedestrian-event-kind;
+    description "Indiana 26: oversized pedestrian (ADA) served.";
+  }
+  identity ped-call-registered {
+    base sc-pedestrian-event-kind;
+    description "Indiana 45: pedestrian call registered.";
+  }
+  identity ped-overlap-begin-walk {
+    base sc-pedestrian-event-kind;
+    description "Indiana 67: ped-overlap WALK began.";
+  }
+  identity ped-overlap-begin-clearance {
+    base sc-pedestrian-event-kind;
+    description "Indiana 68: ped-overlap clearance began.";
+  }
+  identity ped-overlap-begin-solid-dont-walk {
+    base sc-pedestrian-event-kind;
+    description "Indiana 69: ped-overlap solid DONT-WALK began.";
+  }
+  identity ped-overlap-dark {
+    base sc-pedestrian-event-kind;
+    description "Indiana 70: ped-overlap dark.";
+  }
+  identity ped-detector-off {
+    base sc-pedestrian-event-kind;
+    description "Indiana 89: ped detector off.";
+  }
+  identity ped-detector-on {
+    base sc-pedestrian-event-kind;
+    description "Indiana 90: ped detector on.";
+  }
+  identity ped-detector-failed {
+    base sc-pedestrian-event-kind;
+    description "Indiana 91: ped detector failed.";
+  }
+  identity ped-detector-restored {
+    base sc-pedestrian-event-kind;
+    description "Indiana 92: ped detector restored.";
+  }
+
+  /* --------------------------------------------------------------
+   * Detector events (Indiana codes 81-88)
+   * -------------------------------------------------------------- */
+
+  identity vehicle-detector-off {
+    base sc-detector-event-kind;
+    description "Indiana 81: vehicle detector off (call drop).";
+  }
+  identity vehicle-detector-on {
+    base sc-detector-event-kind;
+    description "Indiana 82: vehicle detector on (call placed).";
+  }
+  identity vehicle-detector-restored {
+    base sc-detector-event-kind;
+    description "Indiana 83: vehicle detector restored from fault.";
+  }
+  identity vehicle-detector-fault-other {
+    base sc-detector-event-kind;
+    description "Indiana 84: vehicle detector fault (unspecified).";
+  }
+  identity vehicle-detector-fault-watchdog {
+    base sc-detector-event-kind;
+    description "Indiana 85: vehicle detector watchdog fault.";
+  }
+  identity vehicle-detector-fault-open-loop {
+    base sc-detector-event-kind;
+    description "Indiana 86: vehicle detector open-loop fault.";
+  }
+  identity vehicle-detector-fault-shorted-loop {
+    base sc-detector-event-kind;
+    description "Indiana 87: vehicle detector shorted-loop fault.";
+  }
+  identity vehicle-detector-fault-excessive-change {
+    base sc-detector-event-kind;
+    description "Indiana 88: vehicle detector excessive-change fault.";
+  }
+
+  /* --------------------------------------------------------------
+   * Overlap events (Indiana codes 61-66)
+   * -------------------------------------------------------------- */
+
+  identity overlap-begin-green {
+    base sc-overlap-event-kind;
+    description "Indiana 61: overlap began green.";
+  }
+  identity overlap-begin-trailing-green-extension {
+    base sc-overlap-event-kind;
+    description "Indiana 62: overlap began trailing-green extension.";
+  }
+  identity overlap-begin-yellow {
+    base sc-overlap-event-kind;
+    description "Indiana 63: overlap began yellow.";
+  }
+  identity overlap-begin-red-clearance {
+    base sc-overlap-event-kind;
+    description "Indiana 64: overlap began red-clearance.";
+  }
+  identity overlap-off {
+    base sc-overlap-event-kind;
+    description "Indiana 65: overlap off (inactive with red indication).";
+  }
+  identity overlap-dark {
+    base sc-overlap-event-kind;
+    description "Indiana 66: overlap dark.";
+  }
+
+  /* --------------------------------------------------------------
+   * Preemption events (Indiana codes 101-111, 116)
+   * -------------------------------------------------------------- */
+
+  identity preempt-advance-warning {
+    base sc-preemption-event-kind;
+    description "Indiana 101: preempt advance-warning input.";
+  }
+  identity preempt-call-on {
+    base sc-preemption-event-kind;
+    description "Indiana 102: preempt call input on.";
+  }
+  identity preempt-gate-down {
+    base sc-preemption-event-kind;
+    description "Indiana 103: preempt gate-down input received.";
+  }
+  identity preempt-call-off {
+    base sc-preemption-event-kind;
+    description "Indiana 104: preempt call input off.";
+  }
+  identity preempt-entry-started {
+    base sc-preemption-event-kind;
+    description "Indiana 105: preempt entry interval started.";
+  }
+  identity preempt-track-clearance {
+    base sc-preemption-event-kind;
+    description "Indiana 106: preempt track-clearance interval began.";
+  }
+  identity preempt-dwell-service {
+    base sc-preemption-event-kind;
+    description "Indiana 107: preempt dwell-service interval began.";
+  }
+  identity preempt-link-active-on {
+    base sc-preemption-event-kind;
+    description "Indiana 108: preempt link-active on.";
+  }
+  identity preempt-link-active-off {
+    base sc-preemption-event-kind;
+    description "Indiana 109: preempt link-active off.";
+  }
+  identity preempt-max-presence-exceeded {
+    base sc-preemption-event-kind;
+    description "Indiana 110: preempt max-presence exceeded.";
+  }
+  identity preempt-exit-interval {
+    base sc-preemption-event-kind;
+    description "Indiana 111: preempt exit-interval began.";
+  }
+  identity preempt-force-off-phase {
+    base sc-preemption-event-kind;
+    description "Indiana 116: preempt force-off applied to phase.";
+  }
+
+  /* --------------------------------------------------------------
+   * TSP events (Indiana codes 19, 93-94, 112-115, 117-119)
+   * -------------------------------------------------------------- */
+
+  identity tsp-early-force-off-phase {
+    base sc-tsp-event-kind;
+    description "Indiana 19: TSP early force-off applied to phase.";
+  }
+  identity tsp-detector-off {
+    base sc-tsp-event-kind;
+    description "Indiana 93: TSP detector off.";
+  }
+  identity tsp-detector-on {
+    base sc-tsp-event-kind;
+    description "Indiana 94: TSP detector on.";
+  }
+  identity tsp-check-in {
+    base sc-tsp-event-kind;
+    description "Indiana 112: TSP check-in.";
+  }
+  identity tsp-adjustment-early-green {
+    base sc-tsp-event-kind;
+    description "Indiana 113: TSP adjustment to early-green.";
+  }
+  identity tsp-adjustment-extend-green {
+    base sc-tsp-event-kind;
+    description "Indiana 114: TSP adjustment to extend-green.";
+  }
+  identity tsp-check-out {
+    base sc-tsp-event-kind;
+    description "Indiana 115: TSP check-out.";
+  }
+  identity tsp-early-force-off-cycle {
+    base sc-tsp-event-kind;
+    description "Indiana 117: TSP early force-off applied to cycle.";
+  }
+  identity tsp-service-start {
+    base sc-tsp-event-kind;
+    description "Indiana 118: TSP service-start.";
+  }
+  identity tsp-service-end {
+    base sc-tsp-event-kind;
+    description "Indiana 119: TSP service-end.";
+  }
+
+  /* --------------------------------------------------------------
+   * Coordination events (Indiana codes 50-54, 131-149)
+   * -------------------------------------------------------------- */
+
+  identity coord-max-1-in-effect {
+    base sc-coordination-event-kind;
+    description "Indiana 50: MAX-1 phase-max-in-effect.";
+  }
+  identity coord-max-2-in-effect {
+    base sc-coordination-event-kind;
+    description "Indiana 51: MAX-2 phase-max-in-effect.";
+  }
+  identity coord-dynamic-max-in-effect {
+    base sc-coordination-event-kind;
+    description "Indiana 52: dynamic-MAX in effect.";
+  }
+  identity coord-dynamic-max-step-up {
+    base sc-coordination-event-kind;
+    description "Indiana 53: dynamic-MAX stepped up.";
+  }
+  identity coord-dynamic-max-step-down {
+    base sc-coordination-event-kind;
+    description "Indiana 54: dynamic-MAX stepped down.";
+  }
+  identity coord-pattern-change {
+    base sc-coordination-event-kind;
+    description "Indiana 131: coordination pattern changed.";
+  }
+  identity coord-cycle-length-change {
+    base sc-coordination-event-kind;
+    description "Indiana 132: cycle-length changed.";
+  }
+  identity coord-offset-change {
+    base sc-coordination-event-kind;
+    description "Indiana 133: offset changed.";
+  }
+  identity coord-programmed-split-change {
+    base sc-coordination-event-kind;
+    description
+      "Indiana 134-149: programmed split for phase 1..16 changed.
+       The specific phase is carried in the notification's payload
+       (split-number leaf), not in the identityref.";
+  }
+
+  /* --------------------------------------------------------------
+   * Fault events (Indiana codes 173-185, currently mapped)
+   * -------------------------------------------------------------- */
+
+  identity fault-unit-flash-status {
+    base sc-fault-event-kind;
+    description "Indiana 173: unit flash-status change.";
+  }
+  identity fault-unit-alarm-group-1 {
+    base sc-fault-event-kind;
+    description "Indiana 174: unit alarm group 1 state change.";
+  }
+  identity fault-power-failure {
+    base sc-fault-event-kind;
+    description "Indiana 182/184: power failure / power restored.";
+  }
+  identity fault-vendor-alarm {
+    base sc-fault-event-kind;
+    description
+      "Indiana 185: vendor-specific alarm raised. Vendor modules MAY
+       derive more specific identities from this for their own
+       vendor-alarm-N codes.";
+  }
+
+  identity controller-fault-event-kind {
+    base sc-fault-event-kind;
+    description
+      "High-resolution controller fault event from indianamap codes
+       173-185. Used by the controller-fault-event notification
+       (openits-common-fault-events) to discriminate this HR fault
+       class from cabinet-level faults emitted via fault-raised.";
+  }
+
+  /* --------------------------------------------------------------
+   * Signal-control typedefs
+   *
+   * Shared across the service core (openits-signal-control), the
+   * notification companion (openits-signal-control-notifications),
+   * and sub-event modules (openits-signal-control-preemption-events).
+   * Living here lets sub-event modules import only this -types
+   * module rather than the full service core.
+   * -------------------------------------------------------------- */
+
+  typedef preemption-type {
+    type enumeration {
+      enum none              { value 0; }
+      enum railroad          { value 1; }
+      enum emergency-vehicle { value 2; }
+      enum transit-priority  { value 3; }
+      enum freight-priority  { value 4; }
+    }
+    description
+      "Type of active preemption or priority request.  Preemption
+       overrides normal operation; priority biases it.";
+    reference "NTCIP 1202 v03 (preemption-type semantics).";
+  }
+
+  typedef controller-mode {
+    type enumeration {
+      enum normal;
+      enum coordinated;
+      enum free;
+      enum flash;
+      enum preempt;
+      enum priority;
+      enum manual;
+      enum off;
+    }
+    description
+      "Top-level operational mode of the controller.";
+    reference "NTCIP 1202 v03 (controller operating modes).";
+  }
+}

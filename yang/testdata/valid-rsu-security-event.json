@@ -1,0 +1,11 @@
+{
+  "openits-rsu-events:rsu-security-event": {
+    "kind": "openits-rsu-types:rsu-security-event-kind",
+    "source-device-id": "rsu-i35-mm214",
+    "occurred-at": "2026-07-11T14:05:00Z",
+    "sequence": "1",
+    "event-type": "invalid-signature",
+    "source": "obu-cert-4471",
+    "message": "BSM signature verification failed"
+  }
+}

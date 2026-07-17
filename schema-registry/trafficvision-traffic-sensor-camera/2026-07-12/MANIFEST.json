@@ -1,0 +1,6 @@
+{
+  "module": "trafficvision-traffic-sensor-camera",
+  "revision": "2026-07-12",
+  "kind": "augment",
+  "files": ["schema.yang"]
+}

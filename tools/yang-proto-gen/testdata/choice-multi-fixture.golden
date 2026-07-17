@@ -1,0 +1,11 @@
+message Tagged {
+  string decoder = 1;
+  oneof tag {
+    A a = 2;
+    string b_oid = 3;
+  }
+  message A {
+    uint32 a_code = 1;
+    string a_note = 2;
+  }
+}

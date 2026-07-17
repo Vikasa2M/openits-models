@@ -1,0 +1,152 @@
+syntax = "proto3";
+
+package openits.rsu.v1;
+
+option go_package = "github.com/openits/openits-models/pkg/proto/openits/v1;openitspb";
+
+import "google/protobuf/timestamp.proto";
+
+message RsuBroadcastSample {
+  string source_device_id = 1;
+  uint32 sample_window_s = 2;
+  repeated Broadcast broadcast = 3;
+  google.protobuf.Timestamp occurred_at = 4;
+}
+
+message Broadcast {
+  string msg_id = 1;
+  MsgType msg_type = 2;
+  uint32 channel = 3;
+  string rate_hz = 4;
+  uint32 priority = 5;
+}
+
+enum MsgType {
+  MSG_TYPE_TIM = 0;
+  MSG_TYPE_SPAT = 1;
+  MSG_TYPE_MAP = 2;
+  MSG_TYPE_SRM = 3;
+  MSG_TYPE_SSM = 4;
+  MSG_TYPE_PSM = 5;
+  MSG_TYPE_OTHER = 6;
+}
+
+message RsuCertificateExpiring {
+  string device_id = 1;
+  string certificate_id = 2;
+  string certificate_type = 3;
+  uint32 days_until_expiry = 4;
+  google.protobuf.Timestamp expiry_date = 5;
+  google.protobuf.Timestamp timestamp = 6;
+}
+
+message RsuChannelFault {
+  string device_id = 1;
+  uint32 channel = 2;
+  FaultType fault_type = 3;
+  string message = 4;
+  google.protobuf.Timestamp timestamp = 5;
+}
+
+enum FaultType {
+  FAULT_TYPE_TX_FAILURE = 0;
+  FAULT_TYPE_RX_FAILURE = 1;
+  FAULT_TYPE_HIGH_ERROR_RATE = 2;
+  FAULT_TYPE_NO_SIGNAL = 3;
+  FAULT_TYPE_INTERFERENCE = 4;
+}
+
+message RsuGpsStatusChange {
+  string device_id = 1;
+  string previous_status = 2;
+  string new_status = 3;
+  uint32 satellites = 4;
+  google.protobuf.Timestamp timestamp = 5;
+}
+
+message RsuSecurityEvent {
+  string device_id = 1;
+  EventType event_type = 2;
+  string source = 3;
+  string message = 4;
+  google.protobuf.Timestamp timestamp = 5;
+}
+
+enum EventType {
+  EVENT_TYPE_INVALID_SIGNATURE = 0;
+  EVENT_TYPE_REVOKED_CERTIFICATE = 1;
+  EVENT_TYPE_SCMS_CONNECTION_LOST = 2;
+  EVENT_TYPE_ENROLLMENT_FAILURE = 3;
+  EVENT_TYPE_MISBEHAVIOR_DETECTED = 4;
+}
+
+message RsuSrmReceived {
+  string device_id = 1;
+  string request_id = 2;
+  string vehicle_id = 3;
+  string request_type = 4;
+  uint32 approach = 5;
+  uint32 eta_seconds = 6;
+  string vehicle_class = 7;
+  google.protobuf.Timestamp timestamp = 8;
+}
+
+message RsuSrmStatusChange {
+  string device_id = 1;
+  string request_id = 2;
+  string vehicle_id = 3;
+  string previous_status = 4;
+  string new_status = 5;
+  google.protobuf.Timestamp timestamp = 6;
+}
+
+message RsuTimBroadcast {
+  string msg_id = 1;
+  uint32 channel = 2;
+  uint32 priority = 3;
+  google.protobuf.Timestamp broadcast_at = 4;
+}
+
+message RsuTimBroadcastStateChanged {
+  Prior prior = 1;
+  Current current = 2;
+  uint32 active_tim_count = 3;
+  google.protobuf.Timestamp changed_at = 4;
+}
+
+enum Prior {
+  PRIOR_IDLE = 0;
+  PRIOR_ACTIVE = 1;
+  PRIOR_FAULT = 2;
+}
+
+enum Current {
+  CURRENT_IDLE = 0;
+  CURRENT_ACTIVE = 1;
+  CURRENT_FAULT = 2;
+}
+
+message RsuTimCleared {
+  string msg_id = 1;
+  OpenitsRsuEventsReason reason = 2;
+  google.protobuf.Timestamp cleared_at = 3;
+}
+
+enum OpenitsRsuEventsReason {
+  OPENITS_RSU_EVENTS_REASON_EXPIRED = 0;
+  OPENITS_RSU_EVENTS_REASON_CLEARED_BY_OPERATOR = 1;
+  OPENITS_RSU_EVENTS_REASON_SUPERSEDED = 2;
+  OPENITS_RSU_EVENTS_REASON_RSU_RESTART = 3;
+  OPENITS_RSU_EVENTS_REASON_OTHER = 4;
+}
+
+message RsuTimLoaded {
+  string msg_id = 1;
+  string source = 2;
+  uint32 priority = 3;
+  uint32 duration_seconds = 4;
+  google.protobuf.Timestamp start_time = 5;
+  string content_summary = 6;
+  google.protobuf.Timestamp observed_at = 7;
+}
+

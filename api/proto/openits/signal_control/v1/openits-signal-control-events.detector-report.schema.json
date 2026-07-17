@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "detector": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "detector-id": {
+            "maximum": 65535,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "occupancy": {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "phase-served": {
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "volume": {
+            "maximum": 4294967295,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "interval-duration-s": {
+      "maximum": 3600,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "interval-start": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+}

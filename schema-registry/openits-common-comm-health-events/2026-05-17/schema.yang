@@ -1,0 +1,160 @@
+module openits-common-comm-health-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:common-comm-health-events";
+  prefix openits-common-comm-health;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Cross-service communication-health notifications. Every openits
+     service (signal-control, dms, ess, rsu, ramp-metering, gateway)
+     uses these notifications for time-drift, comm-attempt statistics,
+     percent-loss windows, and link-flap events. Service-specific
+     content (e.g., which controller-id reports it) is carried in
+     the notification payload via standard leaves and via the
+     wire-source grouping.
+
+     The 'kind' identityref discriminates the specific comm-health
+     event class. Service-specific or vendor-specific kinds derive
+     from openits-types:comm-health-event-kind in their own modules.";
+
+  revision 2026-05-17 {
+    description
+      "Add descriptions to source-device-id and occurred-at leaves
+       in comm-health-event so the notification contract is
+       self-documenting for Phase 0c decoder implementers.";
+  }
+  revision 2026-05-16 {
+    description "Initial revision.";
+  }
+
+  /* --------------------------------------------------------------
+   * Base kinds (derive from openits-types:comm-health-event-kind)
+   * -------------------------------------------------------------- */
+
+  identity time-drift-observed {
+    base openits-types:comm-health-event-kind;
+    description
+      "Device clock observed to drift relative to a reference time
+       source. Magnitude carried in the payload.";
+  }
+
+  identity comm-attempt-window {
+    base openits-types:comm-health-event-kind;
+    description
+      "Periodic snapshot of comm-attempt counters (total, failed,
+       percent-loss, average response-time) over a reporting window.";
+  }
+
+  identity comm-link-degraded {
+    base openits-types:comm-health-event-kind;
+    description
+      "Comm link transitioned from healthy to degraded (loss above
+       threshold, latency above threshold, or other quality drop).";
+  }
+
+  identity comm-link-recovered {
+    base openits-types:comm-health-event-kind;
+    description
+      "Comm link transitioned from degraded back to healthy.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification comm-health-event {
+    openits-types:arc-it-flow
+      "Device -> NMS : communication-health observation";
+    description
+      "Generic comm-health observation. The 'kind' identityref names
+       the specific event class; the payload leaves carry magnitudes,
+       and wire-source carries the original wire identifier if the
+       event was decoded from a wire vocabulary (NTCIP status OID,
+       SNMP trap, etc.) rather than synthesized internally.";
+
+    leaf kind {
+      type identityref { base openits-types:comm-health-event-kind; }
+      mandatory true;
+      description "Specific comm-health event class.";
+    }
+
+    leaf source-device-id {
+      type openits-types:device-id;
+      mandatory true;
+      description
+        "Device this comm-health event pertains to, using the
+         openits-types:device-id pattern '[a-zA-Z0-9_-]+'. Typically
+         the controller-id / sign-id / RSU-id from the inventory.";
+    }
+
+    leaf occurred-at {
+      type yang:date-and-time;
+      mandatory true;
+      description
+        "Wall-clock time the event occurred at the device. Distinct
+         from CloudEvents ce-time (when the publisher observed it);
+         the two diverge for HR-log backfill or when device NTP is
+         broken.";
+    }
+
+    leaf drift-milliseconds {
+      type int64;
+      units "milliseconds";
+      description
+        "Time-drift magnitude (positive = device ahead of reference,
+         negative = device behind). Only meaningful when kind is
+         time-drift-observed.";
+    }
+
+    leaf attempts-total {
+      type uint32;
+      description
+        "Total comm attempts in this reporting window. Only meaningful
+         when kind is comm-attempt-window.";
+    }
+
+    leaf attempts-failed {
+      type uint32;
+      description
+        "Failed comm attempts in this reporting window. Only meaningful
+         when kind is comm-attempt-window.";
+    }
+
+    leaf percent-loss {
+      type openits-types:percentage;
+      description
+        "Percent-loss over this reporting window. Only meaningful when
+         kind is comm-attempt-window.";
+    }
+
+    leaf avg-response-ms {
+      type uint32;
+      units "milliseconds";
+      description
+        "Average response time over this reporting window. Only
+         meaningful when kind is comm-attempt-window.";
+    }
+
+    leaf link-id {
+      type uint8;
+      description
+        "Comm-link identifier. Used for link-degraded / link-recovered
+         events to identify which link transitioned.";
+    }
+
+    uses openits-types:wire-source;
+  }
+}

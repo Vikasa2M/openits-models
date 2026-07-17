@@ -1,0 +1,258 @@
+module openits-v2x-radio {
+  yang-version 1.1;
+  namespace "urn:openits:yang:v2x-radio";
+  prefix openits-v2x-radio;
+
+  import openits-types {
+    prefix openits-types;
+  }
+  import openits-v2x-radio-types {
+    prefix openits-v2x-radio-types;
+  }
+  import openits-v2x-messaging-types {
+    prefix openits-v2x-messaging-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "V2X radio capability: the physical radio layer of a V2X-equipped
+     device — radio technology, per-channel configuration, and
+     per-channel physical-layer counters (packets/bytes/errors,
+     channel-busy ratio, transmit power, radio faults). A device
+     profile that has a V2X radio (e.g. openits-rsu) 'uses' the 'radios'
+     grouping.
+
+     Deliberately technology-neutral: the channel key is an opaque
+     'channel-id' and a 'radio-tech' leaf says how to interpret it, so a
+     C-V2X-only unit is expressible — it is not forced onto the US DSRC
+     channel-numbering the previous dsrc-channel key baked in. Per-
+     message-type statistics (queue depths, TX/RX counts) are NOT here;
+     they are a messaging concern (openits-v2x-messaging).
+
+     Extracted from openits-rsu as part of the capability-first
+     re-architecture (docs/08-capability-architecture.md).
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.4.0";
+
+  revision 2026-07-16 {
+    description
+      "Radio regulatory + PHY compliance: bound tx-power-dbm to a plausible
+       range (-40..45 dBm) citing FCC EIRP class limits, instead of an
+       unbounded int8; make channel/radio-tech config-true and tie
+       dsrc-channel-number to it via a `when` so a DSRC channel number cannot
+       be set on a C-V2X channel; guard mode-alternating (IEEE 1609.4
+       CCH/SCH) to DSRC/dual-mode via a must (C-V2X PC5 has no CCH/SCH
+       switching); add a DCC (Decentralized Congestion Control) policy config
+       (SAE J2945/1 §6.3.8). Pre-1.0: radio-tech becomes config-true.";
+    reference "FCC 47 CFR / FCC 20-164; IEEE 1609.4; SAE J2945/1; SAE J3161/1.";
+  }
+  revision 2026-07-15 {
+    description
+      "Move dsrc-channel and the channel-fault-type identity family to the
+       new openits-v2x-radio-types module; repoint local uses. Repoint the
+       channel message-types leaf-list to openits-v2x-messaging-types.
+       BREAKING (pre-v1): channel-fault-type identityref values change
+       module prefix to openits-v2x-radio-types.";
+  }
+  revision 2026-07-14 {
+    description
+      "Extend channel-fault-type with channel-scoped tx-failure /
+       rx-failure / high-error-rate — the members the rsu-channel-fault
+       event's former inline enum needed, so state and event now share
+       one channel-fault vocabulary.";
+  }
+  revision 2026-07-13 {
+    description
+      "Initial revision. radio-tech + channel-mode identities
+       and the per-channel physical radio layer extracted from
+       openits-rsu; the channel key changed from the US-only
+       dsrc-channel number to a technology-neutral channel-id + radio-
+       tech discriminator so C-V2X channels are expressible; the DSRC
+       channel number survives as an optional typed leaf. Per-message-
+       type queue/count stats were removed from the channel (they move
+       to openits-v2x-messaging).";
+  }
+
+  /* --------------------------------------------------------------
+   * Typedefs
+   * -------------------------------------------------------------- */
+
+  typedef tx-power-dbm {
+    type int8 {
+      range "-40 .. 45";
+    }
+    units "dBm";
+    description
+      "Transmit power in dBm, bounded to the physically/regulatorily
+       plausible range. A licensed parameter: FCC EIRP class limits for 5.9
+       GHz ITS run ~33 dBm (class B) to 44.8 dBm (class C/D), so the unbounded
+       int8 (which admitted +127 dBm) is not acceptable for a config setpoint.";
+    reference "FCC 47 CFR (EIRP class limits); IEEE 1609.3/.4.";
+  }
+
+  /* --------------------------------------------------------------
+   * Identities
+   * -------------------------------------------------------------- */
+
+  identity radio-tech {
+    description "Base identity for V2X radio-access technology.";
+  }
+  identity radio-dsrc      { base radio-tech; description "IEEE 802.11p / DSRC (WAVE)."; }
+  identity radio-cv2x      { base radio-tech; description "C-V2X (3GPP PC5 sidelink)."; }
+  identity radio-dual-mode { base radio-tech; description "Dual-mode radio (DSRC + C-V2X)."; }
+
+  identity channel-mode {
+    description "Base identity for radio channel operating mode.";
+  }
+  identity mode-continuous  { base channel-mode; description "Continuous channel access."; }
+  identity mode-alternating { base channel-mode; description "Alternating (CCH/SCH) access."; }
+  identity mode-immediate   { base channel-mode; description "Immediate channel access."; }
+
+  identity radio-fault-type       { description "Base identity for radio fault types"; }
+  identity radio-fault-none       { base radio-fault-type; description "No fault"; }
+  identity radio-fault-tx-failure { base radio-fault-type; description "Transmit failure"; }
+  identity radio-fault-rx-failure { base radio-fault-type; description "Receive failure"; }
+  identity radio-fault-antenna    { base radio-fault-type; description "Antenna fault"; }
+  identity radio-fault-pll-unlock { base radio-fault-type; description "PLL unlock"; }
+  identity radio-fault-temperature { base radio-fault-type; description "Over-temperature"; }
+  identity radio-fault-power-amp  { base radio-fault-type; description "Power amplifier fault"; }
+
+  /* --------------------------------------------------------------
+   * Radio grouping
+   * -------------------------------------------------------------- */
+
+  grouping radios {
+    description
+      "V2X radio channels for a device: radio technology plus one entry
+       per configured channel (config + physical-layer state).";
+
+    container channels {
+      description "V2X radio channel configuration and physical state.";
+
+      leaf radio-type {
+        type identityref { base radio-tech; }
+        config false;
+        description "Radio technology the unit reports (DSRC / C-V2X / dual-mode).";
+      }
+
+      list channel {
+        key "channel-id";
+        description "One radio channel on the unit.";
+
+        leaf channel-id {
+          type string { length "1..32"; }
+          description
+            "Technology-neutral channel identifier (opaque key). For a
+             DSRC channel this is conventionally the channel number as a
+             string; for C-V2X it is a resource-pool / carrier
+             identifier. The radio-tech leaf says how to interpret it.";
+        }
+        leaf radio-tech {
+          type identityref { base radio-tech; }
+          description
+            "Radio technology this channel uses. Config-true (operator-set)
+             so DSRC/C-V2X-specific channel settings can be tied to it — an
+             operator must not be able to configure a DSRC channel number on
+             a C-V2X channel, or vice versa.";
+        }
+        leaf dsrc-channel-number {
+          type openits-v2x-radio-types:dsrc-channel;
+          when
+            "derived-from-or-self(../radio-tech, 'openits-v2x-radio:radio-dsrc')
+             or derived-from-or-self(../radio-tech, 'openits-v2x-radio:radio-dual-mode')";
+          description
+            "DSRC channel number for a DSRC (or dual-mode) channel. The
+             `when` ties it to radio-tech, so it is not applicable to — and
+             cannot be set on — a C-V2X channel.";
+        }
+
+        container config {
+          description "Channel configuration";
+          must
+            "not(derived-from-or-self(mode, 'openits-v2x-radio:mode-alternating'))
+             or derived-from-or-self(../radio-tech, 'openits-v2x-radio:radio-dsrc')
+             or derived-from-or-self(../radio-tech, 'openits-v2x-radio:radio-dual-mode')"
+          {
+            error-message
+              "alternating (CCH/SCH, IEEE 1609.4) channel access applies only
+               to DSRC — C-V2X PC5 has no CCH/SCH channel switching, so
+               mode-alternating is invalid unless radio-tech is DSRC or
+               dual-mode.";
+          }
+          leaf enabled {
+            type boolean;
+            default "true";
+            description "Channel is enabled";
+          }
+          leaf mode {
+            type identityref { base channel-mode; }
+            default "mode-continuous";
+            description "Channel operating mode";
+          }
+          leaf tx-power {
+            type tx-power-dbm;
+            description "Configured transmit power in dBm (setpoint).";
+          }
+          leaf-list message-types {
+            type identityref { base openits-v2x-messaging-types:v2x-message-type; }
+            description "Message types assigned to this channel";
+          }
+          leaf primary {
+            type boolean;
+            default "false";
+            description "Primary channel for safety messages";
+          }
+          container dcc {
+            description
+              "Decentralized Congestion Control policy. The channel-busy-ratio
+               is observed in state; this configures how the radio responds to
+               it (SAE J2945/1 §6.3.8; SAE J3161/1 for C-V2X).";
+            leaf policy {
+              type enumeration {
+                enum disabled { description "No DCC — transmit parameters are static."; }
+                enum reactive { description "Reactive DCC — step transmit power / message rate down as CBR crosses thresholds."; }
+                enum adaptive { description "Adaptive DCC — continuously control the message rate to hold a target CBR."; }
+              }
+              default "reactive";
+              description "DCC control policy.";
+            }
+            leaf cbr-target-percent {
+              type openits-types:percentage;
+              description
+                "Target channel-busy-ratio the adaptive policy holds the
+                 channel to (typically ~60-70 %).";
+            }
+          }
+        }
+
+        container state {
+          config false;
+          description "Channel physical-layer operational state.";
+          leaf operational        { type boolean; description "Channel is operational"; }
+          leaf packets-tx         { type uint64; description "Packets transmitted"; }
+          leaf packets-rx         { type uint64; description "Packets received"; }
+          leaf bytes-tx           { type uint64; description "Bytes transmitted"; }
+          leaf bytes-rx           { type uint64; description "Bytes received"; }
+          leaf tx-errors          { type uint32; description "Transmit errors"; }
+          leaf rx-errors          { type uint32; description "Receive errors"; }
+          leaf channel-busy-ratio { type openits-types:percentage; description "Channel busy ratio (CBR)"; }
+          leaf tx-power-dbm       { type tx-power-dbm; description "Current (measured) transmit power"; }
+          leaf fault-type {
+            type identityref { base openits-v2x-radio-types:channel-fault-type; }
+            description "Channel fault type (if any)";
+          }
+          leaf tx-queue-depth    { type uint32; description "Total transmit queue depth (radio-layer)"; }
+          leaf tx-failures       { type uint64; description "Total transmit failures"; }
+          leaf rx-decode-errors  { type uint64; description "Receive decode errors"; }
+          leaf security-failures { type uint64; description "Security verification failures at the radio layer"; }
+        }
+      }
+    }
+  }
+}

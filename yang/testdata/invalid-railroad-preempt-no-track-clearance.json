@@ -1,0 +1,8 @@
+{
+  "openits-signal-control:signal-controller": {
+    "config": { "id": "c1", "name": "c1" },
+    "preemption": { "preemptor": [
+      { "preemptor-id": 1, "config": { "preemptor-id": 1, "type": "railroad" } }
+    ] }
+  }
+}

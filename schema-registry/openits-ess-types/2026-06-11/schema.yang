@@ -1,0 +1,89 @@
+module openits-ess-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:ess-types";
+  prefix openits-ess-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "ESS / RWIS event-kind identity hierarchy. Derives from the
+     cross-service openits-types:device-event-kind root so ESS events
+     emitted via openits-common-fault-events carry a service-classified
+     'kind' identityref.
+
+     No mode sub-base is defined: an environmental sensor station is an
+     observation platform without an operator-meaningful operational
+     mode-space; modeling one would be an abstraction that fights
+     reality. The leaf fault identities mirror the fault-category
+     catalog in openits-ess (state-tree classification) — the two
+     hierarchies are deliberately separate namespaces.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  revision 2026-06-11 {
+    description
+      "Initial revision. Service root, dual-classified fault sub-base,
+       and leaf fault identities mirroring the openits-ess
+       fault-category catalog.";
+    reference
+      "NTCIP 1204:2017 (ESS functional reference; fault classes).";
+  }
+
+  /* --------------------------------------------------------------
+   * Service root + dual-classified sub-base
+   * -------------------------------------------------------------- */
+
+  identity ess-event-kind {
+    base openits-types:device-event-kind;
+    description
+      "Root for environmental-sensor-station events.";
+  }
+
+  identity ess-fault-event-kind {
+    base openits-types:fault-event-kind;
+    base ess-event-kind;
+    description
+      "ESS fault events. Dual-classified: by behavioral class
+       (fault-event-kind) and by service (ess-event-kind). Used as
+       the fallback kind when a decoder cannot map a more specific
+       leaf identity.";
+  }
+
+  /* --------------------------------------------------------------
+   * Fault leaf identities (mirror openits-ess fault-category)
+   * -------------------------------------------------------------- */
+
+  identity ess-fault-sensor-failure {
+    base ess-fault-event-kind;
+    description
+      "Individual sensor failed self-test or stopped responding.";
+  }
+  identity ess-fault-power {
+    base ess-fault-event-kind;
+    description "Power-supply or input-voltage fault at the station.";
+  }
+  identity ess-fault-communication {
+    base ess-fault-event-kind;
+    description
+      "Communication fault between station and upstream system.";
+  }
+  identity ess-fault-calibration-drift {
+    base ess-fault-event-kind;
+    description
+      "Sensor calibration has drifted outside its tolerance band.";
+  }
+  identity ess-fault-environmental {
+    base ess-fault-event-kind;
+    description
+      "Environmental fault (cabinet temperature, humidity, door,
+       etc.).";
+  }
+}

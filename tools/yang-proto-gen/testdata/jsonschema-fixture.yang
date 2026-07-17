@@ -1,0 +1,34 @@
+module jsonschema-fixture {
+  namespace "urn:test:jsonschema-fixture";
+  prefix jsf;
+  import ietf-yang-types { prefix yang; }
+
+  identity fixture-kind {
+    description "Fixture stand-in base identity for an identityref leaf.";
+  }
+
+  notification sample {
+    leaf name {
+      type string;
+      mandatory true;
+    }
+    leaf count {
+      type uint16 {
+        range "0..100";
+      }
+    }
+    leaf occurred-at {
+      type yang:date-and-time;
+    }
+    leaf kind {
+      type identityref {
+        base fixture-kind;
+      }
+    }
+    container detail {
+      leaf note {
+        type string;
+      }
+    }
+  }
+}

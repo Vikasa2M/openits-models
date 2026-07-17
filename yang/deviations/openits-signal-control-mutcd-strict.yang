@@ -1,0 +1,72 @@
+module openits-signal-control-mutcd-strict {
+  yang-version 1.1;
+  namespace "urn:openits:yang:signal-control-mutcd-strict";
+  prefix openits-sc-strict;
+
+  import openits-signal-control { prefix openits-sc; }
+
+  organization "OpenITS Working Group (proposal)";
+  contact "noi@openits.example.org";
+  description
+    "Jurisdiction deviation: tighten the yellow-change floor from the
+     MUTCD 11th ed. 4F.17 guidance minimum of 3.0 s to 4.0 s. A controller
+     that adheres to this deviation rejects any yellow-change below 4.0 s.
+     Deviations only tighten; they never loosen the standard.
+
+     Additive to the baseline openits-signal-control-mutcd deviation;
+     repeats the 6.0 s ceilings so a standalone load remains
+     conformant.";
+
+  revision 2026-07-13 {
+    description
+      "Repoint deviation targets through the phase config container: the
+       base module moved the phase timing container under
+       phases/phase/config as part of the config/state restructure, so
+       every deviation path gains an openits-sc:config step. Constraints
+       unchanged.";
+    reference "MUTCD 11th ed. 4F.17.";
+  }
+  revision 2026-07-13 {
+    description
+      "Standalone-load safety: this module previously carried only the
+       tightened yellow-change floor, so loading it without the
+       baseline openits-signal-control-mutcd deviation lost the
+       baseline's <= 6.0 s ceilings on yellow-change and red-clear.
+       Repeat both ceilings here so a standalone load is still
+       conformant with MUTCD 11th ed. 4F.17.";
+    reference "MUTCD 11th ed. 4F.17.";
+  }
+  revision 2026-07-10 {
+    description "Initial worked deviation: yellow-change >= 4.0 s.";
+    reference "MUTCD 11th ed. 4F.17; RFC 7950 section 7.20.3 (deviations).";
+  }
+
+  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:yellow-change" {
+    deviate add {
+      must ". >= 4.0" {
+        error-message
+          "This jurisdiction requires a yellow-change of at least 4.0 s "
+        + "(stricter than the MUTCD 4F.17 3.0 s floor).";
+      }
+      must ". <= 6.0" {
+        error-message
+          "Yellow change should not exceed 6.0 seconds (MUTCD 11th ed. "
+        + "section 4F.17 paragraph 13; repeated from the baseline "
+        + "openits-signal-control-mutcd deviation so a standalone load "
+        + "stays conformant).";
+      }
+    }
+  }
+
+  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:red-clear" {
+    deviate add {
+      must ". <= 6.0" {
+        error-message
+          "Red clearance should not exceed 6.0 seconds (MUTCD 11th ed. "
+        + "section 4F.17 paragraph 6; repeated from the baseline "
+        + "openits-signal-control-mutcd deviation so a standalone load "
+        + "stays conformant).";
+      }
+    }
+  }
+}

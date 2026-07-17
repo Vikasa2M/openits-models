@@ -1,0 +1,103 @@
+module openits-vendor-econolite-signal-control-types {
+  yang-version 1.1;
+  namespace "urn:econolite:yang:signal-control-types";
+  prefix openits-vendor-econolite-sc-types;
+
+  import openits-signal-control-types {
+    prefix openits-sc-types;
+  }
+
+  organization
+    "Econolite Group (vendor)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Vendor identity module for Econolite signal-control HR events.
+     Declares specialized identities derived from open vendor-extension
+     slots in openits-signal-control-types. Phase 0e ships the eight
+     vendor-alarm slot identities the ASC3 HR log surfaces under Indiana
+     code 185 (vendor-specific alarm); the ASC3 format decoder rewrites
+     the open openits-sc-types:fault-vendor-alarm identity to the
+     specific slot identity below when param byte names a known slot.
+
+     This module is the reference-implementation worked example of the
+     openits vendor-augmentation pattern. The Econolite Group has not
+     ratified this file; openits maintains it under the
+     conformance-reference NoI until a real Econolite-aligned org
+     adopts it.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  revision 2026-05-17 {
+    description
+      "Initial revision. Declares econolite-vendor-alarm-1 through
+       econolite-vendor-alarm-8, derived from
+       openits-signal-control-types:fault-vendor-alarm. Slot
+       semantics are agency-configurable; identity descriptions name
+       the slot only, not the agency-specific meaning bound to it.";
+    reference
+      "ATSPM Indiana enumeration code 185 (vendor-specific alarm;
+       param byte 1-8 typical ASC3 firmware).";
+  }
+
+  /* --------------------------------------------------------------
+   * Econolite ASC3 vendor-alarm slot identities
+   *
+   * Indiana code 185 carries a param byte in 1..8 (typical ASC3
+   * firmware) naming which vendor-defined alarm slot fired. Each
+   * slot identity below corresponds to one param value; param 0
+   * or 9+ falls back to the open openits-sc-types:fault-vendor-alarm
+   * base.
+   * -------------------------------------------------------------- */
+
+  identity econolite-vendor-alarm-1 {
+    base openits-sc-types:fault-vendor-alarm;
+    description
+      "Econolite ASC3 vendor alarm slot 1 (Indiana code 185, param 1).
+       Slot semantics are agency-configurable.";
+  }
+  identity econolite-vendor-alarm-2 {
+    base openits-sc-types:fault-vendor-alarm;
+    description
+      "Econolite ASC3 vendor alarm slot 2 (Indiana code 185, param 2).
+       Slot semantics are agency-configurable.";
+  }
+  identity econolite-vendor-alarm-3 {
+    base openits-sc-types:fault-vendor-alarm;
+    description
+      "Econolite ASC3 vendor alarm slot 3 (Indiana code 185, param 3).
+       Slot semantics are agency-configurable.";
+  }
+  identity econolite-vendor-alarm-4 {
+    base openits-sc-types:fault-vendor-alarm;
+    description
+      "Econolite ASC3 vendor alarm slot 4 (Indiana code 185, param 4).
+       Slot semantics are agency-configurable.";
+  }
+  identity econolite-vendor-alarm-5 {
+    base openits-sc-types:fault-vendor-alarm;
+    description
+      "Econolite ASC3 vendor alarm slot 5 (Indiana code 185, param 5).
+       Slot semantics are agency-configurable.";
+  }
+  identity econolite-vendor-alarm-6 {
+    base openits-sc-types:fault-vendor-alarm;
+    description
+      "Econolite ASC3 vendor alarm slot 6 (Indiana code 185, param 6).
+       Slot semantics are agency-configurable.";
+  }
+  identity econolite-vendor-alarm-7 {
+    base openits-sc-types:fault-vendor-alarm;
+    description
+      "Econolite ASC3 vendor alarm slot 7 (Indiana code 185, param 7).
+       Slot semantics are agency-configurable.";
+  }
+  identity econolite-vendor-alarm-8 {
+    base openits-sc-types:fault-vendor-alarm;
+    description
+      "Econolite ASC3 vendor alarm slot 8 (Indiana code 185, param 8).
+       Slot semantics are agency-configurable.";
+  }
+}

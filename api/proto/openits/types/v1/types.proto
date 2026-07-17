@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package openits.types.v1;
+
+option go_package = "github.com/openits/openits-models/pkg/proto/openits/types/v1;typesv1";
+
+message WireSource {
+  string decoder = 1;
+  oneof tag {
+    Indiana indiana = 2;
+    NtcipOid ntcip_oid = 3;
+    uint32 message_id = 4;
+    PlcRegister plc_register = 5;
+  }
+  message Indiana {
+    uint32 indiana_code = 1;
+    uint32 indiana_param = 2;
+  }
+
+  message NtcipOid {
+    string oid = 1;
+    string oid_value = 2;
+  }
+
+  message PlcRegister {
+    string register = 1;
+    string register_value = 2;
+  }
+}
+

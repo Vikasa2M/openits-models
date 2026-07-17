@@ -1,0 +1,153 @@
+module openits-cctv-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:cctv-events";
+  prefix openits-cctv-events;
+
+  import openits-types {
+    prefix openits-types;
+  }
+  import openits-cctv-types {
+    prefix openits-cctv-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+  description
+    "Service-specific domain events for openits-cctv (NTCIP 1205). Split
+     into a companion module so ygot's proto backend can generate protobuf
+     from the base module.
+
+     Fault and mode events are emitted via openits-common-fault-events /
+     openits-common-mode-events, discriminated by the cctv-fault-event-kind /
+     cctv-mode-event-kind identities in openits-cctv-types — this module
+     declares only the genuinely CCTV-specific domain events.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.1.0";
+
+  revision 2026-07-17 {
+    description
+      "Initial revision: CCTV domain events — ptz-preset-recalled,
+       tour-state-changed, and lockout-denied (control-ownership refusal).";
+    reference "NTCIP 1205.";
+  }
+
+  notification ptz-preset-recalled {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : camera control status";
+    description
+      "A stored PTZ preset was recalled (goto), whether by an operator
+       command or by a running tour advancing to its next stop. Lets an
+       audit trail record which view the camera was pointed at and why.";
+
+    leaf kind {
+      type identityref {
+        base openits-cctv-types:cctv-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-cctv-types:cctv-ptz-preset-recalled for
+         this notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf preset-id {
+      type uint16;
+      mandatory true;
+      description "Preset that was recalled.";
+    }
+    leaf preset-name {
+      type string;
+      description "Operator label of the recalled preset, if any.";
+    }
+    leaf recalled-by {
+      type string;
+      description
+        "Identifier of the operator / subsystem that recalled the preset.
+         Absent when the recall was a tour advance (see via-tour).";
+    }
+    leaf via-tour {
+      type boolean;
+      description
+        "True when the recall was a tour advancing to its next stop rather
+         than an explicit operator goto.";
+    }
+  }
+
+  notification tour-state-changed {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : camera control status";
+    description
+      "A camera preset tour changed run state (started / stopped / paused).
+       Emitted on transitions only so consumers can track tour lifecycle
+       without polling.";
+
+    leaf kind {
+      type identityref {
+        base openits-cctv-types:cctv-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-cctv-types:cctv-tour-state-changed for
+         this notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf tour-id {
+      type uint16;
+      mandatory true;
+      description "Tour whose run state changed.";
+    }
+    leaf previous-state {
+      type openits-cctv-types:tour-run-state;
+      description "Run state before the transition.";
+    }
+    leaf current-state {
+      type openits-cctv-types:tour-run-state;
+      mandatory true;
+      description "Run state after the transition.";
+    }
+  }
+
+  notification lockout-denied {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : camera control status";
+    description
+      "A control-ownership acquisition was refused because the requester's
+       priority did not exceed the current holder's. The soft-arbitration
+       counterpart to the config/state holder divergence: a losing write
+       surfaces here rather than silently failing.";
+
+    leaf kind {
+      type identityref {
+        base openits-cctv-types:cctv-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-cctv-types:cctv-lockout-denied for this
+         notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf requested-by {
+      type string;
+      mandatory true;
+      description "Identifier of the operator / subsystem that was refused.";
+    }
+    leaf requested-priority {
+      type uint8;
+      description "Priority the refused requester asserted (1..255).";
+    }
+    leaf current-holder {
+      type string;
+      description "Identifier of the operator / subsystem currently holding control.";
+    }
+    leaf held-priority {
+      type uint8;
+      description "Priority the current holder asserted.";
+    }
+  }
+}

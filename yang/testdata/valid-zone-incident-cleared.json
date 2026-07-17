@@ -1,0 +1,10 @@
+{
+  "openits-perception-events:zone-incident-cleared": {
+    "kind": "openits-perception-types:pcp-zone-incident-cleared",
+    "source-device-id": "eb-travel-lanes-cam-03",
+    "occurred-at": "2026-07-11T14:12:00Z",
+    "sequence": "2",
+    "incident-id": "inc-2026-07-11-0004",
+    "zone-id": "eb-travel-lanes"
+  }
+}

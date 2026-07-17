@@ -1,0 +1,34 @@
+{
+  "openits-signal-control:signal-controller": {
+    "config": { "id": "c1", "name": "c1" },
+    "phases": { "phase": [
+      { "phase-number": 2, "config": { "phase-number": 2, "ring": 1, "barrier": 1,
+        "timing": { "min-green": 5, "max-green": 40, "yellow-change": "3.5", "red-clear": "1.5" } } }
+    ] },
+    "coordination": { "timing-plan": [
+      { "plan-id": 1, "cycle-length": 60,
+        "split": [ { "phase-number": 2, "split-seconds": 60 } ] }
+    ] },
+    "timebase": {
+      "day-plan": [
+        { "day-plan-id": 1, "name": "weekday",
+          "action": [
+            { "start-time": "06:00:00", "timing-plan": 1 },
+            { "start-time": "23:00:00", "special-operation": "flash" }
+          ] },
+        { "day-plan-id": 2, "name": "weekend",
+          "action": [ { "start-time": "00:00:00", "special-operation": "free" } ] }
+      ],
+      "schedule-entry": [
+        { "schedule-id": 1, "days-of-week": ["monday","tuesday","wednesday","thursday","friday"], "day-plan": 1 },
+        { "schedule-id": 2, "days-of-week": ["saturday","sunday"], "day-plan": 2 }
+      ],
+      "clock": {
+        "current-time": "2026-07-14T12:00:00Z",
+        "time-source": "openits-signal-control-types:time-source-gnss",
+        "sync-status": "synced",
+        "offset-ms": 12
+      }
+    }
+  }
+}

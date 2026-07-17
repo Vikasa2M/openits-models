@@ -1,0 +1,12 @@
+{
+  "openits-reversible-lane-events:lane-state-changed": {
+    "kind": "openits-reversible-lane-types:rl-lane-state-changed",
+    "source-device-id": "us75-contraflow",
+    "occurred-at": "2026-07-13T12:00:00Z",
+    "sequence": "1",
+    "previous-state": "closed",
+    "new-state": "open",
+    "new-direction": "southbound",
+    "initiated-by": "operator:jsmith"
+  }
+}

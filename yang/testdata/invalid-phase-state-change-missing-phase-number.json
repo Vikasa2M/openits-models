@@ -1,0 +1,7 @@
+{
+  "openits-signal-control-events:phase-state-change": {
+    "kind": "openits-signal-control-types:phase-begin-green",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "occurred-at": "2026-07-11T14:05:00Z"
+  }
+}

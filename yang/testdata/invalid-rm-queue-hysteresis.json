@@ -1,0 +1,129 @@
+{
+  "openits-ramp-metering:ramp-meter": {
+    "config": {
+      "id": "i405-nb-western-ave",
+      "road-reference": "I-405 NB @ Western Ave on-ramp",
+      "latitude": "47.6205",
+      "longitude": "-122.3493"
+    },
+    "state": {
+      "id": "i405-nb-western-ave",
+      "road-reference": "I-405 NB @ Western Ave on-ramp",
+      "latitude": "47.6205",
+      "longitude": "-122.3493",
+      "make": "Siemens",
+      "model": "m60-ramp",
+      "firmware": "9.4.1"
+    },
+    "control": {
+      "config": {
+        "mode": "openits-ramp-metering-types:mode-active",
+        "active-plan-id": 2
+      },
+      "state": {
+        "mode": "openits-ramp-metering-types:mode-active",
+        "active-plan-id": 2,
+        "current-release-rate-vph": 720,
+        "last-mode-change": "2026-04-19T07:00:00Z",
+        "queue-length-current-vehicles": 8,
+        "queue-override-active": false
+      }
+    },
+    "advance-warning-sign": {
+      "config": {
+        "enabled": true
+      }
+    },
+    "plans": {
+      "plan": [
+        {
+          "plan-id": 2,
+          "name": "am-peak",
+          "release-rate-vph": 720,
+          "headway-s": "5.0",
+          "vehicles-per-green": 1,
+          "queue-override-threshold-vehicles": 25,
+          "phase-timing": {
+            "min-green": 1,
+            "max-green": 30,
+            "yellow-change": "2.0",
+            "red-clear": "1.0",
+            "passage": "0.5"
+          },
+          "queue-override-clear-threshold-vehicles": 25,
+          "queue-override-rate-vph": 900
+        }
+      ]
+    },
+    "lanes": {
+      "lane": [
+        {
+          "lane-id": "meter-1",
+          "config": {
+            "lane-id": "meter-1",
+            "bypass": false
+          },
+          "state": {
+            "lane-id": "meter-1",
+            "bypass": false,
+            "last-release": "2026-04-19T07:05:03Z",
+            "head-state": "red",
+            "current-release-rate-vph": 720
+          },
+          "detector": [
+            {
+              "detector-id": "demand",
+              "config": {
+                "detector-id": "demand",
+                "role": "demand"
+              },
+              "state": {
+                "detector-id": "demand",
+                "role": "demand",
+                "active": true,
+                "count-vph": 900,
+                "occupancy-pct": 22,
+                "last-update": "2026-04-19T07:05:00Z"
+              }
+            },
+            {
+              "detector-id": "passage",
+              "config": {
+                "detector-id": "passage",
+                "role": "passage"
+              },
+              "state": {
+                "detector-id": "passage",
+                "role": "passage",
+                "active": true,
+                "count-vph": 720,
+                "occupancy-pct": 10,
+                "last-update": "2026-04-19T07:05:00Z"
+              }
+            },
+            {
+              "detector-id": "queue",
+              "config": {
+                "detector-id": "queue",
+                "role": "queue"
+              },
+              "state": {
+                "detector-id": "queue",
+                "role": "queue",
+                "active": true,
+                "count-vph": 180,
+                "occupancy-pct": 35,
+                "last-update": "2026-04-19T07:05:00Z"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "diagnostics": {
+      "controller-uptime-s": 345600,
+      "last-self-test": "2026-04-19T06:55:00Z",
+      "signal-head-faults": 0
+    }
+  }
+}

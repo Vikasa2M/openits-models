@@ -1,0 +1,115 @@
+{
+  "zone-incident-cleared": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "cleared-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "incident-id": {
+      "type": "string"
+    },
+    "zone-id": {
+      "type": "string"
+    }
+  },
+  "type": "object"
+},
+  "zone-incident-detected": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "confidence": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "incident-id": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "string"
+    },
+    "longitude": {
+      "type": "string"
+    },
+    "object-class": {
+      "type": "string"
+    },
+    "severity": {
+      "enum": [
+        "critical",
+        "info",
+        "major",
+        "minor",
+        "warning"
+      ],
+      "type": "string"
+    },
+    "speed-kmh": {
+      "type": "string"
+    },
+    "track-id": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "type": {
+      "type": "string"
+    },
+    "zone-id": {
+      "type": "string"
+    }
+  },
+  "type": "object"
+},
+  "zone-interval-report": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "zone": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "average-speed-kmh": {
+            "type": "string"
+          },
+          "class-count": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "class": {
+                  "type": "string"
+                },
+                "count": {
+                  "maximum": 4294967295,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "interval-duration-s": {
+            "maximum": 3600,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "interval-start": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "zone-id": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object"
+}
+}

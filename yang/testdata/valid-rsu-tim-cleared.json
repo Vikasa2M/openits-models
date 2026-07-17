@@ -1,0 +1,10 @@
+{
+  "openits-rsu-events:rsu-tim-cleared": {
+    "kind": "openits-rsu-types:rsu-tim-cleared-kind",
+    "source-device-id": "rsu-i35-mm214",
+    "occurred-at": "2026-07-11T15:00:00Z",
+    "sequence": "2",
+    "msg-id": "0x1A2B",
+    "reason": "cleared-by-operator"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "openits-signal-control-events:detector-transition": {
+    "kind": "openits-signal-control-types:coord-pattern-change",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "channel": 12,
+    "occurred-at": "2026-07-11T14:05:00Z"
+  }
+}

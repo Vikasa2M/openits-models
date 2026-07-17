@@ -1,0 +1,9 @@
+{
+  "module": "openits-signal-control-phase-events",
+  "revision": "2026-05-17",
+  "files": [
+    "schema.yang",
+    "schema.proto",
+    "schema.json"
+  ]
+}

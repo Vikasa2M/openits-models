@@ -1,0 +1,9 @@
+{
+  "openits-rsu-events:rsu-tim-broadcast": {
+    "msg-id": "0x1A2B",
+    "channel-id": "172",
+    "dsrc-channel-number": 172,
+    "priority": 12,
+    "broadcast-at": "2026-07-11T14:05:00Z"
+  }
+}

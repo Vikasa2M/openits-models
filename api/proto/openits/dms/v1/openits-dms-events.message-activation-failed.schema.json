@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "attempted-memory-type": {
+      "enum": [
+        "blank",
+        "changeable",
+        "permanent",
+        "schedule",
+        "volatile"
+      ],
+      "type": "string"
+    },
+    "attempted-slot-number": {
+      "maximum": 65535,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "error-position": {
+      "maximum": 65535,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "error-type": {
+      "enum": [
+        "font-not-found",
+        "graphic-not-found",
+        "hardware",
+        "other",
+        "syntax",
+        "too-long",
+        "unsupported-tag"
+      ],
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+}

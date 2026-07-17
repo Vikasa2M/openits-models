@@ -1,0 +1,12 @@
+{
+  "openits-signal-control-events:controller-fault-event": {
+    "kind": "openits-signal-control-types:fault-unit-flash-status",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence": "1",
+    "fault-id": "sc01-hrfault-0173-042",
+    "severity": "critical",
+    "occurred-at": "2026-07-11T14:05:12.483Z",
+    "raised": true,
+    "flash-cause": "openits-signal-control-types:flash-mmu-conflict"
+  }
+}

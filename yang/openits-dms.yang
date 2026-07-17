@@ -1,0 +1,814 @@
+module openits-dms {
+  yang-version 1.1;
+  namespace "urn:openits:yang:dms";
+  prefix openits-dms;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-dms-types {
+    prefix openits-dms-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "YANG data model for Dynamic Message Signs (DMS).
+
+     Transport-independent replacement for NTCIP 1203 v03, aligned
+     with ARC-IT 9.1 service package TI06 (Traffic Information
+     Dissemination).  The model is deliberately structure-first: sign
+     identity, a message-memory library, a commanded control surface
+     (mode, brightness, message activation, and fallback messages),
+     environment sensors, and pixel/lamp health live under a single
+     `sign` container with config / state separation applied to every
+     node that has both sides.
+
+     Nodes are annotated with the 'arc-it-flow' extension so tooling
+     can emit ARC-IT coverage reports.
+
+     Copyright (c) 2026.  Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.8.0";
+
+  revision 2026-07-16 {
+    description
+      "Scheduler / day-plan (Cut 3b): add sign/schedule — a day-plan list
+       (ordered time-of-day actions, each activating a stored message) and a
+       schedule-entry calendar (months / days-of-week / days-of-month ->
+       day-plan, empty axis = all), plus a config-false state readback
+       (active-day-plan-id, next-action-at). The 'schedule' memory-type bank
+       existed but nothing modelled time-based activation (NTCIP 1203
+       scheduling / NTCIP 1201 dayPlan). Adds a time-of-day typedef.
+       Queue/preemption restore + pixel diagnostics (Cut 3a): add
+       control/state/preempted (presence container) holding the message the
+       active higher-priority activation displaced, so a consumer knows the
+       sign will restore it rather than blank when the override clears
+       (priority-queue restore); add pixels-stuck-on / pixels-stuck-off so
+       pixel diagnostics are more than a single failed count.
+       Illumination control (Cut 2b): add sign-control illumination-control
+       (photocell / timer / manual) so automatic photocell dimming is
+       distinguishable from a fixed manual or scheduled level (the
+       brightness-setpoint alone did not say whether it is a ceiling or an
+       exact value); add default-page-on-time-s / default-page-off-time-s
+       (NTCIP 1203 dmsDefaultPage*Time).
+       Capability advertisement (Cut 2a): add sign/state/capabilities
+       (sign-type full/char/line-matrix, character-height/width-pixels,
+       color-capability, max-pages, beacon-capable, supported-multi-tags,
+       and a font table) so a central system can validate a message fits
+       and uses only supported markup before sending — previously only
+       technology + sign dimensions were advertised, so messages
+       truncated/garbled on character-matrix signs (NTCIP 1203 dmsSignCfg /
+       fontDefinition / dmsSupportedMultiTags). Extend the technology enum
+       with fiber-optic / shuttered / lamp / drum.
+       Command-safety cut: replace the conflated sign 'mode' with a
+       commanded/actual control-mode (dms-control-mode) so field takeover
+       is visible as config/state divergence, and add a display-state
+       readback; add a power-loss fallback message + power-loss-active
+       state (NTCIP dmsPowerLossMessage); restructure messages/slot into
+       the config/state paired-list idiom with a per-slot dmsMessageStatus
+       so unvalidated content is distinguishable from deployable; add a
+       per-message beacon. BREAKING (pre-v1): 'mode' becomes control-mode
+       + display-state, and messages/slot gains config/state wrappers.";
+    reference "NTCIP 1203 v03; MUTCD (beacons).";
+  }
+  revision 2026-07-14 {
+    description
+      "Cut 3c (events layering): move typedef message-memory-type to
+       openits-dms-types so the events module imports -types, not
+       this core. Wire-neutral (a typedef emits no proto); pre-v1
+       consumers repoint the prefix.";
+  }
+  revision 2026-07-13 {
+    description
+      "Delete the dead brightness-setpoint must ('. <= 100'): the
+       leaf's type is openits-types:percentage, which already ranges
+       0..100, so the must restated the type range and never fired
+       independently. brightness-setpoint stays in config-false state
+       for now (relocating it to a config-true brightness surface is
+       out of scope here). No schema change; must-only removal.";
+  }
+  revision 2026-07-13 {
+    description
+      "Adopt the shared openits-types:fault-entry grouping in the
+       config-false faults list, replacing the inline fault-id +
+       severity + description + first-observed leaves. The
+       service-specific category identityref is unchanged.
+
+       Also adopt the shared openits-types:device-hardware grouping
+       (make/model/firmware/serial) in the identity container,
+       replacing the inline config-false leaves.
+
+       Delete the local brightness-percent typedef; use the byte-
+       identical openits-types:percentage.
+
+       Convert the sign 'mode' leaf from the local sign-mode
+       enumeration to an identityref on
+       openits-dms-types:sign-mode, so vendors can add proprietary
+       operating modes without a base-model revision.
+
+       Rename the config-false 'operational-status' container to
+       'state', standardising the read-only operational rollup on one
+       container name across services (configuration stays the default
+       tree; state is config false in a dedicated 'state' container).";
+  }
+  revision 2026-07-12 {
+    description
+      "Move the fault taxonomy to gen-2: delete the gen-1
+       fault-category identity and its fault-lamp / fault-pixel /
+       fault-controller / fault-environment / fault-power /
+       fault-communication children, replaced by the service-prefixed
+       dms-fault-event-kind tree already present in the
+       openits-dms-types module. The faults/fault 'category' leaf now
+       bases on openits-dms-types:dms-fault-event-kind. Breaking:
+       identity names change (e.g. fault-lamp -> dms-fault-lamp);
+       wire-neutral since the wire representation of an identityref is
+       a string (pre-v1, acceptable). Completes the fault-taxonomy
+       consolidation for this service.";
+    reference "RFC 7950 section 11 (breaking YANG evolution: identity rename).";
+  }
+  revision 2026-07-10 {
+    description
+      "Replace the inline severity enumeration on the fault-inventory
+       list with the shared openits-types:fault-severity typedef.
+       Member set and order unchanged — wire-stable.
+
+       Also, replace the inline sign-identity latitude/longitude
+       leaves (decimal64 fraction-digits 6) with
+       openits-types:geo-point (fraction-digits 7), correcting a
+       precision drift versus the shared geo-location grouping used
+       elsewhere. Member set unchanged (latitude, longitude); the
+       fraction-digits mantissa widens from 6 to 7.
+
+       Also, add base openits-types:fault-event-kind to the
+       fault-category root so this service's faults are reachable by
+       fleet-wide derived-from-or-self(fault-event-kind) queries.
+       Additive (identity gains a base); no child renamed.";
+    reference "RFC 7950 section 11 (additive YANG evolution).";
+  }
+  revision 2026-04-19 {
+    description
+      "Initial revision.  Minimum viable model covering identity,
+       message buffers, active message, environment sensors, pixel
+       and lamp status, and faults.";
+    reference
+      "ARC-IT 9.1 Service Package TI06 (Traffic Information
+       Dissemination); NTCIP 1203 v03 (functional reference only;
+       no wire compatibility).";
+  }
+
+  /* --------------------------------------------------------------
+   * Typedefs
+   * -------------------------------------------------------------- */
+
+  typedef pixel-count {
+    type uint32;
+    description "Count of pixels, used for both totals and defective tallies.";
+  }
+
+  typedef time-of-day {
+    type string {
+      pattern '(([01][0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]';
+    }
+    description "Wall-clock time of day, 24-hour HH:MM:SS.";
+  }
+
+  /* --------------------------------------------------------------
+   * Reusable groupings
+   * -------------------------------------------------------------- */
+
+  grouping sign-control-config {
+    description
+      "Commanded sign-control values: intended in control/config, applied
+       (actual) in control/state — one definition, mirrored per the
+       config/state idiom.";
+    leaf control-mode {
+      type identityref {
+        base openits-dms-types:dms-control-mode;
+      }
+      description
+        "Who is driving the sign (NTCIP 1203 dmsControlMode). Commanded in
+         control/config; actual value read back in control/state. A
+         commanded control-central with an actual control-local means a
+         field technician took local control and central commands are not
+         being honoured — visible as config/state divergence.";
+    }
+    leaf brightness-setpoint {
+      type openits-types:percentage;
+      description
+        "Brightness setpoint (0..100). The sign may auto-dim within this
+         ceiling per ambient light.";
+    }
+    leaf illumination-control {
+      type enumeration {
+        enum photocell { description "Automatic — the sign dims/brightens from its photocell (ambient-light) reading, up to the brightness-setpoint ceiling."; }
+        enum timer     { description "Scheduled — brightness follows a time-of-day schedule."; }
+        enum manual     { description "Fixed — brightness held at brightness-setpoint regardless of ambient light."; }
+      }
+      description
+        "How the sign's brightness is governed (NTCIP 1203 dmsIllumControl).
+         Distinguishes automatic photocell dimming from a fixed manual
+         level or a scheduled one — brightness-setpoint alone did not say
+         whether it is a ceiling (photocell) or an exact value (manual).";
+    }
+    leaf default-page-on-time-s {
+      type decimal64 {
+        fraction-digits 1;
+        range "0.1 .. 25.5";
+      }
+      units "seconds";
+      description
+        "Default on-time for a MULTI page when the message does not set one
+         (NTCIP 1203 dmsDefaultPageOnTime).";
+    }
+    leaf default-page-off-time-s {
+      type decimal64 {
+        fraction-digits 1;
+        range "0.0 .. 25.5";
+      }
+      units "seconds";
+      description
+        "Default off-time (blank interval) between MULTI pages when the
+         message does not set one (NTCIP 1203 dmsDefaultPageOffTime).";
+    }
+  }
+
+  grouping message-body {
+    description
+      "Fields common to every message slot (permanent / changeable /
+       volatile / active).  MULTI text is carried verbatim; consumers
+       that need rendered pixel maps fetch those from the registry.";
+
+    leaf multi-string {
+      type string {
+        length "0..65535";
+      }
+      description
+        "NTCIP 1203 MULTI (MarkUp Language for Transportation
+         Information) text.  Empty string represents an unused
+         slot.";
+    }
+    leaf priority {
+      type uint8 {
+        range "1..255";
+      }
+      description
+        "Run-time priority; higher value wins when multiple
+         messages are queued.";
+    }
+    leaf owner {
+      type string;
+      description "Authoring system or operator (informational).";
+    }
+    leaf crc {
+      type uint32;
+      description
+        "CRC-32 of the MULTI string.  Receivers compare this to
+         their cached copy before re-rendering.";
+    }
+    leaf beacon {
+      type enumeration {
+        enum none     { description "No beacons flash with this message."; }
+        enum flashing { description "Beacons flash while this message is displayed."; }
+      }
+      default "none";
+      description "Per-message beacon activation (MUTCD ties beacon flashing to message meaning).";
+    }
+  }
+
+  /* --------------------------------------------------------------
+   * Main tree
+   * -------------------------------------------------------------- */
+
+  container sign {
+    description
+      "Top-level container for a single dynamic message sign.";
+
+    /* ----- identity ----- */
+    container config {
+      description "Intended sign identity.";
+      uses openits-types:device-identity-config;
+    }
+    container state {
+      config false;
+      openits-types:arc-it-flow
+        "Roadway Equipment -> TMC : roadway equipment status";
+      description "Applied identity (mirror) + device-reported hardware and face geometry.";
+      uses openits-types:device-identity-config;
+      uses openits-types:device-hardware;
+
+      leaf technology {
+        type enumeration {
+          enum unknown     { value 0; }
+          enum led         { value 1; }
+          enum flip-disk   { value 2; }
+          enum hybrid      { value 3; }
+          enum fiber-optic { value 4; }
+          enum shuttered   { value 5; }
+          enum lamp        { value 6; }
+          enum drum        { value 7; }
+        }
+        description "Display technology reported by the sign (NTCIP 1203 dmsSignTechnology).";
+      }
+
+      leaf sign-width-pixels  { type pixel-count; description "Addressable pixel width of the sign face."; }
+      leaf sign-height-pixels { type pixel-count; description "Addressable pixel height of the sign face."; }
+
+      container capabilities {
+        description
+          "What the sign can display, advertised so a central system can
+           validate that a message fits and uses only supported markup
+           BEFORE sending — otherwise messages truncate or garble on
+           character/line-matrix signs (NTCIP 1203 dmsSignCfg /
+           fontDefinition / dmsSupportedMultiTags).";
+
+        leaf sign-type {
+          type enumeration {
+            enum full-matrix { description "Every pixel individually addressable; arbitrary text position and graphics."; }
+            enum char-matrix { description "Fixed character cells; text only on character-cell boundaries."; }
+            enum line-matrix { description "Fixed rows; graphics within a row, text on line boundaries."; }
+            enum other       { description "Sign type not otherwise classified."; }
+          }
+          description
+            "Matrix type — determines whether arbitrary positioning/graphics
+             are possible or text is confined to character/line cells.";
+        }
+        leaf character-height-pixels {
+          type pixel-count;
+          description "Character-cell height in pixels; 0 on a full-matrix sign.";
+        }
+        leaf character-width-pixels {
+          type pixel-count;
+          description "Character-cell width in pixels; 0 on full/line-matrix (proportional) signs.";
+        }
+        leaf color-capability {
+          type enumeration {
+            enum monochrome-1bit  { description "Single colour, pixels on/off."; }
+            enum monochrome-multi { description "Single hue with multiple intensity levels."; }
+            enum color            { description "Full colour (RGB)."; }
+          }
+          description "Colour rendering capability.";
+        }
+        leaf max-pages {
+          type uint8 { range "1..255"; }
+          description "Maximum number of pages the sign can cycle within one message.";
+        }
+        leaf beacon-capable {
+          type boolean;
+          description "True if the sign has beacons a message can flash.";
+        }
+        leaf-list supported-multi-tags {
+          type enumeration {
+            enum new-line;
+            enum new-page;
+            enum font;
+            enum color-foreground;
+            enum flash;
+            enum justify-line;
+            enum justify-page;
+            enum page-time;
+            enum graphic;
+            enum text-rectangle;
+          }
+          description
+            "MULTI (NTCIP 1203) markup tags this sign supports, so central
+             can avoid sending a tag the sign will reject.";
+        }
+        list font {
+          key "font-number";
+          description "Fonts available on the sign (NTCIP 1203 fontDefinition).";
+          leaf font-number {
+            type uint8;
+            description "Font identifier referenced by a MULTI [fontN] tag.";
+          }
+          leaf name {
+            type string;
+            description "Operator-facing font name.";
+          }
+          leaf character-height-pixels {
+            type pixel-count;
+            description "Character-cell height of this font, in pixels.";
+          }
+        }
+      }
+    }
+
+    /* ----- message buffers (config-only library) ----- */
+    container messages {
+      openits-types:arc-it-flow
+        "TMC -> Roadway Equipment : traffic information";
+
+      description
+        "Message-memory library (NTCIP 1203 banks: permanent /
+         changeable / volatile / schedule). Activated by reference
+         from control/config/active-message.";
+
+      list slot {
+        key "memory-type slot-number";
+        description "One slot per (memory-type, slot-number) tuple.";
+
+        leaf memory-type {
+          type leafref { path "../config/memory-type"; }
+          description "Bank the slot lives in (key; references config/memory-type).";
+        }
+        leaf slot-number {
+          type leafref { path "../config/slot-number"; }
+          description "Slot index within the bank (key; references config/slot-number).";
+        }
+        container config {
+          description "Authored slot content.";
+          leaf memory-type {
+            type openits-dms-types:message-memory-type;
+            description "Bank the slot lives in.";
+          }
+          leaf slot-number {
+            type uint16 { range "1..65535"; }
+            description "Slot index within the bank.";
+          }
+          uses message-body;
+        }
+        container state {
+          config false;
+          description "Sign-reported per-slot status.";
+          leaf status {
+            type openits-dms-types:dms-message-status;
+            description
+              "Validation lifecycle of the slot (NTCIP dmsMessageStatus):
+               not-used / modifying / validating / valid / error — so
+               unvalidated content is distinguishable from deployable.";
+          }
+        }
+      }
+    }
+
+    /* ----- time-based scheduling ----- */
+    container schedule {
+      description
+        "Time-based message activation (NTCIP 1203 scheduling). A day-plan
+         is an ordered set of time-of-day actions, each activating a stored
+         message; a schedule-entry maps calendar dates to a day-plan. An
+         empty calendar axis means 'all'. Previously the 'schedule'
+         memory-type bank existed but nothing modelled what activated it
+         by time.";
+      reference "NTCIP 1203 (scheduling); NTCIP 1201 (dayPlan / dayPlanSchedule).";
+
+      list day-plan {
+        key "day-plan-id";
+        description "One day-plan: an ordered set of time-of-day message activations.";
+        must "action" {
+          error-message
+            "A day-plan must contain at least one action; an empty day-plan schedules nothing.";
+        }
+        leaf day-plan-id { type uint8 { range "1..255"; } description "Day-plan identifier (key)."; }
+        leaf name { type string; description "Operator-facing day-plan name."; }
+
+        list action {
+          key "start-time";
+          description "At start-time, activate the named stored message; it holds until the next action.";
+          leaf start-time { type time-of-day; description "Wall-clock time this action takes effect."; }
+          leaf memory-type {
+            type openits-dms-types:message-memory-type;
+            description "Bank of the message to activate.";
+          }
+          leaf slot-number {
+            type uint16 { range "1..65535"; }
+            description "Slot of the message to activate (a blank slot schedules a blank sign).";
+          }
+        }
+      }
+
+      list schedule-entry {
+        key "schedule-id";
+        description "Calendar rule mapping a set of dates to a day-plan. An empty axis means 'all'.";
+        reference "NTCIP 1201 (dayPlanScheduleTable).";
+        leaf schedule-id { type uint8 { range "1..255"; } description "Schedule-entry identifier (key)."; }
+        leaf-list months {
+          type enumeration {
+            enum january { value 1; } enum february { value 2; } enum march { value 3; }
+            enum april { value 4; } enum may { value 5; } enum june { value 6; }
+            enum july { value 7; } enum august { value 8; } enum september { value 9; }
+            enum october { value 10; } enum november { value 11; } enum december { value 12; }
+          }
+          description "Months this rule applies to. Empty means all months.";
+        }
+        leaf-list days-of-week {
+          type enumeration {
+            enum monday { value 1; } enum tuesday { value 2; } enum wednesday { value 3; }
+            enum thursday { value 4; } enum friday { value 5; } enum saturday { value 6; }
+            enum sunday { value 7; }
+          }
+          description "Days of week this rule applies to. Empty means all days of week.";
+        }
+        leaf-list days-of-month {
+          type uint8 { range "1..31"; }
+          description "Days of month this rule applies to. Empty means all days of month.";
+        }
+        leaf day-plan {
+          type leafref { path "../../day-plan/day-plan-id"; require-instance true; }
+          description "Day-plan to run on matching dates.";
+        }
+      }
+
+      container state {
+        config false;
+        description "Scheduler readback: which day-plan is active and when the next action fires.";
+        leaf active-day-plan-id {
+          type leafref { path "../../day-plan/day-plan-id"; }
+          description "Day-plan the scheduler is currently running (absent if no schedule-entry matches today).";
+        }
+        leaf next-action-at {
+          type yang:date-and-time;
+          description "Wall-clock time of the next scheduled action.";
+        }
+      }
+    }
+
+    /* ----- commanded control surface ----- */
+    container control {
+      description
+        "Commanded sign surface: mode, brightness, message activation, and
+         fallback messages. Write control/config to command the sign; control/
+         state reports the applied/actual result. Whether a command took effect
+         is read as control/config vs control/state divergence.";
+      container config {
+        description "Intended sign control.";
+        uses sign-control-config;
+        container active-message {
+          description
+            "Command the sign to display a library message (NTCIP 1203
+             dmsActivateMessage). Names a slot in the messages library by
+             (memory-type, slot-number).";
+          leaf memory-type {
+            type openits-dms-types:message-memory-type;
+            description "Bank of the message to activate.";
+          }
+          leaf slot-number {
+            type uint16 {
+              range "1..65535";
+            }
+            description "Slot within the bank to activate.";
+          }
+          leaf duration-s {
+            type uint32;
+            units "seconds";
+            description
+              "How long to display; 0 = until replaced. On expiry the
+               sign shows the end-of-duration fallback.";
+          }
+          leaf activation-priority {
+            type uint8 {
+              range "1..255";
+            }
+            description
+              "Activation priority; a higher-priority activation
+               preempts a lower one.";
+          }
+          leaf crc {
+            type uint32;
+            description
+              "CRC-32 of the MULTI string being activated. The sign
+               refuses the activation if it mismatches its cached slot
+               content — guards against displaying the wrong message
+               after a library edit.";
+          }
+          leaf owner {
+            type string;
+            description "Authoring system / operator / TMC workstation issuing the activation.";
+          }
+        }
+        container fallback {
+          description
+            "Messages the sign reverts to, by reference into the
+             messages library. Absent slot = blank.";
+          leaf comm-loss-timeout-s {
+            type uint32;
+            units "seconds";
+            description
+              "Seconds without TMC contact before the sign reverts to
+               the comm-loss message.";
+          }
+          leaf comm-loss-memory-type {
+            type openits-dms-types:message-memory-type;
+            description "Bank of the comm-loss fallback message.";
+          }
+          leaf comm-loss-slot-number {
+            type uint16 {
+              range "1..65535";
+            }
+            description
+              "Slot of the message shown after comm-loss-timeout-s
+               without TMC contact (absent = blank).";
+          }
+          leaf end-of-duration-memory-type {
+            type openits-dms-types:message-memory-type;
+            description "Bank of the end-of-duration fallback message.";
+          }
+          leaf end-of-duration-slot-number {
+            type uint16 {
+              range "1..65535";
+            }
+            description
+              "Slot of the message shown when an activated message's
+               duration expires (absent = blank).";
+          }
+          leaf power-loss-memory-type {
+            type openits-dms-types:message-memory-type;
+            description "Bank of the power-loss fallback message.";
+          }
+          leaf power-loss-slot-number {
+            type uint16 {
+              range "1..65535";
+            }
+            description
+              "Slot of the message shown on power restore (NTCIP 1203
+               dmsPowerLossMessage); absent = blank.";
+          }
+        }
+      }
+      container state {
+        config false;
+        openits-types:arc-it-flow
+          "Roadway Equipment -> TMC : roadway equipment status";
+        description "Applied/actual sign control + the message currently on the face.";
+
+        uses sign-control-config;
+        leaf display-state {
+          type identityref {
+            base openits-dms-types:sign-mode;
+          }
+          description
+            "What the sign face is currently displaying (off / blank /
+             normal message / test). Readback only — the display follows
+             from the active message and control-mode, not commanded
+             directly.";
+        }
+        leaf last-mode-change {
+          type yang:date-and-time;
+          description "Timestamp of the last mode transition.";
+        }
+        leaf brightness-current {
+          type openits-types:percentage;
+          description "Currently applied brightness (may be below brightness-setpoint due to auto-dim).";
+        }
+        container active {
+          description
+            "The message currently driving the sign face (readback). A
+             blank sign has memory-type = blank and empty multi-string.";
+          leaf memory-type { type openits-dms-types:message-memory-type; description "Bank the active message lives in."; }
+          leaf slot-number { type uint16 { range "1..65535"; } description "Slot index for the active message."; }
+          leaf activated-at {
+            type yang:date-and-time;
+            description "When the active message was loaded.";
+          }
+          leaf expires-at {
+            type yang:date-and-time;
+            description "When the current activation's duration expires (absent if indefinite).";
+          }
+          leaf source {
+            type string;
+            description "Operator, schedule id, or TMC workstation that activated the message.";
+          }
+          uses message-body;
+        }
+        container preempted {
+          presence
+            "A lower-priority message was displaced by the active one and
+             will be restored when the active one clears.";
+          description
+            "The message the active (higher-priority) activation displaced.
+             When the active message clears — its duration expires or the
+             AMBER/emergency override is withdrawn — the sign restores THIS
+             message rather than blanking (the priority-queue restore
+             semantics). Absent when the active message displaced nothing
+             (the sign was previously blank).";
+          leaf memory-type {
+            type openits-dms-types:message-memory-type;
+            description "Bank of the displaced message to restore.";
+          }
+          leaf slot-number {
+            type uint16 { range "1..65535"; }
+            description "Slot of the displaced message to restore.";
+          }
+        }
+        leaf comm-loss-active {
+          type boolean;
+          description "True while the sign is displaying its comm-loss fallback because TMC contact was lost.";
+        }
+        leaf power-loss-active {
+          type boolean;
+          description "True while the sign is displaying its power-loss fallback after a power interruption.";
+        }
+        leaf controller-uptime-s {
+          type uint32;
+          units "seconds";
+          description "Seconds since the sign controller last booted.";
+        }
+      }
+    }
+
+    /* ----- environment sensors ----- */
+    container environment {
+      config false;
+      description
+        "Ambient sensors co-located with the sign.  Reported for
+         brightness control, preventive-maintenance analytics, and
+         roadside-weather fusion.";
+
+      leaf ambient-light-lux {
+        type uint32;
+        units "lux";
+        description "Ambient light level at the sign face. Drives auto-dim brightness control.";
+      }
+      leaf cabinet-temperature-c {
+        type decimal64 { fraction-digits 1; }
+        units "celsius";
+        description "Cabinet interior temperature. Surfaces thermal stress on lamps and electronics.";
+      }
+      leaf humidity-percent {
+        type uint8 { range "0..100"; }
+        units "percent";
+        description "Cabinet interior relative humidity (0-100%).";
+      }
+      leaf door-open {
+        type boolean;
+        description "Maintenance-door intrusion sensor.";
+      }
+    }
+
+    /* ----- pixel + lamp health ----- */
+    container diagnostics {
+      config false;
+      openits-types:arc-it-flow
+        "Roadway Equipment -> Maintenance : equipment maintenance status";
+      description "Pixel and lamp diagnostics.";
+
+      leaf pixels-total {
+        type pixel-count;
+        description "Total addressable pixels on the face.";
+      }
+      leaf pixels-stuck-on {
+        type pixel-count;
+        description
+          "Pixels stuck illuminated (failed-on). Broken out from
+           pixels-failed because a stuck-on pixel garbles legibility
+           differently from a dark one — it can add strokes to characters.";
+      }
+      leaf pixels-stuck-off {
+        type pixel-count;
+        description "Pixels stuck dark (failed-off) — the legibility-loss case.";
+      }
+      leaf pixels-failed {
+        type pixel-count;
+        description
+          "Count of pixels failing self-test. NOT constrained against
+           pixels-total here (config-false telemetry carries no must): a
+           readback where pixels-failed > pixels-total is a real sensor/count
+           anomaly that must stay representable and is reported via
+           openits-common-fault-events:fault-raised, not rejected.";
+      }
+      leaf lamps-total      { type uint16; description "Total addressable lamps (flip-disk / hybrid signs only)."; }
+      leaf lamps-failed {
+        type uint16;
+        description
+          "Count of lamps failing self-test. NOT constrained against
+           lamps-total (config-false telemetry carries no must); an
+           inconsistent readback is a reportable fault, not invalid data.";
+      }
+      leaf last-self-test {
+        type yang:date-and-time;
+        description "Timestamp of the most recent pixel self-test.";
+      }
+    }
+
+    /* ----- fault inventory ----- */
+    container faults {
+      config false;
+      openits-types:arc-it-flow
+        "Roadway Equipment -> Maintenance : equipment maintenance status";
+      description
+        "Live fault inventory.  Each entry mirrors a `fault-raised`
+         notification and clears when the condition resolves.";
+
+      list fault {
+        key "fault-id";
+        description "One entry per active fault on the sign.";
+        uses openits-types:fault-entry;
+        leaf category {
+          type identityref {
+            base openits-dms-types:dms-fault-event-kind;
+          }
+          description "Fault class (pixel / lamp / communication / environment / etc.).";
+        }
+      }
+    }
+  }
+}

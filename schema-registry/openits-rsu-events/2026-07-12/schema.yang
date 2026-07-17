@@ -1,0 +1,528 @@
+module openits-rsu-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:rsu-events";
+  prefix openits-rsu-events;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+  import openits-types {
+    prefix openits-types;
+  }
+  import openits-rsu {
+    prefix openits-rsu;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+  description
+    "Notifications for openits-rsu.  Split into a companion
+     module so ygot's proto backend can generate protobuf from
+     the base module (ygot's proto generator fails on modules
+     containing notification statements).";
+
+  revision 2026-07-12 {
+    description
+      "Rename this module (file, module name, namespace, prefix) from
+       the legacy notifications-suffixed name to openits-rsu-events: standardize every service notification module on the
+       events-suffixed name. Mechanical rename only — no notification
+       content changed; ce-types (service-derived, not module-derived)
+       and proto are unaffected. Add rsu-broadcast-sample — a periodic
+       sample of the RSU's active-broadcast-set. Additive.";
+  }
+  revision 2026-07-10 {
+    description
+      "Rename SCREAMING_SNAKE_CASE identities to kebab-case per RFC 8407
+       (pre-v1 wire-facing change). Mechanical 1:1 transform; no identity
+       added or removed.";
+    reference "RFC 8407 section 4.3 (identifier naming).";
+  }
+  revision 2026-05-23 {
+    description
+      "Add the rsu-tim-broadcast notification — emitted per TIM air
+       transmission, distinct from the channel-state aggregate. Closes
+       the gap where the CE catalog declared
+       openits.rsu.rsu-tim-broadcast.v1 with no YANG schema home.";
+    reference "SAE J2735 (TIM broadcast emission).";
+  }
+  revision 2026-04-28 {
+    description
+      "Add TIM lifecycle notifications: rsu-tim-loaded,
+       rsu-tim-cleared, rsu-tim-broadcast-state-changed. Closes the
+       M16 carry-forward for V2X traveler messages. TSAM (Traffic
+       Signal Adaptive Management) is not a V2X message family and
+       lives on the signal-control service, not here.";
+  }
+  revision 2026-04-27 {
+    description
+      "Whitespace-only canonicalization to 2-space indentation
+       (M14 follow-up). No semantic content changes.";
+  }
+  revision 2026-04-19 {
+    description
+      "Initial split.  Content is equivalent to the notification
+       block previously embedded in openits-rsu@2024-12-26; see
+       openits-rsu revision 2026-04-19 for the removal
+       record.";
+  }
+
+  // =========================================================================
+  // RSU NOTIFICATIONS
+  // =========================================================================
+
+  notification rsu-srm-received {
+    openits-types:arc-it-flow "Vehicle -> Roadside Equipment : signal request message";
+    description
+      "Signal Request Message received from vehicle";
+    leaf device-id {
+      type openits-types:device-id;
+      description
+        "RSU that received request";
+    }
+    leaf request-id {
+      type string;
+      description
+        "Request identifier";
+    }
+    leaf vehicle-id {
+      type string;
+      description
+        "Requesting vehicle";
+    }
+    leaf request-type {
+      type identityref {
+        base openits-rsu:srm-request-type;
+      }
+      description
+        "Request type";
+    }
+    leaf approach {
+      type uint8;
+      description
+        "Approach lane";
+    }
+    leaf eta-seconds {
+      type uint16;
+      description
+        "ETA in seconds";
+    }
+    leaf vehicle-class {
+      type string;
+      description
+        "Vehicle class (emergency, transit, etc.)";
+    }
+    leaf timestamp {
+      type yang:date-and-time;
+      description
+        "Receipt timestamp";
+    }
+  }
+
+  notification rsu-srm-status-change {
+    openits-types:arc-it-flow "Roadside Equipment -> TMC : roadside equipment status";
+    description
+      "Signal request status changed";
+    leaf device-id {
+      type openits-types:device-id;
+      description "RSU emitting the status change.";
+    }
+    leaf request-id {
+      type string;
+      description "Request identifier from the original SRM.";
+    }
+    leaf vehicle-id {
+      type string;
+      description "Requesting vehicle identifier.";
+    }
+    leaf previous-status {
+      type string;
+      description "SRM lifecycle status before the change (e.g., pending, granted, denied).";
+    }
+    leaf new-status {
+      type string;
+      description "SRM lifecycle status after the change.";
+    }
+    leaf timestamp {
+      type yang:date-and-time;
+      description "Wall-clock time the status changed at the RSU.";
+    }
+  }
+
+  notification rsu-certificate-expiring {
+    openits-types:arc-it-flow "Roadside Equipment -> Security Management : credential status";
+    description
+      "Certificate approaching expiration";
+    leaf device-id {
+      type openits-types:device-id;
+      description "RSU whose certificate is approaching expiration.";
+    }
+    leaf certificate-id {
+      type string;
+      description "Certificate identifier (SCMS-assigned).";
+    }
+    leaf certificate-type {
+      type string;
+      description "Certificate class (e.g., enrollment, pseudonym, application).";
+    }
+    leaf days-until-expiry {
+      type uint16;
+      description "Days until the certificate expires; tunable threshold per RSU policy.";
+    }
+    leaf expiry-date {
+      type yang:date-and-time;
+      description "Absolute expiry timestamp from the certificate's validity period.";
+    }
+    leaf timestamp {
+      type yang:date-and-time;
+      description "Wall-clock time the expiring-soon condition was detected.";
+    }
+  }
+
+  notification rsu-channel-fault {
+    openits-types:arc-it-flow "Roadside Equipment -> Maintenance : equipment maintenance status";
+    description
+      "Radio channel fault detected";
+    leaf device-id {
+      type openits-types:device-id;
+      description "RSU reporting the channel fault.";
+    }
+    leaf channel {
+      type openits-types:dsrc-channel;
+      description "DSRC channel number affected (172, 174, 176, 178, 180, 182, 184).";
+    }
+    leaf fault-type {
+      type enumeration {
+        enum tx-failure {
+          description
+            "Transmit failure";
+        }
+        enum rx-failure {
+          description
+            "Receive failure";
+        }
+        enum high-error-rate {
+          description
+            "High error rate";
+        }
+        enum no-signal {
+          description
+            "No signal";
+        }
+        enum interference {
+          description
+            "Interference detected";
+        }
+      }
+      description
+        "Type of fault";
+    }
+    leaf message {
+      type string;
+      description "Vendor-specific fault detail message.";
+    }
+    leaf timestamp {
+      type yang:date-and-time;
+      description "Wall-clock time the channel fault was detected.";
+    }
+  }
+
+  notification rsu-gps-status-change {
+    openits-types:arc-it-flow "Roadside Equipment -> TMC : roadside equipment status";
+    description
+      "GPS fix status changed";
+    leaf device-id {
+      type openits-types:device-id;
+      description "RSU emitting the GPS status change.";
+    }
+    leaf previous-status {
+      type string;
+      description "GPS fix status before the change (e.g., '3d-fix', 'no-fix', 'degraded').";
+    }
+    leaf new-status {
+      type string;
+      description "GPS fix status after the change.";
+    }
+    leaf satellites {
+      type uint8;
+      description "Satellite count in the new fix.";
+    }
+    leaf timestamp {
+      type yang:date-and-time;
+      description "Wall-clock time of the status transition.";
+    }
+  }
+
+  notification rsu-security-event {
+    openits-types:arc-it-flow "Roadside Equipment -> Security Management : security event";
+    description
+      "Security-related event";
+    leaf device-id {
+      type openits-types:device-id;
+      description "RSU reporting the security event.";
+    }
+    leaf event-type {
+      type enumeration {
+        enum invalid-signature {
+          description
+            "Invalid message signature";
+        }
+        enum revoked-certificate {
+          description
+            "Message from revoked certificate";
+        }
+        enum scms-connection-lost {
+          description
+            "Lost SCMS connection";
+        }
+        enum enrollment-failure {
+          description
+            "Enrollment failure";
+        }
+        enum misbehavior-detected {
+          description
+            "Misbehavior detected";
+        }
+      }
+      description
+        "Security event type";
+    }
+    leaf source {
+      type string;
+      description "Source identifier associated with the security event (peer cert subject, message sender, etc.).";
+    }
+    leaf message {
+      type string;
+      description "Vendor-specific event detail message.";
+    }
+    leaf timestamp {
+      type yang:date-and-time;
+      description "Wall-clock time the security event was detected.";
+    }
+  }
+
+  // =========================================================================
+  // V2X traveler-message lifecycle (M16 follow-up)
+  //
+  // RSUs broadcast Traveler Information Messages (TIM) per SAE J2735. The
+  // events below capture the lifecycle: when a message is loaded for
+  // broadcast, when broadcasting starts/stops, and when a message expires
+  // or is cleared.
+  //
+  // Traffic Signal Adaptive Management (TSAM) is NOT a V2X message family —
+  // it's an adaptive-control feature that consumes SPaT and other signals
+  // to drive timing decisions. TSAM events live on the signal-control
+  // service, not here.
+  // =========================================================================
+
+  notification rsu-tim-loaded {
+    openits-types:arc-it-flow "Traffic Management Center -> Roadside Equipment : traveler information";
+    description
+      "A Traveler Information Message was loaded onto the RSU. Emitted
+       on receipt of the load (before broadcast begins). Carries the
+       J2735 msg-id and the activation window so consumers can audit
+       what was loaded vs what reached the air.";
+
+    leaf msg-id {
+      type string;
+      mandatory true;
+      description "TIM message id (SAE J2735 msgID, hex-encoded).";
+    }
+    leaf source {
+      type string;
+      description "Origin identifier of the TIM (TMC operator id, RSU id, etc.).";
+    }
+    leaf priority {
+      type uint8 {
+        range "0..7";
+      }
+      description "TIM priority per SAE J2735 (0 = lowest, 7 = highest).";
+    }
+    leaf duration-seconds {
+      type uint32;
+      units "seconds";
+      description "Expected broadcast duration. Zero = until cleared.";
+    }
+    leaf start-time {
+      type yang:date-and-time;
+      description "Scheduled broadcast start; absent = immediate.";
+    }
+    leaf content-summary {
+      type string;
+      description
+        "Human-readable summary of the TIM payload for logging / audit.
+         Not authoritative — consumers needing the full payload fetch it
+         from the RSU's message store.";
+    }
+    leaf observed-at {
+      type yang:date-and-time;
+      description "When the RSU recorded the load.";
+    }
+  }
+
+  notification rsu-tim-cleared {
+    openits-types:arc-it-flow "Roadside Equipment -> Traffic Management Center : traveler information status";
+    description
+      "A previously-loaded TIM stopped broadcasting. Distinguishes
+       expiration (duration elapsed) from explicit clear (operator
+       command) so audit logs reflect operator intent vs scheduled
+       lifecycle.";
+
+    leaf msg-id {
+      type string;
+      mandatory true;
+      description "TIM message id from the corresponding rsu-tim-loaded.";
+    }
+    leaf reason {
+      type enumeration {
+        enum expired {
+          description "Broadcast duration elapsed.";
+        }
+        enum cleared-by-operator {
+          description "Explicit operator clear command.";
+        }
+        enum superseded {
+          description "Replaced by a newer TIM at the same msg-id.";
+        }
+        enum rsu-restart {
+          description "RSU restarted; in-flight TIM did not survive.";
+        }
+        enum other;
+      }
+      mandatory true;
+      description "Why the TIM stopped broadcasting (expired / cleared / superseded / rsu-restart / other).";
+    }
+    leaf cleared-at {
+      type yang:date-and-time;
+      description "Wall-clock time the TIM stopped broadcasting.";
+    }
+  }
+
+  notification rsu-tim-broadcast-state-changed {
+    openits-types:arc-it-flow "Roadside Equipment -> Traffic Management Center : traveler information status";
+    description
+      "Aggregate broadcast state for the RSU's TIM channel. Emitted on
+       transitions only (idle <-> active) so consumers can run cheap
+       state machines instead of polling.";
+
+    leaf prior {
+      type enumeration {
+        enum idle;
+        enum active;
+        enum fault;
+      }
+      description "Broadcast channel state before the transition.";
+    }
+    leaf current {
+      type enumeration {
+        enum idle;
+        enum active;
+        enum fault;
+      }
+      mandatory true;
+      description "Broadcast channel state after the transition.";
+    }
+    leaf active-tim-count {
+      type uint32;
+      description "Number of TIMs currently broadcasting.";
+    }
+    leaf changed-at {
+      type yang:date-and-time;
+      description "Wall-clock time of the state transition.";
+    }
+  }
+
+  notification rsu-tim-broadcast {
+    openits-types:arc-it-flow "Roadside Equipment -> Vehicle : traveler information broadcast";
+    description
+      "A TIM was actually broadcast on the air interface. Distinct
+       from rsu-tim-broadcast-state-changed (which signals channel-state
+       transitions): this notification fires per broadcast emission and
+       carries the msg-id + transmission metadata so consumers can
+       audit which messages reached the air at what cadence.";
+
+    leaf msg-id {
+      type string;
+      mandatory true;
+      description "TIM message id (SAE J2735 msgID, hex-encoded).";
+    }
+    leaf channel {
+      type openits-types:dsrc-channel;
+      description "DSRC channel the broadcast went out on.";
+    }
+    leaf priority {
+      type uint8 {
+        range "0..7";
+      }
+      description "TIM priority per SAE J2735 (0 = lowest, 7 = highest).";
+    }
+    leaf broadcast-at {
+      type yang:date-and-time;
+      mandatory true;
+      description "Wall-clock time of the broadcast emission.";
+    }
+  }
+
+  notification rsu-broadcast-sample {
+    openits-types:arc-it-flow
+      "Roadside Equipment -> TMC : roadside equipment status";
+    description
+      "Periodic sample of the RSU's active broadcast set — one entry per
+       message actively being broadcast, with its observed cadence — so
+       consumers can audit what the RSU is putting on the air without a
+       per-emission event stream. Distinct from rsu-tim-broadcast, which
+       fires per emission.";
+
+    leaf source-device-id {
+      type openits-types:device-id;
+      mandatory true;
+      description "RSU this sample pertains to.";
+    }
+    leaf sample-window-s {
+      type uint16 { range "1..3600"; }
+      units "seconds";
+      description "Window this sample aggregates over.";
+    }
+    list broadcast {
+      key "msg-id";
+      description "One entry per message actively broadcast during the window.";
+
+      leaf msg-id {
+        type string;
+        description "Message id (SAE J2735 msgID, hex-encoded).";
+      }
+      leaf msg-type {
+        type enumeration {
+          enum tim   { description "Traveler Information Message."; }
+          enum spat  { description "Signal Phase and Timing."; }
+          enum map   { description "MAP (intersection geometry)."; }
+          enum srm   { description "Signal Request Message."; }
+          enum ssm   { description "Signal Status Message."; }
+          enum psm   { description "Personal Safety Message."; }
+          enum other { description "Other J2735 message type."; }
+        }
+        description "SAE J2735 message type being broadcast.";
+      }
+      leaf channel {
+        type openits-types:dsrc-channel;
+        description "DSRC channel the message is broadcast on.";
+      }
+      leaf rate-hz {
+        type decimal64 { fraction-digits 1; }
+        units "hertz";
+        description "Observed broadcast rate over the sample window.";
+      }
+      leaf priority {
+        type uint8 { range "0..7"; }
+        description "SAE J2735 priority (0 = lowest, 7 = highest).";
+      }
+    }
+    leaf occurred-at {
+      type yang:date-and-time;
+      mandatory true;
+      description "Wall-clock time the sample was taken at the RSU.";
+    }
+  }
+
+}

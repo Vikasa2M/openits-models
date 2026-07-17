@@ -1,0 +1,66 @@
+{
+  "queue-override-activated": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "plan-id": {
+      "maximum": 255,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "queue-length-vehicles": {
+      "maximum": 999,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "threshold-vehicles": {
+      "maximum": 999,
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "type": "object"
+},
+  "queue-override-cleared": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "plan-id": {
+      "maximum": 255,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "queue-length-vehicles": {
+      "maximum": 999,
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "type": "object"
+},
+  "release-rate-changed": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "new-rate-vph": {
+      "maximum": 1800,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "plan-id": {
+      "maximum": 255,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "previous-rate-vph": {
+      "maximum": 1800,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "reason": {
+      "type": "string"
+    }
+  },
+  "type": "object"
+}
+}

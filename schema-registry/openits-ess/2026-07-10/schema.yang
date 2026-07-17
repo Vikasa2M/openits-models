@@ -1,0 +1,488 @@
+module openits-ess {
+  yang-version 1.1;
+  namespace "urn:openits:yang:ess";
+  prefix openits-ess;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "YANG data model for Environmental Sensor Stations (ESS) — the
+     roadside devices commonly referred to as RWIS (Road Weather
+     Information System).
+
+     Transport-independent replacement for NTCIP 1204 v04, aligned
+     with ARC-IT 9.1 service package MC01 (Environmental Monitoring
+     Station).
+
+     ESS devices are pure-observation: no actuators, no commands, no
+     safety-critical timing.  The model therefore has almost no
+     `must`-constraints.  Bounded values are enforced via YANG
+     `range` (humidity 0..100 %, wind-direction 0..360°, pressure
+     300..1100 hPa, etc.) rather than XPath constraints, because the
+     bounds are **physical** rather than **operational**.
+
+     Every numeric leaf carries a `units` statement.  Agents that
+     report different units MUST convert at the translator boundary;
+     the wire format is canonical.
+
+     Copyright (c) 2026.  Distributed under Apache 2.0.";
+
+  revision 2026-07-10 {
+    description
+      "Replace the inline severity enumeration on the fault-inventory
+       list with the shared openits-types:fault-severity typedef.
+       Member set and order unchanged — wire-stable.
+
+       Also, replace the inline station-identity latitude/longitude
+       leaves (decimal64 fraction-digits 6) with
+       openits-types:geo-point (fraction-digits 7), correcting a
+       precision drift versus the shared geo-location grouping used
+       elsewhere. Member set unchanged (latitude, longitude); the
+       fraction-digits mantissa widens from 6 to 7. The unrelated
+       'elevation-m' leaf (int32, distinct from geo-location's
+       decimal64 'elevation') is untouched.
+
+       Also, add base openits-types:fault-event-kind to the
+       fault-category root so this service's faults are reachable by
+       fleet-wide derived-from-or-self(fault-event-kind) queries.
+       Additive (identity gains a base); no child renamed.";
+    reference "RFC 7950 section 11 (additive YANG evolution).";
+  }
+  revision 2026-04-19 {
+    description
+      "Initial revision.  Minimum viable model covering identity,
+       atmospheric conditions, precipitation, visibility, pavement
+       sensors, solar radiation, diagnostics, and a live fault
+       inventory.";
+    reference
+      "ARC-IT 9.1 Service Package MC01 (Environmental Monitoring
+       Station); NTCIP 1204 v04 (functional reference only; no wire
+       compatibility).";
+  }
+
+  /* --------------------------------------------------------------
+   * Typedefs
+   * -------------------------------------------------------------- */
+
+  typedef percent {
+    type decimal64 {
+      fraction-digits 1;
+      range "0.0 .. 100.0";
+    }
+    units "percent";
+    description "Percentage value bounded to [0, 100].";
+  }
+
+  typedef bearing-degrees {
+    type decimal64 {
+      fraction-digits 1;
+      range "0.0 .. 360.0";
+    }
+    units "degrees";
+    description
+      "Compass bearing, 0..360.  0/360 = true north; increasing
+       clockwise.";
+  }
+
+  typedef celsius {
+    type decimal64 {
+      fraction-digits 1;
+      range "-80.0 .. 80.0";
+    }
+    units "celsius";
+    description
+      "Temperature in degrees Celsius.  Range accommodates global
+       deployments (coldest recorded road-surface temperature is
+       around -70 °C; hottest pavement ~75 °C).";
+  }
+
+  typedef precipitation-type {
+    type enumeration {
+      enum unknown { value 0; }
+      enum none    { value 1; }
+      enum rain    { value 2; }
+      enum snow    { value 3; }
+      enum sleet   { value 4; }
+      enum hail    { value 5; }
+      enum drizzle { value 6; }
+      enum other   { value 7; }
+    }
+    description "Type of precipitation currently observed.";
+  }
+
+  typedef precipitation-intensity {
+    type enumeration {
+      enum unknown    { value 0; }
+      enum none       { value 1; }
+      enum light      { value 2; }
+      enum moderate   { value 3; }
+      enum heavy      { value 4; }
+      enum violent    { value 5; }
+    }
+    description "Qualitative intensity of precipitation.";
+  }
+
+  typedef visibility-situation {
+    type enumeration {
+      enum unknown          { value 0; }
+      enum clear            { value 1; }
+      enum fog              { value 2; }
+      enum heavy-fog        { value 3; }
+      enum smoke            { value 4; }
+      enum blowing-snow     { value 5; }
+      enum blowing-dust     { value 6; }
+      enum heavy-rain       { value 7; }
+      enum heavy-snow       { value 8; }
+    }
+    description
+      "Qualitative description of the visibility situation.  Used in
+       conjunction with `visibility/range-m` (the quantitative
+       value).";
+  }
+
+  typedef pavement-condition {
+    type enumeration {
+      enum unknown           { value 0; }
+      enum dry               { value 1; }
+      enum trace-moisture    { value 2; }
+      enum wet               { value 3; }
+      enum chemically-wet    { value 4; }
+      enum ice-warning       { value 5; }
+      enum ice-watch         { value 6; }
+      enum snow-warning      { value 7; }
+      enum snow-watch        { value 8; }
+      enum absorption        { value 9; }
+      enum frost             { value 10; }
+    }
+    description
+      "Qualitative pavement condition as reported by the pavement
+       sensor's embedded classifier.  Values mirror NTCIP 1204
+       essPavementStatus.";
+  }
+
+  typedef sensor-health {
+    type enumeration {
+      enum ok           { value 0; }
+      enum stale        { value 1; }
+      enum uncalibrated { value 2; }
+      enum degraded     { value 3; }
+      enum failed       { value 4; }
+    }
+    description
+      "Per-sensor health rollup.  `stale` means the sensor is
+       producing values outside its expected refresh interval;
+       `degraded` means the sensor is reporting but quality flags
+       suggest reduced confidence.";
+  }
+
+  /* --------------------------------------------------------------
+   * Identities
+   * -------------------------------------------------------------- */
+
+  identity fault-category {
+    base openits-types:fault-event-kind;
+    description "Root identity for ESS fault taxonomies.";
+  }
+  identity fault-sensor-failure     { base fault-category; description "Individual sensor failed self-test or stopped responding."; }
+  identity fault-power              { base fault-category; description "Power-supply or input-voltage fault at the station."; }
+  identity fault-communication      { base fault-category; description "Communication fault between station and upstream system."; }
+  identity fault-calibration-drift  { base fault-category; description "Sensor calibration has drifted outside its tolerance band."; }
+  identity fault-environmental      { base fault-category; description "Environmental fault (cabinet temperature, humidity, door, etc.)."; }
+
+  /* --------------------------------------------------------------
+   * Reusable groupings
+   * -------------------------------------------------------------- */
+
+  grouping observation-metadata {
+    description
+      "Metadata carried on every observation container.  `observed-at`
+       is the sensor-clock time of the most recent sample; consumers
+       use it with `diagnostics/sensor-health` to gate stale data.";
+
+    leaf observed-at {
+      type yang:date-and-time;
+      description "Wall-clock time of the most recent sample.";
+    }
+    leaf sensor-id {
+      type string;
+      description
+        "Identifier of the physical sensor producing this
+         observation.  Foreign key into diagnostics/sensor.";
+    }
+  }
+
+  /* --------------------------------------------------------------
+   * Main tree
+   * -------------------------------------------------------------- */
+
+  container station {
+    description
+      "Top-level container for a single environmental sensor
+       station.";
+
+    /* ----- identity ----- */
+    container identity {
+      description "Static identity of the station.";
+
+      leaf station-id {
+        type string { length "1..64"; pattern '[a-zA-Z0-9_-]+'; }
+        description "Agency-internal station identifier (URN tail).";
+      }
+      leaf name { type string; description "Operator-facing station name."; }
+      uses openits-types:geo-point;
+      leaf elevation-m {
+        type int32;
+        units "meters";
+        description "Station elevation above mean sea level.";
+      }
+      leaf road-reference {
+        type string;
+        description
+          "Free-form route / milepost reference (e.g.,
+           \"I-35 NB @ MP 214\").  Informational only.";
+      }
+      leaf make      { type string; config false; description "Manufacturer name reported by the station."; }
+      leaf model     { type string; config false; description "Model identifier reported by the station."; }
+      leaf firmware  { type string; config false; description "Firmware version reported by the station."; }
+    }
+
+    /* ----- atmospheric conditions ----- */
+    container atmospheric {
+      config false;
+      openits-types:arc-it-flow
+        "Environmental Sensors -> TMC : road weather information";
+      description
+        "Bulk air observations.  Every leaf is optional — not every
+         station carries every sensor.";
+
+      uses observation-metadata;
+
+      leaf air-temperature-c { type celsius; description "Ambient air temperature in degrees Celsius."; }
+      leaf dewpoint-c        { type celsius; description "Dewpoint temperature in degrees Celsius."; }
+      leaf humidity-percent  { type percent; description "Relative humidity, 0-100%."; }
+
+      leaf pressure-hpa {
+        type decimal64 {
+          fraction-digits 1;
+          range "300.0 .. 1100.0";
+        }
+        units "hectopascals";
+        description
+          "Station-pressure reading.  300..1100 hPa covers every
+           inhabited elevation on Earth with margin.";
+      }
+
+      leaf wind-speed-ms {
+        type decimal64 {
+          fraction-digits 1;
+          range "0.0 .. 120.0";
+        }
+        units "meters-per-second";
+        description
+          "Instantaneous wind speed.  120 m/s upper bound is well
+           above any observed surface wind (record is ~113 m/s).";
+      }
+      leaf wind-gust-ms {
+        type decimal64 {
+          fraction-digits 1;
+          range "0.0 .. 150.0";
+        }
+        units "meters-per-second";
+        description "Peak wind-gust speed over the station's reporting window.";
+      }
+      leaf wind-direction-deg { type bearing-degrees; description "Wind direction in degrees from north (0=N, 90=E, 180=S, 270=W)."; }
+    }
+
+    /* ----- precipitation ----- */
+    container precipitation {
+      config false;
+      openits-types:arc-it-flow
+        "Environmental Sensors -> TMC : road weather information";
+      description
+        "Precipitation observations: type, intensity, rate, and
+         accumulation since the station's last reset.";
+
+      uses observation-metadata;
+
+      leaf type      { type precipitation-type; description "Precipitation class (rain, snow, sleet, hail, mixed, etc.)."; }
+      leaf intensity { type precipitation-intensity; description "Operator-visible intensity bucket (none / light / moderate / heavy)."; }
+      leaf rate-mm-h {
+        type decimal64 { fraction-digits 2; range "0.0 .. 500.0"; }
+        units "millimeters-per-hour";
+        description "Current precipitation rate in millimeters per hour.";
+      }
+      leaf accumulated-mm {
+        type decimal64 { fraction-digits 1; range "0.0 .. 10000.0"; }
+        units "millimeters";
+        description
+          "Accumulation since the last reset (station-specific; may
+           be hourly, daily, or storm-bucketed).";
+      }
+    }
+
+    /* ----- visibility ----- */
+    container visibility {
+      config false;
+      openits-types:arc-it-flow
+        "Environmental Sensors -> TMC : road weather information";
+      description
+        "Horizontal visibility observations plus a coarse situation
+         class for operators.";
+
+      uses observation-metadata;
+
+      leaf range-m {
+        type uint32 { range "0..100000"; }
+        units "meters";
+        description
+          "Horizontal visibility range.  100 km cap is conservative
+           (practical sensors saturate well below this).";
+      }
+      leaf situation { type visibility-situation; description "Operator-visible visibility class (clear / fog / heavy-fog / blowing-snow / etc.)."; }
+    }
+
+    /* ----- pavement sensors ----- */
+    container pavement {
+      config false;
+      openits-types:arc-it-flow
+        "Environmental Sensors -> TMC : road weather information";
+      description
+        "Per-sensor pavement observations.  Multi-sensor stations
+         report one list entry per installed puck / probe.";
+
+      list sensor {
+        key "sensor-id";
+        description "One entry per installed pavement puck or probe.";
+
+        leaf sensor-id {
+          type string;
+          description
+            "Identifier of the pavement sensor within this station.";
+        }
+        leaf lane-reference {
+          type string;
+          description
+            "Free-form lane description (e.g., \"northbound-inside\").";
+        }
+
+        leaf observed-at         { type yang:date-and-time; description "Wall-clock time of the observation."; }
+        leaf surface-temperature-c { type celsius; description "Pavement surface temperature in degrees Celsius."; }
+        leaf condition           { type pavement-condition; description "Operator-visible pavement condition (dry / wet / snow / ice / etc.)."; }
+        leaf freeze-point-c      { type celsius; description "Freeze point of the surface (depressed below 0 °C by salt / brine)."; }
+        leaf water-depth-mm {
+          type decimal64 { fraction-digits 2; range "0.0 .. 100.0"; }
+          units "millimeters";
+          description "Water-film depth on the pavement surface.";
+        }
+        leaf salinity-ppm {
+          type uint32 { range "0..500000"; }
+          units "parts-per-million";
+          description "Salinity of the surface water (used to derive freeze-point-c).";
+        }
+        leaf subsurface-temperature-c { type celsius; description "Subsurface temperature at the depth named by subsurface-depth-mm."; }
+        leaf subsurface-depth-mm {
+          type uint16 { range "0..1000"; }
+          units "millimeters";
+          description
+            "Depth at which `subsurface-temperature-c` is sampled.";
+        }
+      }
+    }
+
+    /* ----- solar radiation ----- */
+    container radiation {
+      config false;
+      openits-types:arc-it-flow
+        "Environmental Sensors -> TMC : road weather information";
+      description
+        "Solar radiation observations (instantaneous + hourly average).";
+
+      uses observation-metadata;
+
+      leaf solar-radiation-wm2 {
+        type decimal64 { fraction-digits 1; range "0.0 .. 2000.0"; }
+        units "watts-per-square-meter";
+        description
+          "Instantaneous solar radiation.  Typical daytime clear-sky
+           peak is ~1000 W/m²; 2000 ceiling leaves headroom for
+           high-altitude / albedo-enhanced readings.";
+      }
+      leaf solar-radiation-hourly-avg-wm2 {
+        type decimal64 { fraction-digits 1; range "0.0 .. 2000.0"; }
+        units "watts-per-square-meter";
+        description "Hourly-averaged solar radiation in W/m².";
+      }
+    }
+
+    /* ----- diagnostics ----- */
+    container diagnostics {
+      config false;
+      openits-types:arc-it-flow
+        "Environmental Sensors -> Maintenance : equipment maintenance status";
+      description
+        "Per-sensor health and calibration metadata.  Consumers use
+         this list to decide whether an observation is trustworthy.";
+
+      list sensor {
+        key "sensor-id";
+        description "One entry per installed sensor; consumers use this to decide whether an observation is trustworthy.";
+
+        leaf sensor-id         { type string; description "Identifier of the sensor within this station."; }
+        leaf type {
+          type string;
+          description
+            "Sensor type (e.g., \"air-temperature\", \"pavement\",
+             \"visibility\").";
+        }
+        leaf health            { type sensor-health; description "Sensor health state (ok / degraded / failed / disabled)."; }
+        leaf last-observation  { type yang:date-and-time; description "Wall-clock time of the most recent observation from this sensor."; }
+        leaf last-calibration  { type yang:date-and-time; description "Wall-clock time of the most recent calibration of this sensor."; }
+        leaf next-calibration  { type yang:date-and-time; description "Wall-clock time the next calibration is due."; }
+        leaf sample-interval-s {
+          type uint32;
+          units "seconds";
+          description "Configured sample interval for this sensor in seconds.";
+        }
+      }
+    }
+
+    /* ----- fault inventory ----- */
+    container faults {
+      config false;
+      openits-types:arc-it-flow
+        "Environmental Sensors -> Maintenance : equipment maintenance status";
+      description
+        "Live fault inventory.  Each entry mirrors an
+         `ess-fault-raised` notification and clears when the
+         condition resolves.";
+
+      list fault {
+        key "fault-id";
+        description "One entry per active fault on the station.";
+        leaf fault-id { type string; description "Station-local fault identifier; stable across raise/clear pairs."; }
+        leaf category {
+          type identityref { base fault-category; }
+          description "Fault class (sensor / communication / power / environment / etc.).";
+        }
+        leaf severity {
+          type openits-types:fault-severity;
+          description "Operator-visible severity escalation.";
+        }
+        leaf description   { type string; description "Human-readable fault description from the station."; }
+        leaf first-observed { type yang:date-and-time; description "Wall-clock time the fault was first observed at the station."; }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "openits-cctv-events:tour-state-changed": {
+    "kind": "openits-cctv-types:cctv-tour-state-changed",
+    "source-device-id": "cctv-i35-mm214",
+    "occurred-at": "2026-07-17T14:06:00Z",
+    "sequence": "2",
+    "tour-id": 1,
+    "previous-state": "stopped",
+    "current-state": "running"
+  }
+}

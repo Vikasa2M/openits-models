@@ -1,0 +1,180 @@
+module openits-cabinet-power {
+  yang-version 1.1;
+  namespace "urn:openits:yang:cabinet-power";
+  prefix openits-cabinet-power;
+
+  import openits-types {
+    prefix openits-types;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+  description
+    "Platform-layer cabinet AC / UPS power and battery health, composed into
+     any battery-backed field device's state tree (signal cabinet, DMS, comm
+     hub) exactly like the openits-device-diagnostics groupings. Modeling
+     power as telemetry — not only as an opaque fault — preserves the leading
+     indicator (power events precede most comm failures) and the maintenance
+     dispatch discriminator (runtime-remaining on battery vs on line power).
+
+     Power events (on-battery, low-battery, charger fault, door open) ride the
+     shared openits-common-fault-events notifications, discriminated by the
+     cabinet-power-fault-event-kind identities below, so a power event is a
+     specific filterable kind rather than one folded fault.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  reference "IEC 62040 (UPS); NEMA TS 2 (cabinet).";
+
+  openits-types:openits-version "0.1.0";
+
+  revision 2026-07-17 {
+    description
+      "Initial revision: the cabinet-power grouping (AC line, UPS battery,
+       generator, cabinet/police-panel door) plus the
+       cabinet-power-fault-event-kind identity hierarchy for the shared
+       fault notifications.";
+    reference "IEC 62040; NEMA TS 2.";
+  }
+
+  /* ---------------------------------------------------------------------
+   * Fault-event-kind hierarchy — carried on the shared
+   * openits-common-fault-events:{fault-raised,fault-cleared} notifications
+   * (kind base openits-types:fault-event-kind), so any device composing the
+   * cabinet-power grouping can raise a specific power fault kind.
+   * ------------------------------------------------------------------- */
+  identity cabinet-power-fault-event-kind {
+    base openits-types:fault-event-kind;
+    description
+      "Base for cabinet-power fault kinds. A power event is a specific,
+       fleet-filterable kind rather than one opaque folded fault.";
+  }
+  identity cabinet-power-on-battery {
+    base cabinet-power-fault-event-kind;
+    description "The cabinet transferred to UPS battery (utility power lost).";
+  }
+  identity cabinet-power-low-battery {
+    base cabinet-power-fault-event-kind;
+    description
+      "Battery state-of-charge / runtime crossed the low threshold while on
+       battery — imminent shutdown.";
+  }
+  identity cabinet-power-charger-fault {
+    base cabinet-power-fault-event-kind;
+    description "The battery charger faulted — the battery is not being maintained.";
+  }
+  identity cabinet-power-door-open {
+    base cabinet-power-fault-event-kind;
+    description "A cabinet or police-panel door opened.";
+  }
+
+  /* ---------------------------------------------------------------------
+   * Composable telemetry grouping. Leaves are plain; compose under a
+   * `config false` container (like a device's diagnostics container).
+   * ------------------------------------------------------------------- */
+  grouping cabinet-power {
+    description
+      "Cabinet AC / UPS power and battery health for a battery-backed field
+       device. Compose into a device's state tree under a config-false
+       container.";
+    reference "IEC 62040 (UPS); NEMA TS 2 (cabinet).";
+
+    leaf power-source {
+      type enumeration {
+        enum on-line    { description "Running on utility (line) power."; }
+        enum on-battery { description "Utility lost; running on UPS battery (discharging) — the leading comm-loss indicator."; }
+        enum bypass     { description "On maintenance / static bypass (the UPS is not protecting the load)."; }
+        enum off        { description "No power to the load."; }
+      }
+      description "Present power source.";
+    }
+    leaf transfer-count {
+      type uint32;
+      description
+        "Cumulative line<->battery transfers since reset; frequent transfers
+         indicate a flapping utility feed.";
+    }
+    leaf line-voltage-v {
+      type decimal64 { fraction-digits 1; }
+      units "volts";
+      description "Measured incoming AC line voltage.";
+    }
+    leaf line-frequency-hz {
+      type decimal64 { fraction-digits 2; }
+      units "hertz";
+      description "Measured incoming AC line frequency.";
+    }
+
+    container battery {
+      description "UPS battery health.";
+      leaf state-of-charge-pct {
+        type openits-types:percentage;
+        description "Battery charge as a percent of full (0..100).";
+      }
+      leaf runtime-remaining-minutes {
+        type uint16;
+        units "minutes";
+        description
+          "Estimated runtime remaining on battery at the present load — the
+           maintenance dispatch discriminator.";
+      }
+      leaf voltage-v {
+        type decimal64 { fraction-digits 1; }
+        units "volts";
+        description "Battery bus voltage.";
+      }
+      leaf temperature-c {
+        type decimal64 { fraction-digits 1; range "-40 .. 90"; }
+        units "celsius";
+        description "Battery temperature.";
+      }
+      leaf charger-fault {
+        type boolean;
+        description
+          "The charger has faulted — the battery is not being maintained even
+           on line power.";
+      }
+      leaf test-state {
+        type enumeration {
+          enum idle        { description "No self-test in progress."; }
+          enum in-progress { description "Self-test running."; }
+          enum passed      { description "Last self-test passed."; }
+          enum failed      { description "Last self-test failed — battery replacement likely."; }
+        }
+        description "Battery self-test state.";
+      }
+      leaf last-test {
+        type yang:date-and-time;
+        description "When the last battery self-test completed.";
+      }
+    }
+
+    container generator {
+      presence "A backup generator is fitted at this site.";
+      description "Backup generator status (where fitted).";
+      leaf running {
+        type boolean;
+        description "Generator is running and supplying the cabinet.";
+      }
+      leaf fuel-level-pct {
+        type openits-types:percentage;
+        description "Generator fuel level (0..100).";
+      }
+    }
+
+    leaf door-open {
+      type boolean;
+      description "Cabinet door is open (maintenance access or intrusion).";
+    }
+    leaf police-panel-open {
+      type boolean;
+      description
+        "Police-panel door is open (signal cabinets: manual override access).";
+    }
+  }
+}

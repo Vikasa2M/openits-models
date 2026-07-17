@@ -1,0 +1,40 @@
+{
+  "openits-signal-control:signal-controller": {
+    "config": { "id": "i35-exit-214", "name": "I-35 NB @ Exit 214" },
+    "state": { "id": "i35-exit-214", "name": "I-35 NB @ Exit 214", "make": "Econolite", "model": "Cobalt", "firmware": "Econolite Cobalt 9.2.3" },
+    "phases": {
+      "phase": [
+        {
+          "phase-number": 2,
+          "config": {
+            "phase-number": 2, "ring": 1, "barrier": 1, "enabled": true,
+            "timing": { "min-green": 5, "max-green": 45, "yellow-change": "3.5", "red-clear": "1.5", "walk": 7, "ped-clear": 20, "passage": "2.0" }
+          }
+        }
+      ]
+    },
+    "detectors": {
+      "detector": [
+        {
+          "detector-id": 1,
+          "config": {
+            "detector-id": 1,
+            "type": "openits-signal-control-types:detector-inductive-loop",
+            "assigned-phases": [2],
+            "enabled": true,
+            "delay": 3,
+            "extend": "1.5",
+            "mode": "presence",
+            "fail-action": "max-recall"
+          },
+          "state": {
+            "active": true,
+            "actuation-count": "1421",
+            "fault": false,
+            "measurement": { "volume": "842", "occupancy": "12.5", "speed-kmh": 61 }
+          }
+        }
+      ]
+    }
+  }
+}

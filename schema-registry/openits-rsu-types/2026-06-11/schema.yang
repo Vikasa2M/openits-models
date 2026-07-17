@@ -1,0 +1,108 @@
+module openits-rsu-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:rsu-types";
+  prefix openits-rsu-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "RSU event-kind identity hierarchy. Derives from the cross-service
+     openits-types:device-event-kind root so RSU events emitted via the
+     generic cross-service notifications (openits-common-fault-events,
+     openits-common-mode-events) carry a service-classified 'kind'
+     identityref.
+
+     Leaf fault identities cover the NTCIP 1218 alarm surface the
+     reference poller decodes today (radio, antenna, GNSS, SCMS
+     certificate, thermal, power, backhaul). They are deliberately
+     coarser than the per-subsystem identity trees inside openits-rsu
+     (radio-fault-type, channel-fault-type in openits-types) — those
+     classify state-tree detail; these classify fault events on the
+     wire. New identities are additive.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  revision 2026-06-11 {
+    description
+      "Initial revision. Service root, dual-classified fault and mode
+       sub-bases, and leaf fault identities covering the NTCIP 1218
+       alarm bitmap the reference translator decodes.";
+    reference
+      "NTCIP 1218:2020 (RSU functional reference; rsuMode, alarms).";
+  }
+
+  /* --------------------------------------------------------------
+   * Service root + dual-classified sub-bases
+   * -------------------------------------------------------------- */
+
+  identity rsu-event-kind {
+    base openits-types:device-event-kind;
+    description "Root for roadside-unit (V2X) events.";
+  }
+
+  identity rsu-fault-event-kind {
+    base openits-types:fault-event-kind;
+    base rsu-event-kind;
+    description
+      "RSU fault events. Dual-classified: by behavioral class
+       (fault-event-kind) and by service (rsu-event-kind). Used as
+       the fallback kind when a decoder cannot map a more specific
+       leaf identity.";
+  }
+
+  identity rsu-mode-event-kind {
+    base openits-types:mode-event-kind;
+    base rsu-event-kind;
+    description
+      "RSU operational-mode transitions (standby / operate per
+       NTCIP 1218 rsuMode). The mode-changed notification's
+       prior/current strings are interpreted in this mode-space.";
+    reference "NTCIP 1218:2020 (rsuMode).";
+  }
+
+  /* --------------------------------------------------------------
+   * Fault leaf identities
+   * -------------------------------------------------------------- */
+
+  identity rsu-fault-radio {
+    base rsu-fault-event-kind;
+    description "Radio TX/RX fault or radio subsystem down.";
+  }
+  identity rsu-fault-antenna {
+    base rsu-fault-event-kind;
+    description "Antenna fault detected.";
+  }
+  identity rsu-fault-gnss {
+    base rsu-fault-event-kind;
+    description "GNSS positioning fault (no fix, degraded fix).";
+  }
+  identity rsu-fault-certificate {
+    base rsu-fault-event-kind;
+    description
+      "SCMS certificate lifecycle fault (near expiry, enrollment
+       failure).";
+    reference "IEEE 1609.2-2022 (security credential management).";
+  }
+  identity rsu-fault-thermal {
+    base rsu-fault-event-kind;
+    description "Thermal threshold exceeded.";
+  }
+  identity rsu-fault-power {
+    base rsu-fault-event-kind;
+    description "RSU power-supply fault.";
+  }
+  identity rsu-fault-communication {
+    base rsu-fault-event-kind;
+    description
+      "Backhaul / management-plane communication fault (including
+       SNMP unreachable from the poller's perspective).";
+  }
+}

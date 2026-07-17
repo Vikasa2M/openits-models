@@ -1,0 +1,14 @@
+{
+  "openits-common-comm-health-events:comm-health-event": {
+    "kind": "openits-common-comm-health-events:comm-lost",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence": "1",
+    "occurred-at": "2026-07-11T14:05:00Z",
+    "drift-milliseconds": "120",
+    "attempts-total": 48,
+    "attempts-failed": 3,
+    "percent-loss": 6,
+    "avg-response-ms": 215,
+    "link-id": 2
+  }
+}

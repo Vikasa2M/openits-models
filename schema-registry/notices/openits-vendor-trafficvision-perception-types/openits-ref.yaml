@@ -1,0 +1,15 @@
+augment: openits-vendor-trafficvision-perception-types
+revision: 2026-07-07
+implementer: openits-ref
+implementer_contact: OpenITS Working Group
+implementer_type: conformance-reference
+deployment_scale: test
+first_observed: 2026-07-08
+notes: >
+  In-repo reference NoI for the identity-only vendor module
+  openits-vendor-trafficvision-perception-types (TrafficVision
+  incident-type identities derived from the open
+  openits-perception:incident-type base). Real TrafficVision
+  adoption files its own NoI under this directory with
+  implementer_type: vendor.
+proof_url: https://github.com/openits/openits/blob/main/yang/openits-vendor-trafficvision-perception-types.yang

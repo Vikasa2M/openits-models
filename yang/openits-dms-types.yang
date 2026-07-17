@@ -1,0 +1,234 @@
+module openits-dms-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:dms-types";
+  prefix openits-dms-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "DMS event-kind identity hierarchy. Derives from the cross-service
+     openits-types:device-event-kind root so DMS events emitted via the
+     generic cross-service notifications (openits-common-fault-events,
+     openits-common-mode-events) carry a service-classified 'kind'
+     identityref, filterable with derived-from-or-self at any altitude.
+
+     The leaf fault identities mirror the fault-category catalog in
+     openits-dms (the state-tree classification); the two hierarchies
+     are deliberately separate namespaces — fault-category classifies
+     entries in the device's active-fault list, dms-fault-event-kind
+     classifies fault events on the wire. New identities are additive;
+     removing or renaming one is a breaking change.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.4.0";
+
+  revision 2026-07-16 {
+    description
+      "Split the DMS mode vocabulary: add a dms-control-mode identity
+       family (control-local / external / central / central-override /
+       simulation / other = NTCIP 1203 dmsControlMode, who drives the
+       sign) and reframe sign-mode as the display-state axis (what the
+       face shows), removing mode-central and mode-simulation which were
+       control concepts. Add a dms-message-status typedef (NTCIP
+       dmsMessageStatus lifecycle). BREAKING (pre-v1): two sign-mode
+       identities removed; wire-neutral (identityref serialises as a
+       string).";
+    reference "NTCIP 1203 v03 (dmsControlMode, dmsMessageStatus).";
+  }
+  revision 2026-07-14 {
+    description
+      "Cut 3c (events layering): adopt typedef message-memory-type
+       moved here from openits-dms. Additive.";
+  }
+  revision 2026-07-13 {
+    description
+      "Add the dms-message-activation-failed notification-kind
+       identity under dms-event-kind: the 'kind' identityref target
+       adopted by openits-dms-events:message-activation-failed under
+       the unified event contract (the notification now carries a
+       mandatory 'kind' plus 'uses openits-types:event-header').
+       Not a periodic report, so single-based. Additive.";
+    reference "RFC 7950 section 11.";
+  }
+  revision 2026-07-13 {
+    description
+      "Stamp openits-version (borrowed from OpenConfig's
+       openconfig-version practice) so tooling can read a
+       compatibility-intent signal independent of the revision date.
+       Add the sign-mode identity hierarchy (converted from the
+       enumeration formerly in openits-dms) so vendors can add
+       proprietary operating modes without a base-model revision.
+       sign-mode derives from openits-types:operational-mode so its
+       values can be carried in the generic mode-changed
+       prior/current identityref.";
+  }
+  revision 2026-06-11 {
+    description
+      "Initial revision. Service root, dual-classified fault and mode
+       sub-bases, and leaf fault identities mirroring the openits-dms
+       fault-category catalog.";
+    reference
+      "NTCIP 1203:2010 (DMS functional reference; fault classes).";
+  }
+
+  /* --------------------------------------------------------------
+   * Typedefs
+   * -------------------------------------------------------------- */
+
+  typedef message-memory-type {
+    type enumeration {
+      enum permanent { value 1; }
+      enum changeable { value 2; }
+      enum volatile  { value 3; }
+      enum schedule  { value 4; }
+      enum blank     { value 5; }
+    }
+    description
+      "NTCIP 1203 dmsMessageMemoryType.  Permanent messages survive
+       power loss and cannot be modified; changeable persist until
+       overwritten; volatile are cleared on reboot.";
+  }
+
+  typedef dms-message-status {
+    type enumeration {
+      enum not-used   { description "Slot is empty / unused."; }
+      enum modifying  { description "Slot content is being written."; }
+      enum validating { description "Slot content is being validated (CRC / MULTI syntax)."; }
+      enum valid      { description "Slot content is validated and deployable."; }
+      enum error      { description "Slot content failed validation and must not be activated."; }
+    }
+    description "Per-slot message validation lifecycle (NTCIP 1203 dmsMessageStatus).";
+  }
+
+  /* --------------------------------------------------------------
+   * Service root + dual-classified sub-bases
+   * -------------------------------------------------------------- */
+
+  identity dms-event-kind {
+    base openits-types:device-event-kind;
+    description
+      "Root for dynamic-message-sign events. Behavioral-class
+       sub-bases derive from this plus the matching cross-service
+       base in openits-types.";
+  }
+
+  identity dms-fault-event-kind {
+    base openits-types:fault-event-kind;
+    base dms-event-kind;
+    description
+      "DMS fault events. Dual-classified: by behavioral class
+       (fault-event-kind) and by service (dms-event-kind). Used as
+       the fallback kind when a decoder cannot map a more specific
+       leaf identity.";
+  }
+
+  identity dms-mode-event-kind {
+    base openits-types:mode-event-kind;
+    base dms-event-kind;
+    description
+      "DMS mode transitions — spans both dms-control-mode (who is
+       driving: local / external / central / central-override /
+       simulation / other) and the sign-mode display-state (off /
+       blank / test / normal). The mode-changed notification's
+       prior/current strings are interpreted in this mode-space.
+       (central and simulation are dms-control-mode values, not
+       sign-mode.)";
+    reference "NTCIP 1203:2010 (dmsControlMode).";
+  }
+
+  /* --------------------------------------------------------------
+   * Notification-kind identities ('kind' identityref targets for
+   * openits-dms-events notifications)
+   * -------------------------------------------------------------- */
+
+  identity dms-message-activation-failed {
+    base dms-event-kind;
+    description "A message activation attempt failed.";
+  }
+
+  /* --------------------------------------------------------------
+   * Fault leaf identities (mirror openits-dms fault-category)
+   * -------------------------------------------------------------- */
+
+  identity dms-fault-lamp {
+    base dms-fault-event-kind;
+    description "Lamp / pixel-bank illumination fault.";
+  }
+  identity dms-fault-pixel {
+    base dms-fault-event-kind;
+    description "Individual pixel failure detected by self-test.";
+  }
+  identity dms-fault-controller {
+    base dms-fault-event-kind;
+    description
+      "Internal sign-controller fault (CPU, memory, watchdog, etc.).";
+  }
+  identity dms-fault-environment {
+    base dms-fault-event-kind;
+    description
+      "Environmental fault (cabinet temperature, humidity, door).";
+  }
+  identity dms-fault-power {
+    base dms-fault-event-kind;
+    description "Power-supply or input-voltage fault.";
+  }
+  identity dms-fault-communication {
+    base dms-fault-event-kind;
+    description
+      "Communication fault between sign and upstream system.";
+  }
+
+  /*
+   * Sign operating mode. Modelled as an identity (not an enumeration)
+   * so vendors can add proprietary operating modes by deriving from
+   * sign-mode in their own module without a base-model revision.
+   */
+  identity sign-mode {
+    base openits-types:operational-mode;
+    description
+      "Base identity for what the sign face is currently displaying
+       (off / blank / a normal message / a test pattern) — the
+       display-state axis, distinct from dms-control-mode (who is
+       driving).";
+  }
+  identity mode-unknown {
+    base sign-mode;
+    description "Operating mode is unknown or not reported.";
+  }
+  identity mode-off {
+    base sign-mode;
+    description "Sign is powered down.";
+  }
+  identity mode-blank {
+    base sign-mode;
+    description "Sign is powered but displaying nothing.";
+  }
+  identity mode-test {
+    base sign-mode;
+    description "Sign is in a diagnostic/test display mode.";
+  }
+  identity mode-normal {
+    base sign-mode;
+    description "Steady-state operating mode.";
+  }
+
+  identity dms-control-mode {
+    base openits-types:operational-mode;
+    description "Base identity for who is driving the sign (NTCIP 1203 dmsControlMode), distinct from what the face displays.";
+  }
+  identity control-local            { base dms-control-mode; description "A field technician has local control at the sign; central commands are not honoured."; }
+  identity control-external         { base dms-control-mode; description "An external system (not the TMC) is driving the sign."; }
+  identity control-central          { base dms-control-mode; description "The TMC / central system is driving the sign."; }
+  identity control-central-override { base dms-control-mode; description "Central has overridden local control."; }
+  identity control-simulation       { base dms-control-mode; description "The sign is in simulation / off-line test control."; }
+  identity control-other            { base dms-control-mode; description "A vendor-specific control mode not covered above."; }
+}

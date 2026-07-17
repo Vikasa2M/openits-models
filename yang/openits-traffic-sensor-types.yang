@@ -1,0 +1,471 @@
+module openits-traffic-sensor-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:traffic-sensor-types";
+  prefix openits-traffic-sensor-types;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Traffic-sensor event-kind identity hierarchy. Derives from the
+     cross-service openits-types:device-event-kind root so
+     traffic-sensor events emitted via the generic cross-service
+     notifications (openits-common-fault-events) carry a
+     service-classified 'kind' identityref, filterable with
+     derived-from-or-self at any altitude.
+
+     The leaf fault identities mirror the fault-category catalog
+     formerly carried in-module by openits-traffic-sensor (the gen-1
+     hierarchy, now deleted): traffic-sensor-event-kind is the service
+     root that inactive-reason also bases on, and
+     traffic-sensor-fault-event-kind is the dual-classified fault
+     sub-base whose children classify entries in the device's
+     active-fault list. New identities are additive; removing or
+     renaming one is a breaking change.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.7.0";
+
+  revision 2026-07-16 {
+    description
+      "Detail/health cuts (same-day):
+       (2a) Classification integrity: add a classification-scheme identity
+       hierarchy (FHWA-13 / length-based / axle-based / other) so an
+       archive can tell which bin plan a station used; add
+       unclassified-volume to lane-interval-data so unbinned vehicles are
+       counted rather than dropped; constrain class-volume/class-id to the
+       configured bin range (1..16) and document the sum relationship
+       (volume = sum(class-volume) + unclassified-volume).
+       (2b) Operational health: extend operational-status with a 'degraded'
+       value (appended, wire-safe) for partial-lane failure, reused per
+       lane so partial failure is visible instead of hidden by a binary
+       active/inactive.
+       (2c) Detail: add wrong-way-volume, mean-vehicle-length-m and
+       speed-std-dev-kmh to lane-interval-data; clarify interval-duration-s
+       as the actual (possibly partial) interval length. Additive.";
+    reference
+      "FHWA Traffic Monitoring Guide (Scheme F, 13-category); ASTM E1318.";
+  }
+  revision 2026-07-15 {
+    description
+      "Measurement-integrity semantics in lane-interval-data: pin
+       occupancy to time occupancy; add speed-space-mean-kmh (harmonic
+       mean) for unbiased q = k * v and clarify speed-average-kmh as
+       time-mean; add a per-interval data-quality verdict (valid /
+       suspect / invalid) and uptime-percent. Additive — pure additions,
+       wire-compatible.";
+    reference
+      "FHWA Traffic Monitoring Guide; AASHTO data-quality; NTCIP 1209.";
+  }
+  revision 2026-07-14 {
+    description
+      "Cut 3c (events layering): adopt the lane-interval-data
+       grouping moved here from openits-traffic-sensor (adds the
+       ietf-yang-types import for yang:date-and-time), and add
+       typedef operational-status, deduping the enumeration formerly
+       inlined separately in openits-traffic-sensor and
+       openits-traffic-sensor-events (member-preserving: active,
+       inactive). Additive.";
+  }
+  revision 2026-07-13 {
+    description
+      "Add three notification-kind identities under
+       traffic-sensor-event-kind: ts-traffic-interval-report,
+       ts-queue-state-changed, ts-status-report. These are the 'kind'
+       identityref targets adopted by the corresponding
+       openits-traffic-sensor-events notifications under the unified
+       event contract (every notification now carries a mandatory
+       'kind' plus 'uses openits-types:event-header'). The two
+       periodic-report identities are additionally dual-based on
+       openits-types:report-event-kind so a consumer can filter every
+       periodic report across services with
+       derived-from-or-self(report-event-kind); queue-state-changed is
+       a discrete state-change event, not a periodic report, so it
+       stays single-based. Additive.";
+    reference "RFC 7950 section 11.";
+  }
+  revision 2026-07-13 {
+    description
+      "Relocate the inactive-reason (+ inactive-* leaves) identity
+       hierarchy here from the openits-traffic-sensor service core, so a vendor identity module extends it via the
+       lightweight -types module. Re-root inactive-reason as a
+       standalone sensor-state identity: it no longer derives from
+       traffic-sensor-event-kind / device-event-kind, because a
+       not-reporting reason is not an event.";
+  }
+  revision 2026-07-11 {
+    description
+      "Initial revision. Service root, dual-classified fault sub-base,
+       and leaf fault identities migrated from the gen-1
+       openits-traffic-sensor fault-category catalog (deleted from
+       the service module in the same change) as part of the fault-
+       taxonomy gen-2 consolidation.";
+    reference
+      "ARC-IT 9.1 Service Package TM01 (Infrastructure-Based Traffic
+       Surveillance); NTCIP 1209 v02 (functional reference only; no
+       wire compatibility).";
+  }
+
+  /* --------------------------------------------------------------
+   * Typedefs
+   * -------------------------------------------------------------- */
+
+  typedef operational-status {
+    type enumeration {
+      enum active   { description "Producing usable data on all monitored lanes."; }
+      enum inactive { description "Not producing usable data."; }
+      enum degraded {
+        description
+          "Producing usable data but with reduced coverage or quality —
+           e.g. one of several lanes has failed while the rest report
+           normally (the most common real detector state, which a binary
+           active/inactive hides). At sensor scope, degraded means at
+           least one lane's per-lane operational-status is not active.";
+      }
+    }
+    description
+      "Whether a sensor (or an individual monitored lane) is currently
+       producing usable data. Used both for the sensor-level rollup
+       (traffic-sensor/state) and per-lane (lanes/lane/state).";
+  }
+
+  /* --------------------------------------------------------------
+   * Reusable groupings
+   * -------------------------------------------------------------- */
+
+  grouping lane-interval-data {
+    description
+      "One reporting interval's aggregate observations for a single
+       lane.  Shared by the state tree and the periodic
+       traffic-interval-report notification.";
+
+    leaf interval-start {
+      type yang:date-and-time;
+      description "Wall-clock time the reporting interval opened.";
+    }
+    leaf interval-duration-s {
+      type uint16 {
+        range "1..3600";
+      }
+      units "seconds";
+      description
+        "Actual length of this completed reporting interval. This is the
+         measured duration, which MAY be shorter than the configured
+         configuration/data-interval-s cadence (min 10 s) — e.g. a partial
+         final interval at a restart or reconfiguration — which is why the
+         floor here is 1 s, not 10 s. Consumers normalizing rates should
+         divide by this value, not the configured cadence.";
+    }
+    leaf volume {
+      type uint32;
+      units "vehicles";
+      description "Vehicles detected during the interval.";
+    }
+    leaf occupancy {
+      type openits-types:percentage-precise;
+      description
+        "Time occupancy — the fraction of the interval the detection
+         zone was occupied. NOT space occupancy: because zone length
+         varies by technology (a ~2 m loop vs a ~9 m radar footprint
+         report different occupancy for identical traffic), consumers
+         converting to space occupancy or density must normalize by the
+         lane's effective-zone-length-m.";
+    }
+    leaf speed-average-kmh {
+      type openits-types:speed-kmh;
+      description
+        "Time-mean (arithmetic mean) speed of vehicles in the interval.
+         See speed-space-mean-kmh for the space-mean used in q = k * v.";
+    }
+    leaf speed-space-mean-kmh {
+      type openits-types:speed-kmh;
+      description
+        "Space-mean (harmonic-mean) speed over the interval. Required
+         for unbiased q = k * v derivations; time-mean speed
+         (speed-average-kmh) systematically overestimates space-mean and
+         biases any flow/density reconstruction. Carried alongside the
+         time-mean so consumers need not choose blindly.";
+    }
+    leaf speed-85th-percentile-kmh {
+      type openits-types:speed-kmh;
+      description
+        "85th-percentile speed over the interval.  The standard
+         operations metric for speed-limit and warning decisions.";
+    }
+    leaf headway-average-s {
+      type decimal64 {
+        fraction-digits 1;
+        range "0.0 .. 3600.0";
+      }
+      units "seconds";
+      description "Mean front-bumper-to-front-bumper headway.";
+    }
+    leaf gap-average-s {
+      type decimal64 {
+        fraction-digits 1;
+        range "0.0 .. 3600.0";
+      }
+      units "seconds";
+      description "Mean rear-bumper-to-front-bumper gap.";
+    }
+    leaf density {
+      type openits-types:traffic-density;
+      description
+        "Lane density over the interval.  Fundamental level-of-service
+         metric; unlike flow-rate it cannot be reconstructed from
+         volume alone (it needs the segment length the detector
+         covers), so it is carried explicitly.";
+    }
+    leaf flow-rate-vph {
+      type uint32;
+      units "vehicles/hour";
+      description
+        "Interval flow rate, vehicles per hour.  Derivable from
+         volume and interval-duration but universally reported by
+         per-lane detectors; stored so consumers need not recompute.";
+    }
+    leaf data-quality {
+      type enumeration {
+        enum valid   { description "Interval passed the sensor's QC; usable as-is."; }
+        enum suspect { description "Interval is questionable (partial uptime, marginal conditions); flag, do not silently discard."; }
+        enum invalid { description "Interval failed QC; do not use for reporting."; }
+      }
+      description
+        "Per-interval, per-lane data-quality verdict (FHWA TMG / AASHTO
+         QC tri-state). 'suspect' is the case a QC pipeline must be able
+         to flag without dropping. Backed by uptime-percent.";
+    }
+    leaf uptime-percent {
+      type openits-types:percentage-precise;
+      description
+        "Fraction of the reporting interval during which the detector
+         was operational and producing data for this lane. The objective
+         metric behind data-quality; a low value means volume/occupancy
+         are under-counts for the interval.";
+    }
+
+    list class-volume {
+      key "class-id";
+      description
+        "Interval volume broken out per configured classification bin.
+         Bins are defined in configuration/vehicle-class; class-id
+         references a configured bin (the same 1..16 key space). Vehicles
+         the sensor could not assign to any bin are counted in
+         unclassified-volume, not omitted, so that
+         volume = sum(class-volume/volume) + unclassified-volume.";
+
+      leaf class-id {
+        type uint8 {
+          range "1..16";
+        }
+        description
+          "Configured classification bin this count belongs to; matches a
+           configuration/vehicle-class/class-id. Not modelled as a leafref
+           because this grouping is also used in the interval-report
+           notification, which has no configuration ancestor.";
+      }
+      leaf volume {
+        type uint32;
+        units "vehicles";
+        description "Vehicles in this bin during the interval.";
+      }
+    }
+
+    leaf unclassified-volume {
+      type uint32;
+      units "vehicles";
+      description
+        "Vehicles detected in the interval that the sensor could not
+         assign to any configured classification bin (out of all bins'
+         length range, or classification disabled/failed). Counted here
+         rather than dropped so the per-class breakdown reconciles with
+         total volume: volume = sum(class-volume/volume) +
+         unclassified-volume.";
+    }
+
+    leaf wrong-way-volume {
+      type uint32;
+      units "vehicles";
+      description
+        "Vehicles observed during the interval travelling against this
+         lane's legal direction (opposite its travel-heading). A safety
+         indicator modern side-fire radar reports; counted separately from
+         the directional volume, not folded into it.";
+    }
+    leaf mean-vehicle-length-m {
+      type decimal64 {
+        fraction-digits 2;
+        range "0.00 .. 30.00";
+      }
+      units "meters";
+      description
+        "Mean measured vehicle length over the interval. Complements the
+         class-volume breakdown and lets a consumer sanity-check the
+         classification against the raw length distribution.";
+    }
+    leaf speed-std-dev-kmh {
+      type decimal64 {
+        fraction-digits 1;
+        range "0.0 .. 300.0";
+      }
+      units "km/h";
+      description
+        "Standard deviation of measured vehicle speeds over the interval —
+         the dispersion behind the mean speeds. Same units as the speed
+         leaves; a high value flags unstable/queueing flow the mean hides.";
+    }
+  }
+
+  /* --------------------------------------------------------------
+   * Service root + dual-classified sub-base
+   * -------------------------------------------------------------- */
+
+  identity traffic-sensor-event-kind {
+    base openits-types:device-event-kind;
+    description
+      "Root for traffic-sensor events. Service dimension of the
+       event-kind taxonomy; behavioral roots derive from this.";
+  }
+
+  identity traffic-sensor-fault-event-kind {
+    base openits-types:fault-event-kind;
+    base traffic-sensor-event-kind;
+    description
+      "Traffic-sensor fault events. Dual-classified: by behavioral
+       class (fault-event-kind) and by service
+       (traffic-sensor-event-kind). Used as the fallback kind when a
+       decoder cannot map a more specific leaf identity.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notification-kind identities ('kind' identityref targets for
+   * openits-traffic-sensor-events notifications)
+   * -------------------------------------------------------------- */
+
+  identity ts-traffic-interval-report {
+    base traffic-sensor-event-kind;
+    base openits-types:report-event-kind;
+    description "Periodic per-lane interval volume/occupancy report.";
+  }
+  identity ts-queue-state-changed {
+    base traffic-sensor-event-kind;
+    description
+      "A queue-detection zone started, cleared, or re-reported
+       duration.";
+  }
+  identity ts-status-report {
+    base traffic-sensor-event-kind;
+    base openits-types:report-event-kind;
+    description "Periodic station health / availability report.";
+  }
+
+  /* --------------------------------------------------------------
+   * Fault leaf identities (mirror the former openits-traffic-sensor
+   * fault-category catalog)
+   * -------------------------------------------------------------- */
+
+  identity traffic-sensor-fault-rf {
+    base traffic-sensor-fault-event-kind;
+    description
+      "Radar RF front-end fault (low signal, transceiver failure).";
+  }
+  identity traffic-sensor-fault-occlusion {
+    base traffic-sensor-fault-event-kind;
+    description
+      "Detection zone occluded (parked vehicle, barrier, snow bank).";
+  }
+  identity traffic-sensor-fault-configuration {
+    base traffic-sensor-fault-event-kind;
+    description
+      "Lane or classification configuration invalid or unconfirmed.";
+  }
+  identity traffic-sensor-fault-power {
+    base traffic-sensor-fault-event-kind;
+    description
+      "Power-supply or input-voltage fault at the sensor.";
+  }
+  identity traffic-sensor-fault-communication {
+    base traffic-sensor-fault-event-kind;
+    description
+      "Communication fault between sensor and upstream system.";
+  }
+  identity traffic-sensor-fault-temperature {
+    base traffic-sensor-fault-event-kind;
+    description
+      "Internal temperature outside the operating envelope.";
+  }
+
+  /* --------------------------------------------------------------
+   * Sensor inactivity reason
+   *
+   * Why a sensor is not reporting usable data — a state value, NOT an
+   * event, so inactive-reason is a standalone root and deliberately
+   * does NOT derive from traffic-sensor-event-kind / device-event-kind.
+   * Open slot: vendors derive concrete reasons (a consumer that does
+   * not load the vendor module sees the base identity).
+   * -------------------------------------------------------------- */
+
+  identity inactive-reason {
+    description
+      "Root identity for why a sensor is not reporting usable data.";
+  }
+  identity inactive-comms-loss {
+    base inactive-reason;
+    description
+      "The sensor is unreachable / has stopped reporting to the
+       upstream system.";
+  }
+  identity inactive-disabled {
+    base inactive-reason;
+    description
+      "The sensor has been administratively disabled.";
+  }
+
+  /* --------------------------------------------------------------
+   * Vehicle-classification scheme
+   *
+   * Which classification (bin) plan a station's configuration/vehicle-class
+   * bins implement. Self-describing so an archive never merges counts from
+   * stations running incompatible bin plans. Vendor-extensible axis, so it
+   * is an identity (not an enum): a vendor derives a proprietary scheme.
+   * -------------------------------------------------------------- */
+
+  identity classification-scheme {
+    description
+      "Root identity for the classification (bin) plan a station uses.";
+  }
+  identity scheme-fhwa-13 {
+    base classification-scheme;
+    description
+      "FHWA Scheme F 13-category vehicle classification (axle/length based).";
+  }
+  identity scheme-length-based {
+    base classification-scheme;
+    description
+      "Generic length-based binning defined solely by configuration/
+       vehicle-class length bounds (no standard axle scheme).";
+  }
+  identity scheme-axle-based {
+    base classification-scheme;
+    description
+      "Axle-based classification other than FHWA-13.";
+  }
+  identity scheme-other {
+    base classification-scheme;
+    description
+      "A classification scheme not otherwise enumerated; vendors derive a
+       concrete identity from this or from classification-scheme directly.";
+  }
+}

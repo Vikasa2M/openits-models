@@ -1,0 +1,302 @@
+module openits-perception-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:perception-events";
+  prefix openits-pn-events;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-perception-types {
+    prefix openits-perception-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Notifications for openits-perception.  Split into a companion
+     module so ygot's proto backend can generate protobuf from the
+     base module (ygot's proto generator fails on modules containing
+     notification statements).";
+
+  openits-types:openits-version "0.4.0";
+
+  revision 2026-07-16 {
+    description
+      "Perception semantics (same-day cuts):
+       (4a) Retype zone-incident-detected severity from the equipment
+       openits-types:fault-severity to the traffic-impact
+       openits-perception-types:incident-severity axis, matching the
+       incident inventory in openits-perception (pre-1.0 breaking retype).
+       (4c) zone-interval-report: separate the crossed (throughput) vs
+       observed (presence) populations — add crossed-volume, observed-count
+       and occupancy-percent (total volume/occupancy were absent); scope
+       average-speed-kmh and the class-count breakdown to the crossed
+       population and document the sum rule (sum(class-count)=crossed-volume,
+       object-unknown as the catch-all). Additive.";
+    reference "FHWA Traffic Incident Management (TIM).";
+  }
+  revision 2026-07-13 {
+    description
+      "Adopt the unified event contract: every notification now
+       'uses openits-types:event-header' (source-device-id, occurred-at,
+       sequence) and carries a mandatory 'kind' identityref under
+       openits-perception-types:perception-event-kind.
+       zone-interval-report's kind (pcp-zone-interval-report) is
+       additionally dual-based on openits-types:report-event-kind (it
+       is a periodic report); the other two are not. zone-incident-
+       detected keeps its existing 'type' leaf (incident-type
+       identityref) unchanged — that is the incident-classification
+       axis, distinct from 'kind'. Delete zone-incident-cleared's
+       'cleared-at' leaf; the event time is now carried by the
+       header's 'occurred-at'. zone-interval-report keeps its
+       per-zone 'interval-start' (interval payload, distinct from the
+       event time). Breaking, pre-v1: notifications gain mandatory
+       device identity + sequence, and zone-incident-cleared loses
+       'cleared-at'.";
+    reference "RFC 7950 section 11.";
+  }
+  revision 2026-07-13 {
+    description
+      "Repoint the incident-type and object-class identityref bases to
+       openits-perception-types (they moved there from the service core
+       in). Import openits-perception-types. Wire-neutral (an
+       identityref's wire form is the identity name, unchanged).
+
+       Repoint the confidence leaf to openits-types:percentage and drop
+       the now-unused openits-perception import.";
+  }
+  revision 2026-07-12 {
+    description
+      "Rename this module (file, module name, namespace, prefix) from
+       the legacy notifications-suffixed name to
+       openits-perception-events: standardize every service
+       notification module on the events-suffixed name. Mechanical
+       rename only — no notification content changed; ce-types
+       (service-derived, not module-derived) and proto are unaffected.
+       Delete the bespoke perception-fault-raised/cleared
+       notifications; perception now emits
+       openits-common-fault-events:{fault-raised,fault-cleared} with
+       kind derived from
+       openits-perception-types:perception-fault-event-kind,
+       completing the orphan-service fault consolidation.";
+  }
+  revision 2026-07-11 {
+    description
+      "Repoint perception-fault-raised's 'category' base from the
+       deleted gen-1 openits-pn:fault-category to
+       openits-perception-types:perception-fault-event-kind. Breaking:
+       identity names change; wire-neutral since the wire
+       representation of an identityref is a string (pre-v1,
+       acceptable).";
+    reference "RFC 7950 section 11 (breaking YANG evolution: identity rename).";
+  }
+  revision 2026-07-10 {
+    description
+      "Replace the inline severity enumeration on
+       zone-incident-detected and perception-fault-raised with the
+       shared openits-types:fault-severity typedef. Member set and
+       order unchanged — wire-stable.
+
+       Also, replace the inline latitude/longitude leaves on
+       zone-incident-detected with openits-types:geo-point. Already
+       fraction-digits 7 — no precision change. Member set and field
+       tags unchanged (latitude/longitude keep their locked tags).";
+  }
+  revision 2026-07-07 {
+    description "Initial release.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification zone-incident-detected {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : incident information";
+    description
+      "The perception pipeline detected an incident in a configured
+       zone.  `incident-id` is stable across the detect / clear pair
+       so downstream systems can reconcile.";
+
+    leaf kind {
+      type identityref {
+        base openits-perception-types:perception-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-perception-types:pcp-zone-incident-detected
+         for this notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf incident-id {
+      type string;
+      description "Sensor-local incident identifier; stable across detect and clear.";
+    }
+    leaf zone-id {
+      type string;
+      description "Zone the incident was detected in.";
+    }
+    leaf type {
+      type identityref {
+        base openits-perception-types:incident-type;
+      }
+      description "Incident class (stopped-vehicle / wrong-way / pedestrian / debris / spillback / near-miss).";
+    }
+    leaf severity {
+      type openits-perception-types:incident-severity;
+      description
+        "Operational severity of the incident (traffic/safety impact) on
+         the incident-severity axis — NOT the equipment fault-severity axis.";
+    }
+    leaf track-id {
+      type uint32;
+      description "Primary track involved, when the incident is track-scoped.";
+    }
+    leaf object-class {
+      type identityref {
+        base openits-perception-types:object-class;
+      }
+      description "Classification of the primary track.";
+    }
+    uses openits-types:geo-point;
+    leaf speed-kmh {
+      type openits-types:speed-kmh;
+      description "Speed of the primary track at detection time.";
+    }
+    leaf confidence {
+      type openits-types:percentage;
+      description "Pipeline confidence in the detection.";
+    }
+  }
+
+  notification zone-incident-cleared {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : incident information";
+    description "A previously detected incident is no longer observed.";
+
+    leaf kind {
+      type identityref {
+        base openits-perception-types:perception-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-perception-types:pcp-zone-incident-cleared
+         for this notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf incident-id {
+      type string;
+      description "The incident-id from the corresponding zone-incident-detected notification.";
+    }
+    leaf zone-id {
+      type string;
+      description "Zone the incident was detected in.";
+    }
+  }
+
+  notification zone-interval-report {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : traffic flow";
+    description
+      "Periodic per-zone analytics report, emitted once per
+       configured data-interval.";
+
+    leaf kind {
+      type identityref {
+        base openits-perception-types:perception-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-perception-types:pcp-zone-interval-report
+         for this notification.";
+    }
+    uses openits-types:event-header;
+
+    list zone {
+      key "zone-id";
+      description "Interval analytics for one configured zone.";
+
+      leaf zone-id {
+        type string;
+        description "The configured zone this entry reports on.";
+      }
+      leaf interval-start {
+        type yang:date-and-time;
+        description "Wall-clock time the reporting interval opened.";
+      }
+      leaf interval-duration-s {
+        type uint16 {
+          range "1..3600";
+        }
+        units "seconds";
+        description "Length of the reporting interval.";
+      }
+      leaf crossed-volume {
+        type uint32;
+        units "objects";
+        description
+          "Throughput population: total objects that traversed (entered
+           and left) the zone during the interval. This is the zone's
+           volume — distinct from observed-count below, which counts
+           presence, not throughput. Mixing the two silently double-counts
+           or under-counts, so they are separated here.";
+      }
+      leaf observed-count {
+        type uint32;
+        units "objects";
+        description
+          "Presence population: distinct objects observed anywhere in the
+           zone at some point during the interval (including those that
+           did not traverse it). NOT the throughput volume — use
+           crossed-volume for that.";
+      }
+      leaf occupancy-percent {
+        type openits-types:percentage-precise;
+        description
+          "Time occupancy: fraction of the interval the zone had at least
+           one object present. The zone-level occupancy metric (previously
+           absent).";
+      }
+      leaf average-speed-kmh {
+        type openits-types:speed-kmh;
+        description
+          "Mean speed of the CROSSED (throughput) population — objects that
+           traversed the zone during the interval.";
+      }
+
+      list class-count {
+        key "class";
+        description
+          "Breakdown of the CROSSED (throughput) population per object
+           class. The counts sum to crossed-volume:
+           sum(class-count/count) = crossed-volume, with object-unknown as
+           the catch-all bucket so no crossed object is dropped from the
+           breakdown.";
+
+        leaf class {
+          type identityref {
+            base openits-perception-types:object-class;
+          }
+          description "Object class this count belongs to.";
+        }
+        leaf count {
+          type uint32;
+          units "objects";
+          description "Crossed objects of this class during the interval.";
+        }
+      }
+    }
+  }
+
+}

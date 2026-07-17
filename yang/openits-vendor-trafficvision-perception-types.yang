@@ -1,0 +1,69 @@
+module openits-vendor-trafficvision-perception-types {
+  yang-version 1.1;
+  namespace "urn:trafficvision:yang:perception-types";
+  prefix openits-vendor-trafficvision-pn-types;
+
+  import openits-perception-types {
+    prefix openits-perception-types;
+  }
+
+  organization
+    "TrafficVision (vendor)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Vendor identity module for TrafficVision incident types.
+     Declares specialized incident identities derived from the open
+     openits-perception:incident-type base for TrafficVision incident
+     classes that have no core analog: a generic catch-all, a
+     low-visibility (environmental) condition, and a fast-traffic
+     flow state.  A consumer that does not load this module sees the
+     base incident-type; one that does sees the specific derived
+     identity in the same identityref field.
+
+     This module is a reference-implementation worked example of the
+     openits vendor-augmentation pattern (identity-only Tier-2,
+     docs/06-extension-model.md).  TrafficVision has not ratified
+     this file; openits maintains it under the conformance-reference
+     NoI until a real TrafficVision-aligned org adopts it.
+
+     Copyright (c) 2026.  Distributed under Apache 2.0.";
+
+  revision 2026-07-13 {
+    description
+      "Import openits-perception-types (not the openits-perception
+       service core) and base the three incident identities on
+       openits-perception-types:incident-type, which moved to the
+       -types module in. A vendor identity module now depends on
+       the lightweight -types layer alone.";
+  }
+  revision 2026-07-07 {
+    description
+      "Initial revision.  Declares incident-generic,
+       incident-low-visibility, and incident-fast-traffic derived
+       from openits-perception:incident-type.";
+    reference
+      "TrafficVision TMC-3.6 realtime API (incident_type vocabulary).";
+  }
+
+  identity incident-generic {
+    base openits-perception-types:incident-type;
+    description
+      "TrafficVision generic incident — detected event with no more
+       specific classification.";
+  }
+  identity incident-low-visibility {
+    base openits-perception-types:incident-type;
+    description
+      "TrafficVision low-visibility condition (fog, heavy rain, or
+       other environmental degradation of the scene).";
+  }
+  identity incident-fast-traffic {
+    base openits-perception-types:incident-type;
+    description
+      "TrafficVision fast-traffic condition — speeds materially above
+       the expected range for the zone.";
+  }
+}

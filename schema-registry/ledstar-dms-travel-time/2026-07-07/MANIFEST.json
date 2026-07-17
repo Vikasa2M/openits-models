@@ -1,0 +1,6 @@
+{
+  "module": "ledstar-dms-travel-time",
+  "revision": "2026-07-07",
+  "kind": "augment",
+  "files": ["schema.yang"]
+}

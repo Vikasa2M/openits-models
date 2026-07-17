@@ -1,0 +1,449 @@
+module openits-scms {
+  yang-version 1.1;
+  namespace "urn:openits:yang:scms";
+  prefix openits-scms;
+
+  import openits-types {
+    prefix openits-types;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "V2X security capability (SCMS): certificate-management configuration
+     and state, and the on-device certificate inventory, for a unit that
+     participates in the Security Credential Management System (IEEE
+     1609.2). A device profile with SCMS (e.g. openits-rsu) 'uses' the
+     'security' grouping. Extracted from openits-rsu as part of the
+     capability-first re-architecture (docs/08-capability-architecture.md).
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.4.0";
+
+  revision 2026-07-16 {
+    description
+      "Application-cert lifecycle + misbehavior reporting (cut 2): add
+       days-to-app-cert-expiry and app-cert-renewal-active (application-cert
+       expiry is what actually stops a roadside unit signing SPaT/MAP, unlike
+       enrollment or pseudonym expiry); deprecate the pseudonym-cert pool
+       leaves (pseudonym-certs-available/used, days-to-pseudonym-expiry) —
+       pseudonym rotation is an OBU privacy mechanism, not applicable to fixed
+       infrastructure; add Misbehavior Reporting (MBR) config
+       (enabled/authority-url/min-reports-to-send) and state
+       (reports-generated/sent/pending, last-report-sent) so detected
+       misbehavior is reportable to the Misbehavior Authority (SAE J3287).
+       Certificate-inventory semantics (cut 1): add per-certificate application
+       permissions (a psid/ssp list) and a geographic-validity region, so
+       'valid cert, wrong PSID' and 'valid cert, wrong region' — messages
+       signed by a genuine cert that lacks the needed permission/region and
+       silently discarded by receivers — become detectable at the sender;
+       add cert-type 'identification' and enrollment-status terminal states
+       'expired' / 'revoked' (IEEE 1609.2).";
+    reference "IEEE 1609.2; SAE J2945.";
+  }
+  revision 2026-07-15 {
+    description
+      "CRL currency: add security/state next-crl-due (IEEE 1609.2 nextCrl)
+       and a derived crl-overdue flag, so a stalled CRL download is
+       observable instead of hiding behind healthy security state.";
+  }
+
+  revision 2026-07-13 {
+    description
+      "Initial revision. The SCMS security config/state +
+       certificate inventory and the certificate-status identity
+       hierarchy extracted from openits-rsu into the 'security' grouping.";
+  }
+
+  identity certificate-status {
+    description
+      "Base identity for certificate status";
+  }
+
+  identity cert-valid {
+    base certificate-status;
+    description
+      "Certificate is valid";
+  }
+
+  identity cert-expiring {
+    base certificate-status;
+    description
+      "Certificate expiring soon";
+  }
+
+  identity cert-expired {
+    base certificate-status;
+    description
+      "Certificate has expired";
+  }
+
+  identity cert-revoked {
+    base certificate-status;
+    description
+      "Certificate has been revoked";
+  }
+
+  grouping security {
+    description
+      "SCMS certificate-management configuration, state, and the
+       on-device certificate inventory.";
+
+    container security {
+      description
+        "V2X security and certificates";
+      container config {
+        description
+          "Security configuration";
+        leaf security-enabled {
+          type boolean;
+          default "true";
+          description
+            "Message signing enabled";
+        }
+        leaf scms-url {
+          type inet:uri;
+          description
+            "SCMS server URL";
+        }
+        leaf auto-renewal {
+          type boolean;
+          default "true";
+          description
+            "Auto-renew certificates";
+        }
+        leaf renewal-days-before-expiry {
+          type uint16;
+          default "30";
+          description
+            "Days before expiry to renew";
+        }
+        container misbehavior-reporting {
+          description
+            "Misbehavior Reporting (MBR) configuration. The unit can detect
+             misbehaving V2X senders (bad signatures, implausible content);
+             this configures whether and how it reports them upstream to the
+             Misbehavior Authority (SAE J3287). Without it, misbehavior is
+             detectable but not reportable.";
+          reference "SAE J3287 (Misbehavior Reporting).";
+          leaf enabled {
+            type boolean;
+            default "false";
+            description "Whether the unit generates and sends misbehavior reports.";
+          }
+          leaf authority-url {
+            type inet:uri;
+            description "Endpoint of the Misbehavior Authority the reports are sent to.";
+          }
+          leaf min-reports-to-send {
+            type uint16;
+            default "1";
+            description
+              "Batch threshold: hold generated reports until this many have
+               accumulated before sending (0/1 = send each immediately).";
+          }
+        }
+      }
+      container state {
+        config false;
+        description
+          "Security state";
+        leaf scms-connected {
+          type boolean;
+          description
+            "Connected to SCMS";
+        }
+        leaf last-scms-contact {
+          type yang:date-and-time;
+          description
+            "Last SCMS contact";
+        }
+        leaf enrollment-status {
+          type enumeration {
+            enum not-enrolled {
+              description
+                "Not enrolled";
+            }
+            enum enrolling {
+              description
+                "Enrollment in progress";
+            }
+            enum enrolled {
+              description
+                "Enrolled and operational";
+            }
+            enum error {
+              description
+                "Enrollment error";
+            }
+            enum expired {
+              description
+                "Enrollment certificate has expired — a terminal state; the
+                 unit cannot obtain application certs until re-enrolled.";
+            }
+            enum revoked {
+              description
+                "Enrollment revoked by the SCMS — a terminal state; the unit
+                 is off the trust chain and must re-enroll.";
+            }
+          }
+          description
+            "SCMS enrollment status.";
+        }
+        leaf pseudonym-certs-available {
+          type uint32;
+          status deprecated;
+          description
+            "Number of pseudonym certificates available. DEPRECATED:
+             pseudonym rotation is an OBU privacy mechanism (anonymising a
+             moving vehicle); a fixed roadside unit signs SPaT/MAP with
+             application certificates and does not rotate pseudonyms, so this
+             is typically 0 and not operationally meaningful on infrastructure.";
+        }
+        leaf pseudonym-certs-used {
+          type uint32;
+          status deprecated;
+          description
+            "Number of pseudonym certificates used. DEPRECATED — see
+             pseudonym-certs-available (OBU privacy mechanism).";
+        }
+        leaf app-certs-available {
+          type uint32;
+          description
+            "Number of application certificates available. Application certs
+             are what a roadside unit signs SPaT/MAP with, so their supply and
+             expiry (below) are the operationally critical figures.";
+        }
+        leaf days-to-app-cert-expiry {
+          type int32;
+          description
+            "Days until the soonest-expiring application certificate expires.
+             When application certs lapse, the unit can no longer sign
+             SPaT/MAP — the actual failure mode for infrastructure (distinct
+             from enrollment expiry). Negative once expired.";
+        }
+        leaf app-cert-renewal-active {
+          type boolean;
+          description
+            "True while an application-certificate renewal is in progress with
+             the SCMS.";
+        }
+        leaf days-to-enrollment-expiry {
+          type int32;
+          description
+            "Days until enrollment certificate expiry";
+        }
+        leaf days-to-pseudonym-expiry {
+          type int32;
+          status deprecated;
+          description
+            "Days until pseudonym certificate expiry. DEPRECATED — pseudonym
+             certs are an OBU privacy mechanism; use days-to-app-cert-expiry
+             for the infrastructure-relevant figure.";
+        }
+        leaf earliest-cert-expiry {
+          type yang:date-and-time;
+          description
+            "Earliest certificate expiration date";
+        }
+        leaf last-cert-download {
+          type yang:date-and-time;
+          description
+            "Timestamp of last certificate download";
+        }
+        leaf certs-downloaded-total {
+          type uint64;
+          description
+            "Total certificates downloaded";
+        }
+        leaf cert-download-failures {
+          type uint64;
+          description
+            "Certificate download failures";
+        }
+        leaf cert-download-queue {
+          type uint32;
+          description
+            "Certificates in download queue";
+        }
+        leaf last-crl-update {
+          type yang:date-and-time;
+          description
+            "Timestamp of last CRL update";
+        }
+        leaf crl-entries {
+          type uint32;
+          description
+            "Number of entries in CRL";
+        }
+        leaf next-crl-due {
+          type yang:date-and-time;
+          description
+            "Wall-clock time the next CRL is due per the current CRL's
+             nextCrl field (IEEE 1609.2). An RSU past this with no newer
+             CRL is accepting certs it can no longer prove unrevoked.";
+        }
+        leaf crl-overdue {
+          type boolean;
+          description
+            "Derived: true when the current time is past next-crl-due and
+             no newer CRL has been installed — the RSU shows healthy
+             security state while accepting potentially-revoked certs.";
+        }
+        leaf revocation-checks {
+          type uint64;
+          description
+            "Total revocation checks performed";
+        }
+        leaf revocation-rejections {
+          type uint64;
+          description
+            "Messages rejected due to revocation";
+        }
+        container misbehavior-reporting {
+          description "Misbehavior Reporting (MBR) status (SAE J3287).";
+          leaf reports-generated {
+            type uint64;
+            description "Total misbehavior reports the unit has generated.";
+          }
+          leaf reports-sent {
+            type uint64;
+            description "Total misbehavior reports successfully sent to the Misbehavior Authority.";
+          }
+          leaf reports-pending {
+            type uint32;
+            description "Reports generated but not yet sent (queued / batching / awaiting connectivity).";
+          }
+          leaf last-report-sent {
+            type yang:date-and-time;
+            description "Wall-clock time of the most recent report sent.";
+          }
+        }
+      }
+      container certificates {
+        description
+          "Certificate management";
+        list certificate {
+          key "id";
+          description
+            "Certificate entry";
+          leaf id {
+            type string;
+            description
+              "Certificate identifier";
+          }
+          container state {
+            config false;
+            description
+              "Certificate state";
+            leaf type {
+              type enumeration {
+                enum enrollment {
+                  description
+                    "Enrollment certificate";
+                }
+                enum pseudonym {
+                  description
+                    "Pseudonym certificate";
+                }
+                enum application {
+                  description
+                    "Application certificate";
+                }
+                enum identification {
+                  description
+                    "Identification certificate (non-anonymous, e.g. for a "
+                  + "fixed infrastructure device).";
+                }
+              }
+              description
+                "Certificate type (IEEE 1609.2).";
+            }
+            leaf status {
+              type identityref {
+                base certificate-status;
+              }
+              description
+                "Certificate status";
+            }
+            leaf valid-from {
+              type yang:date-and-time;
+              description
+                "Valid from date";
+            }
+            leaf valid-until {
+              type yang:date-and-time;
+              description
+                "Expiration date";
+            }
+            leaf days-until-expiry {
+              type int16;
+              description
+                "Days until expiry";
+            }
+            list permissions {
+              key "psid";
+              description
+                "The application permissions this certificate grants: one
+                 entry per PSID the cert is authorized to sign for, with its
+                 Service-Specific Permissions. Without this, 'valid cert,
+                 wrong PSID' — a message signed by a genuine, unexpired cert
+                 that lacks the PSID's permission — is silently discarded by
+                 receivers and undetectable at the sender.";
+              reference "IEEE 1609.2 (PSID / SSP in the certificate).";
+              leaf psid {
+                type uint32;
+                description
+                  "Provider Service Identifier the cert may sign for (e.g. "
+                + "0x8002 SPaT, 0x8003 MAP, 0x20 BSM).";
+              }
+              leaf ssp {
+                type string {
+                  pattern '[0-9a-fA-F]*';
+                }
+                description
+                  "Service-Specific Permissions for this PSID, as a hex
+                   octet string (the fine-grained authorization within the
+                   service; empty means the whole PSID is permitted).";
+              }
+            }
+            container geographic-validity {
+              description
+                "Region in which the certificate is valid. Certs are
+                 geo-scoped (IEEE 1609.2 GeographicRegion); a cert valid
+                 elsewhere but not here is another silent signed-but-discarded
+                 failure.";
+              leaf region-type {
+                type enumeration {
+                  enum none        { description "No geographic restriction (globally valid)."; }
+                  enum circular    { description "A circular region (centre + radius)."; }
+                  enum rectangular { description "One or more rectangular regions."; }
+                  enum polygonal   { description "A polygonal region."; }
+                  enum identified  { description "An identified region (country / region id per ISO 3166 + region)."; }
+                }
+                description "Shape of the certificate's validity region.";
+              }
+              leaf identified-region-id {
+                when "../region-type = 'identified'";
+                type uint32;
+                description
+                  "Country/region identifier when region-type is
+                   'identified' (IEEE 1609.2 IdentifiedRegion).";
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

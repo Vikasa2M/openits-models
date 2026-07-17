@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package openits.dms.v1;
+
+option go_package = "github.com/openits/openits-models/pkg/proto/openits/v1;openitspb";
+
+message MessageActivationFailed {
+  MessageMemoryType attempted_memory_type = 1;
+  uint32 attempted_slot_number = 2;
+  string reason = 3;
+}
+
+enum MessageMemoryType {
+  MESSAGE_MEMORY_TYPE_UNSPECIFIED = 0;
+  MESSAGE_MEMORY_TYPE_PERMANENT = 1;
+  MESSAGE_MEMORY_TYPE_CHANGEABLE = 2;
+  MESSAGE_MEMORY_TYPE_VOLATILE = 3;
+  MESSAGE_MEMORY_TYPE_SCHEDULE = 4;
+  MESSAGE_MEMORY_TYPE_BLANK = 5;
+}
+

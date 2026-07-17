@@ -1,0 +1,98 @@
+module openits-ramp-metering-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:ramp-metering-types";
+  prefix openits-rm-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Ramp-metering event-kind identity hierarchy. Derives from the
+     cross-service openits-types:device-event-kind root so ramp-meter
+     events emitted via the generic cross-service notifications
+     (openits-common-fault-events, openits-common-mode-events) carry a
+     service-classified 'kind' identityref.
+
+     The leaf fault identities mirror the fault-category catalog in
+     openits-ramp-metering (the state-tree classification); the two
+     hierarchies are deliberately separate namespaces. New identities
+     are additive.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  revision 2026-06-11 {
+    description
+      "Initial revision. Service root, dual-classified fault and mode
+       sub-bases, and leaf fault identities mirroring the
+       openits-ramp-metering fault-category catalog.";
+    reference
+      "NTCIP 1207:2017 (ramp-meter functional reference; fault
+       classes, metering modes).";
+  }
+
+  /* --------------------------------------------------------------
+   * Service root + dual-classified sub-bases
+   * -------------------------------------------------------------- */
+
+  identity ramp-meter-event-kind {
+    base openits-types:device-event-kind;
+    description "Root for ramp-meter events.";
+  }
+
+  identity ramp-meter-fault-event-kind {
+    base openits-types:fault-event-kind;
+    base ramp-meter-event-kind;
+    description
+      "Ramp-meter fault events. Dual-classified: by behavioral class
+       (fault-event-kind) and by service (ramp-meter-event-kind).
+       Used as the fallback kind when a decoder cannot map a more
+       specific leaf identity.";
+  }
+
+  identity ramp-meter-mode-event-kind {
+    base openits-types:mode-event-kind;
+    base ramp-meter-event-kind;
+    description
+      "Ramp-meter operational-mode transitions (off / on-standby /
+       active / flush / fault / manual). The mode-changed
+       notification's prior/current strings are interpreted in this
+       mode-space.";
+    reference "NTCIP 1207:2017 (metering modes).";
+  }
+
+  /* --------------------------------------------------------------
+   * Fault leaf identities (mirror openits-ramp-metering
+   * fault-category)
+   * -------------------------------------------------------------- */
+
+  identity ramp-meter-fault-controller {
+    base ramp-meter-fault-event-kind;
+    description "Internal ramp-meter-controller fault.";
+  }
+  identity ramp-meter-fault-detector {
+    base ramp-meter-fault-event-kind;
+    description
+      "Detector fault (demand / passage / queue / advance loop).";
+  }
+  identity ramp-meter-fault-signal-head {
+    base ramp-meter-fault-event-kind;
+    description
+      "Signal-head fault (lamp out, wrong indication, etc.).";
+  }
+  identity ramp-meter-fault-power {
+    base ramp-meter-fault-event-kind;
+    description "Power-supply or input-voltage fault at the meter.";
+  }
+  identity ramp-meter-fault-communication {
+    base ramp-meter-fault-event-kind;
+    description
+      "Communication fault between meter and upstream system.";
+  }
+}

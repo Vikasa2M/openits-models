@@ -1,0 +1,15 @@
+module svc-collision-a {
+  yang-version 1.1;
+  namespace "urn:openits:test:svca";
+  prefix a;
+
+  // Stand-in for one service's control/config tree. Its config leaves are
+  // deliberately disjoint from svc-collision-b's so a conflated field-number
+  // bucket is observable in the assigned tags.
+  container control {
+    container config {
+      leaf a-only { type uint32; }
+      leaf mode { type string; }
+    }
+  }
+}

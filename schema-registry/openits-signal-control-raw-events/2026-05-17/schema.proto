@@ -1,0 +1,262 @@
+syntax = "proto3";
+
+package openits.signal_control.v1;
+
+option go_package = "github.com/openits/openits-models/pkg/proto/openits/v1;openitspb";
+
+import "google/protobuf/timestamp.proto";
+import "openits/v1/types.proto";
+
+message CoordinationChange {
+  string kind = 99;
+  string source_device_id = 1;
+  ChangeKind change_kind = 2;
+  int32 new_value = 3;
+  uint32 split_number = 4;
+  int32 previous_value = 5;
+  google.protobuf.Timestamp occurred_at = 6;
+  openits.types.v1.WireSource source = 100;
+}
+
+enum ChangeKind {
+  CHANGE_KIND_UNSPECIFIED = 0;
+  CHANGE_KIND_PATTERN = 1;
+  CHANGE_KIND_CYCLE_LENGTH = 2;
+  CHANGE_KIND_OFFSET = 3;
+  CHANGE_KIND_SPLIT = 4;
+  CHANGE_KIND_MAX_1_IN_EFFECT = 5;
+  CHANGE_KIND_MAX_2_IN_EFFECT = 6;
+  CHANGE_KIND_DYNAMIC_MAX_IN_EFFECT = 7;
+  CHANGE_KIND_DYNAMIC_MAX_STEP_UP = 8;
+  CHANGE_KIND_DYNAMIC_MAX_STEP_DOWN = 9;
+}
+
+message DetectorTransition {
+  string kind = 99;
+  string source_device_id = 1;
+  uint32 channel = 2;
+  Transition transition = 3;
+  string lane = 4;
+  string approach = 5;
+  uint32 phase_served = 6;
+  google.protobuf.Timestamp occurred_at = 7;
+  openits.types.v1.WireSource source = 100;
+}
+
+enum Transition {
+  TRANSITION_UNSPECIFIED = 0;
+  TRANSITION_ON = 1;
+  TRANSITION_OFF = 2;
+  TRANSITION_RESTORED = 3;
+  TRANSITION_FAULT_OTHER = 4;
+  TRANSITION_FAULT_WATCHDOG = 5;
+  TRANSITION_FAULT_OPEN_LOOP = 6;
+  TRANSITION_FAULT_SHORTED_LOOP = 7;
+  TRANSITION_FAULT_EXCESSIVE_CHANGE = 8;
+}
+
+message OverlapChange {
+  string kind = 99;
+  string source_device_id = 1;
+  uint32 overlap_number = 2;
+  Event event = 3;
+  google.protobuf.Timestamp occurred_at = 4;
+  openits.types.v1.WireSource source = 100;
+}
+
+enum Event {
+  EVENT_UNSPECIFIED = 0;
+  EVENT_BEGIN_GREEN = 1;
+  EVENT_BEGIN_TRAILING_GREEN_EXTENSION = 2;
+  EVENT_BEGIN_YELLOW = 3;
+  EVENT_BEGIN_RED_CLEARANCE = 4;
+  EVENT_OFF = 5;
+  EVENT_DARK = 6;
+}
+
+message PedestrianEvent {
+  string kind = 99;
+  string source_device_id = 1;
+  uint32 phase_number = 2;
+  uint32 detector_channel = 3;
+  OpenitsSignalControlPedestrianEventsEvent event = 4;
+  google.protobuf.Timestamp occurred_at = 5;
+  openits.types.v1.WireSource source = 100;
+}
+
+enum OpenitsSignalControlPedestrianEventsEvent {
+  OPENITS_SIGNAL_CONTROL_PEDESTRIAN_EVENTS_EVENT_UNSPECIFIED = 0;
+  OPENITS_SIGNAL_CONTROL_PEDESTRIAN_EVENTS_EVENT_BEGIN_WALK = 1;
+  OPENITS_SIGNAL_CONTROL_PEDESTRIAN_EVENTS_EVENT_BEGIN_CHANGE_INTERVAL = 2;
+  OPENITS_SIGNAL_CONTROL_PEDESTRIAN_EVENTS_EVENT_BEGIN_SOLID_DONT_WALK = 3;
+  OPENITS_SIGNAL_CONTROL_PEDESTRIAN_EVENTS_EVENT_DARK = 4;
+  OPENITS_SIGNAL_CONTROL_PEDESTRIAN_EVENTS_EVENT_EXTENDED_CHANGE_INTERVAL = 5;
+  OPENITS_SIGNAL_CONTROL_PEDESTRIAN_EVENTS_EVENT_OVERSIZED_SERVED = 6;
+  OPENITS_SIGNAL_CONTROL_PEDESTRIAN_EVENTS_EVENT_CALL_REGISTERED = 7;
+  OPENITS_SIGNAL_CONTROL_PEDESTRIAN_EVENTS_EVENT_OVERLAP_BEGIN_WALK = 8;
+  OPENITS_SIGNAL_CONTROL_PEDESTRIAN_EVENTS_EVENT_OVERLAP_BEGIN_CLEARANCE = 9;
+  OPENITS_SIGNAL_CONTROL_PEDESTRIAN_EVENTS_EVENT_OVERLAP_BEGIN_SOLID_DONT_WALK = 10;
+  OPENITS_SIGNAL_CONTROL_PEDESTRIAN_EVENTS_EVENT_OVERLAP_DARK = 11;
+  OPENITS_SIGNAL_CONTROL_PEDESTRIAN_EVENTS_EVENT_DETECTOR_ON = 12;
+  OPENITS_SIGNAL_CONTROL_PEDESTRIAN_EVENTS_EVENT_DETECTOR_OFF = 13;
+  OPENITS_SIGNAL_CONTROL_PEDESTRIAN_EVENTS_EVENT_DETECTOR_FAILED = 14;
+  OPENITS_SIGNAL_CONTROL_PEDESTRIAN_EVENTS_EVENT_DETECTOR_RESTORED = 15;
+}
+
+message PhaseStateChange {
+  string kind = 99;
+  string source_device_id = 1;
+  uint32 phase_number = 2;
+  ToState to_state = 3;
+  TerminationReason termination_reason = 4;
+  bool hold_active = 5;
+  bool call_registered = 6;
+  google.protobuf.Timestamp occurred_at = 7;
+  openits.types.v1.WireSource source = 100;
+}
+
+enum ToState {
+  TO_STATE_UNSPECIFIED = 0;
+  TO_STATE_GREEN = 1;
+  TO_STATE_YELLOW = 2;
+  TO_STATE_RED_CLEARANCE = 3;
+  TO_STATE_RED = 4;
+  TO_STATE_DARK = 5;
+}
+
+enum TerminationReason {
+  TERMINATION_REASON_UNSPECIFIED = 0;
+  TERMINATION_REASON_GAP_OUT = 1;
+  TERMINATION_REASON_MAX_OUT = 2;
+  TERMINATION_REASON_FORCE_OFF = 3;
+  TERMINATION_REASON_SKIPPED = 4;
+}
+
+message PreemptionActivated {
+  string kind = 99;
+  string source_device_id = 1;
+  PreemptionType type = 2;
+  string source_id = 3;
+  google.protobuf.Timestamp occurred_at = 4;
+  openits.types.v1.WireSource source = 100;
+}
+
+enum PreemptionType {
+  PREEMPTION_TYPE_NONE = 0;
+  PREEMPTION_TYPE_RAILROAD = 1;
+  PREEMPTION_TYPE_EMERGENCY_VEHICLE = 2;
+  PREEMPTION_TYPE_TRANSIT_PRIORITY = 3;
+  PREEMPTION_TYPE_FREIGHT_PRIORITY = 4;
+}
+
+message PreemptionCleared {
+  string kind = 99;
+  string source_device_id = 1;
+  PreemptionType type = 2;
+  string source_id = 3;
+  google.protobuf.Timestamp occurred_at = 4;
+  openits.types.v1.WireSource source = 100;
+}
+
+message PreemptionEvent {
+  string kind = 99;
+  string source_device_id = 1;
+  uint32 preempt_number = 2;
+  Stage stage = 3;
+  string source_id = 4;
+  google.protobuf.Timestamp occurred_at = 5;
+  openits.types.v1.WireSource source = 100;
+}
+
+enum Stage {
+  STAGE_UNSPECIFIED = 0;
+  STAGE_ADVANCE_WARNING = 1;
+  STAGE_CALL_ON = 2;
+  STAGE_GATE_DOWN = 3;
+  STAGE_CALL_OFF = 4;
+  STAGE_ENTRY_STARTED = 5;
+  STAGE_TRACK_CLEARANCE = 6;
+  STAGE_DWELL_SERVICE = 7;
+  STAGE_LINK_ACTIVE_ON = 8;
+  STAGE_LINK_ACTIVE_OFF = 9;
+  STAGE_MAX_PRESENCE_EXCEEDED = 10;
+  STAGE_EXIT_INTERVAL = 11;
+  STAGE_FORCE_OFF = 12;
+}
+
+message UnmappedEvent {
+  google.protobuf.Timestamp occurred_at = 1;
+  string source_controller_id = 2;
+  openits.types.v1.WireSource source = 100;
+}
+
+message TsamModeChanged {
+  string kind = 99;
+  string source_device_id = 1;
+  OpenitsSignalControlTsamEventsPrior prior = 2;
+  OpenitsSignalControlTsamEventsCurrent current = 3;
+  string reason = 4;
+  google.protobuf.Timestamp changed_at = 5;
+  openits.types.v1.WireSource source = 100;
+}
+
+enum OpenitsSignalControlTsamEventsPrior {
+  OPENITS_SIGNAL_CONTROL_TSAM_EVENTS_PRIOR_DISABLED = 0;
+  OPENITS_SIGNAL_CONTROL_TSAM_EVENTS_PRIOR_ADVISORY = 1;
+  OPENITS_SIGNAL_CONTROL_TSAM_EVENTS_PRIOR_ACTIVE = 2;
+  OPENITS_SIGNAL_CONTROL_TSAM_EVENTS_PRIOR_SUSPENDED = 3;
+}
+
+enum OpenitsSignalControlTsamEventsCurrent {
+  OPENITS_SIGNAL_CONTROL_TSAM_EVENTS_CURRENT_DISABLED = 0;
+  OPENITS_SIGNAL_CONTROL_TSAM_EVENTS_CURRENT_ADVISORY = 1;
+  OPENITS_SIGNAL_CONTROL_TSAM_EVENTS_CURRENT_ACTIVE = 2;
+  OPENITS_SIGNAL_CONTROL_TSAM_EVENTS_CURRENT_SUSPENDED = 3;
+}
+
+message TsamRecommendationApplied {
+  string kind = 99;
+  string source_device_id = 1;
+  string recommendation_id = 2;
+  AdjustmentType adjustment_type = 3;
+  string magnitude_seconds = 4;
+  uint32 phase_number = 5;
+  string rationale = 6;
+  google.protobuf.Timestamp applied_at = 7;
+  openits.types.v1.WireSource source = 100;
+}
+
+enum AdjustmentType {
+  ADJUSTMENT_TYPE_CYCLE_LENGTH = 0;
+  ADJUSTMENT_TYPE_SPLIT_ADJUSTMENT = 1;
+  ADJUSTMENT_TYPE_OFFSET_ADJUSTMENT = 2;
+  ADJUSTMENT_TYPE_PHASE_EXTENSION = 3;
+  ADJUSTMENT_TYPE_PHASE_TRUNCATION = 4;
+  ADJUSTMENT_TYPE_PLAN_CHANGE = 5;
+  ADJUSTMENT_TYPE_OTHER = 6;
+}
+
+message TspEvent {
+  string kind = 99;
+  string source_device_id = 1;
+  OpenitsSignalControlTspEventsEvent event = 2;
+  string vehicle_id = 3;
+  uint32 priority_class = 4;
+  string adjustment_seconds = 5;
+  google.protobuf.Timestamp occurred_at = 6;
+  openits.types.v1.WireSource source = 100;
+}
+
+enum OpenitsSignalControlTspEventsEvent {
+  OPENITS_SIGNAL_CONTROL_TSP_EVENTS_EVENT_UNSPECIFIED = 0;
+  OPENITS_SIGNAL_CONTROL_TSP_EVENTS_EVENT_EARLY_FORCE_OFF = 1;
+  OPENITS_SIGNAL_CONTROL_TSP_EVENTS_EVENT_DETECTOR_ON = 2;
+  OPENITS_SIGNAL_CONTROL_TSP_EVENTS_EVENT_DETECTOR_OFF = 3;
+  OPENITS_SIGNAL_CONTROL_TSP_EVENTS_EVENT_CHECK_IN = 4;
+  OPENITS_SIGNAL_CONTROL_TSP_EVENTS_EVENT_ADJUSTMENT_EARLY_GREEN = 5;
+  OPENITS_SIGNAL_CONTROL_TSP_EVENTS_EVENT_ADJUSTMENT_EXTEND_GREEN = 6;
+  OPENITS_SIGNAL_CONTROL_TSP_EVENTS_EVENT_CHECK_OUT = 7;
+  OPENITS_SIGNAL_CONTROL_TSP_EVENTS_EVENT_SERVICE_START = 8;
+  OPENITS_SIGNAL_CONTROL_TSP_EVENTS_EVENT_SERVICE_END = 9;
+}
+

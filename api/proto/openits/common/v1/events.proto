@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package openits.common.v1;
+
+option go_package = "github.com/openits/openits-models/pkg/proto/openits/common/v1;commonv1";
+
+import "google/protobuf/timestamp.proto";
+import "openits/types/v1/types.proto";
+
+message CommHealthEvent {
+  string kind = 99;
+  int64 drift_milliseconds = 3;
+  uint32 attempts_total = 4;
+  uint32 attempts_failed = 5;
+  uint32 percent_loss = 6;
+  uint32 avg_response_ms = 7;
+  uint32 link_id = 8;
+  string observed_by = 9;
+  google.protobuf.Timestamp occurred_at = 2;
+  string owner = 10;
+  uint64 sequence = 11;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message FaultCleared {
+  string kind = 99;
+  string fault_id = 2;
+  string observed_by = 4;
+  google.protobuf.Timestamp occurred_at = 3;
+  string owner = 5;
+  uint64 sequence = 6;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message FaultRaised {
+  string kind = 99;
+  string fault_id = 2;
+  FaultSeverity severity = 3;
+  string description = 4;
+  string observed_by = 6;
+  google.protobuf.Timestamp occurred_at = 5;
+  string owner = 7;
+  uint64 sequence = 8;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+enum FaultSeverity {
+  FAULT_SEVERITY_INFO = 0;
+  FAULT_SEVERITY_WARNING = 1;
+  FAULT_SEVERITY_MINOR = 2;
+  FAULT_SEVERITY_MAJOR = 3;
+  FAULT_SEVERITY_CRITICAL = 4;
+}
+
+message ModeChanged {
+  string kind = 99;
+  string prior = 2;
+  string current = 3;
+  string reason = 4;
+  string control_source = 9;
+  Trigger trigger = 10;
+  string observed_by = 6;
+  google.protobuf.Timestamp occurred_at = 5;
+  string owner = 7;
+  uint64 sequence = 8;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+enum Trigger {
+  TRIGGER_OPERATOR = 0;
+  TRIGGER_SCHEDULE = 1;
+  TRIGGER_FAULT = 2;
+  TRIGGER_PREEMPTION = 3;
+  TRIGGER_UNKNOWN = 4;
+}
+

@@ -1,0 +1,110 @@
+module openits-ess-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:ess-events";
+  prefix openits-ess-events;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Notifications for openits-ess.  Split into a companion module
+     so ygot's proto backend can generate protobuf from the base
+     module (ygot's proto generator fails on modules containing
+     notification statements).";
+
+  revision 2026-07-12 {
+    description
+      "Rename this module (file, module name, namespace, prefix) from
+       the legacy notifications-suffixed name to openits-ess-events: standardize every service notification module on the
+       events-suffixed name. Mechanical rename only — no notification
+       content changed; ce-types (service-derived, not module-derived)
+       and proto are unaffected. Repoint ess-fault-raised's 'category'
+       base from the deleted gen-1 openits-ess:fault-category to
+       openits-ess-types:ess-fault-event-kind — breaking, since
+       identity names change, but wire-neutral since the wire
+       representation of an identityref is a string (pre-v1,
+       acceptable). Delete the deprecated per-service fault/mode
+       shims (ess-fault-raised, ess-fault-cleared), superseded by
+       openits-common-fault-events:{fault-raised,fault-cleared} and
+       openits-common-mode-events:mode-changed, discriminated by kind
+       derived from openits-ess-types.";
+    reference
+      "; RFC 7950 section 11 (breaking YANG evolution: identity
+       rename).";
+  }
+  revision 2026-07-10 {
+    description
+      "Replace the inline severity enumeration on ess-fault-raised
+       with the shared openits-types:fault-severity typedef. Member
+       set and order unchanged — wire-stable.";
+  }
+  revision 2026-06-12 {
+    description
+      "Deprecate ess-fault-raised and ess-fault-cleared in favour of
+       the cross-service openits-common-fault-events notifications,
+       which carry an ess-classified kind identityref
+       (openits-ess-types:ess-fault-event-kind tree) plus wire-source
+       provenance. No emitter ever shipped for the deprecated
+       notifications; they remain for the deprecation window only.";
+  }
+  revision 2026-04-19 {
+    description "Initial release.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification weather-alert {
+    openits-types:arc-it-flow
+      "Environmental Sensors -> TMC : road weather information";
+    description
+      "Emitted when an observation crosses a configured threshold
+       (ice-warning pavement, visibility below X, wind above Y).
+       `direction` distinguishes entering the threshold from leaving
+       it so downstream systems can reconcile cleared alerts.";
+
+    leaf threshold-id { type string; description "Operator-assigned identifier for the threshold rule that fired."; }
+    leaf observed-value {
+      type decimal64 { fraction-digits 2; }
+      description "Sensor observation value that triggered (or cleared) the threshold.";
+    }
+    leaf threshold-value {
+      type decimal64 { fraction-digits 2; }
+      description "Configured threshold value the observation crossed.";
+    }
+    leaf unit { type string; description "Unit of the observed and threshold values (e.g., 'mph', 'm', '°C')."; }
+    leaf direction {
+      type enumeration {
+        enum entered;
+        enum exited;
+      }
+      description "Whether the observation entered the threshold band or exited it.";
+    }
+    leaf human-description { type string; description "Operator-friendly summary of the alert."; }
+  }
+
+  notification sensor-recalibrated {
+    openits-types:arc-it-flow
+      "Environmental Sensors -> Maintenance : equipment maintenance status";
+    description
+      "Audit-trail notification emitted whenever a sensor is
+       calibrated or recalibrated, whether by field staff or via a
+       remote maintenance workflow.";
+
+    leaf sensor-id     { type string; description "Identifier of the sensor that was calibrated."; }
+    leaf calibrated-by { type string; description "Identifier of the actor (operator id, automation workflow) that performed the calibration."; }
+    leaf calibrated-at { type yang:date-and-time; description "Wall-clock time the calibration was completed."; }
+  }
+}

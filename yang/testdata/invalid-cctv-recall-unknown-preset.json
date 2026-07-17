@@ -1,0 +1,11 @@
+{
+  "openits-cctv:camera": {
+    "config": { "id": "cctv-bad", "name": "recall to nonexistent preset" },
+    "ptz": {
+      "presets": {
+        "preset": [ { "preset-id": 1, "name": "only preset" } ],
+        "recall": 9
+      }
+    }
+  }
+}

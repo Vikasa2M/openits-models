@@ -1,0 +1,11 @@
+module choice-fixture {
+  namespace "urn:test:choice-fixture";
+  prefix cf;
+  notification tagged {
+    leaf decoder { type string; }
+    choice tag {
+      case a { leaf a-code { type uint16; } }
+      case b { leaf b-oid { type string; } }
+    }
+  }
+}

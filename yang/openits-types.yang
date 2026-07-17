@@ -1,0 +1,795 @@
+module openits-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:types";
+  prefix openits-types;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Shared types, identities, groupings, and the arc-it-flow extension
+     for the openits YANG module family. Service-neutral content only;
+     service-specific typedefs live in their respective modules.";
+
+  openits-types:openits-version "0.8.0";
+
+  revision 2026-07-14 {
+    description
+      "Retire the RSU-only system-info grouping: add hardware-version +
+       firmware-build to device-hardware (its hardware-identity fields;
+       additive, optional) and delete system-info. The runtime fields
+       move to openits-device-diagnostics:system-runtime.";
+  }
+  revision 2026-07-13 {
+    description
+      "Wave 1 wire-freeze cross-cutting contract fixes (additive):
+       - fault-entry 'fault-id': rewrite description to state the
+         condition-scoped contract explicitly (stable across raise/
+         clear of the SAME condition on the same source-device; the
+         pair (source-device-id, fault-id) is unique among a device's
+         currently-active faults; reused on re-raise; distinct
+         simultaneous instances of the same condition get distinct
+         fault-ids), matching the identical contract now stated in
+         openits-common-fault-events fault-raised/fault-cleared.
+       - 'fault-severity' typedef: rewrite the triage guidance
+         (info/warning/minor/major/critical) and add normative
+         severity floors (a monitor/conflict-flash MMU fault MUST be
+         reported critical). Enum member set unchanged — wire-stable.
+       - Add the 'control-source' identity base (control-central,
+         control-local-backup, control-manual, control-failed): the
+         orthogonal control-authority axis for a device's operating
+         mode, distinct from the mode value itself. Carried by
+         openits-common-mode-events:mode-changed's new optional
+         'control-source' leaf; per-service control-source state
+         leaves are deferred to each service's own task.";
+  }
+
+  revision 2026-07-13 {
+    description
+      "Event-envelope wire break (breaking, pre-v1):
+       - event-header: add mandatory 'sequence' (uint64) per-source-device
+         monotonic counter so same-decisecond hi-res rows have a
+         deterministic order; add optional 'observed-by' (poller identity
+         for synthesized/observed events) and 'owner' (multi-agency
+         device-id qualifier).
+       - wire-source: widen indiana-param uint8 -> uint16 to match
+         indiana-code (cycle-length and extended-enum params exceed 255).
+       - add 'report-event-kind' base under device-event-kind for periodic
+         reports.
+       - document device-id uniqueness scope and elevation datum (WGS84
+         HAE canonical; NTCIP 1204 MSL conversion note).";
+    reference
+      "RFC 7950 section 11 (breaking YANG evolution); ATSPM Indiana
+       enumeration; SAE J2735 (position datum).";
+  }
+
+  revision 2026-07-13 {
+    description
+      "Two additive shared groupings that consolidate copy-paste across
+       the module family:
+       - 'event-header' (source-device-id + occurred-at): the
+         identity+timing envelope previously copy-pasted leaf-by-leaf
+         into ~20 notifications across 14 modules. Field
+         names/types unchanged, so name-locked proto field numbers are
+         preserved.
+       - 'fault-entry' (fault-id + severity + description +
+         first-observed): the common leaves of the config-false
+         active-fault list every service exposes. Each service
+         'uses fault-entry' and adds its own 'category' identityref.
+
+       Add the percentage-precise typedef (decimal64, 0.0-100.0) and
+       the device-hardware grouping; consolidate the duplicate per-
+       service percent typedefs onto percentage / percentage-precise.
+
+       Add the operational-mode base identity: the cross-service
+       supertype for concrete device operating-mode values (each
+       service's mode-value set derives from it), so the generic
+       mode-changed notification can carry typed prior/current values.";
+  }
+
+  revision 2026-07-12 {
+    description
+      "Remove the 9 signal-control-only first-level bases from
+       device-event-kind: phase-event-kind, detector-event-kind,
+       overlap-event-kind, pedestrian-event-kind, preemption-
+       event-kind, coordination-event-kind, tsp-event-kind,
+       tsam-event-kind, external-io-event-kind. These were never
+       cross-service — every consumer of them was a signal-control
+       sc-<x>-event-kind identity, which already dual-based onto
+       openits-signal-control-types:signal-control-event-kind. The
+       behavioral grouping they expressed is now carried solely by
+       the sc-<x>-event-kind identities under signal-control-
+       event-kind, in openits-signal-control-types.
+
+       device-event-kind now keeps only the genuinely cross-service
+       first-level bases: fault-event-kind, mode-event-kind,
+       comm-health-event-kind. Breaking change (RFC 7950 §11) —
+       identities removed. No wire-facing enumeration, notification,
+       or generated field is affected: sc-<x>-event-kind identities
+       in openits-signal-control-types keep their names, values, and
+       single (now sole) base.";
+  }
+
+  revision 2026-07-10 {
+    description
+      "Add the 'fault-severity' typedef (info/warning/minor/major/
+       critical), consolidating the identical inline enumeration
+       previously copy-pasted across 15 modules (and the local
+       typedef in openits-common-fault-events) into one shared
+       definition. Member set and order unchanged — wire-stable.
+       Additive only.
+
+       Also, add value ranges to previously-unconstrained types:
+       speed-kmh (0-400 km/h), dsrc-channel (172-184), and
+       geo-location latitude (-90..90) / longitude (-180..180).
+       Constraint-tightening only.
+
+       Also, factor 'geo-location' into a new 'geo-point' grouping
+       (latitude/longitude, decimal64 fraction-digits 7, ranged
+       -90..90 / -180..180) plus elevation/heading; 'geo-location'
+       now 'uses geo-point'. Consolidates ~10 inline latitude/
+       longitude copy-pastes across modules onto this one grouping
+       and corrects a fraction-digits 6-vs-7 precision drift on the
+       dms/ess/ramp-metering state-tree sites (frac-6 truncated to
+       ~11cm resolution; frac-7 matches the WGS84-standard ~1cm).
+       Member set and order unchanged where 'geo-location' was
+       already used — wire-stable there; sites converted from inline
+       leaves take on the grouping's shape.
+
+       Also, rename SCREAMING_SNAKE_CASE identities to kebab-case per
+       RFC 8407 (pre-v1 wire-facing change). Mechanical 1:1 transform;
+       no identity added or removed.";
+    reference "RFC 8407 section 4.3 (identifier naming).";
+  }
+
+  revision 2026-07-08 {
+    description
+      "Add the 'traffic-density' typedef (vehicles per kilometre of a
+       single lane) for per-lane density reporting by traffic-sensor
+       detectors.  Additive only — no existing typedef, identity, or
+       grouping is renamed or removed.";
+    reference
+      "RFC 7950 §11 (additive YANG evolution).";
+  }
+
+  revision 2026-07-07 {
+    description
+      "Two additive changes:
+       - 'openits-version' extension: a semantic version stamped on
+         module content, independent of the revision date. Borrowed
+         from OpenConfig's openconfig-version lesson — revision
+         dates order changes but cannot signal breaking vs additive
+         intent to consumers or tooling.
+       - 'plc-register' wire-source case: register-level provenance
+         for events decoded from PLC register maps (SRTP, Modbus,
+         DNP3), used by the reversible-lane service. Additive choice
+         case per RFC 7950 §11.";
+    reference
+      "OpenConfig openconfig-extensions (openconfig-version
+       precedent); RFC 7950 §11 (additive YANG evolution).";
+  }
+
+  revision 2026-05-23 {
+    description
+      "Add 'tsam-event-kind' first-level base under device-event-kind
+       so TSAM (Traffic Signal Adaptive Management) sits as a peer
+       of TSP rather than under it. TSAM is agency-side adaptive
+       optimization; TSP is transit-vehicle-triggered priority —
+       distinct domains. Service-specific bases (e.g.,
+       sc-tsam-event-kind) will be re-pointed in their home modules.";
+  }
+
+  revision 2026-05-16 {
+    description
+      "Add the cross-service event-taxonomy foundation:
+       - 'device-event-kind' identity root for openits's event hierarchy,
+         with comm-health/fault/mode/phase/detector/overlap/
+         pedestrian/preemption/coordination/tsp/external-io
+         first-level bases.
+       - 'wire-source' grouping carrying decoder-family + wire identifier
+         as YANG-modeled payload (transport-agnostic). Choice cases for
+         'indiana', 'ntcip-oid', 'j2735'; future cases extend the choice
+         additively (RFC 7950 §11).
+       Additive only — no existing identities, typedefs, or groupings
+       are renamed or removed.";
+    reference
+      "RFC 7950 §11 (additive YANG evolution); ATSPM Indiana enumeration
+       (wire-source 'indiana' case); NTCIP 1202/1203/1204 ('ntcip-oid'
+       case); SAE J2735 ('j2735' case).";
+  }
+
+  revision 2026-04-18 {
+    description "Initial openits release.";
+  }
+
+  /* --------------------------------------------------------------
+   * Extensions
+   * -------------------------------------------------------------- */
+
+  extension openits-version {
+    argument semver;
+    description
+      "Semantic version of the module's content, independent of the
+       YANG revision date.  MAJOR bumps on breaking change (which
+       also triggers the 2-year parallel-publish window per
+       docs/06-extension-model.md), MINOR on backward-compatible
+       additions, PATCH on editorial changes.  Borrowed from
+       OpenConfig's openconfig-version practice: revision dates
+       order changes but cannot signal compatibility intent.";
+  }
+
+  extension arc-it-flow {
+    argument flow;
+    description
+      "Annotates a schema node with the ARC-IT information flow it
+       implements.  Argument format:
+         '<source-subsystem> -> <destination-subsystem> : <flow-name>'
+       Purely informational.  Tooling may walk module trees to emit
+       alignment reports for FHWA / ITS JPO review.";
+  }
+
+  /* --------------------------------------------------------------
+   * Generic typedefs
+   * -------------------------------------------------------------- */
+
+  typedef device-id {
+    type string {
+      length "1..64";
+      pattern '[a-zA-Z0-9_-]+';
+    }
+    description
+      "Device identifier, unique within a single operator's deployment.
+       Multi-agency deployments qualify uniqueness with event-header
+       'owner'. Carried in the event payload (not only the transport
+       envelope) so it survives any transport per the repo's
+       payload-survivability rule.";
+  }
+
+  typedef percentage {
+    type uint8 {
+      range "0..100";
+    }
+    units "percent";
+    description "Whole-number percentage value from 0 to 100.";
+  }
+
+  typedef percentage-precise {
+    type decimal64 {
+      fraction-digits 1;
+      range "0.0 .. 100.0";
+    }
+    units "percent";
+    description
+      "Percentage value from 0.0 to 100.0 with 0.1 resolution, for
+       quantities that need sub-percent precision (humidity, occupancy,
+       etc.). Use 'percentage' where whole-number precision suffices.";
+  }
+
+  typedef heading-degrees {
+    type uint16 {
+      range "0..359";
+    }
+    units "degrees";
+    description "Compass heading in degrees (0 = North)";
+  }
+
+  typedef speed-kmh {
+    type decimal64 {
+      fraction-digits 1;
+      range "0.0 .. 400.0";
+    }
+    units "km/h";
+    description "Speed in kilometers per hour";
+  }
+
+  typedef traffic-density {
+    type decimal64 {
+      fraction-digits 1;
+      range "0.0 .. 250.0";
+    }
+    units "veh/km";
+    description
+      "Traffic density — vehicles present per kilometre of a single
+       lane.  250 veh/km upper bound covers jam density with margin.";
+  }
+
+  typedef fault-severity {
+    type enumeration {
+      enum info;
+      enum warning;
+      enum minor;
+      enum major;
+      enum critical;
+    }
+    description
+      "Severity of a fault/alert, shared across all openits services.
+       Triage: info = FYI only; warning/minor = actionable, generates a
+       work order (e.g. a single detector or pixel failure); major =
+       degraded service; critical = safety-relevant, dispatch now.
+       Normative floors: a monitor/conflict-flash (MMU) fault MUST be
+       reported critical. Vendors MUST NOT down-rate below these
+       floors.";
+  }
+
+  /* --------------------------------------------------------------
+   * Shared identities
+   * -------------------------------------------------------------- */
+
+  identity process-state { description "Base identity for process states"; }
+  identity proc-running  { base process-state; description "Process is running"; }
+  identity proc-stopped  { base process-state; description "Process is stopped"; }
+  identity proc-starting { base process-state; description "Process is starting"; }
+  identity proc-stopping { base process-state; description "Process is stopping"; }
+  identity proc-crashed  { base process-state; description "Process has crashed"; }
+
+  identity temperature-status { description "Base identity for temperature status"; }
+  identity temp-normal        { base temperature-status; description "Normal operating temperature"; }
+  identity temp-high          { base temperature-status; description "High temperature warning"; }
+  identity temp-low           { base temperature-status; description "Low temperature warning"; }
+  identity temp-critical-high { base temperature-status; description "Critical high temperature"; }
+  identity temp-critical-low  { base temperature-status; description "Critical low temperature"; }
+
+  identity restart-reason         { description "Base identity for system restart reasons"; }
+  identity restart-power-cycle    { base restart-reason; description "Power cycle restart"; }
+  identity restart-watchdog       { base restart-reason; description "Watchdog timer restart"; }
+  identity restart-manual         { base restart-reason; description "Manual restart"; }
+  identity restart-upgrade        { base restart-reason; description "Firmware upgrade restart"; }
+  identity restart-config-change  { base restart-reason; description "Configuration change restart"; }
+  identity restart-fault-recovery { base restart-reason; description "Fault recovery restart"; }
+  identity restart-scheduled      { base restart-reason; description "Scheduled restart"; }
+
+  identity comm-link-type { description "Base identity for communication link types"; }
+  identity link-ethernet  { base comm-link-type; description "Ethernet link"; }
+  identity link-serial    { base comm-link-type; description "Serial link (RS-232/RS-485)"; }
+  identity link-cellular  { base comm-link-type; description "Cellular modem link"; }
+  identity link-wifi      { base comm-link-type; description "WiFi link"; }
+  identity link-fiber     { base comm-link-type; description "Fiber optic link"; }
+  identity link-dialup    { base comm-link-type; description "Dial-up modem link"; }
+
+  /* --------------------------------------------------------------
+   * Device-event-kind identity hierarchy
+   *
+   * Root for the cross-service event taxonomy. Every event a device
+   * emits — in any service (signal-control, dms, ess, rsu, ramp-
+   * metering, perception, traffic-sensor, reversible-lane) — is
+   * identified by an identityref pointing to a derived identity below.
+   *
+   * First-level bases here are genuinely cross-service behavioral
+   * classes so a downstream consumer can filter generically
+   * (derived-from-or-self fault-event-kind = every fault, across
+   * every service) or specifically (derived-from-or-self
+   * vendor:econolite-vendor-alarm = one vendor identity).
+   * Service-specific event modules derive their own bases below
+   * these.
+   *
+   * Behavioral classes used by only one service (e.g., signal-
+   * control's phase/detector/overlap/pedestrian/preemption/
+   * coordination/tsp/tsam/external-io events) live under that
+   * service's own root instead (e.g.,
+   * openits-signal-control-types:signal-control-event-kind) rather
+   * than here.
+   *
+   * Adding a new first-level base here is a backward-compatible
+   * additive YANG change. Removing or renaming one is a breaking
+   * change and requires a major revision bump.
+   *
+   * NOTE: Identities below use kebab-case per RFC 8407 §4.3, as do all
+   * other identities in this module (process-state, restart-reason,
+   * comm-link-type, temperature-status). New identities — in this
+   * module or any other openits module — MUST use kebab-case.
+   * -------------------------------------------------------------- */
+
+  identity device-event-kind {
+    description
+      "Root identity for every openits event across every service.
+       Service-specific event modules derive sub-bases from this root.";
+  }
+
+  identity comm-health-event-kind {
+    base device-event-kind;
+    description
+      "Communication-health events: link state, time drift,
+       comm-attempt statistics. Applies to every device.";
+  }
+
+  identity fault-event-kind {
+    base device-event-kind;
+    description
+      "Generic fault events: a device reports a fault condition.
+       Service-specific identities derive from this for service-
+       specific fault catalogs (signal-controller cabinet faults,
+       DMS pixel faults, RSU radio faults, etc.).";
+  }
+
+  identity mode-event-kind {
+    base device-event-kind;
+    description
+      "Operational-mode-change events: a device transitions between
+       operational modes (signal-controller normal/coordinated/free/
+       flash, ramp-meter active/inactive, etc.).";
+  }
+
+  identity report-event-kind {
+    base device-event-kind;
+    description
+      "Periodic-report events: a device emits a scheduled aggregate/
+       status report (interval volume/occupancy, station status, plan
+       applied) rather than a discrete state change. Service report
+       identities derive from this so a consumer can filter every
+       periodic report across the catalog with
+       derived-from-or-self(report-event-kind).";
+  }
+
+  identity operational-mode {
+    description
+      "Cross-service base identity for a concrete device operating-mode
+       *value* (as opposed to mode-event-kind, which discriminates the
+       mode *space* on a mode-changed notification). Each service's
+       mode-value set derives from this base (openits-dms-types:
+       sign-mode, openits-ramp-metering-types:meter-mode,
+       openits-signal-control-types:controller-mode,
+       openits-rsu-types:rsu-mode), so the generic
+       openits-common-mode-events:mode-changed notification can carry
+       typed, enumerable prior/current mode values via a single
+       identityref instead of free-form strings.";
+  }
+
+  identity control-source {
+    description
+      "Orthogonal control-source axis for a device's operating mode:
+       which authority is currently driving it. Distinct from the mode
+       VALUE (what it's doing) — a signal on local TOD backup after
+       comm loss and one under central coordination both read
+       'coordinated' but differ here.";
+  }
+
+  identity control-central {
+    base control-source;
+    description "Driven by central/TMC command.";
+  }
+
+  identity control-local-backup {
+    base control-source;
+    description
+      "Running on local/backup logic (e.g. TOD) after loss of central.";
+  }
+
+  identity control-manual {
+    base control-source;
+    description "Under manual/field control (technician/police panel).";
+  }
+
+  identity control-failed {
+    base control-source;
+    description "Control authority indeterminate/failed.";
+  }
+
+  /* --------------------------------------------------------------
+   * Shared groupings
+   * -------------------------------------------------------------- */
+
+  grouping geo-point {
+    description "WGS84 latitude/longitude for any device or observation.";
+    leaf latitude  { type decimal64 { fraction-digits 7; range "-90.0 .. 90.0"; }   description "WGS84 latitude in decimal degrees"; }
+    leaf longitude { type decimal64 { fraction-digits 7; range "-180.0 .. 180.0"; } description "WGS84 longitude in decimal degrees"; }
+  }
+
+  grouping geo-location {
+    description "Geographic location for any device: a WGS84 point plus optional elevation and heading.";
+    uses geo-point;
+    leaf elevation {
+      type decimal64 { fraction-digits 1; }
+      units "meters";
+      description
+        "Elevation as WGS84 ellipsoidal height (height above ellipsoid,
+         HAE) — the canonical datum here, matching SAE J2735 position
+         payloads. NOTE: NTCIP 1204 ESS reports mean-sea-level (MSL)
+         elevation, which differs from HAE by the local geoid undulation
+         (~-30 m across CONUS); convert MSL->HAE at the decoder.";
+    }
+    leaf heading   { type heading-degrees; description "Orientation heading in degrees from north"; }
+  }
+
+  grouping device-hardware {
+    description
+      "Manufacturer-reported hardware identity of any device: make,
+       model, firmware, serial number, hardware version, and firmware
+       build. All config false — reported by the device, not
+       operator-configured. Every service's identity
+       container 'uses' this instead of re-inlining the same leaves.";
+    leaf make     { type string; config false; description "Manufacturer name reported by the device."; }
+    leaf model    { type string; config false; description "Model identifier reported by the device."; }
+    leaf firmware { type string; config false; description "Firmware version reported by the device."; }
+    leaf serial   { type string; config false; description "Hardware serial number reported by the device."; }
+    leaf hardware-version { type string; config false; description "Hardware version reported by the device."; }
+    leaf firmware-build   { type string; config false; description "Firmware build identifier reported by the device."; }
+  }
+
+  grouping device-identity-config {
+    description
+      "Shared operator-provisioned device identity: id, name, road reference,
+       and geographic location. Used in a service's config container (intended)
+       and mirrored in its state container (applied). Device-reported hardware
+       (device-hardware) is a separate state-only uses.";
+    leaf id {
+      type device-id;
+      description
+        "Agency-internal device identifier (URN tail). Same charset as the
+         event-header source-device-id, so a device can always be named in
+         its own events.";
+    }
+    leaf name { type string; description "Operator-facing device name."; }
+    leaf road-reference {
+      type string;
+      description
+        "Free-form route / location reference (e.g., \"I-35 NB @ MP 214\").
+         Informational only.";
+    }
+    uses geo-location;
+  }
+
+  grouping comm-link-state {
+    description "Communication link state information";
+
+    leaf link-id     { type uint8;   description "Link identifier"; }
+    leaf link-type   {
+      type identityref { base comm-link-type; }
+      description "Type of communication link";
+    }
+    leaf operational { type boolean; description "Link is operational"; }
+    leaf bytes-sent       { type uint64; description "Total bytes sent"; }
+    leaf bytes-received   { type uint64; description "Total bytes received"; }
+    leaf error-count      { type uint32; description "Total error count"; }
+    leaf latency-ms       {
+      type uint32; units "milliseconds";
+      description "Current latency";
+    }
+    leaf last-successful  {
+      type yang:date-and-time;
+      description "Timestamp of last successful communication";
+    }
+    leaf remote-address   { type string; description "Remote endpoint address"; }
+  }
+
+  /* --------------------------------------------------------------
+   * Event-notification header
+   *
+   * The identity + timing envelope shared by every openits event
+   * notification. A notification declares its own 'kind' identityref
+   * (the identity base differs per service, so 'kind' is not part of
+   * this grouping), then 'uses event-header' for the device + time,
+   * and — for events decoded from a wire encoding — 'uses wire-source'
+   * for provenance. Consolidates the source-device-id/occurred-at pair
+   * that was previously hand-copied into every notification.
+   * -------------------------------------------------------------- */
+
+  grouping event-header {
+    description
+      "Common device + timing envelope for an openits event
+       notification: the device the event pertains to and the
+       wall-clock time it occurred at that device. Notifications add
+       their own 'kind' identityref and, for wire-decoded events,
+       'uses openits-types:wire-source'.";
+
+    leaf source-device-id {
+      type device-id;
+      mandatory true;
+      description
+        "Device this event pertains to, using the openits-types:
+         device-id pattern '[a-zA-Z0-9_-]+'. Typically the
+         controller-id / sign-id / RSU-id from the inventory.";
+    }
+
+    leaf occurred-at {
+      type yang:date-and-time;
+      mandatory true;
+      description
+        "Wall-clock time the event occurred at the device. Distinct
+         from CloudEvents ce-time (when the publisher observed it); the
+         two diverge for HR-log backfill or when device NTP is broken.";
+    }
+
+    leaf sequence {
+      type uint64;
+      mandatory true;
+      description
+        "Per-source-device monotonic event counter. Increments by 1 for
+         each event the device emits, in emission order. MAY reset to 0
+         on device restart (a decrease therefore signals a reboot, not a
+         gap). Consumers order events by (occurred-at, sequence); the
+         sequence breaks ties among the 5-15 hi-res rows that share one
+         decisecond tick. A gap in the sequence between two consecutive
+         received events for one device indicates event loss in transit.";
+    }
+
+    leaf observed-by {
+      type device-id;
+      description
+        "Device/poller that OBSERVED this event, when different from
+         source-device-id. Present on synthesized events a collector
+         infers rather than the source reporting (e.g. comm-loss, which
+         is necessarily observed by the poller, not emitted by the
+         unreachable device). Absent when the source device reported the
+         event itself. For observer-reported events, occurred-at is the
+         observer's clock.";
+    }
+
+    leaf owner {
+      type string;
+      description
+        "Optional owning organization/agency for source-device-id, for
+         multi-agency deployments where device-id uniqueness is scoped
+         per operator. Free-form agency identifier; TMDD-style org
+         qualification. Absent in single-operator deployments.";
+    }
+  }
+
+  /* --------------------------------------------------------------
+   * Fault-inventory entry
+   *
+   * One entry in a device's live active-fault list (the config-false
+   * 'faults' container every service exposes). A service's fault list
+   * 'uses fault-entry' for the common leaves and adds its own
+   * service-specific 'category' identityref (base
+   * <service>-fault-event-kind), so a fleet-wide
+   * derived-from-or-self(fault-event-kind) filter spans every service.
+   * -------------------------------------------------------------- */
+
+  grouping fault-entry {
+    description
+      "Common leaves of one active-fault inventory entry: a device-local
+       fault id (the list key), severity, human-readable description, and
+       first-observed time. A service's fault list adds its own
+       'category' identityref (base <service>-fault-event-kind).";
+
+    leaf fault-id {
+      type string;
+      description
+        "Device-local fault identifier, condition-scoped: stable across
+         raise/clear of the same fault condition on the same
+         source-device. The pair (source-device-id, fault-id) is unique
+         among a device's currently-active faults. Re-raising a condition
+         after it cleared reuses the same fault-id. If the same condition
+         has multiple simultaneous distinct instances, each gets a
+         distinct fault-id (e.g. a suffix). Consumers correlate/dedupe on
+         (source-device-id, fault-id). Used as the enclosing list's key.";
+    }
+    leaf severity {
+      type fault-severity;
+      description "Operator-visible severity of the fault.";
+    }
+    leaf description {
+      type string;
+      description "Human-readable fault description from the device.";
+    }
+    leaf first-observed {
+      type yang:date-and-time;
+      description "Wall-clock time the fault was first observed at the device.";
+    }
+  }
+
+  /* --------------------------------------------------------------
+   * Wire-source provenance
+   *
+   * Every event that originates from a decoded wire encoding carries
+   * this grouping in its YANG-modeled payload. Transport-agnostic by
+   * design: it appears in the payload, not in any envelope, so a
+   * consumer reading over NATS, REST, NETCONF, or gNMI sees the
+   * wire identifier identically.
+   *
+   * The 'tag' choice gives type-safe per-decoder-family variants
+   * (Indiana enumeration for ATSPM HR logs, NTCIP OIDs for SNMP-poll
+   * decoders, J2735 messageId for V2X RSU traffic). New decoder
+   * families add new cases additively per RFC 7950 §11.
+   * -------------------------------------------------------------- */
+
+  grouping wire-source {
+    description
+      "Wire-level provenance: the original identifier the event was
+       decoded from. Optional on notifications — events synthesized
+       inside openits rather than decoded off a wire leave it absent.";
+
+    container source {
+      description "Wire-level provenance of this event.";
+
+      leaf decoder {
+        type string;
+        mandatory true;
+        description
+          "Decoder-family name. Convention: lowercase, hyphenated.
+           Examples: 'indiana' (ATSPM Indiana enumeration HR logs),
+           'ntcip-1202' (NTCIP 1202 signal-controller MIB),
+           'ntcip-1203' (NTCIP 1203 DMS MIB),
+           'ntcip-1204' (NTCIP 1204 ESS MIB),
+           'j2735' (SAE J2735 V2X messages),
+           'srtp' / 'modbus' / 'dnp3' (PLC register maps),
+           'gnmi-subscribe' (future), 'snmp-trap' (future).";
+      }
+
+      choice tag {
+        description
+          "Decoder-family-specific wire identifier. Additive: new
+           decoder families add new cases without breaking existing
+           consumers.";
+
+        case indiana {
+          description
+            "ATSPM 'Indiana enumeration' HR event vocabulary (used by
+             Econolite ASC3, McCain MaxTime, Trafficware ATC, and
+             Yunex controllers).";
+          reference
+            "ATSPM Indiana enumeration (HR event-code vocabulary).";
+          leaf indiana-code {
+            type uint16;
+            description
+              "Indiana event-code from the controller's HR log row.";
+          }
+          leaf indiana-param {
+            type uint16;
+            description
+              "Indiana event-param (phase number, detector channel,
+               preempt number, etc. — meaning depends on event-code).
+               uint16 to match indiana-code width: params such as the
+               new cycle length in seconds (Indiana 132) and extended
+               MaxTime/ATC enum values exceed 255.";
+          }
+        }
+
+        case ntcip-oid {
+          description
+            "NTCIP MIB objects polled via SNMP. OID + stringified raw
+             value.";
+          reference
+            "NTCIP 1202 (signal-control MIB); NTCIP 1203 (DMS MIB);
+             NTCIP 1204 (ESS MIB).";
+          leaf oid {
+            type string;
+            description "Dotted-numeric OID, e.g., '1.3.6.1.4.1.1206.4.2.1.1.1'.";
+          }
+          leaf oid-value {
+            type string;
+            description
+              "Stringified raw value the OID held at poll time.";
+          }
+        }
+
+        case j2735 {
+          description
+            "SAE J2735 V2X messages. messageId per DSRC.MessageFrame.";
+          reference "SAE J2735 (DSRC.MessageFrame.messageId).";
+          leaf message-id {
+            type uint16;
+            description "J2735 MessageFrame.messageId.";
+          }
+        }
+
+        case plc-register {
+          description
+            "PLC register reads (SRTP, Modbus, DNP3, or similar
+             register-map protocols), used by facility PLCs such as
+             reversible-lane controllers. The decoder leaf names the
+             concrete protocol ('srtp', 'modbus', 'dnp3'); this case
+             carries register + stringified raw value.";
+          leaf register {
+            type string;
+            description
+              "PLC register reference in the controller's native
+               notation, e.g., '%R00100' (SRTP) or '40001' (Modbus).";
+          }
+          leaf register-value {
+            type string;
+            description
+              "Stringified raw value the register held at read time.";
+          }
+        }
+      }
+    }
+  }
+}

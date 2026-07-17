@@ -1,0 +1,87 @@
+module openits-signal-control-pedestrian-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:signal-control-pedestrian-events";
+  prefix openits-sc-ped;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-signal-control-types {
+    prefix openits-sc-types;
+  }
+
+  import openits-nema-common {
+    prefix openits-nema;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Signal-controller pedestrian-interval and pedestrian-call
+     notifications. Each notification carries a 'kind' identityref
+     derived from openits-signal-control-types:sc-pedestrian-event-kind
+     and a 'wire-source' grouping.";
+
+  revision 2026-05-17 {
+    description
+      "Initial revision. Hosts the pedestrian-event notification
+       migrated from the signal-control notifications companion module@2026-05-15.";
+    reference "ATSPM Indiana enumeration (pedestrian event codes).";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification pedestrian-event {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> ATSPM / TMC : pedestrian event";
+    description
+      "A pedestrian-related transition. The 'kind' identityref names
+       the specific event class (walk interval, call registered, ped
+       detector transition, etc.). Collapses ATSPM codes 21-26, 45,
+       67-70, 89-92.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-pedestrian-event-kind; }
+      mandatory true;
+      description "Specific pedestrian-event identity from the Indiana taxonomy.";
+    }
+    leaf source-device-id {
+      type openits-types:device-id;
+      mandatory true;
+      description "Controller this pedestrian event pertains to.";
+    }
+    leaf phase-number     { type openits-nema:phase-number; description "Pedestrian phase the event belongs to."; }
+    leaf detector-channel { type uint32; description "Ped-detector channel, when the event is detector-side."; }
+    leaf event {
+      type enumeration {
+        enum unspecified; enum begin-walk; enum begin-change-interval;
+        enum begin-solid-dont-walk; enum dark; enum extended-change-interval;
+        enum oversized-served; enum call-registered;
+        enum overlap-begin-walk; enum overlap-begin-clearance;
+        enum overlap-begin-solid-dont-walk; enum overlap-dark;
+        enum detector-on; enum detector-off; enum detector-failed; enum detector-restored;
+      }
+      description
+        "Pedestrian-event class: walk-interval transitions, call registered,
+         pedestrian-detector transitions, or overlap-pedestrian variants.";
+    }
+    leaf occurred-at {
+      type yang:date-and-time;
+      mandatory true;
+      description "Wall-clock time the pedestrian event occurred at the controller.";
+    }
+
+    uses openits-types:wire-source;
+  }
+}

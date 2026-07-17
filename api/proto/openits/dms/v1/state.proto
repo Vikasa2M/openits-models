@@ -1,0 +1,319 @@
+syntax = "proto3";
+
+package openits.dms.v1;
+
+option go_package = "github.com/openits/openits-models/pkg/proto/openits/dms/v1;dmsv1";
+
+import "google/protobuf/timestamp.proto";
+
+message Sign {
+  SignConfig config = 1;
+  SignState state = 2;
+  Messages messages = 3;
+  Schedule schedule = 8;
+  Control control = 4;
+  Environment environment = 5;
+  Diagnostics diagnostics = 6;
+  Faults faults = 7;
+}
+
+message SignConfig {
+  string elevation = 5;
+  uint32 heading = 6;
+  string id = 7;
+  string latitude = 2;
+  string longitude = 3;
+  string name = 8;
+  string road_reference = 9;
+}
+
+message SignState {
+  Technology technology = 1;
+  uint32 sign_width_pixels = 2;
+  uint32 sign_height_pixels = 3;
+  Capabilities capabilities = 5;
+  string elevation = 12;
+  string firmware = 4;
+  string firmware_build = 17;
+  string hardware_version = 18;
+  uint32 heading = 13;
+  string id = 14;
+  string latitude = 6;
+  string longitude = 7;
+  string make = 8;
+  string model = 9;
+  string name = 15;
+  string road_reference = 16;
+  string serial = 10;
+}
+
+enum Technology {
+  TECHNOLOGY_UNKNOWN = 0;
+  TECHNOLOGY_LED = 1;
+  TECHNOLOGY_FLIP_DISK = 2;
+  TECHNOLOGY_HYBRID = 3;
+  TECHNOLOGY_FIBER_OPTIC = 4;
+  TECHNOLOGY_SHUTTERED = 5;
+  TECHNOLOGY_LAMP = 6;
+  TECHNOLOGY_DRUM = 7;
+}
+
+message Capabilities {
+  SignType sign_type = 1;
+  uint32 character_height_pixels = 2;
+  uint32 character_width_pixels = 3;
+  ColorCapability color_capability = 4;
+  uint32 max_pages = 5;
+  bool beacon_capable = 6;
+  repeated SupportedMultiTags supported_multi_tags = 7;
+  repeated Font font = 8;
+}
+
+enum SignType {
+  SIGN_TYPE_FULL_MATRIX = 0;
+  SIGN_TYPE_CHAR_MATRIX = 1;
+  SIGN_TYPE_LINE_MATRIX = 2;
+  SIGN_TYPE_OTHER = 3;
+}
+
+enum ColorCapability {
+  COLOR_CAPABILITY_MONOCHROME_1BIT = 0;
+  COLOR_CAPABILITY_MONOCHROME_MULTI = 1;
+  COLOR_CAPABILITY_COLOR = 2;
+}
+
+enum SupportedMultiTags {
+  SUPPORTED_MULTI_TAGS_NEW_LINE = 0;
+  SUPPORTED_MULTI_TAGS_NEW_PAGE = 1;
+  SUPPORTED_MULTI_TAGS_FONT = 2;
+  SUPPORTED_MULTI_TAGS_COLOR_FOREGROUND = 3;
+  SUPPORTED_MULTI_TAGS_FLASH = 4;
+  SUPPORTED_MULTI_TAGS_JUSTIFY_LINE = 5;
+  SUPPORTED_MULTI_TAGS_JUSTIFY_PAGE = 6;
+  SUPPORTED_MULTI_TAGS_PAGE_TIME = 7;
+  SUPPORTED_MULTI_TAGS_GRAPHIC = 8;
+  SUPPORTED_MULTI_TAGS_TEXT_RECTANGLE = 9;
+}
+
+message Font {
+  uint32 font_number = 1;
+  string name = 2;
+  uint32 character_height_pixels = 3;
+}
+
+message Messages {
+  repeated Slot slot = 1;
+}
+
+message Slot {
+  OpenitsDmsMessageMemoryType memory_type = 1;
+  uint32 slot_number = 2;
+  SlotConfig config = 7;
+  SlotState state = 8;
+}
+
+enum OpenitsDmsMessageMemoryType {
+  OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED = 0;
+  OPENITS_DMS_MESSAGE_MEMORY_TYPE_PERMANENT = 1;
+  OPENITS_DMS_MESSAGE_MEMORY_TYPE_CHANGEABLE = 2;
+  OPENITS_DMS_MESSAGE_MEMORY_TYPE_VOLATILE = 3;
+  OPENITS_DMS_MESSAGE_MEMORY_TYPE_SCHEDULE = 4;
+  OPENITS_DMS_MESSAGE_MEMORY_TYPE_BLANK = 5;
+}
+
+message SlotConfig {
+  OpenitsDmsMessageMemoryType memory_type = 1;
+  uint32 slot_number = 2;
+  Beacon beacon = 3;
+  uint32 crc = 4;
+  string multi_string = 5;
+  string owner = 6;
+  uint32 priority = 7;
+}
+
+enum Beacon {
+  BEACON_NONE = 0;
+  BEACON_FLASHING = 1;
+}
+
+message SlotState {
+  DmsMessageStatus status = 1;
+}
+
+enum DmsMessageStatus {
+  DMS_MESSAGE_STATUS_NOT_USED = 0;
+  DMS_MESSAGE_STATUS_MODIFYING = 1;
+  DMS_MESSAGE_STATUS_VALIDATING = 2;
+  DMS_MESSAGE_STATUS_VALID = 3;
+  DMS_MESSAGE_STATUS_ERROR = 4;
+}
+
+message Schedule {
+  repeated DayPlan day_plan = 1;
+  repeated ScheduleEntry schedule_entry = 2;
+  ScheduleState state = 3;
+}
+
+message DayPlan {
+  uint32 day_plan_id = 1;
+  string name = 2;
+  repeated Action action = 3;
+}
+
+message Action {
+  string start_time = 1;
+  OpenitsDmsMessageMemoryType memory_type = 2;
+  uint32 slot_number = 3;
+}
+
+message ScheduleEntry {
+  uint32 schedule_id = 1;
+  repeated Months months = 2;
+  repeated DaysOfWeek days_of_week = 3;
+  repeated uint32 days_of_month = 4;
+  uint32 day_plan = 5;
+}
+
+enum Months {
+  MONTHS_UNSPECIFIED = 0;
+  MONTHS_JANUARY = 1;
+  MONTHS_FEBRUARY = 2;
+  MONTHS_MARCH = 3;
+  MONTHS_APRIL = 4;
+  MONTHS_MAY = 5;
+  MONTHS_JUNE = 6;
+  MONTHS_JULY = 7;
+  MONTHS_AUGUST = 8;
+  MONTHS_SEPTEMBER = 9;
+  MONTHS_OCTOBER = 10;
+  MONTHS_NOVEMBER = 11;
+  MONTHS_DECEMBER = 12;
+}
+
+enum DaysOfWeek {
+  DAYS_OF_WEEK_UNSPECIFIED = 0;
+  DAYS_OF_WEEK_MONDAY = 1;
+  DAYS_OF_WEEK_TUESDAY = 2;
+  DAYS_OF_WEEK_WEDNESDAY = 3;
+  DAYS_OF_WEEK_THURSDAY = 4;
+  DAYS_OF_WEEK_FRIDAY = 5;
+  DAYS_OF_WEEK_SATURDAY = 6;
+  DAYS_OF_WEEK_SUNDAY = 7;
+}
+
+message ScheduleState {
+  uint32 active_day_plan_id = 1;
+  google.protobuf.Timestamp next_action_at = 2;
+}
+
+message Control {
+  ControlConfig config = 1;
+  ControlState state = 2;
+}
+
+message ControlConfig {
+  ActiveMessage active_message = 4;
+  Fallback fallback = 5;
+  uint32 brightness_setpoint = 6;
+  string control_mode = 11;
+  string default_page_off_time_s = 1;
+  string default_page_on_time_s = 2;
+  IlluminationControl illumination_control = 3;
+}
+
+message ActiveMessage {
+  OpenitsDmsMessageMemoryType memory_type = 1;
+  uint32 slot_number = 2;
+  uint32 duration_s = 3;
+  uint32 activation_priority = 4;
+  uint32 crc = 5;
+  string owner = 6;
+}
+
+message Fallback {
+  uint32 comm_loss_timeout_s = 1;
+  OpenitsDmsMessageMemoryType comm_loss_memory_type = 2;
+  uint32 comm_loss_slot_number = 3;
+  OpenitsDmsMessageMemoryType end_of_duration_memory_type = 4;
+  uint32 end_of_duration_slot_number = 5;
+  OpenitsDmsMessageMemoryType power_loss_memory_type = 6;
+  uint32 power_loss_slot_number = 7;
+}
+
+enum IlluminationControl {
+  ILLUMINATION_CONTROL_PHOTOCELL = 0;
+  ILLUMINATION_CONTROL_TIMER = 1;
+  ILLUMINATION_CONTROL_MANUAL = 2;
+}
+
+message ControlState {
+  string display_state = 21;
+  google.protobuf.Timestamp last_mode_change = 2;
+  uint32 brightness_current = 8;
+  Active active = 9;
+  Preempted preempted = 5;
+  bool comm_loss_active = 10;
+  bool power_loss_active = 22;
+  uint32 controller_uptime_s = 11;
+  uint32 brightness_setpoint = 12;
+  string control_mode = 23;
+  string default_page_off_time_s = 1;
+  string default_page_on_time_s = 3;
+  IlluminationControl illumination_control = 4;
+}
+
+message Active {
+  OpenitsDmsMessageMemoryType memory_type = 1;
+  uint32 slot_number = 2;
+  google.protobuf.Timestamp activated_at = 3;
+  google.protobuf.Timestamp expires_at = 4;
+  string source = 5;
+  Beacon beacon = 11;
+  uint32 crc = 6;
+  string multi_string = 7;
+  string owner = 8;
+  uint32 priority = 9;
+}
+
+message Preempted {
+  OpenitsDmsMessageMemoryType memory_type = 1;
+  uint32 slot_number = 2;
+}
+
+message Environment {
+  uint32 ambient_light_lux = 1;
+  string cabinet_temperature_c = 2;
+  uint32 humidity_percent = 3;
+  bool door_open = 4;
+}
+
+message Diagnostics {
+  uint32 pixels_total = 11;
+  uint32 pixels_stuck_on = 1;
+  uint32 pixels_stuck_off = 2;
+  uint32 pixels_failed = 12;
+  uint32 lamps_total = 13;
+  uint32 lamps_failed = 14;
+  google.protobuf.Timestamp last_self_test = 3;
+}
+
+message Faults {
+  repeated Fault fault = 1;
+}
+
+message Fault {
+  string category = 1;
+  string description = 2;
+  string fault_id = 3;
+  google.protobuf.Timestamp first_observed = 4;
+  FaultSeverity severity = 5;
+}
+
+enum FaultSeverity {
+  FAULT_SEVERITY_INFO = 0;
+  FAULT_SEVERITY_WARNING = 1;
+  FAULT_SEVERITY_MINOR = 2;
+  FAULT_SEVERITY_MAJOR = 3;
+  FAULT_SEVERITY_CRITICAL = 4;
+}
+

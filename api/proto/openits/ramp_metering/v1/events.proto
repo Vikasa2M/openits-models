@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package openits.ramp_metering.v1;
+
+option go_package = "github.com/openits/openits-models/pkg/proto/openits/ramp_metering/v1;rampmeteringv1";
+
+import "google/protobuf/timestamp.proto";
+
+message QueueOverrideActivated {
+  string kind = 99;
+  uint32 queue_length_vehicles = 1;
+  uint32 threshold_vehicles = 2;
+  uint32 plan_id = 3;
+  string observed_by = 4;
+  google.protobuf.Timestamp occurred_at = 5;
+  string owner = 6;
+  uint64 sequence = 7;
+  string source_device_id = 8;
+}
+
+message QueueOverrideCleared {
+  string kind = 99;
+  uint32 queue_length_vehicles = 1;
+  uint32 plan_id = 2;
+  string observed_by = 3;
+  google.protobuf.Timestamp occurred_at = 4;
+  string owner = 5;
+  uint64 sequence = 6;
+  string source_device_id = 7;
+}
+
+message ReleaseRateChanged {
+  string kind = 99;
+  uint32 previous_rate_vph = 1;
+  uint32 new_rate_vph = 2;
+  uint32 plan_id = 3;
+  RateChangeCause cause = 10;
+  string observed_by = 5;
+  google.protobuf.Timestamp occurred_at = 6;
+  string owner = 7;
+  uint64 sequence = 8;
+  string source_device_id = 9;
+}
+
+enum RateChangeCause {
+  RATE_CHANGE_CAUSE_PLAN_SWITCH = 0;
+  RATE_CHANGE_CAUSE_TRAFFIC_RESPONSIVE = 1;
+  RATE_CHANGE_CAUSE_QUEUE_OVERRIDE = 2;
+  RATE_CHANGE_CAUSE_OPERATOR_OVERRIDE = 3;
+  RATE_CHANGE_CAUSE_SCHEDULE = 4;
+  RATE_CHANGE_CAUSE_OTHER = 5;
+}
+

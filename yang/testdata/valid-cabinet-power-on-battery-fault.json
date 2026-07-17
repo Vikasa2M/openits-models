@@ -1,0 +1,10 @@
+{
+  "openits-common-fault-events:fault-raised": {
+    "kind": "openits-cabinet-power:cabinet-power-on-battery",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence": "1",
+    "fault-id": "sc01-power-onbatt-01",
+    "severity": "warning",
+    "occurred-at": "2026-07-17T14:05:00Z"
+  }
+}

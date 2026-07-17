@@ -1,0 +1,150 @@
+module openits-device-diagnostics {
+  yang-version 1.1;
+  namespace "urn:openits:yang:device-diagnostics";
+  prefix openits-device-diag;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Generic device-diagnostics groupings shared across openits service
+     modules: resource utilization (CPU / memory / disk), critical
+     process status, log statistics, and temperature-sensor readings.
+     These describe the compute platform any modern ITS field device
+     runs on, not any one service's function, so they live here and are
+     'uses'-ed by a service's diagnostics/state subtree rather than
+     copy-pasted per service. Extracted from openits-rsu.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.2.0";
+
+  revision 2026-07-14 {
+    description
+      "Add a system-runtime grouping (device-level uptime / restart /
+       config-hash) — the runtime half of the retired system-info.";
+  }
+  revision 2026-07-13 {
+    description
+      "Initial revision. resource-utilization / process-list /
+       log-statistics / temperature-sensor-list groupings extracted
+       verbatim from openits-rsu diagnostics, so the same
+       generic device telemetry can be reused by other services
+       instead of re-inlined.";
+  }
+
+  grouping system-runtime {
+    description "Device-level uptime and restart/config state.";
+    leaf uptime-seconds { type uint64; units "seconds"; description "System uptime."; }
+    leaf restart-count { type uint32; description "Total restart count."; }
+    leaf last-restart-reason {
+      type identityref { base openits-types:restart-reason; }
+      description "Reason for the last restart.";
+    }
+    leaf last-restart-time { type yang:date-and-time; description "Timestamp of the last restart."; }
+    leaf config-hash { type string; description "Applied-configuration hash/checksum."; }
+  }
+
+  grouping resource-utilization {
+    description
+      "Compute-platform resource utilization: CPU, memory, and disk.";
+    container cpu {
+      description "CPU utilization";
+      leaf usage-pct    { type uint8 { range "0..100"; } description "CPU usage percentage"; }
+      leaf temperature-c { type decimal64 { fraction-digits 1; } description "CPU temperature in Celsius"; }
+      leaf load-1min    { type decimal64 { fraction-digits 2; } description "1-minute load average"; }
+      leaf load-5min    { type decimal64 { fraction-digits 2; } description "5-minute load average"; }
+      leaf load-15min   { type decimal64 { fraction-digits 2; } description "15-minute load average"; }
+      leaf alarm        { type boolean; description "CPU alarm active"; }
+    }
+    container memory {
+      description "Memory utilization";
+      leaf total-kb  { type uint64; description "Total memory in KB"; }
+      leaf used-kb   { type uint64; description "Used memory in KB"; }
+      leaf free-kb   { type uint64; description "Free memory in KB"; }
+      leaf usage-pct { type uint8 { range "0..100"; } description "Memory usage percentage"; }
+      leaf alarm     { type boolean; description "Memory alarm active"; }
+    }
+    container disk {
+      description "Disk utilization";
+      leaf total-kb  { type uint64; description "Total disk space in KB"; }
+      leaf used-kb   { type uint64; description "Used disk space in KB"; }
+      leaf free-kb   { type uint64; description "Free disk space in KB"; }
+      leaf usage-pct { type uint8 { range "0..100"; } description "Disk usage percentage"; }
+      leaf alarm     { type boolean; description "Disk alarm active"; }
+    }
+  }
+
+  grouping process-list {
+    description "Critical process status.";
+    list process {
+      key "name";
+      description "Critical process status";
+      leaf name           { type string; description "Process name"; }
+      leaf pid            { type uint32; description "Process ID"; }
+      leaf state          { type identityref { base openits-types:process-state; } description "Process state"; }
+      leaf cpu-usage-pct  { type uint8; description "CPU usage percentage"; }
+      leaf memory-kb      { type uint64; description "Memory usage in KB"; }
+      leaf uptime-seconds { type uint64; description "Process uptime in seconds"; }
+      leaf restart-count  { type uint32; description "Process restart count"; }
+      leaf last-restart   { type yang:date-and-time; description "Timestamp of last restart"; }
+      leaf required       { type boolean; description "Process is required for operation"; }
+    }
+  }
+
+  grouping log-statistics {
+    description "Log-volume statistics.";
+    container logs {
+      description "Log statistics";
+      leaf total-entries { type uint64; description "Total log entries"; }
+      container errors {
+        description "Error log statistics";
+        leaf count-1h  { type uint64; description "Errors in last hour"; }
+        leaf count-24h { type uint64; description "Errors in last 24 hours"; }
+      }
+      container warnings {
+        description "Warning log statistics";
+        leaf count-1h  { type uint64; description "Warnings in last hour"; }
+        leaf count-24h { type uint64; description "Warnings in last 24 hours"; }
+      }
+      container critical {
+        description "Critical log statistics";
+        leaf count-1h  { type uint64; description "Critical events in last hour"; }
+        leaf count-24h { type uint64; description "Critical events in last 24 hours"; }
+      }
+      leaf most-recent-error      { type string; description "Most recent error message"; }
+      leaf most-recent-error-time { type yang:date-and-time; description "Timestamp of most recent error"; }
+      leaf storage-used-pct       { type uint8 { range "0..100"; } description "Log storage usage percentage"; }
+    }
+  }
+
+  grouping temperature-sensor-list {
+    description "Per-sensor temperature readings.";
+    list temperature-sensor {
+      key "id";
+      description "Temperature sensor readings";
+      leaf id              { type uint8; description "Sensor identifier"; }
+      leaf name            { type string; description "Sensor name"; }
+      leaf temperature-c {
+        type decimal64 { fraction-digits 1; }
+        units "celsius";
+        description "Current temperature reading";
+      }
+      leaf status {
+        type identityref { base openits-types:temperature-status; }
+        description "Temperature status";
+      }
+      leaf threshold-high-c { type decimal64 { fraction-digits 1; } description "High temperature threshold"; }
+      leaf threshold-low-c  { type decimal64 { fraction-digits 1; } description "Low temperature threshold"; }
+    }
+  }
+}

@@ -1,0 +1,527 @@
+module openits-traffic-sensor {
+  yang-version 1.1;
+  namespace "urn:openits:yang:traffic-sensor";
+  prefix openits-ts;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "YANG data model for roadside traffic sensors — the radar,
+     magnetometer, and loop-emulation detector stations that report
+     per-lane volume, occupancy, speed, and length-based vehicle
+     classification.
+
+     Transport-independent replacement for NTCIP 1209 (Transportation
+     Sensor Systems), aligned with ARC-IT 9.1 service package TM01
+     (Infrastructure-Based Traffic Surveillance).  The model is
+     vendor-neutral: any per-lane aggregating detector — side-fire
+     radar, magnetometer array, loop emulation — maps onto it.
+     Vendor-specific capabilities ride in vendor augment modules per
+     docs/06-extension-model.md, never in this module.
+
+     Traffic sensors are pure-observation devices: the only writable
+     nodes are the lane / classification-bin setup and the reporting
+     interval.  Bounded values are enforced via YANG `range` because
+     the bounds are physical rather than operational.
+
+     Every numeric leaf carries a `units` statement.  Agents that
+     report different units MUST convert at the translator boundary;
+     the wire format is canonical.
+
+     Copyright (c) 2026.  Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.1.0";
+
+  revision 2026-07-10 {
+    description
+      "Replace the inline severity enumeration on the fault-inventory
+       list with the shared openits-types:fault-severity typedef.
+       Member set and order unchanged — wire-stable.
+
+       Also, add base openits-types:fault-event-kind to the
+       fault-category root so this service's faults are reachable by
+       fleet-wide derived-from-or-self(fault-event-kind) queries.
+       Additive (identity gains a base); no child renamed.";
+    reference "RFC 7950 section 11 (additive YANG evolution).";
+  }
+  revision 2026-07-07 {
+    description
+      "Initial revision.  Minimum viable model covering identity,
+       operational status, lane inventory, per-lane interval data
+       (volume, occupancy, speed, flow-rate, density, classification),
+       carriageway grouping, real-time presence, queue detection,
+       diagnostics, and a live fault inventory.";
+    reference
+      "ARC-IT 9.1 Service Package TM01 (Infrastructure-Based Traffic
+       Surveillance); NTCIP 1209 v02 (functional reference only; no
+       wire compatibility).";
+  }
+
+  /* --------------------------------------------------------------
+   * Typedefs
+   * -------------------------------------------------------------- */
+
+  typedef occupancy-percent {
+    type decimal64 {
+      fraction-digits 1;
+      range "0.0 .. 100.0";
+    }
+    units "percent";
+    description
+      "Lane occupancy — the percentage of the reporting interval
+       during which the detection zone was occupied.";
+  }
+
+  typedef vehicle-length-m {
+    type decimal64 {
+      fraction-digits 1;
+      range "0.0 .. 40.0";
+    }
+    units "meters";
+    description
+      "Vehicle length.  40 m upper bound covers every legal
+       road-train configuration with margin.";
+  }
+
+  /* --------------------------------------------------------------
+   * Identities
+   * -------------------------------------------------------------- */
+
+  identity fault-category {
+    base openits-types:fault-event-kind;
+    description "Root identity for traffic-sensor fault taxonomies.";
+  }
+  identity fault-rf {
+    base fault-category;
+    description
+      "Radar RF front-end fault (low signal, transceiver failure).";
+  }
+  identity fault-occlusion {
+    base fault-category;
+    description
+      "Detection zone occluded (parked vehicle, barrier, snow bank).";
+  }
+  identity fault-configuration {
+    base fault-category;
+    description
+      "Lane or classification configuration invalid or unconfirmed.";
+  }
+  identity fault-power {
+    base fault-category;
+    description
+      "Power-supply or input-voltage fault at the sensor.";
+  }
+  identity fault-communication {
+    base fault-category;
+    description
+      "Communication fault between sensor and upstream system.";
+  }
+  identity fault-temperature {
+    base fault-category;
+    description
+      "Internal temperature outside the operating envelope.";
+  }
+
+  identity inactive-reason {
+    description
+      "Root identity for why a sensor is not reporting usable data.
+       Open slot: vendors derive concrete reasons in a vendor types
+       module (docs/06-extension-model.md).  A consumer that does not
+       load the vendor module sees the base identity.";
+  }
+  identity inactive-comms-loss {
+    base inactive-reason;
+    description
+      "The sensor is unreachable / has stopped reporting to the
+       upstream system.";
+  }
+  identity inactive-disabled {
+    base inactive-reason;
+    description
+      "The sensor has been administratively disabled.";
+  }
+
+  /* --------------------------------------------------------------
+   * Reusable groupings
+   * -------------------------------------------------------------- */
+
+  grouping lane-interval-data {
+    description
+      "One reporting interval's aggregate observations for a single
+       lane.  Shared by the state tree and the periodic
+       traffic-interval-report notification.";
+
+    leaf interval-start {
+      type yang:date-and-time;
+      description "Wall-clock time the reporting interval opened.";
+    }
+    leaf interval-duration-s {
+      type uint16 {
+        range "1..3600";
+      }
+      units "seconds";
+      description "Length of the reporting interval.";
+    }
+    leaf volume {
+      type uint32;
+      units "vehicles";
+      description "Vehicles detected during the interval.";
+    }
+    leaf occupancy {
+      type occupancy-percent;
+      description "Lane occupancy over the interval.";
+    }
+    leaf speed-average-kmh {
+      type openits-types:speed-kmh;
+      description "Arithmetic mean speed of vehicles in the interval.";
+    }
+    leaf speed-85th-percentile-kmh {
+      type openits-types:speed-kmh;
+      description
+        "85th-percentile speed over the interval.  The standard
+         operations metric for speed-limit and warning decisions.";
+    }
+    leaf headway-average-s {
+      type decimal64 {
+        fraction-digits 1;
+        range "0.0 .. 3600.0";
+      }
+      units "seconds";
+      description "Mean front-bumper-to-front-bumper headway.";
+    }
+    leaf gap-average-s {
+      type decimal64 {
+        fraction-digits 1;
+        range "0.0 .. 3600.0";
+      }
+      units "seconds";
+      description "Mean rear-bumper-to-front-bumper gap.";
+    }
+    leaf density {
+      type openits-types:traffic-density;
+      description
+        "Lane density over the interval.  Fundamental level-of-service
+         metric; unlike flow-rate it cannot be reconstructed from
+         volume alone (it needs the segment length the detector
+         covers), so it is carried explicitly.";
+    }
+    leaf flow-rate-vph {
+      type uint32;
+      units "vehicles/hour";
+      description
+        "Interval flow rate, vehicles per hour.  Derivable from
+         volume and interval-duration but universally reported by
+         per-lane detectors; stored so consumers need not recompute.";
+    }
+
+    list class-volume {
+      key "class-id";
+      description
+        "Interval volume broken out per configured classification
+         bin.  Bins are defined in configuration/vehicle-class.";
+
+      leaf class-id {
+        type uint8;
+        description "Classification bin this count belongs to.";
+      }
+      leaf volume {
+        type uint32;
+        units "vehicles";
+        description "Vehicles in this bin during the interval.";
+      }
+    }
+  }
+
+  /* --------------------------------------------------------------
+   * Main tree
+   * -------------------------------------------------------------- */
+
+  container traffic-sensor {
+    description
+      "Top-level container for a single roadside traffic sensor.";
+
+    /* ----- identity ----- */
+    container identity {
+      description "Static identity of the sensor.";
+
+      leaf sensor-id {
+        type openits-types:device-id;
+        description "Agency-internal sensor identifier (URN tail).";
+      }
+      leaf name {
+        type string;
+        description "Operator-facing sensor name.";
+      }
+
+      uses openits-types:geo-location;
+
+      leaf road-reference {
+        type string;
+        description
+          "Free-form route / milepost reference (e.g.,
+           \"I-35 NB @ MP 214\").  Informational only.";
+      }
+      leaf make     { type string; config false; description "Manufacturer name reported by the sensor."; }
+      leaf model    { type string; config false; description "Model identifier reported by the sensor."; }
+      leaf firmware { type string; config false; description "Firmware version reported by the sensor."; }
+    }
+
+    /* ----- operational status ----- */
+    leaf operational-status {
+      type enumeration {
+        enum active   { description "The sensor is producing usable data."; }
+        enum inactive { description "The sensor is not producing usable data."; }
+      }
+      config false;
+      description
+        "Whether the sensor is currently producing usable data.  A
+         closed axis; the reason it is inactive is carried separately
+         in `inactive-reason`.";
+    }
+    leaf inactive-reason {
+      type identityref {
+        base inactive-reason;
+      }
+      config false;
+      description
+        "Why the sensor is inactive, when `operational-status` is
+         `inactive`.  Open identity slot; vendors derive concrete
+         reasons.  Absent when the sensor is active.";
+    }
+
+    /* ----- configuration ----- */
+    container configuration {
+      description
+        "Writable sensor setup: reporting cadence and the
+         length-based classification bins.";
+
+      leaf data-interval-s {
+        type uint16 {
+          range "10..3600";
+        }
+        units "seconds";
+        default "60";
+        description
+          "Aggregation interval for per-lane data.  Typical
+           deployments use 20-300 s.";
+      }
+
+      list vehicle-class {
+        key "class-id";
+        description
+          "Length-based classification bins.  Bins SHOULD be
+           contiguous and non-overlapping; the sensor assigns each
+           vehicle to the first bin whose bounds contain its
+           measured length.";
+
+        leaf class-id {
+          type uint8 {
+            range "1..16";
+          }
+          description "Bin identifier referenced by class-volume counts.";
+        }
+        leaf name {
+          type string;
+          description
+            "Operator-facing bin name (e.g., \"passenger\",
+             \"single-unit\", \"combination\").";
+        }
+        leaf min-length-m {
+          type vehicle-length-m;
+          description "Inclusive lower length bound of the bin.";
+        }
+        leaf max-length-m {
+          type vehicle-length-m;
+          must ". >= ../min-length-m" {
+            error-message "max-length-m must be >= min-length-m";
+          }
+          description "Inclusive upper length bound of the bin.";
+        }
+      }
+    }
+
+    /* ----- lanes ----- */
+    container lanes {
+      openits-types:arc-it-flow
+        "ITS Roadway Equipment -> TMC : traffic flow";
+      description
+        "Per-lane setup and observations.  One entry per detection
+         zone the sensor is aimed at.";
+
+      list lane {
+        key "lane-id";
+        description "One entry per monitored lane.";
+
+        leaf lane-id {
+          type uint8 {
+            range "1..32";
+          }
+          description "Sensor-local lane number.";
+        }
+        leaf name {
+          type string;
+          description
+            "Operator-facing lane description (e.g.,
+             \"northbound-inside\").";
+        }
+        leaf travel-heading {
+          type openits-types:heading-degrees;
+          description "Compass heading of legal travel in this lane.";
+        }
+        leaf carriageway {
+          type string;
+          description
+            "Operator-assigned grouping of lanes that share a
+             physically separated roadway / travel direction (e.g.,
+             \"northbound\").  Side-fire detectors that observe both
+             directions from one station use this to separate the two
+             carriageways; `travel-heading` remains the authoritative
+             per-lane direction.";
+        }
+
+        container interval {
+          config false;
+          description
+            "Most recently completed reporting interval for this
+             lane.";
+          uses lane-interval-data;
+        }
+
+        container presence {
+          config false;
+          description "Real-time detection-zone occupancy.";
+
+          leaf occupied {
+            type boolean;
+            description "A vehicle is currently in the detection zone.";
+          }
+          leaf last-detection {
+            type yang:date-and-time;
+            description "Wall-clock time of the most recent detection.";
+          }
+        }
+      }
+    }
+
+    /* ----- queue detection ----- */
+    container queues {
+      config false;
+      openits-types:arc-it-flow
+        "ITS Roadway Equipment -> TMC : traffic flow";
+      description
+        "Live queue-detection state.  Each entry mirrors a
+         `queue-state-changed` notification and reflects the current
+         queueing condition of a configured detection zone.";
+
+      list queue-zone {
+        key "zone-id";
+        description "One entry per queue-detection zone.";
+
+        leaf zone-id {
+          type string;
+          description "Sensor-local queue-zone identifier.";
+        }
+        leaf queueing {
+          type boolean;
+          description "A queue is currently present in the zone.";
+        }
+        leaf queue-duration-s {
+          type uint32;
+          units "seconds";
+          description
+            "How long the current queue has persisted; 0 when not
+             queueing.";
+        }
+        leaf queue-start {
+          type yang:date-and-time;
+          description
+            "Wall-clock time the current queue began; absent when not
+             queueing.";
+        }
+      }
+    }
+
+    /* ----- diagnostics ----- */
+    container diagnostics {
+      config false;
+      openits-types:arc-it-flow
+        "ITS Roadway Equipment -> Maintenance : equipment maintenance status";
+      description "Sensor self-reported health metrics.";
+
+      leaf rf-signal-quality {
+        type openits-types:percentage;
+        description
+          "Radar return-signal quality rollup as reported by the
+           sensor's self-test.";
+      }
+      leaf internal-temperature-c {
+        type decimal64 {
+          fraction-digits 1;
+          range "-60.0 .. 100.0";
+        }
+        units "celsius";
+        description "Internal enclosure temperature.";
+      }
+      leaf uptime-s {
+        type uint64;
+        units "seconds";
+        description "Time since the sensor last restarted.";
+      }
+      leaf last-self-test {
+        type yang:date-and-time;
+        description "Wall-clock time of the most recent self-test.";
+      }
+    }
+
+    /* ----- fault inventory ----- */
+    container faults {
+      config false;
+      openits-types:arc-it-flow
+        "ITS Roadway Equipment -> Maintenance : equipment maintenance status";
+      description
+        "Live fault inventory.  Each entry mirrors a
+         `traffic-sensor-fault-raised` notification and clears when
+         the condition resolves.";
+
+      list fault {
+        key "fault-id";
+        description "One entry per active fault on the sensor.";
+
+        leaf fault-id {
+          type string;
+          description "Sensor-local fault identifier; stable across raise/clear pairs.";
+        }
+        leaf category {
+          type identityref {
+            base fault-category;
+          }
+          description "Fault class (rf / occlusion / configuration / power / communication / temperature).";
+        }
+        leaf severity {
+          type openits-types:fault-severity;
+          description "Operator-visible severity escalation.";
+        }
+        leaf description {
+          type string;
+          description "Human-readable fault description from the sensor.";
+        }
+        leaf first-observed {
+          type yang:date-and-time;
+          description "Wall-clock time the fault was first observed.";
+        }
+      }
+    }
+  }
+}

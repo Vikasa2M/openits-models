@@ -1,0 +1,261 @@
+module openits-rsu-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:rsu-types";
+  prefix openits-rsu-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "RSU event-kind identity hierarchy. Derives from the cross-service
+     openits-types:device-event-kind root so RSU events emitted via the
+     generic cross-service notifications (openits-common-fault-events,
+     openits-common-mode-events) carry a service-classified 'kind'
+     identityref.
+
+     Leaf fault identities cover the NTCIP 1218 alarm surface the
+     reference poller decodes today (radio, antenna, GNSS, SCMS
+     certificate, thermal, power, backhaul). They are deliberately
+     coarser than the per-subsystem identity trees used by openits-rsu
+     (radio-fault-type, channel-fault-type in openits-v2x-radio) — those
+     classify state-tree detail; these classify fault events on the
+     wire. New identities are additive.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.3.0";
+
+  revision 2026-07-15 {
+    description
+      "Add the gps-fix-status enum typedef — the closed GPS fix vocabulary
+       (no-fix/fix-2d/fix-3d/dgps/rtk) shared by the RSU diagnostics state
+       tree and the rsu-gps-status-change event.";
+  }
+  revision 2026-07-13 {
+    description
+      "Add eleven kind identities for openits-rsu-events notifications,
+       under rsu-event-kind (rsu-channel-fault-kind under
+       rsu-fault-event-kind instead): rsu-srm-received-kind,
+       rsu-srm-status-change-kind, rsu-certificate-expiring-kind,
+       rsu-channel-fault-kind, rsu-gps-status-change-kind,
+       rsu-security-event-kind, rsu-tim-loaded-kind,
+       rsu-tim-cleared-kind, rsu-tim-broadcast-state-changed-kind,
+       rsu-tim-broadcast-kind, rsu-broadcast-sample-kind. These are
+       the 'kind' identityref targets adopted by the corresponding
+       events under the unified event contract (every event now
+       carries a mandatory 'kind' plus
+       'uses openits-types:event-header'). rsu-security-event-kind is
+       deliberately kept off rsu-fault-event-kind (it is a security/
+       misbehavior alert, not an equipment fault). rsu-broadcast-
+       sample-kind is additionally dual-based on
+       openits-types:report-event-kind since it is a periodic report.
+       Additive.";
+    reference "RFC 7950 section 11.";
+  }
+  revision 2026-07-13 {
+    description
+      "Stamp openits-version (borrowed from OpenConfig's
+       openconfig-version practice) so tooling can read a
+       compatibility-intent signal independent of the revision date.
+       Add the rsu-mode identity set (rsu-mode base + mode-standby /
+       mode-operate, per NTCIP 1218 rsuMode), deriving from
+       openits-types:operational-mode, so an RSU mode transition can be
+       carried in the generic mode-changed prior/current identityref.";
+  }
+  revision 2026-06-11 {
+    description
+      "Initial revision. Service root, dual-classified fault and mode
+       sub-bases, and leaf fault identities covering the NTCIP 1218
+       alarm bitmap the reference translator decodes.";
+    reference
+      "NTCIP 1218:2020 (RSU functional reference; rsuMode, alarms).";
+  }
+
+  typedef gps-fix-status {
+    type enumeration {
+      enum no-fix { description "No GPS fix"; }
+      enum fix-2d { description "2D fix"; }
+      enum fix-3d { description "3D fix"; }
+      enum dgps   { description "Differential GPS"; }
+      enum rtk    { description "RTK fix"; }
+    }
+    description
+      "GPS receiver fix status. Shared by the RSU diagnostics state tree
+       and the rsu-gps-status-change event so both name the fix state
+       from one closed vocabulary.";
+  }
+
+  /* --------------------------------------------------------------
+   * Service root + dual-classified sub-bases
+   * -------------------------------------------------------------- */
+
+  identity rsu-event-kind {
+    base openits-types:device-event-kind;
+    description "Root for roadside-unit (V2X) events.";
+  }
+
+  identity rsu-fault-event-kind {
+    base openits-types:fault-event-kind;
+    base rsu-event-kind;
+    description
+      "RSU fault events. Dual-classified: by behavioral class
+       (fault-event-kind) and by service (rsu-event-kind). Used as
+       the fallback kind when a decoder cannot map a more specific
+       leaf identity.";
+  }
+
+  identity rsu-mode-event-kind {
+    base openits-types:mode-event-kind;
+    base rsu-event-kind;
+    description
+      "RSU operational-mode transitions (standby / operate per
+       NTCIP 1218 rsuMode). The mode-changed notification's
+       prior/current identityref values (openits-rsu-types:rsu-mode
+       descendants) are interpreted in this mode-space.";
+    reference "NTCIP 1218:2020 (rsuMode).";
+  }
+
+  /*
+   * RSU operating-mode values. Modelled as an identity (not an
+   * enumeration) so vendors can add proprietary modes without a
+   * base-model revision. Derives from the cross-service
+   * openits-types:operational-mode so a value can be carried in the
+   * generic openits-common-mode-events:mode-changed prior/current.
+   */
+  identity rsu-mode {
+    base openits-types:operational-mode;
+    description
+      "Base identity for the operational mode of a roadside unit.";
+    reference "NTCIP 1218:2020 (rsuMode).";
+  }
+  identity mode-standby {
+    base rsu-mode;
+    description "RSU is powered but not transmitting on the air.";
+  }
+  identity mode-operate {
+    base rsu-mode;
+    description "RSU is operating normally (transmitting/receiving).";
+  }
+
+  /* --------------------------------------------------------------
+   * Fault leaf identities
+   * -------------------------------------------------------------- */
+
+  identity rsu-fault-radio {
+    base rsu-fault-event-kind;
+    description "Radio TX/RX fault or radio subsystem down.";
+  }
+  identity rsu-fault-antenna {
+    base rsu-fault-event-kind;
+    description "Antenna fault detected.";
+  }
+  identity rsu-fault-gnss {
+    base rsu-fault-event-kind;
+    description "GNSS positioning fault (no fix, degraded fix).";
+  }
+  identity rsu-fault-certificate {
+    base rsu-fault-event-kind;
+    description
+      "SCMS certificate lifecycle fault (near expiry, enrollment
+       failure).";
+    reference "IEEE 1609.2-2022 (security credential management).";
+  }
+  identity rsu-fault-thermal {
+    base rsu-fault-event-kind;
+    description "Thermal threshold exceeded.";
+  }
+  identity rsu-fault-power {
+    base rsu-fault-event-kind;
+    description "RSU power-supply fault.";
+  }
+  identity rsu-fault-communication {
+    base rsu-fault-event-kind;
+    description
+      "Backhaul / management-plane communication fault (including
+       SNMP unreachable from the poller's perspective).";
+  }
+
+  /* --------------------------------------------------------------
+   * Notification-kind identities ('kind' identityref targets for
+   * openits-rsu-events notifications)
+   * -------------------------------------------------------------- */
+
+  identity rsu-srm-received-kind {
+    base rsu-event-kind;
+    description "A Signal Request Message (SRM) was received from a vehicle.";
+    reference "SAE J2735 (Signal Request Message).";
+  }
+  identity rsu-srm-status-change-kind {
+    base rsu-event-kind;
+    description
+      "The lifecycle status of a previously received SRM changed
+       (e.g., pending, granted, denied).";
+    reference "SAE J2735 (Signal Request Message / Signal Status Message).";
+  }
+  identity rsu-certificate-expiring-kind {
+    base rsu-event-kind;
+    description
+      "An application or security certificate is approaching its
+       expiry date.";
+    reference "IEEE 1609.2-2022 (security credential management).";
+  }
+  identity rsu-channel-fault-kind {
+    base rsu-fault-event-kind;
+    description
+      "A DSRC/C-V2X radio channel fault was detected (tx/rx failure,
+       high error rate, no signal, or interference).";
+  }
+  identity rsu-gps-status-change-kind {
+    base rsu-event-kind;
+    description "The RSU's GNSS fix status changed.";
+  }
+  identity rsu-security-event-kind {
+    base rsu-event-kind;
+    description
+      "A security-relevant event occurred (invalid signature, revoked
+       certificate, SCMS connection loss, enrollment failure, or
+       misbehavior detection). Not an equipment fault: kept off
+       rsu-fault-event-kind so it does not inflate TMC fault filters.";
+    reference "IEEE 1609.2-2022 (security services); SAE J2945/1 (misbehavior detection).";
+  }
+  identity rsu-tim-loaded-kind {
+    base rsu-event-kind;
+    description
+      "A Traveler Information Message (TIM) was loaded onto the RSU
+       for broadcast.";
+    reference "SAE J2735 (Traveler Information Message).";
+  }
+  identity rsu-tim-cleared-kind {
+    base rsu-event-kind;
+    description
+      "A previously loaded TIM stopped broadcasting (expired, cleared
+       by operator, superseded, or lost to an RSU restart).";
+    reference "SAE J2735 (Traveler Information Message).";
+  }
+  identity rsu-tim-broadcast-state-changed-kind {
+    base rsu-event-kind;
+    description
+      "The RSU's aggregate TIM broadcast channel state transitioned
+       (e.g., idle to active).";
+  }
+  identity rsu-tim-broadcast-kind {
+    base rsu-event-kind;
+    description "A TIM was transmitted on the air interface.";
+    reference "SAE J2735 (Traveler Information Message).";
+  }
+  identity rsu-broadcast-sample-kind {
+    base rsu-event-kind;
+    base openits-types:report-event-kind;
+    description
+      "Periodic sample of the RSU's active broadcast set, one entry
+       per message actively being broadcast during the sample
+       window.";
+  }
+}

@@ -1,0 +1,61 @@
+module openits-signal-control-status-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:signal-control-status-events";
+  prefix openits-sc-status;
+
+  import ietf-yang-types { prefix yang; }
+  import openits-types { prefix openits-types; }
+  import openits-signal-control-types { prefix openits-sc-types; }
+
+  organization "OpenITS Working Group (proposal)";
+  contact "OpenITS Working Group (proposal)";
+  description
+    "Signal-controller operational-status snapshot notification. Carries a
+     periodic snapshot of the controller's operational-status state
+     (mode / conflict-flash / last-mode-change) upstream to the TMC, so
+     consumers can trend controller availability without polling.";
+
+  revision 2026-07-12 {
+    description
+      "Initial revision. Adds operational-status-report, backing the
+       openits.signal-control.operational-status-report.v1 ce-type. Additive.";
+  }
+
+  notification operational-status-report {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> TMC : signal system operational status";
+    description
+      "Periodic snapshot of the controller's operational status. Mirrors
+       the config-false operational-status container; emitted on a
+       heartbeat cadence (distinct from mode-changed, which fires on
+       transitions only).";
+
+    leaf source-device-id {
+      type openits-types:device-id;
+      mandatory true;
+      description "Controller this status pertains to.";
+    }
+    leaf mode {
+      type openits-sc-types:controller-mode;
+      description "Top-level operational mode (normal / coordinated / free / flash / etc.).";
+    }
+    leaf in-conflict-flash {
+      type boolean;
+      description "True if the Malfunction Management Unit has forced flash due to conflicting indications.";
+    }
+    leaf last-mode-change {
+      type yang:date-and-time;
+      description "Wall-clock time of the most recent controller-mode transition.";
+    }
+    leaf uptime-seconds {
+      type uint64;
+      units "seconds";
+      description "Controller uptime at the time of the snapshot.";
+    }
+    leaf occurred-at {
+      type yang:date-and-time;
+      mandatory true;
+      description "Wall-clock time the snapshot was taken at the controller.";
+    }
+  }
+}

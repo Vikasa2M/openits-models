@@ -1,0 +1,10 @@
+{
+  "openits-ess:station": {
+    "config": {
+      "id": "i70-rwis-mm312"
+    },
+    "atmospheric": {
+      "wind-direction-deg": "400.0"
+    }
+  }
+}

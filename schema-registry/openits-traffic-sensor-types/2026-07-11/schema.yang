@@ -1,0 +1,104 @@
+module openits-traffic-sensor-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:traffic-sensor-types";
+  prefix openits-traffic-sensor-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Traffic-sensor event-kind identity hierarchy. Derives from the
+     cross-service openits-types:device-event-kind root so
+     traffic-sensor events emitted via the generic cross-service
+     notifications (openits-common-fault-events) carry a
+     service-classified 'kind' identityref, filterable with
+     derived-from-or-self at any altitude.
+
+     The leaf fault identities mirror the fault-category catalog
+     formerly carried in-module by openits-traffic-sensor (the gen-1
+     hierarchy, now deleted): traffic-sensor-event-kind is the service
+     root that inactive-reason also bases on, and
+     traffic-sensor-fault-event-kind is the dual-classified fault
+     sub-base whose children classify entries in the device's
+     active-fault list. New identities are additive; removing or
+     renaming one is a breaking change.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  revision 2026-07-11 {
+    description
+      "Initial revision. Service root, dual-classified fault sub-base,
+       and leaf fault identities migrated from the gen-1
+       openits-traffic-sensor fault-category catalog (deleted from
+       the service module in the same change) as part of the fault-
+       taxonomy gen-2 consolidation.";
+    reference
+      "ARC-IT 9.1 Service Package TM01 (Infrastructure-Based Traffic
+       Surveillance); NTCIP 1209 v02 (functional reference only; no
+       wire compatibility).";
+  }
+
+  /* --------------------------------------------------------------
+   * Service root + dual-classified sub-base
+   * -------------------------------------------------------------- */
+
+  identity traffic-sensor-event-kind {
+    base openits-types:device-event-kind;
+    description
+      "Root for traffic-sensor events. Service dimension of the
+       event-kind taxonomy; behavioral roots derive from this.";
+  }
+
+  identity traffic-sensor-fault-event-kind {
+    base openits-types:fault-event-kind;
+    base traffic-sensor-event-kind;
+    description
+      "Traffic-sensor fault events. Dual-classified: by behavioral
+       class (fault-event-kind) and by service
+       (traffic-sensor-event-kind). Used as the fallback kind when a
+       decoder cannot map a more specific leaf identity.";
+  }
+
+  /* --------------------------------------------------------------
+   * Fault leaf identities (mirror the former openits-traffic-sensor
+   * fault-category catalog)
+   * -------------------------------------------------------------- */
+
+  identity traffic-sensor-fault-rf {
+    base traffic-sensor-fault-event-kind;
+    description
+      "Radar RF front-end fault (low signal, transceiver failure).";
+  }
+  identity traffic-sensor-fault-occlusion {
+    base traffic-sensor-fault-event-kind;
+    description
+      "Detection zone occluded (parked vehicle, barrier, snow bank).";
+  }
+  identity traffic-sensor-fault-configuration {
+    base traffic-sensor-fault-event-kind;
+    description
+      "Lane or classification configuration invalid or unconfirmed.";
+  }
+  identity traffic-sensor-fault-power {
+    base traffic-sensor-fault-event-kind;
+    description
+      "Power-supply or input-voltage fault at the sensor.";
+  }
+  identity traffic-sensor-fault-communication {
+    base traffic-sensor-fault-event-kind;
+    description
+      "Communication fault between sensor and upstream system.";
+  }
+  identity traffic-sensor-fault-temperature {
+    base traffic-sensor-fault-event-kind;
+    description
+      "Internal temperature outside the operating envelope.";
+  }
+}

@@ -1,0 +1,692 @@
+module openits-rsu {
+  yang-version 1.1;
+  namespace "urn:openits:yang:rsu";
+  prefix openits-rsu;
+
+  import openits-types {
+    prefix openits-types;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+  import openits-device-diagnostics {
+    prefix openits-device-diag;
+  }
+  import openits-v2x-radio {
+    prefix openits-v2x-radio;
+  }
+  import openits-v2x-messaging {
+    prefix openits-v2x-messaging;
+  }
+  import openits-scms {
+    prefix openits-scms;
+  }
+  import openits-vehicle-detection {
+    prefix openits-vehicle-detection;
+  }
+  import openits-rsu-types {
+    prefix openits-rsu-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+  description
+    "Roadside Unit (RSU) YANG module for V2X communication.
+     Models NTCIP 1218-compliant RSUs including DSRC/C-V2X channels,
+     V2X message broadcasting (SPaT, MAP, TIM, BSM), and security.";
+
+  openits-types:openits-version "0.9.0";
+
+  revision 2026-07-17 {
+    description
+      "GNSS positioning integrity. Add a surveyed-position config (gnss/
+       surveyed-position, WGS84 point, presence) as the high-accuracy antenna
+       reference, and three diagnostics state leaves: position-deviation-m
+       (live fix vs surveyed reference — the primary GNSS spoofing / jamming /
+       antenna-drift signal), pps-present (1PPS disciplining-pulse presence,
+       the signal that makes the fix usable for UTC-referenced J2735
+       TimeMarks), and hdop (horizontal dilution of precision — fix geometry
+       quality, so fix-3d no longer hides a geometrically weak solution).
+       Drop diagnostics/radio/collision-count: collisions are not observable
+       on the DSRC CSMA/CA air interface, so the counter was meaningless.
+       BREAKING (pre-v1): collision-count removed.";
+    reference
+      "SAE J2945; IEEE 1609.";
+  }
+  revision 2026-07-16 {
+    description
+      "Store-forward disambiguation: clarify that the store-forward container is
+       backhaul store-and-forward (SAF) for UPLINK telemetry (NTCIP 1218), one
+       of three distinct behaviours, not the downlink SPaT Immediate-Forward or
+       MAP/TIM Store-and-Repeat air-broadcast modes (those live in
+       v2x-messaging). Documentation only; the TIM expiry tie is in
+       openits-v2x-messaging.";
+    reference "NTCIP 1218.";
+  }
+  revision 2026-07-15 {
+    description
+      "V2X safety gating (device side): add configured-time-source and
+       require a UTC-referenced source while SPaT is enabled (J2735
+       TimeMarks are UTC); add a writable rsuMode (mode, default
+       mode-standby) with an active-mode readback; add clock validity
+       state (time-valid / holdover) and extend the diagnostics
+       time-source enum with gnss-pps / ptp. BREAKING (pre-v1): the
+       SPaT-requires-UTC must rejects a formerly-valid config that
+       enables SPaT with configured-time-source 'local'.";
+  }
+  revision 2026-07-15 {
+    description
+      "Model diagnostics/gps-status with the shared
+       openits-rsu-types:gps-fix-status typedef instead of an inline
+       enumeration (same members — wire-neutral) so state and the
+       rsu-gps-status-change event share one GPS vocabulary. Import
+       openits-rsu-types.";
+  }
+  revision 2026-07-14 {
+    description
+      "Dedupe diagnostics/radio: drop the packet/byte/error/tx-power/
+       channel-busy counters that duplicate per-channel v2x-radio state
+       (the single source of truth); keep the radio-PHY telemetry with
+       no per-channel home. BREAKING (pre-v1): those diagnostics/radio
+       leaves are removed.";
+  }
+  revision 2026-07-14 {
+    description
+      "Retire the imperative command surface: delete the four top-level RPCs
+       (rsu-broadcast-tim, rsu-cancel-tim, rsu-refresh-certificates,
+       rsu-approve-srm). TIM broadcast/cancel and SPaT/MAP/channel enable were
+       already declarative config/state; SRM approve/deny moves to a
+       srm-ssm/decisions config list (openits-v2x-messaging); reboot and
+       cert-refresh are operational RPCs (gNOI plane), out of the data model.
+       BREAKING (pre-v1): the RSU RPCs are removed.";
+  }
+  revision 2026-07-14 {
+    description
+      "Retire system-info: rsu/state now uses device-hardware
+       (firmware/serial/hardware-version/firmware-build); rsu/diagnostics
+       uses the new system-runtime grouping; the system container keeps
+       only comm-link. BREAKING (pre-v1): the former system container's
+       system-info leaves move under state/diagnostics.";
+  }
+  revision 2026-07-14 {
+    description
+      "RSU house-style assimilation (structural): collapse the rsu-units/rsu fleet
+       list into a singleton rsu container with a config/state identity pair
+       (openits-types:device-identity-config), matching every other service —
+       fleet addressing belongs to the transport/subject, not the device schema.
+       Also fix the stale organization/contact metadata. BREAKING (pre-v1): RSU
+       data paths change (rsu-units/rsu/… -> rsu/…; rsu-id -> config/id);
+       consumers remap. system-info, diagnostics, the v2x/scms subtrees, and the
+       RPCs are unchanged in this cut.";
+    reference "OpenITS house-style device idiom (device-identity-config).";
+  }
+  revision 2026-07-13 {
+    description
+      "Decompose the mega-module: extract the generic
+       device-telemetry blocks in diagnostics — resource utilization
+       (cpu/memory/disk), the critical-process list, log statistics,
+       and the temperature-sensor list — to the shared
+       openits-device-diagnostics module and 'uses' them here. These
+       describe the compute platform, not RSU function, so they are now
+       reusable by other services. Tree shape and leaf paths unchanged
+       (groupings expand in place); ~270 lines removed from this module.
+
+       Also: extract the radio-channel subtree to the
+       openits-v2x-radio capability (radio-tech + channel-mode
+       identities and the per-channel physical layer moved there;
+       'uses openits-v2x-radio:radios'). The channel key changed from
+       the US-only dsrc-channel number to a tech-neutral channel-id +
+       radio-tech, so a C-V2X RSU is expressible. The per-channel
+       per-message-type queue/count stats were replaced by a single
+       message-type-keyed message-stats list under 'messages' (a
+       messaging concern, not a radio one).
+
+       Also: extract the V2X message-broadcast subtree
+       (spat/map/tim/bsm/psm/srm-ssm config+state and the message-stats
+       list) to the openits-v2x-messaging capability ('uses
+       openits-v2x-messaging:messaging'); the srm-request-type identity
+       hierarchy moved there too (SRM is a V2X message). openits-rsu is
+       now well under 1,000 lines, down from 2,289 — a thin device
+       profile composing the device-diagnostics, v2x-radio,
+       v2x-messaging, and scms capabilities. Onboard vehicle analytics
+       moved to the openits-vehicle-detection capability, gated behind
+       the onboard-detection feature. The per-message-type message-errors
+       and message-stats diagnostics blocks folded into the unified
+       openits-v2x-messaging message-stats list (per type) plus an
+       aggregate message-errors container.";
+  }
+  revision 2026-07-10 {
+    description
+      "Replace the inline latitude/longitude leaves on the
+       broadcast-tim RPC's 'region' input container with
+       openits-types:geo-point. Already fraction-digits 7 — no
+       precision change. Member set unchanged (latitude, longitude,
+       radius); this is the one openits-rsu site that duplicated
+       lat/lon inline alongside the module's otherwise-clean use of
+       openits-types:geo-location elsewhere in the state tree.
+
+       Also, rename SCREAMING_SNAKE_CASE identities to kebab-case per
+       RFC 8407 (pre-v1 wire-facing change). Mechanical 1:1 transform;
+       no identity added or removed.";
+    reference "RFC 8407 section 4.3 (identifier naming).";
+  }
+  revision 2026-04-28 {
+    description
+      "Companion bump for the rsu notifications companion module@2026-04-28
+       which adds the TIM lifecycle notifications (rsu-tim-loaded,
+       rsu-tim-cleared, rsu-tim-broadcast-state-changed). Base data
+       tree byte-equivalent.";
+  }
+  revision 2026-04-27 {
+    description
+      "Whitespace-only canonicalization to 2-space indentation
+       (M14 follow-up to the M8 retrospective). No semantic
+       content changes; the schema tree is byte-equivalent at
+       the libyang level.";
+  }
+  revision 2026-04-19 {
+    description
+      "Split notifications into the rsu notifications companion module
+       (openits-rsu-events as of the rename). Content of the
+       data tree is unchanged — consumers of
+       the base module see the same reachable schema nodes.
+       The split is required so ygot's proto backend can
+       generate protobuf from this module.";
+  }
+  revision 2024-12-26 {
+    description
+      "Initial version - greenfield design for V2X RSU";
+    reference
+      "NTCIP 1218 (RSU communications); SAE J2735 (V2X message types:
+       BSM, SPaT, MAP, TIM, SRM, SSM, PSM); IEEE 1609.2 (security),
+       1609.3 (WSMP), 1609.4 (multi-channel operation).";
+  }
+
+  // openits-rsu defines no identities of its own: they now live in the
+  // capability modules it composes — radio-tech/channel-mode in
+  // openits-v2x-radio, srm-request-type in openits-v2x-messaging, and
+  // certificate-status in openits-scms (capability-first re-architecture,
+  // docs/08-capability-architecture.md).
+
+  feature onboard-detection {
+    description
+      "The RSU performs onboard vehicle detection/analytics (e.g. from
+       received BSMs) and reports the openits-vehicle-detection
+       capability. Not every RSU does this, so the vehicle-analytics
+       subtree is gated behind this feature.";
+  }
+
+  // =========================================================================
+  // TOP-LEVEL RSU CONTAINER
+  // =========================================================================
+
+  container rsu {
+    description
+      "Roadside Unit: a single V2X roadside device. Fleet addressing lives in the
+       transport/subject, not the device schema.";
+    must "not(messages/spat/config/enabled = 'true') or configured-time-source != 'local'" {
+      error-message
+        "SPaT broadcasting requires a UTC-referenced time source;
+         configured-time-source must not be 'local' while SPaT is enabled
+         (J2735 TimeMarks are UTC).";
+    }
+
+    container config {
+      description "Intended RSU identity and location.";
+      uses openits-types:device-identity-config;
+    }
+    container state {
+      config false;
+      description "Applied RSU identity (mirror).";
+      uses openits-types:device-identity-config;
+      uses openits-types:device-hardware;
+    }
+
+    // -----------------------------------------------------------------
+    // RADIO CHANNELS
+    // -----------------------------------------------------------------
+    uses openits-v2x-radio:radios;
+    // -----------------------------------------------------------------
+    // V2X MESSAGES
+    // -----------------------------------------------------------------
+    uses openits-v2x-messaging:messaging;
+    // -----------------------------------------------------------------
+    // SECURITY
+    // -----------------------------------------------------------------
+    uses openits-scms:security;
+    // -----------------------------------------------------------------
+    // OPERATING MODE + TIME SOURCE (safety config)
+    // -----------------------------------------------------------------
+    leaf configured-time-source {
+      type enumeration {
+        enum gnss-pps { description "GNSS with 1PPS disciplining."; }
+        enum ptp      { description "IEEE 1588 PTP."; }
+        enum ntp      { description "NTP."; }
+        enum gps      { description "GPS (no explicit PPS)."; }
+        enum local    { description "Free-running local clock (NOT UTC-disciplined)."; }
+      }
+      default "gnss-pps";
+      description
+        "The disciplining time source the RSU is configured to use. J2735
+         TimeMarks are UTC-referenced, so a free-running local clock
+         produces skewed phase end-times an OBU cannot detect — SPaT MUST
+         NOT be enabled with a local configured source.";
+    }
+    leaf mode {
+      type identityref { base openits-rsu-types:rsu-mode; }
+      default "openits-rsu-types:mode-standby";
+      description
+        "Commanded operating mode (NTCIP 1218 rsuMode). mode-standby =
+         powered, not transmitting on the air (safe fresh-provision
+         default); mode-operate = normal transmit/receive. The most-used
+         1218 control during incidents / certificate problems.";
+    }
+    // -----------------------------------------------------------------
+    // GNSS POSITIONING INTEGRITY (safety config)
+    // -----------------------------------------------------------------
+    container gnss {
+      description
+        "GNSS positioning-integrity configuration.";
+      container surveyed-position {
+        presence
+          "A surveyed reference position has been established for this RSU.";
+        description
+          "Precisely-surveyed WGS84 antenna reference position. Distinct from
+           the device-identity location (config/location, which is the
+           operator-provisioned deployment coordinate and may be coarse): this
+           is the high-accuracy reference the GNSS integrity check compares the
+           live fix against. A large divergence from it
+           (diagnostics/position-deviation-m) while the fix is otherwise valid
+           is the primary GNSS spoofing / jamming / antenna-drift signal
+           (SAE J2945). Absent until a survey has been performed.";
+        uses openits-types:geo-point;
+      }
+    }
+    // -----------------------------------------------------------------
+    // STORE AND FORWARD
+    // -----------------------------------------------------------------
+    container store-forward {
+      description
+        "Backhaul store-and-forward (SAF): buffers UPLINK telemetry across a
+         backhaul/network outage and forwards it when connectivity is restored.
+         This is one of three distinct NTCIP 1218 behaviours and must not be
+         conflated with the two DOWNLINK air-broadcast modes: SPaT
+         Immediate-Forward (re-emit controller data with no caching, gated on
+         freshness) and MAP/TIM Store-and-Repeat (cache and re-broadcast on a
+         schedule until expiry). Those live in the v2x-messaging broadcast
+         subtree (tim/config/suppress-expired etc.), not here.";
+      container config {
+        description
+          "Store-forward configuration";
+        leaf enabled {
+          type boolean;
+          default "true";
+          description
+            "Store-forward enabled";
+        }
+        leaf max-messages {
+          type uint32;
+          default "10000";
+          description
+            "Maximum messages to store";
+        }
+        leaf max-age {
+          type uint32;
+          units "seconds";
+          default "3600";
+          description
+            "Maximum message age";
+        }
+        leaf forward-on-connect {
+          type boolean;
+          default "true";
+          description
+            "Forward when connectivity restored";
+        }
+      }
+      container state {
+        config false;
+        description
+          "Store-forward state";
+        leaf stored-messages {
+          type uint32;
+          description
+            "Currently stored messages";
+        }
+        leaf storage-used-percent {
+          type openits-types:percentage;
+          description
+            "Storage utilization";
+        }
+        leaf messages-forwarded-today {
+          type uint64;
+          description
+            "Messages forwarded today";
+        }
+        leaf oldest-message-age {
+          type uint32;
+          units "seconds";
+          description
+            "Age of oldest stored message";
+        }
+      }
+    }
+    // -----------------------------------------------------------------
+    // DIAGNOSTICS
+    // -----------------------------------------------------------------
+    container diagnostics {
+      config false;
+      description
+        "RSU diagnostics";
+      // Radio hardware diagnostics
+      container radio {
+        description
+          "Radio hardware diagnostics";
+        leaf rssi-dbm {
+          type int32;
+          units "dBm";
+          description
+            "Received Signal Strength Indicator";
+        }
+        leaf noise-floor-dbm {
+          type int32;
+          units "dBm";
+          description
+            "Noise floor level";
+        }
+        leaf snr-db {
+          type int32;
+          units "dB";
+          description
+            "Signal-to-Noise Ratio";
+        }
+        leaf crc-errors {
+          type uint64;
+          description
+            "CRC errors";
+        }
+        leaf operational {
+          type boolean;
+          description
+            "Radio is operational";
+        }
+        leaf fault-type {
+          type identityref {
+            base openits-v2x-radio:radio-fault-type;
+          }
+          description
+            "Radio fault type (if any)";
+        }
+        leaf last-successful-tx {
+          type yang:date-and-time;
+          description
+            "Timestamp of last successful transmit";
+        }
+      }
+      // SPaT/ASC synchronization status
+      container spat-sync {
+        description
+          "SPaT/ASC synchronization status";
+        leaf asc-connected {
+          type boolean;
+          description
+            "Connected to source ASC";
+        }
+        leaf asc-poll-interval-ms {
+          type uint32;
+          description
+            "ASC polling interval in milliseconds";
+        }
+        leaf last-asc-update {
+          type yang:date-and-time;
+          description
+            "Timestamp of last ASC data update";
+        }
+        leaf phase-mismatch-count {
+          type uint32;
+          description
+            "Phase data mismatch count";
+        }
+        leaf timing-mismatch-count {
+          type uint32;
+          description
+            "Timing data mismatch count";
+        }
+        leaf total-spat-generated {
+          type uint64;
+          description
+            "Total SPaT messages generated";
+        }
+        leaf sync-quality-pct {
+          type uint8 {
+            range "0..100";
+          }
+          description
+            "Synchronization quality percentage";
+        }
+        leaf avg-data-age-ms {
+          type uint32;
+          description
+            "Average ASC data age in milliseconds";
+        }
+        leaf min-yellow-violation {
+          type uint32;
+          description
+            "Minimum yellow time violations detected";
+        }
+        leaf max-green-exceeded {
+          type uint32;
+          description
+            "Maximum green exceeded events";
+        }
+        leaf phase-gap-errors {
+          type uint32;
+          description
+            "Phase gap/sequencing errors";
+        }
+      }
+      // System resource utilization
+      container resources {
+        description "System resource utilization";
+        uses openits-device-diag:resource-utilization;
+      }
+      uses openits-device-diag:process-list;
+      uses openits-device-diag:log-statistics;
+      uses openits-device-diag:temperature-sensor-list;
+      uses openits-device-diag:system-runtime;
+      leaf gps-status {
+        type openits-rsu-types:gps-fix-status;
+        description
+          "GPS fix status";
+      }
+      leaf satellites-visible {
+        type uint8;
+        description
+          "GPS satellites visible";
+      }
+      leaf hdop {
+        type decimal64 {
+          fraction-digits 1;
+          range "0.0 .. 99.9";
+        }
+        description
+          "Horizontal dilution of precision — qualifies the fix geometry.
+           A low HDOP (roughly < 2) is a strong solution; a high HDOP means
+           the tracked satellites are poorly distributed and the horizontal
+           fix is geometrically weak even at gps-status fix-3d. Absent when
+           there is no fix.";
+      }
+      leaf pps-present {
+        type boolean;
+        description
+          "True when a 1PPS disciplining pulse from the GNSS receiver is
+           present. 1PPS is the signal that lets the fix drive UTC-referenced
+           J2735 TimeMarks; without it the clock free-runs (see time-valid /
+           holdover) regardless of a good position fix.";
+      }
+      leaf position-deviation-m {
+        type decimal64 {
+          fraction-digits 2;
+        }
+        units "meters";
+        description
+          "Great-circle distance between the current GNSS fix and the
+           configured surveyed reference position (gnss/surveyed-position).
+           Elevated deviation while the fix is otherwise valid is the primary
+           indicator of GNSS spoofing / jamming or antenna movement
+           (SAE J2945). Absent when no surveyed position is configured or
+           there is no fix to compare.";
+      }
+      leaf time-source {
+        type enumeration {
+          enum gps {
+            description
+              "GPS time";
+          }
+          enum ntp {
+            description
+              "NTP time";
+          }
+          enum local {
+            description
+              "Local clock";
+          }
+          enum gnss-pps {
+            description
+              "GNSS with 1PPS.";
+          }
+          enum ptp {
+            description
+              "IEEE 1588 PTP.";
+          }
+        }
+        description
+          "Time synchronization source";
+      }
+      leaf time-accuracy-us {
+        type uint32;
+        units "microseconds";
+        description
+          "Time accuracy";
+      }
+      leaf time-valid {
+        type boolean;
+        description
+          "True when the RSU clock is currently disciplined and UTC-valid
+           (not in free-running / holdover failure).";
+      }
+      leaf holdover {
+        type boolean;
+        description
+          "True when the RSU has lost its disciplining source and is
+           running on holdover — SPaT timing degrades over holdover.";
+      }
+      leaf active-mode {
+        type identityref { base openits-rsu-types:rsu-mode; }
+        description
+          "The operating mode the RSU is actually in (readback of the
+           commanded 'mode').";
+      }
+      container cellular {
+        description
+          "Cellular diagnostics for C-V2X RSUs";
+        leaf operational {
+          type boolean;
+          description
+            "Cellular modem is operational";
+        }
+        leaf operator-name {
+          type string;
+          description
+            "Cellular operator name";
+        }
+        leaf signal-quality {
+          type enumeration {
+            enum excellent {
+              description
+                "Excellent signal";
+            }
+            enum good {
+              description
+                "Good signal";
+            }
+            enum fair {
+              description
+                "Fair signal";
+            }
+            enum poor {
+              description
+                "Poor signal";
+            }
+            enum none {
+              description
+                "No signal";
+            }
+          }
+          description
+            "Cellular signal quality";
+        }
+        leaf rsrp-dbm {
+          type int32;
+          units "dBm";
+          description
+            "Reference Signal Received Power";
+        }
+        leaf rsrq-db {
+          type int32;
+          units "dB";
+          description
+            "Reference Signal Received Quality";
+        }
+        leaf sinr-db {
+          type int32;
+          units "dB";
+          description
+            "Signal-to-Interference-plus-Noise Ratio";
+        }
+        leaf lte-band {
+          type string;
+          description
+            "LTE band in use";
+        }
+        leaf nr-band {
+          type string;
+          description
+            "5G NR band in use";
+        }
+        leaf data-usage-bytes {
+          type uint64;
+          units "bytes";
+          description
+            "Data usage in bytes";
+        }
+        leaf roaming {
+          type boolean;
+          description
+            "Currently roaming";
+        }
+      }
+      uses openits-vehicle-detection:vehicle-analytics {
+        if-feature onboard-detection;
+      }
+    }
+    // -----------------------------------------------------------------
+    // SYSTEM (COMMUNICATION LINKS)
+    // -----------------------------------------------------------------
+    container system {
+      config false;
+      description
+        "Communication link status. Device hardware identity lives in
+         state (device-hardware); uptime/restart/config-hash lives in
+         diagnostics (system-runtime).";
+      list comm-link {
+        key "link-id";
+        description
+          "Communication link status";
+        uses openits-types:comm-link-state;
+      }
+    }
+  }
+}

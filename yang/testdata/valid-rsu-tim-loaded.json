@@ -1,0 +1,14 @@
+{
+  "openits-rsu-events:rsu-tim-loaded": {
+    "kind": "openits-rsu-types:rsu-tim-loaded-kind",
+    "source-device-id": "rsu-i35-mm214",
+    "occurred-at": "2026-07-11T14:05:00Z",
+    "sequence": "1",
+    "msg-id": "0x1A2B",
+    "source": "tmc-operator-07",
+    "priority": 3,
+    "duration-seconds": 1800,
+    "start-time": "2026-07-11T14:10:00Z",
+    "content-summary": "Lane closure ahead, I-35 NB mm 214-216"
+  }
+}

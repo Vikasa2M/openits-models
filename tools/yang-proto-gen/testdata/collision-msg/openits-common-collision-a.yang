@@ -1,0 +1,13 @@
+module openits-common-collision-a {
+  namespace "urn:test:openits-common-collision-a";
+  prefix occa;
+
+  // Deliberately shares its notification name ("foo-bar") with
+  // openits-common-collision-b, another module mapped (by pkgFor's
+  // "openits-common-" prefix route) to the same output file — the fixture
+  // TestGenerate_duplicateMessageNameFails needs to exercise Generate's
+  // message-name uniqueness guard.
+  notification foo-bar {
+    leaf x { type string; }
+  }
+}

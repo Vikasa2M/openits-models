@@ -1,0 +1,11 @@
+{
+  "openits-common-fault-events:fault-raised": {
+    "kind": "openits-dms-types:dms-fault-lamp",
+    "source-device-id": "us40-dms-014",
+    "sequence": "1",
+    "fault-id": "dms014-lamp-0091",
+    "severity": "major",
+    "description": "DMS sign lamp illumination fault detected during self-test.",
+    "occurred-at": "2026-07-11T09:12:33Z"
+  }
+}

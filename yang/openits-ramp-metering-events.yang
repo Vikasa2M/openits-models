@@ -1,0 +1,176 @@
+module openits-ramp-metering-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:ramp-metering-events";
+  prefix openits-rm-events;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-ramp-metering-types {
+    prefix openits-ramp-metering-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Notifications for openits-ramp-metering.  Split into a
+     companion module per the standing pattern.";
+
+  openits-types:openits-version "0.4.0";
+
+  revision 2026-07-16 {
+    description
+      "release-rate-changed: replace the free-form reason string with a
+       classified cause (openits-ramp-metering-types:rate-change-cause) so
+       rate changes are aggregatable (Cut 2d). Pre-1.0 breaking.";
+    reference "NTCIP 1207 v02.";
+  }
+  revision 2026-07-14 {
+    description
+      "Cut 3c (events layering): reference release-rate-vph and
+       queue-vehicles via openits-ramp-metering-types and drop the
+       openits-ramp-metering core import — the events module now
+       imports only -types (+ shared). Wire-neutral.";
+  }
+  revision 2026-07-13 {
+    description
+      "Adopt the unified event contract: every notification now
+       'uses openits-types:event-header' (source-device-id, occurred-at,
+       sequence) and carries a mandatory 'kind' identityref under
+       openits-ramp-metering-types:ramp-meter-event-kind. None of the
+       three notifications is a periodic report, so none dual-bases
+       on openits-types:report-event-kind. Breaking, pre-v1:
+       notifications gain mandatory device identity + sequence.";
+    reference "RFC 7950 section 11.";
+  }
+  revision 2026-07-13 {
+    description
+      "Stamp openits-version (borrowed from OpenConfig's
+       openconfig-version practice) so tooling can read a
+       compatibility-intent signal independent of the revision date.";
+  }
+  revision 2026-07-12 {
+    description
+      "Rename this module (file, module name, namespace, prefix) from
+       the legacy notifications-suffixed name to
+       openits-ramp-metering-events: standardize every service
+       notification module on the events-suffixed name. Mechanical
+       rename only — no notification content changed; ce-types
+       (service-derived, not module-derived) and proto are unaffected.
+       Repoint ramp-meter-fault-raised's 'category' base from the
+       deleted gen-1 openits-rm:fault-category to
+       openits-rm-types:ramp-meter-fault-event-kind — breaking, since
+       identity names change, but wire-neutral since the wire
+       representation of an identityref is a string (pre-v1,
+       acceptable). Delete the deprecated per-service fault/mode
+       shims (ramp-meter-mode-changed, ramp-meter-fault-raised,
+       ramp-meter-fault-cleared), superseded by
+       openits-common-fault-events:{fault-raised,fault-cleared} and
+       openits-common-mode-events:mode-changed, discriminated by kind
+       derived from openits-ramp-metering-types..";
+    reference
+      "; RFC 7950 section 11 (breaking YANG evolution: identity
+       rename).";
+  }
+  revision 2026-07-10 {
+    description
+      "Replace the inline severity enumeration on
+       ramp-meter-fault-raised with the shared
+       openits-types:fault-severity typedef. Member set and order
+       unchanged — wire-stable.";
+  }
+  revision 2026-06-12 {
+    description
+      "Deprecate ramp-meter-fault-raised, ramp-meter-fault-cleared,
+       and ramp-meter-mode-changed in favour of the cross-service
+       openits-common-fault-events fault-raised/fault-cleared and
+       openits-common-mode-events mode-changed notifications, which
+       carry a ramp-meter-classified kind identityref
+       (openits-ramp-metering-types:ramp-meter-fault-event-kind tree)
+       plus wire-source provenance. No emitter ever shipped for the
+       deprecated notifications; they remain for the deprecation
+       window only.";
+  }
+  revision 2026-04-19 {
+    description "Initial release.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification release-rate-changed {
+    openits-types:arc-it-flow
+      "Roadway Equipment -> TMC : roadway equipment status";
+    description
+      "Release rate was adjusted — either by plan switch, by the
+       local traffic-responsive algorithm, or by operator
+       override.";
+
+    leaf kind {
+      type identityref {
+        base openits-ramp-metering-types:ramp-meter-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-ramp-metering-types:rm-release-rate-changed
+         for this notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf previous-rate-vph { type openits-ramp-metering-types:release-rate-vph; description "Release rate before the change, in vehicles per hour."; }
+    leaf new-rate-vph      { type openits-ramp-metering-types:release-rate-vph; description "Release rate after the change, in vehicles per hour."; }
+    leaf plan-id           { type uint8; description "Active metering plan, when the change came from a plan switch."; }
+    leaf cause             { type openits-ramp-metering-types:rate-change-cause; description "Classified cause of the rate change (plan switch, traffic-responsive, queue-override, operator override, schedule)."; }
+  }
+
+  notification queue-override-activated {
+    openits-types:arc-it-flow
+      "Roadway Equipment -> TMC : roadway equipment status";
+    description
+      "Queue detector crossed the plan's override threshold; meter
+       is temporarily flushing the queue.";
+
+    leaf kind {
+      type identityref {
+        base openits-ramp-metering-types:ramp-meter-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-ramp-metering-types:rm-queue-override-activated
+         for this notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf queue-length-vehicles { type openits-ramp-metering-types:queue-vehicles; description "Measured queue length at the moment override activated."; }
+    leaf threshold-vehicles    { type openits-ramp-metering-types:queue-vehicles; description "Configured threshold the queue length crossed to trigger override."; }
+    leaf plan-id               { type uint8; description "Metering plan in effect when override activated."; }
+  }
+
+  notification queue-override-cleared {
+    openits-types:arc-it-flow
+      "Roadway Equipment -> TMC : roadway equipment status";
+    description
+      "Queue dropped back below the plan's override threshold; meter
+       resumed normal metering.";
+
+    leaf kind {
+      type identityref {
+        base openits-ramp-metering-types:ramp-meter-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-ramp-metering-types:rm-queue-override-cleared
+         for this notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf queue-length-vehicles { type openits-ramp-metering-types:queue-vehicles; description "Measured queue length at the moment override cleared."; }
+    leaf plan-id               { type uint8; description "Metering plan resumed after override cleared."; }
+  }
+}

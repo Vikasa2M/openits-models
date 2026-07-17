@@ -1,0 +1,384 @@
+module openits-dms {
+  yang-version 1.1;
+  namespace "urn:openits:yang:dms";
+  prefix openits-dms;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-dms-types {
+    prefix openits-dms-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "YANG data model for Dynamic Message Signs (DMS).
+
+     Transport-independent replacement for NTCIP 1203 v03, aligned
+     with ARC-IT 9.1 service package TI06 (Traffic Information
+     Dissemination).  The model is deliberately structure-first:
+     sign identity, message-buffer inventory, active-message state,
+     environment sensors, and pixel/lamp health live under a single
+     `sign` container with config / state separation applied to
+     every node that has both sides.
+
+     Nodes are annotated with the 'arc-it-flow' extension so tooling
+     can emit ARC-IT coverage reports.
+
+     Copyright (c) 2026.  Distributed under Apache 2.0.";
+
+  revision 2026-07-12 {
+    description
+      "Move the fault taxonomy to gen-2: delete the gen-1
+       fault-category identity and its fault-lamp / fault-pixel /
+       fault-controller / fault-environment / fault-power /
+       fault-communication children, replaced by the service-prefixed
+       dms-fault-event-kind tree already present in the
+       openits-dms-types module. The faults/fault 'category' leaf now
+       bases on openits-dms-types:dms-fault-event-kind. Breaking:
+       identity names change (e.g. fault-lamp -> dms-fault-lamp);
+       wire-neutral since the wire representation of an identityref is
+       a string (pre-v1, acceptable). Completes the fault-taxonomy
+       consolidation for this service.";
+    reference "RFC 7950 section 11 (breaking YANG evolution: identity rename).";
+  }
+  revision 2026-07-10 {
+    description
+      "Replace the inline severity enumeration on the fault-inventory
+       list with the shared openits-types:fault-severity typedef.
+       Member set and order unchanged — wire-stable.
+
+       Also, replace the inline sign-identity latitude/longitude
+       leaves (decimal64 fraction-digits 6) with
+       openits-types:geo-point (fraction-digits 7), correcting a
+       precision drift versus the shared geo-location grouping used
+       elsewhere. Member set unchanged (latitude, longitude); the
+       fraction-digits mantissa widens from 6 to 7.
+
+       Also, add base openits-types:fault-event-kind to the
+       fault-category root so this service's faults are reachable by
+       fleet-wide derived-from-or-self(fault-event-kind) queries.
+       Additive (identity gains a base); no child renamed.";
+    reference "RFC 7950 section 11 (additive YANG evolution).";
+  }
+  revision 2026-04-19 {
+    description
+      "Initial revision.  Minimum viable model covering identity,
+       message buffers, active message, environment sensors, pixel
+       and lamp status, and faults.";
+    reference
+      "ARC-IT 9.1 Service Package TI06 (Traffic Information
+       Dissemination); NTCIP 1203 v03 (functional reference only;
+       no wire compatibility).";
+  }
+
+  /* --------------------------------------------------------------
+   * Typedefs
+   * -------------------------------------------------------------- */
+
+  typedef sign-mode {
+    type enumeration {
+      enum unknown   { value 0; }
+      enum off       { value 1; }
+      enum blank     { value 2; }
+      enum test      { value 3; }
+      enum normal    { value 4; }
+      enum central   { value 5; }
+      enum simulation { value 6; }
+    }
+    description
+      "High-level operating mode of the sign face.  'off' means the
+       sign is powered down; 'blank' means powered but displaying
+       nothing; 'normal' is the steady-state operating mode.";
+  }
+
+  typedef message-memory-type {
+    type enumeration {
+      enum permanent { value 1; }
+      enum changeable { value 2; }
+      enum volatile  { value 3; }
+      enum schedule  { value 4; }
+      enum blank     { value 5; }
+    }
+    description
+      "NTCIP 1203 dmsMessageMemoryType.  Permanent messages survive
+       power loss and cannot be modified; changeable persist until
+       overwritten; volatile are cleared on reboot.";
+  }
+
+  typedef brightness-percent {
+    type uint8 {
+      range "0..100";
+    }
+    units "percent";
+    description "Face brightness, 0 (off) to 100 (full).";
+  }
+
+  typedef pixel-count {
+    type uint32;
+    description "Count of pixels, used for both totals and defective tallies.";
+  }
+
+  /* --------------------------------------------------------------
+   * Reusable groupings
+   * -------------------------------------------------------------- */
+
+  grouping message-body {
+    description
+      "Fields common to every message slot (permanent / changeable /
+       volatile / active).  MULTI text is carried verbatim; consumers
+       that need rendered pixel maps fetch those from the registry.";
+
+    leaf multi-string {
+      type string {
+        length "0..65535";
+      }
+      description
+        "NTCIP 1203 MULTI (MarkUp Language for Transportation
+         Information) text.  Empty string represents an unused
+         slot.";
+    }
+    leaf priority {
+      type uint8 {
+        range "1..255";
+      }
+      description
+        "Run-time priority; higher value wins when multiple
+         messages are queued.";
+    }
+    leaf owner {
+      type string;
+      description "Authoring system or operator (informational).";
+    }
+    leaf crc {
+      type uint32;
+      description
+        "CRC-32 of the MULTI string.  Receivers compare this to
+         their cached copy before re-rendering.";
+    }
+  }
+
+  /* --------------------------------------------------------------
+   * Main tree
+   * -------------------------------------------------------------- */
+
+  container sign {
+    description
+      "Top-level container for a single dynamic message sign.";
+
+    /* ----- identity ----- */
+    container identity {
+      description "Static identity of the sign.";
+
+      leaf sign-id {
+        type string { length "1..64"; pattern '[a-zA-Z0-9_-]+'; }
+        description "Agency-internal sign identifier (URN tail).";
+      }
+      leaf intersection-name { type string; description "Operator-facing intersection or location name (e.g., 'I-35 NB @ MP 214')."; }
+      uses openits-types:geo-point;
+      leaf make      { type string; config false; description "Manufacturer name reported by the sign."; }
+      leaf model     { type string; config false; description "Model identifier reported by the sign."; }
+      leaf firmware  { type string; config false; description "Firmware version reported by the sign."; }
+
+      leaf technology {
+        type enumeration {
+          enum unknown     { value 0; }
+          enum led         { value 1; }
+          enum flip-disk   { value 2; }
+          enum hybrid      { value 3; }
+        }
+        config false;
+        description "Display technology reported by the sign.";
+      }
+
+      leaf sign-width-pixels  { type pixel-count; config false; description "Addressable pixel width of the sign face."; }
+      leaf sign-height-pixels { type pixel-count; config false; description "Addressable pixel height of the sign face."; }
+    }
+
+    /* ----- operational-status ----- */
+    container operational-status {
+      config false;
+      openits-types:arc-it-flow
+        "Roadway Equipment -> TMC : roadway equipment status";
+      description "Runtime state visible to the TMC.";
+
+      leaf mode {
+        type sign-mode;
+        description "Current high-level sign mode.";
+      }
+      leaf last-mode-change {
+        type yang:date-and-time;
+        description "Timestamp of the last mode transition.";
+      }
+      leaf brightness-current {
+        type brightness-percent;
+        description "Currently applied brightness.";
+      }
+      leaf brightness-setpoint {
+        type brightness-percent;
+        must ". <= 100" {
+          error-message
+            "Brightness setpoint must be between 0 and 100 percent.";
+        }
+        description
+          "Operator-requested brightness.  Must stay within the 0..100
+           percent range even under auto-dim overrides.";
+      }
+      leaf controller-uptime-s {
+        type uint32;
+        units "seconds";
+        description "Seconds since the sign controller last booted.";
+      }
+    }
+
+    /* ----- message buffers ----- */
+    container messages {
+      openits-types:arc-it-flow
+        "TMC -> Roadway Equipment : traffic information";
+
+      description
+        "Message-memory inventory.  NTCIP 1203 exposes four banks
+         (permanent, changeable, volatile, schedule).  The active
+         message is a cross-reference into one of these banks.";
+
+      list slot {
+        key "memory-type slot-number";
+        description "One slot per (memory-type, slot-number) tuple.";
+
+        leaf memory-type {
+          type message-memory-type;
+          description "Bank the slot lives in.";
+        }
+        leaf slot-number {
+          type uint16 {
+            range "1..65535";
+          }
+          description "Slot index within the bank.";
+        }
+        uses message-body;
+      }
+
+      container active {
+        config false;
+        description
+          "The message currently driving the sign face.  A blank
+           sign has memory-type = blank and empty multi-string.";
+
+        leaf memory-type { type message-memory-type; description "Bank the active message lives in."; }
+        leaf slot-number { type uint16; description "Slot index within the bank for the active message."; }
+        leaf activated-at {
+          type yang:date-and-time;
+          description "When the active message was loaded.";
+        }
+        leaf source {
+          type string;
+          description
+            "Operator, schedule id, or TMC workstation that
+             activated the message.";
+        }
+        uses message-body;
+      }
+    }
+
+    /* ----- environment sensors ----- */
+    container environment {
+      config false;
+      description
+        "Ambient sensors co-located with the sign.  Reported for
+         brightness control, preventive-maintenance analytics, and
+         roadside-weather fusion.";
+
+      leaf ambient-light-lux {
+        type uint32;
+        units "lux";
+        description "Ambient light level at the sign face. Drives auto-dim brightness control.";
+      }
+      leaf cabinet-temperature-c {
+        type decimal64 { fraction-digits 1; }
+        units "celsius";
+        description "Cabinet interior temperature. Surfaces thermal stress on lamps and electronics.";
+      }
+      leaf humidity-percent {
+        type uint8 { range "0..100"; }
+        units "percent";
+        description "Cabinet interior relative humidity (0-100%).";
+      }
+      leaf door-open {
+        type boolean;
+        description "Maintenance-door intrusion sensor.";
+      }
+    }
+
+    /* ----- pixel + lamp health ----- */
+    container diagnostics {
+      config false;
+      openits-types:arc-it-flow
+        "Roadway Equipment -> Maintenance : equipment maintenance status";
+      description "Pixel and lamp diagnostics.";
+
+      leaf pixels-total {
+        type pixel-count;
+        description "Total addressable pixels on the face.";
+      }
+      leaf pixels-failed {
+        type pixel-count;
+        must ". <= ../pixels-total" {
+          error-message
+            "pixels-failed cannot exceed pixels-total.";
+        }
+        description "Count of pixels failing self-test.";
+      }
+      leaf lamps-total      { type uint16; description "Total addressable lamps (flip-disk / hybrid signs only)."; }
+      leaf lamps-failed {
+        type uint16;
+        must ". <= ../lamps-total" {
+          error-message
+            "lamps-failed cannot exceed lamps-total.";
+        }
+        description "Count of lamps failing self-test.";
+      }
+      leaf last-self-test {
+        type yang:date-and-time;
+        description "Timestamp of the most recent pixel self-test.";
+      }
+    }
+
+    /* ----- fault inventory ----- */
+    container faults {
+      config false;
+      openits-types:arc-it-flow
+        "Roadway Equipment -> Maintenance : equipment maintenance status";
+      description
+        "Live fault inventory.  Each entry mirrors a `fault-raised`
+         notification and clears when the condition resolves.";
+
+      list fault {
+        key "fault-id";
+        description "One entry per active fault on the sign.";
+        leaf fault-id { type string; description "Sign-local fault identifier; stable across raise/clear pairs."; }
+        leaf category {
+          type identityref {
+            base openits-dms-types:dms-fault-event-kind;
+          }
+          description "Fault class (pixel / lamp / communication / environment / etc.).";
+        }
+        leaf severity {
+          type openits-types:fault-severity;
+          description "Operator-visible severity escalation.";
+        }
+        leaf description  { type string; description "Human-readable fault description from the sign."; }
+        leaf first-observed { type yang:date-and-time; description "Wall-clock time the fault was first observed at the sign."; }
+      }
+    }
+  }
+}

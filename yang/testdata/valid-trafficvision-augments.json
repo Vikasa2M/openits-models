@@ -1,0 +1,71 @@
+{
+  "openits-traffic-sensor:traffic-sensor": {
+    "config": {
+      "id": "sr417-646nb-fixed",
+      "name": "417-6.46NB_FIXED",
+      "latitude": "28.3548200",
+      "longitude": "-81.4735300"
+    },
+    "state": {
+      "id": "sr417-646nb-fixed",
+      "name": "417-6.46NB_FIXED",
+      "latitude": "28.3548200",
+      "longitude": "-81.4735300",
+      "make": "TrafficVision",
+      "model": "TMC-3.6",
+      "operational-status": "inactive",
+      "inactive-reason": "openits-vendor-trafficvision-traffic-sensor-types:inactive-low-fps"
+    },
+    "trafficvision-traffic-sensor-camera:camera": {
+      "view-quality": 91,
+      "glare-estimate": 2,
+      "output-fps": 15,
+      "dfi-fps": "0.9706",
+      "input-image-width": 800,
+      "input-image-height": 450,
+      "output-image-width": 416,
+      "output-image-height": 240,
+      "vanishing-point-u": "367.7197",
+      "vanishing-point-v": "18.0154",
+      "vp-drift": "0.000000048",
+      "ptz-mode": "ptz-mps",
+      "autolearn-enabled": true,
+      "video-reconnect-at": "2026-07-07T13:45:00Z",
+      "license": {
+        "valid": true,
+        "invalid-reason": "",
+        "expiration": "2099-12-31T05:00:00Z"
+      }
+    }
+  },
+  "openits-perception:perception-sensor": {
+    "config": {
+      "id": "sr417-646nb-perception",
+      "name": "417-6.46NB perception",
+      "latitude": "28.3548200",
+      "longitude": "-81.4735300"
+    },
+    "state": {
+      "id": "sr417-646nb-perception",
+      "name": "417-6.46NB perception",
+      "latitude": "28.3548200",
+      "longitude": "-81.4735300"
+    },
+    "incidents": {
+      "incident": [
+        {
+          "incident-id": "tv-inc-000123",
+          "zone-id": "nb-mainline",
+          "type": "openits-vendor-trafficvision-perception-types:incident-fast-traffic",
+          "severity": "minor",
+          "latitude": "28.3548400",
+          "longitude": "-81.4735100",
+          "first-observed": "2026-07-07T14:00:20Z",
+          "trafficvision-perception-incident-media:snapshot": "/media/incidents/tv-inc-000123.jpg",
+          "trafficvision-perception-incident-media:clip": "/media/incidents/tv-inc-000123.mp4",
+          "trafficvision-perception-incident-media:clip-input": "/media/incidents/tv-inc-000123-src.mp4"
+        }
+      ]
+    }
+  }
+}

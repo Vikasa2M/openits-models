@@ -1,0 +1,13 @@
+{
+  "openits-reversible-lane-events:transition-timeout": {
+    "kind": "openits-reversible-lane-types:rl-transition-timeout",
+    "source-device-id": "us75-contraflow",
+    "occurred-at": "2026-07-13T12:00:00Z",
+    "sequence": "1",
+    "from-direction": "northbound",
+    "to-direction": "southbound",
+    "started-at": "2026-07-11T13:45:00Z",
+    "timeout-s": 900,
+    "sequence-step": "gate-closing"
+  }
+}

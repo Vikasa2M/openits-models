@@ -1,0 +1,95 @@
+module openits-signal-control-mutcd {
+  yang-version 1.1;
+  namespace "urn:openits:yang:signal-control-mutcd";
+  prefix openits-sc-mutcd;
+
+  import openits-signal-control { prefix openits-sc; }
+
+  organization "OpenITS Working Group (proposal)";
+  contact "noi@openits.example.org";
+  description
+    "US MUTCD baseline deviation. Re-applies the United States MUTCD
+     11th ed. (2023) phase-timing bounds that the vendor-neutral core
+     (openits-nema-common) deliberately does not impose, so a
+     US-jurisdiction controller declaring this deviation validates
+     against the national standard:
+
+       - yellow-change 3.0-6.0 s   (MUTCD 4F.17 para 13)
+       - red-clear     present and > 0, <= 6.0 s (MUTCD 4F.17 para 6)
+       - walk          0 or >= 4 s (MUTCD 2009 4E.06 / 11th ed. 4I.06)
+
+     Deviations only tighten: each `deviate add must` adds a constraint
+     on top of core's permissive engineering-sanity bounds. A stricter
+     variant (yellow >= 4.0 s) lives in
+     openits-signal-control-mutcd-strict.yang.";
+
+  revision 2026-07-13 {
+    description
+      "Repoint deviation targets through the phase config container: the
+       base module moved the phase timing container under
+       phases/phase/config as part of the config/state restructure, so
+       every deviation path gains an openits-sc:config step. Constraints
+       unchanged.";
+    reference "MUTCD 11th ed. 4F.17.";
+  }
+  revision 2026-07-13 {
+    description
+      "Require red-clear presence on the phase `timing` container: the
+       11th ed. elevated red clearance from an engineering-judgment
+       item to a requirement, and a `must` on the optional red-clear
+       leaf itself never fires when the leaf is absent (RFC 7950
+       section 7.5.3), so the presence-plus-positivity check goes on
+       the container, alongside the existing leaf-level <= 6.0 s
+       ceiling. Also dual-cites the MUTCD 2009/11th ed. pedestrian
+       section numbering (4E.06 / 4I.06) in the walk citation.";
+    reference "MUTCD 11th ed. 4F.17; RFC 7950 section 7.5.3.";
+  }
+  revision 2026-07-13 {
+    description
+      "Initial revision. Re-applies the US MUTCD phase-timing bounds
+       that moved out of vendor-neutral core in.";
+    reference "MUTCD 11th ed. (2023) 4F.17, 4E.06; RFC 7950 section 7.20.3.";
+  }
+
+  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:yellow-change" {
+    deviate add {
+      must ". >= 3.0 and . <= 6.0" {
+        error-message
+          "Yellow change must be 3.0-6.0 seconds per MUTCD 11th ed. "
+        + "section 4F.17 paragraph 13.";
+      }
+    }
+  }
+
+  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing" {
+    deviate add {
+      must "red-clear and red-clear > 0" {
+        error-message
+          "Under MUTCD a phase requires a positive all-red clearance "
+        + "interval (MUTCD 11th ed. 4F.17; the 11th ed. elevated red "
+        + "clearance to a requirement).";
+      }
+    }
+  }
+
+  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:red-clear" {
+    deviate add {
+      must ". <= 6.0" {
+        error-message
+          "Red clearance should not exceed 6.0 seconds (MUTCD 11th ed. "
+        + "section 4F.17 paragraph 6; determined by engineering practice).";
+      }
+    }
+  }
+
+  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:walk" {
+    deviate add {
+      must ". = 0 or . >= 4" {
+        error-message
+          "Walk interval must be zero (no pedestrian service) or at "
+        + "least 4 seconds per MUTCD 2009 section 4E.06 / 11th ed. "
+        + "section 4I.06.";
+      }
+    }
+  }
+}

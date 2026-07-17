@@ -1,0 +1,27 @@
+{
+  "openits-traffic-sensor:traffic-sensor": {
+    "config": {
+      "id": "i35-radar-mm214",
+      "name": "I-35 NB @ MP 214 radar"
+    },
+    "lanes": {
+      "lane": [
+        {
+          "lane-id": 1,
+          "config": {
+            "lane-id": 1,
+            "name": "northbound-inside"
+          },
+          "state": {
+            "lane-id": 1,
+            "name": "northbound-inside",
+            "interval": {
+              "volume": 42,
+              "density": "999.0"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

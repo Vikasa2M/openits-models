@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package openits.core.v1;
+
+option go_package = "github.com/openits/openits-models/pkg/proto/openits/v1;openitspb";
+
+// DeviceType identifies the type of traffic device
+enum DeviceType {
+  DEVICE_TYPE_UNSPECIFIED = 0;
+  DEVICE_TYPE_ASC = 1;  // Actuated Signal Controller
+  DEVICE_TYPE_RSU = 2;  // Roadside Unit
+}
+
+// DeviceStatus represents the operational status of a device
+enum DeviceStatus {
+  DEVICE_STATUS_UNSPECIFIED = 0;
+  DEVICE_STATUS_ONLINE = 1;
+  DEVICE_STATUS_OFFLINE = 2;
+  DEVICE_STATUS_DEGRADED = 3;
+  DEVICE_STATUS_MAINTENANCE = 4;
+}
+
+// DeviceInfo contains static device metadata
+message DeviceInfo {
+  string device_id = 1;
+  DeviceType device_type = 2;
+  string host = 3;
+  int32 port = 4;
+  string snmp_community = 5;
+  string firmware_version = 6;
+  string model = 7;
+  string manufacturer = 8;
+  string location = 9;
+  map<string, string> labels = 10;
+
+  // Reserved for future use
+  reserved 50 to 99;
+}
+
+// DeviceHealth represents the current health state of a device
+message DeviceHealth {
+  string device_id = 1;
+  DeviceStatus status = 2;
+  int64 last_poll_unix_ms = 3;
+  int64 last_success_unix_ms = 4;
+  int32 consecutive_failures = 5;
+  string last_error = 6;
+  bool circuit_open = 7;
+  int64 circuit_open_until_unix_ms = 8;
+
+  // Reserved for future use
+  reserved 50 to 99;
+}

@@ -1,0 +1,185 @@
+module openits-common-fault-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:common-fault-events";
+  prefix openits-common-fault;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Cross-service fault-raised and fault-cleared notifications. Each
+     service derives its own fault-kind identities from
+     openits-types:fault-event-kind (or its service-specific sub-base)
+     and emits these generic notifications with the kind identityref
+     identifying the specific fault.
+
+     fault-raised announces a newly-active fault. fault-cleared
+     announces resolution of a previously-active fault. Both carry
+     the fault-id (free-form, decoder-controlled), severity, and
+     wire-source. This module hosts only these two cross-service
+     notifications; signal-controller HR-log fault transitions are
+     carried by openits-signal-control-fault-events:controller-fault-
+     event instead.";
+
+  revision 2026-07-12 {
+    description
+      "Move controller-fault-event to openits-signal-control-fault-events
+       (it is signal-control-specific, not cross-service). This module
+       now hosts only the cross-service fault-raised/fault-cleared.
+       Resolves the catalog over-fan.";
+  }
+  revision 2026-07-10 {
+    description
+      "Delete the local 'fault-severity' typedef and repoint both
+       severity leaves to the shared openits-types:fault-severity
+       typedef. Member set and order unchanged (info/warning/minor/
+       major/critical) — wire-stable. Part of the cross-module
+       fault-severity consolidation.";
+  }
+  revision 2026-05-19 {
+    description
+      "Accept controller-fault-event migration from openits-signal-
+       control-notifications@2026-05-15. Adds a third notification
+       (controller-fault-event) for HR-level controller fault
+       transitions; distinct from fault-raised/fault-cleared which
+       carry NTCIP-polled fault state.";
+  }
+  revision 2026-05-18 {
+    description
+      "Accept fault-raised migration from openits-signal-control-
+       notifications@2026-05-15. The existing fault-raised notification
+       shape is already compatible (kind + fault-id + severity +
+       wire-source); this revision is a documentation bump to record
+       that signal-control's fault-raised now lives here.";
+  }
+  revision 2026-05-17 {
+    description
+      "Add descriptions to source-device-id, severity, occurred-at,
+       and the fault-cleared leaves so the notification contract is
+       self-documenting for Phase 0c decoder implementers.";
+  }
+  revision 2026-05-16 {
+    description "Initial revision.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification fault-raised {
+    openits-types:arc-it-flow
+      "Device -> Maintenance : fault data";
+    description
+      "A fault condition became active on a device. Subsequent
+       fault-cleared with the same fault-id announces resolution.";
+
+    leaf kind {
+      type identityref { base openits-types:fault-event-kind; }
+      mandatory true;
+      description
+        "Specific fault class. Service-derived (e.g.,
+         openits-signal-control-types:fault-power-failure) or
+         vendor-derived (e.g., openits-vendor-econolite-signal-
+         control-types:econolite-vendor-alarm-1).";
+    }
+
+    leaf source-device-id {
+      type openits-types:device-id;
+      mandatory true;
+      description
+        "Device this fault pertains to, using the openits-types:
+         device-id pattern '[a-zA-Z0-9_-]+'. Typically the
+         controller-id / sign-id / RSU-id from the inventory.";
+    }
+
+    leaf fault-id {
+      type string;
+      mandatory true;
+      description
+        "Decoder-controlled stable identifier for this fault instance.
+         Used to correlate fault-raised with fault-cleared.";
+    }
+
+    leaf severity {
+      type openits-types:fault-severity;
+      mandatory true;
+      description
+        "Severity of the fault condition. Consumers SHOULD treat
+         critical/major as actionable; minor/warning/info are
+         informational. The mapping from decoder-family-specific
+         severity bits to this enum is decoder-controlled.";
+    }
+
+    leaf description {
+      type string;
+      description "Human-readable fault description.";
+    }
+
+    leaf occurred-at {
+      type yang:date-and-time;
+      mandatory true;
+      description
+        "Wall-clock time the fault was raised at the device. Distinct
+         from CloudEvents ce-time (when the publisher observed it);
+         the two diverge for HR-log backfill or when device NTP is
+         broken.";
+    }
+
+    uses openits-types:wire-source;
+  }
+
+  notification fault-cleared {
+    openits-types:arc-it-flow
+      "Device -> Maintenance : fault data";
+    description
+      "A previously-raised fault is no longer active. fault-id
+       matches the corresponding fault-raised.";
+
+    leaf kind {
+      type identityref { base openits-types:fault-event-kind; }
+      mandatory true;
+      description
+        "Same fault class identity as the corresponding fault-raised
+         (see fault-raised/kind for the derivation rules).";
+    }
+
+    leaf source-device-id {
+      type openits-types:device-id;
+      mandatory true;
+      description
+        "Device this fault pertains to. Matches the source-device-id
+         on the corresponding fault-raised.";
+    }
+
+    leaf fault-id {
+      type string;
+      mandatory true;
+      description
+        "Same identifier as the corresponding fault-raised. The
+         (source-device-id, fault-id) pair correlates raise/clear
+         pairs across the stream.";
+    }
+
+    leaf occurred-at {
+      type yang:date-and-time;
+      mandatory true;
+      description
+        "Wall-clock time the fault was cleared at the device.
+         Distinct from CloudEvents ce-time (see fault-raised/
+         occurred-at).";
+    }
+
+    uses openits-types:wire-source;
+  }
+}
