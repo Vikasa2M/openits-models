@@ -77,6 +77,15 @@ follow the regenerate-and-gate loop above.
   user-facing.
 - Ensure every CI job is green before requesting review.
 
+## Security
+
+Do **not** open a public issue for security vulnerabilities. Report them
+privately — see [`SECURITY.md`](SECURITY.md).
+
+## Code of conduct
+
+Participation is governed by our [Code of Conduct](CODE_OF_CONDUCT.md).
+
 ## License
 
 By contributing, you agree that your contributions are licensed under the
