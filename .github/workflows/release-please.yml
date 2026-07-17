@@ -1,0 +1,71 @@
+name: Release Please
+
+# Automated release cadence. On every push to main, release-please maintains a
+# standing "release PR" that bumps the version and updates CHANGELOG.md from the
+# Conventional Commits since the last release. Merging that PR tags vX.Y.Z and
+# creates the GitHub Release; the upload-assets job then attaches the curated
+# bundle. release-please creates the tag with GITHUB_TOKEN, which does NOT
+# trigger the tag-based release.yml — so there is no double release.
+#
+# Version policy (pre-1.0, see docs/versioning.md): feat -> minor, fix -> patch,
+# breaking -> minor (bump-minor-pre-major). Config in release-please-config.json;
+# current version tracked in .release-please-manifest.json.
+
+on:
+  push:
+    branches: [main]
+
+# Read-only by default; each job elevates to exactly what it needs.
+permissions:
+  contents: read
+
+concurrency:
+  group: release-please
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write        # create the release + tag
+      pull-requests: write    # open/maintain the release PR
+    outputs:
+      release_created: ${{ steps.rp.outputs.release_created }}
+      tag_name: ${{ steps.rp.outputs.tag_name }}
+    steps:
+      - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        id: rp
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  # Runs only when a release was actually cut. Builds the curated bundle from
+  # the tagged tree and attaches it to the release release-please just created.
+  upload-assets:
+    needs: release-please
+    if: needs.release-please.outputs.release_created == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          ref: ${{ needs.release-please.outputs.tag_name }}
+          persist-credentials: false
+      - name: Build curated bundle
+        env:
+          TAG: ${{ needs.release-please.outputs.tag_name }}
+        run: scripts/build-release-bundle.sh "$TAG"
+      - name: Attach bundle to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.release-please.outputs.tag_name }}
+        run: |
+          set -euo pipefail
+          gh release upload "$TAG" \
+            "openits-models-${TAG}.zip" \
+            "openits-models-${TAG}.tar.gz" \
+            SHA256SUMS \
+            --clobber

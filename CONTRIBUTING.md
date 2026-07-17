@@ -72,9 +72,23 @@ follow the regenerate-and-gate loop above.
 
 ## Commits & PRs
 
+We use [**Conventional Commits**](https://www.conventionalcommits.org/) — the
+changelog and version bumps are generated from them by release-please, so the
+prefix matters:
+
+| Prefix | Effect | Use for |
+|--------|--------|---------|
+| `feat:` | minor bump | a new capability/module, a new field or event |
+| `fix:` | patch bump | a bug fix in a model or a tool |
+| `feat!:` or `BREAKING CHANGE:` footer | minor (pre-1.0) / major (≥1.0) | a wire/JSON or YANG-contract break |
+| `docs:` `chore:` `test:` `refactor:` `ci:` | no release | everything else |
+
+Example: `feat(dms): add travel-time route table augment`.
+
 - Keep PRs focused; separate model changes from tooling changes where practical.
-- Update [`CHANGELOG.md`](CHANGELOG.md) under `## [Unreleased]` for anything
-  user-facing.
+- **Don't hand-edit `CHANGELOG.md`** — release-please regenerates it from commit
+  messages. Write a good commit subject instead. See
+  [`docs/versioning.md`](docs/versioning.md).
 - Ensure every CI job is green before requesting review.
 
 ## Security

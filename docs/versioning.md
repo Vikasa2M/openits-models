@@ -58,20 +58,43 @@ minor-version bump on the v0.x line (or a major + `/v2` post-1.0).
 
 ## Cutting a release
 
-1. Ensure `main` is green (all CI jobs pass).
-2. Move the `## [Unreleased]` items in [`CHANGELOG.md`](../CHANGELOG.md) into a
-   new `## [X.Y.Z] - YYYY-MM-DD` section, and update the compare/tag links at
-   the bottom.
-3. Commit that on `main`.
-4. Tag and push:
-   ```
-   git tag vX.Y.Z
-   git push origin vX.Y.Z
-   ```
-5. The [`release`](../.github/workflows/release.yml) workflow re-runs the build
-   + tests, then creates a GitHub Release whose body is the matching CHANGELOG
-   section. Tags with a pre-release suffix (e.g. `v0.2.0-rc.1`) are marked as
-   pre-releases automatically.
+Releases are driven by **[release-please](https://github.com/googleapis/release-please)**
+off [Conventional Commits](https://www.conventionalcommits.org/). You do not
+tag or edit the changelog by hand for the normal cadence.
+
+1. Land PRs on `main` with Conventional Commit messages — `fix:` (→ patch),
+   `feat:` (→ minor), and `feat!:` / a `BREAKING CHANGE:` footer (→ minor while
+   pre-1.0; major once ≥ 1.0). `docs:`/`chore:`/`test:`/`refactor:` don't
+   trigger a release on their own.
+2. [`release-please.yml`](../.github/workflows/release-please.yml) watches
+   `main` and maintains a standing **release PR** that bumps the version in
+   [`.release-please-manifest.json`](../.release-please-manifest.json) and
+   rewrites [`CHANGELOG.md`](../CHANGELOG.md) from those commits.
+3. When the changelog and version look right, **merge the release PR**. That
+   tags `vX.Y.Z`, creates the GitHub Release with generated notes, and the
+   `upload-assets` job attaches the curated bundle (below).
+
+Config lives in [`release-please-config.json`](../release-please-config.json)
+(`release-type: go`, `bump-minor-pre-major`).
+
+### Manual / bootstrap path
+
+The first release (`v0.1.0`) and any one-off are cut by hand: push a semver tag
+and the [`release`](../.github/workflows/release.yml) workflow re-runs the gate,
+creates the Release from the matching `CHANGELOG.md` section, and attaches the
+bundle (`-rc` suffixes are marked pre-release automatically):
+
+```
+git tag vX.Y.Z
+git push origin vX.Y.Z
+```
+
+release-please tags with `GITHUB_TOKEN`, which does not trigger this tag-based
+workflow, so the automated and manual paths never double-fire.
+
+> **Ordering:** cut `v0.1.0` (manual) *before* merging `feat:`/`fix:` commits,
+> so release-please — whose baseline manifest is `0.1.0` — starts proposing
+> `0.1.1`/`0.2.0` from an existing `v0.1.0` tag rather than pre-empting it.
 
 ## Release artifacts
 

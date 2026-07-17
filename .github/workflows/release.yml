@@ -1,9 +1,14 @@
 name: Release
 
-# Fires when a semver tag is pushed (e.g. v0.1.0). Re-runs the full gate,
-# then cuts a GitHub Release whose notes are the matching CHANGELOG section.
-# Go module consumers pull the tag directly from the repo — there is no
-# binary artifact to publish here; the tag *is* the release.
+# MANUAL / BOOTSTRAP path. The normal release cadence is release-please
+# (.github/workflows/release-please.yml) — merge its release PR and it tags +
+# releases automatically. This workflow is the manual escape hatch: it fires
+# when a maintainer PUSHES a semver tag by hand (e.g. the first v0.1.0
+# bootstrap, or a one-off). It re-runs the gate, then cuts a GitHub Release
+# whose notes are the matching CHANGELOG section, with the curated bundle
+# attached. release-please creates its tags with GITHUB_TOKEN, which does NOT
+# trigger this `on: push: tags` workflow — so the two paths never collide.
+# Go module consumers pull the tag directly; the tag *is* the release.
 
 on:
   push:
@@ -62,24 +67,7 @@ jobs:
       - name: Build curated artifact bundle
         env:
           TAG: ${{ github.ref_name }}
-        run: |
-          set -euo pipefail
-          # A clean subset for non-Go / other-language consumers: the models
-          # and specs, without the Go-generated pkg/, tooling, tests, or docs.
-          # (Go consumers use the tag directly via `go get`; GitHub's auto
-          # source archive covers "the whole repo".)
-          STAGE="openits-models-${TAG}"
-          mkdir -p "$STAGE/api"
-          cp -r yang            "$STAGE/yang"
-          cp -r api/proto       "$STAGE/api/proto"
-          rm -rf "$STAGE/api/proto/yang"   # drop the ygot-generated extension tree
-          cp -r schema-registry "$STAGE/schema-registry"
-          cp asyncapi.yaml CHANGELOG.md LICENSE NOTICE "$STAGE/"
-          zip -qr "${STAGE}.zip" "$STAGE"
-          tar -czf "${STAGE}.tar.gz" "$STAGE"
-          sha256sum "${STAGE}.zip" "${STAGE}.tar.gz" > SHA256SUMS
-          echo "----- bundle contents -----"
-          cat SHA256SUMS
+        run: scripts/build-release-bundle.sh "$TAG"
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}

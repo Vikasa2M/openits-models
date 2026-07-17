@@ -10,4 +10,4 @@
 - [ ] `go build ./... && go vet ./... && go test ./...` pass
 - [ ] `buf lint` passes; no unintended `buf breaking` violations vs. `main`
 - [ ] Ran the relevant `make check-*` / conformance gates for the area touched
-- [ ] Updated `CHANGELOG.md` under `## [Unreleased]` for user-facing changes
+- [ ] Commits follow [Conventional Commits](https://www.conventionalcommits.org/) (`feat:` / `fix:` / `feat!:`) — the changelog is generated from them, don't hand-edit `CHANGELOG.md`
