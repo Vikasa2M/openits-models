@@ -1,0 +1,10 @@
+# Default owners for everything in the repo. Replace with the appropriate
+# GitHub team or usernames before enabling required reviews.
+* @Vikasa2M
+
+# Generated artifacts — reviewers should confirm these changed only as a
+# result of a YANG edit + `make gen`, never hand-edited.
+/pkg/proto/   @Vikasa2M
+/pkg/yang/    @Vikasa2M
+/asyncapi.yaml @Vikasa2M
+/field-numbers.yaml @Vikasa2M

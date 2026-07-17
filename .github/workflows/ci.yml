@@ -1,0 +1,148 @@
+name: CI
+
+# Full release gate. Every job mirrors a Make target that already exists in
+# the repo, so `make <target>` locally reproduces exactly what CI enforces.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  # Pinned to match scripts/proto-gen.sh and scripts/yang-gen.sh. The protoc
+  # version string is normalized out of generated headers by proto-gen.sh, so
+  # protoc's exact version does not affect the check-gen drift gate.
+  PROTOC_VERSION: "29.3"
+  PROTOC_GEN_GO_VERSION: "v1.36.11"
+  YGOT_GENERATOR_VERSION: "v0.34.0"
+  BUF_VERSION: "v1.50.0"
+
+jobs:
+  # go build / vet / unit tests for every tool and generated package.
+  go-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: go build ./...
+      - run: go vet ./...
+      - run: go test ./...
+
+  # Freshness gate: regenerate every artifact (yang->proto->Go, yang->ygot,
+  # yang->asyncapi) and fail if the working tree drifts from what's committed.
+  check-gen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Install protoc
+        run: |
+          curl -sSL -o /tmp/protoc.zip \
+            "https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip"
+          sudo unzip -oq /tmp/protoc.zip -d /usr/local
+          protoc --version
+      - name: Install generators
+        run: |
+          go install "google.golang.org/protobuf/cmd/protoc-gen-go@${PROTOC_GEN_GO_VERSION}"
+          go install "github.com/openconfig/ygot/generator@${YGOT_GENERATOR_VERSION}"
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+      - name: make check-gen (regenerate + assert no drift)
+        run: make check-gen
+      - name: Show drift on failure
+        if: failure()
+        run: git --no-pager diff --stat
+
+  # Protobuf wire-contract gates.
+  buf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Install buf
+        run: |
+          go install "github.com/bufbuild/buf/cmd/buf@${BUF_VERSION}"
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+      - name: buf lint
+        run: buf lint
+      - name: buf breaking (vs main)
+        run: |
+          # Resolve main to a concrete SHA and point buf at that commit. Works
+          # identically for push-to-main (HEAD vs main tip == no-op) and PRs
+          # (HEAD vs base). A depth-1 fetch carries the full tree at that commit,
+          # which is all buf needs to read the .proto files.
+          git fetch --no-tags --depth=1 origin main
+          BASE_SHA="$(git rev-parse FETCH_HEAD)"
+          echo "Comparing against main @ ${BASE_SHA}"
+          buf breaking --against ".git#ref=${BASE_SHA}"
+
+  # YANG governance / layering / naming gates (Go + bash, no external deps).
+  yang-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: make check-revisions
+      - run: make check-naming
+      - run: make check-deviations
+      - run: make check-augment-collisions
+      - run: make check-events-layering
+      - run: make validate-noi
+      - run: make check-graduation
+
+  # Golden YANG instance data validated against the modules with yanglint
+  # (libyang) in Docker — Docker is preinstalled on ubuntu runners.
+  validate-yang:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: make validate-yang
+
+  # pyang --strict structural lint of every YANG module.
+  yang-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyang
+      - run: make yang-lint
+
+  # Conformance harness against the built-in mock device, one job per kind.
+  conformance:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        kind:
+          - asc
+          - rsu
+          - dms
+          - ess
+          - ramp-metering
+          - traffic-sensor
+          - reversible-lane
+          - perception
+          - cctv
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: go run ./tools/conformance -driver mock -kind ${{ matrix.kind }}

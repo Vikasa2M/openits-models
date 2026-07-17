@@ -69,9 +69,8 @@ untouched by `make yang-proto-gen`.
 Requires `protoc`/`buf`, `ygot`/`goyang`, and (optionally) `pyang` and
 `yanglint`.
 
-> **asyncapi.yaml** is carried here as a published artifact. The generator
-> that produces it is in-repo (`make asyncapi`).
-> NOTE: the in-repo AsyncAPI generator lands in refactor plan P2; see docs/superpowers/plans.
+> **asyncapi.yaml** is carried here as a published artifact, regenerated
+> in-repo from the YANG-derived ce-type catalog by `make asyncapi`.
 
 ## Provenance
 
@@ -80,3 +79,22 @@ and every other artifact (protobuf, Go, JSON Schema, AsyncAPI, schema-registry
 snapshots) is generated from them by in-repo tooling. No other repository is
 required to build, generate, or validate this repo. The collector and other
 consumers depend on this module; this module depends on none of them.
+
+## Contributing, versioning & releases
+
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) — the edit-YANG-then-regenerate workflow
+  and the full set of gates CI enforces.
+- [`docs/versioning.md`](docs/versioning.md) — how the Go module version,
+  per-module YANG revisions, and protobuf wire compatibility relate, plus the
+  step-by-step release process.
+- [`CHANGELOG.md`](CHANGELOG.md) — notable changes per release.
+
+CI (`.github/workflows/ci.yml`) runs the full gate on every push and PR:
+generation freshness, `go build`/`vet`/`test`, `buf` lint + breaking-change
+detection, YANG governance checks, `yanglint` instance-data validation, and the
+conformance harness across all device kinds.
+
+## License
+
+Licensed under the [Apache License 2.0](LICENSE). See [`NOTICE`](NOTICE) for
+attribution, including the vendored IETF YANG modules under `yang/ietf/`.

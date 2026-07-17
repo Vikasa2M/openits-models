@@ -1,0 +1,64 @@
+name: Release
+
+# Fires when a semver tag is pushed (e.g. v0.1.0). Re-runs the full gate,
+# then cuts a GitHub Release whose notes are the matching CHANGELOG section.
+# Go module consumers pull the tag directly from the repo — there is no
+# binary artifact to publish here; the tag *is* the release.
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+      - "v[0-9]+.[0-9]+.[0-9]+-*"
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: go build ./...
+      - run: go test ./...
+
+  release:
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract CHANGELOG section for this tag
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          VERSION="${TAG#v}"
+          # Pull the body between "## [<version>]" and the next "## [" header.
+          awk -v ver="$VERSION" '
+            $0 ~ "^## \\[" ver "\\]" { grab=1; next }
+            grab && /^## \[/         { exit }
+            grab                     { print }
+          ' CHANGELOG.md > release-notes.md
+          if [ ! -s release-notes.md ]; then
+            echo "No CHANGELOG section found for ${VERSION}; using tag name as body." >&2
+            echo "Release ${TAG}" > release-notes.md
+          fi
+          echo "----- release notes -----"
+          cat release-notes.md
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          PRERELEASE=""
+          case "$TAG" in
+            *-*) PRERELEASE="--prerelease" ;;
+          esac
+          gh release create "$TAG" \
+            --title "$TAG" \
+            --notes-file release-notes.md \
+            $PRERELEASE

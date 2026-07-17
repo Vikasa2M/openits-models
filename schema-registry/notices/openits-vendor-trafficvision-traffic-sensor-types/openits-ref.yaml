@@ -1,7 +1,7 @@
 augment: openits-vendor-trafficvision-traffic-sensor-types
 revision: 2026-07-07
 implementer: openits-ref
-implementer_contact: OpenITS Working Group
+implementer_contact: noi@openits.example.org
 implementer_type: conformance-reference
 deployment_scale: test
 first_observed: 2026-07-08
