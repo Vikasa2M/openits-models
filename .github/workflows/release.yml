@@ -48,6 +48,27 @@ jobs:
           fi
           echo "----- release notes -----"
           cat release-notes.md
+      - name: Build curated artifact bundle
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          # A clean subset for non-Go / other-language consumers: the models
+          # and specs, without the Go-generated pkg/, tooling, tests, or docs.
+          # (Go consumers use the tag directly via `go get`; GitHub's auto
+          # source archive covers "the whole repo".)
+          STAGE="openits-models-${TAG}"
+          mkdir -p "$STAGE/api"
+          cp -r yang            "$STAGE/yang"
+          cp -r api/proto       "$STAGE/api/proto"
+          rm -rf "$STAGE/api/proto/yang"   # drop the ygot-generated extension tree
+          cp -r schema-registry "$STAGE/schema-registry"
+          cp asyncapi.yaml CHANGELOG.md LICENSE NOTICE "$STAGE/"
+          zip -qr "${STAGE}.zip" "$STAGE"
+          tar -czf "${STAGE}.tar.gz" "$STAGE"
+          sha256sum "${STAGE}.zip" "${STAGE}.tar.gz" > SHA256SUMS
+          echo "----- bundle contents -----"
+          cat SHA256SUMS
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -61,4 +82,7 @@ jobs:
           gh release create "$TAG" \
             --title "$TAG" \
             --notes-file release-notes.md \
-            $PRERELEASE
+            $PRERELEASE \
+            "openits-models-${TAG}.zip" \
+            "openits-models-${TAG}.tar.gz" \
+            SHA256SUMS

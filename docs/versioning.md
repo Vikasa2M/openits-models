@@ -73,6 +73,24 @@ minor-version bump on the v0.x line (or a major + `/v2` post-1.0).
    section. Tags with a pre-release suffix (e.g. `v0.2.0-rc.1`) are marked as
    pre-releases automatically.
 
+## Release artifacts
+
+The **tag itself is the release** — Go consumers pull it directly with
+`go get`, and GitHub auto-attaches a full-repo source archive.
+
+For non-Go / other-language implementers, the release workflow also attaches a
+**curated bundle** — the models and specs without the Go-generated `pkg/`,
+tooling, tests, or docs:
+
+- `openits-models-vX.Y.Z.zip` and `openits-models-vX.Y.Z.tar.gz`, each
+  containing `yang/`, `api/proto/` (minus the ygot-generated extension tree),
+  `schema-registry/`, `asyncapi.yaml`, `CHANGELOG.md`, `LICENSE`, and `NOTICE`
+  under a top-level `openits-models-vX.Y.Z/` directory.
+- `SHA256SUMS` — checksums for both archives, for consumers who vendor them.
+
+There are no compiled binaries to publish (this repo builds none) and no
+package-registry publishing (npm/PyPI) until a consumer needs it.
+
 ## ⚠️ Prerequisite: module path must match the repo URL
 
 The Go module path in `go.mod` is `github.com/openits/openits-models`, but the
