@@ -23,14 +23,17 @@
       "config": {
         "target-state": "open",
         "target-direction": "northbound",
-        "transition-timeout-s": 900
+        "transition-timeout-s": 900,
+        "min-clearance-duration-s": 20,
+        "min-verification-dwell-s": 10
       },
       "state": {
         "current-state": "open",
         "open-direction": "northbound",
         "last-command-source": "tmc-ops",
         "last-command-at": "2026-07-07T06:30:00Z",
-        "changeover-permitted": true
+        "changeover-permitted": true,
+        "direction-open-permitted": true
       }
     },
     "segments": {
@@ -85,12 +88,12 @@
       "interlock": [
         {
           "interlock-id": "sweep-confirm",
-          "config": { "interlock-id": "sweep-confirm", "kind": "openits-reversible-lane-types:sweep-confirmed", "name": "Sweep vehicle confirmed clear", "required": true },
+          "config": { "interlock-id": "sweep-confirm", "kind": "openits-reversible-lane-types:sweep-confirmed", "name": "Sweep vehicle confirmed clear", "required": true, "evaluation-point": "direction-open" },
           "state": { "satisfied": true }
         },
         {
           "interlock-id": "gate-agreement",
-          "config": { "interlock-id": "gate-agreement", "kind": "openits-reversible-lane-types:gate-agreement", "name": "All gate positions agree with commanded state", "required": true },
+          "config": { "interlock-id": "gate-agreement", "kind": "openits-reversible-lane-types:gate-agreement", "name": "All gate positions agree with commanded state", "required": true, "evaluation-point": "direction-open" },
           "state": { "satisfied": true }
         }
       ]

@@ -22,58 +22,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type CommandSource int32
-
-const (
-	CommandSource_COMMAND_SOURCE_CENTRAL  CommandSource = 0
-	CommandSource_COMMAND_SOURCE_SCHEDULE CommandSource = 1
-	CommandSource_COMMAND_SOURCE_LOCAL    CommandSource = 2
-	CommandSource_COMMAND_SOURCE_OTHER    CommandSource = 3
-)
-
-// Enum value maps for CommandSource.
-var (
-	CommandSource_name = map[int32]string{
-		0: "COMMAND_SOURCE_CENTRAL",
-		1: "COMMAND_SOURCE_SCHEDULE",
-		2: "COMMAND_SOURCE_LOCAL",
-		3: "COMMAND_SOURCE_OTHER",
-	}
-	CommandSource_value = map[string]int32{
-		"COMMAND_SOURCE_CENTRAL":  0,
-		"COMMAND_SOURCE_SCHEDULE": 1,
-		"COMMAND_SOURCE_LOCAL":    2,
-		"COMMAND_SOURCE_OTHER":    3,
-	}
-)
-
-func (x CommandSource) Enum() *CommandSource {
-	p := new(CommandSource)
-	*p = x
-	return p
-}
-
-func (x CommandSource) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (CommandSource) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_state_proto_enumTypes[0].Descriptor()
-}
-
-func (CommandSource) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_state_proto_enumTypes[0]
-}
-
-func (x CommandSource) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use CommandSource.Descriptor instead.
-func (CommandSource) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{0}
-}
-
 type NonMeteringDisplay int32
 
 const (
@@ -104,11 +52,11 @@ func (x NonMeteringDisplay) String() string {
 }
 
 func (NonMeteringDisplay) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_state_proto_enumTypes[1].Descriptor()
+	return file_openits_ramp_metering_v1_state_proto_enumTypes[0].Descriptor()
 }
 
 func (NonMeteringDisplay) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_state_proto_enumTypes[1]
+	return &file_openits_ramp_metering_v1_state_proto_enumTypes[0]
 }
 
 func (x NonMeteringDisplay) Number() protoreflect.EnumNumber {
@@ -117,7 +65,7 @@ func (x NonMeteringDisplay) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use NonMeteringDisplay.Descriptor instead.
 func (NonMeteringDisplay) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{1}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{0}
 }
 
 type SequencePhase int32
@@ -159,11 +107,11 @@ func (x SequencePhase) String() string {
 }
 
 func (SequencePhase) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_state_proto_enumTypes[2].Descriptor()
+	return file_openits_ramp_metering_v1_state_proto_enumTypes[1].Descriptor()
 }
 
 func (SequencePhase) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_state_proto_enumTypes[2]
+	return &file_openits_ramp_metering_v1_state_proto_enumTypes[1]
 }
 
 func (x SequencePhase) Number() protoreflect.EnumNumber {
@@ -172,6 +120,52 @@ func (x SequencePhase) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SequencePhase.Descriptor instead.
 func (SequencePhase) EnumDescriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{1}
+}
+
+type AwsFaultAction int32
+
+const (
+	AwsFaultAction_AWS_FAULT_ACTION_SUSPEND_METERING  AwsFaultAction = 0
+	AwsFaultAction_AWS_FAULT_ACTION_CONTINUE_METERING AwsFaultAction = 1
+)
+
+// Enum value maps for AwsFaultAction.
+var (
+	AwsFaultAction_name = map[int32]string{
+		0: "AWS_FAULT_ACTION_SUSPEND_METERING",
+		1: "AWS_FAULT_ACTION_CONTINUE_METERING",
+	}
+	AwsFaultAction_value = map[string]int32{
+		"AWS_FAULT_ACTION_SUSPEND_METERING":  0,
+		"AWS_FAULT_ACTION_CONTINUE_METERING": 1,
+	}
+)
+
+func (x AwsFaultAction) Enum() *AwsFaultAction {
+	p := new(AwsFaultAction)
+	*p = x
+	return p
+}
+
+func (x AwsFaultAction) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (AwsFaultAction) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_ramp_metering_v1_state_proto_enumTypes[2].Descriptor()
+}
+
+func (AwsFaultAction) Type() protoreflect.EnumType {
+	return &file_openits_ramp_metering_v1_state_proto_enumTypes[2]
+}
+
+func (x AwsFaultAction) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use AwsFaultAction.Descriptor instead.
+func (AwsFaultAction) EnumDescriptor() ([]byte, []int) {
 	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{2}
 }
 
@@ -227,6 +221,149 @@ func (LampStatus) EnumDescriptor() ([]byte, []int) {
 	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{3}
 }
 
+type Months int32
+
+const (
+	Months_MONTHS_UNSPECIFIED Months = 0
+	Months_MONTHS_JANUARY     Months = 1
+	Months_MONTHS_FEBRUARY    Months = 2
+	Months_MONTHS_MARCH       Months = 3
+	Months_MONTHS_APRIL       Months = 4
+	Months_MONTHS_MAY         Months = 5
+	Months_MONTHS_JUNE        Months = 6
+	Months_MONTHS_JULY        Months = 7
+	Months_MONTHS_AUGUST      Months = 8
+	Months_MONTHS_SEPTEMBER   Months = 9
+	Months_MONTHS_OCTOBER     Months = 10
+	Months_MONTHS_NOVEMBER    Months = 11
+	Months_MONTHS_DECEMBER    Months = 12
+)
+
+// Enum value maps for Months.
+var (
+	Months_name = map[int32]string{
+		0:  "MONTHS_UNSPECIFIED",
+		1:  "MONTHS_JANUARY",
+		2:  "MONTHS_FEBRUARY",
+		3:  "MONTHS_MARCH",
+		4:  "MONTHS_APRIL",
+		5:  "MONTHS_MAY",
+		6:  "MONTHS_JUNE",
+		7:  "MONTHS_JULY",
+		8:  "MONTHS_AUGUST",
+		9:  "MONTHS_SEPTEMBER",
+		10: "MONTHS_OCTOBER",
+		11: "MONTHS_NOVEMBER",
+		12: "MONTHS_DECEMBER",
+	}
+	Months_value = map[string]int32{
+		"MONTHS_UNSPECIFIED": 0,
+		"MONTHS_JANUARY":     1,
+		"MONTHS_FEBRUARY":    2,
+		"MONTHS_MARCH":       3,
+		"MONTHS_APRIL":       4,
+		"MONTHS_MAY":         5,
+		"MONTHS_JUNE":        6,
+		"MONTHS_JULY":        7,
+		"MONTHS_AUGUST":      8,
+		"MONTHS_SEPTEMBER":   9,
+		"MONTHS_OCTOBER":     10,
+		"MONTHS_NOVEMBER":    11,
+		"MONTHS_DECEMBER":    12,
+	}
+)
+
+func (x Months) Enum() *Months {
+	p := new(Months)
+	*p = x
+	return p
+}
+
+func (x Months) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Months) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_ramp_metering_v1_state_proto_enumTypes[4].Descriptor()
+}
+
+func (Months) Type() protoreflect.EnumType {
+	return &file_openits_ramp_metering_v1_state_proto_enumTypes[4]
+}
+
+func (x Months) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Months.Descriptor instead.
+func (Months) EnumDescriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{4}
+}
+
+type DaysOfWeek int32
+
+const (
+	DaysOfWeek_DAYS_OF_WEEK_UNSPECIFIED DaysOfWeek = 0
+	DaysOfWeek_DAYS_OF_WEEK_MONDAY      DaysOfWeek = 1
+	DaysOfWeek_DAYS_OF_WEEK_TUESDAY     DaysOfWeek = 2
+	DaysOfWeek_DAYS_OF_WEEK_WEDNESDAY   DaysOfWeek = 3
+	DaysOfWeek_DAYS_OF_WEEK_THURSDAY    DaysOfWeek = 4
+	DaysOfWeek_DAYS_OF_WEEK_FRIDAY      DaysOfWeek = 5
+	DaysOfWeek_DAYS_OF_WEEK_SATURDAY    DaysOfWeek = 6
+	DaysOfWeek_DAYS_OF_WEEK_SUNDAY      DaysOfWeek = 7
+)
+
+// Enum value maps for DaysOfWeek.
+var (
+	DaysOfWeek_name = map[int32]string{
+		0: "DAYS_OF_WEEK_UNSPECIFIED",
+		1: "DAYS_OF_WEEK_MONDAY",
+		2: "DAYS_OF_WEEK_TUESDAY",
+		3: "DAYS_OF_WEEK_WEDNESDAY",
+		4: "DAYS_OF_WEEK_THURSDAY",
+		5: "DAYS_OF_WEEK_FRIDAY",
+		6: "DAYS_OF_WEEK_SATURDAY",
+		7: "DAYS_OF_WEEK_SUNDAY",
+	}
+	DaysOfWeek_value = map[string]int32{
+		"DAYS_OF_WEEK_UNSPECIFIED": 0,
+		"DAYS_OF_WEEK_MONDAY":      1,
+		"DAYS_OF_WEEK_TUESDAY":     2,
+		"DAYS_OF_WEEK_WEDNESDAY":   3,
+		"DAYS_OF_WEEK_THURSDAY":    4,
+		"DAYS_OF_WEEK_FRIDAY":      5,
+		"DAYS_OF_WEEK_SATURDAY":    6,
+		"DAYS_OF_WEEK_SUNDAY":      7,
+	}
+)
+
+func (x DaysOfWeek) Enum() *DaysOfWeek {
+	p := new(DaysOfWeek)
+	*p = x
+	return p
+}
+
+func (x DaysOfWeek) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (DaysOfWeek) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_ramp_metering_v1_state_proto_enumTypes[5].Descriptor()
+}
+
+func (DaysOfWeek) Type() protoreflect.EnumType {
+	return &file_openits_ramp_metering_v1_state_proto_enumTypes[5]
+}
+
+func (x DaysOfWeek) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use DaysOfWeek.Descriptor instead.
+func (DaysOfWeek) EnumDescriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{5}
+}
+
 type ReleaseCoordination int32
 
 const (
@@ -257,11 +394,11 @@ func (x ReleaseCoordination) String() string {
 }
 
 func (ReleaseCoordination) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_state_proto_enumTypes[4].Descriptor()
+	return file_openits_ramp_metering_v1_state_proto_enumTypes[6].Descriptor()
 }
 
 func (ReleaseCoordination) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_state_proto_enumTypes[4]
+	return &file_openits_ramp_metering_v1_state_proto_enumTypes[6]
 }
 
 func (x ReleaseCoordination) Number() protoreflect.EnumNumber {
@@ -270,7 +407,7 @@ func (x ReleaseCoordination) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ReleaseCoordination.Descriptor instead.
 func (ReleaseCoordination) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{4}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{6}
 }
 
 type BypassOperation int32
@@ -303,11 +440,11 @@ func (x BypassOperation) String() string {
 }
 
 func (BypassOperation) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_state_proto_enumTypes[5].Descriptor()
+	return file_openits_ramp_metering_v1_state_proto_enumTypes[7].Descriptor()
 }
 
 func (BypassOperation) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_state_proto_enumTypes[5]
+	return &file_openits_ramp_metering_v1_state_proto_enumTypes[7]
 }
 
 func (x BypassOperation) Number() protoreflect.EnumNumber {
@@ -316,7 +453,7 @@ func (x BypassOperation) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use BypassOperation.Descriptor instead.
 func (BypassOperation) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{5}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{7}
 }
 
 type HeadState int32
@@ -355,11 +492,11 @@ func (x HeadState) String() string {
 }
 
 func (HeadState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_state_proto_enumTypes[6].Descriptor()
+	return file_openits_ramp_metering_v1_state_proto_enumTypes[8].Descriptor()
 }
 
 func (HeadState) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_state_proto_enumTypes[6]
+	return &file_openits_ramp_metering_v1_state_proto_enumTypes[8]
 }
 
 func (x HeadState) Number() protoreflect.EnumNumber {
@@ -368,7 +505,7 @@ func (x HeadState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HeadState.Descriptor instead.
 func (HeadState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{6}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{8}
 }
 
 type DetectorRole int32
@@ -416,11 +553,11 @@ func (x DetectorRole) String() string {
 }
 
 func (DetectorRole) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_state_proto_enumTypes[7].Descriptor()
+	return file_openits_ramp_metering_v1_state_proto_enumTypes[9].Descriptor()
 }
 
 func (DetectorRole) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_state_proto_enumTypes[7]
+	return &file_openits_ramp_metering_v1_state_proto_enumTypes[9]
 }
 
 func (x DetectorRole) Number() protoreflect.EnumNumber {
@@ -429,7 +566,7 @@ func (x DetectorRole) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DetectorRole.Descriptor instead.
 func (DetectorRole) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{7}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{9}
 }
 
 type FaultSeverity int32
@@ -471,11 +608,11 @@ func (x FaultSeverity) String() string {
 }
 
 func (FaultSeverity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_state_proto_enumTypes[8].Descriptor()
+	return file_openits_ramp_metering_v1_state_proto_enumTypes[10].Descriptor()
 }
 
 func (FaultSeverity) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_state_proto_enumTypes[8]
+	return &file_openits_ramp_metering_v1_state_proto_enumTypes[10]
 }
 
 func (x FaultSeverity) Number() protoreflect.EnumNumber {
@@ -484,7 +621,7 @@ func (x FaultSeverity) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use FaultSeverity.Descriptor instead.
 func (FaultSeverity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{8}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{10}
 }
 
 type RampMeter struct {
@@ -495,7 +632,10 @@ type RampMeter struct {
 	Sequencing         *Sequencing            `protobuf:"bytes,8,opt,name=sequencing,proto3" json:"sequencing,omitempty"`
 	AdvanceWarningSign *AdvanceWarningSign    `protobuf:"bytes,9,opt,name=advance_warning_sign,json=advanceWarningSign,proto3" json:"advance_warning_sign,omitempty"`
 	Plans              *Plans                 `protobuf:"bytes,4,opt,name=plans,proto3" json:"plans,omitempty"`
+	Schedule           *Schedule              `protobuf:"bytes,10,opt,name=schedule,proto3" json:"schedule,omitempty"`
+	TrafficResponsive  *TrafficResponsive     `protobuf:"bytes,11,opt,name=traffic_responsive,json=trafficResponsive,proto3" json:"traffic_responsive,omitempty"`
 	Lanes              *Lanes                 `protobuf:"bytes,5,opt,name=lanes,proto3" json:"lanes,omitempty"`
+	MainlineDetectors  *MainlineDetectors     `protobuf:"bytes,12,opt,name=mainline_detectors,json=mainlineDetectors,proto3" json:"mainline_detectors,omitempty"`
 	Diagnostics        *Diagnostics           `protobuf:"bytes,6,opt,name=diagnostics,proto3" json:"diagnostics,omitempty"`
 	Faults             *Faults                `protobuf:"bytes,7,opt,name=faults,proto3" json:"faults,omitempty"`
 	unknownFields      protoimpl.UnknownFields
@@ -574,9 +714,30 @@ func (x *RampMeter) GetPlans() *Plans {
 	return nil
 }
 
+func (x *RampMeter) GetSchedule() *Schedule {
+	if x != nil {
+		return x.Schedule
+	}
+	return nil
+}
+
+func (x *RampMeter) GetTrafficResponsive() *TrafficResponsive {
+	if x != nil {
+		return x.TrafficResponsive
+	}
+	return nil
+}
+
 func (x *RampMeter) GetLanes() *Lanes {
 	if x != nil {
 		return x.Lanes
+	}
+	return nil
+}
+
+func (x *RampMeter) GetMainlineDetectors() *MainlineDetectors {
+	if x != nil {
+		return x.MainlineDetectors
 	}
 	return nil
 }
@@ -596,16 +757,21 @@ func (x *RampMeter) GetFaults() *Faults {
 }
 
 type RampMeterConfig struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Elevation     string                 `protobuf:"bytes,5,opt,name=elevation,proto3" json:"elevation,omitempty"`
-	Heading       uint32                 `protobuf:"varint,6,opt,name=heading,proto3" json:"heading,omitempty"`
-	Id            string                 `protobuf:"bytes,7,opt,name=id,proto3" json:"id,omitempty"`
-	Latitude      string                 `protobuf:"bytes,1,opt,name=latitude,proto3" json:"latitude,omitempty"`
-	Longitude     string                 `protobuf:"bytes,2,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	Name          string                 `protobuf:"bytes,8,opt,name=name,proto3" json:"name,omitempty"`
-	RoadReference string                 `protobuf:"bytes,9,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state           protoimpl.MessageState          `protogen:"open.v1"`
+	Elevation       string                          `protobuf:"bytes,5,opt,name=elevation,proto3" json:"elevation,omitempty"`
+	Heading         uint32                          `protobuf:"varint,6,opt,name=heading,proto3" json:"heading,omitempty"`
+	Id              string                          `protobuf:"bytes,7,opt,name=id,proto3" json:"id,omitempty"`
+	InstallDate     *timestamppb.Timestamp          `protobuf:"bytes,3,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
+	Latitude        string                          `protobuf:"bytes,1,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	LinearReference *RampMeterConfigLinearReference `protobuf:"bytes,4,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
+	Longitude       string                          `protobuf:"bytes,2,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	MaintainedBy    string                          `protobuf:"bytes,10,opt,name=maintained_by,json=maintainedBy,proto3" json:"maintained_by,omitempty"`
+	Name            string                          `protobuf:"bytes,8,opt,name=name,proto3" json:"name,omitempty"`
+	Owner           string                          `protobuf:"bytes,11,opt,name=owner,proto3" json:"owner,omitempty"`
+	RoadReference   string                          `protobuf:"bytes,9,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
+	SiteId          string                          `protobuf:"bytes,12,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *RampMeterConfig) Reset() {
@@ -659,6 +825,13 @@ func (x *RampMeterConfig) GetId() string {
 	return ""
 }
 
+func (x *RampMeterConfig) GetInstallDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.InstallDate
+	}
+	return nil
+}
+
 func (x *RampMeterConfig) GetLatitude() string {
 	if x != nil {
 		return x.Latitude
@@ -666,9 +839,23 @@ func (x *RampMeterConfig) GetLatitude() string {
 	return ""
 }
 
+func (x *RampMeterConfig) GetLinearReference() *RampMeterConfigLinearReference {
+	if x != nil {
+		return x.LinearReference
+	}
+	return nil
+}
+
 func (x *RampMeterConfig) GetLongitude() string {
 	if x != nil {
 		return x.Longitude
+	}
+	return ""
+}
+
+func (x *RampMeterConfig) GetMaintainedBy() string {
+	if x != nil {
+		return x.MaintainedBy
 	}
 	return ""
 }
@@ -680,6 +867,13 @@ func (x *RampMeterConfig) GetName() string {
 	return ""
 }
 
+func (x *RampMeterConfig) GetOwner() string {
+	if x != nil {
+		return x.Owner
+	}
+	return ""
+}
+
 func (x *RampMeterConfig) GetRoadReference() string {
 	if x != nil {
 		return x.RoadReference
@@ -687,28 +881,108 @@ func (x *RampMeterConfig) GetRoadReference() string {
 	return ""
 }
 
-type RampMeterState struct {
+func (x *RampMeterConfig) GetSiteId() string {
+	if x != nil {
+		return x.SiteId
+	}
+	return ""
+}
+
+type RampMeterConfigLinearReference struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	Elevation       string                 `protobuf:"bytes,9,opt,name=elevation,proto3" json:"elevation,omitempty"`
-	Firmware        string                 `protobuf:"bytes,1,opt,name=firmware,proto3" json:"firmware,omitempty"`
-	FirmwareBuild   string                 `protobuf:"bytes,14,opt,name=firmware_build,json=firmwareBuild,proto3" json:"firmware_build,omitempty"`
-	HardwareVersion string                 `protobuf:"bytes,15,opt,name=hardware_version,json=hardwareVersion,proto3" json:"hardware_version,omitempty"`
-	Heading         uint32                 `protobuf:"varint,10,opt,name=heading,proto3" json:"heading,omitempty"`
-	Id              string                 `protobuf:"bytes,11,opt,name=id,proto3" json:"id,omitempty"`
-	Latitude        string                 `protobuf:"bytes,2,opt,name=latitude,proto3" json:"latitude,omitempty"`
-	Longitude       string                 `protobuf:"bytes,3,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	Make            string                 `protobuf:"bytes,4,opt,name=make,proto3" json:"make,omitempty"`
-	Model           string                 `protobuf:"bytes,6,opt,name=model,proto3" json:"model,omitempty"`
-	Name            string                 `protobuf:"bytes,12,opt,name=name,proto3" json:"name,omitempty"`
-	RoadReference   string                 `protobuf:"bytes,13,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
-	Serial          string                 `protobuf:"bytes,8,opt,name=serial,proto3" json:"serial,omitempty"`
+	RouteDesignator string                 `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3" json:"route_designator,omitempty"`
+	Direction       string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"`
+	Measure         string                 `protobuf:"bytes,3,opt,name=measure,proto3" json:"measure,omitempty"`
+	LrsMethod       string                 `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3" json:"lrs_method,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *RampMeterConfigLinearReference) Reset() {
+	*x = RampMeterConfigLinearReference{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RampMeterConfigLinearReference) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RampMeterConfigLinearReference) ProtoMessage() {}
+
+func (x *RampMeterConfigLinearReference) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RampMeterConfigLinearReference.ProtoReflect.Descriptor instead.
+func (*RampMeterConfigLinearReference) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *RampMeterConfigLinearReference) GetRouteDesignator() string {
+	if x != nil {
+		return x.RouteDesignator
+	}
+	return ""
+}
+
+func (x *RampMeterConfigLinearReference) GetDirection() string {
+	if x != nil {
+		return x.Direction
+	}
+	return ""
+}
+
+func (x *RampMeterConfigLinearReference) GetMeasure() string {
+	if x != nil {
+		return x.Measure
+	}
+	return ""
+}
+
+func (x *RampMeterConfigLinearReference) GetLrsMethod() string {
+	if x != nil {
+		return x.LrsMethod
+	}
+	return ""
+}
+
+type RampMeterState struct {
+	state           protoimpl.MessageState         `protogen:"open.v1"`
+	Elevation       string                         `protobuf:"bytes,9,opt,name=elevation,proto3" json:"elevation,omitempty"`
+	Firmware        string                         `protobuf:"bytes,1,opt,name=firmware,proto3" json:"firmware,omitempty"`
+	FirmwareBuild   string                         `protobuf:"bytes,14,opt,name=firmware_build,json=firmwareBuild,proto3" json:"firmware_build,omitempty"`
+	HardwareVersion string                         `protobuf:"bytes,15,opt,name=hardware_version,json=hardwareVersion,proto3" json:"hardware_version,omitempty"`
+	Heading         uint32                         `protobuf:"varint,10,opt,name=heading,proto3" json:"heading,omitempty"`
+	Id              string                         `protobuf:"bytes,11,opt,name=id,proto3" json:"id,omitempty"`
+	InstallDate     *timestamppb.Timestamp         `protobuf:"bytes,5,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
+	Latitude        string                         `protobuf:"bytes,2,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	LinearReference *RampMeterStateLinearReference `protobuf:"bytes,7,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
+	Longitude       string                         `protobuf:"bytes,3,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	MaintainedBy    string                         `protobuf:"bytes,16,opt,name=maintained_by,json=maintainedBy,proto3" json:"maintained_by,omitempty"`
+	Make            string                         `protobuf:"bytes,4,opt,name=make,proto3" json:"make,omitempty"`
+	Model           string                         `protobuf:"bytes,6,opt,name=model,proto3" json:"model,omitempty"`
+	Name            string                         `protobuf:"bytes,12,opt,name=name,proto3" json:"name,omitempty"`
+	Owner           string                         `protobuf:"bytes,17,opt,name=owner,proto3" json:"owner,omitempty"`
+	RoadReference   string                         `protobuf:"bytes,13,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
+	Serial          string                         `protobuf:"bytes,8,opt,name=serial,proto3" json:"serial,omitempty"`
+	SiteId          string                         `protobuf:"bytes,18,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
 
 func (x *RampMeterState) Reset() {
 	*x = RampMeterState{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[2]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -720,7 +994,7 @@ func (x *RampMeterState) String() string {
 func (*RampMeterState) ProtoMessage() {}
 
 func (x *RampMeterState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[2]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -733,7 +1007,7 @@ func (x *RampMeterState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RampMeterState.ProtoReflect.Descriptor instead.
 func (*RampMeterState) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{2}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *RampMeterState) GetElevation() string {
@@ -778,6 +1052,13 @@ func (x *RampMeterState) GetId() string {
 	return ""
 }
 
+func (x *RampMeterState) GetInstallDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.InstallDate
+	}
+	return nil
+}
+
 func (x *RampMeterState) GetLatitude() string {
 	if x != nil {
 		return x.Latitude
@@ -785,9 +1066,23 @@ func (x *RampMeterState) GetLatitude() string {
 	return ""
 }
 
+func (x *RampMeterState) GetLinearReference() *RampMeterStateLinearReference {
+	if x != nil {
+		return x.LinearReference
+	}
+	return nil
+}
+
 func (x *RampMeterState) GetLongitude() string {
 	if x != nil {
 		return x.Longitude
+	}
+	return ""
+}
+
+func (x *RampMeterState) GetMaintainedBy() string {
+	if x != nil {
+		return x.MaintainedBy
 	}
 	return ""
 }
@@ -813,6 +1108,13 @@ func (x *RampMeterState) GetName() string {
 	return ""
 }
 
+func (x *RampMeterState) GetOwner() string {
+	if x != nil {
+		return x.Owner
+	}
+	return ""
+}
+
 func (x *RampMeterState) GetRoadReference() string {
 	if x != nil {
 		return x.RoadReference
@@ -827,6 +1129,81 @@ func (x *RampMeterState) GetSerial() string {
 	return ""
 }
 
+func (x *RampMeterState) GetSiteId() string {
+	if x != nil {
+		return x.SiteId
+	}
+	return ""
+}
+
+type RampMeterStateLinearReference struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	RouteDesignator string                 `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3" json:"route_designator,omitempty"`
+	Direction       string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"`
+	Measure         string                 `protobuf:"bytes,3,opt,name=measure,proto3" json:"measure,omitempty"`
+	LrsMethod       string                 `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3" json:"lrs_method,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *RampMeterStateLinearReference) Reset() {
+	*x = RampMeterStateLinearReference{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RampMeterStateLinearReference) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RampMeterStateLinearReference) ProtoMessage() {}
+
+func (x *RampMeterStateLinearReference) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RampMeterStateLinearReference.ProtoReflect.Descriptor instead.
+func (*RampMeterStateLinearReference) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *RampMeterStateLinearReference) GetRouteDesignator() string {
+	if x != nil {
+		return x.RouteDesignator
+	}
+	return ""
+}
+
+func (x *RampMeterStateLinearReference) GetDirection() string {
+	if x != nil {
+		return x.Direction
+	}
+	return ""
+}
+
+func (x *RampMeterStateLinearReference) GetMeasure() string {
+	if x != nil {
+		return x.Measure
+	}
+	return ""
+}
+
+func (x *RampMeterStateLinearReference) GetLrsMethod() string {
+	if x != nil {
+		return x.LrsMethod
+	}
+	return ""
+}
+
 type Control struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Config        *ControlConfig         `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
@@ -837,7 +1214,7 @@ type Control struct {
 
 func (x *Control) Reset() {
 	*x = Control{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[3]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -849,7 +1226,7 @@ func (x *Control) String() string {
 func (*Control) ProtoMessage() {}
 
 func (x *Control) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[3]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -862,7 +1239,7 @@ func (x *Control) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Control.ProtoReflect.Descriptor instead.
 func (*Control) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{3}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *Control) GetConfig() *ControlConfig {
@@ -882,7 +1259,7 @@ func (x *Control) GetState() *ControlState {
 type ControlConfig struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
 	ActivePlanId         uint32                 `protobuf:"varint,1,opt,name=active_plan_id,json=activePlanId,proto3" json:"active_plan_id,omitempty"`
-	CommandSource        CommandSource          `protobuf:"varint,4,opt,name=command_source,json=commandSource,proto3,enum=openits.ramp_metering.v1.CommandSource" json:"command_source,omitempty"`
+	CommandSource        string                 `protobuf:"bytes,4,opt,name=command_source,json=commandSource,proto3" json:"command_source,omitempty"`
 	ManualReleaseRateVph uint32                 `protobuf:"varint,2,opt,name=manual_release_rate_vph,json=manualReleaseRateVph,proto3" json:"manual_release_rate_vph,omitempty"`
 	Mode                 string                 `protobuf:"bytes,3,opt,name=mode,proto3" json:"mode,omitempty"`
 	NonMeteringDisplay   NonMeteringDisplay     `protobuf:"varint,10,opt,name=non_metering_display,json=nonMeteringDisplay,proto3,enum=openits.ramp_metering.v1.NonMeteringDisplay" json:"non_metering_display,omitempty"`
@@ -892,7 +1269,7 @@ type ControlConfig struct {
 
 func (x *ControlConfig) Reset() {
 	*x = ControlConfig{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[4]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -904,7 +1281,7 @@ func (x *ControlConfig) String() string {
 func (*ControlConfig) ProtoMessage() {}
 
 func (x *ControlConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[4]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -917,7 +1294,7 @@ func (x *ControlConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ControlConfig.ProtoReflect.Descriptor instead.
 func (*ControlConfig) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{4}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ControlConfig) GetActivePlanId() uint32 {
@@ -927,11 +1304,11 @@ func (x *ControlConfig) GetActivePlanId() uint32 {
 	return 0
 }
 
-func (x *ControlConfig) GetCommandSource() CommandSource {
+func (x *ControlConfig) GetCommandSource() string {
 	if x != nil {
 		return x.CommandSource
 	}
-	return CommandSource_COMMAND_SOURCE_CENTRAL
+	return ""
 }
 
 func (x *ControlConfig) GetManualReleaseRateVph() uint32 {
@@ -962,7 +1339,7 @@ type ControlState struct {
 	QueueLengthCurrentVehicles uint32                 `protobuf:"varint,3,opt,name=queue_length_current_vehicles,json=queueLengthCurrentVehicles,proto3" json:"queue_length_current_vehicles,omitempty"`
 	QueueOverrideActive        bool                   `protobuf:"varint,4,opt,name=queue_override_active,json=queueOverrideActive,proto3" json:"queue_override_active,omitempty"`
 	ActivePlanId               uint32                 `protobuf:"varint,5,opt,name=active_plan_id,json=activePlanId,proto3" json:"active_plan_id,omitempty"`
-	CommandSource              CommandSource          `protobuf:"varint,8,opt,name=command_source,json=commandSource,proto3,enum=openits.ramp_metering.v1.CommandSource" json:"command_source,omitempty"`
+	CommandSource              string                 `protobuf:"bytes,8,opt,name=command_source,json=commandSource,proto3" json:"command_source,omitempty"`
 	ManualReleaseRateVph       uint32                 `protobuf:"varint,6,opt,name=manual_release_rate_vph,json=manualReleaseRateVph,proto3" json:"manual_release_rate_vph,omitempty"`
 	Mode                       string                 `protobuf:"bytes,7,opt,name=mode,proto3" json:"mode,omitempty"`
 	NonMeteringDisplay         NonMeteringDisplay     `protobuf:"varint,18,opt,name=non_metering_display,json=nonMeteringDisplay,proto3,enum=openits.ramp_metering.v1.NonMeteringDisplay" json:"non_metering_display,omitempty"`
@@ -972,7 +1349,7 @@ type ControlState struct {
 
 func (x *ControlState) Reset() {
 	*x = ControlState{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[5]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -984,7 +1361,7 @@ func (x *ControlState) String() string {
 func (*ControlState) ProtoMessage() {}
 
 func (x *ControlState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[5]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -997,7 +1374,7 @@ func (x *ControlState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ControlState.ProtoReflect.Descriptor instead.
 func (*ControlState) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{5}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ControlState) GetCurrentReleaseRateVph() uint32 {
@@ -1035,11 +1412,11 @@ func (x *ControlState) GetActivePlanId() uint32 {
 	return 0
 }
 
-func (x *ControlState) GetCommandSource() CommandSource {
+func (x *ControlState) GetCommandSource() string {
 	if x != nil {
 		return x.CommandSource
 	}
-	return CommandSource_COMMAND_SOURCE_CENTRAL
+	return ""
 }
 
 func (x *ControlState) GetManualReleaseRateVph() uint32 {
@@ -1073,7 +1450,7 @@ type Sequencing struct {
 
 func (x *Sequencing) Reset() {
 	*x = Sequencing{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[6]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1085,7 +1462,7 @@ func (x *Sequencing) String() string {
 func (*Sequencing) ProtoMessage() {}
 
 func (x *Sequencing) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[6]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1098,7 +1475,7 @@ func (x *Sequencing) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Sequencing.ProtoReflect.Descriptor instead.
 func (*Sequencing) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{6}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *Sequencing) GetConfig() *SequencingConfig {
@@ -1127,7 +1504,7 @@ type SequencingConfig struct {
 
 func (x *SequencingConfig) Reset() {
 	*x = SequencingConfig{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[7]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1139,7 +1516,7 @@ func (x *SequencingConfig) String() string {
 func (*SequencingConfig) ProtoMessage() {}
 
 func (x *SequencingConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[7]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1152,7 +1529,7 @@ func (x *SequencingConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SequencingConfig.ProtoReflect.Descriptor instead.
 func (*SequencingConfig) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{7}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *SequencingConfig) GetAdvanceWarningDuration() uint32 {
@@ -1192,7 +1569,7 @@ type SequencingState struct {
 
 func (x *SequencingState) Reset() {
 	*x = SequencingState{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[8]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1204,7 +1581,7 @@ func (x *SequencingState) String() string {
 func (*SequencingState) ProtoMessage() {}
 
 func (x *SequencingState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[8]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1217,7 +1594,7 @@ func (x *SequencingState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SequencingState.ProtoReflect.Descriptor instead.
 func (*SequencingState) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{8}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *SequencingState) GetSequencePhase() SequencePhase {
@@ -1237,7 +1614,7 @@ type AdvanceWarningSign struct {
 
 func (x *AdvanceWarningSign) Reset() {
 	*x = AdvanceWarningSign{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[9]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1249,7 +1626,7 @@ func (x *AdvanceWarningSign) String() string {
 func (*AdvanceWarningSign) ProtoMessage() {}
 
 func (x *AdvanceWarningSign) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[9]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1262,7 +1639,7 @@ func (x *AdvanceWarningSign) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdvanceWarningSign.ProtoReflect.Descriptor instead.
 func (*AdvanceWarningSign) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{9}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *AdvanceWarningSign) GetConfig() *AdvanceWarningSignConfig {
@@ -1280,15 +1657,16 @@ func (x *AdvanceWarningSign) GetState() *AdvanceWarningSignState {
 }
 
 type AdvanceWarningSignConfig struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Enabled       bool                   `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Enabled        bool                   `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	AwsFaultAction AwsFaultAction         `protobuf:"varint,2,opt,name=aws_fault_action,json=awsFaultAction,proto3,enum=openits.ramp_metering.v1.AwsFaultAction" json:"aws_fault_action,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *AdvanceWarningSignConfig) Reset() {
 	*x = AdvanceWarningSignConfig{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[10]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1300,7 +1678,7 @@ func (x *AdvanceWarningSignConfig) String() string {
 func (*AdvanceWarningSignConfig) ProtoMessage() {}
 
 func (x *AdvanceWarningSignConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[10]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1313,7 +1691,7 @@ func (x *AdvanceWarningSignConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdvanceWarningSignConfig.ProtoReflect.Descriptor instead.
 func (*AdvanceWarningSignConfig) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{10}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *AdvanceWarningSignConfig) GetEnabled() bool {
@@ -1321,6 +1699,13 @@ func (x *AdvanceWarningSignConfig) GetEnabled() bool {
 		return x.Enabled
 	}
 	return false
+}
+
+func (x *AdvanceWarningSignConfig) GetAwsFaultAction() AwsFaultAction {
+	if x != nil {
+		return x.AwsFaultAction
+	}
+	return AwsFaultAction_AWS_FAULT_ACTION_SUSPEND_METERING
 }
 
 type AdvanceWarningSignState struct {
@@ -1333,7 +1718,7 @@ type AdvanceWarningSignState struct {
 
 func (x *AdvanceWarningSignState) Reset() {
 	*x = AdvanceWarningSignState{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[11]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1345,7 +1730,7 @@ func (x *AdvanceWarningSignState) String() string {
 func (*AdvanceWarningSignState) ProtoMessage() {}
 
 func (x *AdvanceWarningSignState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[11]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1358,7 +1743,7 @@ func (x *AdvanceWarningSignState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdvanceWarningSignState.ProtoReflect.Descriptor instead.
 func (*AdvanceWarningSignState) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{11}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *AdvanceWarningSignState) GetLampStatus() LampStatus {
@@ -1384,7 +1769,7 @@ type Plans struct {
 
 func (x *Plans) Reset() {
 	*x = Plans{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[12]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1396,7 +1781,7 @@ func (x *Plans) String() string {
 func (*Plans) ProtoMessage() {}
 
 func (x *Plans) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[12]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1409,7 +1794,7 @@ func (x *Plans) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Plans.ProtoReflect.Descriptor instead.
 func (*Plans) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{12}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *Plans) GetPlan() []*Plan {
@@ -1420,24 +1805,26 @@ func (x *Plans) GetPlan() []*Plan {
 }
 
 type Plan struct {
-	state                               protoimpl.MessageState `protogen:"open.v1"`
-	PlanId                              uint32                 `protobuf:"varint,1,opt,name=plan_id,json=planId,proto3" json:"plan_id,omitempty"`
-	Name                                string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	ReleaseRateVph                      uint32                 `protobuf:"varint,3,opt,name=release_rate_vph,json=releaseRateVph,proto3" json:"release_rate_vph,omitempty"`
-	HeadwayS                            string                 `protobuf:"bytes,4,opt,name=headway_s,json=headwayS,proto3" json:"headway_s,omitempty"`
-	VehiclesPerGreen                    uint32                 `protobuf:"varint,7,opt,name=vehicles_per_green,json=vehiclesPerGreen,proto3" json:"vehicles_per_green,omitempty"`
-	QueueOverrideThresholdVehicles      uint32                 `protobuf:"varint,5,opt,name=queue_override_threshold_vehicles,json=queueOverrideThresholdVehicles,proto3" json:"queue_override_threshold_vehicles,omitempty"`
-	QueueOverrideClearThresholdVehicles uint32                 `protobuf:"varint,8,opt,name=queue_override_clear_threshold_vehicles,json=queueOverrideClearThresholdVehicles,proto3" json:"queue_override_clear_threshold_vehicles,omitempty"`
-	QueueOverrideRateVph                uint32                 `protobuf:"varint,9,opt,name=queue_override_rate_vph,json=queueOverrideRateVph,proto3" json:"queue_override_rate_vph,omitempty"`
-	QueueOverrideOccupancyThresholdPct  uint32                 `protobuf:"varint,10,opt,name=queue_override_occupancy_threshold_pct,json=queueOverrideOccupancyThresholdPct,proto3" json:"queue_override_occupancy_threshold_pct,omitempty"`
-	PhaseTiming                         *PhaseTiming           `protobuf:"bytes,6,opt,name=phase_timing,json=phaseTiming,proto3" json:"phase_timing,omitempty"`
-	unknownFields                       protoimpl.UnknownFields
-	sizeCache                           protoimpl.SizeCache
+	state                                   protoimpl.MessageState `protogen:"open.v1"`
+	PlanId                                  uint32                 `protobuf:"varint,1,opt,name=plan_id,json=planId,proto3" json:"plan_id,omitempty"`
+	Name                                    string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	ReleaseRateVph                          uint32                 `protobuf:"varint,3,opt,name=release_rate_vph,json=releaseRateVph,proto3" json:"release_rate_vph,omitempty"`
+	HeadwayS                                string                 `protobuf:"bytes,4,opt,name=headway_s,json=headwayS,proto3" json:"headway_s,omitempty"`
+	VehiclesPerGreen                        uint32                 `protobuf:"varint,7,opt,name=vehicles_per_green,json=vehiclesPerGreen,proto3" json:"vehicles_per_green,omitempty"`
+	QueueOverrideThresholdVehicles          uint32                 `protobuf:"varint,5,opt,name=queue_override_threshold_vehicles,json=queueOverrideThresholdVehicles,proto3" json:"queue_override_threshold_vehicles,omitempty"`
+	QueueOverrideClearThresholdVehicles     uint32                 `protobuf:"varint,8,opt,name=queue_override_clear_threshold_vehicles,json=queueOverrideClearThresholdVehicles,proto3" json:"queue_override_clear_threshold_vehicles,omitempty"`
+	QueueOverrideRateVph                    uint32                 `protobuf:"varint,9,opt,name=queue_override_rate_vph,json=queueOverrideRateVph,proto3" json:"queue_override_rate_vph,omitempty"`
+	QueueOverrideOccupancyThresholdPct      uint32                 `protobuf:"varint,10,opt,name=queue_override_occupancy_threshold_pct,json=queueOverrideOccupancyThresholdPct,proto3" json:"queue_override_occupancy_threshold_pct,omitempty"`
+	QueueOverrideOccupancyClearThresholdPct uint32                 `protobuf:"varint,11,opt,name=queue_override_occupancy_clear_threshold_pct,json=queueOverrideOccupancyClearThresholdPct,proto3" json:"queue_override_occupancy_clear_threshold_pct,omitempty"`
+	QueueOverridePersistenceS               uint32                 `protobuf:"varint,12,opt,name=queue_override_persistence_s,json=queueOverridePersistenceS,proto3" json:"queue_override_persistence_s,omitempty"`
+	PhaseTiming                             *PhaseTiming           `protobuf:"bytes,6,opt,name=phase_timing,json=phaseTiming,proto3" json:"phase_timing,omitempty"`
+	unknownFields                           protoimpl.UnknownFields
+	sizeCache                               protoimpl.SizeCache
 }
 
 func (x *Plan) Reset() {
 	*x = Plan{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[13]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1449,7 +1836,7 @@ func (x *Plan) String() string {
 func (*Plan) ProtoMessage() {}
 
 func (x *Plan) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[13]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1462,7 +1849,7 @@ func (x *Plan) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Plan.ProtoReflect.Descriptor instead.
 func (*Plan) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{13}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *Plan) GetPlanId() uint32 {
@@ -1528,6 +1915,20 @@ func (x *Plan) GetQueueOverrideOccupancyThresholdPct() uint32 {
 	return 0
 }
 
+func (x *Plan) GetQueueOverrideOccupancyClearThresholdPct() uint32 {
+	if x != nil {
+		return x.QueueOverrideOccupancyClearThresholdPct
+	}
+	return 0
+}
+
+func (x *Plan) GetQueueOverridePersistenceS() uint32 {
+	if x != nil {
+		return x.QueueOverridePersistenceS
+	}
+	return 0
+}
+
 func (x *Plan) GetPhaseTiming() *PhaseTiming {
 	if x != nil {
 		return x.PhaseTiming
@@ -1537,8 +1938,8 @@ func (x *Plan) GetPhaseTiming() *PhaseTiming {
 
 type PhaseTiming struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	MaxGreen      uint32                 `protobuf:"varint,1,opt,name=max_green,json=maxGreen,proto3" json:"max_green,omitempty"`
-	MinGreen      uint32                 `protobuf:"varint,2,opt,name=min_green,json=minGreen,proto3" json:"min_green,omitempty"`
+	MaxGreen      string                 `protobuf:"bytes,1,opt,name=max_green,json=maxGreen,proto3" json:"max_green,omitempty"`
+	MinGreen      string                 `protobuf:"bytes,2,opt,name=min_green,json=minGreen,proto3" json:"min_green,omitempty"`
 	Passage       string                 `protobuf:"bytes,3,opt,name=passage,proto3" json:"passage,omitempty"`
 	RedClear      string                 `protobuf:"bytes,4,opt,name=red_clear,json=redClear,proto3" json:"red_clear,omitempty"`
 	YellowChange  string                 `protobuf:"bytes,5,opt,name=yellow_change,json=yellowChange,proto3" json:"yellow_change,omitempty"`
@@ -1548,7 +1949,7 @@ type PhaseTiming struct {
 
 func (x *PhaseTiming) Reset() {
 	*x = PhaseTiming{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[14]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1560,7 +1961,7 @@ func (x *PhaseTiming) String() string {
 func (*PhaseTiming) ProtoMessage() {}
 
 func (x *PhaseTiming) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[14]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1573,21 +1974,21 @@ func (x *PhaseTiming) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PhaseTiming.ProtoReflect.Descriptor instead.
 func (*PhaseTiming) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{14}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{16}
 }
 
-func (x *PhaseTiming) GetMaxGreen() uint32 {
+func (x *PhaseTiming) GetMaxGreen() string {
 	if x != nil {
 		return x.MaxGreen
 	}
-	return 0
+	return ""
 }
 
-func (x *PhaseTiming) GetMinGreen() uint32 {
+func (x *PhaseTiming) GetMinGreen() string {
 	if x != nil {
 		return x.MinGreen
 	}
-	return 0
+	return ""
 }
 
 func (x *PhaseTiming) GetPassage() string {
@@ -1611,17 +2012,550 @@ func (x *PhaseTiming) GetYellowChange() string {
 	return ""
 }
 
+type Schedule struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DayPlan       []*DayPlan             `protobuf:"bytes,1,rep,name=day_plan,json=dayPlan,proto3" json:"day_plan,omitempty"`
+	ScheduleEntry []*ScheduleEntry       `protobuf:"bytes,2,rep,name=schedule_entry,json=scheduleEntry,proto3" json:"schedule_entry,omitempty"`
+	State         *ScheduleState         `protobuf:"bytes,3,opt,name=state,proto3" json:"state,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Schedule) Reset() {
+	*x = Schedule{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Schedule) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Schedule) ProtoMessage() {}
+
+func (x *Schedule) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Schedule.ProtoReflect.Descriptor instead.
+func (*Schedule) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *Schedule) GetDayPlan() []*DayPlan {
+	if x != nil {
+		return x.DayPlan
+	}
+	return nil
+}
+
+func (x *Schedule) GetScheduleEntry() []*ScheduleEntry {
+	if x != nil {
+		return x.ScheduleEntry
+	}
+	return nil
+}
+
+func (x *Schedule) GetState() *ScheduleState {
+	if x != nil {
+		return x.State
+	}
+	return nil
+}
+
+type DayPlan struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DayPlanId     uint32                 `protobuf:"varint,1,opt,name=day_plan_id,json=dayPlanId,proto3" json:"day_plan_id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Action        []*Action              `protobuf:"bytes,3,rep,name=action,proto3" json:"action,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DayPlan) Reset() {
+	*x = DayPlan{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DayPlan) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DayPlan) ProtoMessage() {}
+
+func (x *DayPlan) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DayPlan.ProtoReflect.Descriptor instead.
+func (*DayPlan) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *DayPlan) GetDayPlanId() uint32 {
+	if x != nil {
+		return x.DayPlanId
+	}
+	return 0
+}
+
+func (x *DayPlan) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *DayPlan) GetAction() []*Action {
+	if x != nil {
+		return x.Action
+	}
+	return nil
+}
+
+type Action struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	StartTime     string                 `protobuf:"bytes,1,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	PlanId        uint32                 `protobuf:"varint,2,opt,name=plan_id,json=planId,proto3" json:"plan_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Action) Reset() {
+	*x = Action{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Action) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Action) ProtoMessage() {}
+
+func (x *Action) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Action.ProtoReflect.Descriptor instead.
+func (*Action) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *Action) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *Action) GetPlanId() uint32 {
+	if x != nil {
+		return x.PlanId
+	}
+	return 0
+}
+
+type ScheduleEntry struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ScheduleId    uint32                 `protobuf:"varint,1,opt,name=schedule_id,json=scheduleId,proto3" json:"schedule_id,omitempty"`
+	Months        []Months               `protobuf:"varint,2,rep,packed,name=months,proto3,enum=openits.ramp_metering.v1.Months" json:"months,omitempty"`
+	DaysOfWeek    []DaysOfWeek           `protobuf:"varint,3,rep,packed,name=days_of_week,json=daysOfWeek,proto3,enum=openits.ramp_metering.v1.DaysOfWeek" json:"days_of_week,omitempty"`
+	DaysOfMonth   []uint32               `protobuf:"varint,4,rep,packed,name=days_of_month,json=daysOfMonth,proto3" json:"days_of_month,omitempty"`
+	DayPlan       uint32                 `protobuf:"varint,5,opt,name=day_plan,json=dayPlan,proto3" json:"day_plan,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ScheduleEntry) Reset() {
+	*x = ScheduleEntry{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ScheduleEntry) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ScheduleEntry) ProtoMessage() {}
+
+func (x *ScheduleEntry) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ScheduleEntry.ProtoReflect.Descriptor instead.
+func (*ScheduleEntry) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *ScheduleEntry) GetScheduleId() uint32 {
+	if x != nil {
+		return x.ScheduleId
+	}
+	return 0
+}
+
+func (x *ScheduleEntry) GetMonths() []Months {
+	if x != nil {
+		return x.Months
+	}
+	return nil
+}
+
+func (x *ScheduleEntry) GetDaysOfWeek() []DaysOfWeek {
+	if x != nil {
+		return x.DaysOfWeek
+	}
+	return nil
+}
+
+func (x *ScheduleEntry) GetDaysOfMonth() []uint32 {
+	if x != nil {
+		return x.DaysOfMonth
+	}
+	return nil
+}
+
+func (x *ScheduleEntry) GetDayPlan() uint32 {
+	if x != nil {
+		return x.DayPlan
+	}
+	return 0
+}
+
+type ScheduleState struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	ActiveDayPlanId uint32                 `protobuf:"varint,1,opt,name=active_day_plan_id,json=activeDayPlanId,proto3" json:"active_day_plan_id,omitempty"`
+	NextActionAt    *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=next_action_at,json=nextActionAt,proto3" json:"next_action_at,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *ScheduleState) Reset() {
+	*x = ScheduleState{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ScheduleState) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ScheduleState) ProtoMessage() {}
+
+func (x *ScheduleState) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ScheduleState.ProtoReflect.Descriptor instead.
+func (*ScheduleState) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *ScheduleState) GetActiveDayPlanId() uint32 {
+	if x != nil {
+		return x.ActiveDayPlanId
+	}
+	return 0
+}
+
+func (x *ScheduleState) GetNextActionAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.NextActionAt
+	}
+	return nil
+}
+
+type TrafficResponsive struct {
+	state         protoimpl.MessageState   `protogen:"open.v1"`
+	Config        *TrafficResponsiveConfig `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
+	State         *TrafficResponsiveState  `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TrafficResponsive) Reset() {
+	*x = TrafficResponsive{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrafficResponsive) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrafficResponsive) ProtoMessage() {}
+
+func (x *TrafficResponsive) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrafficResponsive.ProtoReflect.Descriptor instead.
+func (*TrafficResponsive) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *TrafficResponsive) GetConfig() *TrafficResponsiveConfig {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
+func (x *TrafficResponsive) GetState() *TrafficResponsiveState {
+	if x != nil {
+		return x.State
+	}
+	return nil
+}
+
+type TrafficResponsiveConfig struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Algorithm     string                 `protobuf:"bytes,1,opt,name=algorithm,proto3" json:"algorithm,omitempty"`
+	Band          []*Band                `protobuf:"bytes,2,rep,name=band,proto3" json:"band,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TrafficResponsiveConfig) Reset() {
+	*x = TrafficResponsiveConfig{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrafficResponsiveConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrafficResponsiveConfig) ProtoMessage() {}
+
+func (x *TrafficResponsiveConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrafficResponsiveConfig.ProtoReflect.Descriptor instead.
+func (*TrafficResponsiveConfig) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *TrafficResponsiveConfig) GetAlgorithm() string {
+	if x != nil {
+		return x.Algorithm
+	}
+	return ""
+}
+
+func (x *TrafficResponsiveConfig) GetBand() []*Band {
+	if x != nil {
+		return x.Band
+	}
+	return nil
+}
+
+type Band struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	BandId          uint32                 `protobuf:"varint,1,opt,name=band_id,json=bandId,proto3" json:"band_id,omitempty"`
+	MinOccupancyPct uint32                 `protobuf:"varint,2,opt,name=min_occupancy_pct,json=minOccupancyPct,proto3" json:"min_occupancy_pct,omitempty"`
+	MaxOccupancyPct uint32                 `protobuf:"varint,3,opt,name=max_occupancy_pct,json=maxOccupancyPct,proto3" json:"max_occupancy_pct,omitempty"`
+	MinFlowVph      uint32                 `protobuf:"varint,4,opt,name=min_flow_vph,json=minFlowVph,proto3" json:"min_flow_vph,omitempty"`
+	MaxFlowVph      uint32                 `protobuf:"varint,5,opt,name=max_flow_vph,json=maxFlowVph,proto3" json:"max_flow_vph,omitempty"`
+	PlanId          uint32                 `protobuf:"varint,6,opt,name=plan_id,json=planId,proto3" json:"plan_id,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *Band) Reset() {
+	*x = Band{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Band) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Band) ProtoMessage() {}
+
+func (x *Band) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Band.ProtoReflect.Descriptor instead.
+func (*Band) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *Band) GetBandId() uint32 {
+	if x != nil {
+		return x.BandId
+	}
+	return 0
+}
+
+func (x *Band) GetMinOccupancyPct() uint32 {
+	if x != nil {
+		return x.MinOccupancyPct
+	}
+	return 0
+}
+
+func (x *Band) GetMaxOccupancyPct() uint32 {
+	if x != nil {
+		return x.MaxOccupancyPct
+	}
+	return 0
+}
+
+func (x *Band) GetMinFlowVph() uint32 {
+	if x != nil {
+		return x.MinFlowVph
+	}
+	return 0
+}
+
+func (x *Band) GetMaxFlowVph() uint32 {
+	if x != nil {
+		return x.MaxFlowVph
+	}
+	return 0
+}
+
+func (x *Band) GetPlanId() uint32 {
+	if x != nil {
+		return x.PlanId
+	}
+	return 0
+}
+
+type TrafficResponsiveState struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ActiveBandId  uint32                 `protobuf:"varint,1,opt,name=active_band_id,json=activeBandId,proto3" json:"active_band_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TrafficResponsiveState) Reset() {
+	*x = TrafficResponsiveState{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrafficResponsiveState) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrafficResponsiveState) ProtoMessage() {}
+
+func (x *TrafficResponsiveState) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrafficResponsiveState.ProtoReflect.Descriptor instead.
+func (*TrafficResponsiveState) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *TrafficResponsiveState) GetActiveBandId() uint32 {
+	if x != nil {
+		return x.ActiveBandId
+	}
+	return 0
+}
+
 type Lanes struct {
-	state               protoimpl.MessageState `protogen:"open.v1"`
-	ReleaseCoordination ReleaseCoordination    `protobuf:"varint,2,opt,name=release_coordination,json=releaseCoordination,proto3,enum=openits.ramp_metering.v1.ReleaseCoordination" json:"release_coordination,omitempty"`
-	Lane                []*Lane                `protobuf:"bytes,1,rep,name=lane,proto3" json:"lane,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Config        *LanesConfig           `protobuf:"bytes,3,opt,name=config,proto3" json:"config,omitempty"`
+	State         *LanesState            `protobuf:"bytes,4,opt,name=state,proto3" json:"state,omitempty"`
+	Lane          []*Lane                `protobuf:"bytes,1,rep,name=lane,proto3" json:"lane,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Lanes) Reset() {
 	*x = Lanes{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[15]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1633,7 +2567,7 @@ func (x *Lanes) String() string {
 func (*Lanes) ProtoMessage() {}
 
 func (x *Lanes) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[15]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1646,14 +2580,21 @@ func (x *Lanes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Lanes.ProtoReflect.Descriptor instead.
 func (*Lanes) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{15}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{26}
 }
 
-func (x *Lanes) GetReleaseCoordination() ReleaseCoordination {
+func (x *Lanes) GetConfig() *LanesConfig {
 	if x != nil {
-		return x.ReleaseCoordination
+		return x.Config
 	}
-	return ReleaseCoordination_RELEASE_COORDINATION_SIMULTANEOUS
+	return nil
+}
+
+func (x *Lanes) GetState() *LanesState {
+	if x != nil {
+		return x.State
+	}
+	return nil
 }
 
 func (x *Lanes) GetLane() []*Lane {
@@ -1663,19 +2604,107 @@ func (x *Lanes) GetLane() []*Lane {
 	return nil
 }
 
+type LanesConfig struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	ReleaseCoordination ReleaseCoordination    `protobuf:"varint,1,opt,name=release_coordination,json=releaseCoordination,proto3,enum=openits.ramp_metering.v1.ReleaseCoordination" json:"release_coordination,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *LanesConfig) Reset() {
+	*x = LanesConfig{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LanesConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LanesConfig) ProtoMessage() {}
+
+func (x *LanesConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LanesConfig.ProtoReflect.Descriptor instead.
+func (*LanesConfig) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *LanesConfig) GetReleaseCoordination() ReleaseCoordination {
+	if x != nil {
+		return x.ReleaseCoordination
+	}
+	return ReleaseCoordination_RELEASE_COORDINATION_SIMULTANEOUS
+}
+
+type LanesState struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	ReleaseCoordination ReleaseCoordination    `protobuf:"varint,1,opt,name=release_coordination,json=releaseCoordination,proto3,enum=openits.ramp_metering.v1.ReleaseCoordination" json:"release_coordination,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *LanesState) Reset() {
+	*x = LanesState{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LanesState) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LanesState) ProtoMessage() {}
+
+func (x *LanesState) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LanesState.ProtoReflect.Descriptor instead.
+func (*LanesState) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *LanesState) GetReleaseCoordination() ReleaseCoordination {
+	if x != nil {
+		return x.ReleaseCoordination
+	}
+	return ReleaseCoordination_RELEASE_COORDINATION_SIMULTANEOUS
+}
+
 type Lane struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	LaneId        string                 `protobuf:"bytes,1,opt,name=lane_id,json=laneId,proto3" json:"lane_id,omitempty"`
 	Config        *LaneConfig            `protobuf:"bytes,15,opt,name=config,proto3" json:"config,omitempty"`
 	State         *LaneState             `protobuf:"bytes,16,opt,name=state,proto3" json:"state,omitempty"`
-	Detector      []*Detector            `protobuf:"bytes,17,rep,name=detector,proto3" json:"detector,omitempty"`
+	Detector      []*LaneDetector        `protobuf:"bytes,17,rep,name=detector,proto3" json:"detector,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Lane) Reset() {
 	*x = Lane{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[16]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1687,7 +2716,7 @@ func (x *Lane) String() string {
 func (*Lane) ProtoMessage() {}
 
 func (x *Lane) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[16]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1700,7 +2729,7 @@ func (x *Lane) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Lane.ProtoReflect.Descriptor instead.
 func (*Lane) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{16}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *Lane) GetLaneId() string {
@@ -1724,7 +2753,7 @@ func (x *Lane) GetState() *LaneState {
 	return nil
 }
 
-func (x *Lane) GetDetector() []*Detector {
+func (x *Lane) GetDetector() []*LaneDetector {
 	if x != nil {
 		return x.Detector
 	}
@@ -1745,7 +2774,7 @@ type LaneConfig struct {
 
 func (x *LaneConfig) Reset() {
 	*x = LaneConfig{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[17]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1757,7 +2786,7 @@ func (x *LaneConfig) String() string {
 func (*LaneConfig) ProtoMessage() {}
 
 func (x *LaneConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[17]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1770,7 +2799,7 @@ func (x *LaneConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LaneConfig.ProtoReflect.Descriptor instead.
 func (*LaneConfig) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{17}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *LaneConfig) GetBypass() bool {
@@ -1832,7 +2861,7 @@ type LaneState struct {
 
 func (x *LaneState) Reset() {
 	*x = LaneState{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[18]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1844,7 +2873,7 @@ func (x *LaneState) String() string {
 func (*LaneState) ProtoMessage() {}
 
 func (x *LaneState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[18]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1857,7 +2886,7 @@ func (x *LaneState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LaneState.ProtoReflect.Descriptor instead.
 func (*LaneState) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{18}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *LaneState) GetHeadState() HeadState {
@@ -1923,30 +2952,30 @@ func (x *LaneState) GetVehiclesPerGreen() uint32 {
 	return 0
 }
 
-type Detector struct {
+type LaneDetector struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	DetectorId    string                 `protobuf:"bytes,1,opt,name=detector_id,json=detectorId,proto3" json:"detector_id,omitempty"`
-	Config        *DetectorConfig        `protobuf:"bytes,5,opt,name=config,proto3" json:"config,omitempty"`
-	State         *DetectorState         `protobuf:"bytes,6,opt,name=state,proto3" json:"state,omitempty"`
+	Config        *LaneDetectorConfig    `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
+	State         *LaneDetectorState     `protobuf:"bytes,3,opt,name=state,proto3" json:"state,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Detector) Reset() {
-	*x = Detector{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[19]
+func (x *LaneDetector) Reset() {
+	*x = LaneDetector{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *Detector) String() string {
+func (x *LaneDetector) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Detector) ProtoMessage() {}
+func (*LaneDetector) ProtoMessage() {}
 
-func (x *Detector) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[19]
+func (x *LaneDetector) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1957,33 +2986,33 @@ func (x *Detector) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Detector.ProtoReflect.Descriptor instead.
-func (*Detector) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{19}
+// Deprecated: Use LaneDetector.ProtoReflect.Descriptor instead.
+func (*LaneDetector) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{32}
 }
 
-func (x *Detector) GetDetectorId() string {
+func (x *LaneDetector) GetDetectorId() string {
 	if x != nil {
 		return x.DetectorId
 	}
 	return ""
 }
 
-func (x *Detector) GetConfig() *DetectorConfig {
+func (x *LaneDetector) GetConfig() *LaneDetectorConfig {
 	if x != nil {
 		return x.Config
 	}
 	return nil
 }
 
-func (x *Detector) GetState() *DetectorState {
+func (x *LaneDetector) GetState() *LaneDetectorState {
 	if x != nil {
 		return x.State
 	}
 	return nil
 }
 
-type DetectorConfig struct {
+type LaneDetectorConfig struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	DetectorId    string                 `protobuf:"bytes,1,opt,name=detector_id,json=detectorId,proto3" json:"detector_id,omitempty"`
 	Role          DetectorRole           `protobuf:"varint,2,opt,name=role,proto3,enum=openits.ramp_metering.v1.DetectorRole" json:"role,omitempty"`
@@ -1991,21 +3020,21 @@ type DetectorConfig struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DetectorConfig) Reset() {
-	*x = DetectorConfig{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[20]
+func (x *LaneDetectorConfig) Reset() {
+	*x = LaneDetectorConfig{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DetectorConfig) String() string {
+func (x *LaneDetectorConfig) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DetectorConfig) ProtoMessage() {}
+func (*LaneDetectorConfig) ProtoMessage() {}
 
-func (x *DetectorConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[20]
+func (x *LaneDetectorConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2016,53 +3045,53 @@ func (x *DetectorConfig) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DetectorConfig.ProtoReflect.Descriptor instead.
-func (*DetectorConfig) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{20}
+// Deprecated: Use LaneDetectorConfig.ProtoReflect.Descriptor instead.
+func (*LaneDetectorConfig) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{33}
 }
 
-func (x *DetectorConfig) GetDetectorId() string {
+func (x *LaneDetectorConfig) GetDetectorId() string {
 	if x != nil {
 		return x.DetectorId
 	}
 	return ""
 }
 
-func (x *DetectorConfig) GetRole() DetectorRole {
+func (x *LaneDetectorConfig) GetRole() DetectorRole {
 	if x != nil {
 		return x.Role
 	}
 	return DetectorRole_DETECTOR_ROLE_UNKNOWN
 }
 
-type DetectorState struct {
+type LaneDetectorState struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Active        bool                   `protobuf:"varint,1,opt,name=active,proto3" json:"active,omitempty"`
 	CountVph      uint32                 `protobuf:"varint,2,opt,name=count_vph,json=countVph,proto3" json:"count_vph,omitempty"`
-	OccupancyPct  uint32                 `protobuf:"varint,3,opt,name=occupancy_pct,json=occupancyPct,proto3" json:"occupancy_pct,omitempty"`
-	SpeedKmh      string                 `protobuf:"bytes,4,opt,name=speed_kmh,json=speedKmh,proto3" json:"speed_kmh,omitempty"`
-	LastUpdate    *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=last_update,json=lastUpdate,proto3" json:"last_update,omitempty"`
-	DetectorId    string                 `protobuf:"bytes,6,opt,name=detector_id,json=detectorId,proto3" json:"detector_id,omitempty"`
-	Role          DetectorRole           `protobuf:"varint,7,opt,name=role,proto3,enum=openits.ramp_metering.v1.DetectorRole" json:"role,omitempty"`
+	DetectorId    string                 `protobuf:"bytes,3,opt,name=detector_id,json=detectorId,proto3" json:"detector_id,omitempty"`
+	LastUpdate    *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=last_update,json=lastUpdate,proto3" json:"last_update,omitempty"`
+	OccupancyPct  uint32                 `protobuf:"varint,5,opt,name=occupancy_pct,json=occupancyPct,proto3" json:"occupancy_pct,omitempty"`
+	Role          DetectorRole           `protobuf:"varint,6,opt,name=role,proto3,enum=openits.ramp_metering.v1.DetectorRole" json:"role,omitempty"`
+	SpeedKmh      string                 `protobuf:"bytes,7,opt,name=speed_kmh,json=speedKmh,proto3" json:"speed_kmh,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DetectorState) Reset() {
-	*x = DetectorState{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[21]
+func (x *LaneDetectorState) Reset() {
+	*x = LaneDetectorState{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DetectorState) String() string {
+func (x *LaneDetectorState) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DetectorState) ProtoMessage() {}
+func (*LaneDetectorState) ProtoMessage() {}
 
-func (x *DetectorState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[21]
+func (x *LaneDetectorState) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2073,58 +3102,306 @@ func (x *DetectorState) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DetectorState.ProtoReflect.Descriptor instead.
-func (*DetectorState) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{21}
+// Deprecated: Use LaneDetectorState.ProtoReflect.Descriptor instead.
+func (*LaneDetectorState) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{34}
 }
 
-func (x *DetectorState) GetActive() bool {
+func (x *LaneDetectorState) GetActive() bool {
 	if x != nil {
 		return x.Active
 	}
 	return false
 }
 
-func (x *DetectorState) GetCountVph() uint32 {
+func (x *LaneDetectorState) GetCountVph() uint32 {
 	if x != nil {
 		return x.CountVph
 	}
 	return 0
 }
 
-func (x *DetectorState) GetOccupancyPct() uint32 {
-	if x != nil {
-		return x.OccupancyPct
-	}
-	return 0
-}
-
-func (x *DetectorState) GetSpeedKmh() string {
-	if x != nil {
-		return x.SpeedKmh
-	}
-	return ""
-}
-
-func (x *DetectorState) GetLastUpdate() *timestamppb.Timestamp {
-	if x != nil {
-		return x.LastUpdate
-	}
-	return nil
-}
-
-func (x *DetectorState) GetDetectorId() string {
+func (x *LaneDetectorState) GetDetectorId() string {
 	if x != nil {
 		return x.DetectorId
 	}
 	return ""
 }
 
-func (x *DetectorState) GetRole() DetectorRole {
+func (x *LaneDetectorState) GetLastUpdate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastUpdate
+	}
+	return nil
+}
+
+func (x *LaneDetectorState) GetOccupancyPct() uint32 {
+	if x != nil {
+		return x.OccupancyPct
+	}
+	return 0
+}
+
+func (x *LaneDetectorState) GetRole() DetectorRole {
 	if x != nil {
 		return x.Role
 	}
 	return DetectorRole_DETECTOR_ROLE_UNKNOWN
+}
+
+func (x *LaneDetectorState) GetSpeedKmh() string {
+	if x != nil {
+		return x.SpeedKmh
+	}
+	return ""
+}
+
+type MainlineDetectors struct {
+	state         protoimpl.MessageState       `protogen:"open.v1"`
+	Detector      []*MainlineDetectorsDetector `protobuf:"bytes,1,rep,name=detector,proto3" json:"detector,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MainlineDetectors) Reset() {
+	*x = MainlineDetectors{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MainlineDetectors) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MainlineDetectors) ProtoMessage() {}
+
+func (x *MainlineDetectors) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MainlineDetectors.ProtoReflect.Descriptor instead.
+func (*MainlineDetectors) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *MainlineDetectors) GetDetector() []*MainlineDetectorsDetector {
+	if x != nil {
+		return x.Detector
+	}
+	return nil
+}
+
+type MainlineDetectorsDetector struct {
+	state         protoimpl.MessageState           `protogen:"open.v1"`
+	DetectorId    string                           `protobuf:"bytes,1,opt,name=detector_id,json=detectorId,proto3" json:"detector_id,omitempty"`
+	Config        *MainlineDetectorsDetectorConfig `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
+	State         *MainlineDetectorsDetectorState  `protobuf:"bytes,3,opt,name=state,proto3" json:"state,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MainlineDetectorsDetector) Reset() {
+	*x = MainlineDetectorsDetector{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[36]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MainlineDetectorsDetector) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MainlineDetectorsDetector) ProtoMessage() {}
+
+func (x *MainlineDetectorsDetector) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[36]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MainlineDetectorsDetector.ProtoReflect.Descriptor instead.
+func (*MainlineDetectorsDetector) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *MainlineDetectorsDetector) GetDetectorId() string {
+	if x != nil {
+		return x.DetectorId
+	}
+	return ""
+}
+
+func (x *MainlineDetectorsDetector) GetConfig() *MainlineDetectorsDetectorConfig {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
+func (x *MainlineDetectorsDetector) GetState() *MainlineDetectorsDetectorState {
+	if x != nil {
+		return x.State
+	}
+	return nil
+}
+
+type MainlineDetectorsDetectorConfig struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DetectorId    string                 `protobuf:"bytes,1,opt,name=detector_id,json=detectorId,proto3" json:"detector_id,omitempty"`
+	Role          DetectorRole           `protobuf:"varint,2,opt,name=role,proto3,enum=openits.ramp_metering.v1.DetectorRole" json:"role,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MainlineDetectorsDetectorConfig) Reset() {
+	*x = MainlineDetectorsDetectorConfig{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[37]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MainlineDetectorsDetectorConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MainlineDetectorsDetectorConfig) ProtoMessage() {}
+
+func (x *MainlineDetectorsDetectorConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[37]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MainlineDetectorsDetectorConfig.ProtoReflect.Descriptor instead.
+func (*MainlineDetectorsDetectorConfig) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *MainlineDetectorsDetectorConfig) GetDetectorId() string {
+	if x != nil {
+		return x.DetectorId
+	}
+	return ""
+}
+
+func (x *MainlineDetectorsDetectorConfig) GetRole() DetectorRole {
+	if x != nil {
+		return x.Role
+	}
+	return DetectorRole_DETECTOR_ROLE_UNKNOWN
+}
+
+type MainlineDetectorsDetectorState struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Active        bool                   `protobuf:"varint,1,opt,name=active,proto3" json:"active,omitempty"`
+	CountVph      uint32                 `protobuf:"varint,2,opt,name=count_vph,json=countVph,proto3" json:"count_vph,omitempty"`
+	DetectorId    string                 `protobuf:"bytes,3,opt,name=detector_id,json=detectorId,proto3" json:"detector_id,omitempty"`
+	LastUpdate    *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=last_update,json=lastUpdate,proto3" json:"last_update,omitempty"`
+	OccupancyPct  uint32                 `protobuf:"varint,5,opt,name=occupancy_pct,json=occupancyPct,proto3" json:"occupancy_pct,omitempty"`
+	Role          DetectorRole           `protobuf:"varint,6,opt,name=role,proto3,enum=openits.ramp_metering.v1.DetectorRole" json:"role,omitempty"`
+	SpeedKmh      string                 `protobuf:"bytes,7,opt,name=speed_kmh,json=speedKmh,proto3" json:"speed_kmh,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MainlineDetectorsDetectorState) Reset() {
+	*x = MainlineDetectorsDetectorState{}
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[38]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MainlineDetectorsDetectorState) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MainlineDetectorsDetectorState) ProtoMessage() {}
+
+func (x *MainlineDetectorsDetectorState) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[38]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MainlineDetectorsDetectorState.ProtoReflect.Descriptor instead.
+func (*MainlineDetectorsDetectorState) Descriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{38}
+}
+
+func (x *MainlineDetectorsDetectorState) GetActive() bool {
+	if x != nil {
+		return x.Active
+	}
+	return false
+}
+
+func (x *MainlineDetectorsDetectorState) GetCountVph() uint32 {
+	if x != nil {
+		return x.CountVph
+	}
+	return 0
+}
+
+func (x *MainlineDetectorsDetectorState) GetDetectorId() string {
+	if x != nil {
+		return x.DetectorId
+	}
+	return ""
+}
+
+func (x *MainlineDetectorsDetectorState) GetLastUpdate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastUpdate
+	}
+	return nil
+}
+
+func (x *MainlineDetectorsDetectorState) GetOccupancyPct() uint32 {
+	if x != nil {
+		return x.OccupancyPct
+	}
+	return 0
+}
+
+func (x *MainlineDetectorsDetectorState) GetRole() DetectorRole {
+	if x != nil {
+		return x.Role
+	}
+	return DetectorRole_DETECTOR_ROLE_UNKNOWN
+}
+
+func (x *MainlineDetectorsDetectorState) GetSpeedKmh() string {
+	if x != nil {
+		return x.SpeedKmh
+	}
+	return ""
 }
 
 type Diagnostics struct {
@@ -2138,7 +3415,7 @@ type Diagnostics struct {
 
 func (x *Diagnostics) Reset() {
 	*x = Diagnostics{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[22]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2150,7 +3427,7 @@ func (x *Diagnostics) String() string {
 func (*Diagnostics) ProtoMessage() {}
 
 func (x *Diagnostics) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[22]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2163,7 +3440,7 @@ func (x *Diagnostics) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Diagnostics.ProtoReflect.Descriptor instead.
 func (*Diagnostics) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{22}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *Diagnostics) GetControllerUptimeS() uint32 {
@@ -2196,7 +3473,7 @@ type Faults struct {
 
 func (x *Faults) Reset() {
 	*x = Faults{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[23]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2208,7 +3485,7 @@ func (x *Faults) String() string {
 func (*Faults) ProtoMessage() {}
 
 func (x *Faults) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[23]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2221,7 +3498,7 @@ func (x *Faults) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Faults.ProtoReflect.Descriptor instead.
 func (*Faults) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{23}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *Faults) GetFault() []*Fault {
@@ -2232,19 +3509,20 @@ func (x *Faults) GetFault() []*Fault {
 }
 
 type Fault struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Category      string                 `protobuf:"bytes,1,opt,name=category,proto3" json:"category,omitempty"`
-	Description   string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	FaultId       string                 `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3" json:"fault_id,omitempty"`
-	FirstObserved *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=first_observed,json=firstObserved,proto3" json:"first_observed,omitempty"`
-	Severity      FaultSeverity          `protobuf:"varint,5,opt,name=severity,proto3,enum=openits.ramp_metering.v1.FaultSeverity" json:"severity,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Category       string                 `protobuf:"bytes,1,opt,name=category,proto3" json:"category,omitempty"`
+	CorrelatesWith string                 `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3" json:"correlates_with,omitempty"`
+	Description    string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	FaultId        string                 `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3" json:"fault_id,omitempty"`
+	FirstObserved  *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=first_observed,json=firstObserved,proto3" json:"first_observed,omitempty"`
+	Severity       FaultSeverity          `protobuf:"varint,5,opt,name=severity,proto3,enum=openits.ramp_metering.v1.FaultSeverity" json:"severity,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *Fault) Reset() {
 	*x = Fault{}
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[24]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2256,7 +3534,7 @@ func (x *Fault) String() string {
 func (*Fault) ProtoMessage() {}
 
 func (x *Fault) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[24]
+	mi := &file_openits_ramp_metering_v1_state_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2269,12 +3547,19 @@ func (x *Fault) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Fault.ProtoReflect.Descriptor instead.
 func (*Fault) Descriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{24}
+	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *Fault) GetCategory() string {
 	if x != nil {
 		return x.Category
+	}
+	return ""
+}
+
+func (x *Fault) GetCorrelatesWith() string {
+	if x != nil {
+		return x.CorrelatesWith
 	}
 	return ""
 }
@@ -2311,7 +3596,7 @@ var File_openits_ramp_metering_v1_state_proto protoreflect.FileDescriptor
 
 const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\n" +
-	"$openits/ramp_metering/v1/state.proto\x12\x18openits.ramp_metering.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xe2\x04\n" +
+	"$openits/ramp_metering/v1/state.proto\x12\x18openits.ramp_metering.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xda\x06\n" +
 	"\tRampMeter\x12A\n" +
 	"\x06config\x18\x01 \x01(\v2).openits.ramp_metering.v1.RampMeterConfigR\x06config\x12>\n" +
 	"\x05state\x18\x02 \x01(\v2(.openits.ramp_metering.v1.RampMeterStateR\x05state\x12;\n" +
@@ -2320,18 +3605,34 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"sequencing\x18\b \x01(\v2$.openits.ramp_metering.v1.SequencingR\n" +
 	"sequencing\x12^\n" +
 	"\x14advance_warning_sign\x18\t \x01(\v2,.openits.ramp_metering.v1.AdvanceWarningSignR\x12advanceWarningSign\x125\n" +
-	"\x05plans\x18\x04 \x01(\v2\x1f.openits.ramp_metering.v1.PlansR\x05plans\x125\n" +
-	"\x05lanes\x18\x05 \x01(\v2\x1f.openits.ramp_metering.v1.LanesR\x05lanes\x12G\n" +
+	"\x05plans\x18\x04 \x01(\v2\x1f.openits.ramp_metering.v1.PlansR\x05plans\x12>\n" +
+	"\bschedule\x18\n" +
+	" \x01(\v2\".openits.ramp_metering.v1.ScheduleR\bschedule\x12Z\n" +
+	"\x12traffic_responsive\x18\v \x01(\v2+.openits.ramp_metering.v1.TrafficResponsiveR\x11trafficResponsive\x125\n" +
+	"\x05lanes\x18\x05 \x01(\v2\x1f.openits.ramp_metering.v1.LanesR\x05lanes\x12Z\n" +
+	"\x12mainline_detectors\x18\f \x01(\v2+.openits.ramp_metering.v1.MainlineDetectorsR\x11mainlineDetectors\x12G\n" +
 	"\vdiagnostics\x18\x06 \x01(\v2%.openits.ramp_metering.v1.DiagnosticsR\vdiagnostics\x128\n" +
-	"\x06faults\x18\a \x01(\v2 .openits.ramp_metering.v1.FaultsR\x06faults\"\xce\x01\n" +
+	"\x06faults\x18\a \x01(\v2 .openits.ramp_metering.v1.FaultsR\x06faults\"\xc6\x03\n" +
 	"\x0fRampMeterConfig\x12\x1c\n" +
 	"\televation\x18\x05 \x01(\tR\televation\x12\x18\n" +
 	"\aheading\x18\x06 \x01(\rR\aheading\x12\x0e\n" +
-	"\x02id\x18\a \x01(\tR\x02id\x12\x1a\n" +
-	"\blatitude\x18\x01 \x01(\tR\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\x02 \x01(\tR\tlongitude\x12\x12\n" +
-	"\x04name\x18\b \x01(\tR\x04name\x12%\n" +
-	"\x0eroad_reference\x18\t \x01(\tR\rroadReference\"\xfd\x02\n" +
+	"\x02id\x18\a \x01(\tR\x02id\x12=\n" +
+	"\finstall_date\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1a\n" +
+	"\blatitude\x18\x01 \x01(\tR\blatitude\x12c\n" +
+	"\x10linear_reference\x18\x04 \x01(\v28.openits.ramp_metering.v1.RampMeterConfigLinearReferenceR\x0flinearReference\x12\x1c\n" +
+	"\tlongitude\x18\x02 \x01(\tR\tlongitude\x12#\n" +
+	"\rmaintained_by\x18\n" +
+	" \x01(\tR\fmaintainedBy\x12\x12\n" +
+	"\x04name\x18\b \x01(\tR\x04name\x12\x14\n" +
+	"\x05owner\x18\v \x01(\tR\x05owner\x12%\n" +
+	"\x0eroad_reference\x18\t \x01(\tR\rroadReference\x12\x17\n" +
+	"\asite_id\x18\f \x01(\tR\x06siteId\"\xa2\x01\n" +
+	"\x1eRampMeterConfigLinearReference\x12)\n" +
+	"\x10route_designator\x18\x01 \x01(\tR\x0frouteDesignator\x12\x1c\n" +
+	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
+	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
+	"\n" +
+	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"\xf4\x04\n" +
 	"\x0eRampMeterState\x12\x1c\n" +
 	"\televation\x18\t \x01(\tR\televation\x12\x1a\n" +
 	"\bfirmware\x18\x01 \x01(\tR\bfirmware\x12%\n" +
@@ -2339,31 +3640,42 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\x10hardware_version\x18\x0f \x01(\tR\x0fhardwareVersion\x12\x18\n" +
 	"\aheading\x18\n" +
 	" \x01(\rR\aheading\x12\x0e\n" +
-	"\x02id\x18\v \x01(\tR\x02id\x12\x1a\n" +
-	"\blatitude\x18\x02 \x01(\tR\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\x03 \x01(\tR\tlongitude\x12\x12\n" +
+	"\x02id\x18\v \x01(\tR\x02id\x12=\n" +
+	"\finstall_date\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1a\n" +
+	"\blatitude\x18\x02 \x01(\tR\blatitude\x12b\n" +
+	"\x10linear_reference\x18\a \x01(\v27.openits.ramp_metering.v1.RampMeterStateLinearReferenceR\x0flinearReference\x12\x1c\n" +
+	"\tlongitude\x18\x03 \x01(\tR\tlongitude\x12#\n" +
+	"\rmaintained_by\x18\x10 \x01(\tR\fmaintainedBy\x12\x12\n" +
 	"\x04make\x18\x04 \x01(\tR\x04make\x12\x14\n" +
 	"\x05model\x18\x06 \x01(\tR\x05model\x12\x12\n" +
-	"\x04name\x18\f \x01(\tR\x04name\x12%\n" +
+	"\x04name\x18\f \x01(\tR\x04name\x12\x14\n" +
+	"\x05owner\x18\x11 \x01(\tR\x05owner\x12%\n" +
 	"\x0eroad_reference\x18\r \x01(\tR\rroadReference\x12\x16\n" +
-	"\x06serial\x18\b \x01(\tR\x06serial\"\x88\x01\n" +
+	"\x06serial\x18\b \x01(\tR\x06serial\x12\x17\n" +
+	"\asite_id\x18\x12 \x01(\tR\x06siteId\"\xa1\x01\n" +
+	"\x1dRampMeterStateLinearReference\x12)\n" +
+	"\x10route_designator\x18\x01 \x01(\tR\x0frouteDesignator\x12\x1c\n" +
+	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
+	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
+	"\n" +
+	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"\x88\x01\n" +
 	"\aControl\x12?\n" +
 	"\x06config\x18\x01 \x01(\v2'.openits.ramp_metering.v1.ControlConfigR\x06config\x12<\n" +
-	"\x05state\x18\x02 \x01(\v2&.openits.ramp_metering.v1.ControlStateR\x05state\"\xb0\x02\n" +
+	"\x05state\x18\x02 \x01(\v2&.openits.ramp_metering.v1.ControlStateR\x05state\"\x87\x02\n" +
 	"\rControlConfig\x12$\n" +
-	"\x0eactive_plan_id\x18\x01 \x01(\rR\factivePlanId\x12N\n" +
-	"\x0ecommand_source\x18\x04 \x01(\x0e2'.openits.ramp_metering.v1.CommandSourceR\rcommandSource\x125\n" +
+	"\x0eactive_plan_id\x18\x01 \x01(\rR\factivePlanId\x12%\n" +
+	"\x0ecommand_source\x18\x04 \x01(\tR\rcommandSource\x125\n" +
 	"\x17manual_release_rate_vph\x18\x02 \x01(\rR\x14manualReleaseRateVph\x12\x12\n" +
 	"\x04mode\x18\x03 \x01(\tR\x04mode\x12^\n" +
 	"\x14non_metering_display\x18\n" +
-	" \x01(\x0e2,.openits.ramp_metering.v1.NonMeteringDisplayR\x12nonMeteringDisplay\"\xa5\x04\n" +
+	" \x01(\x0e2,.openits.ramp_metering.v1.NonMeteringDisplayR\x12nonMeteringDisplay\"\xfc\x03\n" +
 	"\fControlState\x127\n" +
 	"\x18current_release_rate_vph\x18\x01 \x01(\rR\x15currentReleaseRateVph\x12D\n" +
 	"\x10last_mode_change\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x0elastModeChange\x12A\n" +
 	"\x1dqueue_length_current_vehicles\x18\x03 \x01(\rR\x1aqueueLengthCurrentVehicles\x122\n" +
 	"\x15queue_override_active\x18\x04 \x01(\bR\x13queueOverrideActive\x12$\n" +
-	"\x0eactive_plan_id\x18\x05 \x01(\rR\factivePlanId\x12N\n" +
-	"\x0ecommand_source\x18\b \x01(\x0e2'.openits.ramp_metering.v1.CommandSourceR\rcommandSource\x125\n" +
+	"\x0eactive_plan_id\x18\x05 \x01(\rR\factivePlanId\x12%\n" +
+	"\x0ecommand_source\x18\b \x01(\tR\rcommandSource\x125\n" +
 	"\x17manual_release_rate_vph\x18\x06 \x01(\rR\x14manualReleaseRateVph\x12\x12\n" +
 	"\x04mode\x18\a \x01(\tR\x04mode\x12^\n" +
 	"\x14non_metering_display\x18\x12 \x01(\x0e2,.openits.ramp_metering.v1.NonMeteringDisplayR\x12nonMeteringDisplay\"\x91\x01\n" +
@@ -2380,15 +3692,16 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\x0esequence_phase\x18\x01 \x01(\x0e2'.openits.ramp_metering.v1.SequencePhaseR\rsequencePhase\"\xa9\x01\n" +
 	"\x12AdvanceWarningSign\x12J\n" +
 	"\x06config\x18\x01 \x01(\v22.openits.ramp_metering.v1.AdvanceWarningSignConfigR\x06config\x12G\n" +
-	"\x05state\x18\x02 \x01(\v21.openits.ramp_metering.v1.AdvanceWarningSignStateR\x05state\"4\n" +
+	"\x05state\x18\x02 \x01(\v21.openits.ramp_metering.v1.AdvanceWarningSignStateR\x05state\"\x88\x01\n" +
 	"\x18AdvanceWarningSignConfig\x12\x18\n" +
-	"\aenabled\x18\x01 \x01(\bR\aenabled\"\x99\x01\n" +
+	"\aenabled\x18\x01 \x01(\bR\aenabled\x12R\n" +
+	"\x10aws_fault_action\x18\x02 \x01(\x0e2(.openits.ramp_metering.v1.AwsFaultActionR\x0eawsFaultAction\"\x99\x01\n" +
 	"\x17AdvanceWarningSignState\x12E\n" +
 	"\vlamp_status\x18\x01 \x01(\x0e2$.openits.ramp_metering.v1.LampStatusR\n" +
 	"lampStatus\x127\n" +
 	"\x18aws_fault_while_metering\x18\x02 \x01(\bR\x15awsFaultWhileMetering\";\n" +
 	"\x05Plans\x122\n" +
-	"\x04plan\x18\x01 \x03(\v2\x1e.openits.ramp_metering.v1.PlanR\x04plan\"\x9e\x04\n" +
+	"\x04plan\x18\x01 \x03(\v2\x1e.openits.ramp_metering.v1.PlanR\x04plan\"\xbe\x05\n" +
 	"\x04Plan\x12\x17\n" +
 	"\aplan_id\x18\x01 \x01(\rR\x06planId\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12(\n" +
@@ -2399,22 +3712,70 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"'queue_override_clear_threshold_vehicles\x18\b \x01(\rR#queueOverrideClearThresholdVehicles\x125\n" +
 	"\x17queue_override_rate_vph\x18\t \x01(\rR\x14queueOverrideRateVph\x12R\n" +
 	"&queue_override_occupancy_threshold_pct\x18\n" +
-	" \x01(\rR\"queueOverrideOccupancyThresholdPct\x12H\n" +
+	" \x01(\rR\"queueOverrideOccupancyThresholdPct\x12]\n" +
+	",queue_override_occupancy_clear_threshold_pct\x18\v \x01(\rR'queueOverrideOccupancyClearThresholdPct\x12?\n" +
+	"\x1cqueue_override_persistence_s\x18\f \x01(\rR\x19queueOverridePersistenceS\x12H\n" +
 	"\fphase_timing\x18\x06 \x01(\v2%.openits.ramp_metering.v1.PhaseTimingR\vphaseTiming\"\xa3\x01\n" +
 	"\vPhaseTiming\x12\x1b\n" +
-	"\tmax_green\x18\x01 \x01(\rR\bmaxGreen\x12\x1b\n" +
-	"\tmin_green\x18\x02 \x01(\rR\bminGreen\x12\x18\n" +
+	"\tmax_green\x18\x01 \x01(\tR\bmaxGreen\x12\x1b\n" +
+	"\tmin_green\x18\x02 \x01(\tR\bminGreen\x12\x18\n" +
 	"\apassage\x18\x03 \x01(\tR\apassage\x12\x1b\n" +
 	"\tred_clear\x18\x04 \x01(\tR\bredClear\x12#\n" +
-	"\ryellow_change\x18\x05 \x01(\tR\fyellowChange\"\x9d\x01\n" +
-	"\x05Lanes\x12`\n" +
-	"\x14release_coordination\x18\x02 \x01(\x0e2-.openits.ramp_metering.v1.ReleaseCoordinationR\x13releaseCoordination\x122\n" +
-	"\x04lane\x18\x01 \x03(\v2\x1e.openits.ramp_metering.v1.LaneR\x04lane\"\xd8\x01\n" +
+	"\ryellow_change\x18\x05 \x01(\tR\fyellowChange\"\xd7\x01\n" +
+	"\bSchedule\x12<\n" +
+	"\bday_plan\x18\x01 \x03(\v2!.openits.ramp_metering.v1.DayPlanR\adayPlan\x12N\n" +
+	"\x0eschedule_entry\x18\x02 \x03(\v2'.openits.ramp_metering.v1.ScheduleEntryR\rscheduleEntry\x12=\n" +
+	"\x05state\x18\x03 \x01(\v2'.openits.ramp_metering.v1.ScheduleStateR\x05state\"w\n" +
+	"\aDayPlan\x12\x1e\n" +
+	"\vday_plan_id\x18\x01 \x01(\rR\tdayPlanId\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x128\n" +
+	"\x06action\x18\x03 \x03(\v2 .openits.ramp_metering.v1.ActionR\x06action\"@\n" +
+	"\x06Action\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\x01 \x01(\tR\tstartTime\x12\x17\n" +
+	"\aplan_id\x18\x02 \x01(\rR\x06planId\"\xf1\x01\n" +
+	"\rScheduleEntry\x12\x1f\n" +
+	"\vschedule_id\x18\x01 \x01(\rR\n" +
+	"scheduleId\x128\n" +
+	"\x06months\x18\x02 \x03(\x0e2 .openits.ramp_metering.v1.MonthsR\x06months\x12F\n" +
+	"\fdays_of_week\x18\x03 \x03(\x0e2$.openits.ramp_metering.v1.DaysOfWeekR\n" +
+	"daysOfWeek\x12\"\n" +
+	"\rdays_of_month\x18\x04 \x03(\rR\vdaysOfMonth\x12\x19\n" +
+	"\bday_plan\x18\x05 \x01(\rR\adayPlan\"~\n" +
+	"\rScheduleState\x12+\n" +
+	"\x12active_day_plan_id\x18\x01 \x01(\rR\x0factiveDayPlanId\x12@\n" +
+	"\x0enext_action_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\fnextActionAt\"\xa6\x01\n" +
+	"\x11TrafficResponsive\x12I\n" +
+	"\x06config\x18\x01 \x01(\v21.openits.ramp_metering.v1.TrafficResponsiveConfigR\x06config\x12F\n" +
+	"\x05state\x18\x02 \x01(\v20.openits.ramp_metering.v1.TrafficResponsiveStateR\x05state\"k\n" +
+	"\x17TrafficResponsiveConfig\x12\x1c\n" +
+	"\talgorithm\x18\x01 \x01(\tR\talgorithm\x122\n" +
+	"\x04band\x18\x02 \x03(\v2\x1e.openits.ramp_metering.v1.BandR\x04band\"\xd4\x01\n" +
+	"\x04Band\x12\x17\n" +
+	"\aband_id\x18\x01 \x01(\rR\x06bandId\x12*\n" +
+	"\x11min_occupancy_pct\x18\x02 \x01(\rR\x0fminOccupancyPct\x12*\n" +
+	"\x11max_occupancy_pct\x18\x03 \x01(\rR\x0fmaxOccupancyPct\x12 \n" +
+	"\fmin_flow_vph\x18\x04 \x01(\rR\n" +
+	"minFlowVph\x12 \n" +
+	"\fmax_flow_vph\x18\x05 \x01(\rR\n" +
+	"maxFlowVph\x12\x17\n" +
+	"\aplan_id\x18\x06 \x01(\rR\x06planId\">\n" +
+	"\x16TrafficResponsiveState\x12$\n" +
+	"\x0eactive_band_id\x18\x01 \x01(\rR\factiveBandId\"\xb6\x01\n" +
+	"\x05Lanes\x12=\n" +
+	"\x06config\x18\x03 \x01(\v2%.openits.ramp_metering.v1.LanesConfigR\x06config\x12:\n" +
+	"\x05state\x18\x04 \x01(\v2$.openits.ramp_metering.v1.LanesStateR\x05state\x122\n" +
+	"\x04lane\x18\x01 \x03(\v2\x1e.openits.ramp_metering.v1.LaneR\x04lane\"o\n" +
+	"\vLanesConfig\x12`\n" +
+	"\x14release_coordination\x18\x01 \x01(\x0e2-.openits.ramp_metering.v1.ReleaseCoordinationR\x13releaseCoordination\"n\n" +
+	"\n" +
+	"LanesState\x12`\n" +
+	"\x14release_coordination\x18\x01 \x01(\x0e2-.openits.ramp_metering.v1.ReleaseCoordinationR\x13releaseCoordination\"\xdc\x01\n" +
 	"\x04Lane\x12\x17\n" +
 	"\alane_id\x18\x01 \x01(\tR\x06laneId\x12<\n" +
 	"\x06config\x18\x0f \x01(\v2$.openits.ramp_metering.v1.LaneConfigR\x06config\x129\n" +
-	"\x05state\x18\x10 \x01(\v2#.openits.ramp_metering.v1.LaneStateR\x05state\x12>\n" +
-	"\bdetector\x18\x11 \x03(\v2\".openits.ramp_metering.v1.DetectorR\bdetector\"\xa3\x02\n" +
+	"\x05state\x18\x10 \x01(\v2#.openits.ramp_metering.v1.LaneStateR\x05state\x12B\n" +
+	"\bdetector\x18\x11 \x03(\v2&.openits.ramp_metering.v1.LaneDetectorR\bdetector\"\xa3\x02\n" +
 	"\n" +
 	"LaneConfig\x12\x16\n" +
 	"\x06bypass\x18\x01 \x01(\bR\x06bypass\x12T\n" +
@@ -2434,43 +3795,60 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\alane_id\x18\x04 \x01(\tR\x06laneId\x12/\n" +
 	"\x14max_release_rate_vph\x18\a \x01(\rR\x11maxReleaseRateVph\x12/\n" +
 	"\x14min_release_rate_vph\x18\b \x01(\rR\x11minReleaseRateVph\x12,\n" +
-	"\x12vehicles_per_green\x18\t \x01(\rR\x10vehiclesPerGreen\"\xac\x01\n" +
-	"\bDetector\x12\x1f\n" +
+	"\x12vehicles_per_green\x18\t \x01(\rR\x10vehiclesPerGreen\"\xb8\x01\n" +
+	"\fLaneDetector\x12\x1f\n" +
 	"\vdetector_id\x18\x01 \x01(\tR\n" +
-	"detectorId\x12@\n" +
-	"\x06config\x18\x05 \x01(\v2(.openits.ramp_metering.v1.DetectorConfigR\x06config\x12=\n" +
-	"\x05state\x18\x06 \x01(\v2'.openits.ramp_metering.v1.DetectorStateR\x05state\"m\n" +
-	"\x0eDetectorConfig\x12\x1f\n" +
+	"detectorId\x12D\n" +
+	"\x06config\x18\x02 \x01(\v2,.openits.ramp_metering.v1.LaneDetectorConfigR\x06config\x12A\n" +
+	"\x05state\x18\x03 \x01(\v2+.openits.ramp_metering.v1.LaneDetectorStateR\x05state\"q\n" +
+	"\x12LaneDetectorConfig\x12\x1f\n" +
 	"\vdetector_id\x18\x01 \x01(\tR\n" +
 	"detectorId\x12:\n" +
-	"\x04role\x18\x02 \x01(\x0e2&.openits.ramp_metering.v1.DetectorRoleR\x04role\"\xa0\x02\n" +
-	"\rDetectorState\x12\x16\n" +
+	"\x04role\x18\x02 \x01(\x0e2&.openits.ramp_metering.v1.DetectorRoleR\x04role\"\xa4\x02\n" +
+	"\x11LaneDetectorState\x12\x16\n" +
 	"\x06active\x18\x01 \x01(\bR\x06active\x12\x1b\n" +
-	"\tcount_vph\x18\x02 \x01(\rR\bcountVph\x12#\n" +
-	"\roccupancy_pct\x18\x03 \x01(\rR\foccupancyPct\x12\x1b\n" +
-	"\tspeed_kmh\x18\x04 \x01(\tR\bspeedKmh\x12;\n" +
-	"\vlast_update\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"lastUpdate\x12\x1f\n" +
-	"\vdetector_id\x18\x06 \x01(\tR\n" +
+	"\tcount_vph\x18\x02 \x01(\rR\bcountVph\x12\x1f\n" +
+	"\vdetector_id\x18\x03 \x01(\tR\n" +
+	"detectorId\x12;\n" +
+	"\vlast_update\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"lastUpdate\x12#\n" +
+	"\roccupancy_pct\x18\x05 \x01(\rR\foccupancyPct\x12:\n" +
+	"\x04role\x18\x06 \x01(\x0e2&.openits.ramp_metering.v1.DetectorRoleR\x04role\x12\x1b\n" +
+	"\tspeed_kmh\x18\a \x01(\tR\bspeedKmh\"d\n" +
+	"\x11MainlineDetectors\x12O\n" +
+	"\bdetector\x18\x01 \x03(\v23.openits.ramp_metering.v1.MainlineDetectorsDetectorR\bdetector\"\xdf\x01\n" +
+	"\x19MainlineDetectorsDetector\x12\x1f\n" +
+	"\vdetector_id\x18\x01 \x01(\tR\n" +
+	"detectorId\x12Q\n" +
+	"\x06config\x18\x02 \x01(\v29.openits.ramp_metering.v1.MainlineDetectorsDetectorConfigR\x06config\x12N\n" +
+	"\x05state\x18\x03 \x01(\v28.openits.ramp_metering.v1.MainlineDetectorsDetectorStateR\x05state\"~\n" +
+	"\x1fMainlineDetectorsDetectorConfig\x12\x1f\n" +
+	"\vdetector_id\x18\x01 \x01(\tR\n" +
 	"detectorId\x12:\n" +
-	"\x04role\x18\a \x01(\x0e2&.openits.ramp_metering.v1.DetectorRoleR\x04role\"\xad\x01\n" +
+	"\x04role\x18\x02 \x01(\x0e2&.openits.ramp_metering.v1.DetectorRoleR\x04role\"\xb1\x02\n" +
+	"\x1eMainlineDetectorsDetectorState\x12\x16\n" +
+	"\x06active\x18\x01 \x01(\bR\x06active\x12\x1b\n" +
+	"\tcount_vph\x18\x02 \x01(\rR\bcountVph\x12\x1f\n" +
+	"\vdetector_id\x18\x03 \x01(\tR\n" +
+	"detectorId\x12;\n" +
+	"\vlast_update\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"lastUpdate\x12#\n" +
+	"\roccupancy_pct\x18\x05 \x01(\rR\foccupancyPct\x12:\n" +
+	"\x04role\x18\x06 \x01(\x0e2&.openits.ramp_metering.v1.DetectorRoleR\x04role\x12\x1b\n" +
+	"\tspeed_kmh\x18\a \x01(\tR\bspeedKmh\"\xad\x01\n" +
 	"\vDiagnostics\x12.\n" +
 	"\x13controller_uptime_s\x18\x02 \x01(\rR\x11controllerUptimeS\x12@\n" +
 	"\x0elast_self_test\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\flastSelfTest\x12,\n" +
 	"\x12signal_head_faults\x18\x04 \x01(\rR\x10signalHeadFaults\"?\n" +
 	"\x06Faults\x125\n" +
-	"\x05fault\x18\x01 \x03(\v2\x1f.openits.ramp_metering.v1.FaultR\x05fault\"\xe8\x01\n" +
+	"\x05fault\x18\x01 \x03(\v2\x1f.openits.ramp_metering.v1.FaultR\x05fault\"\x91\x02\n" +
 	"\x05Fault\x12\x1a\n" +
-	"\bcategory\x18\x01 \x01(\tR\bcategory\x12 \n" +
+	"\bcategory\x18\x01 \x01(\tR\bcategory\x12'\n" +
+	"\x0fcorrelates_with\x18\x06 \x01(\tR\x0ecorrelatesWith\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x19\n" +
 	"\bfault_id\x18\x03 \x01(\tR\afaultId\x12A\n" +
 	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12C\n" +
-	"\bseverity\x18\x05 \x01(\x0e2'.openits.ramp_metering.v1.FaultSeverityR\bseverity*|\n" +
-	"\rCommandSource\x12\x1a\n" +
-	"\x16COMMAND_SOURCE_CENTRAL\x10\x00\x12\x1b\n" +
-	"\x17COMMAND_SOURCE_SCHEDULE\x10\x01\x12\x18\n" +
-	"\x14COMMAND_SOURCE_LOCAL\x10\x02\x12\x18\n" +
-	"\x14COMMAND_SOURCE_OTHER\x10\x03*[\n" +
+	"\bseverity\x18\x05 \x01(\x0e2'.openits.ramp_metering.v1.FaultSeverityR\bseverity*[\n" +
 	"\x12NonMeteringDisplay\x12\x1d\n" +
 	"\x19NON_METERING_DISPLAY_DARK\x10\x00\x12&\n" +
 	"\"NON_METERING_DISPLAY_REST_IN_GREEN\x10\x01*\xb5\x01\n" +
@@ -2479,13 +3857,42 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\x1eSEQUENCE_PHASE_ADVANCE_WARNING\x10\x01\x12'\n" +
 	"#SEQUENCE_PHASE_STARTUP_STEADY_GREEN\x10\x02\x12\x1b\n" +
 	"\x17SEQUENCE_PHASE_METERING\x10\x03\x12!\n" +
-	"\x1dSEQUENCE_PHASE_SHUTDOWN_FLUSH\x10\x04*k\n" +
+	"\x1dSEQUENCE_PHASE_SHUTDOWN_FLUSH\x10\x04*_\n" +
+	"\x0eAwsFaultAction\x12%\n" +
+	"!AWS_FAULT_ACTION_SUSPEND_METERING\x10\x00\x12&\n" +
+	"\"AWS_FAULT_ACTION_CONTINUE_METERING\x10\x01*k\n" +
 	"\n" +
 	"LampStatus\x12\x14\n" +
 	"\x10LAMP_STATUS_DARK\x10\x00\x12\x18\n" +
 	"\x14LAMP_STATUS_FLASHING\x10\x01\x12\x16\n" +
 	"\x12LAMP_STATUS_STEADY\x10\x02\x12\x15\n" +
-	"\x11LAMP_STATUS_FAULT\x10\x03*`\n" +
+	"\x11LAMP_STATUS_FAULT\x10\x03*\x86\x02\n" +
+	"\x06Months\x12\x16\n" +
+	"\x12MONTHS_UNSPECIFIED\x10\x00\x12\x12\n" +
+	"\x0eMONTHS_JANUARY\x10\x01\x12\x13\n" +
+	"\x0fMONTHS_FEBRUARY\x10\x02\x12\x10\n" +
+	"\fMONTHS_MARCH\x10\x03\x12\x10\n" +
+	"\fMONTHS_APRIL\x10\x04\x12\x0e\n" +
+	"\n" +
+	"MONTHS_MAY\x10\x05\x12\x0f\n" +
+	"\vMONTHS_JUNE\x10\x06\x12\x0f\n" +
+	"\vMONTHS_JULY\x10\a\x12\x11\n" +
+	"\rMONTHS_AUGUST\x10\b\x12\x14\n" +
+	"\x10MONTHS_SEPTEMBER\x10\t\x12\x12\n" +
+	"\x0eMONTHS_OCTOBER\x10\n" +
+	"\x12\x13\n" +
+	"\x0fMONTHS_NOVEMBER\x10\v\x12\x13\n" +
+	"\x0fMONTHS_DECEMBER\x10\f*\xe1\x01\n" +
+	"\n" +
+	"DaysOfWeek\x12\x1c\n" +
+	"\x18DAYS_OF_WEEK_UNSPECIFIED\x10\x00\x12\x17\n" +
+	"\x13DAYS_OF_WEEK_MONDAY\x10\x01\x12\x18\n" +
+	"\x14DAYS_OF_WEEK_TUESDAY\x10\x02\x12\x1a\n" +
+	"\x16DAYS_OF_WEEK_WEDNESDAY\x10\x03\x12\x19\n" +
+	"\x15DAYS_OF_WEEK_THURSDAY\x10\x04\x12\x17\n" +
+	"\x13DAYS_OF_WEEK_FRIDAY\x10\x05\x12\x19\n" +
+	"\x15DAYS_OF_WEEK_SATURDAY\x10\x06\x12\x17\n" +
+	"\x13DAYS_OF_WEEK_SUNDAY\x10\a*`\n" +
 	"\x13ReleaseCoordination\x12%\n" +
 	"!RELEASE_COORDINATION_SIMULTANEOUS\x10\x00\x12\"\n" +
 	"\x1eRELEASE_COORDINATION_ALTERNATE\x10\x01*O\n" +
@@ -2524,93 +3931,137 @@ func file_openits_ramp_metering_v1_state_proto_rawDescGZIP() []byte {
 	return file_openits_ramp_metering_v1_state_proto_rawDescData
 }
 
-var file_openits_ramp_metering_v1_state_proto_enumTypes = make([]protoimpl.EnumInfo, 9)
-var file_openits_ramp_metering_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
+var file_openits_ramp_metering_v1_state_proto_enumTypes = make([]protoimpl.EnumInfo, 11)
+var file_openits_ramp_metering_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 42)
 var file_openits_ramp_metering_v1_state_proto_goTypes = []any{
-	(CommandSource)(0),               // 0: openits.ramp_metering.v1.CommandSource
-	(NonMeteringDisplay)(0),          // 1: openits.ramp_metering.v1.NonMeteringDisplay
-	(SequencePhase)(0),               // 2: openits.ramp_metering.v1.SequencePhase
-	(LampStatus)(0),                  // 3: openits.ramp_metering.v1.LampStatus
-	(ReleaseCoordination)(0),         // 4: openits.ramp_metering.v1.ReleaseCoordination
-	(BypassOperation)(0),             // 5: openits.ramp_metering.v1.BypassOperation
-	(HeadState)(0),                   // 6: openits.ramp_metering.v1.HeadState
-	(DetectorRole)(0),                // 7: openits.ramp_metering.v1.DetectorRole
-	(FaultSeverity)(0),               // 8: openits.ramp_metering.v1.FaultSeverity
-	(*RampMeter)(nil),                // 9: openits.ramp_metering.v1.RampMeter
-	(*RampMeterConfig)(nil),          // 10: openits.ramp_metering.v1.RampMeterConfig
-	(*RampMeterState)(nil),           // 11: openits.ramp_metering.v1.RampMeterState
-	(*Control)(nil),                  // 12: openits.ramp_metering.v1.Control
-	(*ControlConfig)(nil),            // 13: openits.ramp_metering.v1.ControlConfig
-	(*ControlState)(nil),             // 14: openits.ramp_metering.v1.ControlState
-	(*Sequencing)(nil),               // 15: openits.ramp_metering.v1.Sequencing
-	(*SequencingConfig)(nil),         // 16: openits.ramp_metering.v1.SequencingConfig
-	(*SequencingState)(nil),          // 17: openits.ramp_metering.v1.SequencingState
-	(*AdvanceWarningSign)(nil),       // 18: openits.ramp_metering.v1.AdvanceWarningSign
-	(*AdvanceWarningSignConfig)(nil), // 19: openits.ramp_metering.v1.AdvanceWarningSignConfig
-	(*AdvanceWarningSignState)(nil),  // 20: openits.ramp_metering.v1.AdvanceWarningSignState
-	(*Plans)(nil),                    // 21: openits.ramp_metering.v1.Plans
-	(*Plan)(nil),                     // 22: openits.ramp_metering.v1.Plan
-	(*PhaseTiming)(nil),              // 23: openits.ramp_metering.v1.PhaseTiming
-	(*Lanes)(nil),                    // 24: openits.ramp_metering.v1.Lanes
-	(*Lane)(nil),                     // 25: openits.ramp_metering.v1.Lane
-	(*LaneConfig)(nil),               // 26: openits.ramp_metering.v1.LaneConfig
-	(*LaneState)(nil),                // 27: openits.ramp_metering.v1.LaneState
-	(*Detector)(nil),                 // 28: openits.ramp_metering.v1.Detector
-	(*DetectorConfig)(nil),           // 29: openits.ramp_metering.v1.DetectorConfig
-	(*DetectorState)(nil),            // 30: openits.ramp_metering.v1.DetectorState
-	(*Diagnostics)(nil),              // 31: openits.ramp_metering.v1.Diagnostics
-	(*Faults)(nil),                   // 32: openits.ramp_metering.v1.Faults
-	(*Fault)(nil),                    // 33: openits.ramp_metering.v1.Fault
-	(*timestamppb.Timestamp)(nil),    // 34: google.protobuf.Timestamp
+	(NonMeteringDisplay)(0),                 // 0: openits.ramp_metering.v1.NonMeteringDisplay
+	(SequencePhase)(0),                      // 1: openits.ramp_metering.v1.SequencePhase
+	(AwsFaultAction)(0),                     // 2: openits.ramp_metering.v1.AwsFaultAction
+	(LampStatus)(0),                         // 3: openits.ramp_metering.v1.LampStatus
+	(Months)(0),                             // 4: openits.ramp_metering.v1.Months
+	(DaysOfWeek)(0),                         // 5: openits.ramp_metering.v1.DaysOfWeek
+	(ReleaseCoordination)(0),                // 6: openits.ramp_metering.v1.ReleaseCoordination
+	(BypassOperation)(0),                    // 7: openits.ramp_metering.v1.BypassOperation
+	(HeadState)(0),                          // 8: openits.ramp_metering.v1.HeadState
+	(DetectorRole)(0),                       // 9: openits.ramp_metering.v1.DetectorRole
+	(FaultSeverity)(0),                      // 10: openits.ramp_metering.v1.FaultSeverity
+	(*RampMeter)(nil),                       // 11: openits.ramp_metering.v1.RampMeter
+	(*RampMeterConfig)(nil),                 // 12: openits.ramp_metering.v1.RampMeterConfig
+	(*RampMeterConfigLinearReference)(nil),  // 13: openits.ramp_metering.v1.RampMeterConfigLinearReference
+	(*RampMeterState)(nil),                  // 14: openits.ramp_metering.v1.RampMeterState
+	(*RampMeterStateLinearReference)(nil),   // 15: openits.ramp_metering.v1.RampMeterStateLinearReference
+	(*Control)(nil),                         // 16: openits.ramp_metering.v1.Control
+	(*ControlConfig)(nil),                   // 17: openits.ramp_metering.v1.ControlConfig
+	(*ControlState)(nil),                    // 18: openits.ramp_metering.v1.ControlState
+	(*Sequencing)(nil),                      // 19: openits.ramp_metering.v1.Sequencing
+	(*SequencingConfig)(nil),                // 20: openits.ramp_metering.v1.SequencingConfig
+	(*SequencingState)(nil),                 // 21: openits.ramp_metering.v1.SequencingState
+	(*AdvanceWarningSign)(nil),              // 22: openits.ramp_metering.v1.AdvanceWarningSign
+	(*AdvanceWarningSignConfig)(nil),        // 23: openits.ramp_metering.v1.AdvanceWarningSignConfig
+	(*AdvanceWarningSignState)(nil),         // 24: openits.ramp_metering.v1.AdvanceWarningSignState
+	(*Plans)(nil),                           // 25: openits.ramp_metering.v1.Plans
+	(*Plan)(nil),                            // 26: openits.ramp_metering.v1.Plan
+	(*PhaseTiming)(nil),                     // 27: openits.ramp_metering.v1.PhaseTiming
+	(*Schedule)(nil),                        // 28: openits.ramp_metering.v1.Schedule
+	(*DayPlan)(nil),                         // 29: openits.ramp_metering.v1.DayPlan
+	(*Action)(nil),                          // 30: openits.ramp_metering.v1.Action
+	(*ScheduleEntry)(nil),                   // 31: openits.ramp_metering.v1.ScheduleEntry
+	(*ScheduleState)(nil),                   // 32: openits.ramp_metering.v1.ScheduleState
+	(*TrafficResponsive)(nil),               // 33: openits.ramp_metering.v1.TrafficResponsive
+	(*TrafficResponsiveConfig)(nil),         // 34: openits.ramp_metering.v1.TrafficResponsiveConfig
+	(*Band)(nil),                            // 35: openits.ramp_metering.v1.Band
+	(*TrafficResponsiveState)(nil),          // 36: openits.ramp_metering.v1.TrafficResponsiveState
+	(*Lanes)(nil),                           // 37: openits.ramp_metering.v1.Lanes
+	(*LanesConfig)(nil),                     // 38: openits.ramp_metering.v1.LanesConfig
+	(*LanesState)(nil),                      // 39: openits.ramp_metering.v1.LanesState
+	(*Lane)(nil),                            // 40: openits.ramp_metering.v1.Lane
+	(*LaneConfig)(nil),                      // 41: openits.ramp_metering.v1.LaneConfig
+	(*LaneState)(nil),                       // 42: openits.ramp_metering.v1.LaneState
+	(*LaneDetector)(nil),                    // 43: openits.ramp_metering.v1.LaneDetector
+	(*LaneDetectorConfig)(nil),              // 44: openits.ramp_metering.v1.LaneDetectorConfig
+	(*LaneDetectorState)(nil),               // 45: openits.ramp_metering.v1.LaneDetectorState
+	(*MainlineDetectors)(nil),               // 46: openits.ramp_metering.v1.MainlineDetectors
+	(*MainlineDetectorsDetector)(nil),       // 47: openits.ramp_metering.v1.MainlineDetectorsDetector
+	(*MainlineDetectorsDetectorConfig)(nil), // 48: openits.ramp_metering.v1.MainlineDetectorsDetectorConfig
+	(*MainlineDetectorsDetectorState)(nil),  // 49: openits.ramp_metering.v1.MainlineDetectorsDetectorState
+	(*Diagnostics)(nil),                     // 50: openits.ramp_metering.v1.Diagnostics
+	(*Faults)(nil),                          // 51: openits.ramp_metering.v1.Faults
+	(*Fault)(nil),                           // 52: openits.ramp_metering.v1.Fault
+	(*timestamppb.Timestamp)(nil),           // 53: google.protobuf.Timestamp
 }
 var file_openits_ramp_metering_v1_state_proto_depIdxs = []int32{
-	10, // 0: openits.ramp_metering.v1.RampMeter.config:type_name -> openits.ramp_metering.v1.RampMeterConfig
-	11, // 1: openits.ramp_metering.v1.RampMeter.state:type_name -> openits.ramp_metering.v1.RampMeterState
-	12, // 2: openits.ramp_metering.v1.RampMeter.control:type_name -> openits.ramp_metering.v1.Control
-	15, // 3: openits.ramp_metering.v1.RampMeter.sequencing:type_name -> openits.ramp_metering.v1.Sequencing
-	18, // 4: openits.ramp_metering.v1.RampMeter.advance_warning_sign:type_name -> openits.ramp_metering.v1.AdvanceWarningSign
-	21, // 5: openits.ramp_metering.v1.RampMeter.plans:type_name -> openits.ramp_metering.v1.Plans
-	24, // 6: openits.ramp_metering.v1.RampMeter.lanes:type_name -> openits.ramp_metering.v1.Lanes
-	31, // 7: openits.ramp_metering.v1.RampMeter.diagnostics:type_name -> openits.ramp_metering.v1.Diagnostics
-	32, // 8: openits.ramp_metering.v1.RampMeter.faults:type_name -> openits.ramp_metering.v1.Faults
-	13, // 9: openits.ramp_metering.v1.Control.config:type_name -> openits.ramp_metering.v1.ControlConfig
-	14, // 10: openits.ramp_metering.v1.Control.state:type_name -> openits.ramp_metering.v1.ControlState
-	0,  // 11: openits.ramp_metering.v1.ControlConfig.command_source:type_name -> openits.ramp_metering.v1.CommandSource
-	1,  // 12: openits.ramp_metering.v1.ControlConfig.non_metering_display:type_name -> openits.ramp_metering.v1.NonMeteringDisplay
-	34, // 13: openits.ramp_metering.v1.ControlState.last_mode_change:type_name -> google.protobuf.Timestamp
-	0,  // 14: openits.ramp_metering.v1.ControlState.command_source:type_name -> openits.ramp_metering.v1.CommandSource
-	1,  // 15: openits.ramp_metering.v1.ControlState.non_metering_display:type_name -> openits.ramp_metering.v1.NonMeteringDisplay
-	16, // 16: openits.ramp_metering.v1.Sequencing.config:type_name -> openits.ramp_metering.v1.SequencingConfig
-	17, // 17: openits.ramp_metering.v1.Sequencing.state:type_name -> openits.ramp_metering.v1.SequencingState
-	2,  // 18: openits.ramp_metering.v1.SequencingState.sequence_phase:type_name -> openits.ramp_metering.v1.SequencePhase
-	19, // 19: openits.ramp_metering.v1.AdvanceWarningSign.config:type_name -> openits.ramp_metering.v1.AdvanceWarningSignConfig
-	20, // 20: openits.ramp_metering.v1.AdvanceWarningSign.state:type_name -> openits.ramp_metering.v1.AdvanceWarningSignState
-	3,  // 21: openits.ramp_metering.v1.AdvanceWarningSignState.lamp_status:type_name -> openits.ramp_metering.v1.LampStatus
-	22, // 22: openits.ramp_metering.v1.Plans.plan:type_name -> openits.ramp_metering.v1.Plan
-	23, // 23: openits.ramp_metering.v1.Plan.phase_timing:type_name -> openits.ramp_metering.v1.PhaseTiming
-	4,  // 24: openits.ramp_metering.v1.Lanes.release_coordination:type_name -> openits.ramp_metering.v1.ReleaseCoordination
-	25, // 25: openits.ramp_metering.v1.Lanes.lane:type_name -> openits.ramp_metering.v1.Lane
-	26, // 26: openits.ramp_metering.v1.Lane.config:type_name -> openits.ramp_metering.v1.LaneConfig
-	27, // 27: openits.ramp_metering.v1.Lane.state:type_name -> openits.ramp_metering.v1.LaneState
-	28, // 28: openits.ramp_metering.v1.Lane.detector:type_name -> openits.ramp_metering.v1.Detector
-	5,  // 29: openits.ramp_metering.v1.LaneConfig.bypass_operation:type_name -> openits.ramp_metering.v1.BypassOperation
-	6,  // 30: openits.ramp_metering.v1.LaneState.head_state:type_name -> openits.ramp_metering.v1.HeadState
-	34, // 31: openits.ramp_metering.v1.LaneState.last_release:type_name -> google.protobuf.Timestamp
-	5,  // 32: openits.ramp_metering.v1.LaneState.bypass_operation:type_name -> openits.ramp_metering.v1.BypassOperation
-	29, // 33: openits.ramp_metering.v1.Detector.config:type_name -> openits.ramp_metering.v1.DetectorConfig
-	30, // 34: openits.ramp_metering.v1.Detector.state:type_name -> openits.ramp_metering.v1.DetectorState
-	7,  // 35: openits.ramp_metering.v1.DetectorConfig.role:type_name -> openits.ramp_metering.v1.DetectorRole
-	34, // 36: openits.ramp_metering.v1.DetectorState.last_update:type_name -> google.protobuf.Timestamp
-	7,  // 37: openits.ramp_metering.v1.DetectorState.role:type_name -> openits.ramp_metering.v1.DetectorRole
-	34, // 38: openits.ramp_metering.v1.Diagnostics.last_self_test:type_name -> google.protobuf.Timestamp
-	33, // 39: openits.ramp_metering.v1.Faults.fault:type_name -> openits.ramp_metering.v1.Fault
-	34, // 40: openits.ramp_metering.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	8,  // 41: openits.ramp_metering.v1.Fault.severity:type_name -> openits.ramp_metering.v1.FaultSeverity
-	42, // [42:42] is the sub-list for method output_type
-	42, // [42:42] is the sub-list for method input_type
-	42, // [42:42] is the sub-list for extension type_name
-	42, // [42:42] is the sub-list for extension extendee
-	0,  // [0:42] is the sub-list for field type_name
+	12, // 0: openits.ramp_metering.v1.RampMeter.config:type_name -> openits.ramp_metering.v1.RampMeterConfig
+	14, // 1: openits.ramp_metering.v1.RampMeter.state:type_name -> openits.ramp_metering.v1.RampMeterState
+	16, // 2: openits.ramp_metering.v1.RampMeter.control:type_name -> openits.ramp_metering.v1.Control
+	19, // 3: openits.ramp_metering.v1.RampMeter.sequencing:type_name -> openits.ramp_metering.v1.Sequencing
+	22, // 4: openits.ramp_metering.v1.RampMeter.advance_warning_sign:type_name -> openits.ramp_metering.v1.AdvanceWarningSign
+	25, // 5: openits.ramp_metering.v1.RampMeter.plans:type_name -> openits.ramp_metering.v1.Plans
+	28, // 6: openits.ramp_metering.v1.RampMeter.schedule:type_name -> openits.ramp_metering.v1.Schedule
+	33, // 7: openits.ramp_metering.v1.RampMeter.traffic_responsive:type_name -> openits.ramp_metering.v1.TrafficResponsive
+	37, // 8: openits.ramp_metering.v1.RampMeter.lanes:type_name -> openits.ramp_metering.v1.Lanes
+	46, // 9: openits.ramp_metering.v1.RampMeter.mainline_detectors:type_name -> openits.ramp_metering.v1.MainlineDetectors
+	50, // 10: openits.ramp_metering.v1.RampMeter.diagnostics:type_name -> openits.ramp_metering.v1.Diagnostics
+	51, // 11: openits.ramp_metering.v1.RampMeter.faults:type_name -> openits.ramp_metering.v1.Faults
+	53, // 12: openits.ramp_metering.v1.RampMeterConfig.install_date:type_name -> google.protobuf.Timestamp
+	13, // 13: openits.ramp_metering.v1.RampMeterConfig.linear_reference:type_name -> openits.ramp_metering.v1.RampMeterConfigLinearReference
+	53, // 14: openits.ramp_metering.v1.RampMeterState.install_date:type_name -> google.protobuf.Timestamp
+	15, // 15: openits.ramp_metering.v1.RampMeterState.linear_reference:type_name -> openits.ramp_metering.v1.RampMeterStateLinearReference
+	17, // 16: openits.ramp_metering.v1.Control.config:type_name -> openits.ramp_metering.v1.ControlConfig
+	18, // 17: openits.ramp_metering.v1.Control.state:type_name -> openits.ramp_metering.v1.ControlState
+	0,  // 18: openits.ramp_metering.v1.ControlConfig.non_metering_display:type_name -> openits.ramp_metering.v1.NonMeteringDisplay
+	53, // 19: openits.ramp_metering.v1.ControlState.last_mode_change:type_name -> google.protobuf.Timestamp
+	0,  // 20: openits.ramp_metering.v1.ControlState.non_metering_display:type_name -> openits.ramp_metering.v1.NonMeteringDisplay
+	20, // 21: openits.ramp_metering.v1.Sequencing.config:type_name -> openits.ramp_metering.v1.SequencingConfig
+	21, // 22: openits.ramp_metering.v1.Sequencing.state:type_name -> openits.ramp_metering.v1.SequencingState
+	1,  // 23: openits.ramp_metering.v1.SequencingState.sequence_phase:type_name -> openits.ramp_metering.v1.SequencePhase
+	23, // 24: openits.ramp_metering.v1.AdvanceWarningSign.config:type_name -> openits.ramp_metering.v1.AdvanceWarningSignConfig
+	24, // 25: openits.ramp_metering.v1.AdvanceWarningSign.state:type_name -> openits.ramp_metering.v1.AdvanceWarningSignState
+	2,  // 26: openits.ramp_metering.v1.AdvanceWarningSignConfig.aws_fault_action:type_name -> openits.ramp_metering.v1.AwsFaultAction
+	3,  // 27: openits.ramp_metering.v1.AdvanceWarningSignState.lamp_status:type_name -> openits.ramp_metering.v1.LampStatus
+	26, // 28: openits.ramp_metering.v1.Plans.plan:type_name -> openits.ramp_metering.v1.Plan
+	27, // 29: openits.ramp_metering.v1.Plan.phase_timing:type_name -> openits.ramp_metering.v1.PhaseTiming
+	29, // 30: openits.ramp_metering.v1.Schedule.day_plan:type_name -> openits.ramp_metering.v1.DayPlan
+	31, // 31: openits.ramp_metering.v1.Schedule.schedule_entry:type_name -> openits.ramp_metering.v1.ScheduleEntry
+	32, // 32: openits.ramp_metering.v1.Schedule.state:type_name -> openits.ramp_metering.v1.ScheduleState
+	30, // 33: openits.ramp_metering.v1.DayPlan.action:type_name -> openits.ramp_metering.v1.Action
+	4,  // 34: openits.ramp_metering.v1.ScheduleEntry.months:type_name -> openits.ramp_metering.v1.Months
+	5,  // 35: openits.ramp_metering.v1.ScheduleEntry.days_of_week:type_name -> openits.ramp_metering.v1.DaysOfWeek
+	53, // 36: openits.ramp_metering.v1.ScheduleState.next_action_at:type_name -> google.protobuf.Timestamp
+	34, // 37: openits.ramp_metering.v1.TrafficResponsive.config:type_name -> openits.ramp_metering.v1.TrafficResponsiveConfig
+	36, // 38: openits.ramp_metering.v1.TrafficResponsive.state:type_name -> openits.ramp_metering.v1.TrafficResponsiveState
+	35, // 39: openits.ramp_metering.v1.TrafficResponsiveConfig.band:type_name -> openits.ramp_metering.v1.Band
+	38, // 40: openits.ramp_metering.v1.Lanes.config:type_name -> openits.ramp_metering.v1.LanesConfig
+	39, // 41: openits.ramp_metering.v1.Lanes.state:type_name -> openits.ramp_metering.v1.LanesState
+	40, // 42: openits.ramp_metering.v1.Lanes.lane:type_name -> openits.ramp_metering.v1.Lane
+	6,  // 43: openits.ramp_metering.v1.LanesConfig.release_coordination:type_name -> openits.ramp_metering.v1.ReleaseCoordination
+	6,  // 44: openits.ramp_metering.v1.LanesState.release_coordination:type_name -> openits.ramp_metering.v1.ReleaseCoordination
+	41, // 45: openits.ramp_metering.v1.Lane.config:type_name -> openits.ramp_metering.v1.LaneConfig
+	42, // 46: openits.ramp_metering.v1.Lane.state:type_name -> openits.ramp_metering.v1.LaneState
+	43, // 47: openits.ramp_metering.v1.Lane.detector:type_name -> openits.ramp_metering.v1.LaneDetector
+	7,  // 48: openits.ramp_metering.v1.LaneConfig.bypass_operation:type_name -> openits.ramp_metering.v1.BypassOperation
+	8,  // 49: openits.ramp_metering.v1.LaneState.head_state:type_name -> openits.ramp_metering.v1.HeadState
+	53, // 50: openits.ramp_metering.v1.LaneState.last_release:type_name -> google.protobuf.Timestamp
+	7,  // 51: openits.ramp_metering.v1.LaneState.bypass_operation:type_name -> openits.ramp_metering.v1.BypassOperation
+	44, // 52: openits.ramp_metering.v1.LaneDetector.config:type_name -> openits.ramp_metering.v1.LaneDetectorConfig
+	45, // 53: openits.ramp_metering.v1.LaneDetector.state:type_name -> openits.ramp_metering.v1.LaneDetectorState
+	9,  // 54: openits.ramp_metering.v1.LaneDetectorConfig.role:type_name -> openits.ramp_metering.v1.DetectorRole
+	53, // 55: openits.ramp_metering.v1.LaneDetectorState.last_update:type_name -> google.protobuf.Timestamp
+	9,  // 56: openits.ramp_metering.v1.LaneDetectorState.role:type_name -> openits.ramp_metering.v1.DetectorRole
+	47, // 57: openits.ramp_metering.v1.MainlineDetectors.detector:type_name -> openits.ramp_metering.v1.MainlineDetectorsDetector
+	48, // 58: openits.ramp_metering.v1.MainlineDetectorsDetector.config:type_name -> openits.ramp_metering.v1.MainlineDetectorsDetectorConfig
+	49, // 59: openits.ramp_metering.v1.MainlineDetectorsDetector.state:type_name -> openits.ramp_metering.v1.MainlineDetectorsDetectorState
+	9,  // 60: openits.ramp_metering.v1.MainlineDetectorsDetectorConfig.role:type_name -> openits.ramp_metering.v1.DetectorRole
+	53, // 61: openits.ramp_metering.v1.MainlineDetectorsDetectorState.last_update:type_name -> google.protobuf.Timestamp
+	9,  // 62: openits.ramp_metering.v1.MainlineDetectorsDetectorState.role:type_name -> openits.ramp_metering.v1.DetectorRole
+	53, // 63: openits.ramp_metering.v1.Diagnostics.last_self_test:type_name -> google.protobuf.Timestamp
+	52, // 64: openits.ramp_metering.v1.Faults.fault:type_name -> openits.ramp_metering.v1.Fault
+	53, // 65: openits.ramp_metering.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	10, // 66: openits.ramp_metering.v1.Fault.severity:type_name -> openits.ramp_metering.v1.FaultSeverity
+	67, // [67:67] is the sub-list for method output_type
+	67, // [67:67] is the sub-list for method input_type
+	67, // [67:67] is the sub-list for extension type_name
+	67, // [67:67] is the sub-list for extension extendee
+	0,  // [0:67] is the sub-list for field type_name
 }
 
 func init() { file_openits_ramp_metering_v1_state_proto_init() }
@@ -2623,8 +4074,8 @@ func file_openits_ramp_metering_v1_state_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_ramp_metering_v1_state_proto_rawDesc), len(file_openits_ramp_metering_v1_state_proto_rawDesc)),
-			NumEnums:      9,
-			NumMessages:   25,
+			NumEnums:      11,
+			NumMessages:   42,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

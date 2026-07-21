@@ -93,12 +93,13 @@ func TestRSUChannels_DsrcChannelImpliesDsrcTech(t *T, obs *Observation) {
 	dsrc := yangpkg.OpenitsV2XRadio_RadioTech_radio_dsrc
 	dual := yangpkg.OpenitsV2XRadio_RadioTech_radio_dual_mode
 	for n, c := range r.GetChannels().Channel {
-		if c.DsrcChannelNumber == nil {
+		cfg := c.GetConfig()
+		if cfg == nil || cfg.DsrcChannelNumber == nil {
 			continue
 		}
 		if c.RadioTech != dsrc && c.RadioTech != dual {
 			t.Errorf("channel %q has DSRC channel number %d but radio-tech is %v (must be DSRC or dual-mode)",
-				n, *c.DsrcChannelNumber, c.RadioTech)
+				n, *cfg.DsrcChannelNumber, c.RadioTech)
 		}
 	}
 }
@@ -117,12 +118,12 @@ func TestRSUSrm_DecidedRequestHasAuthority(t *T, obs *Observation) {
 	if ar == nil {
 		return
 	}
-	approved := yangpkg.OpenitsRsu_Rsu_Messages_SrmSsm_ActiveRequests_Request_Status_approved
-	active := yangpkg.OpenitsRsu_Rsu_Messages_SrmSsm_ActiveRequests_Request_Status_active
-	completed := yangpkg.OpenitsRsu_Rsu_Messages_SrmSsm_ActiveRequests_Request_Status_completed
-	denied := yangpkg.OpenitsRsu_Rsu_Messages_SrmSsm_ActiveRequests_Request_Status_denied
-	unset := yangpkg.OpenitsRsu_Rsu_Messages_SrmSsm_ActiveRequests_Request_DecisionAuthority_UNSET
-	none := yangpkg.OpenitsRsu_Rsu_Messages_SrmSsm_ActiveRequests_Request_DecisionAuthority_none
+	approved := yangpkg.OpenitsV2XMessagingTypes_SrmRequestStatus_approved
+	active := yangpkg.OpenitsV2XMessagingTypes_SrmRequestStatus_active
+	completed := yangpkg.OpenitsV2XMessagingTypes_SrmRequestStatus_completed
+	denied := yangpkg.OpenitsV2XMessagingTypes_SrmRequestStatus_denied
+	unset := yangpkg.OpenitsV2XMessagingTypes_DecisionAuthority_UNSET
+	none := yangpkg.OpenitsV2XMessagingTypes_DecisionAuthority_none
 	for id, req := range ar.Request {
 		s := req.Status
 		if s != approved && s != active && s != completed && s != denied {
@@ -448,5 +449,54 @@ func TestRSUEvent_SecurityEventShape(t *T, obs *Observation) {
 			t.Errorf("rsu-security-event ce-type %q, want %q", e.CEType, want)
 		}
 		return
+	}
+}
+
+// An expedited EVP auto-grant is only trustworthy if the RSU is signing its
+// messages: a request decided by the evp-auto authority implies the RSU has
+// security-enabled true. An unsigned auto-grant is the defect this guards.
+func TestRSUSrm_EvpGrantRequiresSigning(t *T, obs *Observation) {
+	r := obs.Device.GetRsu()
+	if r == nil || r.GetMessages() == nil || r.GetMessages().GetSrmSsm() == nil {
+		return
+	}
+	ar := r.GetMessages().GetSrmSsm().GetActiveRequests()
+	if ar == nil {
+		return
+	}
+	hasEvpAuto := false
+	for _, req := range ar.Request {
+		if req.DecisionAuthority == yangpkg.OpenitsV2XMessagingTypes_DecisionAuthority_evp_auto {
+			hasEvpAuto = true
+			break
+		}
+	}
+	if !hasEvpAuto {
+		return
+	}
+	sec := r.GetSecurity()
+	if sec == nil || sec.GetConfig() == nil || !sec.GetConfig().GetSecurityEnabled() {
+		t.Errorf("an SRM request is decided by evp-auto authority but security-enabled is not true")
+	}
+}
+
+// Every enabled SPaT intersection must have a matching MAP intersection: a
+// SPaT phase-state broadcast is meaningless to a vehicle without the MAP
+// geometry for the same (region, id).
+func TestRSUMessages_SpatIntersectionsSubsetOfMap(t *T, obs *Observation) {
+	msgs := obs.Device.GetRsu().GetMessages()
+	if msgs == nil || msgs.GetSpat() == nil || msgs.GetSpat().GetConfig() == nil {
+		return
+	}
+	mapSet := map[[2]uint16]bool{}
+	if msgs.GetMap() != nil && msgs.GetMap().GetConfig() != nil {
+		for k := range msgs.GetMap().GetConfig().Intersection {
+			mapSet[[2]uint16{k.Region, k.Id}] = true
+		}
+	}
+	for k := range msgs.GetSpat().GetConfig().Intersection {
+		if !mapSet[[2]uint16{k.Region, k.Id}] {
+			t.Errorf("SPaT intersection region=%d id=%d has no matching MAP intersection", k.Region, k.Id)
+		}
 	}
 }

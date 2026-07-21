@@ -17,7 +17,7 @@
       "type": "string"
     },
     "new-rate-vph": {
-      "maximum": 1800,
+      "maximum": 3600,
       "minimum": 0,
       "type": "integer"
     },
@@ -40,7 +40,7 @@
       "type": "integer"
     },
     "previous-rate-vph": {
-      "maximum": 1800,
+      "maximum": 3600,
       "minimum": 0,
       "type": "integer"
     },

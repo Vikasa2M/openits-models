@@ -12,8 +12,8 @@
           "config": {
             "phase-number": 2, "ring": 1, "barrier": 1, "enabled": true,
             "timing": {
-              "min-green": 30,
-              "max-green": 10, "yellow-change": "3.5", "red-clear": "1.5",
+              "min-green": "30.0",
+              "max-green": "10.0", "yellow-change": "3.5", "red-clear": "1.5",
               "walk": 7, "ped-clear": 20, "passage": "2.0"
             }
           }

@@ -1,0 +1,13 @@
+{
+  "openits-dms:sign": {
+    "config": { "id": "i35-mm214-nb-dms" },
+    "control": {
+      "config": {
+        "active-message": {
+          "memory-type": "changeable",
+          "slot-number": 1
+        }
+      }
+    }
+  }
+}

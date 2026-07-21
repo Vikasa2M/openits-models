@@ -120,6 +120,15 @@ func collectTrafficSensor() (*yangpkg.Device, error) {
 	presence.Occupied = boolPtr(false)
 	presence.LastDetection = strPtr("2026-04-19T12:00:58Z")
 
+	// Configured queue-detection zone: the state rollup below leafrefs its
+	// zone-id into this definition, so the config zone must exist first.
+	confZone, err := conf.NewQueueZone("qz-1")
+	if err != nil {
+		return nil, err
+	}
+	confZone.Name = strPtr("NB mainline queue")
+	confZone.LaneReference = u8Ptr(1) // leafref -> lanes/lane 1
+
 	// Live queue-detection rollup for one zone.
 	queues := ts.GetOrCreateQueues()
 	zone, err := queues.NewQueueZone("qz-1")

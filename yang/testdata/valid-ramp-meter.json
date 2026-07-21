@@ -19,7 +19,7 @@
       "config": {
         "mode": "openits-ramp-metering-types:mode-active",
         "active-plan-id": 2,
-        "command-source": "central"
+        "command-source": "openits-types:control-central"
       },
       "state": {
         "mode": "openits-ramp-metering-types:mode-active",
@@ -28,12 +28,13 @@
         "last-mode-change": "2026-04-19T07:00:00Z",
         "queue-length-current-vehicles": 8,
         "queue-override-active": false,
-        "command-source": "central"
+        "command-source": "openits-types:control-central"
       }
     },
     "advance-warning-sign": {
       "config": {
-        "enabled": true
+        "enabled": true,
+        "aws-fault-action": "suspend-metering"
       }
     },
     "plans": {
@@ -46,14 +47,17 @@
           "vehicles-per-green": 1,
           "queue-override-threshold-vehicles": 25,
           "phase-timing": {
-            "min-green": 1,
-            "max-green": 30,
+            "min-green": "1.0",
+            "max-green": "30.0",
             "yellow-change": "2.0",
             "red-clear": "1.0",
             "passage": "0.5"
           },
           "queue-override-clear-threshold-vehicles": 15,
-          "queue-override-rate-vph": 900
+          "queue-override-rate-vph": 900,
+          "queue-override-occupancy-threshold-pct": 40,
+          "queue-override-occupancy-clear-threshold-pct": 30,
+          "queue-override-persistence-s": 5
         }
       ]
     },
@@ -125,7 +129,27 @@
           ]
         }
       ],
-      "release-coordination": "simultaneous"
+      "config": { "release-coordination": "simultaneous" }
+    },
+    "mainline-detectors": {
+      "detector": [
+        {
+          "detector-id": "advance-1",
+          "config": {
+            "detector-id": "advance-1",
+            "role": "advance"
+          },
+          "state": {
+            "detector-id": "advance-1",
+            "role": "advance",
+            "active": true,
+            "count-vph": 4200,
+            "occupancy-pct": 18,
+            "speed-kmh": "96.0",
+            "last-update": "2026-04-19T07:05:00Z"
+          }
+        }
+      ]
     },
     "diagnostics": {
       "controller-uptime-s": 345600,

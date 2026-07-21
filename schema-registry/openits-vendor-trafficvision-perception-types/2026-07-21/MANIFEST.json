@@ -1,0 +1,7 @@
+{
+  "module": "openits-vendor-trafficvision-perception-types",
+  "revision": "2026-07-21",
+  "files": [
+    "schema.yang"
+  ]
+}

@@ -78,61 +78,6 @@ func (FaultSeverity) EnumDescriptor() ([]byte, []int) {
 	return file_openits_common_v1_events_proto_rawDescGZIP(), []int{0}
 }
 
-type Trigger int32
-
-const (
-	Trigger_TRIGGER_OPERATOR   Trigger = 0
-	Trigger_TRIGGER_SCHEDULE   Trigger = 1
-	Trigger_TRIGGER_FAULT      Trigger = 2
-	Trigger_TRIGGER_PREEMPTION Trigger = 3
-	Trigger_TRIGGER_UNKNOWN    Trigger = 4
-)
-
-// Enum value maps for Trigger.
-var (
-	Trigger_name = map[int32]string{
-		0: "TRIGGER_OPERATOR",
-		1: "TRIGGER_SCHEDULE",
-		2: "TRIGGER_FAULT",
-		3: "TRIGGER_PREEMPTION",
-		4: "TRIGGER_UNKNOWN",
-	}
-	Trigger_value = map[string]int32{
-		"TRIGGER_OPERATOR":   0,
-		"TRIGGER_SCHEDULE":   1,
-		"TRIGGER_FAULT":      2,
-		"TRIGGER_PREEMPTION": 3,
-		"TRIGGER_UNKNOWN":    4,
-	}
-)
-
-func (x Trigger) Enum() *Trigger {
-	p := new(Trigger)
-	*p = x
-	return p
-}
-
-func (x Trigger) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Trigger) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_common_v1_events_proto_enumTypes[1].Descriptor()
-}
-
-func (Trigger) Type() protoreflect.EnumType {
-	return &file_openits_common_v1_events_proto_enumTypes[1]
-}
-
-func (x Trigger) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Trigger.Descriptor instead.
-func (Trigger) EnumDescriptor() ([]byte, []int) {
-	return file_openits_common_v1_events_proto_rawDescGZIP(), []int{1}
-}
-
 type CommHealthEvent struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	Kind              string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
@@ -142,6 +87,7 @@ type CommHealthEvent struct {
 	PercentLoss       uint32                 `protobuf:"varint,6,opt,name=percent_loss,json=percentLoss,proto3" json:"percent_loss,omitempty"`
 	AvgResponseMs     uint32                 `protobuf:"varint,7,opt,name=avg_response_ms,json=avgResponseMs,proto3" json:"avg_response_ms,omitempty"`
 	LinkId            uint32                 `protobuf:"varint,8,opt,name=link_id,json=linkId,proto3" json:"link_id,omitempty"`
+	LinkType          string                 `protobuf:"bytes,12,opt,name=link_type,json=linkType,proto3" json:"link_type,omitempty"`
 	ObservedBy        string                 `protobuf:"bytes,9,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
 	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner             string                 `protobuf:"bytes,10,opt,name=owner,proto3" json:"owner,omitempty"`
@@ -229,6 +175,13 @@ func (x *CommHealthEvent) GetLinkId() uint32 {
 		return x.LinkId
 	}
 	return 0
+}
+
+func (x *CommHealthEvent) GetLinkType() string {
+	if x != nil {
+		return x.LinkType
+	}
+	return ""
 }
 
 func (x *CommHealthEvent) GetObservedBy() string {
@@ -379,6 +332,7 @@ type FaultRaised struct {
 	FaultId        string                 `protobuf:"bytes,2,opt,name=fault_id,json=faultId,proto3" json:"fault_id,omitempty"`
 	Severity       FaultSeverity          `protobuf:"varint,3,opt,name=severity,proto3,enum=openits.common.v1.FaultSeverity" json:"severity,omitempty"`
 	Description    string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	CorrelatesWith string                 `protobuf:"bytes,9,opt,name=correlates_with,json=correlatesWith,proto3" json:"correlates_with,omitempty"`
 	ObservedBy     string                 `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner          string                 `protobuf:"bytes,7,opt,name=owner,proto3" json:"owner,omitempty"`
@@ -447,6 +401,13 @@ func (x *FaultRaised) GetDescription() string {
 	return ""
 }
 
+func (x *FaultRaised) GetCorrelatesWith() string {
+	if x != nil {
+		return x.CorrelatesWith
+	}
+	return ""
+}
+
 func (x *FaultRaised) GetObservedBy() string {
 	if x != nil {
 		return x.ObservedBy
@@ -496,7 +457,7 @@ type ModeChanged struct {
 	Current        string                 `protobuf:"bytes,3,opt,name=current,proto3" json:"current,omitempty"`
 	Reason         string                 `protobuf:"bytes,4,opt,name=reason,proto3" json:"reason,omitempty"`
 	ControlSource  string                 `protobuf:"bytes,9,opt,name=control_source,json=controlSource,proto3" json:"control_source,omitempty"`
-	Trigger        Trigger                `protobuf:"varint,10,opt,name=trigger,proto3,enum=openits.common.v1.Trigger" json:"trigger,omitempty"`
+	Trigger        string                 `protobuf:"bytes,10,opt,name=trigger,proto3" json:"trigger,omitempty"`
 	ObservedBy     string                 `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner          string                 `protobuf:"bytes,7,opt,name=owner,proto3" json:"owner,omitempty"`
@@ -572,11 +533,11 @@ func (x *ModeChanged) GetControlSource() string {
 	return ""
 }
 
-func (x *ModeChanged) GetTrigger() Trigger {
+func (x *ModeChanged) GetTrigger() string {
 	if x != nil {
 		return x.Trigger
 	}
-	return Trigger_TRIGGER_OPERATOR
+	return ""
 }
 
 func (x *ModeChanged) GetObservedBy() string {
@@ -625,7 +586,7 @@ var File_openits_common_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_common_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"\x1eopenits/common/v1/events.proto\x12\x11openits.common.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1copenits/types/v1/types.proto\"\xf8\x03\n" +
+	"\x1eopenits/common/v1/events.proto\x12\x11openits.common.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1copenits/types/v1/types.proto\"\x95\x04\n" +
 	"\x0fCommHealthEvent\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12-\n" +
 	"\x12drift_milliseconds\x18\x03 \x01(\x03R\x11driftMilliseconds\x12%\n" +
@@ -633,7 +594,8 @@ const file_openits_common_v1_events_proto_rawDesc = "" +
 	"\x0fattempts_failed\x18\x05 \x01(\rR\x0eattemptsFailed\x12!\n" +
 	"\fpercent_loss\x18\x06 \x01(\rR\vpercentLoss\x12&\n" +
 	"\x0favg_response_ms\x18\a \x01(\rR\ravgResponseMs\x12\x17\n" +
-	"\alink_id\x18\b \x01(\rR\x06linkId\x12\x1f\n" +
+	"\alink_id\x18\b \x01(\rR\x06linkId\x12\x1b\n" +
+	"\tlink_type\x18\f \x01(\tR\blinkType\x12\x1f\n" +
 	"\vobserved_by\x18\t \x01(\tR\n" +
 	"observedBy\x12;\n" +
 	"\voccurred_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
@@ -653,12 +615,13 @@ const file_openits_common_v1_events_proto_rawDesc = "" +
 	"\x05owner\x18\x05 \x01(\tR\x05owner\x12\x1a\n" +
 	"\bsequence\x18\x06 \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\x8c\x03\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xb5\x03\n" +
 	"\vFaultRaised\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x19\n" +
 	"\bfault_id\x18\x02 \x01(\tR\afaultId\x12<\n" +
 	"\bseverity\x18\x03 \x01(\x0e2 .openits.common.v1.FaultSeverityR\bseverity\x12 \n" +
-	"\vdescription\x18\x04 \x01(\tR\vdescription\x12\x1f\n" +
+	"\vdescription\x18\x04 \x01(\tR\vdescription\x12'\n" +
+	"\x0fcorrelates_with\x18\t \x01(\tR\x0ecorrelatesWith\x12\x1f\n" +
 	"\vobserved_by\x18\x06 \x01(\tR\n" +
 	"observedBy\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
@@ -666,15 +629,15 @@ const file_openits_common_v1_events_proto_rawDesc = "" +
 	"\x05owner\x18\a \x01(\tR\x05owner\x12\x1a\n" +
 	"\bsequence\x18\b \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xb6\x03\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\x9a\x03\n" +
 	"\vModeChanged\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x14\n" +
 	"\x05prior\x18\x02 \x01(\tR\x05prior\x12\x18\n" +
 	"\acurrent\x18\x03 \x01(\tR\acurrent\x12\x16\n" +
 	"\x06reason\x18\x04 \x01(\tR\x06reason\x12%\n" +
-	"\x0econtrol_source\x18\t \x01(\tR\rcontrolSource\x124\n" +
+	"\x0econtrol_source\x18\t \x01(\tR\rcontrolSource\x12\x18\n" +
 	"\atrigger\x18\n" +
-	" \x01(\x0e2\x1a.openits.common.v1.TriggerR\atrigger\x12\x1f\n" +
+	" \x01(\tR\atrigger\x12\x1f\n" +
 	"\vobserved_by\x18\x06 \x01(\tR\n" +
 	"observedBy\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
@@ -688,13 +651,7 @@ const file_openits_common_v1_events_proto_rawDesc = "" +
 	"\x16FAULT_SEVERITY_WARNING\x10\x01\x12\x18\n" +
 	"\x14FAULT_SEVERITY_MINOR\x10\x02\x12\x18\n" +
 	"\x14FAULT_SEVERITY_MAJOR\x10\x03\x12\x1b\n" +
-	"\x17FAULT_SEVERITY_CRITICAL\x10\x04*u\n" +
-	"\aTrigger\x12\x14\n" +
-	"\x10TRIGGER_OPERATOR\x10\x00\x12\x14\n" +
-	"\x10TRIGGER_SCHEDULE\x10\x01\x12\x11\n" +
-	"\rTRIGGER_FAULT\x10\x02\x12\x16\n" +
-	"\x12TRIGGER_PREEMPTION\x10\x03\x12\x13\n" +
-	"\x0fTRIGGER_UNKNOWN\x10\x04BHZFgithub.com/openits/openits-models/pkg/proto/openits/common/v1;commonv1b\x06proto3"
+	"\x17FAULT_SEVERITY_CRITICAL\x10\x04BHZFgithub.com/openits/openits-models/pkg/proto/openits/common/v1;commonv1b\x06proto3"
 
 var (
 	file_openits_common_v1_events_proto_rawDescOnce sync.Once
@@ -708,34 +665,32 @@ func file_openits_common_v1_events_proto_rawDescGZIP() []byte {
 	return file_openits_common_v1_events_proto_rawDescData
 }
 
-var file_openits_common_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_openits_common_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_openits_common_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_openits_common_v1_events_proto_goTypes = []any{
 	(FaultSeverity)(0),            // 0: openits.common.v1.FaultSeverity
-	(Trigger)(0),                  // 1: openits.common.v1.Trigger
-	(*CommHealthEvent)(nil),       // 2: openits.common.v1.CommHealthEvent
-	(*FaultCleared)(nil),          // 3: openits.common.v1.FaultCleared
-	(*FaultRaised)(nil),           // 4: openits.common.v1.FaultRaised
-	(*ModeChanged)(nil),           // 5: openits.common.v1.ModeChanged
-	(*timestamppb.Timestamp)(nil), // 6: google.protobuf.Timestamp
-	(*v1.WireSource)(nil),         // 7: openits.types.v1.WireSource
+	(*CommHealthEvent)(nil),       // 1: openits.common.v1.CommHealthEvent
+	(*FaultCleared)(nil),          // 2: openits.common.v1.FaultCleared
+	(*FaultRaised)(nil),           // 3: openits.common.v1.FaultRaised
+	(*ModeChanged)(nil),           // 4: openits.common.v1.ModeChanged
+	(*timestamppb.Timestamp)(nil), // 5: google.protobuf.Timestamp
+	(*v1.WireSource)(nil),         // 6: openits.types.v1.WireSource
 }
 var file_openits_common_v1_events_proto_depIdxs = []int32{
-	6,  // 0: openits.common.v1.CommHealthEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	7,  // 1: openits.common.v1.CommHealthEvent.source:type_name -> openits.types.v1.WireSource
-	6,  // 2: openits.common.v1.FaultCleared.occurred_at:type_name -> google.protobuf.Timestamp
-	7,  // 3: openits.common.v1.FaultCleared.source:type_name -> openits.types.v1.WireSource
-	0,  // 4: openits.common.v1.FaultRaised.severity:type_name -> openits.common.v1.FaultSeverity
-	6,  // 5: openits.common.v1.FaultRaised.occurred_at:type_name -> google.protobuf.Timestamp
-	7,  // 6: openits.common.v1.FaultRaised.source:type_name -> openits.types.v1.WireSource
-	1,  // 7: openits.common.v1.ModeChanged.trigger:type_name -> openits.common.v1.Trigger
-	6,  // 8: openits.common.v1.ModeChanged.occurred_at:type_name -> google.protobuf.Timestamp
-	7,  // 9: openits.common.v1.ModeChanged.source:type_name -> openits.types.v1.WireSource
-	10, // [10:10] is the sub-list for method output_type
-	10, // [10:10] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	5, // 0: openits.common.v1.CommHealthEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	6, // 1: openits.common.v1.CommHealthEvent.source:type_name -> openits.types.v1.WireSource
+	5, // 2: openits.common.v1.FaultCleared.occurred_at:type_name -> google.protobuf.Timestamp
+	6, // 3: openits.common.v1.FaultCleared.source:type_name -> openits.types.v1.WireSource
+	0, // 4: openits.common.v1.FaultRaised.severity:type_name -> openits.common.v1.FaultSeverity
+	5, // 5: openits.common.v1.FaultRaised.occurred_at:type_name -> google.protobuf.Timestamp
+	6, // 6: openits.common.v1.FaultRaised.source:type_name -> openits.types.v1.WireSource
+	5, // 7: openits.common.v1.ModeChanged.occurred_at:type_name -> google.protobuf.Timestamp
+	6, // 8: openits.common.v1.ModeChanged.source:type_name -> openits.types.v1.WireSource
+	9, // [9:9] is the sub-list for method output_type
+	9, // [9:9] is the sub-list for method input_type
+	9, // [9:9] is the sub-list for extension type_name
+	9, // [9:9] is the sub-list for extension extendee
+	0, // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_openits_common_v1_events_proto_init() }
@@ -748,7 +703,7 @@ func file_openits_common_v1_events_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_common_v1_events_proto_rawDesc), len(file_openits_common_v1_events_proto_rawDesc)),
-			NumEnums:      2,
+			NumEnums:      1,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,

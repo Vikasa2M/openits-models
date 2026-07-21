@@ -1,0 +1,7 @@
+{
+  "module": "openits-cabinet-power",
+  "revision": "2026-07-21",
+  "files": [
+    "schema.yang"
+  ]
+}

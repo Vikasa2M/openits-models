@@ -124,12 +124,14 @@ type QueueStateChanged struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	ZoneId         string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Queueing       bool                   `protobuf:"varint,2,opt,name=queueing,proto3" json:"queueing,omitempty"`
-	QueueDurationS uint32                 `protobuf:"varint,3,opt,name=queue_duration_s,json=queueDurationS,proto3" json:"queue_duration_s,omitempty"`
-	QueueStart     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=queue_start,json=queueStart,proto3" json:"queue_start,omitempty"`
+	BackOfQueueM   uint32                 `protobuf:"varint,10,opt,name=back_of_queue_m,json=backOfQueueM,proto3" json:"back_of_queue_m,omitempty"`
 	ObservedBy     string                 `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner          string                 `protobuf:"bytes,7,opt,name=owner,proto3" json:"owner,omitempty"`
+	QueueDurationS uint32                 `protobuf:"varint,3,opt,name=queue_duration_s,json=queueDurationS,proto3" json:"queue_duration_s,omitempty"`
+	QueueLengthM   uint32                 `protobuf:"varint,11,opt,name=queue_length_m,json=queueLengthM,proto3" json:"queue_length_m,omitempty"`
+	QueueStart     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=queue_start,json=queueStart,proto3" json:"queue_start,omitempty"`
+	Queueing       bool                   `protobuf:"varint,2,opt,name=queueing,proto3" json:"queueing,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,9,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -180,25 +182,11 @@ func (x *QueueStateChanged) GetZoneId() string {
 	return ""
 }
 
-func (x *QueueStateChanged) GetQueueing() bool {
+func (x *QueueStateChanged) GetBackOfQueueM() uint32 {
 	if x != nil {
-		return x.Queueing
-	}
-	return false
-}
-
-func (x *QueueStateChanged) GetQueueDurationS() uint32 {
-	if x != nil {
-		return x.QueueDurationS
+		return x.BackOfQueueM
 	}
 	return 0
-}
-
-func (x *QueueStateChanged) GetQueueStart() *timestamppb.Timestamp {
-	if x != nil {
-		return x.QueueStart
-	}
-	return nil
 }
 
 func (x *QueueStateChanged) GetObservedBy() string {
@@ -220,6 +208,34 @@ func (x *QueueStateChanged) GetOwner() string {
 		return x.Owner
 	}
 	return ""
+}
+
+func (x *QueueStateChanged) GetQueueDurationS() uint32 {
+	if x != nil {
+		return x.QueueDurationS
+	}
+	return 0
+}
+
+func (x *QueueStateChanged) GetQueueLengthM() uint32 {
+	if x != nil {
+		return x.QueueLengthM
+	}
+	return 0
+}
+
+func (x *QueueStateChanged) GetQueueStart() *timestamppb.Timestamp {
+	if x != nil {
+		return x.QueueStart
+	}
+	return nil
+}
+
+func (x *QueueStateChanged) GetQueueing() bool {
+	if x != nil {
+		return x.Queueing
+	}
+	return false
 }
 
 func (x *QueueStateChanged) GetSequence() uint64 {
@@ -712,19 +728,22 @@ var File_openits_traffic_sensor_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_traffic_sensor_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"&openits/traffic_sensor/v1/events.proto\x12\x19openits.traffic_sensor.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xfd\x02\n" +
+	"&openits/traffic_sensor/v1/events.proto\x12\x19openits.traffic_sensor.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xca\x03\n" +
 	"\x11QueueStateChanged\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x17\n" +
-	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12\x1a\n" +
-	"\bqueueing\x18\x02 \x01(\bR\bqueueing\x12(\n" +
-	"\x10queue_duration_s\x18\x03 \x01(\rR\x0equeueDurationS\x12;\n" +
-	"\vqueue_start\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"queueStart\x12\x1f\n" +
+	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12%\n" +
+	"\x0fback_of_queue_m\x18\n" +
+	" \x01(\rR\fbackOfQueueM\x12\x1f\n" +
 	"\vobserved_by\x18\x05 \x01(\tR\n" +
 	"observedBy\x12;\n" +
 	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\a \x01(\tR\x05owner\x12\x1a\n" +
+	"\x05owner\x18\a \x01(\tR\x05owner\x12(\n" +
+	"\x10queue_duration_s\x18\x03 \x01(\rR\x0equeueDurationS\x12$\n" +
+	"\x0equeue_length_m\x18\v \x01(\rR\fqueueLengthM\x12;\n" +
+	"\vqueue_start\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"queueStart\x12\x1a\n" +
+	"\bqueueing\x18\x02 \x01(\bR\bqueueing\x12\x1a\n" +
 	"\bsequence\x18\b \x01(\x04R\bsequence\x12(\n" +
 	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceId\"\xaf\x02\n" +
 	"\x15TrafficIntervalReport\x12\x12\n" +
@@ -812,8 +831,8 @@ var file_openits_traffic_sensor_v1_events_proto_goTypes = []any{
 	(*timestamppb.Timestamp)(nil),                // 7: google.protobuf.Timestamp
 }
 var file_openits_traffic_sensor_v1_events_proto_depIdxs = []int32{
-	7, // 0: openits.traffic_sensor.v1.QueueStateChanged.queue_start:type_name -> google.protobuf.Timestamp
-	7, // 1: openits.traffic_sensor.v1.QueueStateChanged.occurred_at:type_name -> google.protobuf.Timestamp
+	7, // 0: openits.traffic_sensor.v1.QueueStateChanged.occurred_at:type_name -> google.protobuf.Timestamp
+	7, // 1: openits.traffic_sensor.v1.QueueStateChanged.queue_start:type_name -> google.protobuf.Timestamp
 	4, // 2: openits.traffic_sensor.v1.TrafficIntervalReport.lane:type_name -> openits.traffic_sensor.v1.TrafficIntervalReportLane
 	7, // 3: openits.traffic_sensor.v1.TrafficIntervalReport.occurred_at:type_name -> google.protobuf.Timestamp
 	5, // 4: openits.traffic_sensor.v1.TrafficIntervalReportLane.class_volume:type_name -> openits.traffic_sensor.v1.TrafficIntervalReportLaneClassVolume

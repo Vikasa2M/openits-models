@@ -11,14 +11,15 @@
             "enabled": true,
             "mode": "openits-v2x-radio:mode-continuous",
             "tx-power": 20,
+            "antenna-gain-dbi": "8.0",
             "primary": true,
+            "dsrc-channel-number": 172,
             "dcc": {
               "policy": "adaptive",
               "cbr-target-percent": 65
             }
           },
-          "radio-tech": "openits-v2x-radio:radio-dsrc",
-          "dsrc-channel-number": 172
+          "radio-tech": "openits-v2x-radio:radio-dsrc"
         }
       ]
     },

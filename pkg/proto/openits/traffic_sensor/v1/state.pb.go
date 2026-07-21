@@ -338,6 +338,7 @@ type TrafficSensor struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Config        *TrafficSensorConfig   `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
 	State         *TrafficSensorState    `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
+	Associations  *Associations          `protobuf:"bytes,8,opt,name=associations,proto3" json:"associations,omitempty"`
 	Configuration *Configuration         `protobuf:"bytes,3,opt,name=configuration,proto3" json:"configuration,omitempty"`
 	Lanes         *Lanes                 `protobuf:"bytes,4,opt,name=lanes,proto3" json:"lanes,omitempty"`
 	Queues        *Queues                `protobuf:"bytes,5,opt,name=queues,proto3" json:"queues,omitempty"`
@@ -391,6 +392,13 @@ func (x *TrafficSensor) GetState() *TrafficSensorState {
 	return nil
 }
 
+func (x *TrafficSensor) GetAssociations() *Associations {
+	if x != nil {
+		return x.Associations
+	}
+	return nil
+}
+
 func (x *TrafficSensor) GetConfiguration() *Configuration {
 	if x != nil {
 		return x.Configuration
@@ -427,16 +435,21 @@ func (x *TrafficSensor) GetFaults() *Faults {
 }
 
 type TrafficSensorConfig struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Elevation     string                 `protobuf:"bytes,1,opt,name=elevation,proto3" json:"elevation,omitempty"`
-	Heading       uint32                 `protobuf:"varint,2,opt,name=heading,proto3" json:"heading,omitempty"`
-	Id            string                 `protobuf:"bytes,8,opt,name=id,proto3" json:"id,omitempty"`
-	Latitude      string                 `protobuf:"bytes,3,opt,name=latitude,proto3" json:"latitude,omitempty"`
-	Longitude     string                 `protobuf:"bytes,4,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	Name          string                 `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
-	RoadReference string                 `protobuf:"bytes,6,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state           protoimpl.MessageState              `protogen:"open.v1"`
+	Elevation       string                              `protobuf:"bytes,1,opt,name=elevation,proto3" json:"elevation,omitempty"`
+	Heading         uint32                              `protobuf:"varint,2,opt,name=heading,proto3" json:"heading,omitempty"`
+	Id              string                              `protobuf:"bytes,8,opt,name=id,proto3" json:"id,omitempty"`
+	InstallDate     *timestamppb.Timestamp              `protobuf:"bytes,7,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
+	Latitude        string                              `protobuf:"bytes,3,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	LinearReference *TrafficSensorConfigLinearReference `protobuf:"bytes,9,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
+	Longitude       string                              `protobuf:"bytes,4,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	MaintainedBy    string                              `protobuf:"bytes,10,opt,name=maintained_by,json=maintainedBy,proto3" json:"maintained_by,omitempty"`
+	Name            string                              `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
+	Owner           string                              `protobuf:"bytes,11,opt,name=owner,proto3" json:"owner,omitempty"`
+	RoadReference   string                              `protobuf:"bytes,6,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
+	SiteId          string                              `protobuf:"bytes,12,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *TrafficSensorConfig) Reset() {
@@ -490,6 +503,13 @@ func (x *TrafficSensorConfig) GetId() string {
 	return ""
 }
 
+func (x *TrafficSensorConfig) GetInstallDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.InstallDate
+	}
+	return nil
+}
+
 func (x *TrafficSensorConfig) GetLatitude() string {
 	if x != nil {
 		return x.Latitude
@@ -497,9 +517,23 @@ func (x *TrafficSensorConfig) GetLatitude() string {
 	return ""
 }
 
+func (x *TrafficSensorConfig) GetLinearReference() *TrafficSensorConfigLinearReference {
+	if x != nil {
+		return x.LinearReference
+	}
+	return nil
+}
+
 func (x *TrafficSensorConfig) GetLongitude() string {
 	if x != nil {
 		return x.Longitude
+	}
+	return ""
+}
+
+func (x *TrafficSensorConfig) GetMaintainedBy() string {
+	if x != nil {
+		return x.MaintainedBy
 	}
 	return ""
 }
@@ -511,9 +545,91 @@ func (x *TrafficSensorConfig) GetName() string {
 	return ""
 }
 
+func (x *TrafficSensorConfig) GetOwner() string {
+	if x != nil {
+		return x.Owner
+	}
+	return ""
+}
+
 func (x *TrafficSensorConfig) GetRoadReference() string {
 	if x != nil {
 		return x.RoadReference
+	}
+	return ""
+}
+
+func (x *TrafficSensorConfig) GetSiteId() string {
+	if x != nil {
+		return x.SiteId
+	}
+	return ""
+}
+
+type TrafficSensorConfigLinearReference struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	RouteDesignator string                 `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3" json:"route_designator,omitempty"`
+	Direction       string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"`
+	Measure         string                 `protobuf:"bytes,3,opt,name=measure,proto3" json:"measure,omitempty"`
+	LrsMethod       string                 `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3" json:"lrs_method,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *TrafficSensorConfigLinearReference) Reset() {
+	*x = TrafficSensorConfigLinearReference{}
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrafficSensorConfigLinearReference) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrafficSensorConfigLinearReference) ProtoMessage() {}
+
+func (x *TrafficSensorConfigLinearReference) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrafficSensorConfigLinearReference.ProtoReflect.Descriptor instead.
+func (*TrafficSensorConfigLinearReference) Descriptor() ([]byte, []int) {
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *TrafficSensorConfigLinearReference) GetRouteDesignator() string {
+	if x != nil {
+		return x.RouteDesignator
+	}
+	return ""
+}
+
+func (x *TrafficSensorConfigLinearReference) GetDirection() string {
+	if x != nil {
+		return x.Direction
+	}
+	return ""
+}
+
+func (x *TrafficSensorConfigLinearReference) GetMeasure() string {
+	if x != nil {
+		return x.Measure
+	}
+	return ""
+}
+
+func (x *TrafficSensorConfigLinearReference) GetLrsMethod() string {
+	if x != nil {
+		return x.LrsMethod
 	}
 	return ""
 }
@@ -528,20 +644,25 @@ type TrafficSensorState struct {
 	HardwareVersion   string                                `protobuf:"bytes,16,opt,name=hardware_version,json=hardwareVersion,proto3" json:"hardware_version,omitempty"`
 	Heading           uint32                                `protobuf:"varint,5,opt,name=heading,proto3" json:"heading,omitempty"`
 	Id                string                                `protobuf:"bytes,14,opt,name=id,proto3" json:"id,omitempty"`
+	InstallDate       *timestamppb.Timestamp                `protobuf:"bytes,12,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
 	Latitude          string                                `protobuf:"bytes,6,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	LinearReference   *TrafficSensorStateLinearReference    `protobuf:"bytes,17,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
 	Longitude         string                                `protobuf:"bytes,7,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	MaintainedBy      string                                `protobuf:"bytes,18,opt,name=maintained_by,json=maintainedBy,proto3" json:"maintained_by,omitempty"`
 	Make              string                                `protobuf:"bytes,8,opt,name=make,proto3" json:"make,omitempty"`
 	Model             string                                `protobuf:"bytes,9,opt,name=model,proto3" json:"model,omitempty"`
 	Name              string                                `protobuf:"bytes,10,opt,name=name,proto3" json:"name,omitempty"`
+	Owner             string                                `protobuf:"bytes,19,opt,name=owner,proto3" json:"owner,omitempty"`
 	RoadReference     string                                `protobuf:"bytes,11,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
 	Serial            string                                `protobuf:"bytes,13,opt,name=serial,proto3" json:"serial,omitempty"`
+	SiteId            string                                `protobuf:"bytes,20,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
 
 func (x *TrafficSensorState) Reset() {
 	*x = TrafficSensorState{}
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[2]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -553,7 +674,7 @@ func (x *TrafficSensorState) String() string {
 func (*TrafficSensorState) ProtoMessage() {}
 
 func (x *TrafficSensorState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[2]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -566,7 +687,7 @@ func (x *TrafficSensorState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TrafficSensorState.ProtoReflect.Descriptor instead.
 func (*TrafficSensorState) Descriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{2}
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *TrafficSensorState) GetOperationalStatus() OpenitsTrafficSensorOperationalStatus {
@@ -625,6 +746,13 @@ func (x *TrafficSensorState) GetId() string {
 	return ""
 }
 
+func (x *TrafficSensorState) GetInstallDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.InstallDate
+	}
+	return nil
+}
+
 func (x *TrafficSensorState) GetLatitude() string {
 	if x != nil {
 		return x.Latitude
@@ -632,9 +760,23 @@ func (x *TrafficSensorState) GetLatitude() string {
 	return ""
 }
 
+func (x *TrafficSensorState) GetLinearReference() *TrafficSensorStateLinearReference {
+	if x != nil {
+		return x.LinearReference
+	}
+	return nil
+}
+
 func (x *TrafficSensorState) GetLongitude() string {
 	if x != nil {
 		return x.Longitude
+	}
+	return ""
+}
+
+func (x *TrafficSensorState) GetMaintainedBy() string {
+	if x != nil {
+		return x.MaintainedBy
 	}
 	return ""
 }
@@ -660,6 +802,13 @@ func (x *TrafficSensorState) GetName() string {
 	return ""
 }
 
+func (x *TrafficSensorState) GetOwner() string {
+	if x != nil {
+		return x.Owner
+	}
+	return ""
+}
+
 func (x *TrafficSensorState) GetRoadReference() string {
 	if x != nil {
 		return x.RoadReference
@@ -674,20 +823,200 @@ func (x *TrafficSensorState) GetSerial() string {
 	return ""
 }
 
+func (x *TrafficSensorState) GetSiteId() string {
+	if x != nil {
+		return x.SiteId
+	}
+	return ""
+}
+
+type TrafficSensorStateLinearReference struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	RouteDesignator string                 `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3" json:"route_designator,omitempty"`
+	Direction       string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"`
+	Measure         string                 `protobuf:"bytes,3,opt,name=measure,proto3" json:"measure,omitempty"`
+	LrsMethod       string                 `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3" json:"lrs_method,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *TrafficSensorStateLinearReference) Reset() {
+	*x = TrafficSensorStateLinearReference{}
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrafficSensorStateLinearReference) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrafficSensorStateLinearReference) ProtoMessage() {}
+
+func (x *TrafficSensorStateLinearReference) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrafficSensorStateLinearReference.ProtoReflect.Descriptor instead.
+func (*TrafficSensorStateLinearReference) Descriptor() ([]byte, []int) {
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *TrafficSensorStateLinearReference) GetRouteDesignator() string {
+	if x != nil {
+		return x.RouteDesignator
+	}
+	return ""
+}
+
+func (x *TrafficSensorStateLinearReference) GetDirection() string {
+	if x != nil {
+		return x.Direction
+	}
+	return ""
+}
+
+func (x *TrafficSensorStateLinearReference) GetMeasure() string {
+	if x != nil {
+		return x.Measure
+	}
+	return ""
+}
+
+func (x *TrafficSensorStateLinearReference) GetLrsMethod() string {
+	if x != nil {
+		return x.LrsMethod
+	}
+	return ""
+}
+
+type Associations struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	AssociatedDevice []*AssociatedDevice    `protobuf:"bytes,1,rep,name=associated_device,json=associatedDevice,proto3" json:"associated_device,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *Associations) Reset() {
+	*x = Associations{}
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Associations) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Associations) ProtoMessage() {}
+
+func (x *Associations) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Associations.ProtoReflect.Descriptor instead.
+func (*Associations) Descriptor() ([]byte, []int) {
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *Associations) GetAssociatedDevice() []*AssociatedDevice {
+	if x != nil {
+		return x.AssociatedDevice
+	}
+	return nil
+}
+
+type AssociatedDevice struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	Role          string                 `protobuf:"bytes,2,opt,name=role,proto3" json:"role,omitempty"`
+	Note          string                 `protobuf:"bytes,3,opt,name=note,proto3" json:"note,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AssociatedDevice) Reset() {
+	*x = AssociatedDevice{}
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AssociatedDevice) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AssociatedDevice) ProtoMessage() {}
+
+func (x *AssociatedDevice) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AssociatedDevice.ProtoReflect.Descriptor instead.
+func (*AssociatedDevice) Descriptor() ([]byte, []int) {
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *AssociatedDevice) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *AssociatedDevice) GetRole() string {
+	if x != nil {
+		return x.Role
+	}
+	return ""
+}
+
+func (x *AssociatedDevice) GetNote() string {
+	if x != nil {
+		return x.Note
+	}
+	return ""
+}
+
 type Configuration struct {
-	state                protoimpl.MessageState `protogen:"open.v1"`
-	DataIntervalS        uint32                 `protobuf:"varint,1,opt,name=data_interval_s,json=dataIntervalS,proto3" json:"data_interval_s,omitempty"`
-	LaneNumberingOrigin  LaneNumberingOrigin    `protobuf:"varint,4,opt,name=lane_numbering_origin,json=laneNumberingOrigin,proto3,enum=openits.traffic_sensor.v1.LaneNumberingOrigin" json:"lane_numbering_origin,omitempty"`
-	MountingSide         MountingSide           `protobuf:"varint,5,opt,name=mounting_side,json=mountingSide,proto3,enum=openits.traffic_sensor.v1.MountingSide" json:"mounting_side,omitempty"`
-	ClassificationScheme string                 `protobuf:"bytes,3,opt,name=classification_scheme,json=classificationScheme,proto3" json:"classification_scheme,omitempty"`
-	VehicleClass         []*VehicleClass        `protobuf:"bytes,2,rep,name=vehicle_class,json=vehicleClass,proto3" json:"vehicle_class,omitempty"`
+	state                protoimpl.MessageState    `protogen:"open.v1"`
+	DataIntervalS        uint32                    `protobuf:"varint,1,opt,name=data_interval_s,json=dataIntervalS,proto3" json:"data_interval_s,omitempty"`
+	LaneNumberingOrigin  LaneNumberingOrigin       `protobuf:"varint,4,opt,name=lane_numbering_origin,json=laneNumberingOrigin,proto3,enum=openits.traffic_sensor.v1.LaneNumberingOrigin" json:"lane_numbering_origin,omitempty"`
+	MountingSide         MountingSide              `protobuf:"varint,5,opt,name=mounting_side,json=mountingSide,proto3,enum=openits.traffic_sensor.v1.MountingSide" json:"mounting_side,omitempty"`
+	ClassificationScheme string                    `protobuf:"bytes,3,opt,name=classification_scheme,json=classificationScheme,proto3" json:"classification_scheme,omitempty"`
+	VehicleClass         []*VehicleClass           `protobuf:"bytes,2,rep,name=vehicle_class,json=vehicleClass,proto3" json:"vehicle_class,omitempty"`
+	QueueZone            []*ConfigurationQueueZone `protobuf:"bytes,6,rep,name=queue_zone,json=queueZone,proto3" json:"queue_zone,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
 
 func (x *Configuration) Reset() {
 	*x = Configuration{}
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[3]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -699,7 +1028,7 @@ func (x *Configuration) String() string {
 func (*Configuration) ProtoMessage() {}
 
 func (x *Configuration) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[3]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -712,7 +1041,7 @@ func (x *Configuration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Configuration.ProtoReflect.Descriptor instead.
 func (*Configuration) Descriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{3}
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *Configuration) GetDataIntervalS() uint32 {
@@ -750,19 +1079,28 @@ func (x *Configuration) GetVehicleClass() []*VehicleClass {
 	return nil
 }
 
+func (x *Configuration) GetQueueZone() []*ConfigurationQueueZone {
+	if x != nil {
+		return x.QueueZone
+	}
+	return nil
+}
+
 type VehicleClass struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ClassId       uint32                 `protobuf:"varint,1,opt,name=class_id,json=classId,proto3" json:"class_id,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	MinLengthM    string                 `protobuf:"bytes,3,opt,name=min_length_m,json=minLengthM,proto3" json:"min_length_m,omitempty"`
 	MaxLengthM    string                 `protobuf:"bytes,4,opt,name=max_length_m,json=maxLengthM,proto3" json:"max_length_m,omitempty"`
+	MinAxleCount  uint32                 `protobuf:"varint,5,opt,name=min_axle_count,json=minAxleCount,proto3" json:"min_axle_count,omitempty"`
+	MaxAxleCount  uint32                 `protobuf:"varint,6,opt,name=max_axle_count,json=maxAxleCount,proto3" json:"max_axle_count,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *VehicleClass) Reset() {
 	*x = VehicleClass{}
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[4]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -774,7 +1112,7 @@ func (x *VehicleClass) String() string {
 func (*VehicleClass) ProtoMessage() {}
 
 func (x *VehicleClass) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[4]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -787,7 +1125,7 @@ func (x *VehicleClass) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VehicleClass.ProtoReflect.Descriptor instead.
 func (*VehicleClass) Descriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{4}
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *VehicleClass) GetClassId() uint32 {
@@ -818,6 +1156,96 @@ func (x *VehicleClass) GetMaxLengthM() string {
 	return ""
 }
 
+func (x *VehicleClass) GetMinAxleCount() uint32 {
+	if x != nil {
+		return x.MinAxleCount
+	}
+	return 0
+}
+
+func (x *VehicleClass) GetMaxAxleCount() uint32 {
+	if x != nil {
+		return x.MaxAxleCount
+	}
+	return 0
+}
+
+type ConfigurationQueueZone struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	ZoneId              string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Name                string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	LaneReference       uint32                 `protobuf:"varint,3,opt,name=lane_reference,json=laneReference,proto3" json:"lane_reference,omitempty"`
+	Carriageway         string                 `protobuf:"bytes,4,opt,name=carriageway,proto3" json:"carriageway,omitempty"`
+	DownstreamReference string                 `protobuf:"bytes,5,opt,name=downstream_reference,json=downstreamReference,proto3" json:"downstream_reference,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *ConfigurationQueueZone) Reset() {
+	*x = ConfigurationQueueZone{}
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ConfigurationQueueZone) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ConfigurationQueueZone) ProtoMessage() {}
+
+func (x *ConfigurationQueueZone) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ConfigurationQueueZone.ProtoReflect.Descriptor instead.
+func (*ConfigurationQueueZone) Descriptor() ([]byte, []int) {
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *ConfigurationQueueZone) GetZoneId() string {
+	if x != nil {
+		return x.ZoneId
+	}
+	return ""
+}
+
+func (x *ConfigurationQueueZone) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ConfigurationQueueZone) GetLaneReference() uint32 {
+	if x != nil {
+		return x.LaneReference
+	}
+	return 0
+}
+
+func (x *ConfigurationQueueZone) GetCarriageway() string {
+	if x != nil {
+		return x.Carriageway
+	}
+	return ""
+}
+
+func (x *ConfigurationQueueZone) GetDownstreamReference() string {
+	if x != nil {
+		return x.DownstreamReference
+	}
+	return ""
+}
+
 type Lanes struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Lane          []*LanesLane           `protobuf:"bytes,1,rep,name=lane,proto3" json:"lane,omitempty"`
@@ -827,7 +1255,7 @@ type Lanes struct {
 
 func (x *Lanes) Reset() {
 	*x = Lanes{}
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[5]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -839,7 +1267,7 @@ func (x *Lanes) String() string {
 func (*Lanes) ProtoMessage() {}
 
 func (x *Lanes) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[5]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -852,7 +1280,7 @@ func (x *Lanes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Lanes.ProtoReflect.Descriptor instead.
 func (*Lanes) Descriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{5}
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *Lanes) GetLane() []*LanesLane {
@@ -873,7 +1301,7 @@ type LanesLane struct {
 
 func (x *LanesLane) Reset() {
 	*x = LanesLane{}
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[6]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -885,7 +1313,7 @@ func (x *LanesLane) String() string {
 func (*LanesLane) ProtoMessage() {}
 
 func (x *LanesLane) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[6]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -898,7 +1326,7 @@ func (x *LanesLane) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LanesLane.ProtoReflect.Descriptor instead.
 func (*LanesLane) Descriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{6}
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *LanesLane) GetLaneId() uint32 {
@@ -935,7 +1363,7 @@ type LanesLaneConfig struct {
 
 func (x *LanesLaneConfig) Reset() {
 	*x = LanesLaneConfig{}
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[7]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -947,7 +1375,7 @@ func (x *LanesLaneConfig) String() string {
 func (*LanesLaneConfig) ProtoMessage() {}
 
 func (x *LanesLaneConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[7]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -960,7 +1388,7 @@ func (x *LanesLaneConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LanesLaneConfig.ProtoReflect.Descriptor instead.
 func (*LanesLaneConfig) Descriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{7}
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *LanesLaneConfig) GetCarriageway() string {
@@ -1014,7 +1442,7 @@ type LanesLaneState struct {
 
 func (x *LanesLaneState) Reset() {
 	*x = LanesLaneState{}
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[8]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1026,7 +1454,7 @@ func (x *LanesLaneState) String() string {
 func (*LanesLaneState) ProtoMessage() {}
 
 func (x *LanesLaneState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[8]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1039,7 +1467,7 @@ func (x *LanesLaneState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LanesLaneState.ProtoReflect.Descriptor instead.
 func (*LanesLaneState) Descriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{8}
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *LanesLaneState) GetOperationalStatus() OpenitsTrafficSensorOperationalStatus {
@@ -1124,7 +1552,7 @@ type Interval struct {
 
 func (x *Interval) Reset() {
 	*x = Interval{}
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[9]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1136,7 +1564,7 @@ func (x *Interval) String() string {
 func (*Interval) ProtoMessage() {}
 
 func (x *Interval) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[9]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1149,7 +1577,7 @@ func (x *Interval) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Interval.ProtoReflect.Descriptor instead.
 func (*Interval) Descriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{9}
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *Interval) GetClassVolume() []*IntervalClassVolume {
@@ -1288,7 +1716,7 @@ type IntervalClassVolume struct {
 
 func (x *IntervalClassVolume) Reset() {
 	*x = IntervalClassVolume{}
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[10]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1300,7 +1728,7 @@ func (x *IntervalClassVolume) String() string {
 func (*IntervalClassVolume) ProtoMessage() {}
 
 func (x *IntervalClassVolume) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[10]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1313,7 +1741,7 @@ func (x *IntervalClassVolume) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IntervalClassVolume.ProtoReflect.Descriptor instead.
 func (*IntervalClassVolume) Descriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{10}
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *IntervalClassVolume) GetClassId() uint32 {
@@ -1340,7 +1768,7 @@ type Presence struct {
 
 func (x *Presence) Reset() {
 	*x = Presence{}
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[11]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1352,7 +1780,7 @@ func (x *Presence) String() string {
 func (*Presence) ProtoMessage() {}
 
 func (x *Presence) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[11]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1365,7 +1793,7 @@ func (x *Presence) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Presence.ProtoReflect.Descriptor instead.
 func (*Presence) Descriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{11}
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *Presence) GetOccupied() bool {
@@ -1384,14 +1812,14 @@ func (x *Presence) GetLastDetection() *timestamppb.Timestamp {
 
 type Queues struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	QueueZone     []*QueueZone           `protobuf:"bytes,1,rep,name=queue_zone,json=queueZone,proto3" json:"queue_zone,omitempty"`
+	QueueZone     []*QueuesQueueZone     `protobuf:"bytes,1,rep,name=queue_zone,json=queueZone,proto3" json:"queue_zone,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Queues) Reset() {
 	*x = Queues{}
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[12]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1403,7 +1831,7 @@ func (x *Queues) String() string {
 func (*Queues) ProtoMessage() {}
 
 func (x *Queues) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[12]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1416,43 +1844,43 @@ func (x *Queues) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Queues.ProtoReflect.Descriptor instead.
 func (*Queues) Descriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{12}
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{17}
 }
 
-func (x *Queues) GetQueueZone() []*QueueZone {
+func (x *Queues) GetQueueZone() []*QueuesQueueZone {
 	if x != nil {
 		return x.QueueZone
 	}
 	return nil
 }
 
-type QueueZone struct {
+type QueuesQueueZone struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	ZoneId         string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Queueing       bool                   `protobuf:"varint,2,opt,name=queueing,proto3" json:"queueing,omitempty"`
+	BackOfQueueM   uint32                 `protobuf:"varint,2,opt,name=back_of_queue_m,json=backOfQueueM,proto3" json:"back_of_queue_m,omitempty"`
 	QueueDurationS uint32                 `protobuf:"varint,3,opt,name=queue_duration_s,json=queueDurationS,proto3" json:"queue_duration_s,omitempty"`
-	QueueStart     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=queue_start,json=queueStart,proto3" json:"queue_start,omitempty"`
-	QueueLengthM   uint32                 `protobuf:"varint,5,opt,name=queue_length_m,json=queueLengthM,proto3" json:"queue_length_m,omitempty"`
-	BackOfQueueM   uint32                 `protobuf:"varint,6,opt,name=back_of_queue_m,json=backOfQueueM,proto3" json:"back_of_queue_m,omitempty"`
+	QueueLengthM   uint32                 `protobuf:"varint,4,opt,name=queue_length_m,json=queueLengthM,proto3" json:"queue_length_m,omitempty"`
+	QueueStart     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=queue_start,json=queueStart,proto3" json:"queue_start,omitempty"`
+	Queueing       bool                   `protobuf:"varint,6,opt,name=queueing,proto3" json:"queueing,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
-func (x *QueueZone) Reset() {
-	*x = QueueZone{}
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[13]
+func (x *QueuesQueueZone) Reset() {
+	*x = QueuesQueueZone{}
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *QueueZone) String() string {
+func (x *QueuesQueueZone) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueueZone) ProtoMessage() {}
+func (*QueuesQueueZone) ProtoMessage() {}
 
-func (x *QueueZone) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[13]
+func (x *QueuesQueueZone) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1463,51 +1891,51 @@ func (x *QueueZone) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use QueueZone.ProtoReflect.Descriptor instead.
-func (*QueueZone) Descriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{13}
+// Deprecated: Use QueuesQueueZone.ProtoReflect.Descriptor instead.
+func (*QueuesQueueZone) Descriptor() ([]byte, []int) {
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{18}
 }
 
-func (x *QueueZone) GetZoneId() string {
+func (x *QueuesQueueZone) GetZoneId() string {
 	if x != nil {
 		return x.ZoneId
 	}
 	return ""
 }
 
-func (x *QueueZone) GetQueueing() bool {
+func (x *QueuesQueueZone) GetBackOfQueueM() uint32 {
 	if x != nil {
-		return x.Queueing
+		return x.BackOfQueueM
 	}
-	return false
+	return 0
 }
 
-func (x *QueueZone) GetQueueDurationS() uint32 {
+func (x *QueuesQueueZone) GetQueueDurationS() uint32 {
 	if x != nil {
 		return x.QueueDurationS
 	}
 	return 0
 }
 
-func (x *QueueZone) GetQueueStart() *timestamppb.Timestamp {
-	if x != nil {
-		return x.QueueStart
-	}
-	return nil
-}
-
-func (x *QueueZone) GetQueueLengthM() uint32 {
+func (x *QueuesQueueZone) GetQueueLengthM() uint32 {
 	if x != nil {
 		return x.QueueLengthM
 	}
 	return 0
 }
 
-func (x *QueueZone) GetBackOfQueueM() uint32 {
+func (x *QueuesQueueZone) GetQueueStart() *timestamppb.Timestamp {
 	if x != nil {
-		return x.BackOfQueueM
+		return x.QueueStart
 	}
-	return 0
+	return nil
+}
+
+func (x *QueuesQueueZone) GetQueueing() bool {
+	if x != nil {
+		return x.Queueing
+	}
+	return false
 }
 
 type Diagnostics struct {
@@ -1523,7 +1951,7 @@ type Diagnostics struct {
 
 func (x *Diagnostics) Reset() {
 	*x = Diagnostics{}
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[14]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1535,7 +1963,7 @@ func (x *Diagnostics) String() string {
 func (*Diagnostics) ProtoMessage() {}
 
 func (x *Diagnostics) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[14]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1548,7 +1976,7 @@ func (x *Diagnostics) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Diagnostics.ProtoReflect.Descriptor instead.
 func (*Diagnostics) Descriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{14}
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *Diagnostics) GetSignalQuality() uint32 {
@@ -1596,7 +2024,7 @@ type Calibration struct {
 
 func (x *Calibration) Reset() {
 	*x = Calibration{}
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[15]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1608,7 +2036,7 @@ func (x *Calibration) String() string {
 func (*Calibration) ProtoMessage() {}
 
 func (x *Calibration) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[15]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1621,7 +2049,7 @@ func (x *Calibration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Calibration.ProtoReflect.Descriptor instead.
 func (*Calibration) Descriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{15}
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *Calibration) GetLastCalibrated() *timestamppb.Timestamp {
@@ -1647,7 +2075,7 @@ type Faults struct {
 
 func (x *Faults) Reset() {
 	*x = Faults{}
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[16]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1659,7 +2087,7 @@ func (x *Faults) String() string {
 func (*Faults) ProtoMessage() {}
 
 func (x *Faults) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[16]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1672,7 +2100,7 @@ func (x *Faults) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Faults.ProtoReflect.Descriptor instead.
 func (*Faults) Descriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{16}
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *Faults) GetFault() []*Fault {
@@ -1683,19 +2111,20 @@ func (x *Faults) GetFault() []*Fault {
 }
 
 type Fault struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Category      string                 `protobuf:"bytes,1,opt,name=category,proto3" json:"category,omitempty"`
-	Description   string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	FaultId       string                 `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3" json:"fault_id,omitempty"`
-	FirstObserved *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=first_observed,json=firstObserved,proto3" json:"first_observed,omitempty"`
-	Severity      FaultSeverity          `protobuf:"varint,5,opt,name=severity,proto3,enum=openits.traffic_sensor.v1.FaultSeverity" json:"severity,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Category       string                 `protobuf:"bytes,1,opt,name=category,proto3" json:"category,omitempty"`
+	CorrelatesWith string                 `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3" json:"correlates_with,omitempty"`
+	Description    string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	FaultId        string                 `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3" json:"fault_id,omitempty"`
+	FirstObserved  *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=first_observed,json=firstObserved,proto3" json:"first_observed,omitempty"`
+	Severity       FaultSeverity          `protobuf:"varint,5,opt,name=severity,proto3,enum=openits.traffic_sensor.v1.FaultSeverity" json:"severity,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *Fault) Reset() {
 	*x = Fault{}
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[17]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1707,7 +2136,7 @@ func (x *Fault) String() string {
 func (*Fault) ProtoMessage() {}
 
 func (x *Fault) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[17]
+	mi := &file_openits_traffic_sensor_v1_state_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1720,12 +2149,19 @@ func (x *Fault) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Fault.ProtoReflect.Descriptor instead.
 func (*Fault) Descriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{17}
+	return file_openits_traffic_sensor_v1_state_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *Fault) GetCategory() string {
 	if x != nil {
 		return x.Category
+	}
+	return ""
+}
+
+func (x *Fault) GetCorrelatesWith() string {
+	if x != nil {
+		return x.CorrelatesWith
 	}
 	return ""
 }
@@ -1762,23 +2198,36 @@ var File_openits_traffic_sensor_v1_state_proto protoreflect.FileDescriptor
 
 const file_openits_traffic_sensor_v1_state_proto_rawDesc = "" +
 	"\n" +
-	"%openits/traffic_sensor/v1/state.proto\x12\x19openits.traffic_sensor.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xe4\x03\n" +
+	"%openits/traffic_sensor/v1/state.proto\x12\x19openits.traffic_sensor.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xb1\x04\n" +
 	"\rTrafficSensor\x12F\n" +
 	"\x06config\x18\x01 \x01(\v2..openits.traffic_sensor.v1.TrafficSensorConfigR\x06config\x12C\n" +
-	"\x05state\x18\x02 \x01(\v2-.openits.traffic_sensor.v1.TrafficSensorStateR\x05state\x12N\n" +
+	"\x05state\x18\x02 \x01(\v2-.openits.traffic_sensor.v1.TrafficSensorStateR\x05state\x12K\n" +
+	"\fassociations\x18\b \x01(\v2'.openits.traffic_sensor.v1.AssociationsR\fassociations\x12N\n" +
 	"\rconfiguration\x18\x03 \x01(\v2(.openits.traffic_sensor.v1.ConfigurationR\rconfiguration\x126\n" +
 	"\x05lanes\x18\x04 \x01(\v2 .openits.traffic_sensor.v1.LanesR\x05lanes\x129\n" +
 	"\x06queues\x18\x05 \x01(\v2!.openits.traffic_sensor.v1.QueuesR\x06queues\x12H\n" +
 	"\vdiagnostics\x18\x06 \x01(\v2&.openits.traffic_sensor.v1.DiagnosticsR\vdiagnostics\x129\n" +
-	"\x06faults\x18\a \x01(\v2!.openits.traffic_sensor.v1.FaultsR\x06faults\"\xd2\x01\n" +
+	"\x06faults\x18\a \x01(\v2!.openits.traffic_sensor.v1.FaultsR\x06faults\"\xcf\x03\n" +
 	"\x13TrafficSensorConfig\x12\x1c\n" +
 	"\televation\x18\x01 \x01(\tR\televation\x12\x18\n" +
 	"\aheading\x18\x02 \x01(\rR\aheading\x12\x0e\n" +
-	"\x02id\x18\b \x01(\tR\x02id\x12\x1a\n" +
-	"\blatitude\x18\x03 \x01(\tR\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\x04 \x01(\tR\tlongitude\x12\x12\n" +
-	"\x04name\x18\x05 \x01(\tR\x04name\x12%\n" +
-	"\x0eroad_reference\x18\x06 \x01(\tR\rroadReference\"\x9b\x04\n" +
+	"\x02id\x18\b \x01(\tR\x02id\x12=\n" +
+	"\finstall_date\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1a\n" +
+	"\blatitude\x18\x03 \x01(\tR\blatitude\x12h\n" +
+	"\x10linear_reference\x18\t \x01(\v2=.openits.traffic_sensor.v1.TrafficSensorConfigLinearReferenceR\x0flinearReference\x12\x1c\n" +
+	"\tlongitude\x18\x04 \x01(\tR\tlongitude\x12#\n" +
+	"\rmaintained_by\x18\n" +
+	" \x01(\tR\fmaintainedBy\x12\x12\n" +
+	"\x04name\x18\x05 \x01(\tR\x04name\x12\x14\n" +
+	"\x05owner\x18\v \x01(\tR\x05owner\x12%\n" +
+	"\x0eroad_reference\x18\x06 \x01(\tR\rroadReference\x12\x17\n" +
+	"\asite_id\x18\f \x01(\tR\x06siteId\"\xa6\x01\n" +
+	"\"TrafficSensorConfigLinearReference\x12)\n" +
+	"\x10route_designator\x18\x01 \x01(\tR\x0frouteDesignator\x12\x1c\n" +
+	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
+	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
+	"\n" +
+	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"\x97\x06\n" +
 	"\x12TrafficSensorState\x12o\n" +
 	"\x12operational_status\x18\x01 \x01(\x0e2@.openits.traffic_sensor.v1.OpenitsTrafficSensorOperationalStatusR\x11operationalStatus\x12'\n" +
 	"\x0finactive_reason\x18\x02 \x01(\tR\x0einactiveReason\x12\x1c\n" +
@@ -1787,28 +2236,55 @@ const file_openits_traffic_sensor_v1_state_proto_rawDesc = "" +
 	"\x0efirmware_build\x18\x0f \x01(\tR\rfirmwareBuild\x12)\n" +
 	"\x10hardware_version\x18\x10 \x01(\tR\x0fhardwareVersion\x12\x18\n" +
 	"\aheading\x18\x05 \x01(\rR\aheading\x12\x0e\n" +
-	"\x02id\x18\x0e \x01(\tR\x02id\x12\x1a\n" +
-	"\blatitude\x18\x06 \x01(\tR\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\a \x01(\tR\tlongitude\x12\x12\n" +
+	"\x02id\x18\x0e \x01(\tR\x02id\x12=\n" +
+	"\finstall_date\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1a\n" +
+	"\blatitude\x18\x06 \x01(\tR\blatitude\x12g\n" +
+	"\x10linear_reference\x18\x11 \x01(\v2<.openits.traffic_sensor.v1.TrafficSensorStateLinearReferenceR\x0flinearReference\x12\x1c\n" +
+	"\tlongitude\x18\a \x01(\tR\tlongitude\x12#\n" +
+	"\rmaintained_by\x18\x12 \x01(\tR\fmaintainedBy\x12\x12\n" +
 	"\x04make\x18\b \x01(\tR\x04make\x12\x14\n" +
 	"\x05model\x18\t \x01(\tR\x05model\x12\x12\n" +
 	"\x04name\x18\n" +
-	" \x01(\tR\x04name\x12%\n" +
+	" \x01(\tR\x04name\x12\x14\n" +
+	"\x05owner\x18\x13 \x01(\tR\x05owner\x12%\n" +
 	"\x0eroad_reference\x18\v \x01(\tR\rroadReference\x12\x16\n" +
-	"\x06serial\x18\r \x01(\tR\x06serial\"\xec\x02\n" +
+	"\x06serial\x18\r \x01(\tR\x06serial\x12\x17\n" +
+	"\asite_id\x18\x14 \x01(\tR\x06siteId\"\xa5\x01\n" +
+	"!TrafficSensorStateLinearReference\x12)\n" +
+	"\x10route_designator\x18\x01 \x01(\tR\x0frouteDesignator\x12\x1c\n" +
+	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
+	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
+	"\n" +
+	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"h\n" +
+	"\fAssociations\x12X\n" +
+	"\x11associated_device\x18\x01 \x03(\v2+.openits.traffic_sensor.v1.AssociatedDeviceR\x10associatedDevice\"W\n" +
+	"\x10AssociatedDevice\x12\x1b\n" +
+	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x12\n" +
+	"\x04role\x18\x02 \x01(\tR\x04role\x12\x12\n" +
+	"\x04note\x18\x03 \x01(\tR\x04note\"\xbe\x03\n" +
 	"\rConfiguration\x12&\n" +
 	"\x0fdata_interval_s\x18\x01 \x01(\rR\rdataIntervalS\x12b\n" +
 	"\x15lane_numbering_origin\x18\x04 \x01(\x0e2..openits.traffic_sensor.v1.LaneNumberingOriginR\x13laneNumberingOrigin\x12L\n" +
 	"\rmounting_side\x18\x05 \x01(\x0e2'.openits.traffic_sensor.v1.MountingSideR\fmountingSide\x123\n" +
 	"\x15classification_scheme\x18\x03 \x01(\tR\x14classificationScheme\x12L\n" +
-	"\rvehicle_class\x18\x02 \x03(\v2'.openits.traffic_sensor.v1.VehicleClassR\fvehicleClass\"\x81\x01\n" +
+	"\rvehicle_class\x18\x02 \x03(\v2'.openits.traffic_sensor.v1.VehicleClassR\fvehicleClass\x12P\n" +
+	"\n" +
+	"queue_zone\x18\x06 \x03(\v21.openits.traffic_sensor.v1.ConfigurationQueueZoneR\tqueueZone\"\xcd\x01\n" +
 	"\fVehicleClass\x12\x19\n" +
 	"\bclass_id\x18\x01 \x01(\rR\aclassId\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
 	"\fmin_length_m\x18\x03 \x01(\tR\n" +
 	"minLengthM\x12 \n" +
 	"\fmax_length_m\x18\x04 \x01(\tR\n" +
-	"maxLengthM\"A\n" +
+	"maxLengthM\x12$\n" +
+	"\x0emin_axle_count\x18\x05 \x01(\rR\fminAxleCount\x12$\n" +
+	"\x0emax_axle_count\x18\x06 \x01(\rR\fmaxAxleCount\"\xc1\x01\n" +
+	"\x16ConfigurationQueueZone\x12\x17\n" +
+	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12%\n" +
+	"\x0elane_reference\x18\x03 \x01(\rR\rlaneReference\x12 \n" +
+	"\vcarriageway\x18\x04 \x01(\tR\vcarriageway\x121\n" +
+	"\x14downstream_reference\x18\x05 \x01(\tR\x13downstreamReference\"A\n" +
 	"\x05Lanes\x128\n" +
 	"\x04lane\x18\x01 \x03(\v2$.openits.traffic_sensor.v1.LanesLaneR\x04lane\"\xa9\x01\n" +
 	"\tLanesLane\x12\x17\n" +
@@ -1855,18 +2331,18 @@ const file_openits_traffic_sensor_v1_state_proto_rawDesc = "" +
 	"\x06volume\x18\x02 \x01(\rR\x06volume\"i\n" +
 	"\bPresence\x12\x1a\n" +
 	"\boccupied\x18\x01 \x01(\bR\boccupied\x12A\n" +
-	"\x0elast_detection\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\rlastDetection\"M\n" +
-	"\x06Queues\x12C\n" +
+	"\x0elast_detection\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\rlastDetection\"S\n" +
+	"\x06Queues\x12I\n" +
 	"\n" +
-	"queue_zone\x18\x01 \x03(\v2$.openits.traffic_sensor.v1.QueueZoneR\tqueueZone\"\xf4\x01\n" +
-	"\tQueueZone\x12\x17\n" +
-	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12\x1a\n" +
-	"\bqueueing\x18\x02 \x01(\bR\bqueueing\x12(\n" +
-	"\x10queue_duration_s\x18\x03 \x01(\rR\x0equeueDurationS\x12;\n" +
-	"\vqueue_start\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"queueStart\x12$\n" +
-	"\x0equeue_length_m\x18\x05 \x01(\rR\fqueueLengthM\x12%\n" +
-	"\x0fback_of_queue_m\x18\x06 \x01(\rR\fbackOfQueueM\"\x91\x02\n" +
+	"queue_zone\x18\x01 \x03(\v2*.openits.traffic_sensor.v1.QueuesQueueZoneR\tqueueZone\"\xfa\x01\n" +
+	"\x0fQueuesQueueZone\x12\x17\n" +
+	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12%\n" +
+	"\x0fback_of_queue_m\x18\x02 \x01(\rR\fbackOfQueueM\x12(\n" +
+	"\x10queue_duration_s\x18\x03 \x01(\rR\x0equeueDurationS\x12$\n" +
+	"\x0equeue_length_m\x18\x04 \x01(\rR\fqueueLengthM\x12;\n" +
+	"\vqueue_start\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"queueStart\x12\x1a\n" +
+	"\bqueueing\x18\x06 \x01(\bR\bqueueing\"\x91\x02\n" +
 	"\vDiagnostics\x12%\n" +
 	"\x0esignal_quality\x18\x01 \x01(\rR\rsignalQuality\x124\n" +
 	"\x16internal_temperature_c\x18\x06 \x01(\tR\x14internalTemperatureC\x12\x19\n" +
@@ -1877,9 +2353,10 @@ const file_openits_traffic_sensor_v1_state_proto_rawDesc = "" +
 	"\x0flast_calibrated\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\x0elastCalibrated\x129\n" +
 	"\x06status\x18\x02 \x01(\x0e2!.openits.traffic_sensor.v1.StatusR\x06status\"@\n" +
 	"\x06Faults\x126\n" +
-	"\x05fault\x18\x01 \x03(\v2 .openits.traffic_sensor.v1.FaultR\x05fault\"\xe9\x01\n" +
+	"\x05fault\x18\x01 \x03(\v2 .openits.traffic_sensor.v1.FaultR\x05fault\"\x92\x02\n" +
 	"\x05Fault\x12\x1a\n" +
-	"\bcategory\x18\x01 \x01(\tR\bcategory\x12 \n" +
+	"\bcategory\x18\x01 \x01(\tR\bcategory\x12'\n" +
+	"\x0fcorrelates_with\x18\x06 \x01(\tR\x0ecorrelatesWith\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x19\n" +
 	"\bfault_id\x18\x03 \x01(\tR\afaultId\x12A\n" +
 	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12D\n" +
@@ -1929,7 +2406,7 @@ func file_openits_traffic_sensor_v1_state_proto_rawDescGZIP() []byte {
 }
 
 var file_openits_traffic_sensor_v1_state_proto_enumTypes = make([]protoimpl.EnumInfo, 6)
-var file_openits_traffic_sensor_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_openits_traffic_sensor_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
 var file_openits_traffic_sensor_v1_state_proto_goTypes = []any{
 	(OpenitsTrafficSensorOperationalStatus)(0), // 0: openits.traffic_sensor.v1.OpenitsTrafficSensorOperationalStatus
 	(LaneNumberingOrigin)(0),                   // 1: openits.traffic_sensor.v1.LaneNumberingOrigin
@@ -1939,60 +2416,72 @@ var file_openits_traffic_sensor_v1_state_proto_goTypes = []any{
 	(FaultSeverity)(0),                         // 5: openits.traffic_sensor.v1.FaultSeverity
 	(*TrafficSensor)(nil),                      // 6: openits.traffic_sensor.v1.TrafficSensor
 	(*TrafficSensorConfig)(nil),                // 7: openits.traffic_sensor.v1.TrafficSensorConfig
-	(*TrafficSensorState)(nil),                 // 8: openits.traffic_sensor.v1.TrafficSensorState
-	(*Configuration)(nil),                      // 9: openits.traffic_sensor.v1.Configuration
-	(*VehicleClass)(nil),                       // 10: openits.traffic_sensor.v1.VehicleClass
-	(*Lanes)(nil),                              // 11: openits.traffic_sensor.v1.Lanes
-	(*LanesLane)(nil),                          // 12: openits.traffic_sensor.v1.LanesLane
-	(*LanesLaneConfig)(nil),                    // 13: openits.traffic_sensor.v1.LanesLaneConfig
-	(*LanesLaneState)(nil),                     // 14: openits.traffic_sensor.v1.LanesLaneState
-	(*Interval)(nil),                           // 15: openits.traffic_sensor.v1.Interval
-	(*IntervalClassVolume)(nil),                // 16: openits.traffic_sensor.v1.IntervalClassVolume
-	(*Presence)(nil),                           // 17: openits.traffic_sensor.v1.Presence
-	(*Queues)(nil),                             // 18: openits.traffic_sensor.v1.Queues
-	(*QueueZone)(nil),                          // 19: openits.traffic_sensor.v1.QueueZone
-	(*Diagnostics)(nil),                        // 20: openits.traffic_sensor.v1.Diagnostics
-	(*Calibration)(nil),                        // 21: openits.traffic_sensor.v1.Calibration
-	(*Faults)(nil),                             // 22: openits.traffic_sensor.v1.Faults
-	(*Fault)(nil),                              // 23: openits.traffic_sensor.v1.Fault
-	(*timestamppb.Timestamp)(nil),              // 24: google.protobuf.Timestamp
+	(*TrafficSensorConfigLinearReference)(nil), // 8: openits.traffic_sensor.v1.TrafficSensorConfigLinearReference
+	(*TrafficSensorState)(nil),                 // 9: openits.traffic_sensor.v1.TrafficSensorState
+	(*TrafficSensorStateLinearReference)(nil),  // 10: openits.traffic_sensor.v1.TrafficSensorStateLinearReference
+	(*Associations)(nil),                       // 11: openits.traffic_sensor.v1.Associations
+	(*AssociatedDevice)(nil),                   // 12: openits.traffic_sensor.v1.AssociatedDevice
+	(*Configuration)(nil),                      // 13: openits.traffic_sensor.v1.Configuration
+	(*VehicleClass)(nil),                       // 14: openits.traffic_sensor.v1.VehicleClass
+	(*ConfigurationQueueZone)(nil),             // 15: openits.traffic_sensor.v1.ConfigurationQueueZone
+	(*Lanes)(nil),                              // 16: openits.traffic_sensor.v1.Lanes
+	(*LanesLane)(nil),                          // 17: openits.traffic_sensor.v1.LanesLane
+	(*LanesLaneConfig)(nil),                    // 18: openits.traffic_sensor.v1.LanesLaneConfig
+	(*LanesLaneState)(nil),                     // 19: openits.traffic_sensor.v1.LanesLaneState
+	(*Interval)(nil),                           // 20: openits.traffic_sensor.v1.Interval
+	(*IntervalClassVolume)(nil),                // 21: openits.traffic_sensor.v1.IntervalClassVolume
+	(*Presence)(nil),                           // 22: openits.traffic_sensor.v1.Presence
+	(*Queues)(nil),                             // 23: openits.traffic_sensor.v1.Queues
+	(*QueuesQueueZone)(nil),                    // 24: openits.traffic_sensor.v1.QueuesQueueZone
+	(*Diagnostics)(nil),                        // 25: openits.traffic_sensor.v1.Diagnostics
+	(*Calibration)(nil),                        // 26: openits.traffic_sensor.v1.Calibration
+	(*Faults)(nil),                             // 27: openits.traffic_sensor.v1.Faults
+	(*Fault)(nil),                              // 28: openits.traffic_sensor.v1.Fault
+	(*timestamppb.Timestamp)(nil),              // 29: google.protobuf.Timestamp
 }
 var file_openits_traffic_sensor_v1_state_proto_depIdxs = []int32{
 	7,  // 0: openits.traffic_sensor.v1.TrafficSensor.config:type_name -> openits.traffic_sensor.v1.TrafficSensorConfig
-	8,  // 1: openits.traffic_sensor.v1.TrafficSensor.state:type_name -> openits.traffic_sensor.v1.TrafficSensorState
-	9,  // 2: openits.traffic_sensor.v1.TrafficSensor.configuration:type_name -> openits.traffic_sensor.v1.Configuration
-	11, // 3: openits.traffic_sensor.v1.TrafficSensor.lanes:type_name -> openits.traffic_sensor.v1.Lanes
-	18, // 4: openits.traffic_sensor.v1.TrafficSensor.queues:type_name -> openits.traffic_sensor.v1.Queues
-	20, // 5: openits.traffic_sensor.v1.TrafficSensor.diagnostics:type_name -> openits.traffic_sensor.v1.Diagnostics
-	22, // 6: openits.traffic_sensor.v1.TrafficSensor.faults:type_name -> openits.traffic_sensor.v1.Faults
-	0,  // 7: openits.traffic_sensor.v1.TrafficSensorState.operational_status:type_name -> openits.traffic_sensor.v1.OpenitsTrafficSensorOperationalStatus
-	1,  // 8: openits.traffic_sensor.v1.Configuration.lane_numbering_origin:type_name -> openits.traffic_sensor.v1.LaneNumberingOrigin
-	2,  // 9: openits.traffic_sensor.v1.Configuration.mounting_side:type_name -> openits.traffic_sensor.v1.MountingSide
-	10, // 10: openits.traffic_sensor.v1.Configuration.vehicle_class:type_name -> openits.traffic_sensor.v1.VehicleClass
-	12, // 11: openits.traffic_sensor.v1.Lanes.lane:type_name -> openits.traffic_sensor.v1.LanesLane
-	13, // 12: openits.traffic_sensor.v1.LanesLane.config:type_name -> openits.traffic_sensor.v1.LanesLaneConfig
-	14, // 13: openits.traffic_sensor.v1.LanesLane.state:type_name -> openits.traffic_sensor.v1.LanesLaneState
-	0,  // 14: openits.traffic_sensor.v1.LanesLaneState.operational_status:type_name -> openits.traffic_sensor.v1.OpenitsTrafficSensorOperationalStatus
-	15, // 15: openits.traffic_sensor.v1.LanesLaneState.interval:type_name -> openits.traffic_sensor.v1.Interval
-	17, // 16: openits.traffic_sensor.v1.LanesLaneState.presence:type_name -> openits.traffic_sensor.v1.Presence
-	16, // 17: openits.traffic_sensor.v1.Interval.class_volume:type_name -> openits.traffic_sensor.v1.IntervalClassVolume
-	3,  // 18: openits.traffic_sensor.v1.Interval.data_quality:type_name -> openits.traffic_sensor.v1.OpenitsTrafficSensorDataQuality
-	24, // 19: openits.traffic_sensor.v1.Interval.interval_start:type_name -> google.protobuf.Timestamp
-	24, // 20: openits.traffic_sensor.v1.Presence.last_detection:type_name -> google.protobuf.Timestamp
-	19, // 21: openits.traffic_sensor.v1.Queues.queue_zone:type_name -> openits.traffic_sensor.v1.QueueZone
-	24, // 22: openits.traffic_sensor.v1.QueueZone.queue_start:type_name -> google.protobuf.Timestamp
-	24, // 23: openits.traffic_sensor.v1.Diagnostics.last_self_test:type_name -> google.protobuf.Timestamp
-	21, // 24: openits.traffic_sensor.v1.Diagnostics.calibration:type_name -> openits.traffic_sensor.v1.Calibration
-	24, // 25: openits.traffic_sensor.v1.Calibration.last_calibrated:type_name -> google.protobuf.Timestamp
-	4,  // 26: openits.traffic_sensor.v1.Calibration.status:type_name -> openits.traffic_sensor.v1.Status
-	23, // 27: openits.traffic_sensor.v1.Faults.fault:type_name -> openits.traffic_sensor.v1.Fault
-	24, // 28: openits.traffic_sensor.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	5,  // 29: openits.traffic_sensor.v1.Fault.severity:type_name -> openits.traffic_sensor.v1.FaultSeverity
-	30, // [30:30] is the sub-list for method output_type
-	30, // [30:30] is the sub-list for method input_type
-	30, // [30:30] is the sub-list for extension type_name
-	30, // [30:30] is the sub-list for extension extendee
-	0,  // [0:30] is the sub-list for field type_name
+	9,  // 1: openits.traffic_sensor.v1.TrafficSensor.state:type_name -> openits.traffic_sensor.v1.TrafficSensorState
+	11, // 2: openits.traffic_sensor.v1.TrafficSensor.associations:type_name -> openits.traffic_sensor.v1.Associations
+	13, // 3: openits.traffic_sensor.v1.TrafficSensor.configuration:type_name -> openits.traffic_sensor.v1.Configuration
+	16, // 4: openits.traffic_sensor.v1.TrafficSensor.lanes:type_name -> openits.traffic_sensor.v1.Lanes
+	23, // 5: openits.traffic_sensor.v1.TrafficSensor.queues:type_name -> openits.traffic_sensor.v1.Queues
+	25, // 6: openits.traffic_sensor.v1.TrafficSensor.diagnostics:type_name -> openits.traffic_sensor.v1.Diagnostics
+	27, // 7: openits.traffic_sensor.v1.TrafficSensor.faults:type_name -> openits.traffic_sensor.v1.Faults
+	29, // 8: openits.traffic_sensor.v1.TrafficSensorConfig.install_date:type_name -> google.protobuf.Timestamp
+	8,  // 9: openits.traffic_sensor.v1.TrafficSensorConfig.linear_reference:type_name -> openits.traffic_sensor.v1.TrafficSensorConfigLinearReference
+	0,  // 10: openits.traffic_sensor.v1.TrafficSensorState.operational_status:type_name -> openits.traffic_sensor.v1.OpenitsTrafficSensorOperationalStatus
+	29, // 11: openits.traffic_sensor.v1.TrafficSensorState.install_date:type_name -> google.protobuf.Timestamp
+	10, // 12: openits.traffic_sensor.v1.TrafficSensorState.linear_reference:type_name -> openits.traffic_sensor.v1.TrafficSensorStateLinearReference
+	12, // 13: openits.traffic_sensor.v1.Associations.associated_device:type_name -> openits.traffic_sensor.v1.AssociatedDevice
+	1,  // 14: openits.traffic_sensor.v1.Configuration.lane_numbering_origin:type_name -> openits.traffic_sensor.v1.LaneNumberingOrigin
+	2,  // 15: openits.traffic_sensor.v1.Configuration.mounting_side:type_name -> openits.traffic_sensor.v1.MountingSide
+	14, // 16: openits.traffic_sensor.v1.Configuration.vehicle_class:type_name -> openits.traffic_sensor.v1.VehicleClass
+	15, // 17: openits.traffic_sensor.v1.Configuration.queue_zone:type_name -> openits.traffic_sensor.v1.ConfigurationQueueZone
+	17, // 18: openits.traffic_sensor.v1.Lanes.lane:type_name -> openits.traffic_sensor.v1.LanesLane
+	18, // 19: openits.traffic_sensor.v1.LanesLane.config:type_name -> openits.traffic_sensor.v1.LanesLaneConfig
+	19, // 20: openits.traffic_sensor.v1.LanesLane.state:type_name -> openits.traffic_sensor.v1.LanesLaneState
+	0,  // 21: openits.traffic_sensor.v1.LanesLaneState.operational_status:type_name -> openits.traffic_sensor.v1.OpenitsTrafficSensorOperationalStatus
+	20, // 22: openits.traffic_sensor.v1.LanesLaneState.interval:type_name -> openits.traffic_sensor.v1.Interval
+	22, // 23: openits.traffic_sensor.v1.LanesLaneState.presence:type_name -> openits.traffic_sensor.v1.Presence
+	21, // 24: openits.traffic_sensor.v1.Interval.class_volume:type_name -> openits.traffic_sensor.v1.IntervalClassVolume
+	3,  // 25: openits.traffic_sensor.v1.Interval.data_quality:type_name -> openits.traffic_sensor.v1.OpenitsTrafficSensorDataQuality
+	29, // 26: openits.traffic_sensor.v1.Interval.interval_start:type_name -> google.protobuf.Timestamp
+	29, // 27: openits.traffic_sensor.v1.Presence.last_detection:type_name -> google.protobuf.Timestamp
+	24, // 28: openits.traffic_sensor.v1.Queues.queue_zone:type_name -> openits.traffic_sensor.v1.QueuesQueueZone
+	29, // 29: openits.traffic_sensor.v1.QueuesQueueZone.queue_start:type_name -> google.protobuf.Timestamp
+	29, // 30: openits.traffic_sensor.v1.Diagnostics.last_self_test:type_name -> google.protobuf.Timestamp
+	26, // 31: openits.traffic_sensor.v1.Diagnostics.calibration:type_name -> openits.traffic_sensor.v1.Calibration
+	29, // 32: openits.traffic_sensor.v1.Calibration.last_calibrated:type_name -> google.protobuf.Timestamp
+	4,  // 33: openits.traffic_sensor.v1.Calibration.status:type_name -> openits.traffic_sensor.v1.Status
+	28, // 34: openits.traffic_sensor.v1.Faults.fault:type_name -> openits.traffic_sensor.v1.Fault
+	29, // 35: openits.traffic_sensor.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	5,  // 36: openits.traffic_sensor.v1.Fault.severity:type_name -> openits.traffic_sensor.v1.FaultSeverity
+	37, // [37:37] is the sub-list for method output_type
+	37, // [37:37] is the sub-list for method input_type
+	37, // [37:37] is the sub-list for extension type_name
+	37, // [37:37] is the sub-list for extension extendee
+	0,  // [0:37] is the sub-list for field type_name
 }
 
 func init() { file_openits_traffic_sensor_v1_state_proto_init() }
@@ -2006,7 +2495,7 @@ func file_openits_traffic_sensor_v1_state_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_traffic_sensor_v1_state_proto_rawDesc), len(file_openits_traffic_sensor_v1_state_proto_rawDesc)),
 			NumEnums:      6,
-			NumMessages:   18,
+			NumMessages:   23,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

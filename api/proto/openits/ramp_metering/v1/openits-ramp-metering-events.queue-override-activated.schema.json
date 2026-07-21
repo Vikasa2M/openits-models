@@ -11,6 +11,11 @@
       "pattern": "^([a-zA-Z0-9_-]+)$",
       "type": "string"
     },
+    "occupancy-pct": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    },
     "occurred-at": {
       "format": "date-time",
       "type": "string"
@@ -41,6 +46,13 @@
       "maximum": 999,
       "minimum": 0,
       "type": "integer"
+    },
+    "trigger": {
+      "enum": [
+        "occupancy",
+        "vehicle-count"
+      ],
+      "type": "string"
     }
   },
   "required": [

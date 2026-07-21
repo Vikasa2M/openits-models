@@ -22,58 +22,58 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type ConfiguredTimeSource int32
+type TimeSource int32
 
 const (
-	ConfiguredTimeSource_CONFIGURED_TIME_SOURCE_GNSS_PPS ConfiguredTimeSource = 0
-	ConfiguredTimeSource_CONFIGURED_TIME_SOURCE_PTP      ConfiguredTimeSource = 1
-	ConfiguredTimeSource_CONFIGURED_TIME_SOURCE_NTP      ConfiguredTimeSource = 2
-	ConfiguredTimeSource_CONFIGURED_TIME_SOURCE_GPS      ConfiguredTimeSource = 3
-	ConfiguredTimeSource_CONFIGURED_TIME_SOURCE_LOCAL    ConfiguredTimeSource = 4
+	TimeSource_TIME_SOURCE_GPS      TimeSource = 0
+	TimeSource_TIME_SOURCE_NTP      TimeSource = 1
+	TimeSource_TIME_SOURCE_LOCAL    TimeSource = 2
+	TimeSource_TIME_SOURCE_GNSS_PPS TimeSource = 3
+	TimeSource_TIME_SOURCE_PTP      TimeSource = 4
 )
 
-// Enum value maps for ConfiguredTimeSource.
+// Enum value maps for TimeSource.
 var (
-	ConfiguredTimeSource_name = map[int32]string{
-		0: "CONFIGURED_TIME_SOURCE_GNSS_PPS",
-		1: "CONFIGURED_TIME_SOURCE_PTP",
-		2: "CONFIGURED_TIME_SOURCE_NTP",
-		3: "CONFIGURED_TIME_SOURCE_GPS",
-		4: "CONFIGURED_TIME_SOURCE_LOCAL",
+	TimeSource_name = map[int32]string{
+		0: "TIME_SOURCE_GPS",
+		1: "TIME_SOURCE_NTP",
+		2: "TIME_SOURCE_LOCAL",
+		3: "TIME_SOURCE_GNSS_PPS",
+		4: "TIME_SOURCE_PTP",
 	}
-	ConfiguredTimeSource_value = map[string]int32{
-		"CONFIGURED_TIME_SOURCE_GNSS_PPS": 0,
-		"CONFIGURED_TIME_SOURCE_PTP":      1,
-		"CONFIGURED_TIME_SOURCE_NTP":      2,
-		"CONFIGURED_TIME_SOURCE_GPS":      3,
-		"CONFIGURED_TIME_SOURCE_LOCAL":    4,
+	TimeSource_value = map[string]int32{
+		"TIME_SOURCE_GPS":      0,
+		"TIME_SOURCE_NTP":      1,
+		"TIME_SOURCE_LOCAL":    2,
+		"TIME_SOURCE_GNSS_PPS": 3,
+		"TIME_SOURCE_PTP":      4,
 	}
 )
 
-func (x ConfiguredTimeSource) Enum() *ConfiguredTimeSource {
-	p := new(ConfiguredTimeSource)
+func (x TimeSource) Enum() *TimeSource {
+	p := new(TimeSource)
 	*p = x
 	return p
 }
 
-func (x ConfiguredTimeSource) String() string {
+func (x TimeSource) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (ConfiguredTimeSource) Descriptor() protoreflect.EnumDescriptor {
+func (TimeSource) Descriptor() protoreflect.EnumDescriptor {
 	return file_openits_rsu_v1_state_proto_enumTypes[0].Descriptor()
 }
 
-func (ConfiguredTimeSource) Type() protoreflect.EnumType {
+func (TimeSource) Type() protoreflect.EnumType {
 	return &file_openits_rsu_v1_state_proto_enumTypes[0]
 }
 
-func (x ConfiguredTimeSource) Number() protoreflect.EnumNumber {
+func (x TimeSource) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use ConfiguredTimeSource.Descriptor instead.
-func (ConfiguredTimeSource) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use TimeSource.Descriptor instead.
+func (TimeSource) EnumDescriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{0}
 }
 
@@ -132,61 +132,6 @@ func (OpenitsRsuGpsFixStatus) EnumDescriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{1}
 }
 
-type TimeSource int32
-
-const (
-	TimeSource_TIME_SOURCE_GPS      TimeSource = 0
-	TimeSource_TIME_SOURCE_NTP      TimeSource = 1
-	TimeSource_TIME_SOURCE_LOCAL    TimeSource = 2
-	TimeSource_TIME_SOURCE_GNSS_PPS TimeSource = 3
-	TimeSource_TIME_SOURCE_PTP      TimeSource = 4
-)
-
-// Enum value maps for TimeSource.
-var (
-	TimeSource_name = map[int32]string{
-		0: "TIME_SOURCE_GPS",
-		1: "TIME_SOURCE_NTP",
-		2: "TIME_SOURCE_LOCAL",
-		3: "TIME_SOURCE_GNSS_PPS",
-		4: "TIME_SOURCE_PTP",
-	}
-	TimeSource_value = map[string]int32{
-		"TIME_SOURCE_GPS":      0,
-		"TIME_SOURCE_NTP":      1,
-		"TIME_SOURCE_LOCAL":    2,
-		"TIME_SOURCE_GNSS_PPS": 3,
-		"TIME_SOURCE_PTP":      4,
-	}
-)
-
-func (x TimeSource) Enum() *TimeSource {
-	p := new(TimeSource)
-	*p = x
-	return p
-}
-
-func (x TimeSource) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (TimeSource) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_rsu_v1_state_proto_enumTypes[2].Descriptor()
-}
-
-func (TimeSource) Type() protoreflect.EnumType {
-	return &file_openits_rsu_v1_state_proto_enumTypes[2]
-}
-
-func (x TimeSource) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use TimeSource.Descriptor instead.
-func (TimeSource) EnumDescriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{2}
-}
-
 type SignalQuality int32
 
 const (
@@ -226,11 +171,11 @@ func (x SignalQuality) String() string {
 }
 
 func (SignalQuality) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_rsu_v1_state_proto_enumTypes[3].Descriptor()
+	return file_openits_rsu_v1_state_proto_enumTypes[2].Descriptor()
 }
 
 func (SignalQuality) Type() protoreflect.EnumType {
-	return &file_openits_rsu_v1_state_proto_enumTypes[3]
+	return &file_openits_rsu_v1_state_proto_enumTypes[2]
 }
 
 func (x SignalQuality) Number() protoreflect.EnumNumber {
@@ -239,7 +184,7 @@ func (x SignalQuality) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SignalQuality.Descriptor instead.
 func (SignalQuality) EnumDescriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{3}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{2}
 }
 
 type WindowType int32
@@ -272,11 +217,11 @@ func (x WindowType) String() string {
 }
 
 func (WindowType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_rsu_v1_state_proto_enumTypes[4].Descriptor()
+	return file_openits_rsu_v1_state_proto_enumTypes[3].Descriptor()
 }
 
 func (WindowType) Type() protoreflect.EnumType {
-	return &file_openits_rsu_v1_state_proto_enumTypes[4]
+	return &file_openits_rsu_v1_state_proto_enumTypes[3]
 }
 
 func (x WindowType) Number() protoreflect.EnumNumber {
@@ -285,7 +230,7 @@ func (x WindowType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use WindowType.Descriptor instead.
 func (WindowType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{4}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{3}
 }
 
 type CountBasis int32
@@ -321,11 +266,11 @@ func (x CountBasis) String() string {
 }
 
 func (CountBasis) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_rsu_v1_state_proto_enumTypes[5].Descriptor()
+	return file_openits_rsu_v1_state_proto_enumTypes[4].Descriptor()
 }
 
 func (CountBasis) Type() protoreflect.EnumType {
-	return &file_openits_rsu_v1_state_proto_enumTypes[5]
+	return &file_openits_rsu_v1_state_proto_enumTypes[4]
 }
 
 func (x CountBasis) Number() protoreflect.EnumNumber {
@@ -334,6 +279,61 @@ func (x CountBasis) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use CountBasis.Descriptor instead.
 func (CountBasis) EnumDescriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{4}
+}
+
+type FaultSeverity int32
+
+const (
+	FaultSeverity_FAULT_SEVERITY_INFO     FaultSeverity = 0
+	FaultSeverity_FAULT_SEVERITY_WARNING  FaultSeverity = 1
+	FaultSeverity_FAULT_SEVERITY_MINOR    FaultSeverity = 2
+	FaultSeverity_FAULT_SEVERITY_MAJOR    FaultSeverity = 3
+	FaultSeverity_FAULT_SEVERITY_CRITICAL FaultSeverity = 4
+)
+
+// Enum value maps for FaultSeverity.
+var (
+	FaultSeverity_name = map[int32]string{
+		0: "FAULT_SEVERITY_INFO",
+		1: "FAULT_SEVERITY_WARNING",
+		2: "FAULT_SEVERITY_MINOR",
+		3: "FAULT_SEVERITY_MAJOR",
+		4: "FAULT_SEVERITY_CRITICAL",
+	}
+	FaultSeverity_value = map[string]int32{
+		"FAULT_SEVERITY_INFO":     0,
+		"FAULT_SEVERITY_WARNING":  1,
+		"FAULT_SEVERITY_MINOR":    2,
+		"FAULT_SEVERITY_MAJOR":    3,
+		"FAULT_SEVERITY_CRITICAL": 4,
+	}
+)
+
+func (x FaultSeverity) Enum() *FaultSeverity {
+	p := new(FaultSeverity)
+	*p = x
+	return p
+}
+
+func (x FaultSeverity) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (FaultSeverity) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_rsu_v1_state_proto_enumTypes[5].Descriptor()
+}
+
+func (FaultSeverity) Type() protoreflect.EnumType {
+	return &file_openits_rsu_v1_state_proto_enumTypes[5]
+}
+
+func (x FaultSeverity) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use FaultSeverity.Descriptor instead.
+func (FaultSeverity) EnumDescriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{5}
 }
 
@@ -386,25 +386,221 @@ func (Policy) EnumDescriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{6}
 }
 
+type SourceMode int32
+
+const (
+	SourceMode_SOURCE_MODE_RSU_GENERATED            SourceMode = 0
+	SourceMode_SOURCE_MODE_IMMEDIATE_FORWARD_INGEST SourceMode = 1
+)
+
+// Enum value maps for SourceMode.
+var (
+	SourceMode_name = map[int32]string{
+		0: "SOURCE_MODE_RSU_GENERATED",
+		1: "SOURCE_MODE_IMMEDIATE_FORWARD_INGEST",
+	}
+	SourceMode_value = map[string]int32{
+		"SOURCE_MODE_RSU_GENERATED":            0,
+		"SOURCE_MODE_IMMEDIATE_FORWARD_INGEST": 1,
+	}
+)
+
+func (x SourceMode) Enum() *SourceMode {
+	p := new(SourceMode)
+	*p = x
+	return p
+}
+
+func (x SourceMode) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SourceMode) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_rsu_v1_state_proto_enumTypes[7].Descriptor()
+}
+
+func (SourceMode) Type() protoreflect.EnumType {
+	return &file_openits_rsu_v1_state_proto_enumTypes[7]
+}
+
+func (x SourceMode) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SourceMode.Descriptor instead.
+func (SourceMode) EnumDescriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{7}
+}
+
+type Transport int32
+
+const (
+	Transport_TRANSPORT_UDP  Transport = 0
+	Transport_TRANSPORT_TCP  Transport = 1
+	Transport_TRANSPORT_MQTT Transport = 2
+)
+
+// Enum value maps for Transport.
+var (
+	Transport_name = map[int32]string{
+		0: "TRANSPORT_UDP",
+		1: "TRANSPORT_TCP",
+		2: "TRANSPORT_MQTT",
+	}
+	Transport_value = map[string]int32{
+		"TRANSPORT_UDP":  0,
+		"TRANSPORT_TCP":  1,
+		"TRANSPORT_MQTT": 2,
+	}
+)
+
+func (x Transport) Enum() *Transport {
+	p := new(Transport)
+	*p = x
+	return p
+}
+
+func (x Transport) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Transport) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_rsu_v1_state_proto_enumTypes[8].Descriptor()
+}
+
+func (Transport) Type() protoreflect.EnumType {
+	return &file_openits_rsu_v1_state_proto_enumTypes[8]
+}
+
+func (x Transport) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Transport.Descriptor instead.
+func (Transport) EnumDescriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{8}
+}
+
+type ForwardProtocol int32
+
+const (
+	ForwardProtocol_FORWARD_PROTOCOL_UDP  ForwardProtocol = 0
+	ForwardProtocol_FORWARD_PROTOCOL_TCP  ForwardProtocol = 1
+	ForwardProtocol_FORWARD_PROTOCOL_MQTT ForwardProtocol = 2
+)
+
+// Enum value maps for ForwardProtocol.
+var (
+	ForwardProtocol_name = map[int32]string{
+		0: "FORWARD_PROTOCOL_UDP",
+		1: "FORWARD_PROTOCOL_TCP",
+		2: "FORWARD_PROTOCOL_MQTT",
+	}
+	ForwardProtocol_value = map[string]int32{
+		"FORWARD_PROTOCOL_UDP":  0,
+		"FORWARD_PROTOCOL_TCP":  1,
+		"FORWARD_PROTOCOL_MQTT": 2,
+	}
+)
+
+func (x ForwardProtocol) Enum() *ForwardProtocol {
+	p := new(ForwardProtocol)
+	*p = x
+	return p
+}
+
+func (x ForwardProtocol) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ForwardProtocol) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_rsu_v1_state_proto_enumTypes[9].Descriptor()
+}
+
+func (ForwardProtocol) Type() protoreflect.EnumType {
+	return &file_openits_rsu_v1_state_proto_enumTypes[9]
+}
+
+func (x ForwardProtocol) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ForwardProtocol.Descriptor instead.
+func (ForwardProtocol) EnumDescriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{9}
+}
+
+type ForwardFormat int32
+
+const (
+	ForwardFormat_FORWARD_FORMAT_UPER_1609DOT2 ForwardFormat = 0
+	ForwardFormat_FORWARD_FORMAT_UPER_BARE     ForwardFormat = 1
+	ForwardFormat_FORWARD_FORMAT_HEX           ForwardFormat = 2
+	ForwardFormat_FORWARD_FORMAT_JSON          ForwardFormat = 3
+)
+
+// Enum value maps for ForwardFormat.
+var (
+	ForwardFormat_name = map[int32]string{
+		0: "FORWARD_FORMAT_UPER_1609DOT2",
+		1: "FORWARD_FORMAT_UPER_BARE",
+		2: "FORWARD_FORMAT_HEX",
+		3: "FORWARD_FORMAT_JSON",
+	}
+	ForwardFormat_value = map[string]int32{
+		"FORWARD_FORMAT_UPER_1609DOT2": 0,
+		"FORWARD_FORMAT_UPER_BARE":     1,
+		"FORWARD_FORMAT_HEX":           2,
+		"FORWARD_FORMAT_JSON":          3,
+	}
+)
+
+func (x ForwardFormat) Enum() *ForwardFormat {
+	p := new(ForwardFormat)
+	*p = x
+	return p
+}
+
+func (x ForwardFormat) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ForwardFormat) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_rsu_v1_state_proto_enumTypes[10].Descriptor()
+}
+
+func (ForwardFormat) Type() protoreflect.EnumType {
+	return &file_openits_rsu_v1_state_proto_enumTypes[10]
+}
+
+func (x ForwardFormat) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ForwardFormat.Descriptor instead.
+func (ForwardFormat) EnumDescriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{10}
+}
+
 type GrantAuthority int32
 
 const (
-	GrantAuthority_GRANT_AUTHORITY_CONTROLLER_PRS   GrantAuthority = 0
-	GrantAuthority_GRANT_AUTHORITY_RSU_LOCAL_POLICY GrantAuthority = 1
-	GrantAuthority_GRANT_AUTHORITY_OPERATOR         GrantAuthority = 2
+	GrantAuthority_GRANT_AUTHORITY_CONTROLLER_PRS GrantAuthority = 0
+	GrantAuthority_GRANT_AUTHORITY_RSU_LOCAL      GrantAuthority = 1
+	GrantAuthority_GRANT_AUTHORITY_OPERATOR       GrantAuthority = 2
 )
 
 // Enum value maps for GrantAuthority.
 var (
 	GrantAuthority_name = map[int32]string{
 		0: "GRANT_AUTHORITY_CONTROLLER_PRS",
-		1: "GRANT_AUTHORITY_RSU_LOCAL_POLICY",
+		1: "GRANT_AUTHORITY_RSU_LOCAL",
 		2: "GRANT_AUTHORITY_OPERATOR",
 	}
 	GrantAuthority_value = map[string]int32{
-		"GRANT_AUTHORITY_CONTROLLER_PRS":   0,
-		"GRANT_AUTHORITY_RSU_LOCAL_POLICY": 1,
-		"GRANT_AUTHORITY_OPERATOR":         2,
+		"GRANT_AUTHORITY_CONTROLLER_PRS": 0,
+		"GRANT_AUTHORITY_RSU_LOCAL":      1,
+		"GRANT_AUTHORITY_OPERATOR":       2,
 	}
 )
 
@@ -419,11 +615,11 @@ func (x GrantAuthority) String() string {
 }
 
 func (GrantAuthority) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_rsu_v1_state_proto_enumTypes[7].Descriptor()
+	return file_openits_rsu_v1_state_proto_enumTypes[11].Descriptor()
 }
 
 func (GrantAuthority) Type() protoreflect.EnumType {
-	return &file_openits_rsu_v1_state_proto_enumTypes[7]
+	return &file_openits_rsu_v1_state_proto_enumTypes[11]
 }
 
 func (x GrantAuthority) Number() protoreflect.EnumNumber {
@@ -432,117 +628,117 @@ func (x GrantAuthority) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use GrantAuthority.Descriptor instead.
 func (GrantAuthority) EnumDescriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{7}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{11}
 }
 
-type Status int32
+type OpenitsRsuSrmRequestStatus int32
 
 const (
-	Status_STATUS_PENDING   Status = 0
-	Status_STATUS_APPROVED  Status = 1
-	Status_STATUS_ACTIVE    Status = 2
-	Status_STATUS_COMPLETED Status = 3
-	Status_STATUS_DENIED    Status = 4
+	OpenitsRsuSrmRequestStatus_OPENITS_RSU_SRM_REQUEST_STATUS_PENDING   OpenitsRsuSrmRequestStatus = 0
+	OpenitsRsuSrmRequestStatus_OPENITS_RSU_SRM_REQUEST_STATUS_APPROVED  OpenitsRsuSrmRequestStatus = 1
+	OpenitsRsuSrmRequestStatus_OPENITS_RSU_SRM_REQUEST_STATUS_ACTIVE    OpenitsRsuSrmRequestStatus = 2
+	OpenitsRsuSrmRequestStatus_OPENITS_RSU_SRM_REQUEST_STATUS_COMPLETED OpenitsRsuSrmRequestStatus = 3
+	OpenitsRsuSrmRequestStatus_OPENITS_RSU_SRM_REQUEST_STATUS_DENIED    OpenitsRsuSrmRequestStatus = 4
 )
 
-// Enum value maps for Status.
+// Enum value maps for OpenitsRsuSrmRequestStatus.
 var (
-	Status_name = map[int32]string{
-		0: "STATUS_PENDING",
-		1: "STATUS_APPROVED",
-		2: "STATUS_ACTIVE",
-		3: "STATUS_COMPLETED",
-		4: "STATUS_DENIED",
+	OpenitsRsuSrmRequestStatus_name = map[int32]string{
+		0: "OPENITS_RSU_SRM_REQUEST_STATUS_PENDING",
+		1: "OPENITS_RSU_SRM_REQUEST_STATUS_APPROVED",
+		2: "OPENITS_RSU_SRM_REQUEST_STATUS_ACTIVE",
+		3: "OPENITS_RSU_SRM_REQUEST_STATUS_COMPLETED",
+		4: "OPENITS_RSU_SRM_REQUEST_STATUS_DENIED",
 	}
-	Status_value = map[string]int32{
-		"STATUS_PENDING":   0,
-		"STATUS_APPROVED":  1,
-		"STATUS_ACTIVE":    2,
-		"STATUS_COMPLETED": 3,
-		"STATUS_DENIED":    4,
+	OpenitsRsuSrmRequestStatus_value = map[string]int32{
+		"OPENITS_RSU_SRM_REQUEST_STATUS_PENDING":   0,
+		"OPENITS_RSU_SRM_REQUEST_STATUS_APPROVED":  1,
+		"OPENITS_RSU_SRM_REQUEST_STATUS_ACTIVE":    2,
+		"OPENITS_RSU_SRM_REQUEST_STATUS_COMPLETED": 3,
+		"OPENITS_RSU_SRM_REQUEST_STATUS_DENIED":    4,
 	}
 )
 
-func (x Status) Enum() *Status {
-	p := new(Status)
+func (x OpenitsRsuSrmRequestStatus) Enum() *OpenitsRsuSrmRequestStatus {
+	p := new(OpenitsRsuSrmRequestStatus)
 	*p = x
 	return p
 }
 
-func (x Status) String() string {
+func (x OpenitsRsuSrmRequestStatus) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (Status) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_rsu_v1_state_proto_enumTypes[8].Descriptor()
+func (OpenitsRsuSrmRequestStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_rsu_v1_state_proto_enumTypes[12].Descriptor()
 }
 
-func (Status) Type() protoreflect.EnumType {
-	return &file_openits_rsu_v1_state_proto_enumTypes[8]
+func (OpenitsRsuSrmRequestStatus) Type() protoreflect.EnumType {
+	return &file_openits_rsu_v1_state_proto_enumTypes[12]
 }
 
-func (x Status) Number() protoreflect.EnumNumber {
+func (x OpenitsRsuSrmRequestStatus) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use Status.Descriptor instead.
-func (Status) EnumDescriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{8}
+// Deprecated: Use OpenitsRsuSrmRequestStatus.Descriptor instead.
+func (OpenitsRsuSrmRequestStatus) EnumDescriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{12}
 }
 
-type DecisionAuthority int32
+type OpenitsRsuDecisionAuthority int32
 
 const (
-	DecisionAuthority_DECISION_AUTHORITY_NONE           DecisionAuthority = 0
-	DecisionAuthority_DECISION_AUTHORITY_CONTROLLER_PRS DecisionAuthority = 1
-	DecisionAuthority_DECISION_AUTHORITY_RSU_LOCAL      DecisionAuthority = 2
-	DecisionAuthority_DECISION_AUTHORITY_OPERATOR       DecisionAuthority = 3
-	DecisionAuthority_DECISION_AUTHORITY_EVP_AUTO       DecisionAuthority = 4
+	OpenitsRsuDecisionAuthority_OPENITS_RSU_DECISION_AUTHORITY_NONE           OpenitsRsuDecisionAuthority = 0
+	OpenitsRsuDecisionAuthority_OPENITS_RSU_DECISION_AUTHORITY_CONTROLLER_PRS OpenitsRsuDecisionAuthority = 1
+	OpenitsRsuDecisionAuthority_OPENITS_RSU_DECISION_AUTHORITY_RSU_LOCAL      OpenitsRsuDecisionAuthority = 2
+	OpenitsRsuDecisionAuthority_OPENITS_RSU_DECISION_AUTHORITY_OPERATOR       OpenitsRsuDecisionAuthority = 3
+	OpenitsRsuDecisionAuthority_OPENITS_RSU_DECISION_AUTHORITY_EVP_AUTO       OpenitsRsuDecisionAuthority = 4
 )
 
-// Enum value maps for DecisionAuthority.
+// Enum value maps for OpenitsRsuDecisionAuthority.
 var (
-	DecisionAuthority_name = map[int32]string{
-		0: "DECISION_AUTHORITY_NONE",
-		1: "DECISION_AUTHORITY_CONTROLLER_PRS",
-		2: "DECISION_AUTHORITY_RSU_LOCAL",
-		3: "DECISION_AUTHORITY_OPERATOR",
-		4: "DECISION_AUTHORITY_EVP_AUTO",
+	OpenitsRsuDecisionAuthority_name = map[int32]string{
+		0: "OPENITS_RSU_DECISION_AUTHORITY_NONE",
+		1: "OPENITS_RSU_DECISION_AUTHORITY_CONTROLLER_PRS",
+		2: "OPENITS_RSU_DECISION_AUTHORITY_RSU_LOCAL",
+		3: "OPENITS_RSU_DECISION_AUTHORITY_OPERATOR",
+		4: "OPENITS_RSU_DECISION_AUTHORITY_EVP_AUTO",
 	}
-	DecisionAuthority_value = map[string]int32{
-		"DECISION_AUTHORITY_NONE":           0,
-		"DECISION_AUTHORITY_CONTROLLER_PRS": 1,
-		"DECISION_AUTHORITY_RSU_LOCAL":      2,
-		"DECISION_AUTHORITY_OPERATOR":       3,
-		"DECISION_AUTHORITY_EVP_AUTO":       4,
+	OpenitsRsuDecisionAuthority_value = map[string]int32{
+		"OPENITS_RSU_DECISION_AUTHORITY_NONE":           0,
+		"OPENITS_RSU_DECISION_AUTHORITY_CONTROLLER_PRS": 1,
+		"OPENITS_RSU_DECISION_AUTHORITY_RSU_LOCAL":      2,
+		"OPENITS_RSU_DECISION_AUTHORITY_OPERATOR":       3,
+		"OPENITS_RSU_DECISION_AUTHORITY_EVP_AUTO":       4,
 	}
 )
 
-func (x DecisionAuthority) Enum() *DecisionAuthority {
-	p := new(DecisionAuthority)
+func (x OpenitsRsuDecisionAuthority) Enum() *OpenitsRsuDecisionAuthority {
+	p := new(OpenitsRsuDecisionAuthority)
 	*p = x
 	return p
 }
 
-func (x DecisionAuthority) String() string {
+func (x OpenitsRsuDecisionAuthority) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (DecisionAuthority) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_rsu_v1_state_proto_enumTypes[9].Descriptor()
+func (OpenitsRsuDecisionAuthority) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_rsu_v1_state_proto_enumTypes[13].Descriptor()
 }
 
-func (DecisionAuthority) Type() protoreflect.EnumType {
-	return &file_openits_rsu_v1_state_proto_enumTypes[9]
+func (OpenitsRsuDecisionAuthority) Type() protoreflect.EnumType {
+	return &file_openits_rsu_v1_state_proto_enumTypes[13]
 }
 
-func (x DecisionAuthority) Number() protoreflect.EnumNumber {
+func (x OpenitsRsuDecisionAuthority) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use DecisionAuthority.Descriptor instead.
-func (DecisionAuthority) EnumDescriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{9}
+// Deprecated: Use OpenitsRsuDecisionAuthority.Descriptor instead.
+func (OpenitsRsuDecisionAuthority) EnumDescriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{13}
 }
 
 type Action int32
@@ -575,11 +771,11 @@ func (x Action) String() string {
 }
 
 func (Action) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_rsu_v1_state_proto_enumTypes[10].Descriptor()
+	return file_openits_rsu_v1_state_proto_enumTypes[14].Descriptor()
 }
 
 func (Action) Type() protoreflect.EnumType {
-	return &file_openits_rsu_v1_state_proto_enumTypes[10]
+	return &file_openits_rsu_v1_state_proto_enumTypes[14]
 }
 
 func (x Action) Number() protoreflect.EnumNumber {
@@ -588,7 +784,7 @@ func (x Action) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Action.Descriptor instead.
 func (Action) EnumDescriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{10}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{14}
 }
 
 type EnrollmentStatus int32
@@ -633,11 +829,11 @@ func (x EnrollmentStatus) String() string {
 }
 
 func (EnrollmentStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_rsu_v1_state_proto_enumTypes[11].Descriptor()
+	return file_openits_rsu_v1_state_proto_enumTypes[15].Descriptor()
 }
 
 func (EnrollmentStatus) Type() protoreflect.EnumType {
-	return &file_openits_rsu_v1_state_proto_enumTypes[11]
+	return &file_openits_rsu_v1_state_proto_enumTypes[15]
 }
 
 func (x EnrollmentStatus) Number() protoreflect.EnumNumber {
@@ -646,7 +842,7 @@ func (x EnrollmentStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use EnrollmentStatus.Descriptor instead.
 func (EnrollmentStatus) EnumDescriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{11}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{15}
 }
 
 type Type int32
@@ -685,11 +881,11 @@ func (x Type) String() string {
 }
 
 func (Type) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_rsu_v1_state_proto_enumTypes[12].Descriptor()
+	return file_openits_rsu_v1_state_proto_enumTypes[16].Descriptor()
 }
 
 func (Type) Type() protoreflect.EnumType {
-	return &file_openits_rsu_v1_state_proto_enumTypes[12]
+	return &file_openits_rsu_v1_state_proto_enumTypes[16]
 }
 
 func (x Type) Number() protoreflect.EnumNumber {
@@ -698,7 +894,7 @@ func (x Type) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Type.Descriptor instead.
 func (Type) EnumDescriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{12}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{16}
 }
 
 type RegionType int32
@@ -740,11 +936,11 @@ func (x RegionType) String() string {
 }
 
 func (RegionType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_rsu_v1_state_proto_enumTypes[13].Descriptor()
+	return file_openits_rsu_v1_state_proto_enumTypes[17].Descriptor()
 }
 
 func (RegionType) Type() protoreflect.EnumType {
-	return &file_openits_rsu_v1_state_proto_enumTypes[13]
+	return &file_openits_rsu_v1_state_proto_enumTypes[17]
 }
 
 func (x RegionType) Number() protoreflect.EnumNumber {
@@ -753,24 +949,24 @@ func (x RegionType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use RegionType.Descriptor instead.
 func (RegionType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{13}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{17}
 }
 
 type Rsu struct {
-	state                protoimpl.MessageState `protogen:"open.v1"`
-	Config               *RsuConfig             `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
-	State                *RsuState              `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
-	ConfiguredTimeSource ConfiguredTimeSource   `protobuf:"varint,9,opt,name=configured_time_source,json=configuredTimeSource,proto3,enum=openits.rsu.v1.ConfiguredTimeSource" json:"configured_time_source,omitempty"`
-	Mode                 string                 `protobuf:"bytes,10,opt,name=mode,proto3" json:"mode,omitempty"`
-	Gnss                 *Gnss                  `protobuf:"bytes,11,opt,name=gnss,proto3" json:"gnss,omitempty"`
-	StoreForward         *StoreForward          `protobuf:"bytes,3,opt,name=store_forward,json=storeForward,proto3" json:"store_forward,omitempty"`
-	Diagnostics          *Diagnostics           `protobuf:"bytes,4,opt,name=diagnostics,proto3" json:"diagnostics,omitempty"`
-	System               *System                `protobuf:"bytes,5,opt,name=system,proto3" json:"system,omitempty"`
-	Channels             *Channels              `protobuf:"bytes,6,opt,name=channels,proto3" json:"channels,omitempty"`
-	Messages             *Messages              `protobuf:"bytes,7,opt,name=messages,proto3" json:"messages,omitempty"`
-	Security             *RsuSecurity           `protobuf:"bytes,8,opt,name=security,proto3" json:"security,omitempty"`
-	unknownFields        protoimpl.UnknownFields
-	sizeCache            protoimpl.SizeCache
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Config        *RsuConfig             `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
+	State         *RsuState              `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
+	Operating     *Operating             `protobuf:"bytes,12,opt,name=operating,proto3" json:"operating,omitempty"`
+	Gnss          *Gnss                  `protobuf:"bytes,11,opt,name=gnss,proto3" json:"gnss,omitempty"`
+	StoreForward  *StoreForward          `protobuf:"bytes,3,opt,name=store_forward,json=storeForward,proto3" json:"store_forward,omitempty"`
+	Diagnostics   *Diagnostics           `protobuf:"bytes,4,opt,name=diagnostics,proto3" json:"diagnostics,omitempty"`
+	System        *System                `protobuf:"bytes,5,opt,name=system,proto3" json:"system,omitempty"`
+	Faults        *Faults                `protobuf:"bytes,13,opt,name=faults,proto3" json:"faults,omitempty"`
+	Channels      *Channels              `protobuf:"bytes,6,opt,name=channels,proto3" json:"channels,omitempty"`
+	Messages      *Messages              `protobuf:"bytes,7,opt,name=messages,proto3" json:"messages,omitempty"`
+	Security      *RsuSecurity           `protobuf:"bytes,8,opt,name=security,proto3" json:"security,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Rsu) Reset() {
@@ -817,18 +1013,11 @@ func (x *Rsu) GetState() *RsuState {
 	return nil
 }
 
-func (x *Rsu) GetConfiguredTimeSource() ConfiguredTimeSource {
+func (x *Rsu) GetOperating() *Operating {
 	if x != nil {
-		return x.ConfiguredTimeSource
+		return x.Operating
 	}
-	return ConfiguredTimeSource_CONFIGURED_TIME_SOURCE_GNSS_PPS
-}
-
-func (x *Rsu) GetMode() string {
-	if x != nil {
-		return x.Mode
-	}
-	return ""
+	return nil
 }
 
 func (x *Rsu) GetGnss() *Gnss {
@@ -859,6 +1048,13 @@ func (x *Rsu) GetSystem() *System {
 	return nil
 }
 
+func (x *Rsu) GetFaults() *Faults {
+	if x != nil {
+		return x.Faults
+	}
+	return nil
+}
+
 func (x *Rsu) GetChannels() *Channels {
 	if x != nil {
 		return x.Channels
@@ -881,16 +1077,21 @@ func (x *Rsu) GetSecurity() *RsuSecurity {
 }
 
 type RsuConfig struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Elevation     string                 `protobuf:"bytes,1,opt,name=elevation,proto3" json:"elevation,omitempty"`
-	Heading       uint32                 `protobuf:"varint,2,opt,name=heading,proto3" json:"heading,omitempty"`
-	Id            string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Latitude      string                 `protobuf:"bytes,4,opt,name=latitude,proto3" json:"latitude,omitempty"`
-	Longitude     string                 `protobuf:"bytes,5,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	Name          string                 `protobuf:"bytes,6,opt,name=name,proto3" json:"name,omitempty"`
-	RoadReference string                 `protobuf:"bytes,7,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state           protoimpl.MessageState    `protogen:"open.v1"`
+	Elevation       string                    `protobuf:"bytes,1,opt,name=elevation,proto3" json:"elevation,omitempty"`
+	Heading         uint32                    `protobuf:"varint,2,opt,name=heading,proto3" json:"heading,omitempty"`
+	Id              string                    `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	InstallDate     *timestamppb.Timestamp    `protobuf:"bytes,8,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
+	Latitude        string                    `protobuf:"bytes,4,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	LinearReference *RsuConfigLinearReference `protobuf:"bytes,9,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
+	Longitude       string                    `protobuf:"bytes,5,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	MaintainedBy    string                    `protobuf:"bytes,10,opt,name=maintained_by,json=maintainedBy,proto3" json:"maintained_by,omitempty"`
+	Name            string                    `protobuf:"bytes,6,opt,name=name,proto3" json:"name,omitempty"`
+	Owner           string                    `protobuf:"bytes,11,opt,name=owner,proto3" json:"owner,omitempty"`
+	RoadReference   string                    `protobuf:"bytes,7,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
+	SiteId          string                    `protobuf:"bytes,12,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *RsuConfig) Reset() {
@@ -944,6 +1145,13 @@ func (x *RsuConfig) GetId() string {
 	return ""
 }
 
+func (x *RsuConfig) GetInstallDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.InstallDate
+	}
+	return nil
+}
+
 func (x *RsuConfig) GetLatitude() string {
 	if x != nil {
 		return x.Latitude
@@ -951,9 +1159,23 @@ func (x *RsuConfig) GetLatitude() string {
 	return ""
 }
 
+func (x *RsuConfig) GetLinearReference() *RsuConfigLinearReference {
+	if x != nil {
+		return x.LinearReference
+	}
+	return nil
+}
+
 func (x *RsuConfig) GetLongitude() string {
 	if x != nil {
 		return x.Longitude
+	}
+	return ""
+}
+
+func (x *RsuConfig) GetMaintainedBy() string {
+	if x != nil {
+		return x.MaintainedBy
 	}
 	return ""
 }
@@ -965,6 +1187,13 @@ func (x *RsuConfig) GetName() string {
 	return ""
 }
 
+func (x *RsuConfig) GetOwner() string {
+	if x != nil {
+		return x.Owner
+	}
+	return ""
+}
+
 func (x *RsuConfig) GetRoadReference() string {
 	if x != nil {
 		return x.RoadReference
@@ -972,28 +1201,108 @@ func (x *RsuConfig) GetRoadReference() string {
 	return ""
 }
 
-type RsuState struct {
+func (x *RsuConfig) GetSiteId() string {
+	if x != nil {
+		return x.SiteId
+	}
+	return ""
+}
+
+type RsuConfigLinearReference struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	Elevation       string                 `protobuf:"bytes,1,opt,name=elevation,proto3" json:"elevation,omitempty"`
-	Firmware        string                 `protobuf:"bytes,8,opt,name=firmware,proto3" json:"firmware,omitempty"`
-	FirmwareBuild   string                 `protobuf:"bytes,9,opt,name=firmware_build,json=firmwareBuild,proto3" json:"firmware_build,omitempty"`
-	HardwareVersion string                 `protobuf:"bytes,10,opt,name=hardware_version,json=hardwareVersion,proto3" json:"hardware_version,omitempty"`
-	Heading         uint32                 `protobuf:"varint,2,opt,name=heading,proto3" json:"heading,omitempty"`
-	Id              string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Latitude        string                 `protobuf:"bytes,4,opt,name=latitude,proto3" json:"latitude,omitempty"`
-	Longitude       string                 `protobuf:"bytes,5,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	Make            string                 `protobuf:"bytes,11,opt,name=make,proto3" json:"make,omitempty"`
-	Model           string                 `protobuf:"bytes,12,opt,name=model,proto3" json:"model,omitempty"`
-	Name            string                 `protobuf:"bytes,6,opt,name=name,proto3" json:"name,omitempty"`
-	RoadReference   string                 `protobuf:"bytes,7,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
-	Serial          string                 `protobuf:"bytes,13,opt,name=serial,proto3" json:"serial,omitempty"`
+	RouteDesignator string                 `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3" json:"route_designator,omitempty"`
+	Direction       string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"`
+	Measure         string                 `protobuf:"bytes,3,opt,name=measure,proto3" json:"measure,omitempty"`
+	LrsMethod       string                 `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3" json:"lrs_method,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *RsuConfigLinearReference) Reset() {
+	*x = RsuConfigLinearReference{}
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RsuConfigLinearReference) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RsuConfigLinearReference) ProtoMessage() {}
+
+func (x *RsuConfigLinearReference) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RsuConfigLinearReference.ProtoReflect.Descriptor instead.
+func (*RsuConfigLinearReference) Descriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *RsuConfigLinearReference) GetRouteDesignator() string {
+	if x != nil {
+		return x.RouteDesignator
+	}
+	return ""
+}
+
+func (x *RsuConfigLinearReference) GetDirection() string {
+	if x != nil {
+		return x.Direction
+	}
+	return ""
+}
+
+func (x *RsuConfigLinearReference) GetMeasure() string {
+	if x != nil {
+		return x.Measure
+	}
+	return ""
+}
+
+func (x *RsuConfigLinearReference) GetLrsMethod() string {
+	if x != nil {
+		return x.LrsMethod
+	}
+	return ""
+}
+
+type RsuState struct {
+	state           protoimpl.MessageState   `protogen:"open.v1"`
+	Elevation       string                   `protobuf:"bytes,1,opt,name=elevation,proto3" json:"elevation,omitempty"`
+	Firmware        string                   `protobuf:"bytes,8,opt,name=firmware,proto3" json:"firmware,omitempty"`
+	FirmwareBuild   string                   `protobuf:"bytes,9,opt,name=firmware_build,json=firmwareBuild,proto3" json:"firmware_build,omitempty"`
+	HardwareVersion string                   `protobuf:"bytes,10,opt,name=hardware_version,json=hardwareVersion,proto3" json:"hardware_version,omitempty"`
+	Heading         uint32                   `protobuf:"varint,2,opt,name=heading,proto3" json:"heading,omitempty"`
+	Id              string                   `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	InstallDate     *timestamppb.Timestamp   `protobuf:"bytes,14,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
+	Latitude        string                   `protobuf:"bytes,4,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	LinearReference *RsuStateLinearReference `protobuf:"bytes,15,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
+	Longitude       string                   `protobuf:"bytes,5,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	MaintainedBy    string                   `protobuf:"bytes,16,opt,name=maintained_by,json=maintainedBy,proto3" json:"maintained_by,omitempty"`
+	Make            string                   `protobuf:"bytes,11,opt,name=make,proto3" json:"make,omitempty"`
+	Model           string                   `protobuf:"bytes,12,opt,name=model,proto3" json:"model,omitempty"`
+	Name            string                   `protobuf:"bytes,6,opt,name=name,proto3" json:"name,omitempty"`
+	Owner           string                   `protobuf:"bytes,17,opt,name=owner,proto3" json:"owner,omitempty"`
+	RoadReference   string                   `protobuf:"bytes,7,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
+	Serial          string                   `protobuf:"bytes,13,opt,name=serial,proto3" json:"serial,omitempty"`
+	SiteId          string                   `protobuf:"bytes,18,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
 
 func (x *RsuState) Reset() {
 	*x = RsuState{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[2]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1005,7 +1314,7 @@ func (x *RsuState) String() string {
 func (*RsuState) ProtoMessage() {}
 
 func (x *RsuState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[2]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1018,7 +1327,7 @@ func (x *RsuState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RsuState.ProtoReflect.Descriptor instead.
 func (*RsuState) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{2}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *RsuState) GetElevation() string {
@@ -1063,6 +1372,13 @@ func (x *RsuState) GetId() string {
 	return ""
 }
 
+func (x *RsuState) GetInstallDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.InstallDate
+	}
+	return nil
+}
+
 func (x *RsuState) GetLatitude() string {
 	if x != nil {
 		return x.Latitude
@@ -1070,9 +1386,23 @@ func (x *RsuState) GetLatitude() string {
 	return ""
 }
 
+func (x *RsuState) GetLinearReference() *RsuStateLinearReference {
+	if x != nil {
+		return x.LinearReference
+	}
+	return nil
+}
+
 func (x *RsuState) GetLongitude() string {
 	if x != nil {
 		return x.Longitude
+	}
+	return ""
+}
+
+func (x *RsuState) GetMaintainedBy() string {
+	if x != nil {
+		return x.MaintainedBy
 	}
 	return ""
 }
@@ -1098,6 +1428,13 @@ func (x *RsuState) GetName() string {
 	return ""
 }
 
+func (x *RsuState) GetOwner() string {
+	if x != nil {
+		return x.Owner
+	}
+	return ""
+}
+
 func (x *RsuState) GetRoadReference() string {
 	if x != nil {
 		return x.RoadReference
@@ -1112,6 +1449,245 @@ func (x *RsuState) GetSerial() string {
 	return ""
 }
 
+func (x *RsuState) GetSiteId() string {
+	if x != nil {
+		return x.SiteId
+	}
+	return ""
+}
+
+type RsuStateLinearReference struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	RouteDesignator string                 `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3" json:"route_designator,omitempty"`
+	Direction       string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"`
+	Measure         string                 `protobuf:"bytes,3,opt,name=measure,proto3" json:"measure,omitempty"`
+	LrsMethod       string                 `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3" json:"lrs_method,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *RsuStateLinearReference) Reset() {
+	*x = RsuStateLinearReference{}
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RsuStateLinearReference) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RsuStateLinearReference) ProtoMessage() {}
+
+func (x *RsuStateLinearReference) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RsuStateLinearReference.ProtoReflect.Descriptor instead.
+func (*RsuStateLinearReference) Descriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *RsuStateLinearReference) GetRouteDesignator() string {
+	if x != nil {
+		return x.RouteDesignator
+	}
+	return ""
+}
+
+func (x *RsuStateLinearReference) GetDirection() string {
+	if x != nil {
+		return x.Direction
+	}
+	return ""
+}
+
+func (x *RsuStateLinearReference) GetMeasure() string {
+	if x != nil {
+		return x.Measure
+	}
+	return ""
+}
+
+func (x *RsuStateLinearReference) GetLrsMethod() string {
+	if x != nil {
+		return x.LrsMethod
+	}
+	return ""
+}
+
+type Operating struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Config        *OperatingConfig       `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
+	State         *OperatingState        `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Operating) Reset() {
+	*x = Operating{}
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Operating) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Operating) ProtoMessage() {}
+
+func (x *Operating) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Operating.ProtoReflect.Descriptor instead.
+func (*Operating) Descriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *Operating) GetConfig() *OperatingConfig {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
+func (x *Operating) GetState() *OperatingState {
+	if x != nil {
+		return x.State
+	}
+	return nil
+}
+
+type OperatingConfig struct {
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	ConfiguredTimeSource TimeSource             `protobuf:"varint,1,opt,name=configured_time_source,json=configuredTimeSource,proto3,enum=openits.rsu.v1.TimeSource" json:"configured_time_source,omitempty"`
+	Mode                 string                 `protobuf:"bytes,2,opt,name=mode,proto3" json:"mode,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *OperatingConfig) Reset() {
+	*x = OperatingConfig{}
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OperatingConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OperatingConfig) ProtoMessage() {}
+
+func (x *OperatingConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OperatingConfig.ProtoReflect.Descriptor instead.
+func (*OperatingConfig) Descriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *OperatingConfig) GetConfiguredTimeSource() TimeSource {
+	if x != nil {
+		return x.ConfiguredTimeSource
+	}
+	return TimeSource_TIME_SOURCE_GPS
+}
+
+func (x *OperatingConfig) GetMode() string {
+	if x != nil {
+		return x.Mode
+	}
+	return ""
+}
+
+type OperatingState struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ActiveMode    string                 `protobuf:"bytes,1,opt,name=active_mode,json=activeMode,proto3" json:"active_mode,omitempty"`
+	TimeValid     bool                   `protobuf:"varint,2,opt,name=time_valid,json=timeValid,proto3" json:"time_valid,omitempty"`
+	Holdover      bool                   `protobuf:"varint,3,opt,name=holdover,proto3" json:"holdover,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *OperatingState) Reset() {
+	*x = OperatingState{}
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OperatingState) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OperatingState) ProtoMessage() {}
+
+func (x *OperatingState) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OperatingState.ProtoReflect.Descriptor instead.
+func (*OperatingState) Descriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *OperatingState) GetActiveMode() string {
+	if x != nil {
+		return x.ActiveMode
+	}
+	return ""
+}
+
+func (x *OperatingState) GetTimeValid() bool {
+	if x != nil {
+		return x.TimeValid
+	}
+	return false
+}
+
+func (x *OperatingState) GetHoldover() bool {
+	if x != nil {
+		return x.Holdover
+	}
+	return false
+}
+
 type Gnss struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	SurveyedPosition *SurveyedPosition      `protobuf:"bytes,1,opt,name=surveyed_position,json=surveyedPosition,proto3" json:"surveyed_position,omitempty"`
@@ -1121,7 +1697,7 @@ type Gnss struct {
 
 func (x *Gnss) Reset() {
 	*x = Gnss{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[3]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1133,7 +1709,7 @@ func (x *Gnss) String() string {
 func (*Gnss) ProtoMessage() {}
 
 func (x *Gnss) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[3]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1146,7 +1722,7 @@ func (x *Gnss) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Gnss.ProtoReflect.Descriptor instead.
 func (*Gnss) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{3}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *Gnss) GetSurveyedPosition() *SurveyedPosition {
@@ -1166,7 +1742,7 @@ type SurveyedPosition struct {
 
 func (x *SurveyedPosition) Reset() {
 	*x = SurveyedPosition{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[4]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1178,7 +1754,7 @@ func (x *SurveyedPosition) String() string {
 func (*SurveyedPosition) ProtoMessage() {}
 
 func (x *SurveyedPosition) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[4]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1191,7 +1767,7 @@ func (x *SurveyedPosition) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SurveyedPosition.ProtoReflect.Descriptor instead.
 func (*SurveyedPosition) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{4}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *SurveyedPosition) GetLatitude() string {
@@ -1218,7 +1794,7 @@ type StoreForward struct {
 
 func (x *StoreForward) Reset() {
 	*x = StoreForward{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[5]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1230,7 +1806,7 @@ func (x *StoreForward) String() string {
 func (*StoreForward) ProtoMessage() {}
 
 func (x *StoreForward) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[5]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1243,7 +1819,7 @@ func (x *StoreForward) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StoreForward.ProtoReflect.Descriptor instead.
 func (*StoreForward) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{5}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *StoreForward) GetConfig() *StoreForwardConfig {
@@ -1272,7 +1848,7 @@ type StoreForwardConfig struct {
 
 func (x *StoreForwardConfig) Reset() {
 	*x = StoreForwardConfig{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[6]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1284,7 +1860,7 @@ func (x *StoreForwardConfig) String() string {
 func (*StoreForwardConfig) ProtoMessage() {}
 
 func (x *StoreForwardConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[6]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1297,7 +1873,7 @@ func (x *StoreForwardConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StoreForwardConfig.ProtoReflect.Descriptor instead.
 func (*StoreForwardConfig) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{6}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *StoreForwardConfig) GetEnabled() bool {
@@ -1340,7 +1916,7 @@ type StoreForwardState struct {
 
 func (x *StoreForwardState) Reset() {
 	*x = StoreForwardState{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[7]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1352,7 +1928,7 @@ func (x *StoreForwardState) String() string {
 func (*StoreForwardState) ProtoMessage() {}
 
 func (x *StoreForwardState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[7]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1365,7 +1941,7 @@ func (x *StoreForwardState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StoreForwardState.ProtoReflect.Descriptor instead.
 func (*StoreForwardState) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{7}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *StoreForwardState) GetStoredMessages() uint32 {
@@ -1408,10 +1984,7 @@ type Diagnostics struct {
 	PositionDeviationM string                 `protobuf:"bytes,3,opt,name=position_deviation_m,json=positionDeviationM,proto3" json:"position_deviation_m,omitempty"`
 	TimeSource         TimeSource             `protobuf:"varint,20,opt,name=time_source,json=timeSource,proto3,enum=openits.rsu.v1.TimeSource" json:"time_source,omitempty"`
 	TimeAccuracyUs     uint32                 `protobuf:"varint,21,opt,name=time_accuracy_us,json=timeAccuracyUs,proto3" json:"time_accuracy_us,omitempty"`
-	TimeValid          bool                   `protobuf:"varint,32,opt,name=time_valid,json=timeValid,proto3" json:"time_valid,omitempty"`
-	Holdover           bool                   `protobuf:"varint,33,opt,name=holdover,proto3" json:"holdover,omitempty"`
-	ActiveMode         string                 `protobuf:"bytes,34,opt,name=active_mode,json=activeMode,proto3" json:"active_mode,omitempty"`
-	Cellular           *Cellular              `protobuf:"bytes,22,opt,name=cellular,proto3" json:"cellular,omitempty"`
+	BackhaulCellular   *BackhaulCellular      `protobuf:"bytes,4,opt,name=backhaul_cellular,json=backhaulCellular,proto3" json:"backhaul_cellular,omitempty"`
 	ConfigHash         string                 `protobuf:"bytes,27,opt,name=config_hash,json=configHash,proto3" json:"config_hash,omitempty"`
 	LastRestartReason  string                 `protobuf:"bytes,28,opt,name=last_restart_reason,json=lastRestartReason,proto3" json:"last_restart_reason,omitempty"`
 	LastRestartTime    *timestamppb.Timestamp `protobuf:"bytes,29,opt,name=last_restart_time,json=lastRestartTime,proto3" json:"last_restart_time,omitempty"`
@@ -1427,7 +2000,7 @@ type Diagnostics struct {
 
 func (x *Diagnostics) Reset() {
 	*x = Diagnostics{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[8]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1439,7 +2012,7 @@ func (x *Diagnostics) String() string {
 func (*Diagnostics) ProtoMessage() {}
 
 func (x *Diagnostics) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[8]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1452,7 +2025,7 @@ func (x *Diagnostics) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Diagnostics.ProtoReflect.Descriptor instead.
 func (*Diagnostics) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{8}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *Diagnostics) GetRadio() *Radio {
@@ -1525,30 +2098,9 @@ func (x *Diagnostics) GetTimeAccuracyUs() uint32 {
 	return 0
 }
 
-func (x *Diagnostics) GetTimeValid() bool {
+func (x *Diagnostics) GetBackhaulCellular() *BackhaulCellular {
 	if x != nil {
-		return x.TimeValid
-	}
-	return false
-}
-
-func (x *Diagnostics) GetHoldover() bool {
-	if x != nil {
-		return x.Holdover
-	}
-	return false
-}
-
-func (x *Diagnostics) GetActiveMode() string {
-	if x != nil {
-		return x.ActiveMode
-	}
-	return ""
-}
-
-func (x *Diagnostics) GetCellular() *Cellular {
-	if x != nil {
-		return x.Cellular
+		return x.BackhaulCellular
 	}
 	return nil
 }
@@ -1631,7 +2183,7 @@ type Radio struct {
 
 func (x *Radio) Reset() {
 	*x = Radio{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[9]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1643,7 +2195,7 @@ func (x *Radio) String() string {
 func (*Radio) ProtoMessage() {}
 
 func (x *Radio) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[9]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1656,7 +2208,7 @@ func (x *Radio) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Radio.ProtoReflect.Descriptor instead.
 func (*Radio) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{9}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *Radio) GetRssiDbm() int32 {
@@ -1710,7 +2262,6 @@ func (x *Radio) GetLastSuccessfulTx() *timestamppb.Timestamp {
 
 type SpatSync struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
-	AscConnected        bool                   `protobuf:"varint,1,opt,name=asc_connected,json=ascConnected,proto3" json:"asc_connected,omitempty"`
 	AscPollIntervalMs   uint32                 `protobuf:"varint,2,opt,name=asc_poll_interval_ms,json=ascPollIntervalMs,proto3" json:"asc_poll_interval_ms,omitempty"`
 	LastAscUpdate       *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=last_asc_update,json=lastAscUpdate,proto3" json:"last_asc_update,omitempty"`
 	PhaseMismatchCount  uint32                 `protobuf:"varint,4,opt,name=phase_mismatch_count,json=phaseMismatchCount,proto3" json:"phase_mismatch_count,omitempty"`
@@ -1727,7 +2278,7 @@ type SpatSync struct {
 
 func (x *SpatSync) Reset() {
 	*x = SpatSync{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[10]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1739,7 +2290,7 @@ func (x *SpatSync) String() string {
 func (*SpatSync) ProtoMessage() {}
 
 func (x *SpatSync) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[10]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1752,14 +2303,7 @@ func (x *SpatSync) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpatSync.ProtoReflect.Descriptor instead.
 func (*SpatSync) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{10}
-}
-
-func (x *SpatSync) GetAscConnected() bool {
-	if x != nil {
-		return x.AscConnected
-	}
-	return false
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *SpatSync) GetAscPollIntervalMs() uint32 {
@@ -1843,7 +2387,7 @@ type Resources struct {
 
 func (x *Resources) Reset() {
 	*x = Resources{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[11]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1855,7 +2399,7 @@ func (x *Resources) String() string {
 func (*Resources) ProtoMessage() {}
 
 func (x *Resources) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[11]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1868,7 +2412,7 @@ func (x *Resources) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Resources.ProtoReflect.Descriptor instead.
 func (*Resources) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{11}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *Resources) GetCpu() *Cpu {
@@ -1906,7 +2450,7 @@ type Cpu struct {
 
 func (x *Cpu) Reset() {
 	*x = Cpu{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[12]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1918,7 +2462,7 @@ func (x *Cpu) String() string {
 func (*Cpu) ProtoMessage() {}
 
 func (x *Cpu) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[12]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1931,7 +2475,7 @@ func (x *Cpu) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Cpu.ProtoReflect.Descriptor instead.
 func (*Cpu) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{12}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *Cpu) GetUsagePct() uint32 {
@@ -1989,7 +2533,7 @@ type Disk struct {
 
 func (x *Disk) Reset() {
 	*x = Disk{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[13]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2001,7 +2545,7 @@ func (x *Disk) String() string {
 func (*Disk) ProtoMessage() {}
 
 func (x *Disk) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[13]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2014,7 +2558,7 @@ func (x *Disk) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Disk.ProtoReflect.Descriptor instead.
 func (*Disk) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{13}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *Disk) GetTotalKb() uint64 {
@@ -2065,7 +2609,7 @@ type Memory struct {
 
 func (x *Memory) Reset() {
 	*x = Memory{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[14]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2077,7 +2621,7 @@ func (x *Memory) String() string {
 func (*Memory) ProtoMessage() {}
 
 func (x *Memory) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[14]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2090,7 +2634,7 @@ func (x *Memory) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Memory.ProtoReflect.Descriptor instead.
 func (*Memory) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{14}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *Memory) GetTotalKb() uint64 {
@@ -2128,7 +2672,7 @@ func (x *Memory) GetAlarm() bool {
 	return false
 }
 
-type Cellular struct {
+type BackhaulCellular struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Operational    bool                   `protobuf:"varint,1,opt,name=operational,proto3" json:"operational,omitempty"`
 	OperatorName   string                 `protobuf:"bytes,2,opt,name=operator_name,json=operatorName,proto3" json:"operator_name,omitempty"`
@@ -2144,21 +2688,21 @@ type Cellular struct {
 	sizeCache      protoimpl.SizeCache
 }
 
-func (x *Cellular) Reset() {
-	*x = Cellular{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[15]
+func (x *BackhaulCellular) Reset() {
+	*x = BackhaulCellular{}
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *Cellular) String() string {
+func (x *BackhaulCellular) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Cellular) ProtoMessage() {}
+func (*BackhaulCellular) ProtoMessage() {}
 
-func (x *Cellular) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[15]
+func (x *BackhaulCellular) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2169,75 +2713,75 @@ func (x *Cellular) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Cellular.ProtoReflect.Descriptor instead.
-func (*Cellular) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{15}
+// Deprecated: Use BackhaulCellular.ProtoReflect.Descriptor instead.
+func (*BackhaulCellular) Descriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{20}
 }
 
-func (x *Cellular) GetOperational() bool {
+func (x *BackhaulCellular) GetOperational() bool {
 	if x != nil {
 		return x.Operational
 	}
 	return false
 }
 
-func (x *Cellular) GetOperatorName() string {
+func (x *BackhaulCellular) GetOperatorName() string {
 	if x != nil {
 		return x.OperatorName
 	}
 	return ""
 }
 
-func (x *Cellular) GetSignalQuality() SignalQuality {
+func (x *BackhaulCellular) GetSignalQuality() SignalQuality {
 	if x != nil {
 		return x.SignalQuality
 	}
 	return SignalQuality_SIGNAL_QUALITY_EXCELLENT
 }
 
-func (x *Cellular) GetRsrpDbm() int32 {
+func (x *BackhaulCellular) GetRsrpDbm() int32 {
 	if x != nil {
 		return x.RsrpDbm
 	}
 	return 0
 }
 
-func (x *Cellular) GetRsrqDb() int32 {
+func (x *BackhaulCellular) GetRsrqDb() int32 {
 	if x != nil {
 		return x.RsrqDb
 	}
 	return 0
 }
 
-func (x *Cellular) GetSinrDb() int32 {
+func (x *BackhaulCellular) GetSinrDb() int32 {
 	if x != nil {
 		return x.SinrDb
 	}
 	return 0
 }
 
-func (x *Cellular) GetLteBand() string {
+func (x *BackhaulCellular) GetLteBand() string {
 	if x != nil {
 		return x.LteBand
 	}
 	return ""
 }
 
-func (x *Cellular) GetNrBand() string {
+func (x *BackhaulCellular) GetNrBand() string {
 	if x != nil {
 		return x.NrBand
 	}
 	return ""
 }
 
-func (x *Cellular) GetDataUsageBytes() uint64 {
+func (x *BackhaulCellular) GetDataUsageBytes() uint64 {
 	if x != nil {
 		return x.DataUsageBytes
 	}
 	return 0
 }
 
-func (x *Cellular) GetRoaming() bool {
+func (x *BackhaulCellular) GetRoaming() bool {
 	if x != nil {
 		return x.Roaming
 	}
@@ -2259,7 +2803,7 @@ type Logs struct {
 
 func (x *Logs) Reset() {
 	*x = Logs{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[16]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2271,7 +2815,7 @@ func (x *Logs) String() string {
 func (*Logs) ProtoMessage() {}
 
 func (x *Logs) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[16]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2284,7 +2828,7 @@ func (x *Logs) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Logs.ProtoReflect.Descriptor instead.
 func (*Logs) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{16}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *Logs) GetTotalEntries() uint64 {
@@ -2346,7 +2890,7 @@ type Errors struct {
 
 func (x *Errors) Reset() {
 	*x = Errors{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[17]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2358,7 +2902,7 @@ func (x *Errors) String() string {
 func (*Errors) ProtoMessage() {}
 
 func (x *Errors) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[17]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2371,7 +2915,7 @@ func (x *Errors) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Errors.ProtoReflect.Descriptor instead.
 func (*Errors) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{17}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *Errors) GetCount_1H() uint64 {
@@ -2398,7 +2942,7 @@ type Warnings struct {
 
 func (x *Warnings) Reset() {
 	*x = Warnings{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[18]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2410,7 +2954,7 @@ func (x *Warnings) String() string {
 func (*Warnings) ProtoMessage() {}
 
 func (x *Warnings) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[18]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2423,7 +2967,7 @@ func (x *Warnings) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Warnings.ProtoReflect.Descriptor instead.
 func (*Warnings) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{18}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *Warnings) GetCount_1H() uint64 {
@@ -2450,7 +2994,7 @@ type Critical struct {
 
 func (x *Critical) Reset() {
 	*x = Critical{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[19]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2462,7 +3006,7 @@ func (x *Critical) String() string {
 func (*Critical) ProtoMessage() {}
 
 func (x *Critical) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[19]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2475,7 +3019,7 @@ func (x *Critical) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Critical.ProtoReflect.Descriptor instead.
 func (*Critical) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{19}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *Critical) GetCount_1H() uint64 {
@@ -2509,7 +3053,7 @@ type Process struct {
 
 func (x *Process) Reset() {
 	*x = Process{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[20]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2521,7 +3065,7 @@ func (x *Process) String() string {
 func (*Process) ProtoMessage() {}
 
 func (x *Process) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[20]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2534,7 +3078,7 @@ func (x *Process) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Process.ProtoReflect.Descriptor instead.
 func (*Process) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{20}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *Process) GetName() string {
@@ -2614,7 +3158,7 @@ type TemperatureSensor struct {
 
 func (x *TemperatureSensor) Reset() {
 	*x = TemperatureSensor{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[21]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2626,7 +3170,7 @@ func (x *TemperatureSensor) String() string {
 func (*TemperatureSensor) ProtoMessage() {}
 
 func (x *TemperatureSensor) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[21]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2639,7 +3183,7 @@ func (x *TemperatureSensor) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TemperatureSensor.ProtoReflect.Descriptor instead.
 func (*TemperatureSensor) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{21}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *TemperatureSensor) GetId() uint32 {
@@ -2697,7 +3241,7 @@ type VehicleAnalytics struct {
 
 func (x *VehicleAnalytics) Reset() {
 	*x = VehicleAnalytics{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[22]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2709,7 +3253,7 @@ func (x *VehicleAnalytics) String() string {
 func (*VehicleAnalytics) ProtoMessage() {}
 
 func (x *VehicleAnalytics) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[22]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2722,7 +3266,7 @@ func (x *VehicleAnalytics) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VehicleAnalytics.ProtoReflect.Descriptor instead.
 func (*VehicleAnalytics) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{22}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *VehicleAnalytics) GetSampleBasis() *SampleBasis {
@@ -2773,7 +3317,7 @@ type SampleBasis struct {
 
 func (x *SampleBasis) Reset() {
 	*x = SampleBasis{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[23]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2785,7 +3329,7 @@ func (x *SampleBasis) String() string {
 func (*SampleBasis) ProtoMessage() {}
 
 func (x *SampleBasis) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[23]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2798,7 +3342,7 @@ func (x *SampleBasis) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SampleBasis.ProtoReflect.Descriptor instead.
 func (*SampleBasis) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{23}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *SampleBasis) GetWindowType() WindowType {
@@ -2848,7 +3392,7 @@ type Counts struct {
 
 func (x *Counts) Reset() {
 	*x = Counts{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[24]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2860,7 +3404,7 @@ func (x *Counts) String() string {
 func (*Counts) ProtoMessage() {}
 
 func (x *Counts) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[24]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2873,7 +3417,7 @@ func (x *Counts) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Counts.ProtoReflect.Descriptor instead.
 func (*Counts) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{24}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *Counts) GetCountBasis() CountBasis {
@@ -2916,7 +3460,7 @@ type SpeedMetrics struct {
 
 func (x *SpeedMetrics) Reset() {
 	*x = SpeedMetrics{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[25]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2928,7 +3472,7 @@ func (x *SpeedMetrics) String() string {
 func (*SpeedMetrics) ProtoMessage() {}
 
 func (x *SpeedMetrics) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[25]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2941,7 +3485,7 @@ func (x *SpeedMetrics) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpeedMetrics.ProtoReflect.Descriptor instead.
 func (*SpeedMetrics) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{25}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *SpeedMetrics) GetAverageKmh() string {
@@ -2984,7 +3528,7 @@ type VehicleClassBreakdown struct {
 
 func (x *VehicleClassBreakdown) Reset() {
 	*x = VehicleClassBreakdown{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[26]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2996,7 +3540,7 @@ func (x *VehicleClassBreakdown) String() string {
 func (*VehicleClassBreakdown) ProtoMessage() {}
 
 func (x *VehicleClassBreakdown) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[26]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3009,7 +3553,7 @@ func (x *VehicleClassBreakdown) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VehicleClassBreakdown.ProtoReflect.Descriptor instead.
 func (*VehicleClassBreakdown) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{26}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *VehicleClassBreakdown) GetPassengerPct() uint32 {
@@ -3052,7 +3596,7 @@ type Approach struct {
 
 func (x *Approach) Reset() {
 	*x = Approach{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[27]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3064,7 +3608,7 @@ func (x *Approach) String() string {
 func (*Approach) ProtoMessage() {}
 
 func (x *Approach) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[27]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3077,7 +3621,7 @@ func (x *Approach) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Approach.ProtoReflect.Descriptor instead.
 func (*Approach) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{27}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *Approach) GetNumber() uint32 {
@@ -3117,7 +3661,7 @@ type System struct {
 
 func (x *System) Reset() {
 	*x = System{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[28]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3129,7 +3673,7 @@ func (x *System) String() string {
 func (*System) ProtoMessage() {}
 
 func (x *System) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[28]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3142,7 +3686,7 @@ func (x *System) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use System.ProtoReflect.Descriptor instead.
 func (*System) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{28}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *System) GetCommLink() []*CommLink {
@@ -3169,7 +3713,7 @@ type CommLink struct {
 
 func (x *CommLink) Reset() {
 	*x = CommLink{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[29]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3181,7 +3725,7 @@ func (x *CommLink) String() string {
 func (*CommLink) ProtoMessage() {}
 
 func (x *CommLink) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[29]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3194,7 +3738,7 @@ func (x *CommLink) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CommLink.ProtoReflect.Descriptor instead.
 func (*CommLink) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{29}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *CommLink) GetBytesReceived() uint64 {
@@ -3260,17 +3804,145 @@ func (x *CommLink) GetRemoteAddress() string {
 	return ""
 }
 
-type Channels struct {
+type Faults struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	RadioType     string                 `protobuf:"bytes,2,opt,name=radio_type,json=radioType,proto3" json:"radio_type,omitempty"`
-	Channel       []*Channel             `protobuf:"bytes,1,rep,name=channel,proto3" json:"channel,omitempty"`
+	Fault         []*Fault               `protobuf:"bytes,1,rep,name=fault,proto3" json:"fault,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
+func (x *Faults) Reset() {
+	*x = Faults{}
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Faults) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Faults) ProtoMessage() {}
+
+func (x *Faults) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Faults.ProtoReflect.Descriptor instead.
+func (*Faults) Descriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *Faults) GetFault() []*Fault {
+	if x != nil {
+		return x.Fault
+	}
+	return nil
+}
+
+type Fault struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Category       string                 `protobuf:"bytes,1,opt,name=category,proto3" json:"category,omitempty"`
+	CorrelatesWith string                 `protobuf:"bytes,2,opt,name=correlates_with,json=correlatesWith,proto3" json:"correlates_with,omitempty"`
+	Description    string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	FaultId        string                 `protobuf:"bytes,4,opt,name=fault_id,json=faultId,proto3" json:"fault_id,omitempty"`
+	FirstObserved  *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=first_observed,json=firstObserved,proto3" json:"first_observed,omitempty"`
+	Severity       FaultSeverity          `protobuf:"varint,6,opt,name=severity,proto3,enum=openits.rsu.v1.FaultSeverity" json:"severity,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *Fault) Reset() {
+	*x = Fault{}
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[36]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Fault) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Fault) ProtoMessage() {}
+
+func (x *Fault) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[36]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Fault.ProtoReflect.Descriptor instead.
+func (*Fault) Descriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *Fault) GetCategory() string {
+	if x != nil {
+		return x.Category
+	}
+	return ""
+}
+
+func (x *Fault) GetCorrelatesWith() string {
+	if x != nil {
+		return x.CorrelatesWith
+	}
+	return ""
+}
+
+func (x *Fault) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *Fault) GetFaultId() string {
+	if x != nil {
+		return x.FaultId
+	}
+	return ""
+}
+
+func (x *Fault) GetFirstObserved() *timestamppb.Timestamp {
+	if x != nil {
+		return x.FirstObserved
+	}
+	return nil
+}
+
+func (x *Fault) GetSeverity() FaultSeverity {
+	if x != nil {
+		return x.Severity
+	}
+	return FaultSeverity_FAULT_SEVERITY_INFO
+}
+
+type Channels struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	ReportedRadioTech string                 `protobuf:"bytes,3,opt,name=reported_radio_tech,json=reportedRadioTech,proto3" json:"reported_radio_tech,omitempty"`
+	Channel           []*Channel             `protobuf:"bytes,1,rep,name=channel,proto3" json:"channel,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
 func (x *Channels) Reset() {
 	*x = Channels{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[30]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3282,7 +3954,7 @@ func (x *Channels) String() string {
 func (*Channels) ProtoMessage() {}
 
 func (x *Channels) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[30]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3295,12 +3967,12 @@ func (x *Channels) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Channels.ProtoReflect.Descriptor instead.
 func (*Channels) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{30}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{37}
 }
 
-func (x *Channels) GetRadioType() string {
+func (x *Channels) GetReportedRadioTech() string {
 	if x != nil {
-		return x.RadioType
+		return x.ReportedRadioTech
 	}
 	return ""
 }
@@ -3313,19 +3985,18 @@ func (x *Channels) GetChannel() []*Channel {
 }
 
 type Channel struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	ChannelId         string                 `protobuf:"bytes,6,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`
-	RadioTech         string                 `protobuf:"bytes,7,opt,name=radio_tech,json=radioTech,proto3" json:"radio_tech,omitempty"`
-	DsrcChannelNumber uint32                 `protobuf:"varint,8,opt,name=dsrc_channel_number,json=dsrcChannelNumber,proto3" json:"dsrc_channel_number,omitempty"`
-	Config            *ChannelConfig         `protobuf:"bytes,9,opt,name=config,proto3" json:"config,omitempty"`
-	State             *ChannelState          `protobuf:"bytes,10,opt,name=state,proto3" json:"state,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ChannelId     string                 `protobuf:"bytes,6,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`
+	RadioTech     string                 `protobuf:"bytes,7,opt,name=radio_tech,json=radioTech,proto3" json:"radio_tech,omitempty"`
+	Config        *ChannelConfig         `protobuf:"bytes,9,opt,name=config,proto3" json:"config,omitempty"`
+	State         *ChannelState          `protobuf:"bytes,10,opt,name=state,proto3" json:"state,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Channel) Reset() {
 	*x = Channel{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[31]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3337,7 +4008,7 @@ func (x *Channel) String() string {
 func (*Channel) ProtoMessage() {}
 
 func (x *Channel) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[31]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3350,7 +4021,7 @@ func (x *Channel) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Channel.ProtoReflect.Descriptor instead.
 func (*Channel) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{31}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *Channel) GetChannelId() string {
@@ -3365,13 +4036,6 @@ func (x *Channel) GetRadioTech() string {
 		return x.RadioTech
 	}
 	return ""
-}
-
-func (x *Channel) GetDsrcChannelNumber() uint32 {
-	if x != nil {
-		return x.DsrcChannelNumber
-	}
-	return 0
 }
 
 func (x *Channel) GetConfig() *ChannelConfig {
@@ -3389,20 +4053,22 @@ func (x *Channel) GetState() *ChannelState {
 }
 
 type ChannelConfig struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Enabled       bool                   `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	Mode          string                 `protobuf:"bytes,2,opt,name=mode,proto3" json:"mode,omitempty"`
-	TxPower       int32                  `protobuf:"varint,3,opt,name=tx_power,json=txPower,proto3" json:"tx_power,omitempty"`
-	MessageTypes  []string               `protobuf:"bytes,4,rep,name=message_types,json=messageTypes,proto3" json:"message_types,omitempty"`
-	Primary       bool                   `protobuf:"varint,5,opt,name=primary,proto3" json:"primary,omitempty"`
-	Dcc           *Dcc                   `protobuf:"bytes,6,opt,name=dcc,proto3" json:"dcc,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	DsrcChannelNumber uint32                 `protobuf:"varint,7,opt,name=dsrc_channel_number,json=dsrcChannelNumber,proto3" json:"dsrc_channel_number,omitempty"`
+	Enabled           bool                   `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Mode              string                 `protobuf:"bytes,2,opt,name=mode,proto3" json:"mode,omitempty"`
+	TxPower           int32                  `protobuf:"varint,3,opt,name=tx_power,json=txPower,proto3" json:"tx_power,omitempty"`
+	AntennaGainDbi    string                 `protobuf:"bytes,8,opt,name=antenna_gain_dbi,json=antennaGainDbi,proto3" json:"antenna_gain_dbi,omitempty"`
+	MessageTypes      []string               `protobuf:"bytes,4,rep,name=message_types,json=messageTypes,proto3" json:"message_types,omitempty"`
+	Primary           bool                   `protobuf:"varint,5,opt,name=primary,proto3" json:"primary,omitempty"`
+	Dcc               *Dcc                   `protobuf:"bytes,6,opt,name=dcc,proto3" json:"dcc,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *ChannelConfig) Reset() {
 	*x = ChannelConfig{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[32]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3414,7 +4080,7 @@ func (x *ChannelConfig) String() string {
 func (*ChannelConfig) ProtoMessage() {}
 
 func (x *ChannelConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[32]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3427,7 +4093,14 @@ func (x *ChannelConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChannelConfig.ProtoReflect.Descriptor instead.
 func (*ChannelConfig) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{32}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{39}
+}
+
+func (x *ChannelConfig) GetDsrcChannelNumber() uint32 {
+	if x != nil {
+		return x.DsrcChannelNumber
+	}
+	return 0
 }
 
 func (x *ChannelConfig) GetEnabled() bool {
@@ -3449,6 +4122,13 @@ func (x *ChannelConfig) GetTxPower() int32 {
 		return x.TxPower
 	}
 	return 0
+}
+
+func (x *ChannelConfig) GetAntennaGainDbi() string {
+	if x != nil {
+		return x.AntennaGainDbi
+	}
+	return ""
 }
 
 func (x *ChannelConfig) GetMessageTypes() []string {
@@ -3482,7 +4162,7 @@ type Dcc struct {
 
 func (x *Dcc) Reset() {
 	*x = Dcc{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[33]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3494,7 +4174,7 @@ func (x *Dcc) String() string {
 func (*Dcc) ProtoMessage() {}
 
 func (x *Dcc) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[33]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3507,7 +4187,7 @@ func (x *Dcc) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Dcc.ProtoReflect.Descriptor instead.
 func (*Dcc) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{33}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *Dcc) GetPolicy() Policy {
@@ -3527,6 +4207,7 @@ func (x *Dcc) GetCbrTargetPercent() uint32 {
 type ChannelState struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	Operational      bool                   `protobuf:"varint,1,opt,name=operational,proto3" json:"operational,omitempty"`
+	RadioTech        string                 `protobuf:"bytes,15,opt,name=radio_tech,json=radioTech,proto3" json:"radio_tech,omitempty"`
 	PacketsTx        uint64                 `protobuf:"varint,2,opt,name=packets_tx,json=packetsTx,proto3" json:"packets_tx,omitempty"`
 	PacketsRx        uint64                 `protobuf:"varint,3,opt,name=packets_rx,json=packetsRx,proto3" json:"packets_rx,omitempty"`
 	BytesTx          uint64                 `protobuf:"varint,4,opt,name=bytes_tx,json=bytesTx,proto3" json:"bytes_tx,omitempty"`
@@ -3546,7 +4227,7 @@ type ChannelState struct {
 
 func (x *ChannelState) Reset() {
 	*x = ChannelState{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[34]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3558,7 +4239,7 @@ func (x *ChannelState) String() string {
 func (*ChannelState) ProtoMessage() {}
 
 func (x *ChannelState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[34]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3571,7 +4252,7 @@ func (x *ChannelState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChannelState.ProtoReflect.Descriptor instead.
 func (*ChannelState) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{34}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *ChannelState) GetOperational() bool {
@@ -3579,6 +4260,13 @@ func (x *ChannelState) GetOperational() bool {
 		return x.Operational
 	}
 	return false
+}
+
+func (x *ChannelState) GetRadioTech() string {
+	if x != nil {
+		return x.RadioTech
+	}
+	return ""
 }
 
 func (x *ChannelState) GetPacketsTx() uint64 {
@@ -3679,6 +4367,7 @@ type Messages struct {
 	Tim           *Tim                   `protobuf:"bytes,4,opt,name=tim,proto3" json:"tim,omitempty"`
 	Bsm           *Bsm                   `protobuf:"bytes,5,opt,name=bsm,proto3" json:"bsm,omitempty"`
 	Psm           *Psm                   `protobuf:"bytes,6,opt,name=psm,proto3" json:"psm,omitempty"`
+	Rtcm          *Rtcm                  `protobuf:"bytes,1,opt,name=rtcm,proto3" json:"rtcm,omitempty"`
 	SrmSsm        *SrmSsm                `protobuf:"bytes,7,opt,name=srm_ssm,json=srmSsm,proto3" json:"srm_ssm,omitempty"`
 	MessageStats  *MessageStats          `protobuf:"bytes,8,opt,name=message_stats,json=messageStats,proto3" json:"message_stats,omitempty"`
 	MessageErrors *MessageErrors         `protobuf:"bytes,9,opt,name=message_errors,json=messageErrors,proto3" json:"message_errors,omitempty"`
@@ -3688,7 +4377,7 @@ type Messages struct {
 
 func (x *Messages) Reset() {
 	*x = Messages{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[35]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3700,7 +4389,7 @@ func (x *Messages) String() string {
 func (*Messages) ProtoMessage() {}
 
 func (x *Messages) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[35]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3713,7 +4402,7 @@ func (x *Messages) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Messages.ProtoReflect.Descriptor instead.
 func (*Messages) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{35}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *Messages) GetSpat() *Spat {
@@ -3751,6 +4440,13 @@ func (x *Messages) GetPsm() *Psm {
 	return nil
 }
 
+func (x *Messages) GetRtcm() *Rtcm {
+	if x != nil {
+		return x.Rtcm
+	}
+	return nil
+}
+
 func (x *Messages) GetSrmSsm() *SrmSsm {
 	if x != nil {
 		return x.SrmSsm
@@ -3782,7 +4478,7 @@ type Spat struct {
 
 func (x *Spat) Reset() {
 	*x = Spat{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[36]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3794,7 +4490,7 @@ func (x *Spat) String() string {
 func (*Spat) ProtoMessage() {}
 
 func (x *Spat) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[36]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3807,7 +4503,7 @@ func (x *Spat) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Spat.ProtoReflect.Descriptor instead.
 func (*Spat) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{36}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *Spat) GetConfig() *SpatConfig {
@@ -3825,20 +4521,23 @@ func (x *Spat) GetState() *SpatState {
 }
 
 type SpatConfig struct {
-	state                   protoimpl.MessageState  `protogen:"open.v1"`
-	Enabled                 bool                    `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	BroadcastInterval       uint32                  `protobuf:"varint,2,opt,name=broadcast_interval,json=broadcastInterval,proto3" json:"broadcast_interval,omitempty"`
-	MaxDataAgeMs            uint32                  `protobuf:"varint,6,opt,name=max_data_age_ms,json=maxDataAgeMs,proto3" json:"max_data_age_ms,omitempty"`
-	SourceAsc               string                  `protobuf:"bytes,3,opt,name=source_asc,json=sourceAsc,proto3" json:"source_asc,omitempty"`
-	Intersection            *SpatConfigIntersection `protobuf:"bytes,7,opt,name=intersection,proto3" json:"intersection,omitempty"`
-	IncludeTimingPrediction bool                    `protobuf:"varint,5,opt,name=include_timing_prediction,json=includeTimingPrediction,proto3" json:"include_timing_prediction,omitempty"`
+	state                   protoimpl.MessageState    `protogen:"open.v1"`
+	Enabled                 bool                      `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	BroadcastInterval       uint32                    `protobuf:"varint,2,opt,name=broadcast_interval,json=broadcastInterval,proto3" json:"broadcast_interval,omitempty"`
+	MaxDataAgeMs            uint32                    `protobuf:"varint,6,opt,name=max_data_age_ms,json=maxDataAgeMs,proto3" json:"max_data_age_ms,omitempty"`
+	SourceAsc               string                    `protobuf:"bytes,3,opt,name=source_asc,json=sourceAsc,proto3" json:"source_asc,omitempty"`
+	SourceMode              SourceMode                `protobuf:"varint,4,opt,name=source_mode,json=sourceMode,proto3,enum=openits.rsu.v1.SourceMode" json:"source_mode,omitempty"`
+	Ingest                  *SpatConfigIngest         `protobuf:"bytes,8,opt,name=ingest,proto3" json:"ingest,omitempty"`
+	Intersection            []*SpatConfigIntersection `protobuf:"bytes,7,rep,name=intersection,proto3" json:"intersection,omitempty"`
+	IncludeTimingPrediction bool                      `protobuf:"varint,5,opt,name=include_timing_prediction,json=includeTimingPrediction,proto3" json:"include_timing_prediction,omitempty"`
+	Psid                    uint32                    `protobuf:"varint,9,opt,name=psid,proto3" json:"psid,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
 
 func (x *SpatConfig) Reset() {
 	*x = SpatConfig{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[37]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3850,7 +4549,7 @@ func (x *SpatConfig) String() string {
 func (*SpatConfig) ProtoMessage() {}
 
 func (x *SpatConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[37]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3863,7 +4562,7 @@ func (x *SpatConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpatConfig.ProtoReflect.Descriptor instead.
 func (*SpatConfig) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{37}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *SpatConfig) GetEnabled() bool {
@@ -3894,7 +4593,21 @@ func (x *SpatConfig) GetSourceAsc() string {
 	return ""
 }
 
-func (x *SpatConfig) GetIntersection() *SpatConfigIntersection {
+func (x *SpatConfig) GetSourceMode() SourceMode {
+	if x != nil {
+		return x.SourceMode
+	}
+	return SourceMode_SOURCE_MODE_RSU_GENERATED
+}
+
+func (x *SpatConfig) GetIngest() *SpatConfigIngest {
+	if x != nil {
+		return x.Ingest
+	}
+	return nil
+}
+
+func (x *SpatConfig) GetIntersection() []*SpatConfigIntersection {
 	if x != nil {
 		return x.Intersection
 	}
@@ -3908,6 +4621,81 @@ func (x *SpatConfig) GetIncludeTimingPrediction() bool {
 	return false
 }
 
+func (x *SpatConfig) GetPsid() uint32 {
+	if x != nil {
+		return x.Psid
+	}
+	return 0
+}
+
+type SpatConfigIngest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Transport     Transport              `protobuf:"varint,1,opt,name=transport,proto3,enum=openits.rsu.v1.Transport" json:"transport,omitempty"`
+	Address       string                 `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
+	Port          uint32                 `protobuf:"varint,3,opt,name=port,proto3" json:"port,omitempty"`
+	Psid          uint32                 `protobuf:"varint,4,opt,name=psid,proto3" json:"psid,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SpatConfigIngest) Reset() {
+	*x = SpatConfigIngest{}
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[45]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SpatConfigIngest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SpatConfigIngest) ProtoMessage() {}
+
+func (x *SpatConfigIngest) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[45]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SpatConfigIngest.ProtoReflect.Descriptor instead.
+func (*SpatConfigIngest) Descriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *SpatConfigIngest) GetTransport() Transport {
+	if x != nil {
+		return x.Transport
+	}
+	return Transport_TRANSPORT_UDP
+}
+
+func (x *SpatConfigIngest) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+func (x *SpatConfigIngest) GetPort() uint32 {
+	if x != nil {
+		return x.Port
+	}
+	return 0
+}
+
+func (x *SpatConfigIngest) GetPsid() uint32 {
+	if x != nil {
+		return x.Psid
+	}
+	return 0
+}
+
 type SpatConfigIntersection struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -3918,7 +4706,7 @@ type SpatConfigIntersection struct {
 
 func (x *SpatConfigIntersection) Reset() {
 	*x = SpatConfigIntersection{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[38]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[46]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3930,7 +4718,7 @@ func (x *SpatConfigIntersection) String() string {
 func (*SpatConfigIntersection) ProtoMessage() {}
 
 func (x *SpatConfigIntersection) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[38]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[46]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3943,7 +4731,7 @@ func (x *SpatConfigIntersection) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpatConfigIntersection.ProtoReflect.Descriptor instead.
 func (*SpatConfigIntersection) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{38}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *SpatConfigIntersection) GetId() uint32 {
@@ -3973,7 +4761,7 @@ type SpatState struct {
 
 func (x *SpatState) Reset() {
 	*x = SpatState{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[39]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[47]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3985,7 +4773,7 @@ func (x *SpatState) String() string {
 func (*SpatState) ProtoMessage() {}
 
 func (x *SpatState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[39]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[47]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3998,7 +4786,7 @@ func (x *SpatState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpatState.ProtoReflect.Descriptor instead.
 func (*SpatState) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{39}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *SpatState) GetBroadcasting() bool {
@@ -4046,7 +4834,7 @@ type Map struct {
 
 func (x *Map) Reset() {
 	*x = Map{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[40]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4058,7 +4846,7 @@ func (x *Map) String() string {
 func (*Map) ProtoMessage() {}
 
 func (x *Map) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[40]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4071,7 +4859,7 @@ func (x *Map) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Map.ProtoReflect.Descriptor instead.
 func (*Map) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{40}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *Map) GetConfig() *MapConfig {
@@ -4089,18 +4877,22 @@ func (x *Map) GetState() *MapState {
 }
 
 type MapConfig struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	Enabled           bool                   `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	BroadcastInterval uint32                 `protobuf:"varint,2,opt,name=broadcast_interval,json=broadcastInterval,proto3" json:"broadcast_interval,omitempty"`
-	Intersection      *MapConfigIntersection `protobuf:"bytes,4,opt,name=intersection,proto3" json:"intersection,omitempty"`
-	GeometryVersion   uint32                 `protobuf:"varint,3,opt,name=geometry_version,json=geometryVersion,proto3" json:"geometry_version,omitempty"`
+	state             protoimpl.MessageState   `protogen:"open.v1"`
+	Enabled           bool                     `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	BroadcastInterval uint32                   `protobuf:"varint,2,opt,name=broadcast_interval,json=broadcastInterval,proto3" json:"broadcast_interval,omitempty"`
+	Intersection      []*MapConfigIntersection `protobuf:"bytes,4,rep,name=intersection,proto3" json:"intersection,omitempty"`
+	GeometryVersion   uint32                   `protobuf:"varint,3,opt,name=geometry_version,json=geometryVersion,proto3" json:"geometry_version,omitempty"`
+	Psid              uint32                   `protobuf:"varint,5,opt,name=psid,proto3" json:"psid,omitempty"`
+	SourceMode        SourceMode               `protobuf:"varint,6,opt,name=source_mode,json=sourceMode,proto3,enum=openits.rsu.v1.SourceMode" json:"source_mode,omitempty"`
+	Ingest            *MapConfigIngest         `protobuf:"bytes,7,opt,name=ingest,proto3" json:"ingest,omitempty"`
+	MaxDataAgeMs      uint32                   `protobuf:"varint,8,opt,name=max_data_age_ms,json=maxDataAgeMs,proto3" json:"max_data_age_ms,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
 
 func (x *MapConfig) Reset() {
 	*x = MapConfig{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[41]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[49]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4112,7 +4904,7 @@ func (x *MapConfig) String() string {
 func (*MapConfig) ProtoMessage() {}
 
 func (x *MapConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[41]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[49]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4125,7 +4917,7 @@ func (x *MapConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MapConfig.ProtoReflect.Descriptor instead.
 func (*MapConfig) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{41}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{49}
 }
 
 func (x *MapConfig) GetEnabled() bool {
@@ -4142,7 +4934,7 @@ func (x *MapConfig) GetBroadcastInterval() uint32 {
 	return 0
 }
 
-func (x *MapConfig) GetIntersection() *MapConfigIntersection {
+func (x *MapConfig) GetIntersection() []*MapConfigIntersection {
 	if x != nil {
 		return x.Intersection
 	}
@@ -4152,6 +4944,34 @@ func (x *MapConfig) GetIntersection() *MapConfigIntersection {
 func (x *MapConfig) GetGeometryVersion() uint32 {
 	if x != nil {
 		return x.GeometryVersion
+	}
+	return 0
+}
+
+func (x *MapConfig) GetPsid() uint32 {
+	if x != nil {
+		return x.Psid
+	}
+	return 0
+}
+
+func (x *MapConfig) GetSourceMode() SourceMode {
+	if x != nil {
+		return x.SourceMode
+	}
+	return SourceMode_SOURCE_MODE_RSU_GENERATED
+}
+
+func (x *MapConfig) GetIngest() *MapConfigIngest {
+	if x != nil {
+		return x.Ingest
+	}
+	return nil
+}
+
+func (x *MapConfig) GetMaxDataAgeMs() uint32 {
+	if x != nil {
+		return x.MaxDataAgeMs
 	}
 	return 0
 }
@@ -4166,7 +4986,7 @@ type MapConfigIntersection struct {
 
 func (x *MapConfigIntersection) Reset() {
 	*x = MapConfigIntersection{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[42]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[50]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4178,7 +4998,7 @@ func (x *MapConfigIntersection) String() string {
 func (*MapConfigIntersection) ProtoMessage() {}
 
 func (x *MapConfigIntersection) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[42]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[50]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4191,7 +5011,7 @@ func (x *MapConfigIntersection) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MapConfigIntersection.ProtoReflect.Descriptor instead.
 func (*MapConfigIntersection) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{42}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *MapConfigIntersection) GetId() uint32 {
@@ -4208,20 +5028,88 @@ func (x *MapConfigIntersection) GetRegion() uint32 {
 	return 0
 }
 
+type MapConfigIngest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Transport     Transport              `protobuf:"varint,1,opt,name=transport,proto3,enum=openits.rsu.v1.Transport" json:"transport,omitempty"`
+	Address       string                 `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
+	Port          uint32                 `protobuf:"varint,3,opt,name=port,proto3" json:"port,omitempty"`
+	Psid          uint32                 `protobuf:"varint,4,opt,name=psid,proto3" json:"psid,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MapConfigIngest) Reset() {
+	*x = MapConfigIngest{}
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[51]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MapConfigIngest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MapConfigIngest) ProtoMessage() {}
+
+func (x *MapConfigIngest) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[51]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MapConfigIngest.ProtoReflect.Descriptor instead.
+func (*MapConfigIngest) Descriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{51}
+}
+
+func (x *MapConfigIngest) GetTransport() Transport {
+	if x != nil {
+		return x.Transport
+	}
+	return Transport_TRANSPORT_UDP
+}
+
+func (x *MapConfigIngest) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+func (x *MapConfigIngest) GetPort() uint32 {
+	if x != nil {
+		return x.Port
+	}
+	return 0
+}
+
+func (x *MapConfigIngest) GetPsid() uint32 {
+	if x != nil {
+		return x.Psid
+	}
+	return 0
+}
+
 type MapState struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Broadcasting   bool                   `protobuf:"varint,1,opt,name=broadcasting,proto3" json:"broadcasting,omitempty"`
-	BroadcastCount uint64                 `protobuf:"varint,2,opt,name=broadcast_count,json=broadcastCount,proto3" json:"broadcast_count,omitempty"`
-	Intersection   *MapStateIntersection  `protobuf:"bytes,6,opt,name=intersection,proto3" json:"intersection,omitempty"`
-	LaneCount      uint32                 `protobuf:"varint,4,opt,name=lane_count,json=laneCount,proto3" json:"lane_count,omitempty"`
-	ApproachCount  uint32                 `protobuf:"varint,5,opt,name=approach_count,json=approachCount,proto3" json:"approach_count,omitempty"`
+	state          protoimpl.MessageState  `protogen:"open.v1"`
+	Broadcasting   bool                    `protobuf:"varint,1,opt,name=broadcasting,proto3" json:"broadcasting,omitempty"`
+	BroadcastCount uint64                  `protobuf:"varint,2,opt,name=broadcast_count,json=broadcastCount,proto3" json:"broadcast_count,omitempty"`
+	Intersection   []*MapStateIntersection `protobuf:"bytes,6,rep,name=intersection,proto3" json:"intersection,omitempty"`
+	LaneCount      uint32                  `protobuf:"varint,4,opt,name=lane_count,json=laneCount,proto3" json:"lane_count,omitempty"`
+	ApproachCount  uint32                  `protobuf:"varint,5,opt,name=approach_count,json=approachCount,proto3" json:"approach_count,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
 func (x *MapState) Reset() {
 	*x = MapState{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[43]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[52]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4233,7 +5121,7 @@ func (x *MapState) String() string {
 func (*MapState) ProtoMessage() {}
 
 func (x *MapState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[43]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[52]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4246,7 +5134,7 @@ func (x *MapState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MapState.ProtoReflect.Descriptor instead.
 func (*MapState) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{43}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *MapState) GetBroadcasting() bool {
@@ -4263,7 +5151,7 @@ func (x *MapState) GetBroadcastCount() uint64 {
 	return 0
 }
 
-func (x *MapState) GetIntersection() *MapStateIntersection {
+func (x *MapState) GetIntersection() []*MapStateIntersection {
 	if x != nil {
 		return x.Intersection
 	}
@@ -4294,7 +5182,7 @@ type MapStateIntersection struct {
 
 func (x *MapStateIntersection) Reset() {
 	*x = MapStateIntersection{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[44]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[53]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4306,7 +5194,7 @@ func (x *MapStateIntersection) String() string {
 func (*MapStateIntersection) ProtoMessage() {}
 
 func (x *MapStateIntersection) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[44]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[53]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4319,7 +5207,7 @@ func (x *MapStateIntersection) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MapStateIntersection.ProtoReflect.Descriptor instead.
 func (*MapStateIntersection) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{44}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{53}
 }
 
 func (x *MapStateIntersection) GetId() uint32 {
@@ -4346,7 +5234,7 @@ type Tim struct {
 
 func (x *Tim) Reset() {
 	*x = Tim{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[45]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[54]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4358,7 +5246,7 @@ func (x *Tim) String() string {
 func (*Tim) ProtoMessage() {}
 
 func (x *Tim) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[45]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[54]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4371,7 +5259,7 @@ func (x *Tim) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Tim.ProtoReflect.Descriptor instead.
 func (*Tim) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{45}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{54}
 }
 
 func (x *Tim) GetConfig() *TimConfig {
@@ -4399,7 +5287,7 @@ type TimConfig struct {
 
 func (x *TimConfig) Reset() {
 	*x = TimConfig{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[46]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[55]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4411,7 +5299,7 @@ func (x *TimConfig) String() string {
 func (*TimConfig) ProtoMessage() {}
 
 func (x *TimConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[46]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[55]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4424,7 +5312,7 @@ func (x *TimConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TimConfig.ProtoReflect.Descriptor instead.
 func (*TimConfig) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{46}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{55}
 }
 
 func (x *TimConfig) GetEnabled() bool {
@@ -4457,7 +5345,7 @@ type Active struct {
 
 func (x *Active) Reset() {
 	*x = Active{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[47]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[56]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4469,7 +5357,7 @@ func (x *Active) String() string {
 func (*Active) ProtoMessage() {}
 
 func (x *Active) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[47]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[56]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4482,7 +5370,7 @@ func (x *Active) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Active.ProtoReflect.Descriptor instead.
 func (*Active) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{47}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{56}
 }
 
 func (x *Active) GetMessage() []*Message {
@@ -4503,7 +5391,7 @@ type Message struct {
 
 func (x *Message) Reset() {
 	*x = Message{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[48]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[57]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4515,7 +5403,7 @@ func (x *Message) String() string {
 func (*Message) ProtoMessage() {}
 
 func (x *Message) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[48]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[57]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4528,7 +5416,7 @@ func (x *Message) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Message.ProtoReflect.Descriptor instead.
 func (*Message) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{48}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{57}
 }
 
 func (x *Message) GetId() string {
@@ -4553,22 +5441,23 @@ func (x *Message) GetState() *MessageState {
 }
 
 type MessageConfig struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Enabled       bool                   `protobuf:"varint,2,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	Priority      uint32                 `protobuf:"varint,3,opt,name=priority,proto3" json:"priority,omitempty"`
-	StartTime     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
-	EndTime       *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
-	ItisCode      []uint32               `protobuf:"varint,9,rep,packed,name=itis_code,json=itisCode,proto3" json:"itis_code,omitempty"`
-	Text          string                 `protobuf:"bytes,7,opt,name=text,proto3" json:"text,omitempty"`
-	Region        *Region                `protobuf:"bytes,8,opt,name=region,proto3" json:"region,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Name            string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Psid            uint32                 `protobuf:"varint,10,opt,name=psid,proto3" json:"psid,omitempty"`
+	Enabled         bool                   `protobuf:"varint,2,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Priority        uint32                 `protobuf:"varint,3,opt,name=priority,proto3" json:"priority,omitempty"`
+	StartTime       *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	DurationMinutes uint32                 `protobuf:"varint,11,opt,name=duration_minutes,json=durationMinutes,proto3" json:"duration_minutes,omitempty"`
+	ItisCode        []uint32               `protobuf:"varint,9,rep,packed,name=itis_code,json=itisCode,proto3" json:"itis_code,omitempty"`
+	Text            string                 `protobuf:"bytes,7,opt,name=text,proto3" json:"text,omitempty"`
+	Region          *Region                `protobuf:"bytes,8,opt,name=region,proto3" json:"region,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *MessageConfig) Reset() {
 	*x = MessageConfig{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[49]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[58]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4580,7 +5469,7 @@ func (x *MessageConfig) String() string {
 func (*MessageConfig) ProtoMessage() {}
 
 func (x *MessageConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[49]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[58]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4593,7 +5482,7 @@ func (x *MessageConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MessageConfig.ProtoReflect.Descriptor instead.
 func (*MessageConfig) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{49}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{58}
 }
 
 func (x *MessageConfig) GetName() string {
@@ -4601,6 +5490,13 @@ func (x *MessageConfig) GetName() string {
 		return x.Name
 	}
 	return ""
+}
+
+func (x *MessageConfig) GetPsid() uint32 {
+	if x != nil {
+		return x.Psid
+	}
+	return 0
 }
 
 func (x *MessageConfig) GetEnabled() bool {
@@ -4624,11 +5520,11 @@ func (x *MessageConfig) GetStartTime() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *MessageConfig) GetEndTime() *timestamppb.Timestamp {
+func (x *MessageConfig) GetDurationMinutes() uint32 {
 	if x != nil {
-		return x.EndTime
+		return x.DurationMinutes
 	}
-	return nil
+	return 0
 }
 
 func (x *MessageConfig) GetItisCode() []uint32 {
@@ -4667,7 +5563,7 @@ type Region struct {
 
 func (x *Region) Reset() {
 	*x = Region{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[50]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[59]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4679,7 +5575,7 @@ func (x *Region) String() string {
 func (*Region) ProtoMessage() {}
 
 func (x *Region) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[50]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[59]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4692,7 +5588,7 @@ func (x *Region) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Region.ProtoReflect.Descriptor instead.
 func (*Region) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{50}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{59}
 }
 
 func (x *Region) GetRadius() uint32 {
@@ -4756,7 +5652,7 @@ type MessageState struct {
 
 func (x *MessageState) Reset() {
 	*x = MessageState{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[51]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[60]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4768,7 +5664,7 @@ func (x *MessageState) String() string {
 func (*MessageState) ProtoMessage() {}
 
 func (x *MessageState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[51]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[60]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4781,7 +5677,7 @@ func (x *MessageState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MessageState.ProtoReflect.Descriptor instead.
 func (*MessageState) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{51}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{60}
 }
 
 func (x *MessageState) GetBroadcastCount() uint64 {
@@ -4822,7 +5718,7 @@ type Bsm struct {
 
 func (x *Bsm) Reset() {
 	*x = Bsm{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[52]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[61]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4834,7 +5730,7 @@ func (x *Bsm) String() string {
 func (*Bsm) ProtoMessage() {}
 
 func (x *Bsm) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[52]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[61]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4847,7 +5743,7 @@ func (x *Bsm) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Bsm.ProtoReflect.Descriptor instead.
 func (*Bsm) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{52}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{61}
 }
 
 func (x *Bsm) GetConfig() *BsmConfig {
@@ -4867,9 +5763,13 @@ func (x *Bsm) GetState() *BsmState {
 type BsmConfig struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	ReceiveEnabled     bool                   `protobuf:"varint,1,opt,name=receive_enabled,json=receiveEnabled,proto3" json:"receive_enabled,omitempty"`
+	Psid               uint32                 `protobuf:"varint,7,opt,name=psid,proto3" json:"psid,omitempty"`
 	ForwardEnabled     bool                   `protobuf:"varint,2,opt,name=forward_enabled,json=forwardEnabled,proto3" json:"forward_enabled,omitempty"`
 	ForwardDestination string                 `protobuf:"bytes,3,opt,name=forward_destination,json=forwardDestination,proto3" json:"forward_destination,omitempty"`
 	ForwardPort        uint32                 `protobuf:"varint,4,opt,name=forward_port,json=forwardPort,proto3" json:"forward_port,omitempty"`
+	ForwardProtocol    ForwardProtocol        `protobuf:"varint,8,opt,name=forward_protocol,json=forwardProtocol,proto3,enum=openits.rsu.v1.ForwardProtocol" json:"forward_protocol,omitempty"`
+	ForwardFormat      ForwardFormat          `protobuf:"varint,9,opt,name=forward_format,json=forwardFormat,proto3,enum=openits.rsu.v1.ForwardFormat" json:"forward_format,omitempty"`
+	StripPathHistory   bool                   `protobuf:"varint,10,opt,name=strip_path_history,json=stripPathHistory,proto3" json:"strip_path_history,omitempty"`
 	FilterByRegion     bool                   `protobuf:"varint,5,opt,name=filter_by_region,json=filterByRegion,proto3" json:"filter_by_region,omitempty"`
 	RegionRadius       uint32                 `protobuf:"varint,6,opt,name=region_radius,json=regionRadius,proto3" json:"region_radius,omitempty"`
 	unknownFields      protoimpl.UnknownFields
@@ -4878,7 +5778,7 @@ type BsmConfig struct {
 
 func (x *BsmConfig) Reset() {
 	*x = BsmConfig{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[53]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[62]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4890,7 +5790,7 @@ func (x *BsmConfig) String() string {
 func (*BsmConfig) ProtoMessage() {}
 
 func (x *BsmConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[53]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[62]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4903,7 +5803,7 @@ func (x *BsmConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BsmConfig.ProtoReflect.Descriptor instead.
 func (*BsmConfig) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{53}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{62}
 }
 
 func (x *BsmConfig) GetReceiveEnabled() bool {
@@ -4911,6 +5811,13 @@ func (x *BsmConfig) GetReceiveEnabled() bool {
 		return x.ReceiveEnabled
 	}
 	return false
+}
+
+func (x *BsmConfig) GetPsid() uint32 {
+	if x != nil {
+		return x.Psid
+	}
+	return 0
 }
 
 func (x *BsmConfig) GetForwardEnabled() bool {
@@ -4932,6 +5839,27 @@ func (x *BsmConfig) GetForwardPort() uint32 {
 		return x.ForwardPort
 	}
 	return 0
+}
+
+func (x *BsmConfig) GetForwardProtocol() ForwardProtocol {
+	if x != nil {
+		return x.ForwardProtocol
+	}
+	return ForwardProtocol_FORWARD_PROTOCOL_UDP
+}
+
+func (x *BsmConfig) GetForwardFormat() ForwardFormat {
+	if x != nil {
+		return x.ForwardFormat
+	}
+	return ForwardFormat_FORWARD_FORMAT_UPER_1609DOT2
+}
+
+func (x *BsmConfig) GetStripPathHistory() bool {
+	if x != nil {
+		return x.StripPathHistory
+	}
+	return false
 }
 
 func (x *BsmConfig) GetFilterByRegion() bool {
@@ -4962,7 +5890,7 @@ type BsmState struct {
 
 func (x *BsmState) Reset() {
 	*x = BsmState{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[54]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[63]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4974,7 +5902,7 @@ func (x *BsmState) String() string {
 func (*BsmState) ProtoMessage() {}
 
 func (x *BsmState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[54]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[63]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4987,7 +5915,7 @@ func (x *BsmState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BsmState.ProtoReflect.Descriptor instead.
 func (*BsmState) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{54}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{63}
 }
 
 func (x *BsmState) GetReceivedCount() uint64 {
@@ -5033,16 +5961,18 @@ func (x *BsmState) GetLastReceived() *timestamppb.Timestamp {
 }
 
 type Psm struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Config        *PsmConfig             `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
-	State         *PsmState              `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Config          *PsmConfig             `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
+	State           *PsmState              `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
+	BroadcastConfig *BroadcastConfig       `protobuf:"bytes,3,opt,name=broadcast_config,json=broadcastConfig,proto3" json:"broadcast_config,omitempty"`
+	BroadcastState  *BroadcastState        `protobuf:"bytes,4,opt,name=broadcast_state,json=broadcastState,proto3" json:"broadcast_state,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *Psm) Reset() {
 	*x = Psm{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[55]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[64]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5054,7 +5984,7 @@ func (x *Psm) String() string {
 func (*Psm) ProtoMessage() {}
 
 func (x *Psm) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[55]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[64]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5067,7 +5997,7 @@ func (x *Psm) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Psm.ProtoReflect.Descriptor instead.
 func (*Psm) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{55}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{64}
 }
 
 func (x *Psm) GetConfig() *PsmConfig {
@@ -5084,17 +6014,32 @@ func (x *Psm) GetState() *PsmState {
 	return nil
 }
 
+func (x *Psm) GetBroadcastConfig() *BroadcastConfig {
+	if x != nil {
+		return x.BroadcastConfig
+	}
+	return nil
+}
+
+func (x *Psm) GetBroadcastState() *BroadcastState {
+	if x != nil {
+		return x.BroadcastState
+	}
+	return nil
+}
+
 type PsmConfig struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Enabled       bool                   `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
 	AlertAsc      bool                   `protobuf:"varint,2,opt,name=alert_asc,json=alertAsc,proto3" json:"alert_asc,omitempty"`
+	Psid          uint32                 `protobuf:"varint,3,opt,name=psid,proto3" json:"psid,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *PsmConfig) Reset() {
 	*x = PsmConfig{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[56]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[65]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5106,7 +6051,7 @@ func (x *PsmConfig) String() string {
 func (*PsmConfig) ProtoMessage() {}
 
 func (x *PsmConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[56]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[65]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5119,7 +6064,7 @@ func (x *PsmConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PsmConfig.ProtoReflect.Descriptor instead.
 func (*PsmConfig) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{56}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{65}
 }
 
 func (x *PsmConfig) GetEnabled() bool {
@@ -5136,6 +6081,13 @@ func (x *PsmConfig) GetAlertAsc() bool {
 	return false
 }
 
+func (x *PsmConfig) GetPsid() uint32 {
+	if x != nil {
+		return x.Psid
+	}
+	return 0
+}
+
 type PsmState struct {
 	state                    protoimpl.MessageState `protogen:"open.v1"`
 	ReceivedCount            uint64                 `protobuf:"varint,1,opt,name=received_count,json=receivedCount,proto3" json:"received_count,omitempty"`
@@ -5149,7 +6101,7 @@ type PsmState struct {
 
 func (x *PsmState) Reset() {
 	*x = PsmState{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[57]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[66]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5161,7 +6113,7 @@ func (x *PsmState) String() string {
 func (*PsmState) ProtoMessage() {}
 
 func (x *PsmState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[57]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[66]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5174,7 +6126,7 @@ func (x *PsmState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PsmState.ProtoReflect.Descriptor instead.
 func (*PsmState) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{57}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{66}
 }
 
 func (x *PsmState) GetReceivedCount() uint64 {
@@ -5212,6 +6164,322 @@ func (x *PsmState) GetInvalidCount() uint64 {
 	return 0
 }
 
+type BroadcastConfig struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Enabled           bool                   `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Source            string                 `protobuf:"bytes,2,opt,name=source,proto3" json:"source,omitempty"`
+	BroadcastInterval uint32                 `protobuf:"varint,3,opt,name=broadcast_interval,json=broadcastInterval,proto3" json:"broadcast_interval,omitempty"`
+	Psid              uint32                 `protobuf:"varint,4,opt,name=psid,proto3" json:"psid,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *BroadcastConfig) Reset() {
+	*x = BroadcastConfig{}
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[67]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BroadcastConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BroadcastConfig) ProtoMessage() {}
+
+func (x *BroadcastConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[67]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BroadcastConfig.ProtoReflect.Descriptor instead.
+func (*BroadcastConfig) Descriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{67}
+}
+
+func (x *BroadcastConfig) GetEnabled() bool {
+	if x != nil {
+		return x.Enabled
+	}
+	return false
+}
+
+func (x *BroadcastConfig) GetSource() string {
+	if x != nil {
+		return x.Source
+	}
+	return ""
+}
+
+func (x *BroadcastConfig) GetBroadcastInterval() uint32 {
+	if x != nil {
+		return x.BroadcastInterval
+	}
+	return 0
+}
+
+func (x *BroadcastConfig) GetPsid() uint32 {
+	if x != nil {
+		return x.Psid
+	}
+	return 0
+}
+
+type BroadcastState struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Broadcasting   bool                   `protobuf:"varint,1,opt,name=broadcasting,proto3" json:"broadcasting,omitempty"`
+	BroadcastCount uint64                 `protobuf:"varint,2,opt,name=broadcast_count,json=broadcastCount,proto3" json:"broadcast_count,omitempty"`
+	LastBroadcast  *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=last_broadcast,json=lastBroadcast,proto3" json:"last_broadcast,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *BroadcastState) Reset() {
+	*x = BroadcastState{}
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[68]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BroadcastState) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BroadcastState) ProtoMessage() {}
+
+func (x *BroadcastState) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[68]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BroadcastState.ProtoReflect.Descriptor instead.
+func (*BroadcastState) Descriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{68}
+}
+
+func (x *BroadcastState) GetBroadcasting() bool {
+	if x != nil {
+		return x.Broadcasting
+	}
+	return false
+}
+
+func (x *BroadcastState) GetBroadcastCount() uint64 {
+	if x != nil {
+		return x.BroadcastCount
+	}
+	return 0
+}
+
+func (x *BroadcastState) GetLastBroadcast() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastBroadcast
+	}
+	return nil
+}
+
+type Rtcm struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Config        *RtcmConfig            `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
+	State         *RtcmState             `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Rtcm) Reset() {
+	*x = Rtcm{}
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[69]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Rtcm) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Rtcm) ProtoMessage() {}
+
+func (x *Rtcm) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[69]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Rtcm.ProtoReflect.Descriptor instead.
+func (*Rtcm) Descriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{69}
+}
+
+func (x *Rtcm) GetConfig() *RtcmConfig {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
+func (x *Rtcm) GetState() *RtcmState {
+	if x != nil {
+		return x.State
+	}
+	return nil
+}
+
+type RtcmConfig struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Enabled           bool                   `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	SourceUrl         string                 `protobuf:"bytes,2,opt,name=source_url,json=sourceUrl,proto3" json:"source_url,omitempty"`
+	MessageSet        []uint32               `protobuf:"varint,3,rep,packed,name=message_set,json=messageSet,proto3" json:"message_set,omitempty"`
+	BroadcastInterval uint32                 `protobuf:"varint,4,opt,name=broadcast_interval,json=broadcastInterval,proto3" json:"broadcast_interval,omitempty"`
+	Psid              uint32                 `protobuf:"varint,5,opt,name=psid,proto3" json:"psid,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *RtcmConfig) Reset() {
+	*x = RtcmConfig{}
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[70]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RtcmConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RtcmConfig) ProtoMessage() {}
+
+func (x *RtcmConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[70]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RtcmConfig.ProtoReflect.Descriptor instead.
+func (*RtcmConfig) Descriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{70}
+}
+
+func (x *RtcmConfig) GetEnabled() bool {
+	if x != nil {
+		return x.Enabled
+	}
+	return false
+}
+
+func (x *RtcmConfig) GetSourceUrl() string {
+	if x != nil {
+		return x.SourceUrl
+	}
+	return ""
+}
+
+func (x *RtcmConfig) GetMessageSet() []uint32 {
+	if x != nil {
+		return x.MessageSet
+	}
+	return nil
+}
+
+func (x *RtcmConfig) GetBroadcastInterval() uint32 {
+	if x != nil {
+		return x.BroadcastInterval
+	}
+	return 0
+}
+
+func (x *RtcmConfig) GetPsid() uint32 {
+	if x != nil {
+		return x.Psid
+	}
+	return 0
+}
+
+type RtcmState struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Broadcasting   bool                   `protobuf:"varint,1,opt,name=broadcasting,proto3" json:"broadcasting,omitempty"`
+	BroadcastCount uint64                 `protobuf:"varint,2,opt,name=broadcast_count,json=broadcastCount,proto3" json:"broadcast_count,omitempty"`
+	LastBroadcast  *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=last_broadcast,json=lastBroadcast,proto3" json:"last_broadcast,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *RtcmState) Reset() {
+	*x = RtcmState{}
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[71]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RtcmState) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RtcmState) ProtoMessage() {}
+
+func (x *RtcmState) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[71]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RtcmState.ProtoReflect.Descriptor instead.
+func (*RtcmState) Descriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{71}
+}
+
+func (x *RtcmState) GetBroadcasting() bool {
+	if x != nil {
+		return x.Broadcasting
+	}
+	return false
+}
+
+func (x *RtcmState) GetBroadcastCount() uint64 {
+	if x != nil {
+		return x.BroadcastCount
+	}
+	return 0
+}
+
+func (x *RtcmState) GetLastBroadcast() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastBroadcast
+	}
+	return nil
+}
+
 type SrmSsm struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Config         *SrmSsmConfig          `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
@@ -5224,7 +6492,7 @@ type SrmSsm struct {
 
 func (x *SrmSsm) Reset() {
 	*x = SrmSsm{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[58]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[72]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5236,7 +6504,7 @@ func (x *SrmSsm) String() string {
 func (*SrmSsm) ProtoMessage() {}
 
 func (x *SrmSsm) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[58]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[72]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5249,7 +6517,7 @@ func (x *SrmSsm) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SrmSsm.ProtoReflect.Descriptor instead.
 func (*SrmSsm) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{58}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{72}
 }
 
 func (x *SrmSsm) GetConfig() *SrmSsmConfig {
@@ -5282,6 +6550,7 @@ func (x *SrmSsm) GetDecisions() *Decisions {
 
 type SrmSsmConfig struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
+	Psid                uint32                 `protobuf:"varint,9,opt,name=psid,proto3" json:"psid,omitempty"`
 	SrmReceiveEnabled   bool                   `protobuf:"varint,1,opt,name=srm_receive_enabled,json=srmReceiveEnabled,proto3" json:"srm_receive_enabled,omitempty"`
 	SsmBroadcastEnabled bool                   `protobuf:"varint,2,opt,name=ssm_broadcast_enabled,json=ssmBroadcastEnabled,proto3" json:"ssm_broadcast_enabled,omitempty"`
 	ForwardToAsc        bool                   `protobuf:"varint,3,opt,name=forward_to_asc,json=forwardToAsc,proto3" json:"forward_to_asc,omitempty"`
@@ -5296,7 +6565,7 @@ type SrmSsmConfig struct {
 
 func (x *SrmSsmConfig) Reset() {
 	*x = SrmSsmConfig{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[59]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[73]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5308,7 +6577,7 @@ func (x *SrmSsmConfig) String() string {
 func (*SrmSsmConfig) ProtoMessage() {}
 
 func (x *SrmSsmConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[59]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[73]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5321,7 +6590,14 @@ func (x *SrmSsmConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SrmSsmConfig.ProtoReflect.Descriptor instead.
 func (*SrmSsmConfig) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{59}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{73}
+}
+
+func (x *SrmSsmConfig) GetPsid() uint32 {
+	if x != nil {
+		return x.Psid
+	}
+	return 0
 }
 
 func (x *SrmSsmConfig) GetSrmReceiveEnabled() bool {
@@ -5393,7 +6669,7 @@ type SrmSsmState struct {
 
 func (x *SrmSsmState) Reset() {
 	*x = SrmSsmState{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[60]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[74]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5405,7 +6681,7 @@ func (x *SrmSsmState) String() string {
 func (*SrmSsmState) ProtoMessage() {}
 
 func (x *SrmSsmState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[60]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[74]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5418,7 +6694,7 @@ func (x *SrmSsmState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SrmSsmState.ProtoReflect.Descriptor instead.
 func (*SrmSsmState) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{60}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{74}
 }
 
 func (x *SrmSsmState) GetSrmReceived() uint64 {
@@ -5465,7 +6741,7 @@ type ActiveRequests struct {
 
 func (x *ActiveRequests) Reset() {
 	*x = ActiveRequests{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[61]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[75]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5477,7 +6753,7 @@ func (x *ActiveRequests) String() string {
 func (*ActiveRequests) ProtoMessage() {}
 
 func (x *ActiveRequests) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[61]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[75]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5490,7 +6766,7 @@ func (x *ActiveRequests) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActiveRequests.ProtoReflect.Descriptor instead.
 func (*ActiveRequests) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{61}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{75}
 }
 
 func (x *ActiveRequests) GetRequest() []*Request {
@@ -5501,25 +6777,25 @@ func (x *ActiveRequests) GetRequest() []*Request {
 }
 
 type Request struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	Id                string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	VehicleId         string                 `protobuf:"bytes,2,opt,name=vehicle_id,json=vehicleId,proto3" json:"vehicle_id,omitempty"`
-	RequestType       string                 `protobuf:"bytes,3,opt,name=request_type,json=requestType,proto3" json:"request_type,omitempty"`
-	Approach          uint32                 `protobuf:"varint,4,opt,name=approach,proto3" json:"approach,omitempty"`
-	EtaSeconds        uint32                 `protobuf:"varint,5,opt,name=eta_seconds,json=etaSeconds,proto3" json:"eta_seconds,omitempty"`
-	ReceivedAt        *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=received_at,json=receivedAt,proto3" json:"received_at,omitempty"`
-	Status            Status                 `protobuf:"varint,7,opt,name=status,proto3,enum=openits.rsu.v1.Status" json:"status,omitempty"`
-	Priority          uint32                 `protobuf:"varint,8,opt,name=priority,proto3" json:"priority,omitempty"`
-	VehicleClass      string                 `protobuf:"bytes,9,opt,name=vehicle_class,json=vehicleClass,proto3" json:"vehicle_class,omitempty"`
-	DecisionAuthority DecisionAuthority      `protobuf:"varint,10,opt,name=decision_authority,json=decisionAuthority,proto3,enum=openits.rsu.v1.DecisionAuthority" json:"decision_authority,omitempty"`
-	DenialReason      string                 `protobuf:"bytes,11,opt,name=denial_reason,json=denialReason,proto3" json:"denial_reason,omitempty"`
+	state             protoimpl.MessageState      `protogen:"open.v1"`
+	Id                string                      `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	VehicleId         string                      `protobuf:"bytes,2,opt,name=vehicle_id,json=vehicleId,proto3" json:"vehicle_id,omitempty"`
+	RequestType       string                      `protobuf:"bytes,3,opt,name=request_type,json=requestType,proto3" json:"request_type,omitempty"`
+	Approach          uint32                      `protobuf:"varint,4,opt,name=approach,proto3" json:"approach,omitempty"`
+	EtaSeconds        uint32                      `protobuf:"varint,5,opt,name=eta_seconds,json=etaSeconds,proto3" json:"eta_seconds,omitempty"`
+	ReceivedAt        *timestamppb.Timestamp      `protobuf:"bytes,6,opt,name=received_at,json=receivedAt,proto3" json:"received_at,omitempty"`
+	Status            OpenitsRsuSrmRequestStatus  `protobuf:"varint,7,opt,name=status,proto3,enum=openits.rsu.v1.OpenitsRsuSrmRequestStatus" json:"status,omitempty"`
+	Priority          uint32                      `protobuf:"varint,8,opt,name=priority,proto3" json:"priority,omitempty"`
+	VehicleClass      string                      `protobuf:"bytes,9,opt,name=vehicle_class,json=vehicleClass,proto3" json:"vehicle_class,omitempty"`
+	DecisionAuthority OpenitsRsuDecisionAuthority `protobuf:"varint,10,opt,name=decision_authority,json=decisionAuthority,proto3,enum=openits.rsu.v1.OpenitsRsuDecisionAuthority" json:"decision_authority,omitempty"`
+	DenialReason      string                      `protobuf:"bytes,11,opt,name=denial_reason,json=denialReason,proto3" json:"denial_reason,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
 
 func (x *Request) Reset() {
 	*x = Request{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[62]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[76]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5531,7 +6807,7 @@ func (x *Request) String() string {
 func (*Request) ProtoMessage() {}
 
 func (x *Request) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[62]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[76]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5544,7 +6820,7 @@ func (x *Request) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Request.ProtoReflect.Descriptor instead.
 func (*Request) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{62}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{76}
 }
 
 func (x *Request) GetId() string {
@@ -5589,11 +6865,11 @@ func (x *Request) GetReceivedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *Request) GetStatus() Status {
+func (x *Request) GetStatus() OpenitsRsuSrmRequestStatus {
 	if x != nil {
 		return x.Status
 	}
-	return Status_STATUS_PENDING
+	return OpenitsRsuSrmRequestStatus_OPENITS_RSU_SRM_REQUEST_STATUS_PENDING
 }
 
 func (x *Request) GetPriority() uint32 {
@@ -5610,11 +6886,11 @@ func (x *Request) GetVehicleClass() string {
 	return ""
 }
 
-func (x *Request) GetDecisionAuthority() DecisionAuthority {
+func (x *Request) GetDecisionAuthority() OpenitsRsuDecisionAuthority {
 	if x != nil {
 		return x.DecisionAuthority
 	}
-	return DecisionAuthority_DECISION_AUTHORITY_NONE
+	return OpenitsRsuDecisionAuthority_OPENITS_RSU_DECISION_AUTHORITY_NONE
 }
 
 func (x *Request) GetDenialReason() string {
@@ -5633,7 +6909,7 @@ type Decisions struct {
 
 func (x *Decisions) Reset() {
 	*x = Decisions{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[63]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[77]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5645,7 +6921,7 @@ func (x *Decisions) String() string {
 func (*Decisions) ProtoMessage() {}
 
 func (x *Decisions) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[63]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[77]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5658,7 +6934,7 @@ func (x *Decisions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Decisions.ProtoReflect.Descriptor instead.
 func (*Decisions) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{63}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{77}
 }
 
 func (x *Decisions) GetDecision() []*Decision {
@@ -5679,7 +6955,7 @@ type Decision struct {
 
 func (x *Decision) Reset() {
 	*x = Decision{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[64]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[78]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5691,7 +6967,7 @@ func (x *Decision) String() string {
 func (*Decision) ProtoMessage() {}
 
 func (x *Decision) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[64]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[78]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5704,7 +6980,7 @@ func (x *Decision) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Decision.ProtoReflect.Descriptor instead.
 func (*Decision) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{64}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{78}
 }
 
 func (x *Decision) GetRequestId() string {
@@ -5737,7 +7013,7 @@ type MessageStats struct {
 
 func (x *MessageStats) Reset() {
 	*x = MessageStats{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[65]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[79]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5749,7 +7025,7 @@ func (x *MessageStats) String() string {
 func (*MessageStats) ProtoMessage() {}
 
 func (x *MessageStats) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[65]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[79]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5762,7 +7038,7 @@ func (x *MessageStats) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MessageStats.ProtoReflect.Descriptor instead.
 func (*MessageStats) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{65}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{79}
 }
 
 func (x *MessageStats) GetPerMessageType() []*PerMessageType {
@@ -5775,11 +7051,10 @@ func (x *MessageStats) GetPerMessageType() []*PerMessageType {
 type PerMessageType struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	MessageType    string                 `protobuf:"bytes,1,opt,name=message_type,json=messageType,proto3" json:"message_type,omitempty"`
+	Psid           uint32                 `protobuf:"varint,13,opt,name=psid,proto3" json:"psid,omitempty"`
 	QueueDepth     uint32                 `protobuf:"varint,2,opt,name=queue_depth,json=queueDepth,proto3" json:"queue_depth,omitempty"`
 	TxCount        uint64                 `protobuf:"varint,3,opt,name=tx_count,json=txCount,proto3" json:"tx_count,omitempty"`
 	RxCount        uint64                 `protobuf:"varint,4,opt,name=rx_count,json=rxCount,proto3" json:"rx_count,omitempty"`
-	TotalSent      uint64                 `protobuf:"varint,5,opt,name=total_sent,json=totalSent,proto3" json:"total_sent,omitempty"`
-	TotalReceived  uint64                 `protobuf:"varint,6,opt,name=total_received,json=totalReceived,proto3" json:"total_received,omitempty"`
 	Success        uint64                 `protobuf:"varint,7,opt,name=success,proto3" json:"success,omitempty"`
 	Invalid        uint64                 `protobuf:"varint,8,opt,name=invalid,proto3" json:"invalid,omitempty"`
 	AvgLatencyMs   uint32                 `protobuf:"varint,9,opt,name=avg_latency_ms,json=avgLatencyMs,proto3" json:"avg_latency_ms,omitempty"`
@@ -5792,7 +7067,7 @@ type PerMessageType struct {
 
 func (x *PerMessageType) Reset() {
 	*x = PerMessageType{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[66]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[80]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5804,7 +7079,7 @@ func (x *PerMessageType) String() string {
 func (*PerMessageType) ProtoMessage() {}
 
 func (x *PerMessageType) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[66]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[80]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5817,7 +7092,7 @@ func (x *PerMessageType) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PerMessageType.ProtoReflect.Descriptor instead.
 func (*PerMessageType) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{66}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{80}
 }
 
 func (x *PerMessageType) GetMessageType() string {
@@ -5825,6 +7100,13 @@ func (x *PerMessageType) GetMessageType() string {
 		return x.MessageType
 	}
 	return ""
+}
+
+func (x *PerMessageType) GetPsid() uint32 {
+	if x != nil {
+		return x.Psid
+	}
+	return 0
 }
 
 func (x *PerMessageType) GetQueueDepth() uint32 {
@@ -5844,20 +7126,6 @@ func (x *PerMessageType) GetTxCount() uint64 {
 func (x *PerMessageType) GetRxCount() uint64 {
 	if x != nil {
 		return x.RxCount
-	}
-	return 0
-}
-
-func (x *PerMessageType) GetTotalSent() uint64 {
-	if x != nil {
-		return x.TotalSent
-	}
-	return 0
-}
-
-func (x *PerMessageType) GetTotalReceived() uint64 {
-	if x != nil {
-		return x.TotalReceived
 	}
 	return 0
 }
@@ -5915,7 +7183,7 @@ type MessageErrors struct {
 
 func (x *MessageErrors) Reset() {
 	*x = MessageErrors{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[67]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[81]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5927,7 +7195,7 @@ func (x *MessageErrors) String() string {
 func (*MessageErrors) ProtoMessage() {}
 
 func (x *MessageErrors) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[67]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[81]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5940,7 +7208,7 @@ func (x *MessageErrors) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MessageErrors.ProtoReflect.Descriptor instead.
 func (*MessageErrors) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{67}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{81}
 }
 
 func (x *MessageErrors) GetSecurity() *MessageErrorsSecurity {
@@ -5975,7 +7243,7 @@ type MessageErrorsSecurity struct {
 
 func (x *MessageErrorsSecurity) Reset() {
 	*x = MessageErrorsSecurity{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[68]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[82]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5987,7 +7255,7 @@ func (x *MessageErrorsSecurity) String() string {
 func (*MessageErrorsSecurity) ProtoMessage() {}
 
 func (x *MessageErrorsSecurity) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[68]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[82]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6000,7 +7268,7 @@ func (x *MessageErrorsSecurity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MessageErrorsSecurity.ProtoReflect.Descriptor instead.
 func (*MessageErrorsSecurity) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{68}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{82}
 }
 
 func (x *MessageErrorsSecurity) GetSignFailures() uint64 {
@@ -6035,7 +7303,7 @@ type Drops struct {
 
 func (x *Drops) Reset() {
 	*x = Drops{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[69]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[83]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6047,7 +7315,7 @@ func (x *Drops) String() string {
 func (*Drops) ProtoMessage() {}
 
 func (x *Drops) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[69]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[83]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6060,7 +7328,7 @@ func (x *Drops) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Drops.ProtoReflect.Descriptor instead.
 func (*Drops) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{69}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{83}
 }
 
 func (x *Drops) GetQueue() uint64 {
@@ -6095,7 +7363,7 @@ type RsuSecurity struct {
 
 func (x *RsuSecurity) Reset() {
 	*x = RsuSecurity{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[70]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[84]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6107,7 +7375,7 @@ func (x *RsuSecurity) String() string {
 func (*RsuSecurity) ProtoMessage() {}
 
 func (x *RsuSecurity) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[70]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[84]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6120,7 +7388,7 @@ func (x *RsuSecurity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RsuSecurity.ProtoReflect.Descriptor instead.
 func (*RsuSecurity) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{70}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{84}
 }
 
 func (x *RsuSecurity) GetConfig() *RsuSecurityConfig {
@@ -6150,6 +7418,7 @@ type RsuSecurityConfig struct {
 	ScmsUrl                 string                                 `protobuf:"bytes,2,opt,name=scms_url,json=scmsUrl,proto3" json:"scms_url,omitempty"`
 	AutoRenewal             bool                                   `protobuf:"varint,3,opt,name=auto_renewal,json=autoRenewal,proto3" json:"auto_renewal,omitempty"`
 	RenewalDaysBeforeExpiry uint32                                 `protobuf:"varint,4,opt,name=renewal_days_before_expiry,json=renewalDaysBeforeExpiry,proto3" json:"renewal_days_before_expiry,omitempty"`
+	PermitUnsignedBroadcast bool                                   `protobuf:"varint,6,opt,name=permit_unsigned_broadcast,json=permitUnsignedBroadcast,proto3" json:"permit_unsigned_broadcast,omitempty"`
 	MisbehaviorReporting    *RsuSecurityConfigMisbehaviorReporting `protobuf:"bytes,5,opt,name=misbehavior_reporting,json=misbehaviorReporting,proto3" json:"misbehavior_reporting,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
@@ -6157,7 +7426,7 @@ type RsuSecurityConfig struct {
 
 func (x *RsuSecurityConfig) Reset() {
 	*x = RsuSecurityConfig{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[71]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[85]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6169,7 +7438,7 @@ func (x *RsuSecurityConfig) String() string {
 func (*RsuSecurityConfig) ProtoMessage() {}
 
 func (x *RsuSecurityConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[71]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[85]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6182,7 +7451,7 @@ func (x *RsuSecurityConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RsuSecurityConfig.ProtoReflect.Descriptor instead.
 func (*RsuSecurityConfig) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{71}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{85}
 }
 
 func (x *RsuSecurityConfig) GetSecurityEnabled() bool {
@@ -6213,6 +7482,13 @@ func (x *RsuSecurityConfig) GetRenewalDaysBeforeExpiry() uint32 {
 	return 0
 }
 
+func (x *RsuSecurityConfig) GetPermitUnsignedBroadcast() bool {
+	if x != nil {
+		return x.PermitUnsignedBroadcast
+	}
+	return false
+}
+
 func (x *RsuSecurityConfig) GetMisbehaviorReporting() *RsuSecurityConfigMisbehaviorReporting {
 	if x != nil {
 		return x.MisbehaviorReporting
@@ -6231,7 +7507,7 @@ type RsuSecurityConfigMisbehaviorReporting struct {
 
 func (x *RsuSecurityConfigMisbehaviorReporting) Reset() {
 	*x = RsuSecurityConfigMisbehaviorReporting{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[72]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[86]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6243,7 +7519,7 @@ func (x *RsuSecurityConfigMisbehaviorReporting) String() string {
 func (*RsuSecurityConfigMisbehaviorReporting) ProtoMessage() {}
 
 func (x *RsuSecurityConfigMisbehaviorReporting) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[72]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[86]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6256,7 +7532,7 @@ func (x *RsuSecurityConfigMisbehaviorReporting) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use RsuSecurityConfigMisbehaviorReporting.ProtoReflect.Descriptor instead.
 func (*RsuSecurityConfigMisbehaviorReporting) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{72}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{86}
 }
 
 func (x *RsuSecurityConfigMisbehaviorReporting) GetEnabled() bool {
@@ -6301,6 +7577,9 @@ type RsuSecurityState struct {
 	CrlEntries              uint32                                `protobuf:"varint,15,opt,name=crl_entries,json=crlEntries,proto3" json:"crl_entries,omitempty"`
 	NextCrlDue              *timestamppb.Timestamp                `protobuf:"bytes,18,opt,name=next_crl_due,json=nextCrlDue,proto3" json:"next_crl_due,omitempty"`
 	CrlOverdue              bool                                  `protobuf:"varint,19,opt,name=crl_overdue,json=crlOverdue,proto3" json:"crl_overdue,omitempty"`
+	LpfVersion              string                                `protobuf:"bytes,23,opt,name=lpf_version,json=lpfVersion,proto3" json:"lpf_version,omitempty"`
+	LccfVersion             string                                `protobuf:"bytes,24,opt,name=lccf_version,json=lccfVersion,proto3" json:"lccf_version,omitempty"`
+	PolicyFilesLastUpdated  *timestamppb.Timestamp                `protobuf:"bytes,25,opt,name=policy_files_last_updated,json=policyFilesLastUpdated,proto3" json:"policy_files_last_updated,omitempty"`
 	RevocationChecks        uint64                                `protobuf:"varint,16,opt,name=revocation_checks,json=revocationChecks,proto3" json:"revocation_checks,omitempty"`
 	RevocationRejections    uint64                                `protobuf:"varint,17,opt,name=revocation_rejections,json=revocationRejections,proto3" json:"revocation_rejections,omitempty"`
 	MisbehaviorReporting    *RsuSecurityStateMisbehaviorReporting `protobuf:"bytes,22,opt,name=misbehavior_reporting,json=misbehaviorReporting,proto3" json:"misbehavior_reporting,omitempty"`
@@ -6310,7 +7589,7 @@ type RsuSecurityState struct {
 
 func (x *RsuSecurityState) Reset() {
 	*x = RsuSecurityState{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[73]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[87]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6322,7 +7601,7 @@ func (x *RsuSecurityState) String() string {
 func (*RsuSecurityState) ProtoMessage() {}
 
 func (x *RsuSecurityState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[73]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[87]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6335,7 +7614,7 @@ func (x *RsuSecurityState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RsuSecurityState.ProtoReflect.Descriptor instead.
 func (*RsuSecurityState) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{73}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{87}
 }
 
 func (x *RsuSecurityState) GetScmsConnected() bool {
@@ -6471,6 +7750,27 @@ func (x *RsuSecurityState) GetCrlOverdue() bool {
 	return false
 }
 
+func (x *RsuSecurityState) GetLpfVersion() string {
+	if x != nil {
+		return x.LpfVersion
+	}
+	return ""
+}
+
+func (x *RsuSecurityState) GetLccfVersion() string {
+	if x != nil {
+		return x.LccfVersion
+	}
+	return ""
+}
+
+func (x *RsuSecurityState) GetPolicyFilesLastUpdated() *timestamppb.Timestamp {
+	if x != nil {
+		return x.PolicyFilesLastUpdated
+	}
+	return nil
+}
+
 func (x *RsuSecurityState) GetRevocationChecks() uint64 {
 	if x != nil {
 		return x.RevocationChecks
@@ -6504,7 +7804,7 @@ type RsuSecurityStateMisbehaviorReporting struct {
 
 func (x *RsuSecurityStateMisbehaviorReporting) Reset() {
 	*x = RsuSecurityStateMisbehaviorReporting{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[74]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[88]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6516,7 +7816,7 @@ func (x *RsuSecurityStateMisbehaviorReporting) String() string {
 func (*RsuSecurityStateMisbehaviorReporting) ProtoMessage() {}
 
 func (x *RsuSecurityStateMisbehaviorReporting) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[74]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[88]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6529,7 +7829,7 @@ func (x *RsuSecurityStateMisbehaviorReporting) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use RsuSecurityStateMisbehaviorReporting.ProtoReflect.Descriptor instead.
 func (*RsuSecurityStateMisbehaviorReporting) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{74}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{88}
 }
 
 func (x *RsuSecurityStateMisbehaviorReporting) GetReportsGenerated() uint64 {
@@ -6569,7 +7869,7 @@ type Certificates struct {
 
 func (x *Certificates) Reset() {
 	*x = Certificates{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[75]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[89]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6581,7 +7881,7 @@ func (x *Certificates) String() string {
 func (*Certificates) ProtoMessage() {}
 
 func (x *Certificates) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[75]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[89]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6594,7 +7894,7 @@ func (x *Certificates) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Certificates.ProtoReflect.Descriptor instead.
 func (*Certificates) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{75}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{89}
 }
 
 func (x *Certificates) GetCertificate() []*Certificate {
@@ -6614,7 +7914,7 @@ type Certificate struct {
 
 func (x *Certificate) Reset() {
 	*x = Certificate{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[76]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[90]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6626,7 +7926,7 @@ func (x *Certificate) String() string {
 func (*Certificate) ProtoMessage() {}
 
 func (x *Certificate) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[76]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[90]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6639,7 +7939,7 @@ func (x *Certificate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Certificate.ProtoReflect.Descriptor instead.
 func (*Certificate) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{76}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{90}
 }
 
 func (x *Certificate) GetId() string {
@@ -6671,7 +7971,7 @@ type CertificateState struct {
 
 func (x *CertificateState) Reset() {
 	*x = CertificateState{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[77]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[91]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6683,7 +7983,7 @@ func (x *CertificateState) String() string {
 func (*CertificateState) ProtoMessage() {}
 
 func (x *CertificateState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[77]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[91]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6696,7 +7996,7 @@ func (x *CertificateState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CertificateState.ProtoReflect.Descriptor instead.
 func (*CertificateState) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{77}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{91}
 }
 
 func (x *CertificateState) GetType() Type {
@@ -6758,7 +8058,7 @@ type Permissions struct {
 
 func (x *Permissions) Reset() {
 	*x = Permissions{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[78]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[92]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6770,7 +8070,7 @@ func (x *Permissions) String() string {
 func (*Permissions) ProtoMessage() {}
 
 func (x *Permissions) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[78]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[92]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6783,7 +8083,7 @@ func (x *Permissions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Permissions.ProtoReflect.Descriptor instead.
 func (*Permissions) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{78}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{92}
 }
 
 func (x *Permissions) GetPsid() uint32 {
@@ -6804,13 +8104,14 @@ type GeographicValidity struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	RegionType         RegionType             `protobuf:"varint,1,opt,name=region_type,json=regionType,proto3,enum=openits.rsu.v1.RegionType" json:"region_type,omitempty"`
 	IdentifiedRegionId uint32                 `protobuf:"varint,2,opt,name=identified_region_id,json=identifiedRegionId,proto3" json:"identified_region_id,omitempty"`
+	CircularRegion     *CircularRegion        `protobuf:"bytes,3,opt,name=circular_region,json=circularRegion,proto3" json:"circular_region,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
 
 func (x *GeographicValidity) Reset() {
 	*x = GeographicValidity{}
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[79]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[93]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6822,7 +8123,7 @@ func (x *GeographicValidity) String() string {
 func (*GeographicValidity) ProtoMessage() {}
 
 func (x *GeographicValidity) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_rsu_v1_state_proto_msgTypes[79]
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[93]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6835,7 +8136,7 @@ func (x *GeographicValidity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GeographicValidity.ProtoReflect.Descriptor instead.
 func (*GeographicValidity) Descriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{79}
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{93}
 }
 
 func (x *GeographicValidity) GetRegionType() RegionType {
@@ -6852,32 +8153,110 @@ func (x *GeographicValidity) GetIdentifiedRegionId() uint32 {
 	return 0
 }
 
+func (x *GeographicValidity) GetCircularRegion() *CircularRegion {
+	if x != nil {
+		return x.CircularRegion
+	}
+	return nil
+}
+
+type CircularRegion struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RadiusM       uint32                 `protobuf:"varint,1,opt,name=radius_m,json=radiusM,proto3" json:"radius_m,omitempty"`
+	Latitude      string                 `protobuf:"bytes,2,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	Longitude     string                 `protobuf:"bytes,3,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CircularRegion) Reset() {
+	*x = CircularRegion{}
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[94]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CircularRegion) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CircularRegion) ProtoMessage() {}
+
+func (x *CircularRegion) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_rsu_v1_state_proto_msgTypes[94]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CircularRegion.ProtoReflect.Descriptor instead.
+func (*CircularRegion) Descriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{94}
+}
+
+func (x *CircularRegion) GetRadiusM() uint32 {
+	if x != nil {
+		return x.RadiusM
+	}
+	return 0
+}
+
+func (x *CircularRegion) GetLatitude() string {
+	if x != nil {
+		return x.Latitude
+	}
+	return ""
+}
+
+func (x *CircularRegion) GetLongitude() string {
+	if x != nil {
+		return x.Longitude
+	}
+	return ""
+}
+
 var File_openits_rsu_v1_state_proto protoreflect.FileDescriptor
 
 const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\n" +
-	"\x1aopenits/rsu/v1/state.proto\x12\x0eopenits.rsu.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd9\x04\n" +
+	"\x1aopenits/rsu/v1/state.proto\x12\x0eopenits.rsu.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd2\x04\n" +
 	"\x03Rsu\x121\n" +
 	"\x06config\x18\x01 \x01(\v2\x19.openits.rsu.v1.RsuConfigR\x06config\x12.\n" +
-	"\x05state\x18\x02 \x01(\v2\x18.openits.rsu.v1.RsuStateR\x05state\x12Z\n" +
-	"\x16configured_time_source\x18\t \x01(\x0e2$.openits.rsu.v1.ConfiguredTimeSourceR\x14configuredTimeSource\x12\x12\n" +
-	"\x04mode\x18\n" +
-	" \x01(\tR\x04mode\x12(\n" +
+	"\x05state\x18\x02 \x01(\v2\x18.openits.rsu.v1.RsuStateR\x05state\x127\n" +
+	"\toperating\x18\f \x01(\v2\x19.openits.rsu.v1.OperatingR\toperating\x12(\n" +
 	"\x04gnss\x18\v \x01(\v2\x14.openits.rsu.v1.GnssR\x04gnss\x12A\n" +
 	"\rstore_forward\x18\x03 \x01(\v2\x1c.openits.rsu.v1.StoreForwardR\fstoreForward\x12=\n" +
 	"\vdiagnostics\x18\x04 \x01(\v2\x1b.openits.rsu.v1.DiagnosticsR\vdiagnostics\x12.\n" +
-	"\x06system\x18\x05 \x01(\v2\x16.openits.rsu.v1.SystemR\x06system\x124\n" +
+	"\x06system\x18\x05 \x01(\v2\x16.openits.rsu.v1.SystemR\x06system\x12.\n" +
+	"\x06faults\x18\r \x01(\v2\x16.openits.rsu.v1.FaultsR\x06faults\x124\n" +
 	"\bchannels\x18\x06 \x01(\v2\x18.openits.rsu.v1.ChannelsR\bchannels\x124\n" +
 	"\bmessages\x18\a \x01(\v2\x18.openits.rsu.v1.MessagesR\bmessages\x127\n" +
-	"\bsecurity\x18\b \x01(\v2\x1b.openits.rsu.v1.RsuSecurityR\bsecurity\"\xc8\x01\n" +
+	"\bsecurity\x18\b \x01(\v2\x1b.openits.rsu.v1.RsuSecurityR\bsecurity\"\xb0\x03\n" +
 	"\tRsuConfig\x12\x1c\n" +
 	"\televation\x18\x01 \x01(\tR\televation\x12\x18\n" +
 	"\aheading\x18\x02 \x01(\rR\aheading\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\x12\x1a\n" +
-	"\blatitude\x18\x04 \x01(\tR\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\x05 \x01(\tR\tlongitude\x12\x12\n" +
-	"\x04name\x18\x06 \x01(\tR\x04name\x12%\n" +
-	"\x0eroad_reference\x18\a \x01(\tR\rroadReference\"\xf7\x02\n" +
+	"\x02id\x18\x03 \x01(\tR\x02id\x12=\n" +
+	"\finstall_date\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1a\n" +
+	"\blatitude\x18\x04 \x01(\tR\blatitude\x12S\n" +
+	"\x10linear_reference\x18\t \x01(\v2(.openits.rsu.v1.RsuConfigLinearReferenceR\x0flinearReference\x12\x1c\n" +
+	"\tlongitude\x18\x05 \x01(\tR\tlongitude\x12#\n" +
+	"\rmaintained_by\x18\n" +
+	" \x01(\tR\fmaintainedBy\x12\x12\n" +
+	"\x04name\x18\x06 \x01(\tR\x04name\x12\x14\n" +
+	"\x05owner\x18\v \x01(\tR\x05owner\x12%\n" +
+	"\x0eroad_reference\x18\a \x01(\tR\rroadReference\x12\x17\n" +
+	"\asite_id\x18\f \x01(\tR\x06siteId\"\x9c\x01\n" +
+	"\x18RsuConfigLinearReference\x12)\n" +
+	"\x10route_designator\x18\x01 \x01(\tR\x0frouteDesignator\x12\x1c\n" +
+	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
+	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
+	"\n" +
+	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"\xde\x04\n" +
 	"\bRsuState\x12\x1c\n" +
 	"\televation\x18\x01 \x01(\tR\televation\x12\x1a\n" +
 	"\bfirmware\x18\b \x01(\tR\bfirmware\x12%\n" +
@@ -6885,14 +8264,37 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x10hardware_version\x18\n" +
 	" \x01(\tR\x0fhardwareVersion\x12\x18\n" +
 	"\aheading\x18\x02 \x01(\rR\aheading\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\x12\x1a\n" +
-	"\blatitude\x18\x04 \x01(\tR\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\x05 \x01(\tR\tlongitude\x12\x12\n" +
+	"\x02id\x18\x03 \x01(\tR\x02id\x12=\n" +
+	"\finstall_date\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1a\n" +
+	"\blatitude\x18\x04 \x01(\tR\blatitude\x12R\n" +
+	"\x10linear_reference\x18\x0f \x01(\v2'.openits.rsu.v1.RsuStateLinearReferenceR\x0flinearReference\x12\x1c\n" +
+	"\tlongitude\x18\x05 \x01(\tR\tlongitude\x12#\n" +
+	"\rmaintained_by\x18\x10 \x01(\tR\fmaintainedBy\x12\x12\n" +
 	"\x04make\x18\v \x01(\tR\x04make\x12\x14\n" +
 	"\x05model\x18\f \x01(\tR\x05model\x12\x12\n" +
-	"\x04name\x18\x06 \x01(\tR\x04name\x12%\n" +
+	"\x04name\x18\x06 \x01(\tR\x04name\x12\x14\n" +
+	"\x05owner\x18\x11 \x01(\tR\x05owner\x12%\n" +
 	"\x0eroad_reference\x18\a \x01(\tR\rroadReference\x12\x16\n" +
-	"\x06serial\x18\r \x01(\tR\x06serial\"U\n" +
+	"\x06serial\x18\r \x01(\tR\x06serial\x12\x17\n" +
+	"\asite_id\x18\x12 \x01(\tR\x06siteId\"\x9b\x01\n" +
+	"\x17RsuStateLinearReference\x12)\n" +
+	"\x10route_designator\x18\x01 \x01(\tR\x0frouteDesignator\x12\x1c\n" +
+	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
+	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
+	"\n" +
+	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"z\n" +
+	"\tOperating\x127\n" +
+	"\x06config\x18\x01 \x01(\v2\x1f.openits.rsu.v1.OperatingConfigR\x06config\x124\n" +
+	"\x05state\x18\x02 \x01(\v2\x1e.openits.rsu.v1.OperatingStateR\x05state\"w\n" +
+	"\x0fOperatingConfig\x12P\n" +
+	"\x16configured_time_source\x18\x01 \x01(\x0e2\x1a.openits.rsu.v1.TimeSourceR\x14configuredTimeSource\x12\x12\n" +
+	"\x04mode\x18\x02 \x01(\tR\x04mode\"l\n" +
+	"\x0eOperatingState\x12\x1f\n" +
+	"\vactive_mode\x18\x01 \x01(\tR\n" +
+	"activeMode\x12\x1d\n" +
+	"\n" +
+	"time_valid\x18\x02 \x01(\bR\ttimeValid\x12\x1a\n" +
+	"\bholdover\x18\x03 \x01(\bR\bholdover\"U\n" +
 	"\x04Gnss\x12M\n" +
 	"\x11surveyed_position\x18\x01 \x01(\v2 .openits.rsu.v1.SurveyedPositionR\x10surveyedPosition\"L\n" +
 	"\x10SurveyedPosition\x12\x1a\n" +
@@ -6910,7 +8312,7 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x0fstored_messages\x18\x01 \x01(\rR\x0estoredMessages\x120\n" +
 	"\x14storage_used_percent\x18\x02 \x01(\rR\x12storageUsedPercent\x128\n" +
 	"\x18messages_forwarded_today\x18\x03 \x01(\x04R\x16messagesForwardedToday\x12,\n" +
-	"\x12oldest_message_age\x18\x04 \x01(\rR\x10oldestMessageAge\"\xe3\b\n" +
+	"\x12oldest_message_age\x18\x04 \x01(\rR\x10oldestMessageAge\"\xa0\b\n" +
 	"\vDiagnostics\x12+\n" +
 	"\x05radio\x18\x0f \x01(\v2\x15.openits.rsu.v1.RadioR\x05radio\x125\n" +
 	"\tspat_sync\x18\x10 \x01(\v2\x18.openits.rsu.v1.SpatSyncR\bspatSync\x127\n" +
@@ -6924,13 +8326,8 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x14position_deviation_m\x18\x03 \x01(\tR\x12positionDeviationM\x12;\n" +
 	"\vtime_source\x18\x14 \x01(\x0e2\x1a.openits.rsu.v1.TimeSourceR\n" +
 	"timeSource\x12(\n" +
-	"\x10time_accuracy_us\x18\x15 \x01(\rR\x0etimeAccuracyUs\x12\x1d\n" +
-	"\n" +
-	"time_valid\x18  \x01(\bR\ttimeValid\x12\x1a\n" +
-	"\bholdover\x18! \x01(\bR\bholdover\x12\x1f\n" +
-	"\vactive_mode\x18\" \x01(\tR\n" +
-	"activeMode\x124\n" +
-	"\bcellular\x18\x16 \x01(\v2\x18.openits.rsu.v1.CellularR\bcellular\x12\x1f\n" +
+	"\x10time_accuracy_us\x18\x15 \x01(\rR\x0etimeAccuracyUs\x12M\n" +
+	"\x11backhaul_cellular\x18\x04 \x01(\v2 .openits.rsu.v1.BackhaulCellularR\x10backhaulCellular\x12\x1f\n" +
 	"\vconfig_hash\x18\x1b \x01(\tR\n" +
 	"configHash\x12.\n" +
 	"\x13last_restart_reason\x18\x1c \x01(\tR\x11lastRestartReason\x12F\n" +
@@ -6950,9 +8347,8 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\voperational\x18\r \x01(\bR\voperational\x12\x1d\n" +
 	"\n" +
 	"fault_type\x18\x0e \x01(\tR\tfaultType\x12H\n" +
-	"\x12last_successful_tx\x18\x10 \x01(\v2\x1a.google.protobuf.TimestampR\x10lastSuccessfulTx\"\x97\x04\n" +
-	"\bSpatSync\x12#\n" +
-	"\rasc_connected\x18\x01 \x01(\bR\fascConnected\x12/\n" +
+	"\x12last_successful_tx\x18\x10 \x01(\v2\x1a.google.protobuf.TimestampR\x10lastSuccessfulTx\"\xf2\x03\n" +
+	"\bSpatSync\x12/\n" +
 	"\x14asc_poll_interval_ms\x18\x02 \x01(\rR\x11ascPollIntervalMs\x12B\n" +
 	"\x0flast_asc_update\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\rlastAscUpdate\x120\n" +
 	"\x14phase_mismatch_count\x18\x04 \x01(\rR\x12phaseMismatchCount\x122\n" +
@@ -6987,8 +8383,8 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\aused_kb\x18\x02 \x01(\x04R\x06usedKb\x12\x17\n" +
 	"\afree_kb\x18\x03 \x01(\x04R\x06freeKb\x12\x1b\n" +
 	"\tusage_pct\x18\x04 \x01(\rR\busagePct\x12\x14\n" +
-	"\x05alarm\x18\x05 \x01(\bR\x05alarm\"\xdc\x02\n" +
-	"\bCellular\x12 \n" +
+	"\x05alarm\x18\x05 \x01(\bR\x05alarm\"\xe4\x02\n" +
+	"\x10BackhaulCellular\x12 \n" +
 	"\voperational\x18\x01 \x01(\bR\voperational\x12#\n" +
 	"\roperator_name\x18\x02 \x01(\tR\foperatorName\x12D\n" +
 	"\x0esignal_quality\x18\x03 \x01(\x0e2\x1d.openits.rsu.v1.SignalQualityR\rsignalQuality\x12\x19\n" +
@@ -7086,32 +8482,43 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\alink_id\x18\x06 \x01(\rR\x06linkId\x12\x1b\n" +
 	"\tlink_type\x18\a \x01(\tR\blinkType\x12 \n" +
 	"\voperational\x18\b \x01(\bR\voperational\x12%\n" +
-	"\x0eremote_address\x18\t \x01(\tR\rremoteAddress\"\\\n" +
-	"\bChannels\x12\x1d\n" +
-	"\n" +
-	"radio_type\x18\x02 \x01(\tR\tradioType\x121\n" +
-	"\achannel\x18\x01 \x03(\v2\x17.openits.rsu.v1.ChannelR\achannel\"\xe2\x01\n" +
+	"\x0eremote_address\x18\t \x01(\tR\rremoteAddress\"5\n" +
+	"\x06Faults\x12+\n" +
+	"\x05fault\x18\x01 \x03(\v2\x15.openits.rsu.v1.FaultR\x05fault\"\x87\x02\n" +
+	"\x05Fault\x12\x1a\n" +
+	"\bcategory\x18\x01 \x01(\tR\bcategory\x12'\n" +
+	"\x0fcorrelates_with\x18\x02 \x01(\tR\x0ecorrelatesWith\x12 \n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x19\n" +
+	"\bfault_id\x18\x04 \x01(\tR\afaultId\x12A\n" +
+	"\x0efirst_observed\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x129\n" +
+	"\bseverity\x18\x06 \x01(\x0e2\x1d.openits.rsu.v1.FaultSeverityR\bseverity\"m\n" +
+	"\bChannels\x12.\n" +
+	"\x13reported_radio_tech\x18\x03 \x01(\tR\x11reportedRadioTech\x121\n" +
+	"\achannel\x18\x01 \x03(\v2\x17.openits.rsu.v1.ChannelR\achannel\"\xb2\x01\n" +
 	"\aChannel\x12\x1d\n" +
 	"\n" +
 	"channel_id\x18\x06 \x01(\tR\tchannelId\x12\x1d\n" +
 	"\n" +
-	"radio_tech\x18\a \x01(\tR\tradioTech\x12.\n" +
-	"\x13dsrc_channel_number\x18\b \x01(\rR\x11dsrcChannelNumber\x125\n" +
+	"radio_tech\x18\a \x01(\tR\tradioTech\x125\n" +
 	"\x06config\x18\t \x01(\v2\x1d.openits.rsu.v1.ChannelConfigR\x06config\x122\n" +
 	"\x05state\x18\n" +
-	" \x01(\v2\x1c.openits.rsu.v1.ChannelStateR\x05state\"\xbe\x01\n" +
-	"\rChannelConfig\x12\x18\n" +
+	" \x01(\v2\x1c.openits.rsu.v1.ChannelStateR\x05state\"\x98\x02\n" +
+	"\rChannelConfig\x12.\n" +
+	"\x13dsrc_channel_number\x18\a \x01(\rR\x11dsrcChannelNumber\x12\x18\n" +
 	"\aenabled\x18\x01 \x01(\bR\aenabled\x12\x12\n" +
 	"\x04mode\x18\x02 \x01(\tR\x04mode\x12\x19\n" +
-	"\btx_power\x18\x03 \x01(\x05R\atxPower\x12#\n" +
+	"\btx_power\x18\x03 \x01(\x05R\atxPower\x12(\n" +
+	"\x10antenna_gain_dbi\x18\b \x01(\tR\x0eantennaGainDbi\x12#\n" +
 	"\rmessage_types\x18\x04 \x03(\tR\fmessageTypes\x12\x18\n" +
 	"\aprimary\x18\x05 \x01(\bR\aprimary\x12%\n" +
 	"\x03dcc\x18\x06 \x01(\v2\x13.openits.rsu.v1.DccR\x03dcc\"c\n" +
 	"\x03Dcc\x12.\n" +
 	"\x06policy\x18\x01 \x01(\x0e2\x16.openits.rsu.v1.PolicyR\x06policy\x12,\n" +
-	"\x12cbr_target_percent\x18\x02 \x01(\rR\x10cbrTargetPercent\"\xeb\x03\n" +
+	"\x12cbr_target_percent\x18\x02 \x01(\rR\x10cbrTargetPercent\"\x8a\x04\n" +
 	"\fChannelState\x12 \n" +
 	"\voperational\x18\x01 \x01(\bR\voperational\x12\x1d\n" +
+	"\n" +
+	"radio_tech\x18\x0f \x01(\tR\tradioTech\x12\x1d\n" +
 	"\n" +
 	"packets_tx\x18\x02 \x01(\x04R\tpacketsTx\x12\x1d\n" +
 	"\n" +
@@ -7130,28 +8537,38 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\vtx_failures\x18\f \x01(\x04R\n" +
 	"txFailures\x12(\n" +
 	"\x10rx_decode_errors\x18\r \x01(\x04R\x0erxDecodeErrors\x12+\n" +
-	"\x11security_failures\x18\x0e \x01(\x04R\x10securityFailures\"\x8a\x03\n" +
+	"\x11security_failures\x18\x0e \x01(\x04R\x10securityFailures\"\xb4\x03\n" +
 	"\bMessages\x12(\n" +
 	"\x04spat\x18\x02 \x01(\v2\x14.openits.rsu.v1.SpatR\x04spat\x12%\n" +
 	"\x03map\x18\x03 \x01(\v2\x13.openits.rsu.v1.MapR\x03map\x12%\n" +
 	"\x03tim\x18\x04 \x01(\v2\x13.openits.rsu.v1.TimR\x03tim\x12%\n" +
 	"\x03bsm\x18\x05 \x01(\v2\x13.openits.rsu.v1.BsmR\x03bsm\x12%\n" +
-	"\x03psm\x18\x06 \x01(\v2\x13.openits.rsu.v1.PsmR\x03psm\x12/\n" +
+	"\x03psm\x18\x06 \x01(\v2\x13.openits.rsu.v1.PsmR\x03psm\x12(\n" +
+	"\x04rtcm\x18\x01 \x01(\v2\x14.openits.rsu.v1.RtcmR\x04rtcm\x12/\n" +
 	"\asrm_ssm\x18\a \x01(\v2\x16.openits.rsu.v1.SrmSsmR\x06srmSsm\x12A\n" +
 	"\rmessage_stats\x18\b \x01(\v2\x1c.openits.rsu.v1.MessageStatsR\fmessageStats\x12D\n" +
 	"\x0emessage_errors\x18\t \x01(\v2\x1d.openits.rsu.v1.MessageErrorsR\rmessageErrors\"k\n" +
 	"\x04Spat\x122\n" +
 	"\x06config\x18\x01 \x01(\v2\x1a.openits.rsu.v1.SpatConfigR\x06config\x12/\n" +
-	"\x05state\x18\x02 \x01(\v2\x19.openits.rsu.v1.SpatStateR\x05state\"\xa3\x02\n" +
+	"\x05state\x18\x02 \x01(\v2\x19.openits.rsu.v1.SpatStateR\x05state\"\xae\x03\n" +
 	"\n" +
 	"SpatConfig\x12\x18\n" +
 	"\aenabled\x18\x01 \x01(\bR\aenabled\x12-\n" +
 	"\x12broadcast_interval\x18\x02 \x01(\rR\x11broadcastInterval\x12%\n" +
 	"\x0fmax_data_age_ms\x18\x06 \x01(\rR\fmaxDataAgeMs\x12\x1d\n" +
 	"\n" +
-	"source_asc\x18\x03 \x01(\tR\tsourceAsc\x12J\n" +
-	"\fintersection\x18\a \x01(\v2&.openits.rsu.v1.SpatConfigIntersectionR\fintersection\x12:\n" +
-	"\x19include_timing_prediction\x18\x05 \x01(\bR\x17includeTimingPrediction\"@\n" +
+	"source_asc\x18\x03 \x01(\tR\tsourceAsc\x12;\n" +
+	"\vsource_mode\x18\x04 \x01(\x0e2\x1a.openits.rsu.v1.SourceModeR\n" +
+	"sourceMode\x128\n" +
+	"\x06ingest\x18\b \x01(\v2 .openits.rsu.v1.SpatConfigIngestR\x06ingest\x12J\n" +
+	"\fintersection\x18\a \x03(\v2&.openits.rsu.v1.SpatConfigIntersectionR\fintersection\x12:\n" +
+	"\x19include_timing_prediction\x18\x05 \x01(\bR\x17includeTimingPrediction\x12\x12\n" +
+	"\x04psid\x18\t \x01(\rR\x04psid\"\x8d\x01\n" +
+	"\x10SpatConfigIngest\x127\n" +
+	"\ttransport\x18\x01 \x01(\x0e2\x19.openits.rsu.v1.TransportR\ttransport\x12\x18\n" +
+	"\aaddress\x18\x02 \x01(\tR\aaddress\x12\x12\n" +
+	"\x04port\x18\x03 \x01(\rR\x04port\x12\x12\n" +
+	"\x04psid\x18\x04 \x01(\rR\x04psid\"@\n" +
 	"\x16SpatConfigIntersection\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x16\n" +
 	"\x06region\x18\x02 \x01(\rR\x06region\"\xe3\x01\n" +
@@ -7163,19 +8580,29 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\fhalted_stale\x18\x05 \x01(\bR\vhaltedStale\"h\n" +
 	"\x03Map\x121\n" +
 	"\x06config\x18\x01 \x01(\v2\x19.openits.rsu.v1.MapConfigR\x06config\x12.\n" +
-	"\x05state\x18\x02 \x01(\v2\x18.openits.rsu.v1.MapStateR\x05state\"\xca\x01\n" +
+	"\x05state\x18\x02 \x01(\v2\x18.openits.rsu.v1.MapStateR\x05state\"\xfb\x02\n" +
 	"\tMapConfig\x12\x18\n" +
 	"\aenabled\x18\x01 \x01(\bR\aenabled\x12-\n" +
 	"\x12broadcast_interval\x18\x02 \x01(\rR\x11broadcastInterval\x12I\n" +
-	"\fintersection\x18\x04 \x01(\v2%.openits.rsu.v1.MapConfigIntersectionR\fintersection\x12)\n" +
-	"\x10geometry_version\x18\x03 \x01(\rR\x0fgeometryVersion\"?\n" +
+	"\fintersection\x18\x04 \x03(\v2%.openits.rsu.v1.MapConfigIntersectionR\fintersection\x12)\n" +
+	"\x10geometry_version\x18\x03 \x01(\rR\x0fgeometryVersion\x12\x12\n" +
+	"\x04psid\x18\x05 \x01(\rR\x04psid\x12;\n" +
+	"\vsource_mode\x18\x06 \x01(\x0e2\x1a.openits.rsu.v1.SourceModeR\n" +
+	"sourceMode\x127\n" +
+	"\x06ingest\x18\a \x01(\v2\x1f.openits.rsu.v1.MapConfigIngestR\x06ingest\x12%\n" +
+	"\x0fmax_data_age_ms\x18\b \x01(\rR\fmaxDataAgeMs\"?\n" +
 	"\x15MapConfigIntersection\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x16\n" +
-	"\x06region\x18\x02 \x01(\rR\x06region\"\xe7\x01\n" +
+	"\x06region\x18\x02 \x01(\rR\x06region\"\x8c\x01\n" +
+	"\x0fMapConfigIngest\x127\n" +
+	"\ttransport\x18\x01 \x01(\x0e2\x19.openits.rsu.v1.TransportR\ttransport\x12\x18\n" +
+	"\aaddress\x18\x02 \x01(\tR\aaddress\x12\x12\n" +
+	"\x04port\x18\x03 \x01(\rR\x04port\x12\x12\n" +
+	"\x04psid\x18\x04 \x01(\rR\x04psid\"\xe7\x01\n" +
 	"\bMapState\x12\"\n" +
 	"\fbroadcasting\x18\x01 \x01(\bR\fbroadcasting\x12'\n" +
 	"\x0fbroadcast_count\x18\x02 \x01(\x04R\x0ebroadcastCount\x12H\n" +
-	"\fintersection\x18\x06 \x01(\v2$.openits.rsu.v1.MapStateIntersectionR\fintersection\x12\x1d\n" +
+	"\fintersection\x18\x06 \x03(\v2$.openits.rsu.v1.MapStateIntersectionR\fintersection\x12\x1d\n" +
 	"\n" +
 	"lane_count\x18\x04 \x01(\rR\tlaneCount\x12%\n" +
 	"\x0eapproach_count\x18\x05 \x01(\rR\rapproachCount\">\n" +
@@ -7195,14 +8622,16 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\aMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x125\n" +
 	"\x06config\x18\x02 \x01(\v2\x1d.openits.rsu.v1.MessageConfigR\x06config\x122\n" +
-	"\x05state\x18\x03 \x01(\v2\x1c.openits.rsu.v1.MessageStateR\x05state\"\xac\x02\n" +
+	"\x05state\x18\x03 \x01(\v2\x1c.openits.rsu.v1.MessageStateR\x05state\"\xb4\x02\n" +
 	"\rMessageConfig\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12\x18\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n" +
+	"\x04psid\x18\n" +
+	" \x01(\rR\x04psid\x12\x18\n" +
 	"\aenabled\x18\x02 \x01(\bR\aenabled\x12\x1a\n" +
 	"\bpriority\x18\x03 \x01(\rR\bpriority\x129\n" +
 	"\n" +
-	"start_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
-	"\bend_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\x12\x1b\n" +
+	"start_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x12)\n" +
+	"\x10duration_minutes\x18\v \x01(\rR\x0fdurationMinutes\x12\x1b\n" +
 	"\titis_code\x18\t \x03(\rR\bitisCode\x12\x12\n" +
 	"\x04text\x18\a \x01(\tR\x04text\x12.\n" +
 	"\x06region\x18\b \x01(\v2\x16.openits.rsu.v1.RegionR\x06region\"\xe1\x01\n" +
@@ -7221,12 +8650,17 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\aexpired\x18\x04 \x01(\bR\aexpired\"h\n" +
 	"\x03Bsm\x121\n" +
 	"\x06config\x18\x01 \x01(\v2\x19.openits.rsu.v1.BsmConfigR\x06config\x12.\n" +
-	"\x05state\x18\x02 \x01(\v2\x18.openits.rsu.v1.BsmStateR\x05state\"\x80\x02\n" +
+	"\x05state\x18\x02 \x01(\v2\x18.openits.rsu.v1.BsmStateR\x05state\"\xd4\x03\n" +
 	"\tBsmConfig\x12'\n" +
-	"\x0freceive_enabled\x18\x01 \x01(\bR\x0ereceiveEnabled\x12'\n" +
+	"\x0freceive_enabled\x18\x01 \x01(\bR\x0ereceiveEnabled\x12\x12\n" +
+	"\x04psid\x18\a \x01(\rR\x04psid\x12'\n" +
 	"\x0fforward_enabled\x18\x02 \x01(\bR\x0eforwardEnabled\x12/\n" +
 	"\x13forward_destination\x18\x03 \x01(\tR\x12forwardDestination\x12!\n" +
-	"\fforward_port\x18\x04 \x01(\rR\vforwardPort\x12(\n" +
+	"\fforward_port\x18\x04 \x01(\rR\vforwardPort\x12J\n" +
+	"\x10forward_protocol\x18\b \x01(\x0e2\x1f.openits.rsu.v1.ForwardProtocolR\x0fforwardProtocol\x12D\n" +
+	"\x0eforward_format\x18\t \x01(\x0e2\x1d.openits.rsu.v1.ForwardFormatR\rforwardFormat\x12,\n" +
+	"\x12strip_path_history\x18\n" +
+	" \x01(\bR\x10stripPathHistory\x12(\n" +
 	"\x10filter_by_region\x18\x05 \x01(\bR\x0efilterByRegion\x12#\n" +
 	"\rregion_radius\x18\x06 \x01(\rR\fregionRadius\"\xa2\x02\n" +
 	"\bBsmState\x12%\n" +
@@ -7235,25 +8669,54 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x14unique_vehicles_1min\x18\x03 \x01(\rR\x12uniqueVehicles1min\x12.\n" +
 	"\x13unique_vehicles_1hr\x18\x04 \x01(\rR\x11uniqueVehicles1hr\x12#\n" +
 	"\raverage_speed\x18\x05 \x01(\tR\faverageSpeed\x12?\n" +
-	"\rlast_received\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\flastReceived\"h\n" +
+	"\rlast_received\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\flastReceived\"\xfd\x01\n" +
 	"\x03Psm\x121\n" +
 	"\x06config\x18\x01 \x01(\v2\x19.openits.rsu.v1.PsmConfigR\x06config\x12.\n" +
-	"\x05state\x18\x02 \x01(\v2\x18.openits.rsu.v1.PsmStateR\x05state\"B\n" +
+	"\x05state\x18\x02 \x01(\v2\x18.openits.rsu.v1.PsmStateR\x05state\x12J\n" +
+	"\x10broadcast_config\x18\x03 \x01(\v2\x1f.openits.rsu.v1.BroadcastConfigR\x0fbroadcastConfig\x12G\n" +
+	"\x0fbroadcast_state\x18\x04 \x01(\v2\x1e.openits.rsu.v1.BroadcastStateR\x0ebroadcastState\"V\n" +
 	"\tPsmConfig\x12\x18\n" +
 	"\aenabled\x18\x01 \x01(\bR\aenabled\x12\x1b\n" +
-	"\talert_asc\x18\x02 \x01(\bR\balertAsc\"\x8d\x02\n" +
+	"\talert_asc\x18\x02 \x01(\bR\balertAsc\x12\x12\n" +
+	"\x04psid\x18\x03 \x01(\rR\x04psid\"\x8d\x02\n" +
 	"\bPsmState\x12%\n" +
 	"\x0ereceived_count\x18\x01 \x01(\x04R\rreceivedCount\x12:\n" +
 	"\x19pedestrians_detected_1min\x18\x02 \x01(\rR\x17pedestriansDetected1min\x128\n" +
 	"\x18pedestrians_detected_1hr\x18\x03 \x01(\rR\x16pedestriansDetected1hr\x12?\n" +
 	"\rlast_received\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\flastReceived\x12#\n" +
-	"\rinvalid_count\x18\x05 \x01(\x04R\finvalidCount\"\xf3\x01\n" +
+	"\rinvalid_count\x18\x05 \x01(\x04R\finvalidCount\"\x86\x01\n" +
+	"\x0fBroadcastConfig\x12\x18\n" +
+	"\aenabled\x18\x01 \x01(\bR\aenabled\x12\x16\n" +
+	"\x06source\x18\x02 \x01(\tR\x06source\x12-\n" +
+	"\x12broadcast_interval\x18\x03 \x01(\rR\x11broadcastInterval\x12\x12\n" +
+	"\x04psid\x18\x04 \x01(\rR\x04psid\"\xa0\x01\n" +
+	"\x0eBroadcastState\x12\"\n" +
+	"\fbroadcasting\x18\x01 \x01(\bR\fbroadcasting\x12'\n" +
+	"\x0fbroadcast_count\x18\x02 \x01(\x04R\x0ebroadcastCount\x12A\n" +
+	"\x0elast_broadcast\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\rlastBroadcast\"k\n" +
+	"\x04Rtcm\x122\n" +
+	"\x06config\x18\x01 \x01(\v2\x1a.openits.rsu.v1.RtcmConfigR\x06config\x12/\n" +
+	"\x05state\x18\x02 \x01(\v2\x19.openits.rsu.v1.RtcmStateR\x05state\"\xa9\x01\n" +
+	"\n" +
+	"RtcmConfig\x12\x18\n" +
+	"\aenabled\x18\x01 \x01(\bR\aenabled\x12\x1d\n" +
+	"\n" +
+	"source_url\x18\x02 \x01(\tR\tsourceUrl\x12\x1f\n" +
+	"\vmessage_set\x18\x03 \x03(\rR\n" +
+	"messageSet\x12-\n" +
+	"\x12broadcast_interval\x18\x04 \x01(\rR\x11broadcastInterval\x12\x12\n" +
+	"\x04psid\x18\x05 \x01(\rR\x04psid\"\x9b\x01\n" +
+	"\tRtcmState\x12\"\n" +
+	"\fbroadcasting\x18\x01 \x01(\bR\fbroadcasting\x12'\n" +
+	"\x0fbroadcast_count\x18\x02 \x01(\x04R\x0ebroadcastCount\x12A\n" +
+	"\x0elast_broadcast\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\rlastBroadcast\"\xf3\x01\n" +
 	"\x06SrmSsm\x124\n" +
 	"\x06config\x18\x01 \x01(\v2\x1c.openits.rsu.v1.SrmSsmConfigR\x06config\x121\n" +
 	"\x05state\x18\x02 \x01(\v2\x1b.openits.rsu.v1.SrmSsmStateR\x05state\x12G\n" +
 	"\x0factive_requests\x18\x03 \x01(\v2\x1e.openits.rsu.v1.ActiveRequestsR\x0eactiveRequests\x127\n" +
-	"\tdecisions\x18\x04 \x01(\v2\x19.openits.rsu.v1.DecisionsR\tdecisions\"\x80\x03\n" +
-	"\fSrmSsmConfig\x12.\n" +
+	"\tdecisions\x18\x04 \x01(\v2\x19.openits.rsu.v1.DecisionsR\tdecisions\"\x94\x03\n" +
+	"\fSrmSsmConfig\x12\x12\n" +
+	"\x04psid\x18\t \x01(\rR\x04psid\x12.\n" +
 	"\x13srm_receive_enabled\x18\x01 \x01(\bR\x11srmReceiveEnabled\x122\n" +
 	"\x15ssm_broadcast_enabled\x18\x02 \x01(\bR\x13ssmBroadcastEnabled\x12$\n" +
 	"\x0eforward_to_asc\x18\x03 \x01(\bR\fforwardToAsc\x12\x1d\n" +
@@ -7270,7 +8733,7 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x11approved_requests\x18\x04 \x01(\x04R\x10approvedRequests\x12'\n" +
 	"\x0fdenied_requests\x18\x05 \x01(\x04R\x0edeniedRequests\"C\n" +
 	"\x0eActiveRequests\x121\n" +
-	"\arequest\x18\x01 \x03(\v2\x17.openits.rsu.v1.RequestR\arequest\"\xbd\x03\n" +
+	"\arequest\x18\x01 \x03(\v2\x17.openits.rsu.v1.RequestR\arequest\"\xdb\x03\n" +
 	"\aRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
@@ -7280,12 +8743,12 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\veta_seconds\x18\x05 \x01(\rR\n" +
 	"etaSeconds\x12;\n" +
 	"\vreceived_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"receivedAt\x12.\n" +
-	"\x06status\x18\a \x01(\x0e2\x16.openits.rsu.v1.StatusR\x06status\x12\x1a\n" +
+	"receivedAt\x12B\n" +
+	"\x06status\x18\a \x01(\x0e2*.openits.rsu.v1.OpenitsRsuSrmRequestStatusR\x06status\x12\x1a\n" +
 	"\bpriority\x18\b \x01(\rR\bpriority\x12#\n" +
-	"\rvehicle_class\x18\t \x01(\tR\fvehicleClass\x12P\n" +
+	"\rvehicle_class\x18\t \x01(\tR\fvehicleClass\x12Z\n" +
 	"\x12decision_authority\x18\n" +
-	" \x01(\x0e2!.openits.rsu.v1.DecisionAuthorityR\x11decisionAuthority\x12#\n" +
+	" \x01(\x0e2+.openits.rsu.v1.OpenitsRsuDecisionAuthorityR\x11decisionAuthority\x12#\n" +
 	"\rdenial_reason\x18\v \x01(\tR\fdenialReason\"A\n" +
 	"\tDecisions\x124\n" +
 	"\bdecision\x18\x01 \x03(\v2\x18.openits.rsu.v1.DecisionR\bdecision\"q\n" +
@@ -7295,16 +8758,14 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x06action\x18\x02 \x01(\x0e2\x16.openits.rsu.v1.ActionR\x06action\x12\x16\n" +
 	"\x06reason\x18\x03 \x01(\tR\x06reason\"X\n" +
 	"\fMessageStats\x12H\n" +
-	"\x10per_message_type\x18\x01 \x03(\v2\x1e.openits.rsu.v1.PerMessageTypeR\x0eperMessageType\"\x9e\x03\n" +
+	"\x10per_message_type\x18\x01 \x03(\v2\x1e.openits.rsu.v1.PerMessageTypeR\x0eperMessageType\"\xec\x02\n" +
 	"\x0ePerMessageType\x12!\n" +
-	"\fmessage_type\x18\x01 \x01(\tR\vmessageType\x12\x1f\n" +
+	"\fmessage_type\x18\x01 \x01(\tR\vmessageType\x12\x12\n" +
+	"\x04psid\x18\r \x01(\rR\x04psid\x12\x1f\n" +
 	"\vqueue_depth\x18\x02 \x01(\rR\n" +
 	"queueDepth\x12\x19\n" +
 	"\btx_count\x18\x03 \x01(\x04R\atxCount\x12\x19\n" +
-	"\brx_count\x18\x04 \x01(\x04R\arxCount\x12\x1d\n" +
-	"\n" +
-	"total_sent\x18\x05 \x01(\x04R\ttotalSent\x12%\n" +
-	"\x0etotal_received\x18\x06 \x01(\x04R\rtotalReceived\x12\x18\n" +
+	"\brx_count\x18\x04 \x01(\x04R\arxCount\x12\x18\n" +
 	"\asuccess\x18\a \x01(\x04R\asuccess\x12\x18\n" +
 	"\ainvalid\x18\b \x01(\x04R\ainvalid\x12$\n" +
 	"\x0eavg_latency_ms\x18\t \x01(\rR\favgLatencyMs\x12 \n" +
@@ -7331,18 +8792,18 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\vRsuSecurity\x129\n" +
 	"\x06config\x18\x01 \x01(\v2!.openits.rsu.v1.RsuSecurityConfigR\x06config\x126\n" +
 	"\x05state\x18\x02 \x01(\v2 .openits.rsu.v1.RsuSecurityStateR\x05state\x12@\n" +
-	"\fcertificates\x18\x03 \x01(\v2\x1c.openits.rsu.v1.CertificatesR\fcertificates\"\xa5\x02\n" +
+	"\fcertificates\x18\x03 \x01(\v2\x1c.openits.rsu.v1.CertificatesR\fcertificates\"\xe1\x02\n" +
 	"\x11RsuSecurityConfig\x12)\n" +
 	"\x10security_enabled\x18\x01 \x01(\bR\x0fsecurityEnabled\x12\x19\n" +
 	"\bscms_url\x18\x02 \x01(\tR\ascmsUrl\x12!\n" +
 	"\fauto_renewal\x18\x03 \x01(\bR\vautoRenewal\x12;\n" +
-	"\x1arenewal_days_before_expiry\x18\x04 \x01(\rR\x17renewalDaysBeforeExpiry\x12j\n" +
+	"\x1arenewal_days_before_expiry\x18\x04 \x01(\rR\x17renewalDaysBeforeExpiry\x12:\n" +
+	"\x19permit_unsigned_broadcast\x18\x06 \x01(\bR\x17permitUnsignedBroadcast\x12j\n" +
 	"\x15misbehavior_reporting\x18\x05 \x01(\v25.openits.rsu.v1.RsuSecurityConfigMisbehaviorReportingR\x14misbehaviorReporting\"\x95\x01\n" +
 	"%RsuSecurityConfigMisbehaviorReporting\x12\x18\n" +
 	"\aenabled\x18\x01 \x01(\bR\aenabled\x12#\n" +
 	"\rauthority_url\x18\x02 \x01(\tR\fauthorityUrl\x12-\n" +
-	"\x13min_reports_to_send\x18\x03 \x01(\rR\x10minReportsToSend\"\x94\n" +
-	"\n" +
+	"\x13min_reports_to_send\x18\x03 \x01(\rR\x10minReportsToSend\"\xaf\v\n" +
 	"\x10RsuSecurityState\x12%\n" +
 	"\x0escms_connected\x18\x01 \x01(\bR\rscmsConnected\x12F\n" +
 	"\x11last_scms_contact\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x0flastScmsContact\x12M\n" +
@@ -7366,7 +8827,11 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\fnext_crl_due\x18\x12 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"nextCrlDue\x12\x1f\n" +
 	"\vcrl_overdue\x18\x13 \x01(\bR\n" +
-	"crlOverdue\x12+\n" +
+	"crlOverdue\x12\x1f\n" +
+	"\vlpf_version\x18\x17 \x01(\tR\n" +
+	"lpfVersion\x12!\n" +
+	"\flccf_version\x18\x18 \x01(\tR\vlccfVersion\x12U\n" +
+	"\x19policy_files_last_updated\x18\x19 \x01(\v2\x1a.google.protobuf.TimestampR\x16policyFilesLastUpdated\x12+\n" +
 	"\x11revocation_checks\x18\x10 \x01(\x04R\x10revocationChecks\x123\n" +
 	"\x15revocation_rejections\x18\x11 \x01(\x04R\x14revocationRejections\x12i\n" +
 	"\x15misbehavior_reporting\x18\x16 \x01(\v24.openits.rsu.v1.RsuSecurityStateMisbehaviorReportingR\x14misbehaviorReporting\"\xe5\x01\n" +
@@ -7392,30 +8857,29 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x13geographic_validity\x18\a \x01(\v2\".openits.rsu.v1.GeographicValidityR\x12geographicValidity\"3\n" +
 	"\vPermissions\x12\x12\n" +
 	"\x04psid\x18\x01 \x01(\rR\x04psid\x12\x10\n" +
-	"\x03ssp\x18\x02 \x01(\tR\x03ssp\"\x83\x01\n" +
+	"\x03ssp\x18\x02 \x01(\tR\x03ssp\"\xcc\x01\n" +
 	"\x12GeographicValidity\x12;\n" +
 	"\vregion_type\x18\x01 \x01(\x0e2\x1a.openits.rsu.v1.RegionTypeR\n" +
 	"regionType\x120\n" +
-	"\x14identified_region_id\x18\x02 \x01(\rR\x12identifiedRegionId*\xbd\x01\n" +
-	"\x14ConfiguredTimeSource\x12#\n" +
-	"\x1fCONFIGURED_TIME_SOURCE_GNSS_PPS\x10\x00\x12\x1e\n" +
-	"\x1aCONFIGURED_TIME_SOURCE_PTP\x10\x01\x12\x1e\n" +
-	"\x1aCONFIGURED_TIME_SOURCE_NTP\x10\x02\x12\x1e\n" +
-	"\x1aCONFIGURED_TIME_SOURCE_GPS\x10\x03\x12 \n" +
-	"\x1cCONFIGURED_TIME_SOURCE_LOCAL\x10\x04*\xd6\x01\n" +
-	"\x16OpenitsRsuGpsFixStatus\x12%\n" +
-	"!OPENITS_RSU_GPS_FIX_STATUS_NO_FIX\x10\x00\x12%\n" +
-	"!OPENITS_RSU_GPS_FIX_STATUS_FIX_2D\x10\x01\x12%\n" +
-	"!OPENITS_RSU_GPS_FIX_STATUS_FIX_3D\x10\x02\x12#\n" +
-	"\x1fOPENITS_RSU_GPS_FIX_STATUS_DGPS\x10\x03\x12\"\n" +
-	"\x1eOPENITS_RSU_GPS_FIX_STATUS_RTK\x10\x04*|\n" +
+	"\x14identified_region_id\x18\x02 \x01(\rR\x12identifiedRegionId\x12G\n" +
+	"\x0fcircular_region\x18\x03 \x01(\v2\x1e.openits.rsu.v1.CircularRegionR\x0ecircularRegion\"e\n" +
+	"\x0eCircularRegion\x12\x19\n" +
+	"\bradius_m\x18\x01 \x01(\rR\aradiusM\x12\x1a\n" +
+	"\blatitude\x18\x02 \x01(\tR\blatitude\x12\x1c\n" +
+	"\tlongitude\x18\x03 \x01(\tR\tlongitude*|\n" +
 	"\n" +
 	"TimeSource\x12\x13\n" +
 	"\x0fTIME_SOURCE_GPS\x10\x00\x12\x13\n" +
 	"\x0fTIME_SOURCE_NTP\x10\x01\x12\x15\n" +
 	"\x11TIME_SOURCE_LOCAL\x10\x02\x12\x18\n" +
 	"\x14TIME_SOURCE_GNSS_PPS\x10\x03\x12\x13\n" +
-	"\x0fTIME_SOURCE_PTP\x10\x04*\x91\x01\n" +
+	"\x0fTIME_SOURCE_PTP\x10\x04*\xd6\x01\n" +
+	"\x16OpenitsRsuGpsFixStatus\x12%\n" +
+	"!OPENITS_RSU_GPS_FIX_STATUS_NO_FIX\x10\x00\x12%\n" +
+	"!OPENITS_RSU_GPS_FIX_STATUS_FIX_2D\x10\x01\x12%\n" +
+	"!OPENITS_RSU_GPS_FIX_STATUS_FIX_3D\x10\x02\x12#\n" +
+	"\x1fOPENITS_RSU_GPS_FIX_STATUS_DGPS\x10\x03\x12\"\n" +
+	"\x1eOPENITS_RSU_GPS_FIX_STATUS_RTK\x10\x04*\x91\x01\n" +
 	"\rSignalQuality\x12\x1c\n" +
 	"\x18SIGNAL_QUALITY_EXCELLENT\x10\x00\x12\x17\n" +
 	"\x13SIGNAL_QUALITY_GOOD\x10\x01\x12\x17\n" +
@@ -7430,27 +8894,50 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"CountBasis\x12#\n" +
 	"\x1fCOUNT_BASIS_UNIQUE_DEDUPLICATED\x10\x00\x12$\n" +
 	" COUNT_BASIS_OBSERVATION_SESSIONS\x10\x01\x12\x1c\n" +
-	"\x18COUNT_BASIS_RAW_MESSAGES\x10\x02*G\n" +
+	"\x18COUNT_BASIS_RAW_MESSAGES\x10\x02*\x95\x01\n" +
+	"\rFaultSeverity\x12\x17\n" +
+	"\x13FAULT_SEVERITY_INFO\x10\x00\x12\x1a\n" +
+	"\x16FAULT_SEVERITY_WARNING\x10\x01\x12\x18\n" +
+	"\x14FAULT_SEVERITY_MINOR\x10\x02\x12\x18\n" +
+	"\x14FAULT_SEVERITY_MAJOR\x10\x03\x12\x1b\n" +
+	"\x17FAULT_SEVERITY_CRITICAL\x10\x04*G\n" +
 	"\x06Policy\x12\x13\n" +
 	"\x0fPOLICY_DISABLED\x10\x00\x12\x13\n" +
 	"\x0fPOLICY_REACTIVE\x10\x01\x12\x13\n" +
-	"\x0fPOLICY_ADAPTIVE\x10\x02*x\n" +
+	"\x0fPOLICY_ADAPTIVE\x10\x02*U\n" +
+	"\n" +
+	"SourceMode\x12\x1d\n" +
+	"\x19SOURCE_MODE_RSU_GENERATED\x10\x00\x12(\n" +
+	"$SOURCE_MODE_IMMEDIATE_FORWARD_INGEST\x10\x01*E\n" +
+	"\tTransport\x12\x11\n" +
+	"\rTRANSPORT_UDP\x10\x00\x12\x11\n" +
+	"\rTRANSPORT_TCP\x10\x01\x12\x12\n" +
+	"\x0eTRANSPORT_MQTT\x10\x02*`\n" +
+	"\x0fForwardProtocol\x12\x18\n" +
+	"\x14FORWARD_PROTOCOL_UDP\x10\x00\x12\x18\n" +
+	"\x14FORWARD_PROTOCOL_TCP\x10\x01\x12\x19\n" +
+	"\x15FORWARD_PROTOCOL_MQTT\x10\x02*\x80\x01\n" +
+	"\rForwardFormat\x12 \n" +
+	"\x1cFORWARD_FORMAT_UPER_1609DOT2\x10\x00\x12\x1c\n" +
+	"\x18FORWARD_FORMAT_UPER_BARE\x10\x01\x12\x16\n" +
+	"\x12FORWARD_FORMAT_HEX\x10\x02\x12\x17\n" +
+	"\x13FORWARD_FORMAT_JSON\x10\x03*q\n" +
 	"\x0eGrantAuthority\x12\"\n" +
-	"\x1eGRANT_AUTHORITY_CONTROLLER_PRS\x10\x00\x12$\n" +
-	" GRANT_AUTHORITY_RSU_LOCAL_POLICY\x10\x01\x12\x1c\n" +
-	"\x18GRANT_AUTHORITY_OPERATOR\x10\x02*m\n" +
-	"\x06Status\x12\x12\n" +
-	"\x0eSTATUS_PENDING\x10\x00\x12\x13\n" +
-	"\x0fSTATUS_APPROVED\x10\x01\x12\x11\n" +
-	"\rSTATUS_ACTIVE\x10\x02\x12\x14\n" +
-	"\x10STATUS_COMPLETED\x10\x03\x12\x11\n" +
-	"\rSTATUS_DENIED\x10\x04*\xbb\x01\n" +
-	"\x11DecisionAuthority\x12\x1b\n" +
-	"\x17DECISION_AUTHORITY_NONE\x10\x00\x12%\n" +
-	"!DECISION_AUTHORITY_CONTROLLER_PRS\x10\x01\x12 \n" +
-	"\x1cDECISION_AUTHORITY_RSU_LOCAL\x10\x02\x12\x1f\n" +
-	"\x1bDECISION_AUTHORITY_OPERATOR\x10\x03\x12\x1f\n" +
-	"\x1bDECISION_AUTHORITY_EVP_AUTO\x10\x04*-\n" +
+	"\x1eGRANT_AUTHORITY_CONTROLLER_PRS\x10\x00\x12\x1d\n" +
+	"\x19GRANT_AUTHORITY_RSU_LOCAL\x10\x01\x12\x1c\n" +
+	"\x18GRANT_AUTHORITY_OPERATOR\x10\x02*\xf9\x01\n" +
+	"\x1aOpenitsRsuSrmRequestStatus\x12*\n" +
+	"&OPENITS_RSU_SRM_REQUEST_STATUS_PENDING\x10\x00\x12+\n" +
+	"'OPENITS_RSU_SRM_REQUEST_STATUS_APPROVED\x10\x01\x12)\n" +
+	"%OPENITS_RSU_SRM_REQUEST_STATUS_ACTIVE\x10\x02\x12,\n" +
+	"(OPENITS_RSU_SRM_REQUEST_STATUS_COMPLETED\x10\x03\x12)\n" +
+	"%OPENITS_RSU_SRM_REQUEST_STATUS_DENIED\x10\x04*\x81\x02\n" +
+	"\x1bOpenitsRsuDecisionAuthority\x12'\n" +
+	"#OPENITS_RSU_DECISION_AUTHORITY_NONE\x10\x00\x121\n" +
+	"-OPENITS_RSU_DECISION_AUTHORITY_CONTROLLER_PRS\x10\x01\x12,\n" +
+	"(OPENITS_RSU_DECISION_AUTHORITY_RSU_LOCAL\x10\x02\x12+\n" +
+	"'OPENITS_RSU_DECISION_AUTHORITY_OPERATOR\x10\x03\x12+\n" +
+	"'OPENITS_RSU_DECISION_AUTHORITY_EVP_AUTO\x10\x04*-\n" +
 	"\x06Action\x12\x12\n" +
 	"\x0eACTION_APPROVE\x10\x00\x12\x0f\n" +
 	"\vACTION_DENY\x10\x01*\xd2\x01\n" +
@@ -7486,226 +8973,272 @@ func file_openits_rsu_v1_state_proto_rawDescGZIP() []byte {
 	return file_openits_rsu_v1_state_proto_rawDescData
 }
 
-var file_openits_rsu_v1_state_proto_enumTypes = make([]protoimpl.EnumInfo, 14)
-var file_openits_rsu_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 80)
+var file_openits_rsu_v1_state_proto_enumTypes = make([]protoimpl.EnumInfo, 18)
+var file_openits_rsu_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 95)
 var file_openits_rsu_v1_state_proto_goTypes = []any{
-	(ConfiguredTimeSource)(0),      // 0: openits.rsu.v1.ConfiguredTimeSource
-	(OpenitsRsuGpsFixStatus)(0),    // 1: openits.rsu.v1.OpenitsRsuGpsFixStatus
-	(TimeSource)(0),                // 2: openits.rsu.v1.TimeSource
-	(SignalQuality)(0),             // 3: openits.rsu.v1.SignalQuality
-	(WindowType)(0),                // 4: openits.rsu.v1.WindowType
-	(CountBasis)(0),                // 5: openits.rsu.v1.CountBasis
-	(Policy)(0),                    // 6: openits.rsu.v1.Policy
-	(GrantAuthority)(0),            // 7: openits.rsu.v1.GrantAuthority
-	(Status)(0),                    // 8: openits.rsu.v1.Status
-	(DecisionAuthority)(0),         // 9: openits.rsu.v1.DecisionAuthority
-	(Action)(0),                    // 10: openits.rsu.v1.Action
-	(EnrollmentStatus)(0),          // 11: openits.rsu.v1.EnrollmentStatus
-	(Type)(0),                      // 12: openits.rsu.v1.Type
-	(RegionType)(0),                // 13: openits.rsu.v1.RegionType
-	(*Rsu)(nil),                    // 14: openits.rsu.v1.Rsu
-	(*RsuConfig)(nil),              // 15: openits.rsu.v1.RsuConfig
-	(*RsuState)(nil),               // 16: openits.rsu.v1.RsuState
-	(*Gnss)(nil),                   // 17: openits.rsu.v1.Gnss
-	(*SurveyedPosition)(nil),       // 18: openits.rsu.v1.SurveyedPosition
-	(*StoreForward)(nil),           // 19: openits.rsu.v1.StoreForward
-	(*StoreForwardConfig)(nil),     // 20: openits.rsu.v1.StoreForwardConfig
-	(*StoreForwardState)(nil),      // 21: openits.rsu.v1.StoreForwardState
-	(*Diagnostics)(nil),            // 22: openits.rsu.v1.Diagnostics
-	(*Radio)(nil),                  // 23: openits.rsu.v1.Radio
-	(*SpatSync)(nil),               // 24: openits.rsu.v1.SpatSync
-	(*Resources)(nil),              // 25: openits.rsu.v1.Resources
-	(*Cpu)(nil),                    // 26: openits.rsu.v1.Cpu
-	(*Disk)(nil),                   // 27: openits.rsu.v1.Disk
-	(*Memory)(nil),                 // 28: openits.rsu.v1.Memory
-	(*Cellular)(nil),               // 29: openits.rsu.v1.Cellular
-	(*Logs)(nil),                   // 30: openits.rsu.v1.Logs
-	(*Errors)(nil),                 // 31: openits.rsu.v1.Errors
-	(*Warnings)(nil),               // 32: openits.rsu.v1.Warnings
-	(*Critical)(nil),               // 33: openits.rsu.v1.Critical
-	(*Process)(nil),                // 34: openits.rsu.v1.Process
-	(*TemperatureSensor)(nil),      // 35: openits.rsu.v1.TemperatureSensor
-	(*VehicleAnalytics)(nil),       // 36: openits.rsu.v1.VehicleAnalytics
-	(*SampleBasis)(nil),            // 37: openits.rsu.v1.SampleBasis
-	(*Counts)(nil),                 // 38: openits.rsu.v1.Counts
-	(*SpeedMetrics)(nil),           // 39: openits.rsu.v1.SpeedMetrics
-	(*VehicleClassBreakdown)(nil),  // 40: openits.rsu.v1.VehicleClassBreakdown
-	(*Approach)(nil),               // 41: openits.rsu.v1.Approach
-	(*System)(nil),                 // 42: openits.rsu.v1.System
-	(*CommLink)(nil),               // 43: openits.rsu.v1.CommLink
-	(*Channels)(nil),               // 44: openits.rsu.v1.Channels
-	(*Channel)(nil),                // 45: openits.rsu.v1.Channel
-	(*ChannelConfig)(nil),          // 46: openits.rsu.v1.ChannelConfig
-	(*Dcc)(nil),                    // 47: openits.rsu.v1.Dcc
-	(*ChannelState)(nil),           // 48: openits.rsu.v1.ChannelState
-	(*Messages)(nil),               // 49: openits.rsu.v1.Messages
-	(*Spat)(nil),                   // 50: openits.rsu.v1.Spat
-	(*SpatConfig)(nil),             // 51: openits.rsu.v1.SpatConfig
-	(*SpatConfigIntersection)(nil), // 52: openits.rsu.v1.SpatConfigIntersection
-	(*SpatState)(nil),              // 53: openits.rsu.v1.SpatState
-	(*Map)(nil),                    // 54: openits.rsu.v1.Map
-	(*MapConfig)(nil),              // 55: openits.rsu.v1.MapConfig
-	(*MapConfigIntersection)(nil),  // 56: openits.rsu.v1.MapConfigIntersection
-	(*MapState)(nil),               // 57: openits.rsu.v1.MapState
-	(*MapStateIntersection)(nil),   // 58: openits.rsu.v1.MapStateIntersection
-	(*Tim)(nil),                    // 59: openits.rsu.v1.Tim
-	(*TimConfig)(nil),              // 60: openits.rsu.v1.TimConfig
-	(*Active)(nil),                 // 61: openits.rsu.v1.Active
-	(*Message)(nil),                // 62: openits.rsu.v1.Message
-	(*MessageConfig)(nil),          // 63: openits.rsu.v1.MessageConfig
-	(*Region)(nil),                 // 64: openits.rsu.v1.Region
-	(*MessageState)(nil),           // 65: openits.rsu.v1.MessageState
-	(*Bsm)(nil),                    // 66: openits.rsu.v1.Bsm
-	(*BsmConfig)(nil),              // 67: openits.rsu.v1.BsmConfig
-	(*BsmState)(nil),               // 68: openits.rsu.v1.BsmState
-	(*Psm)(nil),                    // 69: openits.rsu.v1.Psm
-	(*PsmConfig)(nil),              // 70: openits.rsu.v1.PsmConfig
-	(*PsmState)(nil),               // 71: openits.rsu.v1.PsmState
-	(*SrmSsm)(nil),                 // 72: openits.rsu.v1.SrmSsm
-	(*SrmSsmConfig)(nil),           // 73: openits.rsu.v1.SrmSsmConfig
-	(*SrmSsmState)(nil),            // 74: openits.rsu.v1.SrmSsmState
-	(*ActiveRequests)(nil),         // 75: openits.rsu.v1.ActiveRequests
-	(*Request)(nil),                // 76: openits.rsu.v1.Request
-	(*Decisions)(nil),              // 77: openits.rsu.v1.Decisions
-	(*Decision)(nil),               // 78: openits.rsu.v1.Decision
-	(*MessageStats)(nil),           // 79: openits.rsu.v1.MessageStats
-	(*PerMessageType)(nil),         // 80: openits.rsu.v1.PerMessageType
-	(*MessageErrors)(nil),          // 81: openits.rsu.v1.MessageErrors
-	(*MessageErrorsSecurity)(nil),  // 82: openits.rsu.v1.MessageErrorsSecurity
-	(*Drops)(nil),                  // 83: openits.rsu.v1.Drops
-	(*RsuSecurity)(nil),            // 84: openits.rsu.v1.RsuSecurity
-	(*RsuSecurityConfig)(nil),      // 85: openits.rsu.v1.RsuSecurityConfig
-	(*RsuSecurityConfigMisbehaviorReporting)(nil), // 86: openits.rsu.v1.RsuSecurityConfigMisbehaviorReporting
-	(*RsuSecurityState)(nil),                      // 87: openits.rsu.v1.RsuSecurityState
-	(*RsuSecurityStateMisbehaviorReporting)(nil),  // 88: openits.rsu.v1.RsuSecurityStateMisbehaviorReporting
-	(*Certificates)(nil),                          // 89: openits.rsu.v1.Certificates
-	(*Certificate)(nil),                           // 90: openits.rsu.v1.Certificate
-	(*CertificateState)(nil),                      // 91: openits.rsu.v1.CertificateState
-	(*Permissions)(nil),                           // 92: openits.rsu.v1.Permissions
-	(*GeographicValidity)(nil),                    // 93: openits.rsu.v1.GeographicValidity
-	(*timestamppb.Timestamp)(nil),                 // 94: google.protobuf.Timestamp
+	(TimeSource)(0),                  // 0: openits.rsu.v1.TimeSource
+	(OpenitsRsuGpsFixStatus)(0),      // 1: openits.rsu.v1.OpenitsRsuGpsFixStatus
+	(SignalQuality)(0),               // 2: openits.rsu.v1.SignalQuality
+	(WindowType)(0),                  // 3: openits.rsu.v1.WindowType
+	(CountBasis)(0),                  // 4: openits.rsu.v1.CountBasis
+	(FaultSeverity)(0),               // 5: openits.rsu.v1.FaultSeverity
+	(Policy)(0),                      // 6: openits.rsu.v1.Policy
+	(SourceMode)(0),                  // 7: openits.rsu.v1.SourceMode
+	(Transport)(0),                   // 8: openits.rsu.v1.Transport
+	(ForwardProtocol)(0),             // 9: openits.rsu.v1.ForwardProtocol
+	(ForwardFormat)(0),               // 10: openits.rsu.v1.ForwardFormat
+	(GrantAuthority)(0),              // 11: openits.rsu.v1.GrantAuthority
+	(OpenitsRsuSrmRequestStatus)(0),  // 12: openits.rsu.v1.OpenitsRsuSrmRequestStatus
+	(OpenitsRsuDecisionAuthority)(0), // 13: openits.rsu.v1.OpenitsRsuDecisionAuthority
+	(Action)(0),                      // 14: openits.rsu.v1.Action
+	(EnrollmentStatus)(0),            // 15: openits.rsu.v1.EnrollmentStatus
+	(Type)(0),                        // 16: openits.rsu.v1.Type
+	(RegionType)(0),                  // 17: openits.rsu.v1.RegionType
+	(*Rsu)(nil),                      // 18: openits.rsu.v1.Rsu
+	(*RsuConfig)(nil),                // 19: openits.rsu.v1.RsuConfig
+	(*RsuConfigLinearReference)(nil), // 20: openits.rsu.v1.RsuConfigLinearReference
+	(*RsuState)(nil),                 // 21: openits.rsu.v1.RsuState
+	(*RsuStateLinearReference)(nil),  // 22: openits.rsu.v1.RsuStateLinearReference
+	(*Operating)(nil),                // 23: openits.rsu.v1.Operating
+	(*OperatingConfig)(nil),          // 24: openits.rsu.v1.OperatingConfig
+	(*OperatingState)(nil),           // 25: openits.rsu.v1.OperatingState
+	(*Gnss)(nil),                     // 26: openits.rsu.v1.Gnss
+	(*SurveyedPosition)(nil),         // 27: openits.rsu.v1.SurveyedPosition
+	(*StoreForward)(nil),             // 28: openits.rsu.v1.StoreForward
+	(*StoreForwardConfig)(nil),       // 29: openits.rsu.v1.StoreForwardConfig
+	(*StoreForwardState)(nil),        // 30: openits.rsu.v1.StoreForwardState
+	(*Diagnostics)(nil),              // 31: openits.rsu.v1.Diagnostics
+	(*Radio)(nil),                    // 32: openits.rsu.v1.Radio
+	(*SpatSync)(nil),                 // 33: openits.rsu.v1.SpatSync
+	(*Resources)(nil),                // 34: openits.rsu.v1.Resources
+	(*Cpu)(nil),                      // 35: openits.rsu.v1.Cpu
+	(*Disk)(nil),                     // 36: openits.rsu.v1.Disk
+	(*Memory)(nil),                   // 37: openits.rsu.v1.Memory
+	(*BackhaulCellular)(nil),         // 38: openits.rsu.v1.BackhaulCellular
+	(*Logs)(nil),                     // 39: openits.rsu.v1.Logs
+	(*Errors)(nil),                   // 40: openits.rsu.v1.Errors
+	(*Warnings)(nil),                 // 41: openits.rsu.v1.Warnings
+	(*Critical)(nil),                 // 42: openits.rsu.v1.Critical
+	(*Process)(nil),                  // 43: openits.rsu.v1.Process
+	(*TemperatureSensor)(nil),        // 44: openits.rsu.v1.TemperatureSensor
+	(*VehicleAnalytics)(nil),         // 45: openits.rsu.v1.VehicleAnalytics
+	(*SampleBasis)(nil),              // 46: openits.rsu.v1.SampleBasis
+	(*Counts)(nil),                   // 47: openits.rsu.v1.Counts
+	(*SpeedMetrics)(nil),             // 48: openits.rsu.v1.SpeedMetrics
+	(*VehicleClassBreakdown)(nil),    // 49: openits.rsu.v1.VehicleClassBreakdown
+	(*Approach)(nil),                 // 50: openits.rsu.v1.Approach
+	(*System)(nil),                   // 51: openits.rsu.v1.System
+	(*CommLink)(nil),                 // 52: openits.rsu.v1.CommLink
+	(*Faults)(nil),                   // 53: openits.rsu.v1.Faults
+	(*Fault)(nil),                    // 54: openits.rsu.v1.Fault
+	(*Channels)(nil),                 // 55: openits.rsu.v1.Channels
+	(*Channel)(nil),                  // 56: openits.rsu.v1.Channel
+	(*ChannelConfig)(nil),            // 57: openits.rsu.v1.ChannelConfig
+	(*Dcc)(nil),                      // 58: openits.rsu.v1.Dcc
+	(*ChannelState)(nil),             // 59: openits.rsu.v1.ChannelState
+	(*Messages)(nil),                 // 60: openits.rsu.v1.Messages
+	(*Spat)(nil),                     // 61: openits.rsu.v1.Spat
+	(*SpatConfig)(nil),               // 62: openits.rsu.v1.SpatConfig
+	(*SpatConfigIngest)(nil),         // 63: openits.rsu.v1.SpatConfigIngest
+	(*SpatConfigIntersection)(nil),   // 64: openits.rsu.v1.SpatConfigIntersection
+	(*SpatState)(nil),                // 65: openits.rsu.v1.SpatState
+	(*Map)(nil),                      // 66: openits.rsu.v1.Map
+	(*MapConfig)(nil),                // 67: openits.rsu.v1.MapConfig
+	(*MapConfigIntersection)(nil),    // 68: openits.rsu.v1.MapConfigIntersection
+	(*MapConfigIngest)(nil),          // 69: openits.rsu.v1.MapConfigIngest
+	(*MapState)(nil),                 // 70: openits.rsu.v1.MapState
+	(*MapStateIntersection)(nil),     // 71: openits.rsu.v1.MapStateIntersection
+	(*Tim)(nil),                      // 72: openits.rsu.v1.Tim
+	(*TimConfig)(nil),                // 73: openits.rsu.v1.TimConfig
+	(*Active)(nil),                   // 74: openits.rsu.v1.Active
+	(*Message)(nil),                  // 75: openits.rsu.v1.Message
+	(*MessageConfig)(nil),            // 76: openits.rsu.v1.MessageConfig
+	(*Region)(nil),                   // 77: openits.rsu.v1.Region
+	(*MessageState)(nil),             // 78: openits.rsu.v1.MessageState
+	(*Bsm)(nil),                      // 79: openits.rsu.v1.Bsm
+	(*BsmConfig)(nil),                // 80: openits.rsu.v1.BsmConfig
+	(*BsmState)(nil),                 // 81: openits.rsu.v1.BsmState
+	(*Psm)(nil),                      // 82: openits.rsu.v1.Psm
+	(*PsmConfig)(nil),                // 83: openits.rsu.v1.PsmConfig
+	(*PsmState)(nil),                 // 84: openits.rsu.v1.PsmState
+	(*BroadcastConfig)(nil),          // 85: openits.rsu.v1.BroadcastConfig
+	(*BroadcastState)(nil),           // 86: openits.rsu.v1.BroadcastState
+	(*Rtcm)(nil),                     // 87: openits.rsu.v1.Rtcm
+	(*RtcmConfig)(nil),               // 88: openits.rsu.v1.RtcmConfig
+	(*RtcmState)(nil),                // 89: openits.rsu.v1.RtcmState
+	(*SrmSsm)(nil),                   // 90: openits.rsu.v1.SrmSsm
+	(*SrmSsmConfig)(nil),             // 91: openits.rsu.v1.SrmSsmConfig
+	(*SrmSsmState)(nil),              // 92: openits.rsu.v1.SrmSsmState
+	(*ActiveRequests)(nil),           // 93: openits.rsu.v1.ActiveRequests
+	(*Request)(nil),                  // 94: openits.rsu.v1.Request
+	(*Decisions)(nil),                // 95: openits.rsu.v1.Decisions
+	(*Decision)(nil),                 // 96: openits.rsu.v1.Decision
+	(*MessageStats)(nil),             // 97: openits.rsu.v1.MessageStats
+	(*PerMessageType)(nil),           // 98: openits.rsu.v1.PerMessageType
+	(*MessageErrors)(nil),            // 99: openits.rsu.v1.MessageErrors
+	(*MessageErrorsSecurity)(nil),    // 100: openits.rsu.v1.MessageErrorsSecurity
+	(*Drops)(nil),                    // 101: openits.rsu.v1.Drops
+	(*RsuSecurity)(nil),              // 102: openits.rsu.v1.RsuSecurity
+	(*RsuSecurityConfig)(nil),        // 103: openits.rsu.v1.RsuSecurityConfig
+	(*RsuSecurityConfigMisbehaviorReporting)(nil), // 104: openits.rsu.v1.RsuSecurityConfigMisbehaviorReporting
+	(*RsuSecurityState)(nil),                      // 105: openits.rsu.v1.RsuSecurityState
+	(*RsuSecurityStateMisbehaviorReporting)(nil),  // 106: openits.rsu.v1.RsuSecurityStateMisbehaviorReporting
+	(*Certificates)(nil),                          // 107: openits.rsu.v1.Certificates
+	(*Certificate)(nil),                           // 108: openits.rsu.v1.Certificate
+	(*CertificateState)(nil),                      // 109: openits.rsu.v1.CertificateState
+	(*Permissions)(nil),                           // 110: openits.rsu.v1.Permissions
+	(*GeographicValidity)(nil),                    // 111: openits.rsu.v1.GeographicValidity
+	(*CircularRegion)(nil),                        // 112: openits.rsu.v1.CircularRegion
+	(*timestamppb.Timestamp)(nil),                 // 113: google.protobuf.Timestamp
 }
 var file_openits_rsu_v1_state_proto_depIdxs = []int32{
-	15,  // 0: openits.rsu.v1.Rsu.config:type_name -> openits.rsu.v1.RsuConfig
-	16,  // 1: openits.rsu.v1.Rsu.state:type_name -> openits.rsu.v1.RsuState
-	0,   // 2: openits.rsu.v1.Rsu.configured_time_source:type_name -> openits.rsu.v1.ConfiguredTimeSource
-	17,  // 3: openits.rsu.v1.Rsu.gnss:type_name -> openits.rsu.v1.Gnss
-	19,  // 4: openits.rsu.v1.Rsu.store_forward:type_name -> openits.rsu.v1.StoreForward
-	22,  // 5: openits.rsu.v1.Rsu.diagnostics:type_name -> openits.rsu.v1.Diagnostics
-	42,  // 6: openits.rsu.v1.Rsu.system:type_name -> openits.rsu.v1.System
-	44,  // 7: openits.rsu.v1.Rsu.channels:type_name -> openits.rsu.v1.Channels
-	49,  // 8: openits.rsu.v1.Rsu.messages:type_name -> openits.rsu.v1.Messages
-	84,  // 9: openits.rsu.v1.Rsu.security:type_name -> openits.rsu.v1.RsuSecurity
-	18,  // 10: openits.rsu.v1.Gnss.surveyed_position:type_name -> openits.rsu.v1.SurveyedPosition
-	20,  // 11: openits.rsu.v1.StoreForward.config:type_name -> openits.rsu.v1.StoreForwardConfig
-	21,  // 12: openits.rsu.v1.StoreForward.state:type_name -> openits.rsu.v1.StoreForwardState
-	23,  // 13: openits.rsu.v1.Diagnostics.radio:type_name -> openits.rsu.v1.Radio
-	24,  // 14: openits.rsu.v1.Diagnostics.spat_sync:type_name -> openits.rsu.v1.SpatSync
-	25,  // 15: openits.rsu.v1.Diagnostics.resources:type_name -> openits.rsu.v1.Resources
-	1,   // 16: openits.rsu.v1.Diagnostics.gps_status:type_name -> openits.rsu.v1.OpenitsRsuGpsFixStatus
-	2,   // 17: openits.rsu.v1.Diagnostics.time_source:type_name -> openits.rsu.v1.TimeSource
-	29,  // 18: openits.rsu.v1.Diagnostics.cellular:type_name -> openits.rsu.v1.Cellular
-	94,  // 19: openits.rsu.v1.Diagnostics.last_restart_time:type_name -> google.protobuf.Timestamp
-	30,  // 20: openits.rsu.v1.Diagnostics.logs:type_name -> openits.rsu.v1.Logs
-	34,  // 21: openits.rsu.v1.Diagnostics.process:type_name -> openits.rsu.v1.Process
-	35,  // 22: openits.rsu.v1.Diagnostics.temperature_sensor:type_name -> openits.rsu.v1.TemperatureSensor
-	36,  // 23: openits.rsu.v1.Diagnostics.vehicle_analytics:type_name -> openits.rsu.v1.VehicleAnalytics
-	94,  // 24: openits.rsu.v1.Radio.last_successful_tx:type_name -> google.protobuf.Timestamp
-	94,  // 25: openits.rsu.v1.SpatSync.last_asc_update:type_name -> google.protobuf.Timestamp
-	26,  // 26: openits.rsu.v1.Resources.cpu:type_name -> openits.rsu.v1.Cpu
-	27,  // 27: openits.rsu.v1.Resources.disk:type_name -> openits.rsu.v1.Disk
-	28,  // 28: openits.rsu.v1.Resources.memory:type_name -> openits.rsu.v1.Memory
-	3,   // 29: openits.rsu.v1.Cellular.signal_quality:type_name -> openits.rsu.v1.SignalQuality
-	31,  // 30: openits.rsu.v1.Logs.errors:type_name -> openits.rsu.v1.Errors
-	32,  // 31: openits.rsu.v1.Logs.warnings:type_name -> openits.rsu.v1.Warnings
-	33,  // 32: openits.rsu.v1.Logs.critical:type_name -> openits.rsu.v1.Critical
-	94,  // 33: openits.rsu.v1.Logs.most_recent_error_time:type_name -> google.protobuf.Timestamp
-	94,  // 34: openits.rsu.v1.Process.last_restart:type_name -> google.protobuf.Timestamp
-	37,  // 35: openits.rsu.v1.VehicleAnalytics.sample_basis:type_name -> openits.rsu.v1.SampleBasis
-	38,  // 36: openits.rsu.v1.VehicleAnalytics.counts:type_name -> openits.rsu.v1.Counts
-	39,  // 37: openits.rsu.v1.VehicleAnalytics.speed_metrics:type_name -> openits.rsu.v1.SpeedMetrics
-	40,  // 38: openits.rsu.v1.VehicleAnalytics.vehicle_class_breakdown:type_name -> openits.rsu.v1.VehicleClassBreakdown
-	41,  // 39: openits.rsu.v1.VehicleAnalytics.approach:type_name -> openits.rsu.v1.Approach
-	4,   // 40: openits.rsu.v1.SampleBasis.window_type:type_name -> openits.rsu.v1.WindowType
-	94,  // 41: openits.rsu.v1.SampleBasis.computed_at:type_name -> google.protobuf.Timestamp
-	5,   // 42: openits.rsu.v1.Counts.count_basis:type_name -> openits.rsu.v1.CountBasis
-	43,  // 43: openits.rsu.v1.System.comm_link:type_name -> openits.rsu.v1.CommLink
-	94,  // 44: openits.rsu.v1.CommLink.last_successful:type_name -> google.protobuf.Timestamp
-	45,  // 45: openits.rsu.v1.Channels.channel:type_name -> openits.rsu.v1.Channel
-	46,  // 46: openits.rsu.v1.Channel.config:type_name -> openits.rsu.v1.ChannelConfig
-	48,  // 47: openits.rsu.v1.Channel.state:type_name -> openits.rsu.v1.ChannelState
-	47,  // 48: openits.rsu.v1.ChannelConfig.dcc:type_name -> openits.rsu.v1.Dcc
-	6,   // 49: openits.rsu.v1.Dcc.policy:type_name -> openits.rsu.v1.Policy
-	50,  // 50: openits.rsu.v1.Messages.spat:type_name -> openits.rsu.v1.Spat
-	54,  // 51: openits.rsu.v1.Messages.map:type_name -> openits.rsu.v1.Map
-	59,  // 52: openits.rsu.v1.Messages.tim:type_name -> openits.rsu.v1.Tim
-	66,  // 53: openits.rsu.v1.Messages.bsm:type_name -> openits.rsu.v1.Bsm
-	69,  // 54: openits.rsu.v1.Messages.psm:type_name -> openits.rsu.v1.Psm
-	72,  // 55: openits.rsu.v1.Messages.srm_ssm:type_name -> openits.rsu.v1.SrmSsm
-	79,  // 56: openits.rsu.v1.Messages.message_stats:type_name -> openits.rsu.v1.MessageStats
-	81,  // 57: openits.rsu.v1.Messages.message_errors:type_name -> openits.rsu.v1.MessageErrors
-	51,  // 58: openits.rsu.v1.Spat.config:type_name -> openits.rsu.v1.SpatConfig
-	53,  // 59: openits.rsu.v1.Spat.state:type_name -> openits.rsu.v1.SpatState
-	52,  // 60: openits.rsu.v1.SpatConfig.intersection:type_name -> openits.rsu.v1.SpatConfigIntersection
-	94,  // 61: openits.rsu.v1.SpatState.last_broadcast:type_name -> google.protobuf.Timestamp
-	55,  // 62: openits.rsu.v1.Map.config:type_name -> openits.rsu.v1.MapConfig
-	57,  // 63: openits.rsu.v1.Map.state:type_name -> openits.rsu.v1.MapState
-	56,  // 64: openits.rsu.v1.MapConfig.intersection:type_name -> openits.rsu.v1.MapConfigIntersection
-	58,  // 65: openits.rsu.v1.MapState.intersection:type_name -> openits.rsu.v1.MapStateIntersection
-	60,  // 66: openits.rsu.v1.Tim.config:type_name -> openits.rsu.v1.TimConfig
-	61,  // 67: openits.rsu.v1.Tim.active:type_name -> openits.rsu.v1.Active
-	62,  // 68: openits.rsu.v1.Active.message:type_name -> openits.rsu.v1.Message
-	63,  // 69: openits.rsu.v1.Message.config:type_name -> openits.rsu.v1.MessageConfig
-	65,  // 70: openits.rsu.v1.Message.state:type_name -> openits.rsu.v1.MessageState
-	94,  // 71: openits.rsu.v1.MessageConfig.start_time:type_name -> google.protobuf.Timestamp
-	94,  // 72: openits.rsu.v1.MessageConfig.end_time:type_name -> google.protobuf.Timestamp
-	64,  // 73: openits.rsu.v1.MessageConfig.region:type_name -> openits.rsu.v1.Region
-	94,  // 74: openits.rsu.v1.MessageState.last_broadcast:type_name -> google.protobuf.Timestamp
-	67,  // 75: openits.rsu.v1.Bsm.config:type_name -> openits.rsu.v1.BsmConfig
-	68,  // 76: openits.rsu.v1.Bsm.state:type_name -> openits.rsu.v1.BsmState
-	94,  // 77: openits.rsu.v1.BsmState.last_received:type_name -> google.protobuf.Timestamp
-	70,  // 78: openits.rsu.v1.Psm.config:type_name -> openits.rsu.v1.PsmConfig
-	71,  // 79: openits.rsu.v1.Psm.state:type_name -> openits.rsu.v1.PsmState
-	94,  // 80: openits.rsu.v1.PsmState.last_received:type_name -> google.protobuf.Timestamp
-	73,  // 81: openits.rsu.v1.SrmSsm.config:type_name -> openits.rsu.v1.SrmSsmConfig
-	74,  // 82: openits.rsu.v1.SrmSsm.state:type_name -> openits.rsu.v1.SrmSsmState
-	75,  // 83: openits.rsu.v1.SrmSsm.active_requests:type_name -> openits.rsu.v1.ActiveRequests
-	77,  // 84: openits.rsu.v1.SrmSsm.decisions:type_name -> openits.rsu.v1.Decisions
-	7,   // 85: openits.rsu.v1.SrmSsmConfig.grant_authority:type_name -> openits.rsu.v1.GrantAuthority
-	76,  // 86: openits.rsu.v1.ActiveRequests.request:type_name -> openits.rsu.v1.Request
-	94,  // 87: openits.rsu.v1.Request.received_at:type_name -> google.protobuf.Timestamp
-	8,   // 88: openits.rsu.v1.Request.status:type_name -> openits.rsu.v1.Status
-	9,   // 89: openits.rsu.v1.Request.decision_authority:type_name -> openits.rsu.v1.DecisionAuthority
-	78,  // 90: openits.rsu.v1.Decisions.decision:type_name -> openits.rsu.v1.Decision
-	10,  // 91: openits.rsu.v1.Decision.action:type_name -> openits.rsu.v1.Action
-	80,  // 92: openits.rsu.v1.MessageStats.per_message_type:type_name -> openits.rsu.v1.PerMessageType
-	82,  // 93: openits.rsu.v1.MessageErrors.security:type_name -> openits.rsu.v1.MessageErrorsSecurity
-	83,  // 94: openits.rsu.v1.MessageErrors.drops:type_name -> openits.rsu.v1.Drops
-	85,  // 95: openits.rsu.v1.RsuSecurity.config:type_name -> openits.rsu.v1.RsuSecurityConfig
-	87,  // 96: openits.rsu.v1.RsuSecurity.state:type_name -> openits.rsu.v1.RsuSecurityState
-	89,  // 97: openits.rsu.v1.RsuSecurity.certificates:type_name -> openits.rsu.v1.Certificates
-	86,  // 98: openits.rsu.v1.RsuSecurityConfig.misbehavior_reporting:type_name -> openits.rsu.v1.RsuSecurityConfigMisbehaviorReporting
-	94,  // 99: openits.rsu.v1.RsuSecurityState.last_scms_contact:type_name -> google.protobuf.Timestamp
-	11,  // 100: openits.rsu.v1.RsuSecurityState.enrollment_status:type_name -> openits.rsu.v1.EnrollmentStatus
-	94,  // 101: openits.rsu.v1.RsuSecurityState.earliest_cert_expiry:type_name -> google.protobuf.Timestamp
-	94,  // 102: openits.rsu.v1.RsuSecurityState.last_cert_download:type_name -> google.protobuf.Timestamp
-	94,  // 103: openits.rsu.v1.RsuSecurityState.last_crl_update:type_name -> google.protobuf.Timestamp
-	94,  // 104: openits.rsu.v1.RsuSecurityState.next_crl_due:type_name -> google.protobuf.Timestamp
-	88,  // 105: openits.rsu.v1.RsuSecurityState.misbehavior_reporting:type_name -> openits.rsu.v1.RsuSecurityStateMisbehaviorReporting
-	94,  // 106: openits.rsu.v1.RsuSecurityStateMisbehaviorReporting.last_report_sent:type_name -> google.protobuf.Timestamp
-	90,  // 107: openits.rsu.v1.Certificates.certificate:type_name -> openits.rsu.v1.Certificate
-	91,  // 108: openits.rsu.v1.Certificate.state:type_name -> openits.rsu.v1.CertificateState
-	12,  // 109: openits.rsu.v1.CertificateState.type:type_name -> openits.rsu.v1.Type
-	94,  // 110: openits.rsu.v1.CertificateState.valid_from:type_name -> google.protobuf.Timestamp
-	94,  // 111: openits.rsu.v1.CertificateState.valid_until:type_name -> google.protobuf.Timestamp
-	92,  // 112: openits.rsu.v1.CertificateState.permissions:type_name -> openits.rsu.v1.Permissions
-	93,  // 113: openits.rsu.v1.CertificateState.geographic_validity:type_name -> openits.rsu.v1.GeographicValidity
-	13,  // 114: openits.rsu.v1.GeographicValidity.region_type:type_name -> openits.rsu.v1.RegionType
-	115, // [115:115] is the sub-list for method output_type
-	115, // [115:115] is the sub-list for method input_type
-	115, // [115:115] is the sub-list for extension type_name
-	115, // [115:115] is the sub-list for extension extendee
-	0,   // [0:115] is the sub-list for field type_name
+	19,  // 0: openits.rsu.v1.Rsu.config:type_name -> openits.rsu.v1.RsuConfig
+	21,  // 1: openits.rsu.v1.Rsu.state:type_name -> openits.rsu.v1.RsuState
+	23,  // 2: openits.rsu.v1.Rsu.operating:type_name -> openits.rsu.v1.Operating
+	26,  // 3: openits.rsu.v1.Rsu.gnss:type_name -> openits.rsu.v1.Gnss
+	28,  // 4: openits.rsu.v1.Rsu.store_forward:type_name -> openits.rsu.v1.StoreForward
+	31,  // 5: openits.rsu.v1.Rsu.diagnostics:type_name -> openits.rsu.v1.Diagnostics
+	51,  // 6: openits.rsu.v1.Rsu.system:type_name -> openits.rsu.v1.System
+	53,  // 7: openits.rsu.v1.Rsu.faults:type_name -> openits.rsu.v1.Faults
+	55,  // 8: openits.rsu.v1.Rsu.channels:type_name -> openits.rsu.v1.Channels
+	60,  // 9: openits.rsu.v1.Rsu.messages:type_name -> openits.rsu.v1.Messages
+	102, // 10: openits.rsu.v1.Rsu.security:type_name -> openits.rsu.v1.RsuSecurity
+	113, // 11: openits.rsu.v1.RsuConfig.install_date:type_name -> google.protobuf.Timestamp
+	20,  // 12: openits.rsu.v1.RsuConfig.linear_reference:type_name -> openits.rsu.v1.RsuConfigLinearReference
+	113, // 13: openits.rsu.v1.RsuState.install_date:type_name -> google.protobuf.Timestamp
+	22,  // 14: openits.rsu.v1.RsuState.linear_reference:type_name -> openits.rsu.v1.RsuStateLinearReference
+	24,  // 15: openits.rsu.v1.Operating.config:type_name -> openits.rsu.v1.OperatingConfig
+	25,  // 16: openits.rsu.v1.Operating.state:type_name -> openits.rsu.v1.OperatingState
+	0,   // 17: openits.rsu.v1.OperatingConfig.configured_time_source:type_name -> openits.rsu.v1.TimeSource
+	27,  // 18: openits.rsu.v1.Gnss.surveyed_position:type_name -> openits.rsu.v1.SurveyedPosition
+	29,  // 19: openits.rsu.v1.StoreForward.config:type_name -> openits.rsu.v1.StoreForwardConfig
+	30,  // 20: openits.rsu.v1.StoreForward.state:type_name -> openits.rsu.v1.StoreForwardState
+	32,  // 21: openits.rsu.v1.Diagnostics.radio:type_name -> openits.rsu.v1.Radio
+	33,  // 22: openits.rsu.v1.Diagnostics.spat_sync:type_name -> openits.rsu.v1.SpatSync
+	34,  // 23: openits.rsu.v1.Diagnostics.resources:type_name -> openits.rsu.v1.Resources
+	1,   // 24: openits.rsu.v1.Diagnostics.gps_status:type_name -> openits.rsu.v1.OpenitsRsuGpsFixStatus
+	0,   // 25: openits.rsu.v1.Diagnostics.time_source:type_name -> openits.rsu.v1.TimeSource
+	38,  // 26: openits.rsu.v1.Diagnostics.backhaul_cellular:type_name -> openits.rsu.v1.BackhaulCellular
+	113, // 27: openits.rsu.v1.Diagnostics.last_restart_time:type_name -> google.protobuf.Timestamp
+	39,  // 28: openits.rsu.v1.Diagnostics.logs:type_name -> openits.rsu.v1.Logs
+	43,  // 29: openits.rsu.v1.Diagnostics.process:type_name -> openits.rsu.v1.Process
+	44,  // 30: openits.rsu.v1.Diagnostics.temperature_sensor:type_name -> openits.rsu.v1.TemperatureSensor
+	45,  // 31: openits.rsu.v1.Diagnostics.vehicle_analytics:type_name -> openits.rsu.v1.VehicleAnalytics
+	113, // 32: openits.rsu.v1.Radio.last_successful_tx:type_name -> google.protobuf.Timestamp
+	113, // 33: openits.rsu.v1.SpatSync.last_asc_update:type_name -> google.protobuf.Timestamp
+	35,  // 34: openits.rsu.v1.Resources.cpu:type_name -> openits.rsu.v1.Cpu
+	36,  // 35: openits.rsu.v1.Resources.disk:type_name -> openits.rsu.v1.Disk
+	37,  // 36: openits.rsu.v1.Resources.memory:type_name -> openits.rsu.v1.Memory
+	2,   // 37: openits.rsu.v1.BackhaulCellular.signal_quality:type_name -> openits.rsu.v1.SignalQuality
+	40,  // 38: openits.rsu.v1.Logs.errors:type_name -> openits.rsu.v1.Errors
+	41,  // 39: openits.rsu.v1.Logs.warnings:type_name -> openits.rsu.v1.Warnings
+	42,  // 40: openits.rsu.v1.Logs.critical:type_name -> openits.rsu.v1.Critical
+	113, // 41: openits.rsu.v1.Logs.most_recent_error_time:type_name -> google.protobuf.Timestamp
+	113, // 42: openits.rsu.v1.Process.last_restart:type_name -> google.protobuf.Timestamp
+	46,  // 43: openits.rsu.v1.VehicleAnalytics.sample_basis:type_name -> openits.rsu.v1.SampleBasis
+	47,  // 44: openits.rsu.v1.VehicleAnalytics.counts:type_name -> openits.rsu.v1.Counts
+	48,  // 45: openits.rsu.v1.VehicleAnalytics.speed_metrics:type_name -> openits.rsu.v1.SpeedMetrics
+	49,  // 46: openits.rsu.v1.VehicleAnalytics.vehicle_class_breakdown:type_name -> openits.rsu.v1.VehicleClassBreakdown
+	50,  // 47: openits.rsu.v1.VehicleAnalytics.approach:type_name -> openits.rsu.v1.Approach
+	3,   // 48: openits.rsu.v1.SampleBasis.window_type:type_name -> openits.rsu.v1.WindowType
+	113, // 49: openits.rsu.v1.SampleBasis.computed_at:type_name -> google.protobuf.Timestamp
+	4,   // 50: openits.rsu.v1.Counts.count_basis:type_name -> openits.rsu.v1.CountBasis
+	52,  // 51: openits.rsu.v1.System.comm_link:type_name -> openits.rsu.v1.CommLink
+	113, // 52: openits.rsu.v1.CommLink.last_successful:type_name -> google.protobuf.Timestamp
+	54,  // 53: openits.rsu.v1.Faults.fault:type_name -> openits.rsu.v1.Fault
+	113, // 54: openits.rsu.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	5,   // 55: openits.rsu.v1.Fault.severity:type_name -> openits.rsu.v1.FaultSeverity
+	56,  // 56: openits.rsu.v1.Channels.channel:type_name -> openits.rsu.v1.Channel
+	57,  // 57: openits.rsu.v1.Channel.config:type_name -> openits.rsu.v1.ChannelConfig
+	59,  // 58: openits.rsu.v1.Channel.state:type_name -> openits.rsu.v1.ChannelState
+	58,  // 59: openits.rsu.v1.ChannelConfig.dcc:type_name -> openits.rsu.v1.Dcc
+	6,   // 60: openits.rsu.v1.Dcc.policy:type_name -> openits.rsu.v1.Policy
+	61,  // 61: openits.rsu.v1.Messages.spat:type_name -> openits.rsu.v1.Spat
+	66,  // 62: openits.rsu.v1.Messages.map:type_name -> openits.rsu.v1.Map
+	72,  // 63: openits.rsu.v1.Messages.tim:type_name -> openits.rsu.v1.Tim
+	79,  // 64: openits.rsu.v1.Messages.bsm:type_name -> openits.rsu.v1.Bsm
+	82,  // 65: openits.rsu.v1.Messages.psm:type_name -> openits.rsu.v1.Psm
+	87,  // 66: openits.rsu.v1.Messages.rtcm:type_name -> openits.rsu.v1.Rtcm
+	90,  // 67: openits.rsu.v1.Messages.srm_ssm:type_name -> openits.rsu.v1.SrmSsm
+	97,  // 68: openits.rsu.v1.Messages.message_stats:type_name -> openits.rsu.v1.MessageStats
+	99,  // 69: openits.rsu.v1.Messages.message_errors:type_name -> openits.rsu.v1.MessageErrors
+	62,  // 70: openits.rsu.v1.Spat.config:type_name -> openits.rsu.v1.SpatConfig
+	65,  // 71: openits.rsu.v1.Spat.state:type_name -> openits.rsu.v1.SpatState
+	7,   // 72: openits.rsu.v1.SpatConfig.source_mode:type_name -> openits.rsu.v1.SourceMode
+	63,  // 73: openits.rsu.v1.SpatConfig.ingest:type_name -> openits.rsu.v1.SpatConfigIngest
+	64,  // 74: openits.rsu.v1.SpatConfig.intersection:type_name -> openits.rsu.v1.SpatConfigIntersection
+	8,   // 75: openits.rsu.v1.SpatConfigIngest.transport:type_name -> openits.rsu.v1.Transport
+	113, // 76: openits.rsu.v1.SpatState.last_broadcast:type_name -> google.protobuf.Timestamp
+	67,  // 77: openits.rsu.v1.Map.config:type_name -> openits.rsu.v1.MapConfig
+	70,  // 78: openits.rsu.v1.Map.state:type_name -> openits.rsu.v1.MapState
+	68,  // 79: openits.rsu.v1.MapConfig.intersection:type_name -> openits.rsu.v1.MapConfigIntersection
+	7,   // 80: openits.rsu.v1.MapConfig.source_mode:type_name -> openits.rsu.v1.SourceMode
+	69,  // 81: openits.rsu.v1.MapConfig.ingest:type_name -> openits.rsu.v1.MapConfigIngest
+	8,   // 82: openits.rsu.v1.MapConfigIngest.transport:type_name -> openits.rsu.v1.Transport
+	71,  // 83: openits.rsu.v1.MapState.intersection:type_name -> openits.rsu.v1.MapStateIntersection
+	73,  // 84: openits.rsu.v1.Tim.config:type_name -> openits.rsu.v1.TimConfig
+	74,  // 85: openits.rsu.v1.Tim.active:type_name -> openits.rsu.v1.Active
+	75,  // 86: openits.rsu.v1.Active.message:type_name -> openits.rsu.v1.Message
+	76,  // 87: openits.rsu.v1.Message.config:type_name -> openits.rsu.v1.MessageConfig
+	78,  // 88: openits.rsu.v1.Message.state:type_name -> openits.rsu.v1.MessageState
+	113, // 89: openits.rsu.v1.MessageConfig.start_time:type_name -> google.protobuf.Timestamp
+	77,  // 90: openits.rsu.v1.MessageConfig.region:type_name -> openits.rsu.v1.Region
+	113, // 91: openits.rsu.v1.MessageState.last_broadcast:type_name -> google.protobuf.Timestamp
+	80,  // 92: openits.rsu.v1.Bsm.config:type_name -> openits.rsu.v1.BsmConfig
+	81,  // 93: openits.rsu.v1.Bsm.state:type_name -> openits.rsu.v1.BsmState
+	9,   // 94: openits.rsu.v1.BsmConfig.forward_protocol:type_name -> openits.rsu.v1.ForwardProtocol
+	10,  // 95: openits.rsu.v1.BsmConfig.forward_format:type_name -> openits.rsu.v1.ForwardFormat
+	113, // 96: openits.rsu.v1.BsmState.last_received:type_name -> google.protobuf.Timestamp
+	83,  // 97: openits.rsu.v1.Psm.config:type_name -> openits.rsu.v1.PsmConfig
+	84,  // 98: openits.rsu.v1.Psm.state:type_name -> openits.rsu.v1.PsmState
+	85,  // 99: openits.rsu.v1.Psm.broadcast_config:type_name -> openits.rsu.v1.BroadcastConfig
+	86,  // 100: openits.rsu.v1.Psm.broadcast_state:type_name -> openits.rsu.v1.BroadcastState
+	113, // 101: openits.rsu.v1.PsmState.last_received:type_name -> google.protobuf.Timestamp
+	113, // 102: openits.rsu.v1.BroadcastState.last_broadcast:type_name -> google.protobuf.Timestamp
+	88,  // 103: openits.rsu.v1.Rtcm.config:type_name -> openits.rsu.v1.RtcmConfig
+	89,  // 104: openits.rsu.v1.Rtcm.state:type_name -> openits.rsu.v1.RtcmState
+	113, // 105: openits.rsu.v1.RtcmState.last_broadcast:type_name -> google.protobuf.Timestamp
+	91,  // 106: openits.rsu.v1.SrmSsm.config:type_name -> openits.rsu.v1.SrmSsmConfig
+	92,  // 107: openits.rsu.v1.SrmSsm.state:type_name -> openits.rsu.v1.SrmSsmState
+	93,  // 108: openits.rsu.v1.SrmSsm.active_requests:type_name -> openits.rsu.v1.ActiveRequests
+	95,  // 109: openits.rsu.v1.SrmSsm.decisions:type_name -> openits.rsu.v1.Decisions
+	11,  // 110: openits.rsu.v1.SrmSsmConfig.grant_authority:type_name -> openits.rsu.v1.GrantAuthority
+	94,  // 111: openits.rsu.v1.ActiveRequests.request:type_name -> openits.rsu.v1.Request
+	113, // 112: openits.rsu.v1.Request.received_at:type_name -> google.protobuf.Timestamp
+	12,  // 113: openits.rsu.v1.Request.status:type_name -> openits.rsu.v1.OpenitsRsuSrmRequestStatus
+	13,  // 114: openits.rsu.v1.Request.decision_authority:type_name -> openits.rsu.v1.OpenitsRsuDecisionAuthority
+	96,  // 115: openits.rsu.v1.Decisions.decision:type_name -> openits.rsu.v1.Decision
+	14,  // 116: openits.rsu.v1.Decision.action:type_name -> openits.rsu.v1.Action
+	98,  // 117: openits.rsu.v1.MessageStats.per_message_type:type_name -> openits.rsu.v1.PerMessageType
+	100, // 118: openits.rsu.v1.MessageErrors.security:type_name -> openits.rsu.v1.MessageErrorsSecurity
+	101, // 119: openits.rsu.v1.MessageErrors.drops:type_name -> openits.rsu.v1.Drops
+	103, // 120: openits.rsu.v1.RsuSecurity.config:type_name -> openits.rsu.v1.RsuSecurityConfig
+	105, // 121: openits.rsu.v1.RsuSecurity.state:type_name -> openits.rsu.v1.RsuSecurityState
+	107, // 122: openits.rsu.v1.RsuSecurity.certificates:type_name -> openits.rsu.v1.Certificates
+	104, // 123: openits.rsu.v1.RsuSecurityConfig.misbehavior_reporting:type_name -> openits.rsu.v1.RsuSecurityConfigMisbehaviorReporting
+	113, // 124: openits.rsu.v1.RsuSecurityState.last_scms_contact:type_name -> google.protobuf.Timestamp
+	15,  // 125: openits.rsu.v1.RsuSecurityState.enrollment_status:type_name -> openits.rsu.v1.EnrollmentStatus
+	113, // 126: openits.rsu.v1.RsuSecurityState.earliest_cert_expiry:type_name -> google.protobuf.Timestamp
+	113, // 127: openits.rsu.v1.RsuSecurityState.last_cert_download:type_name -> google.protobuf.Timestamp
+	113, // 128: openits.rsu.v1.RsuSecurityState.last_crl_update:type_name -> google.protobuf.Timestamp
+	113, // 129: openits.rsu.v1.RsuSecurityState.next_crl_due:type_name -> google.protobuf.Timestamp
+	113, // 130: openits.rsu.v1.RsuSecurityState.policy_files_last_updated:type_name -> google.protobuf.Timestamp
+	106, // 131: openits.rsu.v1.RsuSecurityState.misbehavior_reporting:type_name -> openits.rsu.v1.RsuSecurityStateMisbehaviorReporting
+	113, // 132: openits.rsu.v1.RsuSecurityStateMisbehaviorReporting.last_report_sent:type_name -> google.protobuf.Timestamp
+	108, // 133: openits.rsu.v1.Certificates.certificate:type_name -> openits.rsu.v1.Certificate
+	109, // 134: openits.rsu.v1.Certificate.state:type_name -> openits.rsu.v1.CertificateState
+	16,  // 135: openits.rsu.v1.CertificateState.type:type_name -> openits.rsu.v1.Type
+	113, // 136: openits.rsu.v1.CertificateState.valid_from:type_name -> google.protobuf.Timestamp
+	113, // 137: openits.rsu.v1.CertificateState.valid_until:type_name -> google.protobuf.Timestamp
+	110, // 138: openits.rsu.v1.CertificateState.permissions:type_name -> openits.rsu.v1.Permissions
+	111, // 139: openits.rsu.v1.CertificateState.geographic_validity:type_name -> openits.rsu.v1.GeographicValidity
+	17,  // 140: openits.rsu.v1.GeographicValidity.region_type:type_name -> openits.rsu.v1.RegionType
+	112, // 141: openits.rsu.v1.GeographicValidity.circular_region:type_name -> openits.rsu.v1.CircularRegion
+	142, // [142:142] is the sub-list for method output_type
+	142, // [142:142] is the sub-list for method input_type
+	142, // [142:142] is the sub-list for extension type_name
+	142, // [142:142] is the sub-list for extension extendee
+	0,   // [0:142] is the sub-list for field type_name
 }
 
 func init() { file_openits_rsu_v1_state_proto_init() }
@@ -7718,8 +9251,8 @@ func file_openits_rsu_v1_state_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_rsu_v1_state_proto_rawDesc), len(file_openits_rsu_v1_state_proto_rawDesc)),
-			NumEnums:      14,
-			NumMessages:   80,
+			NumEnums:      18,
+			NumMessages:   95,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

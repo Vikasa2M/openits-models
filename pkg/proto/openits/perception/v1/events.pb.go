@@ -179,6 +179,7 @@ type ZoneIncidentDetected struct {
 	Type           string                 `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
 	Severity       IncidentSeverity       `protobuf:"varint,4,opt,name=severity,proto3,enum=openits.perception.v1.IncidentSeverity" json:"severity,omitempty"`
 	TrackId        uint32                 `protobuf:"varint,5,opt,name=track_id,json=trackId,proto3" json:"track_id,omitempty"`
+	TrackEpoch     uint32                 `protobuf:"varint,16,opt,name=track_epoch,json=trackEpoch,proto3" json:"track_epoch,omitempty"`
 	ObjectClass    string                 `protobuf:"bytes,6,opt,name=object_class,json=objectClass,proto3" json:"object_class,omitempty"`
 	SpeedKmh       string                 `protobuf:"bytes,9,opt,name=speed_kmh,json=speedKmh,proto3" json:"speed_kmh,omitempty"`
 	Confidence     uint32                 `protobuf:"varint,10,opt,name=confidence,proto3" json:"confidence,omitempty"`
@@ -265,6 +266,13 @@ func (x *ZoneIncidentDetected) GetTrackId() uint32 {
 	return 0
 }
 
+func (x *ZoneIncidentDetected) GetTrackEpoch() uint32 {
+	if x != nil {
+		return x.TrackEpoch
+	}
+	return 0
+}
+
 func (x *ZoneIncidentDetected) GetObjectClass() string {
 	if x != nil {
 		return x.ObjectClass
@@ -335,6 +343,130 @@ func (x *ZoneIncidentDetected) GetSourceDeviceId() string {
 	return ""
 }
 
+type ZoneIncidentUpdated struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
+	IncidentId     string                 `protobuf:"bytes,1,opt,name=incident_id,json=incidentId,proto3" json:"incident_id,omitempty"`
+	ZoneId         string                 `protobuf:"bytes,2,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Severity       IncidentSeverity       `protobuf:"varint,3,opt,name=severity,proto3,enum=openits.perception.v1.IncidentSeverity" json:"severity,omitempty"`
+	SpeedKmh       string                 `protobuf:"bytes,4,opt,name=speed_kmh,json=speedKmh,proto3" json:"speed_kmh,omitempty"`
+	Confidence     uint32                 `protobuf:"varint,5,opt,name=confidence,proto3" json:"confidence,omitempty"`
+	ObservedBy     string                 `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
+	Owner          string                 `protobuf:"bytes,8,opt,name=owner,proto3" json:"owner,omitempty"`
+	Sequence       uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SourceDeviceId string                 `protobuf:"bytes,10,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ZoneIncidentUpdated) Reset() {
+	*x = ZoneIncidentUpdated{}
+	mi := &file_openits_perception_v1_events_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ZoneIncidentUpdated) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ZoneIncidentUpdated) ProtoMessage() {}
+
+func (x *ZoneIncidentUpdated) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_perception_v1_events_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ZoneIncidentUpdated.ProtoReflect.Descriptor instead.
+func (*ZoneIncidentUpdated) Descriptor() ([]byte, []int) {
+	return file_openits_perception_v1_events_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *ZoneIncidentUpdated) GetKind() string {
+	if x != nil {
+		return x.Kind
+	}
+	return ""
+}
+
+func (x *ZoneIncidentUpdated) GetIncidentId() string {
+	if x != nil {
+		return x.IncidentId
+	}
+	return ""
+}
+
+func (x *ZoneIncidentUpdated) GetZoneId() string {
+	if x != nil {
+		return x.ZoneId
+	}
+	return ""
+}
+
+func (x *ZoneIncidentUpdated) GetSeverity() IncidentSeverity {
+	if x != nil {
+		return x.Severity
+	}
+	return IncidentSeverity_INCIDENT_SEVERITY_MINOR
+}
+
+func (x *ZoneIncidentUpdated) GetSpeedKmh() string {
+	if x != nil {
+		return x.SpeedKmh
+	}
+	return ""
+}
+
+func (x *ZoneIncidentUpdated) GetConfidence() uint32 {
+	if x != nil {
+		return x.Confidence
+	}
+	return 0
+}
+
+func (x *ZoneIncidentUpdated) GetObservedBy() string {
+	if x != nil {
+		return x.ObservedBy
+	}
+	return ""
+}
+
+func (x *ZoneIncidentUpdated) GetOccurredAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.OccurredAt
+	}
+	return nil
+}
+
+func (x *ZoneIncidentUpdated) GetOwner() string {
+	if x != nil {
+		return x.Owner
+	}
+	return ""
+}
+
+func (x *ZoneIncidentUpdated) GetSequence() uint64 {
+	if x != nil {
+		return x.Sequence
+	}
+	return 0
+}
+
+func (x *ZoneIncidentUpdated) GetSourceDeviceId() string {
+	if x != nil {
+		return x.SourceDeviceId
+	}
+	return ""
+}
+
 type ZoneIntervalReport struct {
 	state          protoimpl.MessageState    `protogen:"open.v1"`
 	Kind           string                    `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
@@ -350,7 +482,7 @@ type ZoneIntervalReport struct {
 
 func (x *ZoneIntervalReport) Reset() {
 	*x = ZoneIntervalReport{}
-	mi := &file_openits_perception_v1_events_proto_msgTypes[2]
+	mi := &file_openits_perception_v1_events_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -362,7 +494,7 @@ func (x *ZoneIntervalReport) String() string {
 func (*ZoneIntervalReport) ProtoMessage() {}
 
 func (x *ZoneIntervalReport) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_perception_v1_events_proto_msgTypes[2]
+	mi := &file_openits_perception_v1_events_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -375,7 +507,7 @@ func (x *ZoneIntervalReport) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ZoneIntervalReport.ProtoReflect.Descriptor instead.
 func (*ZoneIntervalReport) Descriptor() ([]byte, []int) {
-	return file_openits_perception_v1_events_proto_rawDescGZIP(), []int{2}
+	return file_openits_perception_v1_events_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *ZoneIntervalReport) GetKind() string {
@@ -443,7 +575,7 @@ type ZoneIntervalReportZone struct {
 
 func (x *ZoneIntervalReportZone) Reset() {
 	*x = ZoneIntervalReportZone{}
-	mi := &file_openits_perception_v1_events_proto_msgTypes[3]
+	mi := &file_openits_perception_v1_events_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -455,7 +587,7 @@ func (x *ZoneIntervalReportZone) String() string {
 func (*ZoneIntervalReportZone) ProtoMessage() {}
 
 func (x *ZoneIntervalReportZone) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_perception_v1_events_proto_msgTypes[3]
+	mi := &file_openits_perception_v1_events_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -468,7 +600,7 @@ func (x *ZoneIntervalReportZone) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ZoneIntervalReportZone.ProtoReflect.Descriptor instead.
 func (*ZoneIntervalReportZone) Descriptor() ([]byte, []int) {
-	return file_openits_perception_v1_events_proto_rawDescGZIP(), []int{3}
+	return file_openits_perception_v1_events_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ZoneIntervalReportZone) GetZoneId() string {
@@ -537,7 +669,7 @@ type ClassCount struct {
 
 func (x *ClassCount) Reset() {
 	*x = ClassCount{}
-	mi := &file_openits_perception_v1_events_proto_msgTypes[4]
+	mi := &file_openits_perception_v1_events_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -549,7 +681,7 @@ func (x *ClassCount) String() string {
 func (*ClassCount) ProtoMessage() {}
 
 func (x *ClassCount) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_perception_v1_events_proto_msgTypes[4]
+	mi := &file_openits_perception_v1_events_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -562,7 +694,7 @@ func (x *ClassCount) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ClassCount.ProtoReflect.Descriptor instead.
 func (*ClassCount) Descriptor() ([]byte, []int) {
-	return file_openits_perception_v1_events_proto_rawDescGZIP(), []int{4}
+	return file_openits_perception_v1_events_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ClassCount) GetClass() string {
@@ -595,7 +727,7 @@ const file_openits_perception_v1_events_proto_rawDesc = "" +
 	"occurredAt\x12\x14\n" +
 	"\x05owner\x18\x06 \x01(\tR\x05owner\x12\x1a\n" +
 	"\bsequence\x18\a \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceId\"\xac\x04\n" +
+	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceId\"\xcd\x04\n" +
 	"\x14ZoneIncidentDetected\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x1f\n" +
 	"\vincident_id\x18\x01 \x01(\tR\n" +
@@ -603,7 +735,9 @@ const file_openits_perception_v1_events_proto_rawDesc = "" +
 	"\azone_id\x18\x02 \x01(\tR\x06zoneId\x12\x12\n" +
 	"\x04type\x18\x03 \x01(\tR\x04type\x12C\n" +
 	"\bseverity\x18\x04 \x01(\x0e2'.openits.perception.v1.IncidentSeverityR\bseverity\x12\x19\n" +
-	"\btrack_id\x18\x05 \x01(\rR\atrackId\x12!\n" +
+	"\btrack_id\x18\x05 \x01(\rR\atrackId\x12\x1f\n" +
+	"\vtrack_epoch\x18\x10 \x01(\rR\n" +
+	"trackEpoch\x12!\n" +
 	"\fobject_class\x18\x06 \x01(\tR\vobjectClass\x12\x1b\n" +
 	"\tspeed_kmh\x18\t \x01(\tR\bspeedKmh\x12\x1e\n" +
 	"\n" +
@@ -618,7 +752,25 @@ const file_openits_perception_v1_events_proto_rawDesc = "" +
 	"occurredAt\x12\x14\n" +
 	"\x05owner\x18\r \x01(\tR\x05owner\x12\x1a\n" +
 	"\bsequence\x18\x0e \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\x0f \x01(\tR\x0esourceDeviceId\"\xa5\x02\n" +
+	"\x10source_device_id\x18\x0f \x01(\tR\x0esourceDeviceId\"\x9f\x03\n" +
+	"\x13ZoneIncidentUpdated\x12\x12\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12\x1f\n" +
+	"\vincident_id\x18\x01 \x01(\tR\n" +
+	"incidentId\x12\x17\n" +
+	"\azone_id\x18\x02 \x01(\tR\x06zoneId\x12C\n" +
+	"\bseverity\x18\x03 \x01(\x0e2'.openits.perception.v1.IncidentSeverityR\bseverity\x12\x1b\n" +
+	"\tspeed_kmh\x18\x04 \x01(\tR\bspeedKmh\x12\x1e\n" +
+	"\n" +
+	"confidence\x18\x05 \x01(\rR\n" +
+	"confidence\x12\x1f\n" +
+	"\vobserved_by\x18\x06 \x01(\tR\n" +
+	"observedBy\x12;\n" +
+	"\voccurred_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"occurredAt\x12\x14\n" +
+	"\x05owner\x18\b \x01(\tR\x05owner\x12\x1a\n" +
+	"\bsequence\x18\t \x01(\x04R\bsequence\x12(\n" +
+	"\x10source_device_id\x18\n" +
+	" \x01(\tR\x0esourceDeviceId\"\xa5\x02\n" +
 	"\x12ZoneIntervalReport\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12A\n" +
 	"\x04zone\x18\x01 \x03(\v2-.openits.perception.v1.ZoneIntervalReportZoneR\x04zone\x12\x1f\n" +
@@ -661,29 +813,32 @@ func file_openits_perception_v1_events_proto_rawDescGZIP() []byte {
 }
 
 var file_openits_perception_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_openits_perception_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_openits_perception_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_openits_perception_v1_events_proto_goTypes = []any{
 	(IncidentSeverity)(0),          // 0: openits.perception.v1.IncidentSeverity
 	(*ZoneIncidentCleared)(nil),    // 1: openits.perception.v1.ZoneIncidentCleared
 	(*ZoneIncidentDetected)(nil),   // 2: openits.perception.v1.ZoneIncidentDetected
-	(*ZoneIntervalReport)(nil),     // 3: openits.perception.v1.ZoneIntervalReport
-	(*ZoneIntervalReportZone)(nil), // 4: openits.perception.v1.ZoneIntervalReportZone
-	(*ClassCount)(nil),             // 5: openits.perception.v1.ClassCount
-	(*timestamppb.Timestamp)(nil),  // 6: google.protobuf.Timestamp
+	(*ZoneIncidentUpdated)(nil),    // 3: openits.perception.v1.ZoneIncidentUpdated
+	(*ZoneIntervalReport)(nil),     // 4: openits.perception.v1.ZoneIntervalReport
+	(*ZoneIntervalReportZone)(nil), // 5: openits.perception.v1.ZoneIntervalReportZone
+	(*ClassCount)(nil),             // 6: openits.perception.v1.ClassCount
+	(*timestamppb.Timestamp)(nil),  // 7: google.protobuf.Timestamp
 }
 var file_openits_perception_v1_events_proto_depIdxs = []int32{
-	6, // 0: openits.perception.v1.ZoneIncidentCleared.occurred_at:type_name -> google.protobuf.Timestamp
+	7, // 0: openits.perception.v1.ZoneIncidentCleared.occurred_at:type_name -> google.protobuf.Timestamp
 	0, // 1: openits.perception.v1.ZoneIncidentDetected.severity:type_name -> openits.perception.v1.IncidentSeverity
-	6, // 2: openits.perception.v1.ZoneIncidentDetected.occurred_at:type_name -> google.protobuf.Timestamp
-	4, // 3: openits.perception.v1.ZoneIntervalReport.zone:type_name -> openits.perception.v1.ZoneIntervalReportZone
-	6, // 4: openits.perception.v1.ZoneIntervalReport.occurred_at:type_name -> google.protobuf.Timestamp
-	6, // 5: openits.perception.v1.ZoneIntervalReportZone.interval_start:type_name -> google.protobuf.Timestamp
-	5, // 6: openits.perception.v1.ZoneIntervalReportZone.class_count:type_name -> openits.perception.v1.ClassCount
-	7, // [7:7] is the sub-list for method output_type
-	7, // [7:7] is the sub-list for method input_type
-	7, // [7:7] is the sub-list for extension type_name
-	7, // [7:7] is the sub-list for extension extendee
-	0, // [0:7] is the sub-list for field type_name
+	7, // 2: openits.perception.v1.ZoneIncidentDetected.occurred_at:type_name -> google.protobuf.Timestamp
+	0, // 3: openits.perception.v1.ZoneIncidentUpdated.severity:type_name -> openits.perception.v1.IncidentSeverity
+	7, // 4: openits.perception.v1.ZoneIncidentUpdated.occurred_at:type_name -> google.protobuf.Timestamp
+	5, // 5: openits.perception.v1.ZoneIntervalReport.zone:type_name -> openits.perception.v1.ZoneIntervalReportZone
+	7, // 6: openits.perception.v1.ZoneIntervalReport.occurred_at:type_name -> google.protobuf.Timestamp
+	7, // 7: openits.perception.v1.ZoneIntervalReportZone.interval_start:type_name -> google.protobuf.Timestamp
+	6, // 8: openits.perception.v1.ZoneIntervalReportZone.class_count:type_name -> openits.perception.v1.ClassCount
+	9, // [9:9] is the sub-list for method output_type
+	9, // [9:9] is the sub-list for method input_type
+	9, // [9:9] is the sub-list for extension type_name
+	9, // [9:9] is the sub-list for extension extendee
+	0, // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_openits_perception_v1_events_proto_init() }
@@ -697,7 +852,7 @@ func file_openits_perception_v1_events_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_perception_v1_events_proto_rawDesc), len(file_openits_perception_v1_events_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   5,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

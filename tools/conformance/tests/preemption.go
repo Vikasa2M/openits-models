@@ -22,7 +22,7 @@ func TestPreemption_RailTrackClearance(t *T, obs *Observation) {
 	}
 	for _, pr := range pre.Preemptor {
 		cfg := pr.GetConfig()
-		if cfg.GetType() != yangpkg.OpenitsSignalControlTypes_PreemptionType_railroad {
+		if cfg.GetType() != yangpkg.OpenitsSignalControlTypes_PreemptionType_preempt_railroad {
 			continue
 		}
 		if cfg.GetTrackClearance() == nil || cfg.GetTrackClearance().GetGreenSeconds() == 0 {

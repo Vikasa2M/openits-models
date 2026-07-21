@@ -61,7 +61,7 @@
     },
     "preempt-number": {
       "maximum": 255,
-      "minimum": 0,
+      "minimum": 1,
       "type": "integer"
     },
     "sequence": {
@@ -80,12 +80,6 @@
       "type": "string"
     },
     "type": {
-      "enum": [
-        "emergency-vehicle",
-        "none",
-        "other",
-        "railroad"
-      ],
       "type": "string"
     }
   },

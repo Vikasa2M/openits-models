@@ -154,6 +154,8 @@ func All(kind string) []TestCase {
 			TestCase{"TestRSUChannels_OperationalChannelAdvertisesMessageTypes", TestRSUChannels_OperationalChannelAdvertisesMessageTypes},
 			TestCase{"TestRSUGnss_DeviationRequiresSurveyedPosition", TestRSUGnss_DeviationRequiresSurveyedPosition},
 			TestCase{"TestRSUSrm_DecidedRequestHasAuthority", TestRSUSrm_DecidedRequestHasAuthority},
+			TestCase{"TestRSUSrm_EvpGrantRequiresSigning", TestRSUSrm_EvpGrantRequiresSigning},
+			TestCase{"TestRSUMessages_SpatIntersectionsSubsetOfMap", TestRSUMessages_SpatIntersectionsSubsetOfMap},
 			TestCase{"TestRSUCerts_AppCertHasPermissions", TestRSUCerts_AppCertHasPermissions},
 			TestCase{"TestRSUSecurity_MbrCountsConsistent", TestRSUSecurity_MbrCountsConsistent},
 			TestCase{"TestRSUTim_BroadcastingImpliesNotExpired", TestRSUTim_BroadcastingImpliesNotExpired},
@@ -296,6 +298,7 @@ func All(kind string) []TestCase {
 			// segments / lanes
 			TestCase{"TestReversibleLaneLane_GreenImpliesOpposingRedX", TestReversibleLaneLane_GreenImpliesOpposingRedX},
 			TestCase{"TestReversibleLaneLane_GateStatePresent", TestReversibleLaneLane_GateStatePresent},
+			TestCase{"TestRL_DirectionOpenGateBlocksReverse", TestRL_DirectionOpenGateBlocksReverse},
 
 			// events
 			TestCase{"TestReversibleLaneEvent_LcsConflictShape", TestReversibleLaneEvent_LcsConflictShape},
@@ -313,6 +316,9 @@ func All(kind string) []TestCase {
 			// track lifecycle
 			TestCase{"TestPerceptionTrack_LifecyclePresent", TestPerceptionTrack_LifecyclePresent},
 
+			// incident-review disposition round-trip
+			TestCase{"TestPerception_DispositionRoundTrip", TestPerception_DispositionRoundTrip},
+
 			// events
 			TestCase{"TestPerceptionEvent_IncidentDetectedShape", TestPerceptionEvent_IncidentDetectedShape},
 			TestCase{"TestPerceptionEvent_IntervalCrossedReconciles", TestPerceptionEvent_IntervalCrossedReconciles},
@@ -326,6 +332,8 @@ func All(kind string) []TestCase {
 			// PTZ
 			TestCase{"TestCctvPtz_ActivePresetIsDefined", TestCctvPtz_ActivePresetIsDefined},
 			TestCase{"TestCctvTour_RunningImpliesActiveTour", TestCctvTour_RunningImpliesActiveTour},
+			TestCase{"TestCctv_VelocityMoveRequiresVelocityConfig", TestCctv_VelocityMoveRequiresVelocityConfig},
+			TestCase{"TestCctv_OperationalStatusPresent", TestCctv_OperationalStatusPresent},
 
 			// streams
 			TestCase{"TestCctvStream_OkHealthHasBitrate", TestCctvStream_OkHealthHasBitrate},
@@ -371,12 +379,14 @@ func All(kind string) []TestCase {
 			TestCase{"TestConflictMonitor_AtLeastOnePermissive", TestConflictMonitor_AtLeastOnePermissive},
 			TestCase{"TestConflictMonitor_PermissiveResolvesChannels", TestConflictMonitor_PermissiveResolvesChannels},
 			TestCase{"TestConflictMonitor_PermissiveCanonicalOrder", TestConflictMonitor_PermissiveCanonicalOrder},
+			TestCase{"TestConflictMonitor_NoSameRingPermissive", TestConflictMonitor_NoSameRingPermissive},
 
 			// coordination
 			TestCase{"TestCoordination_ActivePlan", TestCoordination_ActivePlan},
 			TestCase{"TestCoordination_NEMADualRing", TestCoordination_NEMADualRing},
 			TestCase{"TestCoordination_BarrierAssignment", TestCoordination_BarrierAssignment},
 			TestCase{"TestCoordination_SplitsWithinCycle", TestCoordination_SplitsWithinCycle},
+			TestCase{"TestCoordination_BarrierCrossingAlignment", TestCoordination_BarrierCrossingAlignment},
 
 			// timebase
 			TestCase{"TestTimebase_ReferencesResolve", TestTimebase_ReferencesResolve},

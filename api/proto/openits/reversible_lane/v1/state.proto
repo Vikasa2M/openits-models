@@ -21,10 +21,15 @@ message ReversibleLaneConfig {
   string elevation = 3;
   uint32 heading = 4;
   string id = 5;
+  google.protobuf.Timestamp install_date = 10;
   string latitude = 6;
+  ReversibleLaneConfigLinearReference linear_reference = 11;
   string longitude = 7;
+  string maintained_by = 12;
   string name = 8;
+  string owner = 13;
   string road_reference = 9;
+  string site_id = 14;
 }
 
 enum OpenitsReversibleLaneTravelDirection {
@@ -35,6 +40,13 @@ enum OpenitsReversibleLaneTravelDirection {
   OPENITS_REVERSIBLE_LANE_TRAVEL_DIRECTION_WESTBOUND = 4;
 }
 
+message ReversibleLaneConfigLinearReference {
+  string route_designator = 1;
+  string direction = 2;
+  string measure = 3;
+  string lrs_method = 4;
+}
+
 message ReversibleLaneState {
   string elevation = 1;
   string firmware = 2;
@@ -42,13 +54,25 @@ message ReversibleLaneState {
   string hardware_version = 13;
   uint32 heading = 3;
   string id = 4;
+  google.protobuf.Timestamp install_date = 14;
   string latitude = 5;
+  ReversibleLaneStateLinearReference linear_reference = 15;
   string longitude = 6;
+  string maintained_by = 16;
   string make = 7;
   string model = 8;
   string name = 9;
+  string owner = 17;
   string road_reference = 10;
   string serial = 11;
+  string site_id = 18;
+}
+
+message ReversibleLaneStateLinearReference {
+  string route_designator = 1;
+  string direction = 2;
+  string measure = 3;
+  string lrs_method = 4;
 }
 
 message Control {
@@ -60,6 +84,8 @@ message ControlConfig {
   TargetState target_state = 7;
   OpenitsReversibleLaneTravelDirection target_direction = 8;
   uint32 transition_timeout_s = 9;
+  uint32 min_clearance_duration_s = 1;
+  uint32 min_verification_dwell_s = 2;
 }
 
 enum TargetState {
@@ -74,6 +100,7 @@ message ControlState {
   string last_command_source = 15;
   google.protobuf.Timestamp last_command_at = 16;
   bool changeover_permitted = 19;
+  bool direction_open_permitted = 1;
   repeated string blocking_interlocks = 20;
   Transition transition = 17;
 }
@@ -169,6 +196,12 @@ message InterlockConfig {
   string kind = 99;
   string name = 2;
   bool required = 3;
+  EvaluationPoint evaluation_point = 4;
+}
+
+enum EvaluationPoint {
+  EVALUATION_POINT_CHANGEOVER_START = 0;
+  EVALUATION_POINT_DIRECTION_OPEN = 1;
 }
 
 message InterlockState {
@@ -181,6 +214,7 @@ message Faults {
 
 message Fault {
   string category = 1;
+  string correlates_with = 6;
   string description = 2;
   string fault_id = 3;
   google.protobuf.Timestamp first_observed = 4;

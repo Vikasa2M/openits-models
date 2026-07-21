@@ -1,0 +1,9 @@
+{
+  "module": "openits-common-mode-events",
+  "revision": "2026-07-21",
+  "files": [
+    "schema.yang",
+    "schema.proto",
+    "schema.json"
+  ]
+}

@@ -315,6 +315,7 @@ type LcsConflictDetected struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	SegmentId      string                 `protobuf:"bytes,1,opt,name=segment_id,json=segmentId,proto3" json:"segment_id,omitempty"`
+	LaneId         string                 `protobuf:"bytes,9,opt,name=lane_id,json=laneId,proto3" json:"lane_id,omitempty"`
 	LcsDirectionA  LcsIndication          `protobuf:"varint,2,opt,name=lcs_direction_a,json=lcsDirectionA,proto3,enum=openits.reversible_lane.v1.LcsIndication" json:"lcs_direction_a,omitempty"`
 	LcsDirectionB  LcsIndication          `protobuf:"varint,3,opt,name=lcs_direction_b,json=lcsDirectionB,proto3,enum=openits.reversible_lane.v1.LcsIndication" json:"lcs_direction_b,omitempty"`
 	ObservedBy     string                 `protobuf:"bytes,4,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
@@ -366,6 +367,13 @@ func (x *LcsConflictDetected) GetKind() string {
 func (x *LcsConflictDetected) GetSegmentId() string {
 	if x != nil {
 		return x.SegmentId
+	}
+	return ""
+}
+
+func (x *LcsConflictDetected) GetLaneId() string {
+	if x != nil {
+		return x.LaneId
 	}
 	return ""
 }
@@ -562,11 +570,12 @@ const file_openits_reversible_lane_v1_events_proto_rawDesc = "" +
 	"\x05owner\x18\t \x01(\tR\x05owner\x12\x1a\n" +
 	"\bsequence\x18\n" +
 	" \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\v \x01(\tR\x0esourceDeviceId\"\xa8\x03\n" +
+	"\x10source_device_id\x18\v \x01(\tR\x0esourceDeviceId\"\xc1\x03\n" +
 	"\x13LcsConflictDetected\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x1d\n" +
 	"\n" +
-	"segment_id\x18\x01 \x01(\tR\tsegmentId\x12Q\n" +
+	"segment_id\x18\x01 \x01(\tR\tsegmentId\x12\x17\n" +
+	"\alane_id\x18\t \x01(\tR\x06laneId\x12Q\n" +
 	"\x0flcs_direction_a\x18\x02 \x01(\x0e2).openits.reversible_lane.v1.LcsIndicationR\rlcsDirectionA\x12Q\n" +
 	"\x0flcs_direction_b\x18\x03 \x01(\x0e2).openits.reversible_lane.v1.LcsIndicationR\rlcsDirectionB\x12\x1f\n" +
 	"\vobserved_by\x18\x04 \x01(\tR\n" +

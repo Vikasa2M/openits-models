@@ -114,6 +114,12 @@ channels:
             openits.perception.zone-incident-detected.v1:
                 $ref: '#/components/messages/openits.perception.zone-incident-detected.v1'
         title: perception — zone-incident-detected
+    openits.perception.zone-incident-updated.v1:
+        address: openits.perception.zone-incident-updated.v1
+        messages:
+            openits.perception.zone-incident-updated.v1:
+                $ref: '#/components/messages/openits.perception.zone-incident-updated.v1'
+        title: perception — zone-incident-updated
     openits.perception.zone-interval-report.v1:
         address: openits.perception.zone-interval-report.v1
         messages:
@@ -577,6 +583,8 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        correlates-with:
+                            type: string
                         description:
                             type: string
                         fault-id:
@@ -657,7 +665,7 @@ components:
                             type: string
                         held-priority:
                             maximum: 255
-                            minimum: 0
+                            minimum: 1
                             type: integer
                         kind:
                             type: string
@@ -675,7 +683,7 @@ components:
                             type: string
                         requested-priority:
                             maximum: 255
-                            minimum: 0
+                            minimum: 1
                             type: integer
                         sequence:
                             type: string
@@ -785,12 +793,6 @@ components:
                             pattern: ^([a-zA-Z0-9_-]+)$
                             type: string
                         trigger:
-                            enum:
-                                - fault
-                                - operator
-                                - preemption
-                                - schedule
-                                - unknown
                             type: string
                     required:
                         - current
@@ -1106,6 +1108,8 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        correlates-with:
+                            type: string
                         description:
                             type: string
                         fault-id:
@@ -1192,7 +1196,7 @@ components:
                             type: string
                         attempted-slot-number:
                             maximum: 65535
-                            minimum: 0
+                            minimum: 1
                             type: integer
                         error-position:
                             maximum: 65535
@@ -1329,12 +1333,6 @@ components:
                             pattern: ^([a-zA-Z0-9_-]+)$
                             type: string
                         trigger:
-                            enum:
-                                - fault
-                                - operator
-                                - preemption
-                                - schedule
-                                - unknown
                             type: string
                     required:
                         - current
@@ -1501,6 +1499,8 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        correlates-with:
+                            type: string
                         description:
                             type: string
                         fault-id:
@@ -1678,12 +1678,16 @@ components:
                         unit:
                             enum:
                                 - celsius
+                                - degrees
+                                - dimensionless
                                 - hectopascals
                                 - meters
                                 - meters-per-second
                                 - millimeters
                                 - millimeters-per-hour
+                                - parts-per-million
                                 - percent
+                                - watts-per-square-meter
                             type: string
                     required:
                         - kind
@@ -1849,6 +1853,8 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        correlates-with:
+                            type: string
                         description:
                             type: string
                         fault-id:
@@ -1947,6 +1953,9 @@ components:
                             pattern: ^([a-zA-Z0-9_-]+)$
                             type: string
                         zone-id:
+                            maxLength: 64
+                            minLength: 1
+                            pattern: ^([a-zA-Z0-9_-]+)$
                             type: string
                     required:
                         - kind
@@ -2028,6 +2037,10 @@ components:
                             type: string
                         speed-kmh:
                             type: string
+                        track-epoch:
+                            maximum: 4294967295
+                            minimum: 0
+                            type: integer
                         track-id:
                             maximum: 4294967295
                             minimum: 0
@@ -2035,6 +2048,9 @@ components:
                         type:
                             type: string
                         zone-id:
+                            maxLength: 64
+                            minLength: 1
+                            pattern: ^([a-zA-Z0-9_-]+)$
                             type: string
                     required:
                         - kind
@@ -2045,6 +2061,85 @@ components:
                 schemaFormat: application/schema+json;version=draft-2020-12
             summary: perception.zone-incident-detected
             title: openits.perception.zone-incident-detected.v1
+        openits.perception.zone-incident-updated.v1:
+            contentType: application/protobuf
+            headers:
+                properties:
+                    ce-datacontenttype:
+                        const: application/protobuf
+                        type: string
+                    ce-id:
+                        description: Event identifier, unique within the source.
+                        type: string
+                    ce-source:
+                        description: CloudEvents source URI identifying the emitting device or service instance.
+                        type: string
+                    ce-specversion:
+                        const: "1.0"
+                        type: string
+                    ce-time:
+                        format: date-time
+                        type: string
+                    ce-type:
+                        const: openits.perception.zone-incident-updated.v1
+                        type: string
+                    traceparent:
+                        description: W3C Trace Context. Optional; recommended.
+                        type: string
+                type: object
+            name: openits.perception.zone-incident-updated.v1
+            payload:
+                schema:
+                    $schema: https://json-schema.org/draft/2020-12/schema
+                    additionalProperties: false
+                    properties:
+                        confidence:
+                            maximum: 100
+                            minimum: 0
+                            type: integer
+                        incident-id:
+                            type: string
+                        kind:
+                            type: string
+                        observed-by:
+                            maxLength: 64
+                            minLength: 1
+                            pattern: ^([a-zA-Z0-9_-]+)$
+                            type: string
+                        occurred-at:
+                            format: date-time
+                            type: string
+                        owner:
+                            type: string
+                        sequence:
+                            type: string
+                        severity:
+                            enum:
+                                - intermediate
+                                - major
+                                - minor
+                            type: string
+                        source-device-id:
+                            maxLength: 64
+                            minLength: 1
+                            pattern: ^([a-zA-Z0-9_-]+)$
+                            type: string
+                        speed-kmh:
+                            type: string
+                        zone-id:
+                            maxLength: 64
+                            minLength: 1
+                            pattern: ^([a-zA-Z0-9_-]+)$
+                            type: string
+                    required:
+                        - kind
+                        - occurred-at
+                        - sequence
+                        - source-device-id
+                    type: object
+                schemaFormat: application/schema+json;version=draft-2020-12
+            summary: perception.zone-incident-updated
+            title: openits.perception.zone-incident-updated.v1
         openits.perception.zone-interval-report.v1:
             contentType: application/protobuf
             headers:
@@ -2132,6 +2227,9 @@ components:
                                     occupancy-percent:
                                         type: string
                                     zone-id:
+                                        maxLength: 64
+                                        minLength: 1
+                                        pattern: ^([a-zA-Z0-9_-]+)$
                                         type: string
                                 type: object
                             type: array
@@ -2299,6 +2397,8 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        correlates-with:
+                            type: string
                         description:
                             type: string
                         fault-id:
@@ -2434,12 +2534,6 @@ components:
                             pattern: ^([a-zA-Z0-9_-]+)$
                             type: string
                         trigger:
-                            enum:
-                                - fault
-                                - operator
-                                - preemption
-                                - schedule
-                                - unknown
                             type: string
                     required:
                         - current
@@ -2490,6 +2584,10 @@ components:
                             minLength: 1
                             pattern: ^([a-zA-Z0-9_-]+)$
                             type: string
+                        occupancy-pct:
+                            maximum: 100
+                            minimum: 0
+                            type: integer
                         occurred-at:
                             format: date-time
                             type: string
@@ -2514,6 +2612,11 @@ components:
                             maximum: 999
                             minimum: 0
                             type: integer
+                        trigger:
+                            enum:
+                                - occupancy
+                                - vehicle-count
+                            type: string
                     required:
                         - kind
                         - occurred-at
@@ -2635,7 +2738,7 @@ components:
                         kind:
                             type: string
                         new-rate-vph:
-                            maximum: 1800
+                            maximum: 3600
                             minimum: 0
                             type: integer
                         observed-by:
@@ -2653,7 +2756,7 @@ components:
                             minimum: 0
                             type: integer
                         previous-rate-vph:
-                            maximum: 1800
+                            maximum: 3600
                             minimum: 0
                             type: integer
                         sequence:
@@ -2827,6 +2930,8 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        correlates-with:
+                            type: string
                         description:
                             type: string
                         fault-id:
@@ -2996,6 +3101,8 @@ components:
                     additionalProperties: false
                     properties:
                         kind:
+                            type: string
+                        lane-id:
                             type: string
                         lcs-direction-a:
                             enum:
@@ -3283,6 +3390,8 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        correlates-with:
+                            type: string
                         description:
                             type: string
                         fault-id:
@@ -3418,12 +3527,6 @@ components:
                             pattern: ^([a-zA-Z0-9_-]+)$
                             type: string
                         trigger:
-                            enum:
-                                - fault
-                                - operator
-                                - preemption
-                                - schedule
-                                - unknown
                             type: string
                     required:
                         - current
@@ -3775,12 +3878,6 @@ components:
                     additionalProperties: false
                     properties:
                         event-type:
-                            enum:
-                                - enrollment-failure
-                                - invalid-signature
-                                - misbehavior-detected
-                                - revoked-certificate
-                                - scms-connection-lost
                             type: string
                         kind:
                             type: string
@@ -3922,9 +4019,23 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        decision-authority:
+                            enum:
+                                - controller-prs
+                                - evp-auto
+                                - none
+                                - operator
+                                - rsu-local
+                            type: string
                         kind:
                             type: string
                         new-status:
+                            enum:
+                                - active
+                                - approved
+                                - completed
+                                - denied
+                                - pending
                             type: string
                         observed-by:
                             maxLength: 64
@@ -3937,6 +4048,12 @@ components:
                         owner:
                             type: string
                         previous-status:
+                            enum:
+                                - active
+                                - approved
+                                - completed
+                                - denied
+                                - pending
                             type: string
                         request-id:
                             type: string
@@ -4339,6 +4456,8 @@ components:
                             maximum: 255
                             minimum: 0
                             type: integer
+                        link-type:
+                            type: string
                         observed-by:
                             maxLength: 64
                             minLength: 1
@@ -4572,8 +4691,8 @@ components:
                             pattern: ^([a-zA-Z0-9_-]+)$
                             type: string
                         split-number:
-                            maximum: 255
-                            minimum: 0
+                            maximum: 40
+                            minimum: 1
                             type: integer
                     required:
                         - kind
@@ -4622,15 +4741,13 @@ components:
                                 properties:
                                     detector-id:
                                         maximum: 65535
-                                        minimum: 0
+                                        minimum: 1
                                         type: integer
                                     occupancy:
-                                        maximum: 100
-                                        minimum: 0
-                                        type: integer
+                                        type: string
                                     phase-served:
-                                        maximum: 255
-                                        minimum: 0
+                                        maximum: 40
+                                        minimum: 1
                                         type: integer
                                     volume:
                                         maximum: 4294967295
@@ -4737,8 +4854,8 @@ components:
                         approach:
                             type: string
                         channel:
-                            maximum: 4294967295
-                            minimum: 0
+                            maximum: 65535
+                            minimum: 1
                             type: integer
                         kind:
                             type: string
@@ -4755,8 +4872,8 @@ components:
                         owner:
                             type: string
                         phase-served:
-                            maximum: 255
-                            minimum: 0
+                            maximum: 40
+                            minimum: 1
                             type: integer
                         sequence:
                             type: string
@@ -4932,6 +5049,8 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        correlates-with:
+                            type: string
                         description:
                             type: string
                         fault-id:
@@ -5067,12 +5186,6 @@ components:
                             pattern: ^([a-zA-Z0-9_-]+)$
                             type: string
                         trigger:
-                            enum:
-                                - fault
-                                - operator
-                                - preemption
-                                - schedule
-                                - unknown
                             type: string
                     required:
                         - current
@@ -5227,8 +5340,8 @@ components:
                             format: date-time
                             type: string
                         overlap-number:
-                            maximum: 4294967295
-                            minimum: 0
+                            maximum: 255
+                            minimum: 1
                             type: integer
                         owner:
                             type: string
@@ -5313,8 +5426,8 @@ components:
                     additionalProperties: false
                     properties:
                         detector-channel:
-                            maximum: 4294967295
-                            minimum: 0
+                            maximum: 65535
+                            minimum: 1
                             type: integer
                         kind:
                             type: string
@@ -5503,8 +5616,8 @@ components:
                         owner:
                             type: string
                         plan-id:
-                            maximum: 65535
-                            minimum: 0
+                            maximum: 255
+                            minimum: 1
                             type: integer
                         sequence:
                             type: string
@@ -5609,7 +5722,7 @@ components:
                             type: string
                         preempt-number:
                             maximum: 255
-                            minimum: 0
+                            minimum: 1
                             type: integer
                         sequence:
                             type: string
@@ -5623,11 +5736,6 @@ components:
                         source-id:
                             type: string
                         type:
-                            enum:
-                                - emergency-vehicle
-                                - none
-                                - other
-                                - railroad
                             type: string
                     required:
                         - kind
@@ -5715,7 +5823,7 @@ components:
                             type: string
                         preempt-number:
                             maximum: 255
-                            minimum: 0
+                            minimum: 1
                             type: integer
                         sequence:
                             type: string
@@ -5729,11 +5837,6 @@ components:
                         source-id:
                             type: string
                         type:
-                            enum:
-                                - emergency-vehicle
-                                - none
-                                - other
-                                - railroad
                             type: string
                     required:
                         - kind
@@ -5820,8 +5923,8 @@ components:
                         owner:
                             type: string
                         preempt-number:
-                            maximum: 4294967295
-                            minimum: 0
+                            maximum: 255
+                            minimum: 1
                             type: integer
                         sequence:
                             type: string
@@ -6037,8 +6140,8 @@ components:
                         owner:
                             type: string
                         phase-number:
-                            maximum: 255
-                            minimum: 0
+                            maximum: 40
+                            minimum: 1
                             type: integer
                         rationale:
                             type: string
@@ -6421,6 +6524,8 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        correlates-with:
+                            type: string
                         description:
                             type: string
                         fault-id:
@@ -6497,6 +6602,10 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        back-of-queue-m:
+                            maximum: 4294967295
+                            minimum: 0
+                            type: integer
                         kind:
                             type: string
                         observed-by:
@@ -6510,6 +6619,10 @@ components:
                         owner:
                             type: string
                         queue-duration-s:
+                            maximum: 4294967295
+                            minimum: 0
+                            type: integer
+                        queue-length-m:
                             maximum: 4294967295
                             minimum: 0
                             type: integer
@@ -6893,6 +7006,13 @@ operations:
         messages:
             - $ref: '#/channels/openits.perception.zone-incident-detected.v1/messages/openits.perception.zone-incident-detected.v1'
         summary: Consume openits.perception.zone-incident-detected.v1
+    consume_openits.perception.zone-incident-updated.v1:
+        action: receive
+        channel:
+            $ref: '#/channels/openits.perception.zone-incident-updated.v1'
+        messages:
+            - $ref: '#/channels/openits.perception.zone-incident-updated.v1/messages/openits.perception.zone-incident-updated.v1'
+        summary: Consume openits.perception.zone-incident-updated.v1
     consume_openits.perception.zone-interval-report.v1:
         action: receive
         channel:
@@ -7376,6 +7496,13 @@ operations:
         messages:
             - $ref: '#/channels/openits.perception.zone-incident-detected.v1/messages/openits.perception.zone-incident-detected.v1'
         summary: Publish openits.perception.zone-incident-detected.v1
+    publish_openits.perception.zone-incident-updated.v1:
+        action: send
+        channel:
+            $ref: '#/channels/openits.perception.zone-incident-updated.v1'
+        messages:
+            - $ref: '#/channels/openits.perception.zone-incident-updated.v1/messages/openits.perception.zone-incident-updated.v1'
+        summary: Publish openits.perception.zone-incident-updated.v1
     publish_openits.perception.zone-interval-report.v1:
         action: send
         channel:

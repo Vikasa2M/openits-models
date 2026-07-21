@@ -10,6 +10,7 @@
       "state": {
         "current-state": "closed",
         "changeover-permitted": false,
+        "direction-open-permitted": false,
         "blocking-interlocks": ["intrusion-1"]
       }
     },
@@ -17,7 +18,7 @@
       "interlock": [
         {
           "interlock-id": "intrusion-1",
-          "config": { "interlock-id": "intrusion-1", "kind": "openits-reversible-lane-types:intrusion-clear", "name": "No intrusion in section", "required": true },
+          "config": { "interlock-id": "intrusion-1", "kind": "openits-reversible-lane-types:intrusion-clear", "name": "No intrusion in section", "required": true, "evaluation-point": "changeover-start" },
           "state": { "satisfied": false }
         }
       ]

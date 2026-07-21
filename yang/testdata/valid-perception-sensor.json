@@ -28,6 +28,8 @@
           "name": "EB travel lanes",
           "function": "incident",
           "legal-heading": 92,
+          "dwell-s": 30,
+          "min-confidence": 70,
           "vertex": [
             {
               "vertex-index": 0,
@@ -88,13 +90,20 @@
           "type": "openits-perception-types:incident-stopped-vehicle",
           "severity": "intermediate",
           "track-id": 1809,
+          "track-epoch": 3,
           "object-class": "openits-perception-types:object-passenger-vehicle",
           "speed-kmh": "0.0",
           "confidence": 88,
           "latitude": "32.8560200",
           "longitude": "-96.7279600",
-          "first-observed": "2026-07-07T13:58:12Z"
+          "first-observed": "2026-07-07T13:58:12Z",
+          "disposition": "confirmed"
         }
+      ]
+    },
+    "incident-review": {
+      "review": [
+        { "incident-id": "inc-2026-07-07-0007", "disposition": "confirmed", "reviewed-by": "op-tmc-03" }
       ]
     },
     "diagnostics": {

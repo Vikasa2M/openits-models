@@ -1,0 +1,15 @@
+{
+  "openits-rsu:rsu": {
+    "config": { "id": "rsu-psm-01", "name": "Infrastructure PSM broadcast RSU" },
+    "messages": {
+      "psm": {
+        "broadcast-config": {
+          "enabled": true,
+          "source": "perception-01",
+          "broadcast-interval": 500,
+          "psid": 39
+        }
+      }
+    }
+  }
+}

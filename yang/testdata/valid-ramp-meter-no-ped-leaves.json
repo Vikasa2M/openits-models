@@ -11,8 +11,8 @@
           "headway-s": "6.0",
           "queue-override-threshold-vehicles": 20,
           "phase-timing": {
-            "min-green": 1,
-            "max-green": 20,
+            "min-green": "1.0",
+            "max-green": "20.0",
             "yellow-change": "3.5",
             "red-clear": "1.0",
             "passage": "1.0"

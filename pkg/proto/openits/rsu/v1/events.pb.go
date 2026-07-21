@@ -77,59 +77,114 @@ func (GpsFixStatus) EnumDescriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_events_proto_rawDescGZIP(), []int{0}
 }
 
-type EventType int32
+type SrmRequestStatus int32
 
 const (
-	EventType_EVENT_TYPE_INVALID_SIGNATURE    EventType = 0
-	EventType_EVENT_TYPE_REVOKED_CERTIFICATE  EventType = 1
-	EventType_EVENT_TYPE_SCMS_CONNECTION_LOST EventType = 2
-	EventType_EVENT_TYPE_ENROLLMENT_FAILURE   EventType = 3
-	EventType_EVENT_TYPE_MISBEHAVIOR_DETECTED EventType = 4
+	SrmRequestStatus_SRM_REQUEST_STATUS_PENDING   SrmRequestStatus = 0
+	SrmRequestStatus_SRM_REQUEST_STATUS_APPROVED  SrmRequestStatus = 1
+	SrmRequestStatus_SRM_REQUEST_STATUS_ACTIVE    SrmRequestStatus = 2
+	SrmRequestStatus_SRM_REQUEST_STATUS_COMPLETED SrmRequestStatus = 3
+	SrmRequestStatus_SRM_REQUEST_STATUS_DENIED    SrmRequestStatus = 4
 )
 
-// Enum value maps for EventType.
+// Enum value maps for SrmRequestStatus.
 var (
-	EventType_name = map[int32]string{
-		0: "EVENT_TYPE_INVALID_SIGNATURE",
-		1: "EVENT_TYPE_REVOKED_CERTIFICATE",
-		2: "EVENT_TYPE_SCMS_CONNECTION_LOST",
-		3: "EVENT_TYPE_ENROLLMENT_FAILURE",
-		4: "EVENT_TYPE_MISBEHAVIOR_DETECTED",
+	SrmRequestStatus_name = map[int32]string{
+		0: "SRM_REQUEST_STATUS_PENDING",
+		1: "SRM_REQUEST_STATUS_APPROVED",
+		2: "SRM_REQUEST_STATUS_ACTIVE",
+		3: "SRM_REQUEST_STATUS_COMPLETED",
+		4: "SRM_REQUEST_STATUS_DENIED",
 	}
-	EventType_value = map[string]int32{
-		"EVENT_TYPE_INVALID_SIGNATURE":    0,
-		"EVENT_TYPE_REVOKED_CERTIFICATE":  1,
-		"EVENT_TYPE_SCMS_CONNECTION_LOST": 2,
-		"EVENT_TYPE_ENROLLMENT_FAILURE":   3,
-		"EVENT_TYPE_MISBEHAVIOR_DETECTED": 4,
+	SrmRequestStatus_value = map[string]int32{
+		"SRM_REQUEST_STATUS_PENDING":   0,
+		"SRM_REQUEST_STATUS_APPROVED":  1,
+		"SRM_REQUEST_STATUS_ACTIVE":    2,
+		"SRM_REQUEST_STATUS_COMPLETED": 3,
+		"SRM_REQUEST_STATUS_DENIED":    4,
 	}
 )
 
-func (x EventType) Enum() *EventType {
-	p := new(EventType)
+func (x SrmRequestStatus) Enum() *SrmRequestStatus {
+	p := new(SrmRequestStatus)
 	*p = x
 	return p
 }
 
-func (x EventType) String() string {
+func (x SrmRequestStatus) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (EventType) Descriptor() protoreflect.EnumDescriptor {
+func (SrmRequestStatus) Descriptor() protoreflect.EnumDescriptor {
 	return file_openits_rsu_v1_events_proto_enumTypes[1].Descriptor()
 }
 
-func (EventType) Type() protoreflect.EnumType {
+func (SrmRequestStatus) Type() protoreflect.EnumType {
 	return &file_openits_rsu_v1_events_proto_enumTypes[1]
 }
 
-func (x EventType) Number() protoreflect.EnumNumber {
+func (x SrmRequestStatus) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use EventType.Descriptor instead.
-func (EventType) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use SrmRequestStatus.Descriptor instead.
+func (SrmRequestStatus) EnumDescriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_events_proto_rawDescGZIP(), []int{1}
+}
+
+type DecisionAuthority int32
+
+const (
+	DecisionAuthority_DECISION_AUTHORITY_NONE           DecisionAuthority = 0
+	DecisionAuthority_DECISION_AUTHORITY_CONTROLLER_PRS DecisionAuthority = 1
+	DecisionAuthority_DECISION_AUTHORITY_RSU_LOCAL      DecisionAuthority = 2
+	DecisionAuthority_DECISION_AUTHORITY_OPERATOR       DecisionAuthority = 3
+	DecisionAuthority_DECISION_AUTHORITY_EVP_AUTO       DecisionAuthority = 4
+)
+
+// Enum value maps for DecisionAuthority.
+var (
+	DecisionAuthority_name = map[int32]string{
+		0: "DECISION_AUTHORITY_NONE",
+		1: "DECISION_AUTHORITY_CONTROLLER_PRS",
+		2: "DECISION_AUTHORITY_RSU_LOCAL",
+		3: "DECISION_AUTHORITY_OPERATOR",
+		4: "DECISION_AUTHORITY_EVP_AUTO",
+	}
+	DecisionAuthority_value = map[string]int32{
+		"DECISION_AUTHORITY_NONE":           0,
+		"DECISION_AUTHORITY_CONTROLLER_PRS": 1,
+		"DECISION_AUTHORITY_RSU_LOCAL":      2,
+		"DECISION_AUTHORITY_OPERATOR":       3,
+		"DECISION_AUTHORITY_EVP_AUTO":       4,
+	}
+)
+
+func (x DecisionAuthority) Enum() *DecisionAuthority {
+	p := new(DecisionAuthority)
+	*p = x
+	return p
+}
+
+func (x DecisionAuthority) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (DecisionAuthority) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_rsu_v1_events_proto_enumTypes[2].Descriptor()
+}
+
+func (DecisionAuthority) Type() protoreflect.EnumType {
+	return &file_openits_rsu_v1_events_proto_enumTypes[2]
+}
+
+func (x DecisionAuthority) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use DecisionAuthority.Descriptor instead.
+func (DecisionAuthority) EnumDescriptor() ([]byte, []int) {
+	return file_openits_rsu_v1_events_proto_rawDescGZIP(), []int{2}
 }
 
 type Prior int32
@@ -165,11 +220,11 @@ func (x Prior) String() string {
 }
 
 func (Prior) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_rsu_v1_events_proto_enumTypes[2].Descriptor()
+	return file_openits_rsu_v1_events_proto_enumTypes[3].Descriptor()
 }
 
 func (Prior) Type() protoreflect.EnumType {
-	return &file_openits_rsu_v1_events_proto_enumTypes[2]
+	return &file_openits_rsu_v1_events_proto_enumTypes[3]
 }
 
 func (x Prior) Number() protoreflect.EnumNumber {
@@ -178,7 +233,7 @@ func (x Prior) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Prior.Descriptor instead.
 func (Prior) EnumDescriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_events_proto_rawDescGZIP(), []int{2}
+	return file_openits_rsu_v1_events_proto_rawDescGZIP(), []int{3}
 }
 
 type Current int32
@@ -214,11 +269,11 @@ func (x Current) String() string {
 }
 
 func (Current) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_rsu_v1_events_proto_enumTypes[3].Descriptor()
+	return file_openits_rsu_v1_events_proto_enumTypes[4].Descriptor()
 }
 
 func (Current) Type() protoreflect.EnumType {
-	return &file_openits_rsu_v1_events_proto_enumTypes[3]
+	return &file_openits_rsu_v1_events_proto_enumTypes[4]
 }
 
 func (x Current) Number() protoreflect.EnumNumber {
@@ -227,7 +282,7 @@ func (x Current) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Current.Descriptor instead.
 func (Current) EnumDescriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_events_proto_rawDescGZIP(), []int{3}
+	return file_openits_rsu_v1_events_proto_rawDescGZIP(), []int{4}
 }
 
 type Reason int32
@@ -269,11 +324,11 @@ func (x Reason) String() string {
 }
 
 func (Reason) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_rsu_v1_events_proto_enumTypes[4].Descriptor()
+	return file_openits_rsu_v1_events_proto_enumTypes[5].Descriptor()
 }
 
 func (Reason) Type() protoreflect.EnumType {
-	return &file_openits_rsu_v1_events_proto_enumTypes[4]
+	return &file_openits_rsu_v1_events_proto_enumTypes[5]
 }
 
 func (x Reason) Number() protoreflect.EnumNumber {
@@ -282,7 +337,7 @@ func (x Reason) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Reason.Descriptor instead.
 func (Reason) EnumDescriptor() ([]byte, []int) {
-	return file_openits_rsu_v1_events_proto_rawDescGZIP(), []int{4}
+	return file_openits_rsu_v1_events_proto_rawDescGZIP(), []int{5}
 }
 
 type RsuBroadcastSample struct {
@@ -389,10 +444,10 @@ type Broadcast struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	MsgId             string                 `protobuf:"bytes,1,opt,name=msg_id,json=msgId,proto3" json:"msg_id,omitempty"`
 	MsgType           string                 `protobuf:"bytes,2,opt,name=msg_type,json=msgType,proto3" json:"msg_type,omitempty"`
-	ChannelId         string                 `protobuf:"bytes,6,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`
-	DsrcChannelNumber uint32                 `protobuf:"varint,7,opt,name=dsrc_channel_number,json=dsrcChannelNumber,proto3" json:"dsrc_channel_number,omitempty"`
 	RateHz            string                 `protobuf:"bytes,4,opt,name=rate_hz,json=rateHz,proto3" json:"rate_hz,omitempty"`
 	Priority          uint32                 `protobuf:"varint,5,opt,name=priority,proto3" json:"priority,omitempty"`
+	ChannelId         string                 `protobuf:"bytes,6,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`
+	DsrcChannelNumber uint32                 `protobuf:"varint,7,opt,name=dsrc_channel_number,json=dsrcChannelNumber,proto3" json:"dsrc_channel_number,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -441,20 +496,6 @@ func (x *Broadcast) GetMsgType() string {
 	return ""
 }
 
-func (x *Broadcast) GetChannelId() string {
-	if x != nil {
-		return x.ChannelId
-	}
-	return ""
-}
-
-func (x *Broadcast) GetDsrcChannelNumber() uint32 {
-	if x != nil {
-		return x.DsrcChannelNumber
-	}
-	return 0
-}
-
 func (x *Broadcast) GetRateHz() string {
 	if x != nil {
 		return x.RateHz
@@ -465,6 +506,20 @@ func (x *Broadcast) GetRateHz() string {
 func (x *Broadcast) GetPriority() uint32 {
 	if x != nil {
 		return x.Priority
+	}
+	return 0
+}
+
+func (x *Broadcast) GetChannelId() string {
+	if x != nil {
+		return x.ChannelId
+	}
+	return ""
+}
+
+func (x *Broadcast) GetDsrcChannelNumber() uint32 {
+	if x != nil {
+		return x.DsrcChannelNumber
 	}
 	return 0
 }
@@ -588,10 +643,10 @@ func (x *RsuCertificateExpiring) GetSourceDeviceId() string {
 type RsuChannelFault struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	Kind              string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	ChannelId         string                 `protobuf:"bytes,11,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`
-	DsrcChannelNumber uint32                 `protobuf:"varint,12,opt,name=dsrc_channel_number,json=dsrcChannelNumber,proto3" json:"dsrc_channel_number,omitempty"`
 	FaultType         string                 `protobuf:"bytes,3,opt,name=fault_type,json=faultType,proto3" json:"fault_type,omitempty"`
 	Message           string                 `protobuf:"bytes,4,opt,name=message,proto3" json:"message,omitempty"`
+	ChannelId         string                 `protobuf:"bytes,11,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`
+	DsrcChannelNumber uint32                 `protobuf:"varint,12,opt,name=dsrc_channel_number,json=dsrcChannelNumber,proto3" json:"dsrc_channel_number,omitempty"`
 	ObservedBy        string                 `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
 	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner             string                 `protobuf:"bytes,8,opt,name=owner,proto3" json:"owner,omitempty"`
@@ -638,20 +693,6 @@ func (x *RsuChannelFault) GetKind() string {
 	return ""
 }
 
-func (x *RsuChannelFault) GetChannelId() string {
-	if x != nil {
-		return x.ChannelId
-	}
-	return ""
-}
-
-func (x *RsuChannelFault) GetDsrcChannelNumber() uint32 {
-	if x != nil {
-		return x.DsrcChannelNumber
-	}
-	return 0
-}
-
 func (x *RsuChannelFault) GetFaultType() string {
 	if x != nil {
 		return x.FaultType
@@ -664,6 +705,20 @@ func (x *RsuChannelFault) GetMessage() string {
 		return x.Message
 	}
 	return ""
+}
+
+func (x *RsuChannelFault) GetChannelId() string {
+	if x != nil {
+		return x.ChannelId
+	}
+	return ""
+}
+
+func (x *RsuChannelFault) GetDsrcChannelNumber() uint32 {
+	if x != nil {
+		return x.DsrcChannelNumber
+	}
+	return 0
 }
 
 func (x *RsuChannelFault) GetObservedBy() string {
@@ -812,7 +867,7 @@ func (x *RsuGpsStatusChange) GetSourceDeviceId() string {
 type RsuSecurityEvent struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	EventType      EventType              `protobuf:"varint,2,opt,name=event_type,json=eventType,proto3,enum=openits.rsu.v1.EventType" json:"event_type,omitempty"`
+	EventType      string                 `protobuf:"bytes,2,opt,name=event_type,json=eventType,proto3" json:"event_type,omitempty"`
 	Source         string                 `protobuf:"bytes,3,opt,name=source,proto3" json:"source,omitempty"`
 	Message        string                 `protobuf:"bytes,4,opt,name=message,proto3" json:"message,omitempty"`
 	ObservedBy     string                 `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
@@ -861,11 +916,11 @@ func (x *RsuSecurityEvent) GetKind() string {
 	return ""
 }
 
-func (x *RsuSecurityEvent) GetEventType() EventType {
+func (x *RsuSecurityEvent) GetEventType() string {
 	if x != nil {
 		return x.EventType
 	}
-	return EventType_EVENT_TYPE_INVALID_SIGNATURE
+	return ""
 }
 
 func (x *RsuSecurityEvent) GetSource() string {
@@ -1050,19 +1105,20 @@ func (x *RsuSrmReceived) GetSourceDeviceId() string {
 }
 
 type RsuSrmStatusChange struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	RequestId      string                 `protobuf:"bytes,2,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
-	VehicleId      string                 `protobuf:"bytes,3,opt,name=vehicle_id,json=vehicleId,proto3" json:"vehicle_id,omitempty"`
-	PreviousStatus string                 `protobuf:"bytes,4,opt,name=previous_status,json=previousStatus,proto3" json:"previous_status,omitempty"`
-	NewStatus      string                 `protobuf:"bytes,5,opt,name=new_status,json=newStatus,proto3" json:"new_status,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
-	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,9,opt,name=owner,proto3" json:"owner,omitempty"`
-	Sequence       uint64                 `protobuf:"varint,10,opt,name=sequence,proto3" json:"sequence,omitempty"`
-	SourceDeviceId string                 `protobuf:"bytes,11,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Kind              string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
+	RequestId         string                 `protobuf:"bytes,2,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+	VehicleId         string                 `protobuf:"bytes,3,opt,name=vehicle_id,json=vehicleId,proto3" json:"vehicle_id,omitempty"`
+	PreviousStatus    SrmRequestStatus       `protobuf:"varint,4,opt,name=previous_status,json=previousStatus,proto3,enum=openits.rsu.v1.SrmRequestStatus" json:"previous_status,omitempty"`
+	NewStatus         SrmRequestStatus       `protobuf:"varint,5,opt,name=new_status,json=newStatus,proto3,enum=openits.rsu.v1.SrmRequestStatus" json:"new_status,omitempty"`
+	DecisionAuthority DecisionAuthority      `protobuf:"varint,1,opt,name=decision_authority,json=decisionAuthority,proto3,enum=openits.rsu.v1.DecisionAuthority" json:"decision_authority,omitempty"`
+	ObservedBy        string                 `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
+	Owner             string                 `protobuf:"bytes,9,opt,name=owner,proto3" json:"owner,omitempty"`
+	Sequence          uint64                 `protobuf:"varint,10,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SourceDeviceId    string                 `protobuf:"bytes,11,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *RsuSrmStatusChange) Reset() {
@@ -1116,18 +1172,25 @@ func (x *RsuSrmStatusChange) GetVehicleId() string {
 	return ""
 }
 
-func (x *RsuSrmStatusChange) GetPreviousStatus() string {
+func (x *RsuSrmStatusChange) GetPreviousStatus() SrmRequestStatus {
 	if x != nil {
 		return x.PreviousStatus
 	}
-	return ""
+	return SrmRequestStatus_SRM_REQUEST_STATUS_PENDING
 }
 
-func (x *RsuSrmStatusChange) GetNewStatus() string {
+func (x *RsuSrmStatusChange) GetNewStatus() SrmRequestStatus {
 	if x != nil {
 		return x.NewStatus
 	}
-	return ""
+	return SrmRequestStatus_SRM_REQUEST_STATUS_PENDING
+}
+
+func (x *RsuSrmStatusChange) GetDecisionAuthority() DecisionAuthority {
+	if x != nil {
+		return x.DecisionAuthority
+	}
+	return DecisionAuthority_DECISION_AUTHORITY_NONE
 }
 
 func (x *RsuSrmStatusChange) GetObservedBy() string {
@@ -1169,9 +1232,9 @@ type RsuTimBroadcast struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	Kind              string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	MsgId             string                 `protobuf:"bytes,1,opt,name=msg_id,json=msgId,proto3" json:"msg_id,omitempty"`
+	Priority          uint32                 `protobuf:"varint,3,opt,name=priority,proto3" json:"priority,omitempty"`
 	ChannelId         string                 `protobuf:"bytes,10,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`
 	DsrcChannelNumber uint32                 `protobuf:"varint,11,opt,name=dsrc_channel_number,json=dsrcChannelNumber,proto3" json:"dsrc_channel_number,omitempty"`
-	Priority          uint32                 `protobuf:"varint,3,opt,name=priority,proto3" json:"priority,omitempty"`
 	ObservedBy        string                 `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
 	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner             string                 `protobuf:"bytes,7,opt,name=owner,proto3" json:"owner,omitempty"`
@@ -1225,6 +1288,13 @@ func (x *RsuTimBroadcast) GetMsgId() string {
 	return ""
 }
 
+func (x *RsuTimBroadcast) GetPriority() uint32 {
+	if x != nil {
+		return x.Priority
+	}
+	return 0
+}
+
 func (x *RsuTimBroadcast) GetChannelId() string {
 	if x != nil {
 		return x.ChannelId
@@ -1235,13 +1305,6 @@ func (x *RsuTimBroadcast) GetChannelId() string {
 func (x *RsuTimBroadcast) GetDsrcChannelNumber() uint32 {
 	if x != nil {
 		return x.DsrcChannelNumber
-	}
-	return 0
-}
-
-func (x *RsuTimBroadcast) GetPriority() uint32 {
-	if x != nil {
-		return x.Priority
 	}
 	return 0
 }
@@ -1639,12 +1702,12 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xc1\x01\n" +
 	"\tBroadcast\x12\x15\n" +
 	"\x06msg_id\x18\x01 \x01(\tR\x05msgId\x12\x19\n" +
-	"\bmsg_type\x18\x02 \x01(\tR\amsgType\x12\x1d\n" +
+	"\bmsg_type\x18\x02 \x01(\tR\amsgType\x12\x17\n" +
+	"\arate_hz\x18\x04 \x01(\tR\x06rateHz\x12\x1a\n" +
+	"\bpriority\x18\x05 \x01(\rR\bpriority\x12\x1d\n" +
 	"\n" +
 	"channel_id\x18\x06 \x01(\tR\tchannelId\x12.\n" +
-	"\x13dsrc_channel_number\x18\a \x01(\rR\x11dsrcChannelNumber\x12\x17\n" +
-	"\arate_hz\x18\x04 \x01(\tR\x06rateHz\x12\x1a\n" +
-	"\bpriority\x18\x05 \x01(\rR\bpriority\"\xa1\x03\n" +
+	"\x13dsrc_channel_number\x18\a \x01(\rR\x11dsrcChannelNumber\"\xa1\x03\n" +
 	"\x16RsuCertificateExpiring\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12%\n" +
 	"\x0ecertificate_id\x18\x02 \x01(\tR\rcertificateId\x12)\n" +
@@ -1663,11 +1726,11 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\x0fRsuChannelFault\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x1d\n" +
 	"\n" +
-	"channel_id\x18\v \x01(\tR\tchannelId\x12.\n" +
-	"\x13dsrc_channel_number\x18\f \x01(\rR\x11dsrcChannelNumber\x12\x1d\n" +
-	"\n" +
 	"fault_type\x18\x03 \x01(\tR\tfaultType\x12\x18\n" +
-	"\amessage\x18\x04 \x01(\tR\amessage\x12\x1f\n" +
+	"\amessage\x18\x04 \x01(\tR\amessage\x12\x1d\n" +
+	"\n" +
+	"channel_id\x18\v \x01(\tR\tchannelId\x12.\n" +
+	"\x13dsrc_channel_number\x18\f \x01(\rR\x11dsrcChannelNumber\x12\x1f\n" +
 	"\vobserved_by\x18\x06 \x01(\tR\n" +
 	"observedBy\x12;\n" +
 	"\voccurred_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
@@ -1691,11 +1754,11 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\x05owner\x18\b \x01(\tR\x05owner\x12\x1a\n" +
 	"\bsequence\x18\t \x01(\x04R\bsequence\x12(\n" +
 	"\x10source_device_id\x18\n" +
-	" \x01(\tR\x0esourceDeviceId\"\xcc\x02\n" +
+	" \x01(\tR\x0esourceDeviceId\"\xb1\x02\n" +
 	"\x10RsuSecurityEvent\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x128\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12\x1d\n" +
 	"\n" +
-	"event_type\x18\x02 \x01(\x0e2\x19.openits.rsu.v1.EventTypeR\teventType\x12\x16\n" +
+	"event_type\x18\x02 \x01(\tR\teventType\x12\x16\n" +
 	"\x06source\x18\x03 \x01(\tR\x06source\x12\x18\n" +
 	"\amessage\x18\x04 \x01(\tR\amessage\x12\x1f\n" +
 	"\vobserved_by\x18\x06 \x01(\tR\n" +
@@ -1724,16 +1787,17 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"occurredAt\x12\x14\n" +
 	"\x05owner\x18\v \x01(\tR\x05owner\x12\x1a\n" +
 	"\bsequence\x18\f \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\r \x01(\tR\x0esourceDeviceId\"\xe8\x02\n" +
+	"\x10source_device_id\x18\r \x01(\tR\x0esourceDeviceId\"\xfe\x03\n" +
 	"\x12RsuSrmStatusChange\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x1d\n" +
 	"\n" +
 	"request_id\x18\x02 \x01(\tR\trequestId\x12\x1d\n" +
 	"\n" +
-	"vehicle_id\x18\x03 \x01(\tR\tvehicleId\x12'\n" +
-	"\x0fprevious_status\x18\x04 \x01(\tR\x0epreviousStatus\x12\x1d\n" +
+	"vehicle_id\x18\x03 \x01(\tR\tvehicleId\x12I\n" +
+	"\x0fprevious_status\x18\x04 \x01(\x0e2 .openits.rsu.v1.SrmRequestStatusR\x0epreviousStatus\x12?\n" +
 	"\n" +
-	"new_status\x18\x05 \x01(\tR\tnewStatus\x12\x1f\n" +
+	"new_status\x18\x05 \x01(\x0e2 .openits.rsu.v1.SrmRequestStatusR\tnewStatus\x12P\n" +
+	"\x12decision_authority\x18\x01 \x01(\x0e2!.openits.rsu.v1.DecisionAuthorityR\x11decisionAuthority\x12\x1f\n" +
 	"\vobserved_by\x18\a \x01(\tR\n" +
 	"observedBy\x12;\n" +
 	"\voccurred_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
@@ -1744,12 +1808,12 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\x10source_device_id\x18\v \x01(\tR\x0esourceDeviceId\"\xe1\x02\n" +
 	"\x0fRsuTimBroadcast\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x15\n" +
-	"\x06msg_id\x18\x01 \x01(\tR\x05msgId\x12\x1d\n" +
+	"\x06msg_id\x18\x01 \x01(\tR\x05msgId\x12\x1a\n" +
+	"\bpriority\x18\x03 \x01(\rR\bpriority\x12\x1d\n" +
 	"\n" +
 	"channel_id\x18\n" +
 	" \x01(\tR\tchannelId\x12.\n" +
-	"\x13dsrc_channel_number\x18\v \x01(\rR\x11dsrcChannelNumber\x12\x1a\n" +
-	"\bpriority\x18\x03 \x01(\rR\bpriority\x12\x1f\n" +
+	"\x13dsrc_channel_number\x18\v \x01(\rR\x11dsrcChannelNumber\x12\x1f\n" +
 	"\vobserved_by\x18\x05 \x01(\tR\n" +
 	"observedBy\x12;\n" +
 	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
@@ -1802,13 +1866,19 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\x15GPS_FIX_STATUS_FIX_2D\x10\x01\x12\x19\n" +
 	"\x15GPS_FIX_STATUS_FIX_3D\x10\x02\x12\x17\n" +
 	"\x13GPS_FIX_STATUS_DGPS\x10\x03\x12\x16\n" +
-	"\x12GPS_FIX_STATUS_RTK\x10\x04*\xbe\x01\n" +
-	"\tEventType\x12 \n" +
-	"\x1cEVENT_TYPE_INVALID_SIGNATURE\x10\x00\x12\"\n" +
-	"\x1eEVENT_TYPE_REVOKED_CERTIFICATE\x10\x01\x12#\n" +
-	"\x1fEVENT_TYPE_SCMS_CONNECTION_LOST\x10\x02\x12!\n" +
-	"\x1dEVENT_TYPE_ENROLLMENT_FAILURE\x10\x03\x12#\n" +
-	"\x1fEVENT_TYPE_MISBEHAVIOR_DETECTED\x10\x04*:\n" +
+	"\x12GPS_FIX_STATUS_RTK\x10\x04*\xb3\x01\n" +
+	"\x10SrmRequestStatus\x12\x1e\n" +
+	"\x1aSRM_REQUEST_STATUS_PENDING\x10\x00\x12\x1f\n" +
+	"\x1bSRM_REQUEST_STATUS_APPROVED\x10\x01\x12\x1d\n" +
+	"\x19SRM_REQUEST_STATUS_ACTIVE\x10\x02\x12 \n" +
+	"\x1cSRM_REQUEST_STATUS_COMPLETED\x10\x03\x12\x1d\n" +
+	"\x19SRM_REQUEST_STATUS_DENIED\x10\x04*\xbb\x01\n" +
+	"\x11DecisionAuthority\x12\x1b\n" +
+	"\x17DECISION_AUTHORITY_NONE\x10\x00\x12%\n" +
+	"!DECISION_AUTHORITY_CONTROLLER_PRS\x10\x01\x12 \n" +
+	"\x1cDECISION_AUTHORITY_RSU_LOCAL\x10\x02\x12\x1f\n" +
+	"\x1bDECISION_AUTHORITY_OPERATOR\x10\x03\x12\x1f\n" +
+	"\x1bDECISION_AUTHORITY_EVP_AUTO\x10\x04*:\n" +
 	"\x05Prior\x12\x0e\n" +
 	"\n" +
 	"PRIOR_IDLE\x10\x00\x12\x10\n" +
@@ -1837,54 +1907,57 @@ func file_openits_rsu_v1_events_proto_rawDescGZIP() []byte {
 	return file_openits_rsu_v1_events_proto_rawDescData
 }
 
-var file_openits_rsu_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
+var file_openits_rsu_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 6)
 var file_openits_rsu_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_openits_rsu_v1_events_proto_goTypes = []any{
 	(GpsFixStatus)(0),                   // 0: openits.rsu.v1.GpsFixStatus
-	(EventType)(0),                      // 1: openits.rsu.v1.EventType
-	(Prior)(0),                          // 2: openits.rsu.v1.Prior
-	(Current)(0),                        // 3: openits.rsu.v1.Current
-	(Reason)(0),                         // 4: openits.rsu.v1.Reason
-	(*RsuBroadcastSample)(nil),          // 5: openits.rsu.v1.RsuBroadcastSample
-	(*Broadcast)(nil),                   // 6: openits.rsu.v1.Broadcast
-	(*RsuCertificateExpiring)(nil),      // 7: openits.rsu.v1.RsuCertificateExpiring
-	(*RsuChannelFault)(nil),             // 8: openits.rsu.v1.RsuChannelFault
-	(*RsuGpsStatusChange)(nil),          // 9: openits.rsu.v1.RsuGpsStatusChange
-	(*RsuSecurityEvent)(nil),            // 10: openits.rsu.v1.RsuSecurityEvent
-	(*RsuSrmReceived)(nil),              // 11: openits.rsu.v1.RsuSrmReceived
-	(*RsuSrmStatusChange)(nil),          // 12: openits.rsu.v1.RsuSrmStatusChange
-	(*RsuTimBroadcast)(nil),             // 13: openits.rsu.v1.RsuTimBroadcast
-	(*RsuTimBroadcastStateChanged)(nil), // 14: openits.rsu.v1.RsuTimBroadcastStateChanged
-	(*RsuTimCleared)(nil),               // 15: openits.rsu.v1.RsuTimCleared
-	(*RsuTimLoaded)(nil),                // 16: openits.rsu.v1.RsuTimLoaded
-	(*timestamppb.Timestamp)(nil),       // 17: google.protobuf.Timestamp
+	(SrmRequestStatus)(0),               // 1: openits.rsu.v1.SrmRequestStatus
+	(DecisionAuthority)(0),              // 2: openits.rsu.v1.DecisionAuthority
+	(Prior)(0),                          // 3: openits.rsu.v1.Prior
+	(Current)(0),                        // 4: openits.rsu.v1.Current
+	(Reason)(0),                         // 5: openits.rsu.v1.Reason
+	(*RsuBroadcastSample)(nil),          // 6: openits.rsu.v1.RsuBroadcastSample
+	(*Broadcast)(nil),                   // 7: openits.rsu.v1.Broadcast
+	(*RsuCertificateExpiring)(nil),      // 8: openits.rsu.v1.RsuCertificateExpiring
+	(*RsuChannelFault)(nil),             // 9: openits.rsu.v1.RsuChannelFault
+	(*RsuGpsStatusChange)(nil),          // 10: openits.rsu.v1.RsuGpsStatusChange
+	(*RsuSecurityEvent)(nil),            // 11: openits.rsu.v1.RsuSecurityEvent
+	(*RsuSrmReceived)(nil),              // 12: openits.rsu.v1.RsuSrmReceived
+	(*RsuSrmStatusChange)(nil),          // 13: openits.rsu.v1.RsuSrmStatusChange
+	(*RsuTimBroadcast)(nil),             // 14: openits.rsu.v1.RsuTimBroadcast
+	(*RsuTimBroadcastStateChanged)(nil), // 15: openits.rsu.v1.RsuTimBroadcastStateChanged
+	(*RsuTimCleared)(nil),               // 16: openits.rsu.v1.RsuTimCleared
+	(*RsuTimLoaded)(nil),                // 17: openits.rsu.v1.RsuTimLoaded
+	(*timestamppb.Timestamp)(nil),       // 18: google.protobuf.Timestamp
 }
 var file_openits_rsu_v1_events_proto_depIdxs = []int32{
-	6,  // 0: openits.rsu.v1.RsuBroadcastSample.broadcast:type_name -> openits.rsu.v1.Broadcast
-	17, // 1: openits.rsu.v1.RsuBroadcastSample.occurred_at:type_name -> google.protobuf.Timestamp
-	17, // 2: openits.rsu.v1.RsuCertificateExpiring.expiry_date:type_name -> google.protobuf.Timestamp
-	17, // 3: openits.rsu.v1.RsuCertificateExpiring.occurred_at:type_name -> google.protobuf.Timestamp
-	17, // 4: openits.rsu.v1.RsuChannelFault.occurred_at:type_name -> google.protobuf.Timestamp
+	7,  // 0: openits.rsu.v1.RsuBroadcastSample.broadcast:type_name -> openits.rsu.v1.Broadcast
+	18, // 1: openits.rsu.v1.RsuBroadcastSample.occurred_at:type_name -> google.protobuf.Timestamp
+	18, // 2: openits.rsu.v1.RsuCertificateExpiring.expiry_date:type_name -> google.protobuf.Timestamp
+	18, // 3: openits.rsu.v1.RsuCertificateExpiring.occurred_at:type_name -> google.protobuf.Timestamp
+	18, // 4: openits.rsu.v1.RsuChannelFault.occurred_at:type_name -> google.protobuf.Timestamp
 	0,  // 5: openits.rsu.v1.RsuGpsStatusChange.previous_status:type_name -> openits.rsu.v1.GpsFixStatus
 	0,  // 6: openits.rsu.v1.RsuGpsStatusChange.new_status:type_name -> openits.rsu.v1.GpsFixStatus
-	17, // 7: openits.rsu.v1.RsuGpsStatusChange.occurred_at:type_name -> google.protobuf.Timestamp
-	1,  // 8: openits.rsu.v1.RsuSecurityEvent.event_type:type_name -> openits.rsu.v1.EventType
-	17, // 9: openits.rsu.v1.RsuSecurityEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	17, // 10: openits.rsu.v1.RsuSrmReceived.occurred_at:type_name -> google.protobuf.Timestamp
-	17, // 11: openits.rsu.v1.RsuSrmStatusChange.occurred_at:type_name -> google.protobuf.Timestamp
-	17, // 12: openits.rsu.v1.RsuTimBroadcast.occurred_at:type_name -> google.protobuf.Timestamp
-	2,  // 13: openits.rsu.v1.RsuTimBroadcastStateChanged.prior:type_name -> openits.rsu.v1.Prior
-	3,  // 14: openits.rsu.v1.RsuTimBroadcastStateChanged.current:type_name -> openits.rsu.v1.Current
-	17, // 15: openits.rsu.v1.RsuTimBroadcastStateChanged.occurred_at:type_name -> google.protobuf.Timestamp
-	4,  // 16: openits.rsu.v1.RsuTimCleared.reason:type_name -> openits.rsu.v1.Reason
-	17, // 17: openits.rsu.v1.RsuTimCleared.occurred_at:type_name -> google.protobuf.Timestamp
-	17, // 18: openits.rsu.v1.RsuTimLoaded.start_time:type_name -> google.protobuf.Timestamp
-	17, // 19: openits.rsu.v1.RsuTimLoaded.occurred_at:type_name -> google.protobuf.Timestamp
-	20, // [20:20] is the sub-list for method output_type
-	20, // [20:20] is the sub-list for method input_type
-	20, // [20:20] is the sub-list for extension type_name
-	20, // [20:20] is the sub-list for extension extendee
-	0,  // [0:20] is the sub-list for field type_name
+	18, // 7: openits.rsu.v1.RsuGpsStatusChange.occurred_at:type_name -> google.protobuf.Timestamp
+	18, // 8: openits.rsu.v1.RsuSecurityEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	18, // 9: openits.rsu.v1.RsuSrmReceived.occurred_at:type_name -> google.protobuf.Timestamp
+	1,  // 10: openits.rsu.v1.RsuSrmStatusChange.previous_status:type_name -> openits.rsu.v1.SrmRequestStatus
+	1,  // 11: openits.rsu.v1.RsuSrmStatusChange.new_status:type_name -> openits.rsu.v1.SrmRequestStatus
+	2,  // 12: openits.rsu.v1.RsuSrmStatusChange.decision_authority:type_name -> openits.rsu.v1.DecisionAuthority
+	18, // 13: openits.rsu.v1.RsuSrmStatusChange.occurred_at:type_name -> google.protobuf.Timestamp
+	18, // 14: openits.rsu.v1.RsuTimBroadcast.occurred_at:type_name -> google.protobuf.Timestamp
+	3,  // 15: openits.rsu.v1.RsuTimBroadcastStateChanged.prior:type_name -> openits.rsu.v1.Prior
+	4,  // 16: openits.rsu.v1.RsuTimBroadcastStateChanged.current:type_name -> openits.rsu.v1.Current
+	18, // 17: openits.rsu.v1.RsuTimBroadcastStateChanged.occurred_at:type_name -> google.protobuf.Timestamp
+	5,  // 18: openits.rsu.v1.RsuTimCleared.reason:type_name -> openits.rsu.v1.Reason
+	18, // 19: openits.rsu.v1.RsuTimCleared.occurred_at:type_name -> google.protobuf.Timestamp
+	18, // 20: openits.rsu.v1.RsuTimLoaded.start_time:type_name -> google.protobuf.Timestamp
+	18, // 21: openits.rsu.v1.RsuTimLoaded.occurred_at:type_name -> google.protobuf.Timestamp
+	22, // [22:22] is the sub-list for method output_type
+	22, // [22:22] is the sub-list for method input_type
+	22, // [22:22] is the sub-list for extension type_name
+	22, // [22:22] is the sub-list for extension extendee
+	0,  // [0:22] is the sub-list for field type_name
 }
 
 func init() { file_openits_rsu_v1_events_proto_init() }
@@ -1897,7 +1970,7 @@ func file_openits_rsu_v1_events_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_rsu_v1_events_proto_rawDesc), len(file_openits_rsu_v1_events_proto_rawDesc)),
-			NumEnums:      5,
+			NumEnums:      6,
 			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   0,

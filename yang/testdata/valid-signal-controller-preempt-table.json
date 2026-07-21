@@ -3,11 +3,11 @@
     "config": { "id": "c1", "name": "c1" },
     "phases": { "phase": [
       { "phase-number": 2, "config": { "phase-number": 2, "ring": 1, "barrier": 1,
-        "timing": { "min-green": 5, "max-green": 40, "yellow-change": "3.5", "red-clear": "1.5" } } }
+        "timing": { "min-green": "5.0", "max-green": "40.0", "yellow-change": "3.5", "red-clear": "1.5" } } }
     ] },
     "preemption": { "preemptor": [
       { "preemptor-id": 1, "config": {
-          "preemptor-id": 1, "type": "railroad", "priority-order": 1,
+          "preemptor-id": 1, "type": "openits-signal-control-types:preempt-railroad", "priority-order": 1,
           "delay-seconds": 0, "min-green-before-entry": 5,
           "track-clearance": { "phases": [2], "green-seconds": 8 },
           "exit-phases": [2], "max-presence-seconds": 600 },

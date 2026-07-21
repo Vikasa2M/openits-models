@@ -75,8 +75,8 @@
       "type": "string"
     },
     "phase-number": {
-      "maximum": 255,
-      "minimum": 0,
+      "maximum": 40,
+      "minimum": 1,
       "type": "integer"
     },
     "rationale": {

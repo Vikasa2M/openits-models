@@ -7,7 +7,7 @@
     "current": "openits-signal-control-types:mode-coordinated",
     "reason": "schedule-triggered",
     "control-source": "openits-types:control-central",
-    "trigger": "schedule",
+    "trigger": "openits-types:trigger-schedule",
     "occurred-at": "2026-07-11T14:05:00Z"
   }
 }

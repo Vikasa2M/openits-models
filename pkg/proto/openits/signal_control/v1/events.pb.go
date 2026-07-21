@@ -133,193 +133,95 @@ func (Source) EnumDescriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_events_proto_rawDescGZIP(), []int{1}
 }
 
-type PreemptionType int32
+type TsamEngagementState int32
 
 const (
-	PreemptionType_PREEMPTION_TYPE_NONE              PreemptionType = 0
-	PreemptionType_PREEMPTION_TYPE_RAILROAD          PreemptionType = 1
-	PreemptionType_PREEMPTION_TYPE_EMERGENCY_VEHICLE PreemptionType = 2
-	PreemptionType_PREEMPTION_TYPE_OTHER             PreemptionType = 5
+	TsamEngagementState_TSAM_ENGAGEMENT_STATE_UNSPECIFIED TsamEngagementState = 0
+	TsamEngagementState_TSAM_ENGAGEMENT_STATE_DISABLED    TsamEngagementState = 1
+	TsamEngagementState_TSAM_ENGAGEMENT_STATE_ADVISORY    TsamEngagementState = 2
+	TsamEngagementState_TSAM_ENGAGEMENT_STATE_ACTIVE      TsamEngagementState = 3
+	TsamEngagementState_TSAM_ENGAGEMENT_STATE_SUSPENDED   TsamEngagementState = 4
 )
 
-// Enum value maps for PreemptionType.
+// Enum value maps for TsamEngagementState.
 var (
-	PreemptionType_name = map[int32]string{
-		0: "PREEMPTION_TYPE_NONE",
-		1: "PREEMPTION_TYPE_RAILROAD",
-		2: "PREEMPTION_TYPE_EMERGENCY_VEHICLE",
-		5: "PREEMPTION_TYPE_OTHER",
+	TsamEngagementState_name = map[int32]string{
+		0: "TSAM_ENGAGEMENT_STATE_UNSPECIFIED",
+		1: "TSAM_ENGAGEMENT_STATE_DISABLED",
+		2: "TSAM_ENGAGEMENT_STATE_ADVISORY",
+		3: "TSAM_ENGAGEMENT_STATE_ACTIVE",
+		4: "TSAM_ENGAGEMENT_STATE_SUSPENDED",
 	}
-	PreemptionType_value = map[string]int32{
-		"PREEMPTION_TYPE_NONE":              0,
-		"PREEMPTION_TYPE_RAILROAD":          1,
-		"PREEMPTION_TYPE_EMERGENCY_VEHICLE": 2,
-		"PREEMPTION_TYPE_OTHER":             5,
+	TsamEngagementState_value = map[string]int32{
+		"TSAM_ENGAGEMENT_STATE_UNSPECIFIED": 0,
+		"TSAM_ENGAGEMENT_STATE_DISABLED":    1,
+		"TSAM_ENGAGEMENT_STATE_ADVISORY":    2,
+		"TSAM_ENGAGEMENT_STATE_ACTIVE":      3,
+		"TSAM_ENGAGEMENT_STATE_SUSPENDED":   4,
 	}
 )
 
-func (x PreemptionType) Enum() *PreemptionType {
-	p := new(PreemptionType)
+func (x TsamEngagementState) Enum() *TsamEngagementState {
+	p := new(TsamEngagementState)
 	*p = x
 	return p
 }
 
-func (x PreemptionType) String() string {
+func (x TsamEngagementState) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (PreemptionType) Descriptor() protoreflect.EnumDescriptor {
+func (TsamEngagementState) Descriptor() protoreflect.EnumDescriptor {
 	return file_openits_signal_control_v1_events_proto_enumTypes[2].Descriptor()
 }
 
-func (PreemptionType) Type() protoreflect.EnumType {
+func (TsamEngagementState) Type() protoreflect.EnumType {
 	return &file_openits_signal_control_v1_events_proto_enumTypes[2]
 }
 
-func (x PreemptionType) Number() protoreflect.EnumNumber {
+func (x TsamEngagementState) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use PreemptionType.Descriptor instead.
-func (PreemptionType) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use TsamEngagementState.Descriptor instead.
+func (TsamEngagementState) EnumDescriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_events_proto_rawDescGZIP(), []int{2}
-}
-
-type Prior int32
-
-const (
-	Prior_PRIOR_DISABLED  Prior = 0
-	Prior_PRIOR_ADVISORY  Prior = 1
-	Prior_PRIOR_ACTIVE    Prior = 2
-	Prior_PRIOR_SUSPENDED Prior = 3
-)
-
-// Enum value maps for Prior.
-var (
-	Prior_name = map[int32]string{
-		0: "PRIOR_DISABLED",
-		1: "PRIOR_ADVISORY",
-		2: "PRIOR_ACTIVE",
-		3: "PRIOR_SUSPENDED",
-	}
-	Prior_value = map[string]int32{
-		"PRIOR_DISABLED":  0,
-		"PRIOR_ADVISORY":  1,
-		"PRIOR_ACTIVE":    2,
-		"PRIOR_SUSPENDED": 3,
-	}
-)
-
-func (x Prior) Enum() *Prior {
-	p := new(Prior)
-	*p = x
-	return p
-}
-
-func (x Prior) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Prior) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_events_proto_enumTypes[3].Descriptor()
-}
-
-func (Prior) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_events_proto_enumTypes[3]
-}
-
-func (x Prior) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Prior.Descriptor instead.
-func (Prior) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_events_proto_rawDescGZIP(), []int{3}
-}
-
-type Current int32
-
-const (
-	Current_CURRENT_DISABLED  Current = 0
-	Current_CURRENT_ADVISORY  Current = 1
-	Current_CURRENT_ACTIVE    Current = 2
-	Current_CURRENT_SUSPENDED Current = 3
-)
-
-// Enum value maps for Current.
-var (
-	Current_name = map[int32]string{
-		0: "CURRENT_DISABLED",
-		1: "CURRENT_ADVISORY",
-		2: "CURRENT_ACTIVE",
-		3: "CURRENT_SUSPENDED",
-	}
-	Current_value = map[string]int32{
-		"CURRENT_DISABLED":  0,
-		"CURRENT_ADVISORY":  1,
-		"CURRENT_ACTIVE":    2,
-		"CURRENT_SUSPENDED": 3,
-	}
-)
-
-func (x Current) Enum() *Current {
-	p := new(Current)
-	*p = x
-	return p
-}
-
-func (x Current) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Current) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_events_proto_enumTypes[4].Descriptor()
-}
-
-func (Current) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_events_proto_enumTypes[4]
-}
-
-func (x Current) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Current.Descriptor instead.
-func (Current) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_events_proto_rawDescGZIP(), []int{4}
 }
 
 type AdjustmentType int32
 
 const (
-	AdjustmentType_ADJUSTMENT_TYPE_CYCLE_LENGTH      AdjustmentType = 0
-	AdjustmentType_ADJUSTMENT_TYPE_SPLIT_ADJUSTMENT  AdjustmentType = 1
-	AdjustmentType_ADJUSTMENT_TYPE_OFFSET_ADJUSTMENT AdjustmentType = 2
-	AdjustmentType_ADJUSTMENT_TYPE_PHASE_EXTENSION   AdjustmentType = 3
-	AdjustmentType_ADJUSTMENT_TYPE_PHASE_TRUNCATION  AdjustmentType = 4
-	AdjustmentType_ADJUSTMENT_TYPE_PLAN_CHANGE       AdjustmentType = 5
-	AdjustmentType_ADJUSTMENT_TYPE_OTHER             AdjustmentType = 6
+	AdjustmentType_ADJUSTMENT_TYPE_UNSPECIFIED       AdjustmentType = 0
+	AdjustmentType_ADJUSTMENT_TYPE_CYCLE_LENGTH      AdjustmentType = 1
+	AdjustmentType_ADJUSTMENT_TYPE_SPLIT_ADJUSTMENT  AdjustmentType = 2
+	AdjustmentType_ADJUSTMENT_TYPE_OFFSET_ADJUSTMENT AdjustmentType = 3
+	AdjustmentType_ADJUSTMENT_TYPE_PHASE_EXTENSION   AdjustmentType = 4
+	AdjustmentType_ADJUSTMENT_TYPE_PHASE_TRUNCATION  AdjustmentType = 5
+	AdjustmentType_ADJUSTMENT_TYPE_PLAN_CHANGE       AdjustmentType = 6
+	AdjustmentType_ADJUSTMENT_TYPE_OTHER             AdjustmentType = 7
 )
 
 // Enum value maps for AdjustmentType.
 var (
 	AdjustmentType_name = map[int32]string{
-		0: "ADJUSTMENT_TYPE_CYCLE_LENGTH",
-		1: "ADJUSTMENT_TYPE_SPLIT_ADJUSTMENT",
-		2: "ADJUSTMENT_TYPE_OFFSET_ADJUSTMENT",
-		3: "ADJUSTMENT_TYPE_PHASE_EXTENSION",
-		4: "ADJUSTMENT_TYPE_PHASE_TRUNCATION",
-		5: "ADJUSTMENT_TYPE_PLAN_CHANGE",
-		6: "ADJUSTMENT_TYPE_OTHER",
+		0: "ADJUSTMENT_TYPE_UNSPECIFIED",
+		1: "ADJUSTMENT_TYPE_CYCLE_LENGTH",
+		2: "ADJUSTMENT_TYPE_SPLIT_ADJUSTMENT",
+		3: "ADJUSTMENT_TYPE_OFFSET_ADJUSTMENT",
+		4: "ADJUSTMENT_TYPE_PHASE_EXTENSION",
+		5: "ADJUSTMENT_TYPE_PHASE_TRUNCATION",
+		6: "ADJUSTMENT_TYPE_PLAN_CHANGE",
+		7: "ADJUSTMENT_TYPE_OTHER",
 	}
 	AdjustmentType_value = map[string]int32{
-		"ADJUSTMENT_TYPE_CYCLE_LENGTH":      0,
-		"ADJUSTMENT_TYPE_SPLIT_ADJUSTMENT":  1,
-		"ADJUSTMENT_TYPE_OFFSET_ADJUSTMENT": 2,
-		"ADJUSTMENT_TYPE_PHASE_EXTENSION":   3,
-		"ADJUSTMENT_TYPE_PHASE_TRUNCATION":  4,
-		"ADJUSTMENT_TYPE_PLAN_CHANGE":       5,
-		"ADJUSTMENT_TYPE_OTHER":             6,
+		"ADJUSTMENT_TYPE_UNSPECIFIED":       0,
+		"ADJUSTMENT_TYPE_CYCLE_LENGTH":      1,
+		"ADJUSTMENT_TYPE_SPLIT_ADJUSTMENT":  2,
+		"ADJUSTMENT_TYPE_OFFSET_ADJUSTMENT": 3,
+		"ADJUSTMENT_TYPE_PHASE_EXTENSION":   4,
+		"ADJUSTMENT_TYPE_PHASE_TRUNCATION":  5,
+		"ADJUSTMENT_TYPE_PLAN_CHANGE":       6,
+		"ADJUSTMENT_TYPE_OTHER":             7,
 	}
 )
 
@@ -334,11 +236,11 @@ func (x AdjustmentType) String() string {
 }
 
 func (AdjustmentType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_events_proto_enumTypes[5].Descriptor()
+	return file_openits_signal_control_v1_events_proto_enumTypes[3].Descriptor()
 }
 
 func (AdjustmentType) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_events_proto_enumTypes[5]
+	return &file_openits_signal_control_v1_events_proto_enumTypes[3]
 }
 
 func (x AdjustmentType) Number() protoreflect.EnumNumber {
@@ -347,34 +249,37 @@ func (x AdjustmentType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AdjustmentType.Descriptor instead.
 func (AdjustmentType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_events_proto_rawDescGZIP(), []int{5}
+	return file_openits_signal_control_v1_events_proto_rawDescGZIP(), []int{3}
 }
 
 type DenialReason int32
 
 const (
-	DenialReason_DENIAL_REASON_RESERVICE_LOCK           DenialReason = 0
-	DenialReason_DENIAL_REASON_COORD_CONSTRAINT         DenialReason = 1
-	DenialReason_DENIAL_REASON_HIGHER_PRIORITY_CONFLICT DenialReason = 2
-	DenialReason_DENIAL_REASON_DISABLED                 DenialReason = 3
-	DenialReason_DENIAL_REASON_OTHER                    DenialReason = 4
+	DenialReason_DENIAL_REASON_UNSPECIFIED              DenialReason = 0
+	DenialReason_DENIAL_REASON_RESERVICE_LOCK           DenialReason = 1
+	DenialReason_DENIAL_REASON_COORD_CONSTRAINT         DenialReason = 2
+	DenialReason_DENIAL_REASON_HIGHER_PRIORITY_CONFLICT DenialReason = 3
+	DenialReason_DENIAL_REASON_DISABLED                 DenialReason = 4
+	DenialReason_DENIAL_REASON_OTHER                    DenialReason = 5
 )
 
 // Enum value maps for DenialReason.
 var (
 	DenialReason_name = map[int32]string{
-		0: "DENIAL_REASON_RESERVICE_LOCK",
-		1: "DENIAL_REASON_COORD_CONSTRAINT",
-		2: "DENIAL_REASON_HIGHER_PRIORITY_CONFLICT",
-		3: "DENIAL_REASON_DISABLED",
-		4: "DENIAL_REASON_OTHER",
+		0: "DENIAL_REASON_UNSPECIFIED",
+		1: "DENIAL_REASON_RESERVICE_LOCK",
+		2: "DENIAL_REASON_COORD_CONSTRAINT",
+		3: "DENIAL_REASON_HIGHER_PRIORITY_CONFLICT",
+		4: "DENIAL_REASON_DISABLED",
+		5: "DENIAL_REASON_OTHER",
 	}
 	DenialReason_value = map[string]int32{
-		"DENIAL_REASON_RESERVICE_LOCK":           0,
-		"DENIAL_REASON_COORD_CONSTRAINT":         1,
-		"DENIAL_REASON_HIGHER_PRIORITY_CONFLICT": 2,
-		"DENIAL_REASON_DISABLED":                 3,
-		"DENIAL_REASON_OTHER":                    4,
+		"DENIAL_REASON_UNSPECIFIED":              0,
+		"DENIAL_REASON_RESERVICE_LOCK":           1,
+		"DENIAL_REASON_COORD_CONSTRAINT":         2,
+		"DENIAL_REASON_HIGHER_PRIORITY_CONFLICT": 3,
+		"DENIAL_REASON_DISABLED":                 4,
+		"DENIAL_REASON_OTHER":                    5,
 	}
 )
 
@@ -389,11 +294,11 @@ func (x DenialReason) String() string {
 }
 
 func (DenialReason) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_events_proto_enumTypes[6].Descriptor()
+	return file_openits_signal_control_v1_events_proto_enumTypes[4].Descriptor()
 }
 
 func (DenialReason) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_events_proto_enumTypes[6]
+	return &file_openits_signal_control_v1_events_proto_enumTypes[4]
 }
 
 func (x DenialReason) Number() protoreflect.EnumNumber {
@@ -402,7 +307,7 @@ func (x DenialReason) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DenialReason.Descriptor instead.
 func (DenialReason) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_events_proto_rawDescGZIP(), []int{6}
+	return file_openits_signal_control_v1_events_proto_rawDescGZIP(), []int{4}
 }
 
 type ControllerFaultEvent struct {
@@ -766,7 +671,7 @@ type DetectorReportDetector struct {
 	DetectorId    uint32                 `protobuf:"varint,1,opt,name=detector_id,json=detectorId,proto3" json:"detector_id,omitempty"`
 	PhaseServed   uint32                 `protobuf:"varint,2,opt,name=phase_served,json=phaseServed,proto3" json:"phase_served,omitempty"`
 	Volume        uint32                 `protobuf:"varint,3,opt,name=volume,proto3" json:"volume,omitempty"`
-	Occupancy     uint32                 `protobuf:"varint,4,opt,name=occupancy,proto3" json:"occupancy,omitempty"`
+	Occupancy     string                 `protobuf:"bytes,4,opt,name=occupancy,proto3" json:"occupancy,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -822,11 +727,11 @@ func (x *DetectorReportDetector) GetVolume() uint32 {
 	return 0
 }
 
-func (x *DetectorReportDetector) GetOccupancy() uint32 {
+func (x *DetectorReportDetector) GetOccupancy() string {
 	if x != nil {
 		return x.Occupancy
 	}
-	return 0
+	return ""
 }
 
 type DetectorTransition struct {
@@ -1529,7 +1434,7 @@ type PreemptionActivated struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	PreemptNumber  uint32                 `protobuf:"varint,8,opt,name=preempt_number,json=preemptNumber,proto3" json:"preempt_number,omitempty"`
-	Type           PreemptionType         `protobuf:"varint,2,opt,name=type,proto3,enum=openits.signal_control.v1.PreemptionType" json:"type,omitempty"`
+	Type           string                 `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
 	SourceId       string                 `protobuf:"bytes,3,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`
 	ObservedBy     string                 `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
@@ -1585,11 +1490,11 @@ func (x *PreemptionActivated) GetPreemptNumber() uint32 {
 	return 0
 }
 
-func (x *PreemptionActivated) GetType() PreemptionType {
+func (x *PreemptionActivated) GetType() string {
 	if x != nil {
 		return x.Type
 	}
-	return PreemptionType_PREEMPTION_TYPE_NONE
+	return ""
 }
 
 func (x *PreemptionActivated) GetSourceId() string {
@@ -1645,7 +1550,7 @@ type PreemptionCleared struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	PreemptNumber  uint32                 `protobuf:"varint,8,opt,name=preempt_number,json=preemptNumber,proto3" json:"preempt_number,omitempty"`
-	Type           PreemptionType         `protobuf:"varint,2,opt,name=type,proto3,enum=openits.signal_control.v1.PreemptionType" json:"type,omitempty"`
+	Type           string                 `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
 	SourceId       string                 `protobuf:"bytes,3,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`
 	ObservedBy     string                 `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
@@ -1701,11 +1606,11 @@ func (x *PreemptionCleared) GetPreemptNumber() uint32 {
 	return 0
 }
 
-func (x *PreemptionCleared) GetType() PreemptionType {
+func (x *PreemptionCleared) GetType() string {
 	if x != nil {
 		return x.Type
 	}
-	return PreemptionType_PREEMPTION_TYPE_NONE
+	return ""
 }
 
 func (x *PreemptionCleared) GetSourceId() string {
@@ -1868,8 +1773,8 @@ func (x *PreemptionEvent) GetSourceDeviceId() string {
 type TsamModeChanged struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	Prior          Prior                  `protobuf:"varint,2,opt,name=prior,proto3,enum=openits.signal_control.v1.Prior" json:"prior,omitempty"`
-	Current        Current                `protobuf:"varint,3,opt,name=current,proto3,enum=openits.signal_control.v1.Current" json:"current,omitempty"`
+	Prior          TsamEngagementState    `protobuf:"varint,2,opt,name=prior,proto3,enum=openits.signal_control.v1.TsamEngagementState" json:"prior,omitempty"`
+	Current        TsamEngagementState    `protobuf:"varint,3,opt,name=current,proto3,enum=openits.signal_control.v1.TsamEngagementState" json:"current,omitempty"`
 	Reason         string                 `protobuf:"bytes,4,opt,name=reason,proto3" json:"reason,omitempty"`
 	ObservedBy     string                 `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
@@ -1918,18 +1823,18 @@ func (x *TsamModeChanged) GetKind() string {
 	return ""
 }
 
-func (x *TsamModeChanged) GetPrior() Prior {
+func (x *TsamModeChanged) GetPrior() TsamEngagementState {
 	if x != nil {
 		return x.Prior
 	}
-	return Prior_PRIOR_DISABLED
+	return TsamEngagementState_TSAM_ENGAGEMENT_STATE_UNSPECIFIED
 }
 
-func (x *TsamModeChanged) GetCurrent() Current {
+func (x *TsamModeChanged) GetCurrent() TsamEngagementState {
 	if x != nil {
 		return x.Current
 	}
-	return Current_CURRENT_DISABLED
+	return TsamEngagementState_TSAM_ENGAGEMENT_STATE_UNSPECIFIED
 }
 
 func (x *TsamModeChanged) GetReason() string {
@@ -2047,7 +1952,7 @@ func (x *TsamRecommendationApplied) GetAdjustmentType() AdjustmentType {
 	if x != nil {
 		return x.AdjustmentType
 	}
-	return AdjustmentType_ADJUSTMENT_TYPE_CYCLE_LENGTH
+	return AdjustmentType_ADJUSTMENT_TYPE_UNSPECIFIED
 }
 
 func (x *TsamRecommendationApplied) GetMagnitudeSeconds() string {
@@ -2200,7 +2105,7 @@ func (x *TspEvent) GetDenialReason() DenialReason {
 	if x != nil {
 		return x.DenialReason
 	}
-	return DenialReason_DENIAL_REASON_RESERVICE_LOCK
+	return DenialReason_DENIAL_REASON_UNSPECIFIED
 }
 
 func (x *TspEvent) GetObservedBy() string {
@@ -2389,7 +2294,7 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"detectorId\x12!\n" +
 	"\fphase_served\x18\x02 \x01(\rR\vphaseServed\x12\x16\n" +
 	"\x06volume\x18\x03 \x01(\rR\x06volume\x12\x1c\n" +
-	"\toccupancy\x18\x04 \x01(\rR\toccupancy\"\x85\x03\n" +
+	"\toccupancy\x18\x04 \x01(\tR\toccupancy\"\x85\x03\n" +
 	"\x12DetectorTransition\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x18\n" +
 	"\achannel\x18\x02 \x01(\rR\achannel\x12\x12\n" +
@@ -2473,11 +2378,11 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"\x05owner\x18\t \x01(\tR\x05owner\x12\x1a\n" +
 	"\bsequence\x18\n" +
 	" \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\x9c\x03\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xf1\x02\n" +
 	"\x13PreemptionActivated\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12%\n" +
-	"\x0epreempt_number\x18\b \x01(\rR\rpreemptNumber\x12=\n" +
-	"\x04type\x18\x02 \x01(\x0e2).openits.signal_control.v1.PreemptionTypeR\x04type\x12\x1b\n" +
+	"\x0epreempt_number\x18\b \x01(\rR\rpreemptNumber\x12\x12\n" +
+	"\x04type\x18\x02 \x01(\tR\x04type\x12\x1b\n" +
 	"\tsource_id\x18\x03 \x01(\tR\bsourceId\x12\x1f\n" +
 	"\vobserved_by\x18\x05 \x01(\tR\n" +
 	"observedBy\x12;\n" +
@@ -2486,11 +2391,11 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"\x05owner\x18\x06 \x01(\tR\x05owner\x12\x1a\n" +
 	"\bsequence\x18\a \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\x9a\x03\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xef\x02\n" +
 	"\x11PreemptionCleared\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12%\n" +
-	"\x0epreempt_number\x18\b \x01(\rR\rpreemptNumber\x12=\n" +
-	"\x04type\x18\x02 \x01(\x0e2).openits.signal_control.v1.PreemptionTypeR\x04type\x12\x1b\n" +
+	"\x0epreempt_number\x18\b \x01(\rR\rpreemptNumber\x12\x12\n" +
+	"\x04type\x18\x02 \x01(\tR\x04type\x12\x1b\n" +
 	"\tsource_id\x18\x03 \x01(\tR\bsourceId\x12\x1f\n" +
 	"\vobserved_by\x18\x05 \x01(\tR\n" +
 	"observedBy\x12;\n" +
@@ -2511,11 +2416,11 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"\x05owner\x18\a \x01(\tR\x05owner\x12\x1a\n" +
 	"\bsequence\x18\b \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xa3\x03\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xbd\x03\n" +
 	"\x0fTsamModeChanged\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x126\n" +
-	"\x05prior\x18\x02 \x01(\x0e2 .openits.signal_control.v1.PriorR\x05prior\x12<\n" +
-	"\acurrent\x18\x03 \x01(\x0e2\".openits.signal_control.v1.CurrentR\acurrent\x12\x16\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12D\n" +
+	"\x05prior\x18\x02 \x01(\x0e2..openits.signal_control.v1.TsamEngagementStateR\x05prior\x12H\n" +
+	"\acurrent\x18\x03 \x01(\x0e2..openits.signal_control.v1.TsamEngagementStateR\acurrent\x12\x16\n" +
 	"\x06reason\x18\x04 \x01(\tR\x06reason\x12\x1f\n" +
 	"\vobserved_by\x18\a \x01(\tR\n" +
 	"observedBy\x12;\n" +
@@ -2580,36 +2485,29 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"\x0fSOURCE_SCHEDULE\x10\x01\x12\x13\n" +
 	"\x0fSOURCE_OPERATOR\x10\x02\x12\x13\n" +
 	"\x0fSOURCE_ADAPTIVE\x10\x03\x12\x15\n" +
-	"\x11SOURCE_PREEMPTION\x10\x04*\x8a\x01\n" +
-	"\x0ePreemptionType\x12\x18\n" +
-	"\x14PREEMPTION_TYPE_NONE\x10\x00\x12\x1c\n" +
-	"\x18PREEMPTION_TYPE_RAILROAD\x10\x01\x12%\n" +
-	"!PREEMPTION_TYPE_EMERGENCY_VEHICLE\x10\x02\x12\x19\n" +
-	"\x15PREEMPTION_TYPE_OTHER\x10\x05*V\n" +
-	"\x05Prior\x12\x12\n" +
-	"\x0ePRIOR_DISABLED\x10\x00\x12\x12\n" +
-	"\x0ePRIOR_ADVISORY\x10\x01\x12\x10\n" +
-	"\fPRIOR_ACTIVE\x10\x02\x12\x13\n" +
-	"\x0fPRIOR_SUSPENDED\x10\x03*`\n" +
-	"\aCurrent\x12\x14\n" +
-	"\x10CURRENT_DISABLED\x10\x00\x12\x14\n" +
-	"\x10CURRENT_ADVISORY\x10\x01\x12\x12\n" +
-	"\x0eCURRENT_ACTIVE\x10\x02\x12\x15\n" +
-	"\x11CURRENT_SUSPENDED\x10\x03*\x86\x02\n" +
-	"\x0eAdjustmentType\x12 \n" +
-	"\x1cADJUSTMENT_TYPE_CYCLE_LENGTH\x10\x00\x12$\n" +
-	" ADJUSTMENT_TYPE_SPLIT_ADJUSTMENT\x10\x01\x12%\n" +
-	"!ADJUSTMENT_TYPE_OFFSET_ADJUSTMENT\x10\x02\x12#\n" +
-	"\x1fADJUSTMENT_TYPE_PHASE_EXTENSION\x10\x03\x12$\n" +
-	" ADJUSTMENT_TYPE_PHASE_TRUNCATION\x10\x04\x12\x1f\n" +
-	"\x1bADJUSTMENT_TYPE_PLAN_CHANGE\x10\x05\x12\x19\n" +
-	"\x15ADJUSTMENT_TYPE_OTHER\x10\x06*\xb5\x01\n" +
-	"\fDenialReason\x12 \n" +
-	"\x1cDENIAL_REASON_RESERVICE_LOCK\x10\x00\x12\"\n" +
-	"\x1eDENIAL_REASON_COORD_CONSTRAINT\x10\x01\x12*\n" +
-	"&DENIAL_REASON_HIGHER_PRIORITY_CONFLICT\x10\x02\x12\x1a\n" +
-	"\x16DENIAL_REASON_DISABLED\x10\x03\x12\x17\n" +
-	"\x13DENIAL_REASON_OTHER\x10\x04BWZUgithub.com/openits/openits-models/pkg/proto/openits/signal_control/v1;signalcontrolv1b\x06proto3"
+	"\x11SOURCE_PREEMPTION\x10\x04*\xcb\x01\n" +
+	"\x13TsamEngagementState\x12%\n" +
+	"!TSAM_ENGAGEMENT_STATE_UNSPECIFIED\x10\x00\x12\"\n" +
+	"\x1eTSAM_ENGAGEMENT_STATE_DISABLED\x10\x01\x12\"\n" +
+	"\x1eTSAM_ENGAGEMENT_STATE_ADVISORY\x10\x02\x12 \n" +
+	"\x1cTSAM_ENGAGEMENT_STATE_ACTIVE\x10\x03\x12#\n" +
+	"\x1fTSAM_ENGAGEMENT_STATE_SUSPENDED\x10\x04*\xa7\x02\n" +
+	"\x0eAdjustmentType\x12\x1f\n" +
+	"\x1bADJUSTMENT_TYPE_UNSPECIFIED\x10\x00\x12 \n" +
+	"\x1cADJUSTMENT_TYPE_CYCLE_LENGTH\x10\x01\x12$\n" +
+	" ADJUSTMENT_TYPE_SPLIT_ADJUSTMENT\x10\x02\x12%\n" +
+	"!ADJUSTMENT_TYPE_OFFSET_ADJUSTMENT\x10\x03\x12#\n" +
+	"\x1fADJUSTMENT_TYPE_PHASE_EXTENSION\x10\x04\x12$\n" +
+	" ADJUSTMENT_TYPE_PHASE_TRUNCATION\x10\x05\x12\x1f\n" +
+	"\x1bADJUSTMENT_TYPE_PLAN_CHANGE\x10\x06\x12\x19\n" +
+	"\x15ADJUSTMENT_TYPE_OTHER\x10\a*\xd4\x01\n" +
+	"\fDenialReason\x12\x1d\n" +
+	"\x19DENIAL_REASON_UNSPECIFIED\x10\x00\x12 \n" +
+	"\x1cDENIAL_REASON_RESERVICE_LOCK\x10\x01\x12\"\n" +
+	"\x1eDENIAL_REASON_COORD_CONSTRAINT\x10\x02\x12*\n" +
+	"&DENIAL_REASON_HIGHER_PRIORITY_CONFLICT\x10\x03\x12\x1a\n" +
+	"\x16DENIAL_REASON_DISABLED\x10\x04\x12\x17\n" +
+	"\x13DENIAL_REASON_OTHER\x10\x05BWZUgithub.com/openits/openits-models/pkg/proto/openits/signal_control/v1;signalcontrolv1b\x06proto3"
 
 var (
 	file_openits_signal_control_v1_events_proto_rawDescOnce sync.Once
@@ -2623,82 +2521,78 @@ func file_openits_signal_control_v1_events_proto_rawDescGZIP() []byte {
 	return file_openits_signal_control_v1_events_proto_rawDescData
 }
 
-var file_openits_signal_control_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 7)
+var file_openits_signal_control_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
 var file_openits_signal_control_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_openits_signal_control_v1_events_proto_goTypes = []any{
 	(FaultSeverity)(0),                // 0: openits.signal_control.v1.FaultSeverity
 	(Source)(0),                       // 1: openits.signal_control.v1.Source
-	(PreemptionType)(0),               // 2: openits.signal_control.v1.PreemptionType
-	(Prior)(0),                        // 3: openits.signal_control.v1.Prior
-	(Current)(0),                      // 4: openits.signal_control.v1.Current
-	(AdjustmentType)(0),               // 5: openits.signal_control.v1.AdjustmentType
-	(DenialReason)(0),                 // 6: openits.signal_control.v1.DenialReason
-	(*ControllerFaultEvent)(nil),      // 7: openits.signal_control.v1.ControllerFaultEvent
-	(*CoordinationChange)(nil),        // 8: openits.signal_control.v1.CoordinationChange
-	(*DetectorReport)(nil),            // 9: openits.signal_control.v1.DetectorReport
-	(*DetectorReportDetector)(nil),    // 10: openits.signal_control.v1.DetectorReportDetector
-	(*DetectorTransition)(nil),        // 11: openits.signal_control.v1.DetectorTransition
-	(*OperationalStatusReport)(nil),   // 12: openits.signal_control.v1.OperationalStatusReport
-	(*OverlapChange)(nil),             // 13: openits.signal_control.v1.OverlapChange
-	(*PedestrianEvent)(nil),           // 14: openits.signal_control.v1.PedestrianEvent
-	(*PhaseStateChange)(nil),          // 15: openits.signal_control.v1.PhaseStateChange
-	(*PlanApplied)(nil),               // 16: openits.signal_control.v1.PlanApplied
-	(*PreemptionActivated)(nil),       // 17: openits.signal_control.v1.PreemptionActivated
-	(*PreemptionCleared)(nil),         // 18: openits.signal_control.v1.PreemptionCleared
-	(*PreemptionEvent)(nil),           // 19: openits.signal_control.v1.PreemptionEvent
-	(*TsamModeChanged)(nil),           // 20: openits.signal_control.v1.TsamModeChanged
-	(*TsamRecommendationApplied)(nil), // 21: openits.signal_control.v1.TsamRecommendationApplied
-	(*TspEvent)(nil),                  // 22: openits.signal_control.v1.TspEvent
-	(*UnmappedEvent)(nil),             // 23: openits.signal_control.v1.UnmappedEvent
-	(*timestamppb.Timestamp)(nil),     // 24: google.protobuf.Timestamp
-	(*v1.WireSource)(nil),             // 25: openits.types.v1.WireSource
+	(TsamEngagementState)(0),          // 2: openits.signal_control.v1.TsamEngagementState
+	(AdjustmentType)(0),               // 3: openits.signal_control.v1.AdjustmentType
+	(DenialReason)(0),                 // 4: openits.signal_control.v1.DenialReason
+	(*ControllerFaultEvent)(nil),      // 5: openits.signal_control.v1.ControllerFaultEvent
+	(*CoordinationChange)(nil),        // 6: openits.signal_control.v1.CoordinationChange
+	(*DetectorReport)(nil),            // 7: openits.signal_control.v1.DetectorReport
+	(*DetectorReportDetector)(nil),    // 8: openits.signal_control.v1.DetectorReportDetector
+	(*DetectorTransition)(nil),        // 9: openits.signal_control.v1.DetectorTransition
+	(*OperationalStatusReport)(nil),   // 10: openits.signal_control.v1.OperationalStatusReport
+	(*OverlapChange)(nil),             // 11: openits.signal_control.v1.OverlapChange
+	(*PedestrianEvent)(nil),           // 12: openits.signal_control.v1.PedestrianEvent
+	(*PhaseStateChange)(nil),          // 13: openits.signal_control.v1.PhaseStateChange
+	(*PlanApplied)(nil),               // 14: openits.signal_control.v1.PlanApplied
+	(*PreemptionActivated)(nil),       // 15: openits.signal_control.v1.PreemptionActivated
+	(*PreemptionCleared)(nil),         // 16: openits.signal_control.v1.PreemptionCleared
+	(*PreemptionEvent)(nil),           // 17: openits.signal_control.v1.PreemptionEvent
+	(*TsamModeChanged)(nil),           // 18: openits.signal_control.v1.TsamModeChanged
+	(*TsamRecommendationApplied)(nil), // 19: openits.signal_control.v1.TsamRecommendationApplied
+	(*TspEvent)(nil),                  // 20: openits.signal_control.v1.TspEvent
+	(*UnmappedEvent)(nil),             // 21: openits.signal_control.v1.UnmappedEvent
+	(*timestamppb.Timestamp)(nil),     // 22: google.protobuf.Timestamp
+	(*v1.WireSource)(nil),             // 23: openits.types.v1.WireSource
 }
 var file_openits_signal_control_v1_events_proto_depIdxs = []int32{
 	0,  // 0: openits.signal_control.v1.ControllerFaultEvent.severity:type_name -> openits.signal_control.v1.FaultSeverity
-	24, // 1: openits.signal_control.v1.ControllerFaultEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	25, // 2: openits.signal_control.v1.ControllerFaultEvent.source:type_name -> openits.types.v1.WireSource
-	24, // 3: openits.signal_control.v1.CoordinationChange.occurred_at:type_name -> google.protobuf.Timestamp
-	25, // 4: openits.signal_control.v1.CoordinationChange.source:type_name -> openits.types.v1.WireSource
-	24, // 5: openits.signal_control.v1.DetectorReport.interval_start:type_name -> google.protobuf.Timestamp
-	10, // 6: openits.signal_control.v1.DetectorReport.detector:type_name -> openits.signal_control.v1.DetectorReportDetector
-	24, // 7: openits.signal_control.v1.DetectorReport.occurred_at:type_name -> google.protobuf.Timestamp
-	24, // 8: openits.signal_control.v1.DetectorTransition.occurred_at:type_name -> google.protobuf.Timestamp
-	25, // 9: openits.signal_control.v1.DetectorTransition.source:type_name -> openits.types.v1.WireSource
-	24, // 10: openits.signal_control.v1.OperationalStatusReport.last_mode_change:type_name -> google.protobuf.Timestamp
-	24, // 11: openits.signal_control.v1.OperationalStatusReport.occurred_at:type_name -> google.protobuf.Timestamp
-	24, // 12: openits.signal_control.v1.OverlapChange.occurred_at:type_name -> google.protobuf.Timestamp
-	25, // 13: openits.signal_control.v1.OverlapChange.source:type_name -> openits.types.v1.WireSource
-	24, // 14: openits.signal_control.v1.PedestrianEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	25, // 15: openits.signal_control.v1.PedestrianEvent.source:type_name -> openits.types.v1.WireSource
-	24, // 16: openits.signal_control.v1.PhaseStateChange.occurred_at:type_name -> google.protobuf.Timestamp
-	25, // 17: openits.signal_control.v1.PhaseStateChange.source:type_name -> openits.types.v1.WireSource
+	22, // 1: openits.signal_control.v1.ControllerFaultEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	23, // 2: openits.signal_control.v1.ControllerFaultEvent.source:type_name -> openits.types.v1.WireSource
+	22, // 3: openits.signal_control.v1.CoordinationChange.occurred_at:type_name -> google.protobuf.Timestamp
+	23, // 4: openits.signal_control.v1.CoordinationChange.source:type_name -> openits.types.v1.WireSource
+	22, // 5: openits.signal_control.v1.DetectorReport.interval_start:type_name -> google.protobuf.Timestamp
+	8,  // 6: openits.signal_control.v1.DetectorReport.detector:type_name -> openits.signal_control.v1.DetectorReportDetector
+	22, // 7: openits.signal_control.v1.DetectorReport.occurred_at:type_name -> google.protobuf.Timestamp
+	22, // 8: openits.signal_control.v1.DetectorTransition.occurred_at:type_name -> google.protobuf.Timestamp
+	23, // 9: openits.signal_control.v1.DetectorTransition.source:type_name -> openits.types.v1.WireSource
+	22, // 10: openits.signal_control.v1.OperationalStatusReport.last_mode_change:type_name -> google.protobuf.Timestamp
+	22, // 11: openits.signal_control.v1.OperationalStatusReport.occurred_at:type_name -> google.protobuf.Timestamp
+	22, // 12: openits.signal_control.v1.OverlapChange.occurred_at:type_name -> google.protobuf.Timestamp
+	23, // 13: openits.signal_control.v1.OverlapChange.source:type_name -> openits.types.v1.WireSource
+	22, // 14: openits.signal_control.v1.PedestrianEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	23, // 15: openits.signal_control.v1.PedestrianEvent.source:type_name -> openits.types.v1.WireSource
+	22, // 16: openits.signal_control.v1.PhaseStateChange.occurred_at:type_name -> google.protobuf.Timestamp
+	23, // 17: openits.signal_control.v1.PhaseStateChange.source:type_name -> openits.types.v1.WireSource
 	1,  // 18: openits.signal_control.v1.PlanApplied.source:type_name -> openits.signal_control.v1.Source
-	24, // 19: openits.signal_control.v1.PlanApplied.occurred_at:type_name -> google.protobuf.Timestamp
-	2,  // 20: openits.signal_control.v1.PreemptionActivated.type:type_name -> openits.signal_control.v1.PreemptionType
-	24, // 21: openits.signal_control.v1.PreemptionActivated.occurred_at:type_name -> google.protobuf.Timestamp
-	25, // 22: openits.signal_control.v1.PreemptionActivated.source:type_name -> openits.types.v1.WireSource
-	2,  // 23: openits.signal_control.v1.PreemptionCleared.type:type_name -> openits.signal_control.v1.PreemptionType
-	24, // 24: openits.signal_control.v1.PreemptionCleared.occurred_at:type_name -> google.protobuf.Timestamp
-	25, // 25: openits.signal_control.v1.PreemptionCleared.source:type_name -> openits.types.v1.WireSource
-	24, // 26: openits.signal_control.v1.PreemptionEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	25, // 27: openits.signal_control.v1.PreemptionEvent.source:type_name -> openits.types.v1.WireSource
-	3,  // 28: openits.signal_control.v1.TsamModeChanged.prior:type_name -> openits.signal_control.v1.Prior
-	4,  // 29: openits.signal_control.v1.TsamModeChanged.current:type_name -> openits.signal_control.v1.Current
-	24, // 30: openits.signal_control.v1.TsamModeChanged.occurred_at:type_name -> google.protobuf.Timestamp
-	25, // 31: openits.signal_control.v1.TsamModeChanged.source:type_name -> openits.types.v1.WireSource
-	5,  // 32: openits.signal_control.v1.TsamRecommendationApplied.adjustment_type:type_name -> openits.signal_control.v1.AdjustmentType
-	24, // 33: openits.signal_control.v1.TsamRecommendationApplied.occurred_at:type_name -> google.protobuf.Timestamp
-	25, // 34: openits.signal_control.v1.TsamRecommendationApplied.source:type_name -> openits.types.v1.WireSource
-	6,  // 35: openits.signal_control.v1.TspEvent.denial_reason:type_name -> openits.signal_control.v1.DenialReason
-	24, // 36: openits.signal_control.v1.TspEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	25, // 37: openits.signal_control.v1.TspEvent.source:type_name -> openits.types.v1.WireSource
-	24, // 38: openits.signal_control.v1.UnmappedEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	25, // 39: openits.signal_control.v1.UnmappedEvent.source:type_name -> openits.types.v1.WireSource
-	40, // [40:40] is the sub-list for method output_type
-	40, // [40:40] is the sub-list for method input_type
-	40, // [40:40] is the sub-list for extension type_name
-	40, // [40:40] is the sub-list for extension extendee
-	0,  // [0:40] is the sub-list for field type_name
+	22, // 19: openits.signal_control.v1.PlanApplied.occurred_at:type_name -> google.protobuf.Timestamp
+	22, // 20: openits.signal_control.v1.PreemptionActivated.occurred_at:type_name -> google.protobuf.Timestamp
+	23, // 21: openits.signal_control.v1.PreemptionActivated.source:type_name -> openits.types.v1.WireSource
+	22, // 22: openits.signal_control.v1.PreemptionCleared.occurred_at:type_name -> google.protobuf.Timestamp
+	23, // 23: openits.signal_control.v1.PreemptionCleared.source:type_name -> openits.types.v1.WireSource
+	22, // 24: openits.signal_control.v1.PreemptionEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	23, // 25: openits.signal_control.v1.PreemptionEvent.source:type_name -> openits.types.v1.WireSource
+	2,  // 26: openits.signal_control.v1.TsamModeChanged.prior:type_name -> openits.signal_control.v1.TsamEngagementState
+	2,  // 27: openits.signal_control.v1.TsamModeChanged.current:type_name -> openits.signal_control.v1.TsamEngagementState
+	22, // 28: openits.signal_control.v1.TsamModeChanged.occurred_at:type_name -> google.protobuf.Timestamp
+	23, // 29: openits.signal_control.v1.TsamModeChanged.source:type_name -> openits.types.v1.WireSource
+	3,  // 30: openits.signal_control.v1.TsamRecommendationApplied.adjustment_type:type_name -> openits.signal_control.v1.AdjustmentType
+	22, // 31: openits.signal_control.v1.TsamRecommendationApplied.occurred_at:type_name -> google.protobuf.Timestamp
+	23, // 32: openits.signal_control.v1.TsamRecommendationApplied.source:type_name -> openits.types.v1.WireSource
+	4,  // 33: openits.signal_control.v1.TspEvent.denial_reason:type_name -> openits.signal_control.v1.DenialReason
+	22, // 34: openits.signal_control.v1.TspEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	23, // 35: openits.signal_control.v1.TspEvent.source:type_name -> openits.types.v1.WireSource
+	22, // 36: openits.signal_control.v1.UnmappedEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	23, // 37: openits.signal_control.v1.UnmappedEvent.source:type_name -> openits.types.v1.WireSource
+	38, // [38:38] is the sub-list for method output_type
+	38, // [38:38] is the sub-list for method input_type
+	38, // [38:38] is the sub-list for extension type_name
+	38, // [38:38] is the sub-list for extension extendee
+	0,  // [0:38] is the sub-list for field type_name
 }
 
 func init() { file_openits_signal_control_v1_events_proto_init() }
@@ -2711,7 +2605,7 @@ func file_openits_signal_control_v1_events_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_signal_control_v1_events_proto_rawDesc), len(file_openits_signal_control_v1_events_proto_rawDesc)),
-			NumEnums:      7,
+			NumEnums:      5,
 			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   0,

@@ -1,0 +1,16 @@
+{
+  "openits-rsu:rsu": {
+    "config": { "id": "rsu-faults-01", "name": "RSU with active faults" },
+    "faults": {
+      "fault": [
+        {
+          "fault-id": "radio-1",
+          "severity": "major",
+          "description": "TX PLL unlock",
+          "first-observed": "2026-07-21T10:00:00Z",
+          "category": "openits-rsu-types:rsu-fault-radio"
+        }
+      ]
+    }
+  }
+}

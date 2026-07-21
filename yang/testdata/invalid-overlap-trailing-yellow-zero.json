@@ -1,0 +1,26 @@
+{
+  "openits-signal-control:signal-controller": {
+    "config": { "id": "i35-exit-214", "name": "I-35 NB @ Exit 214" },
+    "phases": {
+      "phase": [
+        { "phase-number": 2, "config": { "phase-number": 2, "ring": 1, "barrier": 1, "enabled": true, "timing": { "min-green": "5.0", "max-green": "45.0", "yellow-change": "3.5", "red-clear": "1.5" } } },
+        { "phase-number": 5, "config": { "phase-number": 5, "ring": 2, "barrier": 1, "enabled": true, "timing": { "min-green": "5.0", "max-green": "20.0", "yellow-change": "3.0", "red-clear": "1.5" } } }
+      ]
+    },
+    "overlaps": {
+      "overlap": [
+        {
+          "overlap-number": 1,
+          "config": {
+            "overlap-number": 1,
+            "name": "NB left FYA",
+            "type": "openits-signal-control-types:overlap-fya",
+            "included-phases": [5],
+            "trailing-green": "0.0", "trailing-yellow": "0.0", "trailing-red-clear": "1.0",
+            "fya": { "protected-left-phase": 5, "opposing-through-phase": 2 }
+          }
+        }
+      ]
+    }
+  }
+}

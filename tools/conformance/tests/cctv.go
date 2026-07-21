@@ -136,3 +136,32 @@ func TestCctvEvent_FaultRaisedShape(t *T, obs *Observation) {
 	}
 	t.Errorf("no fault-raised event observed during %s window", obs.Window)
 }
+
+// ----- PTZ velocity / operational status (model-review additions) -----
+
+// A camera reporting move-mode == velocity must expose the velocity setpoint
+// container it is tracking; otherwise the joystick readback is uninterpretable.
+func TestCctv_VelocityMoveRequiresVelocityConfig(t *T, obs *Observation) {
+	ptz := obs.Device.GetCamera().GetPtz()
+	if ptz == nil || ptz.GetState() == nil {
+		return
+	}
+	if ptz.GetState().GetMoveMode() != yangpkg.OpenitsCctvTypes_PtzMoveMode_velocity {
+		return
+	}
+	if ptz.GetConfig() == nil || ptz.GetConfig().GetVelocity() == nil {
+		t.Errorf("ptz move-mode is velocity but ptz/config/velocity is absent")
+	}
+}
+
+// The device-level operational-status rollup must be reported so a consumer
+// knows whether the camera is usable without inferring it from sub-states.
+func TestCctv_OperationalStatusPresent(t *T, obs *Observation) {
+	st := obs.Device.GetCamera().GetState()
+	if st == nil {
+		return
+	}
+	if st.GetOperationalStatus() == yangpkg.OpenitsCctvTypes_OperationalStatus_UNSET {
+		t.Errorf("state/operational-status is unset; camera usability is unknown")
+	}
+}

@@ -1,0 +1,19 @@
+{
+  "openits-rsu:rsu": {
+    "config": { "id": "rsu-ingest-01", "name": "SPaT Immediate-Forward ingest" },
+    "operating": {
+      "config": { "configured-time-source": "gnss-pps" }
+    },
+    "security": {
+      "config": { "security-enabled": true }
+    },
+    "messages": {
+      "spat": { "config": {
+        "enabled": true,
+        "source-mode": "immediate-forward-ingest",
+        "ingest": { "transport": "udp", "address": "10.0.0.5", "port": 5000, "psid": 32770 },
+        "intersection": [ { "region": 1, "id": 42 } ]
+      } }
+    }
+  }
+}

@@ -4,12 +4,14 @@
     "state": {
       "id": "cctv-i35-mm214", "name": "I-35 NB @ MM 214 PTZ",
       "latitude": "30.2672", "longitude": "-97.7431",
-      "make": "Axis", "model": "Q6215-LE", "firmware": "10.12.0"
+      "make": "Axis", "model": "Q6215-LE", "firmware": "10.12.0",
+      "operational-status": "online"
     },
-    "mounting": { "structure": "pole", "height-m": "9.1", "co-located-device": ["asc-i35-mm214", "ess-i35-mm214"] },
+    "mounting": { "structure": "pole", "height-m": "9.1", "pan-reference-offset-deg": 180, "associated-device": [ { "device-id": "asc-i35-mm214", "role": "openits-types:role-co-located" }, { "device-id": "ess-i35-mm214", "role": "openits-types:role-co-located" } ] },
     "ptz": {
       "capabilities": { "ptz-capable": true, "max-presets": 256, "pan-continuous": true },
-      "state": { "pan-degrees": "182.0", "tilt-degrees": "-12.5", "zoom-percent": 40, "moving": false },
+      "config": { "absolute": { "pan-degrees": "182.0", "tilt-degrees": "-12.5", "zoom-percent": 40 } },
+      "state": { "pan-degrees": "182.0", "tilt-degrees": "-12.5", "zoom-percent": 40, "moving": false, "move-mode": "absolute" },
       "presets": {
         "preset": [
           { "preset-id": 1, "name": "NB approach", "pan-degrees": "180.0", "tilt-degrees": "-10.0", "zoom-percent": 30 },
@@ -29,15 +31,20 @@
         "state": { "active-tour": 1, "run-state": "running", "current-stop": 1 }
       }
     },
+    "lens": {
+      "config": { "focus-mode": "auto", "iris-mode": "auto" },
+      "state": { "focus-mode": "auto", "focus-position": 62, "iris-mode": "auto", "iris-position": 70 }
+    },
+    "privacy-masks": { "mask": [ { "mask-id": 1, "name": "residence NE corner", "enabled": true } ] },
     "streams": {
       "stream": [
         { "stream-id": 0,
           "config": { "codec": "h264", "target-bitrate-kbps": 4000 },
-          "state": { "width-px": 1920, "height-px": 1080, "codec": "h264", "bitrate-kbps": 3850, "frame-rate": "30.0", "health": "ok" } }
+          "state": { "width-px": 1920, "height-px": 1080, "codec": "h264", "bitrate-kbps": 3850, "frame-rate": "30.0", "health": "ok", "uri": "rtsp://cctv-i35-mm214.example/stream0" } }
       ]
     },
     "environment": {
-      "config": { "wiper": false, "washer": false, "heater-mode": "auto" },
+      "config": { "wiper": false, "washer": false, "washer-spray-duration-s": 5, "heater-mode": "auto" },
       "state": { "enclosure-temp-c": "34.5", "wiper-active": false, "heater-active": false, "blower-active": true }
     },
     "faults": {
@@ -47,11 +54,11 @@
     },
     "control": {
       "config": {
-        "control-mode": "openits-cctv-types:control-central",
+        "control-mode": "openits-cctv-types:cctv-control-central",
         "holder": { "requested-by": "op-tmc-07", "priority": 200, "lockout-timeout-s": 120 }
       },
       "state": {
-        "control-mode": "openits-cctv-types:control-central",
+        "control-mode": "openits-cctv-types:cctv-control-central",
         "holder": { "current-holder": "op-tmc-07", "held-priority": 200, "held-since": "2026-07-17T14:00:00Z", "expires-at": "2026-07-17T14:02:00Z" }
       }
     }

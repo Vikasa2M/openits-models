@@ -278,6 +278,55 @@ func (VisibilitySituation) EnumDescriptor() ([]byte, []int) {
 	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{3}
 }
 
+type SensingMethod int32
+
+const (
+	SensingMethod_SENSING_METHOD_EMBEDDED            SensingMethod = 0
+	SensingMethod_SENSING_METHOD_NON_INVASIVE_REMOTE SensingMethod = 1
+	SensingMethod_SENSING_METHOD_UNKNOWN             SensingMethod = 2
+)
+
+// Enum value maps for SensingMethod.
+var (
+	SensingMethod_name = map[int32]string{
+		0: "SENSING_METHOD_EMBEDDED",
+		1: "SENSING_METHOD_NON_INVASIVE_REMOTE",
+		2: "SENSING_METHOD_UNKNOWN",
+	}
+	SensingMethod_value = map[string]int32{
+		"SENSING_METHOD_EMBEDDED":            0,
+		"SENSING_METHOD_NON_INVASIVE_REMOTE": 1,
+		"SENSING_METHOD_UNKNOWN":             2,
+	}
+)
+
+func (x SensingMethod) Enum() *SensingMethod {
+	p := new(SensingMethod)
+	*p = x
+	return p
+}
+
+func (x SensingMethod) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SensingMethod) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_ess_v1_state_proto_enumTypes[4].Descriptor()
+}
+
+func (SensingMethod) Type() protoreflect.EnumType {
+	return &file_openits_ess_v1_state_proto_enumTypes[4]
+}
+
+func (x SensingMethod) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SensingMethod.Descriptor instead.
+func (SensingMethod) EnumDescriptor() ([]byte, []int) {
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{4}
+}
+
 type PavementCondition int32
 
 const (
@@ -341,11 +390,11 @@ func (x PavementCondition) String() string {
 }
 
 func (PavementCondition) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_state_proto_enumTypes[4].Descriptor()
+	return file_openits_ess_v1_state_proto_enumTypes[5].Descriptor()
 }
 
 func (PavementCondition) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_state_proto_enumTypes[4]
+	return &file_openits_ess_v1_state_proto_enumTypes[5]
 }
 
 func (x PavementCondition) Number() protoreflect.EnumNumber {
@@ -354,7 +403,7 @@ func (x PavementCondition) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use PavementCondition.Descriptor instead.
 func (PavementCondition) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{4}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{5}
 }
 
 type SensorHealth int32
@@ -399,11 +448,11 @@ func (x SensorHealth) String() string {
 }
 
 func (SensorHealth) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_state_proto_enumTypes[5].Descriptor()
+	return file_openits_ess_v1_state_proto_enumTypes[6].Descriptor()
 }
 
 func (SensorHealth) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_state_proto_enumTypes[5]
+	return &file_openits_ess_v1_state_proto_enumTypes[6]
 }
 
 func (x SensorHealth) Number() protoreflect.EnumNumber {
@@ -412,7 +461,7 @@ func (x SensorHealth) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SensorHealth.Descriptor instead.
 func (SensorHealth) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{5}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{6}
 }
 
 type FaultSeverity int32
@@ -454,11 +503,11 @@ func (x FaultSeverity) String() string {
 }
 
 func (FaultSeverity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_state_proto_enumTypes[6].Descriptor()
+	return file_openits_ess_v1_state_proto_enumTypes[7].Descriptor()
 }
 
 func (FaultSeverity) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_state_proto_enumTypes[6]
+	return &file_openits_ess_v1_state_proto_enumTypes[7]
 }
 
 func (x FaultSeverity) Number() protoreflect.EnumNumber {
@@ -467,7 +516,7 @@ func (x FaultSeverity) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use FaultSeverity.Descriptor instead.
 func (FaultSeverity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{6}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{7}
 }
 
 type Station struct {
@@ -587,16 +636,21 @@ func (x *Station) GetFaults() *Faults {
 }
 
 type StationConfig struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Elevation     string                 `protobuf:"bytes,7,opt,name=elevation,proto3" json:"elevation,omitempty"`
-	Heading       uint32                 `protobuf:"varint,8,opt,name=heading,proto3" json:"heading,omitempty"`
-	Id            string                 `protobuf:"bytes,9,opt,name=id,proto3" json:"id,omitempty"`
-	Latitude      string                 `protobuf:"bytes,2,opt,name=latitude,proto3" json:"latitude,omitempty"`
-	Longitude     string                 `protobuf:"bytes,3,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	Name          string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
-	RoadReference string                 `protobuf:"bytes,5,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state           protoimpl.MessageState        `protogen:"open.v1"`
+	Elevation       string                        `protobuf:"bytes,7,opt,name=elevation,proto3" json:"elevation,omitempty"`
+	Heading         uint32                        `protobuf:"varint,8,opt,name=heading,proto3" json:"heading,omitempty"`
+	Id              string                        `protobuf:"bytes,9,opt,name=id,proto3" json:"id,omitempty"`
+	InstallDate     *timestamppb.Timestamp        `protobuf:"bytes,1,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
+	Latitude        string                        `protobuf:"bytes,2,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	LinearReference *StationConfigLinearReference `protobuf:"bytes,6,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
+	Longitude       string                        `protobuf:"bytes,3,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	MaintainedBy    string                        `protobuf:"bytes,10,opt,name=maintained_by,json=maintainedBy,proto3" json:"maintained_by,omitempty"`
+	Name            string                        `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	Owner           string                        `protobuf:"bytes,11,opt,name=owner,proto3" json:"owner,omitempty"`
+	RoadReference   string                        `protobuf:"bytes,5,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
+	SiteId          string                        `protobuf:"bytes,12,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *StationConfig) Reset() {
@@ -650,6 +704,13 @@ func (x *StationConfig) GetId() string {
 	return ""
 }
 
+func (x *StationConfig) GetInstallDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.InstallDate
+	}
+	return nil
+}
+
 func (x *StationConfig) GetLatitude() string {
 	if x != nil {
 		return x.Latitude
@@ -657,9 +718,23 @@ func (x *StationConfig) GetLatitude() string {
 	return ""
 }
 
+func (x *StationConfig) GetLinearReference() *StationConfigLinearReference {
+	if x != nil {
+		return x.LinearReference
+	}
+	return nil
+}
+
 func (x *StationConfig) GetLongitude() string {
 	if x != nil {
 		return x.Longitude
+	}
+	return ""
+}
+
+func (x *StationConfig) GetMaintainedBy() string {
+	if x != nil {
+		return x.MaintainedBy
 	}
 	return ""
 }
@@ -671,6 +746,13 @@ func (x *StationConfig) GetName() string {
 	return ""
 }
 
+func (x *StationConfig) GetOwner() string {
+	if x != nil {
+		return x.Owner
+	}
+	return ""
+}
+
 func (x *StationConfig) GetRoadReference() string {
 	if x != nil {
 		return x.RoadReference
@@ -678,28 +760,108 @@ func (x *StationConfig) GetRoadReference() string {
 	return ""
 }
 
-type StationState struct {
+func (x *StationConfig) GetSiteId() string {
+	if x != nil {
+		return x.SiteId
+	}
+	return ""
+}
+
+type StationConfigLinearReference struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	Elevation       string                 `protobuf:"bytes,11,opt,name=elevation,proto3" json:"elevation,omitempty"`
-	Firmware        string                 `protobuf:"bytes,2,opt,name=firmware,proto3" json:"firmware,omitempty"`
-	FirmwareBuild   string                 `protobuf:"bytes,14,opt,name=firmware_build,json=firmwareBuild,proto3" json:"firmware_build,omitempty"`
-	HardwareVersion string                 `protobuf:"bytes,15,opt,name=hardware_version,json=hardwareVersion,proto3" json:"hardware_version,omitempty"`
-	Heading         uint32                 `protobuf:"varint,12,opt,name=heading,proto3" json:"heading,omitempty"`
-	Id              string                 `protobuf:"bytes,13,opt,name=id,proto3" json:"id,omitempty"`
-	Latitude        string                 `protobuf:"bytes,3,opt,name=latitude,proto3" json:"latitude,omitempty"`
-	Longitude       string                 `protobuf:"bytes,4,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	Make            string                 `protobuf:"bytes,5,opt,name=make,proto3" json:"make,omitempty"`
-	Model           string                 `protobuf:"bytes,6,opt,name=model,proto3" json:"model,omitempty"`
-	Name            string                 `protobuf:"bytes,7,opt,name=name,proto3" json:"name,omitempty"`
-	RoadReference   string                 `protobuf:"bytes,8,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
-	Serial          string                 `protobuf:"bytes,9,opt,name=serial,proto3" json:"serial,omitempty"`
+	RouteDesignator string                 `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3" json:"route_designator,omitempty"`
+	Direction       string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"`
+	Measure         string                 `protobuf:"bytes,3,opt,name=measure,proto3" json:"measure,omitempty"`
+	LrsMethod       string                 `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3" json:"lrs_method,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *StationConfigLinearReference) Reset() {
+	*x = StationConfigLinearReference{}
+	mi := &file_openits_ess_v1_state_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StationConfigLinearReference) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StationConfigLinearReference) ProtoMessage() {}
+
+func (x *StationConfigLinearReference) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ess_v1_state_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StationConfigLinearReference.ProtoReflect.Descriptor instead.
+func (*StationConfigLinearReference) Descriptor() ([]byte, []int) {
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *StationConfigLinearReference) GetRouteDesignator() string {
+	if x != nil {
+		return x.RouteDesignator
+	}
+	return ""
+}
+
+func (x *StationConfigLinearReference) GetDirection() string {
+	if x != nil {
+		return x.Direction
+	}
+	return ""
+}
+
+func (x *StationConfigLinearReference) GetMeasure() string {
+	if x != nil {
+		return x.Measure
+	}
+	return ""
+}
+
+func (x *StationConfigLinearReference) GetLrsMethod() string {
+	if x != nil {
+		return x.LrsMethod
+	}
+	return ""
+}
+
+type StationState struct {
+	state           protoimpl.MessageState       `protogen:"open.v1"`
+	Elevation       string                       `protobuf:"bytes,11,opt,name=elevation,proto3" json:"elevation,omitempty"`
+	Firmware        string                       `protobuf:"bytes,2,opt,name=firmware,proto3" json:"firmware,omitempty"`
+	FirmwareBuild   string                       `protobuf:"bytes,14,opt,name=firmware_build,json=firmwareBuild,proto3" json:"firmware_build,omitempty"`
+	HardwareVersion string                       `protobuf:"bytes,15,opt,name=hardware_version,json=hardwareVersion,proto3" json:"hardware_version,omitempty"`
+	Heading         uint32                       `protobuf:"varint,12,opt,name=heading,proto3" json:"heading,omitempty"`
+	Id              string                       `protobuf:"bytes,13,opt,name=id,proto3" json:"id,omitempty"`
+	InstallDate     *timestamppb.Timestamp       `protobuf:"bytes,1,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
+	Latitude        string                       `protobuf:"bytes,3,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	LinearReference *StationStateLinearReference `protobuf:"bytes,10,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
+	Longitude       string                       `protobuf:"bytes,4,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	MaintainedBy    string                       `protobuf:"bytes,16,opt,name=maintained_by,json=maintainedBy,proto3" json:"maintained_by,omitempty"`
+	Make            string                       `protobuf:"bytes,5,opt,name=make,proto3" json:"make,omitempty"`
+	Model           string                       `protobuf:"bytes,6,opt,name=model,proto3" json:"model,omitempty"`
+	Name            string                       `protobuf:"bytes,7,opt,name=name,proto3" json:"name,omitempty"`
+	Owner           string                       `protobuf:"bytes,17,opt,name=owner,proto3" json:"owner,omitempty"`
+	RoadReference   string                       `protobuf:"bytes,8,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
+	Serial          string                       `protobuf:"bytes,9,opt,name=serial,proto3" json:"serial,omitempty"`
+	SiteId          string                       `protobuf:"bytes,18,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
 
 func (x *StationState) Reset() {
 	*x = StationState{}
-	mi := &file_openits_ess_v1_state_proto_msgTypes[2]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -711,7 +873,7 @@ func (x *StationState) String() string {
 func (*StationState) ProtoMessage() {}
 
 func (x *StationState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ess_v1_state_proto_msgTypes[2]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -724,7 +886,7 @@ func (x *StationState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StationState.ProtoReflect.Descriptor instead.
 func (*StationState) Descriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{2}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *StationState) GetElevation() string {
@@ -769,6 +931,13 @@ func (x *StationState) GetId() string {
 	return ""
 }
 
+func (x *StationState) GetInstallDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.InstallDate
+	}
+	return nil
+}
+
 func (x *StationState) GetLatitude() string {
 	if x != nil {
 		return x.Latitude
@@ -776,9 +945,23 @@ func (x *StationState) GetLatitude() string {
 	return ""
 }
 
+func (x *StationState) GetLinearReference() *StationStateLinearReference {
+	if x != nil {
+		return x.LinearReference
+	}
+	return nil
+}
+
 func (x *StationState) GetLongitude() string {
 	if x != nil {
 		return x.Longitude
+	}
+	return ""
+}
+
+func (x *StationState) GetMaintainedBy() string {
+	if x != nil {
+		return x.MaintainedBy
 	}
 	return ""
 }
@@ -804,6 +987,13 @@ func (x *StationState) GetName() string {
 	return ""
 }
 
+func (x *StationState) GetOwner() string {
+	if x != nil {
+		return x.Owner
+	}
+	return ""
+}
+
 func (x *StationState) GetRoadReference() string {
 	if x != nil {
 		return x.RoadReference
@@ -814,6 +1004,81 @@ func (x *StationState) GetRoadReference() string {
 func (x *StationState) GetSerial() string {
 	if x != nil {
 		return x.Serial
+	}
+	return ""
+}
+
+func (x *StationState) GetSiteId() string {
+	if x != nil {
+		return x.SiteId
+	}
+	return ""
+}
+
+type StationStateLinearReference struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	RouteDesignator string                 `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3" json:"route_designator,omitempty"`
+	Direction       string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"`
+	Measure         string                 `protobuf:"bytes,3,opt,name=measure,proto3" json:"measure,omitempty"`
+	LrsMethod       string                 `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3" json:"lrs_method,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *StationStateLinearReference) Reset() {
+	*x = StationStateLinearReference{}
+	mi := &file_openits_ess_v1_state_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StationStateLinearReference) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StationStateLinearReference) ProtoMessage() {}
+
+func (x *StationStateLinearReference) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_ess_v1_state_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StationStateLinearReference.ProtoReflect.Descriptor instead.
+func (*StationStateLinearReference) Descriptor() ([]byte, []int) {
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *StationStateLinearReference) GetRouteDesignator() string {
+	if x != nil {
+		return x.RouteDesignator
+	}
+	return ""
+}
+
+func (x *StationStateLinearReference) GetDirection() string {
+	if x != nil {
+		return x.Direction
+	}
+	return ""
+}
+
+func (x *StationStateLinearReference) GetMeasure() string {
+	if x != nil {
+		return x.Measure
+	}
+	return ""
+}
+
+func (x *StationStateLinearReference) GetLrsMethod() string {
+	if x != nil {
+		return x.LrsMethod
 	}
 	return ""
 }
@@ -829,7 +1094,7 @@ type Configuration struct {
 
 func (x *Configuration) Reset() {
 	*x = Configuration{}
-	mi := &file_openits_ess_v1_state_proto_msgTypes[3]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -841,7 +1106,7 @@ func (x *Configuration) String() string {
 func (*Configuration) ProtoMessage() {}
 
 func (x *Configuration) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ess_v1_state_proto_msgTypes[3]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -854,7 +1119,7 @@ func (x *Configuration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Configuration.ProtoReflect.Descriptor instead.
 func (*Configuration) Descriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{3}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *Configuration) GetWindSensorHeightM() string {
@@ -879,25 +1144,26 @@ func (x *Configuration) GetVisibilitySensorHeightM() string {
 }
 
 type Atmospheric struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	AirTemperatureC  string                 `protobuf:"bytes,1,opt,name=air_temperature_c,json=airTemperatureC,proto3" json:"air_temperature_c,omitempty"`
-	DewpointC        string                 `protobuf:"bytes,2,opt,name=dewpoint_c,json=dewpointC,proto3" json:"dewpoint_c,omitempty"`
-	HumidityPercent  string                 `protobuf:"bytes,3,opt,name=humidity_percent,json=humidityPercent,proto3" json:"humidity_percent,omitempty"`
-	PressureHpa      string                 `protobuf:"bytes,4,opt,name=pressure_hpa,json=pressureHpa,proto3" json:"pressure_hpa,omitempty"`
-	WindSpeedMs      string                 `protobuf:"bytes,5,opt,name=wind_speed_ms,json=windSpeedMs,proto3" json:"wind_speed_ms,omitempty"`
-	WindSpeedAvgMs   string                 `protobuf:"bytes,10,opt,name=wind_speed_avg_ms,json=windSpeedAvgMs,proto3" json:"wind_speed_avg_ms,omitempty"`
-	WindGustMs       string                 `protobuf:"bytes,6,opt,name=wind_gust_ms,json=windGustMs,proto3" json:"wind_gust_ms,omitempty"`
-	WindDirectionDeg string                 `protobuf:"bytes,7,opt,name=wind_direction_deg,json=windDirectionDeg,proto3" json:"wind_direction_deg,omitempty"`
-	ObservedAt       *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
-	Quality          Quality                `protobuf:"varint,11,opt,name=quality,proto3,enum=openits.ess.v1.Quality" json:"quality,omitempty"`
-	SensorId         string                 `protobuf:"bytes,9,opt,name=sensor_id,json=sensorId,proto3" json:"sensor_id,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	AirTemperatureC     string                 `protobuf:"bytes,1,opt,name=air_temperature_c,json=airTemperatureC,proto3" json:"air_temperature_c,omitempty"`
+	DewpointC           string                 `protobuf:"bytes,2,opt,name=dewpoint_c,json=dewpointC,proto3" json:"dewpoint_c,omitempty"`
+	HumidityPercent     string                 `protobuf:"bytes,3,opt,name=humidity_percent,json=humidityPercent,proto3" json:"humidity_percent,omitempty"`
+	PressureHpa         string                 `protobuf:"bytes,4,opt,name=pressure_hpa,json=pressureHpa,proto3" json:"pressure_hpa,omitempty"`
+	WindSpeedMs         string                 `protobuf:"bytes,5,opt,name=wind_speed_ms,json=windSpeedMs,proto3" json:"wind_speed_ms,omitempty"`
+	WindSpeedAvgMs      string                 `protobuf:"bytes,10,opt,name=wind_speed_avg_ms,json=windSpeedAvgMs,proto3" json:"wind_speed_avg_ms,omitempty"`
+	WindGustMs          string                 `protobuf:"bytes,6,opt,name=wind_gust_ms,json=windGustMs,proto3" json:"wind_gust_ms,omitempty"`
+	WindDirectionDeg    string                 `protobuf:"bytes,7,opt,name=wind_direction_deg,json=windDirectionDeg,proto3" json:"wind_direction_deg,omitempty"`
+	WindDirectionAvgDeg string                 `protobuf:"bytes,12,opt,name=wind_direction_avg_deg,json=windDirectionAvgDeg,proto3" json:"wind_direction_avg_deg,omitempty"`
+	ObservedAt          *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
+	Quality             Quality                `protobuf:"varint,11,opt,name=quality,proto3,enum=openits.ess.v1.Quality" json:"quality,omitempty"`
+	SensorId            string                 `protobuf:"bytes,9,opt,name=sensor_id,json=sensorId,proto3" json:"sensor_id,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *Atmospheric) Reset() {
 	*x = Atmospheric{}
-	mi := &file_openits_ess_v1_state_proto_msgTypes[4]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -909,7 +1175,7 @@ func (x *Atmospheric) String() string {
 func (*Atmospheric) ProtoMessage() {}
 
 func (x *Atmospheric) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ess_v1_state_proto_msgTypes[4]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -922,7 +1188,7 @@ func (x *Atmospheric) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Atmospheric.ProtoReflect.Descriptor instead.
 func (*Atmospheric) Descriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{4}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *Atmospheric) GetAirTemperatureC() string {
@@ -981,6 +1247,13 @@ func (x *Atmospheric) GetWindDirectionDeg() string {
 	return ""
 }
 
+func (x *Atmospheric) GetWindDirectionAvgDeg() string {
+	if x != nil {
+		return x.WindDirectionAvgDeg
+	}
+	return ""
+}
+
 func (x *Atmospheric) GetObservedAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.ObservedAt
@@ -1021,7 +1294,7 @@ type Precipitation struct {
 
 func (x *Precipitation) Reset() {
 	*x = Precipitation{}
-	mi := &file_openits_ess_v1_state_proto_msgTypes[5]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1033,7 +1306,7 @@ func (x *Precipitation) String() string {
 func (*Precipitation) ProtoMessage() {}
 
 func (x *Precipitation) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ess_v1_state_proto_msgTypes[5]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1046,7 +1319,7 @@ func (x *Precipitation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Precipitation.ProtoReflect.Descriptor instead.
 func (*Precipitation) Descriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{5}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *Precipitation) GetType() PrecipitationType {
@@ -1139,7 +1412,7 @@ type Visibility struct {
 
 func (x *Visibility) Reset() {
 	*x = Visibility{}
-	mi := &file_openits_ess_v1_state_proto_msgTypes[6]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1151,7 +1424,7 @@ func (x *Visibility) String() string {
 func (*Visibility) ProtoMessage() {}
 
 func (x *Visibility) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ess_v1_state_proto_msgTypes[6]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1164,7 +1437,7 @@ func (x *Visibility) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Visibility.ProtoReflect.Descriptor instead.
 func (*Visibility) Descriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{6}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *Visibility) GetRangeM() uint32 {
@@ -1211,7 +1484,7 @@ type Pavement struct {
 
 func (x *Pavement) Reset() {
 	*x = Pavement{}
-	mi := &file_openits_ess_v1_state_proto_msgTypes[7]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1223,7 +1496,7 @@ func (x *Pavement) String() string {
 func (*Pavement) ProtoMessage() {}
 
 func (x *Pavement) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ess_v1_state_proto_msgTypes[7]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1236,7 +1509,7 @@ func (x *Pavement) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Pavement.ProtoReflect.Descriptor instead.
 func (*Pavement) Descriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{7}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *Pavement) GetSensor() []*PavementSensor {
@@ -1257,7 +1530,7 @@ type PavementSensor struct {
 
 func (x *PavementSensor) Reset() {
 	*x = PavementSensor{}
-	mi := &file_openits_ess_v1_state_proto_msgTypes[8]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1269,7 +1542,7 @@ func (x *PavementSensor) String() string {
 func (*PavementSensor) ProtoMessage() {}
 
 func (x *PavementSensor) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ess_v1_state_proto_msgTypes[8]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1282,7 +1555,7 @@ func (x *PavementSensor) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PavementSensor.ProtoReflect.Descriptor instead.
 func (*PavementSensor) Descriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{8}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *PavementSensor) GetSensorId() string {
@@ -1309,6 +1582,7 @@ func (x *PavementSensor) GetState() *PavementSensorState {
 type PavementSensorConfig struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	LaneReference string                 `protobuf:"bytes,1,opt,name=lane_reference,json=laneReference,proto3" json:"lane_reference,omitempty"`
+	SensingMethod SensingMethod          `protobuf:"varint,3,opt,name=sensing_method,json=sensingMethod,proto3,enum=openits.ess.v1.SensingMethod" json:"sensing_method,omitempty"`
 	SensorId      string                 `protobuf:"bytes,2,opt,name=sensor_id,json=sensorId,proto3" json:"sensor_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1316,7 +1590,7 @@ type PavementSensorConfig struct {
 
 func (x *PavementSensorConfig) Reset() {
 	*x = PavementSensorConfig{}
-	mi := &file_openits_ess_v1_state_proto_msgTypes[9]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1328,7 +1602,7 @@ func (x *PavementSensorConfig) String() string {
 func (*PavementSensorConfig) ProtoMessage() {}
 
 func (x *PavementSensorConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ess_v1_state_proto_msgTypes[9]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1341,7 +1615,7 @@ func (x *PavementSensorConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PavementSensorConfig.ProtoReflect.Descriptor instead.
 func (*PavementSensorConfig) Descriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{9}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *PavementSensorConfig) GetLaneReference() string {
@@ -1349,6 +1623,13 @@ func (x *PavementSensorConfig) GetLaneReference() string {
 		return x.LaneReference
 	}
 	return ""
+}
+
+func (x *PavementSensorConfig) GetSensingMethod() SensingMethod {
+	if x != nil {
+		return x.SensingMethod
+	}
+	return SensingMethod_SENSING_METHOD_EMBEDDED
 }
 
 func (x *PavementSensorConfig) GetSensorId() string {
@@ -1373,6 +1654,7 @@ type PavementSensorState struct {
 	SubsurfaceTemperatureC string                 `protobuf:"bytes,7,opt,name=subsurface_temperature_c,json=subsurfaceTemperatureC,proto3" json:"subsurface_temperature_c,omitempty"`
 	SubsurfaceDepthMm      uint32                 `protobuf:"varint,8,opt,name=subsurface_depth_mm,json=subsurfaceDepthMm,proto3" json:"subsurface_depth_mm,omitempty"`
 	LaneReference          string                 `protobuf:"bytes,9,opt,name=lane_reference,json=laneReference,proto3" json:"lane_reference,omitempty"`
+	SensingMethod          SensingMethod          `protobuf:"varint,15,opt,name=sensing_method,json=sensingMethod,proto3,enum=openits.ess.v1.SensingMethod" json:"sensing_method,omitempty"`
 	SensorId               string                 `protobuf:"bytes,10,opt,name=sensor_id,json=sensorId,proto3" json:"sensor_id,omitempty"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
@@ -1380,7 +1662,7 @@ type PavementSensorState struct {
 
 func (x *PavementSensorState) Reset() {
 	*x = PavementSensorState{}
-	mi := &file_openits_ess_v1_state_proto_msgTypes[10]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1392,7 +1674,7 @@ func (x *PavementSensorState) String() string {
 func (*PavementSensorState) ProtoMessage() {}
 
 func (x *PavementSensorState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ess_v1_state_proto_msgTypes[10]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1405,7 +1687,7 @@ func (x *PavementSensorState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PavementSensorState.ProtoReflect.Descriptor instead.
 func (*PavementSensorState) Descriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{10}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *PavementSensorState) GetObservedAt() *timestamppb.Timestamp {
@@ -1499,6 +1781,13 @@ func (x *PavementSensorState) GetLaneReference() string {
 	return ""
 }
 
+func (x *PavementSensorState) GetSensingMethod() SensingMethod {
+	if x != nil {
+		return x.SensingMethod
+	}
+	return SensingMethod_SENSING_METHOD_EMBEDDED
+}
+
 func (x *PavementSensorState) GetSensorId() string {
 	if x != nil {
 		return x.SensorId
@@ -1519,7 +1808,7 @@ type Radiation struct {
 
 func (x *Radiation) Reset() {
 	*x = Radiation{}
-	mi := &file_openits_ess_v1_state_proto_msgTypes[11]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1531,7 +1820,7 @@ func (x *Radiation) String() string {
 func (*Radiation) ProtoMessage() {}
 
 func (x *Radiation) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ess_v1_state_proto_msgTypes[11]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1544,7 +1833,7 @@ func (x *Radiation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Radiation.ProtoReflect.Descriptor instead.
 func (*Radiation) Descriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{11}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *Radiation) GetSolarRadiationWm2() string {
@@ -1591,7 +1880,7 @@ type Diagnostics struct {
 
 func (x *Diagnostics) Reset() {
 	*x = Diagnostics{}
-	mi := &file_openits_ess_v1_state_proto_msgTypes[12]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1603,7 +1892,7 @@ func (x *Diagnostics) String() string {
 func (*Diagnostics) ProtoMessage() {}
 
 func (x *Diagnostics) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ess_v1_state_proto_msgTypes[12]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1616,7 +1905,7 @@ func (x *Diagnostics) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Diagnostics.ProtoReflect.Descriptor instead.
 func (*Diagnostics) Descriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{12}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *Diagnostics) GetSensor() []*DiagnosticsSensor {
@@ -1637,7 +1926,7 @@ type DiagnosticsSensor struct {
 
 func (x *DiagnosticsSensor) Reset() {
 	*x = DiagnosticsSensor{}
-	mi := &file_openits_ess_v1_state_proto_msgTypes[13]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1649,7 +1938,7 @@ func (x *DiagnosticsSensor) String() string {
 func (*DiagnosticsSensor) ProtoMessage() {}
 
 func (x *DiagnosticsSensor) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ess_v1_state_proto_msgTypes[13]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1662,7 +1951,7 @@ func (x *DiagnosticsSensor) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DiagnosticsSensor.ProtoReflect.Descriptor instead.
 func (*DiagnosticsSensor) Descriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{13}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *DiagnosticsSensor) GetSensorId() string {
@@ -1696,7 +1985,7 @@ type DiagnosticsSensorConfig struct {
 
 func (x *DiagnosticsSensorConfig) Reset() {
 	*x = DiagnosticsSensorConfig{}
-	mi := &file_openits_ess_v1_state_proto_msgTypes[14]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1708,7 +1997,7 @@ func (x *DiagnosticsSensorConfig) String() string {
 func (*DiagnosticsSensorConfig) ProtoMessage() {}
 
 func (x *DiagnosticsSensorConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ess_v1_state_proto_msgTypes[14]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1721,7 +2010,7 @@ func (x *DiagnosticsSensorConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DiagnosticsSensorConfig.ProtoReflect.Descriptor instead.
 func (*DiagnosticsSensorConfig) Descriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{14}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *DiagnosticsSensorConfig) GetSampleIntervalS() uint32 {
@@ -1753,7 +2042,7 @@ type DiagnosticsSensorState struct {
 
 func (x *DiagnosticsSensorState) Reset() {
 	*x = DiagnosticsSensorState{}
-	mi := &file_openits_ess_v1_state_proto_msgTypes[15]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1765,7 +2054,7 @@ func (x *DiagnosticsSensorState) String() string {
 func (*DiagnosticsSensorState) ProtoMessage() {}
 
 func (x *DiagnosticsSensorState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ess_v1_state_proto_msgTypes[15]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1778,7 +2067,7 @@ func (x *DiagnosticsSensorState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DiagnosticsSensorState.ProtoReflect.Descriptor instead.
 func (*DiagnosticsSensorState) Descriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{15}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *DiagnosticsSensorState) GetType() string {
@@ -1839,7 +2128,7 @@ type Faults struct {
 
 func (x *Faults) Reset() {
 	*x = Faults{}
-	mi := &file_openits_ess_v1_state_proto_msgTypes[16]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1851,7 +2140,7 @@ func (x *Faults) String() string {
 func (*Faults) ProtoMessage() {}
 
 func (x *Faults) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ess_v1_state_proto_msgTypes[16]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1864,7 +2153,7 @@ func (x *Faults) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Faults.ProtoReflect.Descriptor instead.
 func (*Faults) Descriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{16}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *Faults) GetFault() []*Fault {
@@ -1875,19 +2164,20 @@ func (x *Faults) GetFault() []*Fault {
 }
 
 type Fault struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Category      string                 `protobuf:"bytes,1,opt,name=category,proto3" json:"category,omitempty"`
-	Description   string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	FaultId       string                 `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3" json:"fault_id,omitempty"`
-	FirstObserved *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=first_observed,json=firstObserved,proto3" json:"first_observed,omitempty"`
-	Severity      FaultSeverity          `protobuf:"varint,5,opt,name=severity,proto3,enum=openits.ess.v1.FaultSeverity" json:"severity,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Category       string                 `protobuf:"bytes,1,opt,name=category,proto3" json:"category,omitempty"`
+	CorrelatesWith string                 `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3" json:"correlates_with,omitempty"`
+	Description    string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	FaultId        string                 `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3" json:"fault_id,omitempty"`
+	FirstObserved  *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=first_observed,json=firstObserved,proto3" json:"first_observed,omitempty"`
+	Severity       FaultSeverity          `protobuf:"varint,5,opt,name=severity,proto3,enum=openits.ess.v1.FaultSeverity" json:"severity,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *Fault) Reset() {
 	*x = Fault{}
-	mi := &file_openits_ess_v1_state_proto_msgTypes[17]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1899,7 +2189,7 @@ func (x *Fault) String() string {
 func (*Fault) ProtoMessage() {}
 
 func (x *Fault) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_ess_v1_state_proto_msgTypes[17]
+	mi := &file_openits_ess_v1_state_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1912,12 +2202,19 @@ func (x *Fault) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Fault.ProtoReflect.Descriptor instead.
 func (*Fault) Descriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{17}
+	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *Fault) GetCategory() string {
 	if x != nil {
 		return x.Category
+	}
+	return ""
+}
+
+func (x *Fault) GetCorrelatesWith() string {
+	if x != nil {
+		return x.CorrelatesWith
 	}
 	return ""
 }
@@ -1968,33 +2265,57 @@ const file_openits_ess_v1_state_proto_rawDesc = "" +
 	"\bpavement\x18\x06 \x01(\v2\x18.openits.ess.v1.PavementR\bpavement\x127\n" +
 	"\tradiation\x18\a \x01(\v2\x19.openits.ess.v1.RadiationR\tradiation\x12=\n" +
 	"\vdiagnostics\x18\b \x01(\v2\x1b.openits.ess.v1.DiagnosticsR\vdiagnostics\x12.\n" +
-	"\x06faults\x18\t \x01(\v2\x16.openits.ess.v1.FaultsR\x06faults\"\xcc\x01\n" +
+	"\x06faults\x18\t \x01(\v2\x16.openits.ess.v1.FaultsR\x06faults\"\xb8\x03\n" +
 	"\rStationConfig\x12\x1c\n" +
 	"\televation\x18\a \x01(\tR\televation\x12\x18\n" +
 	"\aheading\x18\b \x01(\rR\aheading\x12\x0e\n" +
-	"\x02id\x18\t \x01(\tR\x02id\x12\x1a\n" +
-	"\blatitude\x18\x02 \x01(\tR\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\x03 \x01(\tR\tlongitude\x12\x12\n" +
-	"\x04name\x18\x04 \x01(\tR\x04name\x12%\n" +
-	"\x0eroad_reference\x18\x05 \x01(\tR\rroadReference\"\xfb\x02\n" +
+	"\x02id\x18\t \x01(\tR\x02id\x12=\n" +
+	"\finstall_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1a\n" +
+	"\blatitude\x18\x02 \x01(\tR\blatitude\x12W\n" +
+	"\x10linear_reference\x18\x06 \x01(\v2,.openits.ess.v1.StationConfigLinearReferenceR\x0flinearReference\x12\x1c\n" +
+	"\tlongitude\x18\x03 \x01(\tR\tlongitude\x12#\n" +
+	"\rmaintained_by\x18\n" +
+	" \x01(\tR\fmaintainedBy\x12\x12\n" +
+	"\x04name\x18\x04 \x01(\tR\x04name\x12\x14\n" +
+	"\x05owner\x18\v \x01(\tR\x05owner\x12%\n" +
+	"\x0eroad_reference\x18\x05 \x01(\tR\rroadReference\x12\x17\n" +
+	"\asite_id\x18\f \x01(\tR\x06siteId\"\xa0\x01\n" +
+	"\x1cStationConfigLinearReference\x12)\n" +
+	"\x10route_designator\x18\x01 \x01(\tR\x0frouteDesignator\x12\x1c\n" +
+	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
+	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
+	"\n" +
+	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"\xe6\x04\n" +
 	"\fStationState\x12\x1c\n" +
 	"\televation\x18\v \x01(\tR\televation\x12\x1a\n" +
 	"\bfirmware\x18\x02 \x01(\tR\bfirmware\x12%\n" +
 	"\x0efirmware_build\x18\x0e \x01(\tR\rfirmwareBuild\x12)\n" +
 	"\x10hardware_version\x18\x0f \x01(\tR\x0fhardwareVersion\x12\x18\n" +
 	"\aheading\x18\f \x01(\rR\aheading\x12\x0e\n" +
-	"\x02id\x18\r \x01(\tR\x02id\x12\x1a\n" +
-	"\blatitude\x18\x03 \x01(\tR\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\x04 \x01(\tR\tlongitude\x12\x12\n" +
+	"\x02id\x18\r \x01(\tR\x02id\x12=\n" +
+	"\finstall_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1a\n" +
+	"\blatitude\x18\x03 \x01(\tR\blatitude\x12V\n" +
+	"\x10linear_reference\x18\n" +
+	" \x01(\v2+.openits.ess.v1.StationStateLinearReferenceR\x0flinearReference\x12\x1c\n" +
+	"\tlongitude\x18\x04 \x01(\tR\tlongitude\x12#\n" +
+	"\rmaintained_by\x18\x10 \x01(\tR\fmaintainedBy\x12\x12\n" +
 	"\x04make\x18\x05 \x01(\tR\x04make\x12\x14\n" +
 	"\x05model\x18\x06 \x01(\tR\x05model\x12\x12\n" +
-	"\x04name\x18\a \x01(\tR\x04name\x12%\n" +
+	"\x04name\x18\a \x01(\tR\x04name\x12\x14\n" +
+	"\x05owner\x18\x11 \x01(\tR\x05owner\x12%\n" +
 	"\x0eroad_reference\x18\b \x01(\tR\rroadReference\x12\x16\n" +
-	"\x06serial\x18\t \x01(\tR\x06serial\"\xc3\x01\n" +
+	"\x06serial\x18\t \x01(\tR\x06serial\x12\x17\n" +
+	"\asite_id\x18\x12 \x01(\tR\x06siteId\"\x9f\x01\n" +
+	"\x1bStationStateLinearReference\x12)\n" +
+	"\x10route_designator\x18\x01 \x01(\tR\x0frouteDesignator\x12\x1c\n" +
+	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
+	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
+	"\n" +
+	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"\xc3\x01\n" +
 	"\rConfiguration\x12/\n" +
 	"\x14wind_sensor_height_m\x18\x01 \x01(\tR\x11windSensorHeightM\x12D\n" +
 	"\x1fair_temperature_sensor_height_m\x18\x02 \x01(\tR\x1bairTemperatureSensorHeightM\x12;\n" +
-	"\x1avisibility_sensor_height_m\x18\x03 \x01(\tR\x17visibilitySensorHeightM\"\xd2\x03\n" +
+	"\x1avisibility_sensor_height_m\x18\x03 \x01(\tR\x17visibilitySensorHeightM\"\x87\x04\n" +
 	"\vAtmospheric\x12*\n" +
 	"\x11air_temperature_c\x18\x01 \x01(\tR\x0fairTemperatureC\x12\x1d\n" +
 	"\n" +
@@ -2006,7 +2327,8 @@ const file_openits_ess_v1_state_proto_rawDesc = "" +
 	" \x01(\tR\x0ewindSpeedAvgMs\x12 \n" +
 	"\fwind_gust_ms\x18\x06 \x01(\tR\n" +
 	"windGustMs\x12,\n" +
-	"\x12wind_direction_deg\x18\a \x01(\tR\x10windDirectionDeg\x12;\n" +
+	"\x12wind_direction_deg\x18\a \x01(\tR\x10windDirectionDeg\x123\n" +
+	"\x16wind_direction_avg_deg\x18\f \x01(\tR\x13windDirectionAvgDeg\x12;\n" +
 	"\vobserved_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"observedAt\x121\n" +
 	"\aquality\x18\v \x01(\x0e2\x17.openits.ess.v1.QualityR\aquality\x12\x1b\n" +
@@ -2038,10 +2360,11 @@ const file_openits_ess_v1_state_proto_rawDesc = "" +
 	"\x0ePavementSensor\x12\x1b\n" +
 	"\tsensor_id\x18\x01 \x01(\tR\bsensorId\x12<\n" +
 	"\x06config\x18\x02 \x01(\v2$.openits.ess.v1.PavementSensorConfigR\x06config\x129\n" +
-	"\x05state\x18\x03 \x01(\v2#.openits.ess.v1.PavementSensorStateR\x05state\"Z\n" +
+	"\x05state\x18\x03 \x01(\v2#.openits.ess.v1.PavementSensorStateR\x05state\"\xa0\x01\n" +
 	"\x14PavementSensorConfig\x12%\n" +
-	"\x0elane_reference\x18\x01 \x01(\tR\rlaneReference\x12\x1b\n" +
-	"\tsensor_id\x18\x02 \x01(\tR\bsensorId\"\x85\x05\n" +
+	"\x0elane_reference\x18\x01 \x01(\tR\rlaneReference\x12D\n" +
+	"\x0esensing_method\x18\x03 \x01(\x0e2\x1d.openits.ess.v1.SensingMethodR\rsensingMethod\x12\x1b\n" +
+	"\tsensor_id\x18\x02 \x01(\tR\bsensorId\"\xcb\x05\n" +
 	"\x13PavementSensorState\x12;\n" +
 	"\vobserved_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"observedAt\x122\n" +
@@ -2057,7 +2380,8 @@ const file_openits_ess_v1_state_proto_rawDesc = "" +
 	"iceDepthMm\x128\n" +
 	"\x18subsurface_temperature_c\x18\a \x01(\tR\x16subsurfaceTemperatureC\x12.\n" +
 	"\x13subsurface_depth_mm\x18\b \x01(\rR\x11subsurfaceDepthMm\x12%\n" +
-	"\x0elane_reference\x18\t \x01(\tR\rlaneReference\x12\x1b\n" +
+	"\x0elane_reference\x18\t \x01(\tR\rlaneReference\x12D\n" +
+	"\x0esensing_method\x18\x0f \x01(\x0e2\x1d.openits.ess.v1.SensingMethodR\rsensingMethod\x12\x1b\n" +
 	"\tsensor_id\x18\n" +
 	" \x01(\tR\bsensorId\"\x8c\x02\n" +
 	"\tRadiation\x12.\n" +
@@ -2085,9 +2409,10 @@ const file_openits_ess_v1_state_proto_rawDesc = "" +
 	"\x11sample_interval_s\x18\x06 \x01(\rR\x0fsampleIntervalS\x12\x1b\n" +
 	"\tsensor_id\x18\a \x01(\tR\bsensorId\"5\n" +
 	"\x06Faults\x12+\n" +
-	"\x05fault\x18\x01 \x03(\v2\x15.openits.ess.v1.FaultR\x05fault\"\xde\x01\n" +
+	"\x05fault\x18\x01 \x03(\v2\x15.openits.ess.v1.FaultR\x05fault\"\x87\x02\n" +
 	"\x05Fault\x12\x1a\n" +
-	"\bcategory\x18\x01 \x01(\tR\bcategory\x12 \n" +
+	"\bcategory\x18\x01 \x01(\tR\bcategory\x12'\n" +
+	"\x0fcorrelates_with\x18\x06 \x01(\tR\x0ecorrelatesWith\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x19\n" +
 	"\bfault_id\x18\x03 \x01(\tR\afaultId\x12A\n" +
 	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x129\n" +
@@ -2128,7 +2453,11 @@ const file_openits_ess_v1_state_proto_rawDesc = "" +
 	"!VISIBILITY_SITUATION_BLOWING_SNOW\x10\x05\x12%\n" +
 	"!VISIBILITY_SITUATION_BLOWING_DUST\x10\x06\x12#\n" +
 	"\x1fVISIBILITY_SITUATION_HEAVY_RAIN\x10\a\x12#\n" +
-	"\x1fVISIBILITY_SITUATION_HEAVY_SNOW\x10\b*\xc2\x03\n" +
+	"\x1fVISIBILITY_SITUATION_HEAVY_SNOW\x10\b*p\n" +
+	"\rSensingMethod\x12\x1b\n" +
+	"\x17SENSING_METHOD_EMBEDDED\x10\x00\x12&\n" +
+	"\"SENSING_METHOD_NON_INVASIVE_REMOTE\x10\x01\x12\x1a\n" +
+	"\x16SENSING_METHOD_UNKNOWN\x10\x02*\xc2\x03\n" +
 	"\x11PavementCondition\x12\x1e\n" +
 	"\x1aPAVEMENT_CONDITION_UNKNOWN\x10\x00\x12\x1a\n" +
 	"\x16PAVEMENT_CONDITION_DRY\x10\x01\x12%\n" +
@@ -2170,78 +2499,87 @@ func file_openits_ess_v1_state_proto_rawDescGZIP() []byte {
 	return file_openits_ess_v1_state_proto_rawDescData
 }
 
-var file_openits_ess_v1_state_proto_enumTypes = make([]protoimpl.EnumInfo, 7)
-var file_openits_ess_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_openits_ess_v1_state_proto_enumTypes = make([]protoimpl.EnumInfo, 8)
+var file_openits_ess_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_openits_ess_v1_state_proto_goTypes = []any{
-	(Quality)(0),                    // 0: openits.ess.v1.Quality
-	(PrecipitationType)(0),          // 1: openits.ess.v1.PrecipitationType
-	(PrecipitationIntensity)(0),     // 2: openits.ess.v1.PrecipitationIntensity
-	(VisibilitySituation)(0),        // 3: openits.ess.v1.VisibilitySituation
-	(PavementCondition)(0),          // 4: openits.ess.v1.PavementCondition
-	(SensorHealth)(0),               // 5: openits.ess.v1.SensorHealth
-	(FaultSeverity)(0),              // 6: openits.ess.v1.FaultSeverity
-	(*Station)(nil),                 // 7: openits.ess.v1.Station
-	(*StationConfig)(nil),           // 8: openits.ess.v1.StationConfig
-	(*StationState)(nil),            // 9: openits.ess.v1.StationState
-	(*Configuration)(nil),           // 10: openits.ess.v1.Configuration
-	(*Atmospheric)(nil),             // 11: openits.ess.v1.Atmospheric
-	(*Precipitation)(nil),           // 12: openits.ess.v1.Precipitation
-	(*Visibility)(nil),              // 13: openits.ess.v1.Visibility
-	(*Pavement)(nil),                // 14: openits.ess.v1.Pavement
-	(*PavementSensor)(nil),          // 15: openits.ess.v1.PavementSensor
-	(*PavementSensorConfig)(nil),    // 16: openits.ess.v1.PavementSensorConfig
-	(*PavementSensorState)(nil),     // 17: openits.ess.v1.PavementSensorState
-	(*Radiation)(nil),               // 18: openits.ess.v1.Radiation
-	(*Diagnostics)(nil),             // 19: openits.ess.v1.Diagnostics
-	(*DiagnosticsSensor)(nil),       // 20: openits.ess.v1.DiagnosticsSensor
-	(*DiagnosticsSensorConfig)(nil), // 21: openits.ess.v1.DiagnosticsSensorConfig
-	(*DiagnosticsSensorState)(nil),  // 22: openits.ess.v1.DiagnosticsSensorState
-	(*Faults)(nil),                  // 23: openits.ess.v1.Faults
-	(*Fault)(nil),                   // 24: openits.ess.v1.Fault
-	(*timestamppb.Timestamp)(nil),   // 25: google.protobuf.Timestamp
+	(Quality)(0),                         // 0: openits.ess.v1.Quality
+	(PrecipitationType)(0),               // 1: openits.ess.v1.PrecipitationType
+	(PrecipitationIntensity)(0),          // 2: openits.ess.v1.PrecipitationIntensity
+	(VisibilitySituation)(0),             // 3: openits.ess.v1.VisibilitySituation
+	(SensingMethod)(0),                   // 4: openits.ess.v1.SensingMethod
+	(PavementCondition)(0),               // 5: openits.ess.v1.PavementCondition
+	(SensorHealth)(0),                    // 6: openits.ess.v1.SensorHealth
+	(FaultSeverity)(0),                   // 7: openits.ess.v1.FaultSeverity
+	(*Station)(nil),                      // 8: openits.ess.v1.Station
+	(*StationConfig)(nil),                // 9: openits.ess.v1.StationConfig
+	(*StationConfigLinearReference)(nil), // 10: openits.ess.v1.StationConfigLinearReference
+	(*StationState)(nil),                 // 11: openits.ess.v1.StationState
+	(*StationStateLinearReference)(nil),  // 12: openits.ess.v1.StationStateLinearReference
+	(*Configuration)(nil),                // 13: openits.ess.v1.Configuration
+	(*Atmospheric)(nil),                  // 14: openits.ess.v1.Atmospheric
+	(*Precipitation)(nil),                // 15: openits.ess.v1.Precipitation
+	(*Visibility)(nil),                   // 16: openits.ess.v1.Visibility
+	(*Pavement)(nil),                     // 17: openits.ess.v1.Pavement
+	(*PavementSensor)(nil),               // 18: openits.ess.v1.PavementSensor
+	(*PavementSensorConfig)(nil),         // 19: openits.ess.v1.PavementSensorConfig
+	(*PavementSensorState)(nil),          // 20: openits.ess.v1.PavementSensorState
+	(*Radiation)(nil),                    // 21: openits.ess.v1.Radiation
+	(*Diagnostics)(nil),                  // 22: openits.ess.v1.Diagnostics
+	(*DiagnosticsSensor)(nil),            // 23: openits.ess.v1.DiagnosticsSensor
+	(*DiagnosticsSensorConfig)(nil),      // 24: openits.ess.v1.DiagnosticsSensorConfig
+	(*DiagnosticsSensorState)(nil),       // 25: openits.ess.v1.DiagnosticsSensorState
+	(*Faults)(nil),                       // 26: openits.ess.v1.Faults
+	(*Fault)(nil),                        // 27: openits.ess.v1.Fault
+	(*timestamppb.Timestamp)(nil),        // 28: google.protobuf.Timestamp
 }
 var file_openits_ess_v1_state_proto_depIdxs = []int32{
-	8,  // 0: openits.ess.v1.Station.config:type_name -> openits.ess.v1.StationConfig
-	9,  // 1: openits.ess.v1.Station.state:type_name -> openits.ess.v1.StationState
-	10, // 2: openits.ess.v1.Station.configuration:type_name -> openits.ess.v1.Configuration
-	11, // 3: openits.ess.v1.Station.atmospheric:type_name -> openits.ess.v1.Atmospheric
-	12, // 4: openits.ess.v1.Station.precipitation:type_name -> openits.ess.v1.Precipitation
-	13, // 5: openits.ess.v1.Station.visibility:type_name -> openits.ess.v1.Visibility
-	14, // 6: openits.ess.v1.Station.pavement:type_name -> openits.ess.v1.Pavement
-	18, // 7: openits.ess.v1.Station.radiation:type_name -> openits.ess.v1.Radiation
-	19, // 8: openits.ess.v1.Station.diagnostics:type_name -> openits.ess.v1.Diagnostics
-	23, // 9: openits.ess.v1.Station.faults:type_name -> openits.ess.v1.Faults
-	25, // 10: openits.ess.v1.Atmospheric.observed_at:type_name -> google.protobuf.Timestamp
-	0,  // 11: openits.ess.v1.Atmospheric.quality:type_name -> openits.ess.v1.Quality
-	1,  // 12: openits.ess.v1.Precipitation.type:type_name -> openits.ess.v1.PrecipitationType
-	2,  // 13: openits.ess.v1.Precipitation.intensity:type_name -> openits.ess.v1.PrecipitationIntensity
-	25, // 14: openits.ess.v1.Precipitation.observed_at:type_name -> google.protobuf.Timestamp
-	0,  // 15: openits.ess.v1.Precipitation.quality:type_name -> openits.ess.v1.Quality
-	3,  // 16: openits.ess.v1.Visibility.situation:type_name -> openits.ess.v1.VisibilitySituation
-	25, // 17: openits.ess.v1.Visibility.observed_at:type_name -> google.protobuf.Timestamp
-	0,  // 18: openits.ess.v1.Visibility.quality:type_name -> openits.ess.v1.Quality
-	15, // 19: openits.ess.v1.Pavement.sensor:type_name -> openits.ess.v1.PavementSensor
-	16, // 20: openits.ess.v1.PavementSensor.config:type_name -> openits.ess.v1.PavementSensorConfig
-	17, // 21: openits.ess.v1.PavementSensor.state:type_name -> openits.ess.v1.PavementSensorState
-	25, // 22: openits.ess.v1.PavementSensorState.observed_at:type_name -> google.protobuf.Timestamp
-	4,  // 23: openits.ess.v1.PavementSensorState.condition:type_name -> openits.ess.v1.PavementCondition
-	25, // 24: openits.ess.v1.Radiation.observed_at:type_name -> google.protobuf.Timestamp
-	0,  // 25: openits.ess.v1.Radiation.quality:type_name -> openits.ess.v1.Quality
-	20, // 26: openits.ess.v1.Diagnostics.sensor:type_name -> openits.ess.v1.DiagnosticsSensor
-	21, // 27: openits.ess.v1.DiagnosticsSensor.config:type_name -> openits.ess.v1.DiagnosticsSensorConfig
-	22, // 28: openits.ess.v1.DiagnosticsSensor.state:type_name -> openits.ess.v1.DiagnosticsSensorState
-	5,  // 29: openits.ess.v1.DiagnosticsSensorState.health:type_name -> openits.ess.v1.SensorHealth
-	25, // 30: openits.ess.v1.DiagnosticsSensorState.last_observation:type_name -> google.protobuf.Timestamp
-	25, // 31: openits.ess.v1.DiagnosticsSensorState.last_calibration:type_name -> google.protobuf.Timestamp
-	25, // 32: openits.ess.v1.DiagnosticsSensorState.next_calibration:type_name -> google.protobuf.Timestamp
-	24, // 33: openits.ess.v1.Faults.fault:type_name -> openits.ess.v1.Fault
-	25, // 34: openits.ess.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	6,  // 35: openits.ess.v1.Fault.severity:type_name -> openits.ess.v1.FaultSeverity
-	36, // [36:36] is the sub-list for method output_type
-	36, // [36:36] is the sub-list for method input_type
-	36, // [36:36] is the sub-list for extension type_name
-	36, // [36:36] is the sub-list for extension extendee
-	0,  // [0:36] is the sub-list for field type_name
+	9,  // 0: openits.ess.v1.Station.config:type_name -> openits.ess.v1.StationConfig
+	11, // 1: openits.ess.v1.Station.state:type_name -> openits.ess.v1.StationState
+	13, // 2: openits.ess.v1.Station.configuration:type_name -> openits.ess.v1.Configuration
+	14, // 3: openits.ess.v1.Station.atmospheric:type_name -> openits.ess.v1.Atmospheric
+	15, // 4: openits.ess.v1.Station.precipitation:type_name -> openits.ess.v1.Precipitation
+	16, // 5: openits.ess.v1.Station.visibility:type_name -> openits.ess.v1.Visibility
+	17, // 6: openits.ess.v1.Station.pavement:type_name -> openits.ess.v1.Pavement
+	21, // 7: openits.ess.v1.Station.radiation:type_name -> openits.ess.v1.Radiation
+	22, // 8: openits.ess.v1.Station.diagnostics:type_name -> openits.ess.v1.Diagnostics
+	26, // 9: openits.ess.v1.Station.faults:type_name -> openits.ess.v1.Faults
+	28, // 10: openits.ess.v1.StationConfig.install_date:type_name -> google.protobuf.Timestamp
+	10, // 11: openits.ess.v1.StationConfig.linear_reference:type_name -> openits.ess.v1.StationConfigLinearReference
+	28, // 12: openits.ess.v1.StationState.install_date:type_name -> google.protobuf.Timestamp
+	12, // 13: openits.ess.v1.StationState.linear_reference:type_name -> openits.ess.v1.StationStateLinearReference
+	28, // 14: openits.ess.v1.Atmospheric.observed_at:type_name -> google.protobuf.Timestamp
+	0,  // 15: openits.ess.v1.Atmospheric.quality:type_name -> openits.ess.v1.Quality
+	1,  // 16: openits.ess.v1.Precipitation.type:type_name -> openits.ess.v1.PrecipitationType
+	2,  // 17: openits.ess.v1.Precipitation.intensity:type_name -> openits.ess.v1.PrecipitationIntensity
+	28, // 18: openits.ess.v1.Precipitation.observed_at:type_name -> google.protobuf.Timestamp
+	0,  // 19: openits.ess.v1.Precipitation.quality:type_name -> openits.ess.v1.Quality
+	3,  // 20: openits.ess.v1.Visibility.situation:type_name -> openits.ess.v1.VisibilitySituation
+	28, // 21: openits.ess.v1.Visibility.observed_at:type_name -> google.protobuf.Timestamp
+	0,  // 22: openits.ess.v1.Visibility.quality:type_name -> openits.ess.v1.Quality
+	18, // 23: openits.ess.v1.Pavement.sensor:type_name -> openits.ess.v1.PavementSensor
+	19, // 24: openits.ess.v1.PavementSensor.config:type_name -> openits.ess.v1.PavementSensorConfig
+	20, // 25: openits.ess.v1.PavementSensor.state:type_name -> openits.ess.v1.PavementSensorState
+	4,  // 26: openits.ess.v1.PavementSensorConfig.sensing_method:type_name -> openits.ess.v1.SensingMethod
+	28, // 27: openits.ess.v1.PavementSensorState.observed_at:type_name -> google.protobuf.Timestamp
+	5,  // 28: openits.ess.v1.PavementSensorState.condition:type_name -> openits.ess.v1.PavementCondition
+	4,  // 29: openits.ess.v1.PavementSensorState.sensing_method:type_name -> openits.ess.v1.SensingMethod
+	28, // 30: openits.ess.v1.Radiation.observed_at:type_name -> google.protobuf.Timestamp
+	0,  // 31: openits.ess.v1.Radiation.quality:type_name -> openits.ess.v1.Quality
+	23, // 32: openits.ess.v1.Diagnostics.sensor:type_name -> openits.ess.v1.DiagnosticsSensor
+	24, // 33: openits.ess.v1.DiagnosticsSensor.config:type_name -> openits.ess.v1.DiagnosticsSensorConfig
+	25, // 34: openits.ess.v1.DiagnosticsSensor.state:type_name -> openits.ess.v1.DiagnosticsSensorState
+	6,  // 35: openits.ess.v1.DiagnosticsSensorState.health:type_name -> openits.ess.v1.SensorHealth
+	28, // 36: openits.ess.v1.DiagnosticsSensorState.last_observation:type_name -> google.protobuf.Timestamp
+	28, // 37: openits.ess.v1.DiagnosticsSensorState.last_calibration:type_name -> google.protobuf.Timestamp
+	28, // 38: openits.ess.v1.DiagnosticsSensorState.next_calibration:type_name -> google.protobuf.Timestamp
+	27, // 39: openits.ess.v1.Faults.fault:type_name -> openits.ess.v1.Fault
+	28, // 40: openits.ess.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	7,  // 41: openits.ess.v1.Fault.severity:type_name -> openits.ess.v1.FaultSeverity
+	42, // [42:42] is the sub-list for method output_type
+	42, // [42:42] is the sub-list for method input_type
+	42, // [42:42] is the sub-list for extension type_name
+	42, // [42:42] is the sub-list for extension extendee
+	0,  // [0:42] is the sub-list for field type_name
 }
 
 func init() { file_openits_ess_v1_state_proto_init() }
@@ -2254,8 +2592,8 @@ func file_openits_ess_v1_state_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_ess_v1_state_proto_rawDesc), len(file_openits_ess_v1_state_proto_rawDesc)),
-			NumEnums:      7,
-			NumMessages:   18,
+			NumEnums:      8,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

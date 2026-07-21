@@ -33,12 +33,17 @@ func collectCctv() (*yangpkg.Device, error) {
 	st.Make = strPtr("Axis")
 	st.Model = strPtr("Q6215-LE")
 	st.Firmware = strPtr("10.12.0")
+	st.OperationalStatus = yangpkg.OpenitsCctvTypes_OperationalStatus_online
 
 	// Mounting + the co-located devices an operator verifies against.
 	mount := cam.GetOrCreateMounting()
 	mount.Structure = yangpkg.OpenitsCctvTypes_MountingStructure_pole
 	mount.HeightM = f64Ptr(9.1)
-	mount.CoLocatedDevice = []string{"asc-i35-mm214", "ess-i35-mm214"}
+	for _, id := range []string{"asc-i35-mm214", "ess-i35-mm214"} {
+		if _, err := mount.NewAssociatedDevice(id, yangpkg.OpenitsTypes_AssociationRole_role_co_located); err != nil {
+			panic(err)
+		}
+	}
 
 	// PTZ: capabilities, live position, presets (with the recalled one), a tour.
 	ptz := cam.GetOrCreatePtz()
@@ -139,13 +144,13 @@ func collectCctv() (*yangpkg.Device, error) {
 	// records who holds control and at what priority (soft arbitration).
 	ctl := cam.GetOrCreateControl()
 	ctlCfg := ctl.GetOrCreateConfig()
-	ctlCfg.ControlMode = yangpkg.OpenitsCctvTypes_CctvControlMode_control_central
+	ctlCfg.ControlMode = yangpkg.OpenitsCctvTypes_CctvControlMode_cctv_control_central
 	reqHolder := ctlCfg.GetOrCreateHolder()
 	reqHolder.RequestedBy = strPtr("op-tmc-07")
 	reqHolder.Priority = u8Ptr(200)
 	reqHolder.LockoutTimeoutS = u16Ptr(120)
 	ctlSt := ctl.GetOrCreateState()
-	ctlSt.ControlMode = yangpkg.OpenitsCctvTypes_CctvControlMode_control_central
+	ctlSt.ControlMode = yangpkg.OpenitsCctvTypes_CctvControlMode_cctv_control_central
 	curHolder := ctlSt.GetOrCreateHolder()
 	curHolder.CurrentHolder = strPtr("op-tmc-07")
 	curHolder.HeldPriority = u8Ptr(200)

@@ -57,8 +57,8 @@
       "type": "string"
     },
     "overlap-number": {
-      "maximum": 4294967295,
-      "minimum": 0,
+      "maximum": 255,
+      "minimum": 1,
       "type": "integer"
     },
     "owner": {

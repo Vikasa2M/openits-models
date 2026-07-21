@@ -1,0 +1,9 @@
+{
+  "openits-common-comm-health-events:comm-health-event": {
+    "kind": "openits-common-comm-health-events:comm-lost",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence": "1",
+    "occurred-at": "2026-07-11T14:05:00Z",
+    "attempts-total": 48
+  }
+}

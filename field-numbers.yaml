@@ -1,10 +1,20 @@
 messages:
+    openits.cctv.v1.Absolute:
+        pan_degrees: 1
+        tilt_degrees: 2
+        zoom_percent: 3
+    openits.cctv.v1.AssociatedDevice:
+        device_id: 1
+        note: 3
+        role: 2
     openits.cctv.v1.Camera:
         config: 1
         control: 8
         environment: 6
         faults: 7
+        lens: 9
         mounting: 3
+        privacy_masks: 10
         ptz: 4
         state: 2
         streams: 5
@@ -12,10 +22,20 @@ messages:
         elevation: 1
         heading: 2
         id: 3
+        install_date: 8
         latitude: 4
+        linear_reference: 9
         longitude: 5
+        maintained_by: 10
         name: 6
+        owner: 11
         road_reference: 7
+        site_id: 12
+    openits.cctv.v1.CameraConfigLinearReference:
+        direction: 2
+        lrs_method: 4
+        measure: 3
+        route_designator: 1
     openits.cctv.v1.CameraState:
         elevation: 1
         firmware: 2
@@ -23,13 +43,24 @@ messages:
         hardware_version: 4
         heading: 5
         id: 6
+        install_date: 15
         latitude: 7
+        linear_reference: 16
         longitude: 8
+        maintained_by: 17
         make: 9
         model: 10
         name: 11
+        operational_status: 14
+        owner: 18
         road_reference: 12
         serial: 13
+        site_id: 19
+    openits.cctv.v1.CameraStateLinearReference:
+        direction: 2
+        lrs_method: 4
+        measure: 3
+        route_designator: 1
     openits.cctv.v1.Capabilities:
         max_presets: 2
         pan_continuous: 3
@@ -58,6 +89,7 @@ messages:
     openits.cctv.v1.EnvironmentConfig:
         heater_mode: 3
         washer: 2
+        washer_spray_duration_s: 4
         wiper: 1
     openits.cctv.v1.EnvironmentState:
         blower_active: 4
@@ -66,12 +98,26 @@ messages:
         wiper_active: 2
     openits.cctv.v1.Fault:
         category: 1
+        correlates_with: 6
         description: 2
         fault_id: 3
         first_observed: 4
         severity: 5
     openits.cctv.v1.Faults:
         fault: 1
+    openits.cctv.v1.Lens:
+        config: 1
+        state: 2
+    openits.cctv.v1.LensConfig:
+        focus_mode: 1
+        focus_position: 2
+        iris_mode: 3
+        iris_position: 4
+    openits.cctv.v1.LensState:
+        focus_mode: 1
+        focus_position: 2
+        iris_mode: 3
+        iris_position: 4
     openits.cctv.v1.LockoutDenied:
         current_holder: 3
         held_priority: 4
@@ -83,9 +129,15 @@ messages:
         requested_priority: 2
         sequence: 8
         source_device_id: 9
+    openits.cctv.v1.Mask:
+        enabled: 3
+        mask_id: 1
+        name: 2
     openits.cctv.v1.Mounting:
+        associated_device: 5
         co_located_device: 3
         height_m: 2
+        pan_reference_offset_deg: 4
         structure: 1
     openits.cctv.v1.Preset:
         name: 2
@@ -99,11 +151,17 @@ messages:
         state: 3
     openits.cctv.v1.PresetsState:
         active_preset: 1
+    openits.cctv.v1.PrivacyMasks:
+        mask: 1
     openits.cctv.v1.Ptz:
         capabilities: 1
+        config: 5
         presets: 3
         state: 2
         tours: 4
+    openits.cctv.v1.PtzConfig:
+        absolute: 1
+        velocity: 2
     openits.cctv.v1.PtzPresetRecalled:
         kind: 99
         observed_by: 5
@@ -116,6 +174,7 @@ messages:
         source_device_id: 9
         via_tour: 4
     openits.cctv.v1.PtzState:
+        move_mode: 5
         moving: 4
         pan_degrees: 1
         tilt_degrees: 2
@@ -137,6 +196,7 @@ messages:
         frame_rate: 5
         health: 6
         height_px: 2
+        uri: 7
         width_px: 1
     openits.cctv.v1.Streams:
         stream: 1
@@ -162,6 +222,10 @@ messages:
         active_tour: 1
         current_stop: 3
         run_state: 2
+    openits.cctv.v1.Velocity:
+        pan_speed: 1
+        tilt_speed: 2
+        zoom_speed: 3
     openits.common.v1.CommHealthEvent:
         attempts_failed: 5
         attempts_total: 4
@@ -169,6 +233,7 @@ messages:
         drift_milliseconds: 3
         kind: 99
         link_id: 8
+        link_type: 12
         observed_by: 9
         occurred_at: 2
         owner: 10
@@ -186,6 +251,7 @@ messages:
         source: 100
         source_device_id: 1
     openits.common.v1.FaultRaised:
+        correlates_with: 9
         description: 4
         fault_id: 2
         kind: 99
@@ -325,18 +391,28 @@ messages:
         activation_priority: 4
         crc: 5
         duration_s: 3
+        indefinite: 7
         memory_type: 1
         owner: 6
         slot_number: 2
     openits.dms.v1.Capabilities:
         beacon_capable: 6
+        beacon_type: 13
+        character_height_mm: 11
         character_height_pixels: 2
+        character_width_mm: 12
         character_width_pixels: 3
         color_capability: 4
         font: 8
         max_pages: 5
+        sign_face_height_mm: 9
+        sign_face_width_mm: 10
         sign_type: 1
         supported_multi_tags: 7
+    openits.dms.v1.CommLoss:
+        comm_loss_timeout_s: 1
+        memory_type: 2
+        slot_number: 3
     openits.dms.v1.Control:
         config: 1
         state: 2
@@ -348,8 +424,10 @@ messages:
         default_page_on_time_s: 2
         fallback: 5
         illumination_control: 3
+        request_self_test: 7
     openits.dms.v1.ControlState:
         active: 9
+        beacon_state: 6
         brightness_current: 8
         brightness_setpoint: 12
         comm_loss_active: 10
@@ -367,6 +445,9 @@ messages:
         day_plan_id: 1
         name: 2
     openits.dms.v1.Diagnostics:
+        beacons_failed: 5
+        beacons_total: 4
+        controller_uptime_s: 6
         lamps_failed: 14
         lamps_total: 13
         last_self_test: 3
@@ -374,21 +455,31 @@ messages:
         pixels_stuck_off: 2
         pixels_stuck_on: 1
         pixels_total: 11
+    openits.dms.v1.EndOfDuration:
+        memory_type: 1
+        slot_number: 2
     openits.dms.v1.Environment:
         ambient_light_lux: 1
         cabinet_temperature_c: 2
         door_open: 4
+        fan_active: 6
+        heater_active: 7
         humidity_percent: 3
+        sign_face_temperature_c: 5
     openits.dms.v1.Fallback:
+        comm_loss: 8
         comm_loss_memory_type: 2
         comm_loss_slot_number: 3
         comm_loss_timeout_s: 1
+        end_of_duration: 9
         end_of_duration_memory_type: 4
         end_of_duration_slot_number: 5
+        power_loss: 10
         power_loss_memory_type: 6
         power_loss_slot_number: 7
     openits.dms.v1.Fault:
         category: 1
+        correlates_with: 6
         description: 2
         fault_id: 3
         first_observed: 4
@@ -397,6 +488,7 @@ messages:
         fault: 1
     openits.dms.v1.Font:
         character_height_pixels: 3
+        character_width_pixels: 4
         font_number: 1
         name: 2
     openits.dms.v1.MessageActivationFailed:
@@ -413,8 +505,12 @@ messages:
         source_device_id: 8
     openits.dms.v1.Messages:
         slot: 1
+    openits.dms.v1.PowerLoss:
+        memory_type: 1
+        slot_number: 2
     openits.dms.v1.Preempted:
         memory_type: 1
+        remaining_duration_s: 3
         slot_number: 2
     openits.dms.v1.Schedule:
         day_plan: 1
@@ -442,10 +538,20 @@ messages:
         elevation: 5
         heading: 6
         id: 7
+        install_date: 1
         latitude: 2
+        linear_reference: 4
         longitude: 3
+        maintained_by: 10
         name: 8
+        owner: 11
         road_reference: 9
+        site_id: 12
+    openits.dms.v1.SignConfigLinearReference:
+        direction: 2
+        lrs_method: 4
+        measure: 3
+        route_designator: 1
     openits.dms.v1.SignState:
         capabilities: 5
         elevation: 12
@@ -454,16 +560,26 @@ messages:
         hardware_version: 18
         heading: 13
         id: 14
+        install_date: 11
         latitude: 6
+        linear_reference: 19
         longitude: 7
+        maintained_by: 20
         make: 8
         model: 9
         name: 15
+        owner: 21
         road_reference: 16
         serial: 10
         sign_height_pixels: 3
         sign_width_pixels: 2
+        site_id: 22
         technology: 1
+    openits.dms.v1.SignStateLinearReference:
+        direction: 2
+        lrs_method: 4
+        measure: 3
+        route_designator: 1
     openits.dms.v1.Slot:
         config: 7
         memory_type: 1
@@ -487,6 +603,7 @@ messages:
         pressure_hpa: 4
         quality: 11
         sensor_id: 9
+        wind_direction_avg_deg: 12
         wind_direction_deg: 7
         wind_gust_ms: 6
         wind_speed_avg_ms: 10
@@ -514,6 +631,7 @@ messages:
         type: 1
     openits.ess.v1.Fault:
         category: 1
+        correlates_with: 6
         description: 2
         fault_id: 3
         first_observed: 4
@@ -528,6 +646,7 @@ messages:
         state: 3
     openits.ess.v1.PavementSensorConfig:
         lane_reference: 1
+        sensing_method: 3
         sensor_id: 2
     openits.ess.v1.PavementSensorState:
         chemical_factor: 13
@@ -539,6 +658,7 @@ messages:
         lane_reference: 9
         observed_at: 1
         salinity_ppm: 6
+        sensing_method: 15
         sensor_id: 10
         subsurface_depth_mm: 8
         subsurface_temperature_c: 7
@@ -586,10 +706,20 @@ messages:
         elevation: 7
         heading: 8
         id: 9
+        install_date: 1
         latitude: 2
+        linear_reference: 6
         longitude: 3
+        maintained_by: 10
         name: 4
+        owner: 11
         road_reference: 5
+        site_id: 12
+    openits.ess.v1.StationConfigLinearReference:
+        direction: 2
+        lrs_method: 4
+        measure: 3
+        route_designator: 1
     openits.ess.v1.StationState:
         elevation: 11
         firmware: 2
@@ -597,13 +727,23 @@ messages:
         hardware_version: 15
         heading: 12
         id: 13
+        install_date: 1
         latitude: 3
+        linear_reference: 10
         longitude: 4
+        maintained_by: 16
         make: 5
         model: 6
         name: 7
+        owner: 17
         road_reference: 8
         serial: 9
+        site_id: 18
+    openits.ess.v1.StationStateLinearReference:
+        direction: 2
+        lrs_method: 4
+        measure: 3
+        route_designator: 1
     openits.ess.v1.Visibility:
         observed_at: 3
         quality: 5
@@ -624,6 +764,12 @@ messages:
         threshold_id: 1
         threshold_value: 3
         unit: 4
+    openits.perception.v1.AssociatedDevice:
+        device_id: 1
+        note: 3
+        role: 2
+    openits.perception.v1.Associations:
+        associated_device: 1
     openits.perception.v1.ClassCount:
         class: 1
         count: 2
@@ -631,9 +777,14 @@ messages:
         data_interval_s: 1
         zone: 3
     openits.perception.v1.ConfigurationZone:
+        congestion_density_threshold: 10
+        congestion_speed_threshold_kmh: 9
+        dwell_s: 6
         function: 3
         legal_heading: 4
+        min_confidence: 8
         name: 2
+        persistence_s: 7
         vertex: 5
         zone_id: 1
     openits.perception.v1.Diagnostics:
@@ -644,6 +795,7 @@ messages:
         uptime_s: 7
     openits.perception.v1.Fault:
         category: 1
+        correlates_with: 6
         description: 2
         fault_id: 3
         first_observed: 4
@@ -652,6 +804,7 @@ messages:
         fault: 1
     openits.perception.v1.Incident:
         confidence: 11
+        disposition: 13
         first_observed: 5
         incident_id: 1
         latitude: 6
@@ -659,9 +812,12 @@ messages:
         object_class: 9
         severity: 4
         speed_kmh: 10
+        track_epoch: 12
         track_id: 8
         type: 3
         zone_id: 2
+    openits.perception.v1.IncidentReview:
+        review: 1
     openits.perception.v1.Incidents:
         incident: 1
     openits.perception.v1.Objects:
@@ -669,10 +825,12 @@ messages:
         track_count: 1
         track_epoch: 3
     openits.perception.v1.PerceptionSensor:
+        associations: 9
         config: 1
         configuration: 3
         diagnostics: 6
         faults: 8
+        incident_review: 10
         incidents: 7
         objects: 4
         state: 2
@@ -681,10 +839,20 @@ messages:
         elevation: 1
         heading: 2
         id: 8
+        install_date: 7
         latitude: 3
+        linear_reference: 9
         longitude: 4
+        maintained_by: 10
         name: 5
+        owner: 11
         road_reference: 6
+        site_id: 12
+    openits.perception.v1.PerceptionSensorConfigLinearReference:
+        direction: 2
+        lrs_method: 4
+        measure: 3
+        route_designator: 1
     openits.perception.v1.PerceptionSensorState:
         elevation: 1
         firmware: 2
@@ -692,13 +860,27 @@ messages:
         hardware_version: 14
         heading: 3
         id: 12
+        install_date: 10
         latitude: 4
+        linear_reference: 15
         longitude: 5
+        maintained_by: 16
         make: 6
         model: 7
         name: 8
+        owner: 17
         road_reference: 9
         serial: 11
+        site_id: 18
+    openits.perception.v1.PerceptionSensorStateLinearReference:
+        direction: 2
+        lrs_method: 4
+        measure: 3
+        route_designator: 1
+    openits.perception.v1.Review:
+        disposition: 2
+        incident_id: 1
+        reviewed_by: 3
     openits.perception.v1.Track:
         class: 2
         class_confidence: 3
@@ -737,8 +919,21 @@ messages:
         severity: 4
         source_device_id: 15
         speed_kmh: 9
+        track_epoch: 16
         track_id: 5
         type: 3
+        zone_id: 2
+    openits.perception.v1.ZoneIncidentUpdated:
+        confidence: 5
+        incident_id: 1
+        kind: 99
+        observed_by: 6
+        occurred_at: 7
+        owner: 8
+        sequence: 9
+        severity: 3
+        source_device_id: 10
+        speed_kmh: 4
         zone_id: 2
     openits.perception.v1.ZoneIntervalReport:
         kind: 99
@@ -764,14 +959,25 @@ messages:
         occupancy_count: 2
         presence: 3
         zone_id: 1
+    openits.ramp_metering.v1.Action:
+        plan_id: 2
+        start_time: 1
     openits.ramp_metering.v1.AdvanceWarningSign:
         config: 1
         state: 2
     openits.ramp_metering.v1.AdvanceWarningSignConfig:
+        aws_fault_action: 2
         enabled: 1
     openits.ramp_metering.v1.AdvanceWarningSignState:
         aws_fault_while_metering: 2
         lamp_status: 1
+    openits.ramp_metering.v1.Band:
+        band_id: 1
+        max_flow_vph: 5
+        max_occupancy_pct: 3
+        min_flow_vph: 4
+        min_occupancy_pct: 2
+        plan_id: 6
     openits.ramp_metering.v1.Control:
         config: 1
         state: 2
@@ -791,6 +997,10 @@ messages:
         non_metering_display: 18
         queue_length_current_vehicles: 3
         queue_override_active: 4
+    openits.ramp_metering.v1.DayPlan:
+        action: 3
+        day_plan_id: 1
+        name: 2
     openits.ramp_metering.v1.Detector:
         config: 5
         detector_id: 1
@@ -812,6 +1022,7 @@ messages:
         signal_head_faults: 4
     openits.ramp_metering.v1.Fault:
         category: 1
+        correlates_with: 6
         description: 2
         fault_id: 3
         first_observed: 4
@@ -830,6 +1041,21 @@ messages:
         max_release_rate_vph: 3
         min_release_rate_vph: 4
         vehicles_per_green: 5
+    openits.ramp_metering.v1.LaneDetector:
+        config: 2
+        detector_id: 1
+        state: 3
+    openits.ramp_metering.v1.LaneDetectorConfig:
+        detector_id: 1
+        role: 2
+    openits.ramp_metering.v1.LaneDetectorState:
+        active: 1
+        count_vph: 2
+        detector_id: 3
+        last_update: 4
+        occupancy_pct: 5
+        role: 6
+        speed_kmh: 7
     openits.ramp_metering.v1.LaneState:
         bypass: 3
         bypass_operation: 10
@@ -842,8 +1068,31 @@ messages:
         min_release_rate_vph: 8
         vehicles_per_green: 9
     openits.ramp_metering.v1.Lanes:
+        config: 3
         lane: 1
         release_coordination: 2
+        state: 4
+    openits.ramp_metering.v1.LanesConfig:
+        release_coordination: 1
+    openits.ramp_metering.v1.LanesState:
+        release_coordination: 1
+    openits.ramp_metering.v1.MainlineDetectors:
+        detector: 1
+    openits.ramp_metering.v1.MainlineDetectorsDetector:
+        config: 2
+        detector_id: 1
+        state: 3
+    openits.ramp_metering.v1.MainlineDetectorsDetectorConfig:
+        detector_id: 1
+        role: 2
+    openits.ramp_metering.v1.MainlineDetectorsDetectorState:
+        active: 1
+        count_vph: 2
+        detector_id: 3
+        last_update: 4
+        occupancy_pct: 5
+        role: 6
+        speed_kmh: 7
     openits.ramp_metering.v1.PhaseTiming:
         max_green: 1
         min_green: 2
@@ -856,7 +1105,9 @@ messages:
         phase_timing: 6
         plan_id: 1
         queue_override_clear_threshold_vehicles: 8
+        queue_override_occupancy_clear_threshold_pct: 11
         queue_override_occupancy_threshold_pct: 10
+        queue_override_persistence_s: 12
         queue_override_rate_vph: 9
         queue_override_threshold_vehicles: 5
         release_rate_vph: 3
@@ -866,6 +1117,7 @@ messages:
     openits.ramp_metering.v1.QueueOverrideActivated:
         kind: 99
         observed_by: 4
+        occupancy_pct: 10
         occurred_at: 5
         owner: 6
         plan_id: 3
@@ -873,6 +1125,7 @@ messages:
         sequence: 7
         source_device_id: 8
         threshold_vehicles: 2
+        trigger: 9
     openits.ramp_metering.v1.QueueOverrideCleared:
         kind: 99
         observed_by: 3
@@ -889,17 +1142,30 @@ messages:
         diagnostics: 6
         faults: 7
         lanes: 5
+        mainline_detectors: 12
         plans: 4
+        schedule: 10
         sequencing: 8
         state: 2
+        traffic_responsive: 11
     openits.ramp_metering.v1.RampMeterConfig:
         elevation: 5
         heading: 6
         id: 7
+        install_date: 3
         latitude: 1
+        linear_reference: 4
         longitude: 2
+        maintained_by: 10
         name: 8
+        owner: 11
         road_reference: 9
+        site_id: 12
+    openits.ramp_metering.v1.RampMeterConfigLinearReference:
+        direction: 2
+        lrs_method: 4
+        measure: 3
+        route_designator: 1
     openits.ramp_metering.v1.RampMeterState:
         elevation: 9
         firmware: 1
@@ -907,13 +1173,23 @@ messages:
         hardware_version: 15
         heading: 10
         id: 11
+        install_date: 5
         latitude: 2
+        linear_reference: 7
         longitude: 3
+        maintained_by: 16
         make: 4
         model: 6
         name: 12
+        owner: 17
         road_reference: 13
         serial: 8
+        site_id: 18
+    openits.ramp_metering.v1.RampMeterStateLinearReference:
+        direction: 2
+        lrs_method: 4
+        measure: 3
+        route_designator: 1
     openits.ramp_metering.v1.ReleaseRateChanged:
         cause: 10
         kind: 99
@@ -926,6 +1202,19 @@ messages:
         reason: 4
         sequence: 8
         source_device_id: 9
+    openits.ramp_metering.v1.Schedule:
+        day_plan: 1
+        schedule_entry: 2
+        state: 3
+    openits.ramp_metering.v1.ScheduleEntry:
+        day_plan: 5
+        days_of_month: 4
+        days_of_week: 3
+        months: 2
+        schedule_id: 1
+    openits.ramp_metering.v1.ScheduleState:
+        active_day_plan_id: 1
+        next_action_at: 2
     openits.ramp_metering.v1.Sequencing:
         config: 1
         state: 2
@@ -936,10 +1225,20 @@ messages:
         startup_steady_green_duration: 2
     openits.ramp_metering.v1.SequencingState:
         sequence_phase: 1
+    openits.ramp_metering.v1.TrafficResponsive:
+        config: 1
+        state: 2
+    openits.ramp_metering.v1.TrafficResponsiveConfig:
+        algorithm: 1
+        band: 2
+    openits.ramp_metering.v1.TrafficResponsiveState:
+        active_band_id: 1
     openits.reversible_lane.v1.Control:
         config: 1
         state: 2
     openits.reversible_lane.v1.ControlConfig:
+        min_clearance_duration_s: 1
+        min_verification_dwell_s: 2
         target_direction: 8
         target_state: 7
         transition_timeout_s: 9
@@ -947,12 +1246,14 @@ messages:
         blocking_interlocks: 20
         changeover_permitted: 19
         current_state: 13
+        direction_open_permitted: 1
         last_command_at: 16
         last_command_source: 15
         open_direction: 14
         transition: 17
     openits.reversible_lane.v1.Fault:
         category: 1
+        correlates_with: 6
         description: 2
         fault_id: 3
         first_observed: 4
@@ -964,6 +1265,7 @@ messages:
         interlock_id: 1
         state: 5
     openits.reversible_lane.v1.InterlockConfig:
+        evaluation_point: 4
         interlock_id: 1
         kind: 99
         name: 2
@@ -998,6 +1300,7 @@ messages:
         source_device_id: 11
     openits.reversible_lane.v1.LcsConflictDetected:
         kind: 99
+        lane_id: 9
         lcs_direction_a: 2
         lcs_direction_b: 3
         observed_by: 4
@@ -1019,10 +1322,20 @@ messages:
         elevation: 3
         heading: 4
         id: 5
+        install_date: 10
         latitude: 6
+        linear_reference: 11
         longitude: 7
+        maintained_by: 12
         name: 8
+        owner: 13
         road_reference: 9
+        site_id: 14
+    openits.reversible_lane.v1.ReversibleLaneConfigLinearReference:
+        direction: 2
+        lrs_method: 4
+        measure: 3
+        route_designator: 1
     openits.reversible_lane.v1.ReversibleLaneState:
         elevation: 1
         firmware: 2
@@ -1030,13 +1343,23 @@ messages:
         hardware_version: 13
         heading: 3
         id: 4
+        install_date: 14
         latitude: 5
+        linear_reference: 15
         longitude: 6
+        maintained_by: 16
         make: 7
         model: 8
         name: 9
+        owner: 17
         road_reference: 10
         serial: 11
+        site_id: 18
+    openits.reversible_lane.v1.ReversibleLaneStateLinearReference:
+        direction: 2
+        lrs_method: 4
+        measure: 3
+        route_designator: 1
     openits.reversible_lane.v1.Segment:
         config: 2
         lane: 3
@@ -1073,6 +1396,17 @@ messages:
         number: 1
         queue_vehicles: 4
         vehicles_1min: 2
+    openits.rsu.v1.BackhaulCellular:
+        data_usage_bytes: 9
+        lte_band: 7
+        nr_band: 8
+        operational: 1
+        operator_name: 2
+        roaming: 10
+        rsrp_dbm: 4
+        rsrq_db: 5
+        signal_quality: 3
+        sinr_db: 6
     openits.rsu.v1.Broadcast:
         channel_id: 6
         dsrc_channel_number: 7
@@ -1080,6 +1414,15 @@ messages:
         msg_type: 2
         priority: 5
         rate_hz: 4
+    openits.rsu.v1.BroadcastConfig:
+        broadcast_interval: 3
+        enabled: 1
+        psid: 4
+        source: 2
+    openits.rsu.v1.BroadcastState:
+        broadcast_count: 2
+        broadcasting: 1
+        last_broadcast: 3
     openits.rsu.v1.Bsm:
         config: 1
         state: 2
@@ -1087,9 +1430,13 @@ messages:
         filter_by_region: 5
         forward_destination: 3
         forward_enabled: 2
+        forward_format: 9
         forward_port: 4
+        forward_protocol: 8
+        psid: 7
         receive_enabled: 1
         region_radius: 6
+        strip_path_history: 10
     openits.rsu.v1.BsmState:
         average_speed: 5
         forwarded_count: 2
@@ -1128,7 +1475,9 @@ messages:
         radio_tech: 7
         state: 10
     openits.rsu.v1.ChannelConfig:
+        antenna_gain_dbi: 8
         dcc: 6
+        dsrc_channel_number: 7
         enabled: 1
         message_types: 4
         mode: 2
@@ -1142,6 +1491,7 @@ messages:
         operational: 1
         packets_rx: 3
         packets_tx: 2
+        radio_tech: 15
         rx_decode_errors: 13
         rx_errors: 7
         security_failures: 14
@@ -1152,6 +1502,11 @@ messages:
     openits.rsu.v1.Channels:
         channel: 1
         radio_type: 2
+        reported_radio_tech: 3
+    openits.rsu.v1.CircularRegion:
+        latitude: 2
+        longitude: 3
+        radius_m: 1
     openits.rsu.v1.CommLink:
         bytes_received: 1
         bytes_sent: 2
@@ -1188,6 +1543,7 @@ messages:
         decision: 1
     openits.rsu.v1.Diagnostics:
         active_mode: 34
+        backhaul_cellular: 4
         cellular: 22
         config_hash: 27
         gps_status: 18
@@ -1223,7 +1579,17 @@ messages:
     openits.rsu.v1.Errors:
         count_1h: 1
         count_24h: 2
+    openits.rsu.v1.Fault:
+        category: 1
+        correlates_with: 2
+        description: 3
+        fault_id: 4
+        first_observed: 5
+        severity: 6
+    openits.rsu.v1.Faults:
+        fault: 1
     openits.rsu.v1.GeographicValidity:
+        circular_region: 3
         identified_region_id: 2
         region_type: 1
     openits.rsu.v1.Gnss:
@@ -1243,7 +1609,16 @@ messages:
         broadcast_interval: 2
         enabled: 1
         geometry_version: 3
+        ingest: 7
         intersection: 4
+        max_data_age_ms: 8
+        psid: 5
+        source_mode: 6
+    openits.rsu.v1.MapConfigIngest:
+        address: 2
+        port: 3
+        psid: 4
+        transport: 1
     openits.rsu.v1.MapConfigIntersection:
         id: 1
         region: 2
@@ -1267,12 +1642,14 @@ messages:
         id: 1
         state: 3
     openits.rsu.v1.MessageConfig:
+        duration_minutes: 11
         enabled: 2
         end_time: 5
         itis_code: 9
         itis_codes: 6
         name: 1
         priority: 3
+        psid: 10
         region: 8
         start_time: 4
         text: 7
@@ -1297,15 +1674,27 @@ messages:
         message_errors: 9
         message_stats: 8
         psm: 6
+        rtcm: 1
         spat: 2
         srm_ssm: 7
         tim: 4
+    openits.rsu.v1.Operating:
+        config: 1
+        state: 2
+    openits.rsu.v1.OperatingConfig:
+        configured_time_source: 1
+        mode: 2
+    openits.rsu.v1.OperatingState:
+        active_mode: 1
+        holdover: 3
+        time_valid: 2
     openits.rsu.v1.PerMessageType:
         avg_latency_ms: 9
         decoding_errors: 12
         encoding_errors: 11
         invalid: 8
         message_type: 1
+        psid: 13
         queue_depth: 2
         rate_per_sec: 10
         rx_count: 4
@@ -1327,11 +1716,14 @@ messages:
         state: 3
         uptime_seconds: 6
     openits.rsu.v1.Psm:
+        broadcast_config: 3
+        broadcast_state: 4
         config: 1
         state: 2
     openits.rsu.v1.PsmConfig:
         alert_asc: 2
         enabled: 1
+        psid: 3
     openits.rsu.v1.PsmState:
         invalid_count: 5
         last_received: 4
@@ -1376,9 +1768,11 @@ messages:
         config: 1
         configured_time_source: 9
         diagnostics: 4
+        faults: 13
         gnss: 11
         messages: 7
         mode: 10
+        operating: 12
         security: 8
         state: 2
         store_forward: 3
@@ -1418,10 +1812,20 @@ messages:
         elevation: 1
         heading: 2
         id: 3
+        install_date: 8
         latitude: 4
+        linear_reference: 9
         longitude: 5
+        maintained_by: 10
         name: 6
+        owner: 11
         road_reference: 7
+        site_id: 12
+    openits.rsu.v1.RsuConfigLinearReference:
+        direction: 2
+        lrs_method: 4
+        measure: 3
+        route_designator: 1
     openits.rsu.v1.RsuGpsStatusChange:
         kind: 99
         new_status: 3
@@ -1439,6 +1843,7 @@ messages:
     openits.rsu.v1.RsuSecurityConfig:
         auto_renewal: 3
         misbehavior_reporting: 5
+        permit_unsigned_broadcast: 6
         renewal_days_before_expiry: 4
         scms_url: 2
         security_enabled: 1
@@ -1472,8 +1877,11 @@ messages:
         last_cert_download: 10
         last_crl_update: 14
         last_scms_contact: 2
+        lccf_version: 24
+        lpf_version: 23
         misbehavior_reporting: 22
         next_crl_due: 18
+        policy_files_last_updated: 25
         pseudonym_certs_available: 4
         pseudonym_certs_used: 5
         revocation_checks: 16
@@ -1498,6 +1906,7 @@ messages:
         vehicle_class: 7
         vehicle_id: 3
     openits.rsu.v1.RsuSrmStatusChange:
+        decision_authority: 1
         kind: 99
         new_status: 5
         observed_by: 7
@@ -1515,13 +1924,23 @@ messages:
         hardware_version: 10
         heading: 2
         id: 3
+        install_date: 14
         latitude: 4
+        linear_reference: 15
         longitude: 5
+        maintained_by: 16
         make: 11
         model: 12
         name: 6
+        owner: 17
         road_reference: 7
         serial: 13
+        site_id: 18
+    openits.rsu.v1.RsuStateLinearReference:
+        direction: 2
+        lrs_method: 4
+        measure: 3
+        route_designator: 1
     openits.rsu.v1.RsuTimBroadcast:
         channel_id: 10
         dsrc_channel_number: 11
@@ -1565,6 +1984,19 @@ messages:
         source: 2
         source_device_id: 12
         start_time: 5
+    openits.rsu.v1.Rtcm:
+        config: 1
+        state: 2
+    openits.rsu.v1.RtcmConfig:
+        broadcast_interval: 4
+        enabled: 1
+        message_set: 3
+        psid: 5
+        source_url: 2
+    openits.rsu.v1.RtcmState:
+        broadcast_count: 2
+        broadcasting: 1
+        last_broadcast: 3
     openits.rsu.v1.SampleBasis:
         computed_at: 5
         penetration_estimate_pct: 4
@@ -1578,9 +2010,17 @@ messages:
         broadcast_interval: 2
         enabled: 1
         include_timing_prediction: 5
+        ingest: 8
         intersection: 7
         max_data_age_ms: 6
+        psid: 9
         source_asc: 3
+        source_mode: 4
+    openits.rsu.v1.SpatConfigIngest:
+        address: 2
+        port: 3
+        psid: 4
+        transport: 1
     openits.rsu.v1.SpatConfigIntersection:
         id: 1
         region: 2
@@ -1619,6 +2059,7 @@ messages:
         forward_to_asc: 3
         grant_authority: 7
         max_active_requests: 6
+        psid: 9
         srm_receive_enabled: 1
         ssm_broadcast_enabled: 2
     openits.rsu.v1.SrmSsmState:
@@ -1677,6 +2118,12 @@ messages:
         special_operation: 3
         start_time: 1
         timing_plan: 2
+    openits.signal_control.v1.ActiveRequest:
+        priority_type: 2
+        request_id: 1
+        stage: 4
+        strategy_id: 5
+        vehicle_id: 3
     openits.signal_control.v1.Battery:
         charger_fault: 5
         last_test: 7
@@ -1691,8 +2138,10 @@ messages:
         generator: 3
         line_frequency_hz: 4
         line_voltage_v: 5
+        on_battery_policy: 9
         police_panel_open: 6
         power_source: 7
+        signal_operation_on_battery: 10
         transfer_count: 8
     openits.signal_control.v1.Channel:
         channel_number: 1
@@ -1780,6 +2229,7 @@ messages:
         assigned_phases: 3
         delay: 5
         detector_id: 1
+        diagnostics: 10
         enabled: 4
         extend: 6
         extend_phases: 8
@@ -1792,8 +2242,13 @@ messages:
         fault: 4
         last_activation: 2
         measurement: 5
+    openits.signal_control.v1.Diagnostics:
+        erratic_counts_per_minute: 3
+        max_presence_minutes: 2
+        no_activity_minutes: 1
     openits.signal_control.v1.Fault:
         category: 1
+        correlates_with: 6
         description: 2
         fault_id: 3
         first_observed: 4
@@ -1807,6 +2262,8 @@ messages:
         fuel_level_pct: 2
         running: 1
     openits.signal_control.v1.Measurement:
+        collected_at: 5
+        collection_period_seconds: 4
         occupancy: 2
         speed_kmh: 3
         volume: 1
@@ -1814,6 +2271,10 @@ messages:
         fault_type: 1
         faulting_channels: 2
         latched: 3
+    openits.signal_control.v1.OnBatteryPolicy:
+        mode: 1
+        transition_at_runtime_minutes: 3
+        transition_at_soc_pct: 2
     openits.signal_control.v1.Operation:
         flash_active: 2
         flash_cause: 3
@@ -1844,6 +2305,7 @@ messages:
     openits.signal_control.v1.Overlap:
         config: 2
         overlap_id: 1
+        overlap_number: 4
         state: 3
     openits.signal_control.v1.OverlapChange:
         kind: 99
@@ -1857,8 +2319,10 @@ messages:
     openits.signal_control.v1.OverlapConfig:
         fya: 8
         included_phases: 4
+        modifier_phases: 10
         name: 2
         overlap_id: 1
+        overlap_number: 9
         trailing_green: 5
         trailing_red_clear: 7
         trailing_yellow: 6
@@ -1887,10 +2351,13 @@ messages:
         state: 3
     openits.signal_control.v1.PhaseConfig:
         barrier: 4
+        crossing_distance_m: 10
         enabled: 2
+        leading_ped_interval_seconds: 11
         max_green_2: 6
         options: 7
         phase_number: 1
+        red_revert: 9
         ring: 3
         timing: 5
         volume_density: 8
@@ -1967,9 +2434,11 @@ messages:
         delay_seconds: 4
         dwell_phases: 8
         exit_phases: 10
+        flash_dwell_seconds: 13
         max_presence_seconds: 11
         min_dwell_seconds: 9
         min_green_before_entry: 5
+        min_ped_clear_before_entry: 12
         min_walk_before_entry: 6
         preemptor_id: 1
         priority_order: 3
@@ -1980,12 +2449,26 @@ messages:
         active_since: 2
         current_stage: 3
         source_id: 4
+    openits.signal_control.v1.Priority:
+        state: 2
+        strategy: 1
+    openits.signal_control.v1.PriorityState:
+        active_request: 1
+    openits.signal_control.v1.RingSequence:
+        ordered_phases: 2
+        ring: 1
     openits.signal_control.v1.ScheduleEntry:
         day_plan: 5
         days_of_month: 4
         days_of_week: 3
         months: 2
         schedule_id: 1
+    openits.signal_control.v1.Sequence:
+        name: 2
+        ring_sequence: 3
+        sequence_id: 1
+    openits.signal_control.v1.Sequences:
+        sequence: 1
     openits.signal_control.v1.SignalController:
         cabinet_power: 13
         channels: 10
@@ -1998,16 +2481,29 @@ messages:
         overlaps: 9
         phases: 3
         preemption: 6
+        priority: 16
+        sequences: 15
+        startup: 14
         state: 2
         timebase: 12
     openits.signal_control.v1.SignalControllerConfig:
         elevation: 1
         heading: 2
         id: 3
+        install_date: 8
         latitude: 4
+        linear_reference: 9
         longitude: 5
+        maintained_by: 10
         name: 6
+        owner: 11
         road_reference: 7
+        site_id: 12
+    openits.signal_control.v1.SignalControllerConfigLinearReference:
+        direction: 2
+        lrs_method: 4
+        measure: 3
+        route_designator: 1
     openits.signal_control.v1.SignalControllerState:
         elevation: 1
         firmware: 2
@@ -2015,21 +2511,47 @@ messages:
         hardware_version: 13
         heading: 3
         id: 4
+        install_date: 14
         latitude: 5
+        linear_reference: 15
         longitude: 6
+        maintained_by: 16
         make: 7
         model: 8
         name: 9
+        owner: 17
         road_reference: 10
         serial: 11
+        site_id: 18
+    openits.signal_control.v1.SignalControllerStateLinearReference:
+        direction: 2
+        lrs_method: 4
+        measure: 3
+        route_designator: 1
     openits.signal_control.v1.Split:
         phase_number: 1
         split_mode: 3
         split_seconds: 2
+    openits.signal_control.v1.Startup:
+        all_red_duration_seconds: 3
+        flash_duration_seconds: 1
+        flash_phases: 2
+    openits.signal_control.v1.Strategy:
+        config: 2
+        strategy_id: 1
+    openits.signal_control.v1.StrategyConfig:
+        max_early_green_seconds: 3
+        max_green_extension_seconds: 4
+        priority_class: 2
+        reservice_interval_seconds: 5
+        served_phases: 6
+        strategy_id: 1
     openits.signal_control.v1.Timebase:
         clock: 3
         day_plan: 1
+        observe_dst: 5
         schedule_entry: 2
+        timezone: 4
     openits.signal_control.v1.Timing:
         max_green: 1
         min_green: 2
@@ -2045,6 +2567,7 @@ messages:
         offset: 3
         offset_reference: 6
         plan_id: 1
+        sequence_id: 9
         split: 4
         transition_mode: 7
     openits.signal_control.v1.TrackClearance:
@@ -2101,6 +2624,12 @@ messages:
         min_gap: 5
         time_before_reduction: 3
         time_to_reduce: 4
+    openits.traffic_sensor.v1.AssociatedDevice:
+        device_id: 1
+        note: 3
+        role: 2
+    openits.traffic_sensor.v1.Associations:
+        associated_device: 1
     openits.traffic_sensor.v1.Calibration:
         last_calibrated: 1
         status: 2
@@ -2109,7 +2638,14 @@ messages:
         data_interval_s: 1
         lane_numbering_origin: 4
         mounting_side: 5
+        queue_zone: 6
         vehicle_class: 2
+    openits.traffic_sensor.v1.ConfigurationQueueZone:
+        carriageway: 4
+        downstream_reference: 5
+        lane_reference: 3
+        name: 2
+        zone_id: 1
     openits.traffic_sensor.v1.Diagnostics:
         calibration: 2
         internal_temperature_c: 6
@@ -2119,6 +2655,7 @@ messages:
         uptime_s: 7
     openits.traffic_sensor.v1.Fault:
         category: 1
+        correlates_with: 6
         description: 2
         fault_id: 3
         first_observed: 4
@@ -2172,11 +2709,13 @@ messages:
         last_detection: 2
         occupied: 1
     openits.traffic_sensor.v1.QueueStateChanged:
+        back_of_queue_m: 10
         kind: 99
         observed_by: 5
         occurred_at: 6
         owner: 7
         queue_duration_s: 3
+        queue_length_m: 11
         queue_start: 4
         queueing: 2
         sequence: 8
@@ -2191,6 +2730,13 @@ messages:
         zone_id: 1
     openits.traffic_sensor.v1.Queues:
         queue_zone: 1
+    openits.traffic_sensor.v1.QueuesQueueZone:
+        back_of_queue_m: 2
+        queue_duration_s: 3
+        queue_length_m: 4
+        queue_start: 5
+        queueing: 6
+        zone_id: 1
     openits.traffic_sensor.v1.TrafficIntervalReport:
         kind: 99
         lane: 1
@@ -2225,6 +2771,7 @@ messages:
         class_id: 1
         volume: 2
     openits.traffic_sensor.v1.TrafficSensor:
+        associations: 8
         config: 1
         configuration: 3
         diagnostics: 6
@@ -2236,10 +2783,20 @@ messages:
         elevation: 1
         heading: 2
         id: 8
+        install_date: 7
         latitude: 3
+        linear_reference: 9
         longitude: 4
+        maintained_by: 10
         name: 5
+        owner: 11
         road_reference: 6
+        site_id: 12
+    openits.traffic_sensor.v1.TrafficSensorConfigLinearReference:
+        direction: 2
+        lrs_method: 4
+        measure: 3
+        route_designator: 1
     openits.traffic_sensor.v1.TrafficSensorState:
         elevation: 3
         firmware: 4
@@ -2248,14 +2805,24 @@ messages:
         heading: 5
         id: 14
         inactive_reason: 2
+        install_date: 12
         latitude: 6
+        linear_reference: 17
         longitude: 7
+        maintained_by: 18
         make: 8
         model: 9
         name: 10
         operational_status: 1
+        owner: 19
         road_reference: 11
         serial: 13
+        site_id: 20
+    openits.traffic_sensor.v1.TrafficSensorStateLinearReference:
+        direction: 2
+        lrs_method: 4
+        measure: 3
+        route_designator: 1
     openits.traffic_sensor.v1.TrafficSensorStatusReport:
         inactive_reason: 5
         kind: 99
@@ -2270,7 +2837,9 @@ messages:
         source_device_id: 10
     openits.traffic_sensor.v1.VehicleClass:
         class_id: 1
+        max_axle_count: 6
         max_length_m: 4
+        min_axle_count: 5
         min_length_m: 3
         name: 2
     openits.types.v1.Indiana:

@@ -1,0 +1,7 @@
+{
+  "openits-perception:perception-sensor": {
+    "config": { "id": "lidar-1" },
+    "configuration": { "zone": [ { "zone-id": "eb-travel-lanes", "vertex": [ {"vertex-index":0,"latitude":"32.8","longitude":"-96.7"},{"vertex-index":1,"latitude":"32.9","longitude":"-96.7"},{"vertex-index":2,"latitude":"32.9","longitude":"-96.8"} ] } ] },
+    "incidents": { "incident": [ { "incident-id": "i1", "zone-id": "not-a-zone" } ] }
+  }
+}

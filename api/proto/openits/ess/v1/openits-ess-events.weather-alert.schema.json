@@ -52,12 +52,16 @@
     "unit": {
       "enum": [
         "celsius",
+        "degrees",
+        "dimensionless",
         "hectopascals",
         "meters",
         "meters-per-second",
         "millimeters",
         "millimeters-per-hour",
-        "percent"
+        "parts-per-million",
+        "percent",
+        "watts-per-square-meter"
       ],
       "type": "string"
     }

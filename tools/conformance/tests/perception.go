@@ -139,3 +139,32 @@ func TestPerceptionEvent_FaultRaisedShape(t *T, obs *Observation) {
 	}
 	t.Errorf("no fault-raised event observed during %s window", obs.Window)
 }
+
+// Operator incident-review disposition must round-trip onto the incident: a
+// review keyed to an incident-id records a disposition, and the incident
+// inventory entry for that id must carry the same applied disposition back.
+func TestPerception_DispositionRoundTrip(t *T, obs *Observation) {
+	ps := obs.Device.GetPerceptionSensor()
+	if ps == nil || ps.GetIncidentReview() == nil {
+		return
+	}
+	incidents := ps.GetIncidents()
+	for id, rev := range ps.GetIncidentReview().Review {
+		if rev.Disposition == 0 {
+			continue // no disposition recorded on this review
+		}
+		if incidents == nil {
+			t.Errorf("incident-review %q has a disposition but there is no incident inventory", id)
+			continue
+		}
+		inc := incidents.GetIncident(id)
+		if inc == nil {
+			t.Errorf("incident-review %q has a disposition but no matching incident %q", id, id)
+			continue
+		}
+		if inc.GetDisposition() != rev.GetDisposition() {
+			t.Errorf("incident %q disposition readback %v does not match reviewed disposition %v",
+				id, inc.GetDisposition(), rev.GetDisposition())
+		}
+	}
+}

@@ -8,17 +8,15 @@
         "properties": {
           "detector-id": {
             "maximum": 65535,
-            "minimum": 0,
+            "minimum": 1,
             "type": "integer"
           },
           "occupancy": {
-            "maximum": 100,
-            "minimum": 0,
-            "type": "integer"
+            "type": "string"
           },
           "phase-served": {
-            "maximum": 255,
-            "minimum": 0,
+            "maximum": 40,
+            "minimum": 1,
             "type": "integer"
           },
           "volume": {

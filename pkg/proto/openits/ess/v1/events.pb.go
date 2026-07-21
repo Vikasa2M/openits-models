@@ -25,34 +25,46 @@ const (
 type Unit int32
 
 const (
-	Unit_UNIT_CELSIUS              Unit = 0
-	Unit_UNIT_METERS_PER_SECOND    Unit = 1
-	Unit_UNIT_METERS               Unit = 2
-	Unit_UNIT_MILLIMETERS          Unit = 3
-	Unit_UNIT_MILLIMETERS_PER_HOUR Unit = 4
-	Unit_UNIT_PERCENT              Unit = 5
-	Unit_UNIT_HECTOPASCALS         Unit = 6
+	Unit_UNIT_CELSIUS                Unit = 0
+	Unit_UNIT_METERS_PER_SECOND      Unit = 1
+	Unit_UNIT_METERS                 Unit = 2
+	Unit_UNIT_MILLIMETERS            Unit = 3
+	Unit_UNIT_MILLIMETERS_PER_HOUR   Unit = 4
+	Unit_UNIT_PERCENT                Unit = 5
+	Unit_UNIT_HECTOPASCALS           Unit = 6
+	Unit_UNIT_WATTS_PER_SQUARE_METER Unit = 7
+	Unit_UNIT_PARTS_PER_MILLION      Unit = 8
+	Unit_UNIT_DEGREES                Unit = 9
+	Unit_UNIT_DIMENSIONLESS          Unit = 10
 )
 
 // Enum value maps for Unit.
 var (
 	Unit_name = map[int32]string{
-		0: "UNIT_CELSIUS",
-		1: "UNIT_METERS_PER_SECOND",
-		2: "UNIT_METERS",
-		3: "UNIT_MILLIMETERS",
-		4: "UNIT_MILLIMETERS_PER_HOUR",
-		5: "UNIT_PERCENT",
-		6: "UNIT_HECTOPASCALS",
+		0:  "UNIT_CELSIUS",
+		1:  "UNIT_METERS_PER_SECOND",
+		2:  "UNIT_METERS",
+		3:  "UNIT_MILLIMETERS",
+		4:  "UNIT_MILLIMETERS_PER_HOUR",
+		5:  "UNIT_PERCENT",
+		6:  "UNIT_HECTOPASCALS",
+		7:  "UNIT_WATTS_PER_SQUARE_METER",
+		8:  "UNIT_PARTS_PER_MILLION",
+		9:  "UNIT_DEGREES",
+		10: "UNIT_DIMENSIONLESS",
 	}
 	Unit_value = map[string]int32{
-		"UNIT_CELSIUS":              0,
-		"UNIT_METERS_PER_SECOND":    1,
-		"UNIT_METERS":               2,
-		"UNIT_MILLIMETERS":          3,
-		"UNIT_MILLIMETERS_PER_HOUR": 4,
-		"UNIT_PERCENT":              5,
-		"UNIT_HECTOPASCALS":         6,
+		"UNIT_CELSIUS":                0,
+		"UNIT_METERS_PER_SECOND":      1,
+		"UNIT_METERS":                 2,
+		"UNIT_MILLIMETERS":            3,
+		"UNIT_MILLIMETERS_PER_HOUR":   4,
+		"UNIT_PERCENT":                5,
+		"UNIT_HECTOPASCALS":           6,
+		"UNIT_WATTS_PER_SQUARE_METER": 7,
+		"UNIT_PARTS_PER_MILLION":      8,
+		"UNIT_DEGREES":                9,
+		"UNIT_DIMENSIONLESS":          10,
 	}
 )
 
@@ -401,7 +413,7 @@ const file_openits_ess_v1_events_proto_rawDesc = "" +
 	"\x05owner\x18\t \x01(\tR\x05owner\x12\x1a\n" +
 	"\bsequence\x18\n" +
 	" \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\v \x01(\tR\x0esourceDeviceId*\xa3\x01\n" +
+	"\x10source_device_id\x18\v \x01(\tR\x0esourceDeviceId*\x8a\x02\n" +
 	"\x04Unit\x12\x10\n" +
 	"\fUNIT_CELSIUS\x10\x00\x12\x1a\n" +
 	"\x16UNIT_METERS_PER_SECOND\x10\x01\x12\x0f\n" +
@@ -409,7 +421,12 @@ const file_openits_ess_v1_events_proto_rawDesc = "" +
 	"\x10UNIT_MILLIMETERS\x10\x03\x12\x1d\n" +
 	"\x19UNIT_MILLIMETERS_PER_HOUR\x10\x04\x12\x10\n" +
 	"\fUNIT_PERCENT\x10\x05\x12\x15\n" +
-	"\x11UNIT_HECTOPASCALS\x10\x06*8\n" +
+	"\x11UNIT_HECTOPASCALS\x10\x06\x12\x1f\n" +
+	"\x1bUNIT_WATTS_PER_SQUARE_METER\x10\a\x12\x1a\n" +
+	"\x16UNIT_PARTS_PER_MILLION\x10\b\x12\x10\n" +
+	"\fUNIT_DEGREES\x10\t\x12\x16\n" +
+	"\x12UNIT_DIMENSIONLESS\x10\n" +
+	"*8\n" +
 	"\tDirection\x12\x15\n" +
 	"\x11DIRECTION_ENTERED\x10\x00\x12\x14\n" +
 	"\x10DIRECTION_EXITED\x10\x01BBZ@github.com/openits/openits-models/pkg/proto/openits/ess/v1;essv1b\x06proto3"

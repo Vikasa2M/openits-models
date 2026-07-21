@@ -20,10 +20,10 @@ message RsuBroadcastSample {
 message Broadcast {
   string msg_id = 1;
   string msg_type = 2;
-  string channel_id = 6;
-  uint32 dsrc_channel_number = 7;
   string rate_hz = 4;
   uint32 priority = 5;
+  string channel_id = 6;
+  uint32 dsrc_channel_number = 7;
 }
 
 message RsuCertificateExpiring {
@@ -41,10 +41,10 @@ message RsuCertificateExpiring {
 
 message RsuChannelFault {
   string kind = 99;
-  string channel_id = 11;
-  uint32 dsrc_channel_number = 12;
   string fault_type = 3;
   string message = 4;
+  string channel_id = 11;
+  uint32 dsrc_channel_number = 12;
   string observed_by = 6;
   google.protobuf.Timestamp occurred_at = 7;
   string owner = 8;
@@ -74,7 +74,7 @@ enum GpsFixStatus {
 
 message RsuSecurityEvent {
   string kind = 99;
-  EventType event_type = 2;
+  string event_type = 2;
   string source = 3;
   string message = 4;
   string observed_by = 6;
@@ -82,14 +82,6 @@ message RsuSecurityEvent {
   string owner = 8;
   uint64 sequence = 9;
   string source_device_id = 10;
-}
-
-enum EventType {
-  EVENT_TYPE_INVALID_SIGNATURE = 0;
-  EVENT_TYPE_REVOKED_CERTIFICATE = 1;
-  EVENT_TYPE_SCMS_CONNECTION_LOST = 2;
-  EVENT_TYPE_ENROLLMENT_FAILURE = 3;
-  EVENT_TYPE_MISBEHAVIOR_DETECTED = 4;
 }
 
 message RsuSrmReceived {
@@ -111,8 +103,9 @@ message RsuSrmStatusChange {
   string kind = 99;
   string request_id = 2;
   string vehicle_id = 3;
-  string previous_status = 4;
-  string new_status = 5;
+  SrmRequestStatus previous_status = 4;
+  SrmRequestStatus new_status = 5;
+  DecisionAuthority decision_authority = 1;
   string observed_by = 7;
   google.protobuf.Timestamp occurred_at = 8;
   string owner = 9;
@@ -120,12 +113,28 @@ message RsuSrmStatusChange {
   string source_device_id = 11;
 }
 
+enum SrmRequestStatus {
+  SRM_REQUEST_STATUS_PENDING = 0;
+  SRM_REQUEST_STATUS_APPROVED = 1;
+  SRM_REQUEST_STATUS_ACTIVE = 2;
+  SRM_REQUEST_STATUS_COMPLETED = 3;
+  SRM_REQUEST_STATUS_DENIED = 4;
+}
+
+enum DecisionAuthority {
+  DECISION_AUTHORITY_NONE = 0;
+  DECISION_AUTHORITY_CONTROLLER_PRS = 1;
+  DECISION_AUTHORITY_RSU_LOCAL = 2;
+  DECISION_AUTHORITY_OPERATOR = 3;
+  DECISION_AUTHORITY_EVP_AUTO = 4;
+}
+
 message RsuTimBroadcast {
   string kind = 99;
   string msg_id = 1;
+  uint32 priority = 3;
   string channel_id = 10;
   uint32 dsrc_channel_number = 11;
-  uint32 priority = 3;
   string observed_by = 5;
   google.protobuf.Timestamp occurred_at = 6;
   string owner = 7;

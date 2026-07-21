@@ -21,22 +21,28 @@
         "sign-type": "full-matrix",
         "character-height-pixels": 7,
         "character-width-pixels": 0,
+        "sign-face-height-mm": 900,
+        "sign-face-width-mm": 4800,
+        "character-height-mm": 350,
+        "character-width-mm": 0,
+        "beacon-type": "two-beacon",
         "color-capability": "color",
         "max-pages": 3,
         "beacon-capable": true,
         "supported-multi-tags": [
-          "new-line",
-          "new-page",
-          "font",
-          "color-foreground",
-          "flash",
-          "page-time"
+          "openits-dms-types:multi-tag-new-line",
+          "openits-dms-types:multi-tag-new-page",
+          "openits-dms-types:multi-tag-font",
+          "openits-dms-types:multi-tag-color-foreground",
+          "openits-dms-types:multi-tag-flash",
+          "openits-dms-types:multi-tag-page-time"
         ],
         "font": [
           {
             "font-number": 1,
             "name": "default-7line",
-            "character-height-pixels": 7
+            "character-height-pixels": 7,
+            "character-width-pixels": 5
           }
         ]
       }
@@ -92,7 +98,7 @@
     },
     "control": {
       "config": {
-        "control-mode": "openits-dms-types:control-central",
+        "control-mode": "openits-dms-types:dms-control-central",
         "brightness-setpoint": 85,
         "active-message": {
           "memory-type": "changeable",
@@ -103,21 +109,18 @@
           "owner": "tmc-ops"
         },
         "fallback": {
-          "comm-loss-timeout-s": 300,
-          "comm-loss-memory-type": "changeable",
-          "comm-loss-slot-number": 2,
-          "end-of-duration-memory-type": "changeable",
-          "end-of-duration-slot-number": 3,
-          "power-loss-memory-type": "changeable",
-          "power-loss-slot-number": 3
+          "comm-loss": { "comm-loss-timeout-s": 300, "memory-type": "changeable", "slot-number": 2 },
+          "end-of-duration": { "memory-type": "changeable", "slot-number": 3 },
+          "power-loss": { "memory-type": "changeable", "slot-number": 3 }
         },
         "illumination-control": "photocell",
         "default-page-on-time-s": "2.0",
         "default-page-off-time-s": "0.0"
       },
       "state": {
-        "control-mode": "openits-dms-types:control-central",
+        "control-mode": "openits-dms-types:dms-control-central",
         "display-state": "openits-dms-types:mode-normal",
+        "beacon-state": "none",
         "last-mode-change": "2026-04-18T14:00:00Z",
         "brightness-current": 80,
         "brightness-setpoint": 85,
@@ -135,13 +138,13 @@
         },
         "comm-loss-active": false,
         "power-loss-active": false,
-        "controller-uptime-s": 43200,
         "illumination-control": "photocell",
         "default-page-on-time-s": "2.0",
         "default-page-off-time-s": "0.0",
         "preempted": {
           "memory-type": "changeable",
-          "slot-number": 4
+          "slot-number": 4,
+          "remaining-duration-s": 1200
         }
       }
     },
@@ -149,7 +152,10 @@
       "ambient-light-lux": 12000,
       "cabinet-temperature-c": "32.5",
       "humidity-percent": 40,
-      "door-open": false
+      "door-open": false,
+      "sign-face-temperature-c": "38.0",
+      "fan-active": true,
+      "heater-active": false
     },
     "diagnostics": {
       "pixels-total": 3888,
@@ -158,7 +164,10 @@
       "lamps-failed": 0,
       "last-self-test": "2026-04-18T12:00:00Z",
       "pixels-stuck-on": 1,
-      "pixels-stuck-off": 2
+      "pixels-stuck-off": 2,
+      "beacons-total": 0,
+      "beacons-failed": 0,
+      "controller-uptime-s": 43200
     },
     "schedule": {
       "day-plan": [

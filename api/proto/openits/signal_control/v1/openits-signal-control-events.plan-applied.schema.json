@@ -29,8 +29,8 @@
       "type": "string"
     },
     "plan-id": {
-      "maximum": 65535,
-      "minimum": 0,
+      "maximum": 255,
+      "minimum": 1,
       "type": "integer"
     },
     "sequence": {

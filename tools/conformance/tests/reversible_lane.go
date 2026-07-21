@@ -208,3 +208,33 @@ func TestReversibleLaneEvent_FaultRaisedShape(t *T, obs *Observation) {
 	}
 	t.Errorf("no fault-raised event observed during %s window", obs.Window)
 }
+
+// When the lane group is explicitly not permitted to open toward a direction
+// (a transition / interlock state), no lane may show a proceed (green-arrow)
+// indication in either direction. Guards the open-permit safety interlock.
+func TestRL_DirectionOpenGateBlocksReverse(t *T, obs *Observation) {
+	rl := obs.Device.GetReversibleLane()
+	if rl == nil || rl.GetControl() == nil || rl.GetControl().GetState() == nil {
+		return
+	}
+	st := rl.GetControl().GetState()
+	if st.DirectionOpenPermitted == nil || *st.DirectionOpenPermitted {
+		return // permitted, or not reported — nothing to gate
+	}
+	segs := rl.GetSegments()
+	if segs == nil {
+		return
+	}
+	green := yangpkg.OpenitsReversibleLaneTypes_LcsIndication_green_arrow
+	for _, seg := range segs.Segment {
+		for _, lane := range seg.Lane {
+			ls := lane.GetState()
+			if ls == nil {
+				continue
+			}
+			if ls.GetLcsDirectionA() == green || ls.GetLcsDirectionB() == green {
+				t.Errorf("direction-open-permitted is false but a lane shows a green-arrow indication")
+			}
+		}
+	}
+}

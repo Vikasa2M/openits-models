@@ -10,7 +10,7 @@
         "detector-id": 12,
         "phase-served": 2,
         "volume": 84,
-        "occupancy": 17
+        "occupancy": "17.0"
       }
     ],
     "occurred-at": "2026-07-11T14:05:00Z"

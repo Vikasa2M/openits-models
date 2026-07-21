@@ -7,7 +7,7 @@
     },
     "held-priority": {
       "maximum": 255,
-      "minimum": 0,
+      "minimum": 1,
       "type": "integer"
     },
     "kind": {
@@ -31,7 +31,7 @@
     },
     "requested-priority": {
       "maximum": 255,
-      "minimum": 0,
+      "minimum": 1,
       "type": "integer"
     },
     "sequence": {

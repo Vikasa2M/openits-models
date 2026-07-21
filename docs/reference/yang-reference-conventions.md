@@ -570,6 +570,17 @@ Do not use `geo-point` for a device identity as a way to save two
 optional leaves — the identity is still a physical thing sitting at an
 elevation, even if that value is usually absent on the wire.
 
+## Module prefixes
+
+Module prefixes are an internal, non-wire-visible convention. The suite
+uses a mix of service short-codes (`openits-sc`, `openits-rm`,
+`openits-ts`, `openits-rl`, `openits-pn`) and full names
+(`openits-dms-types`, `openits-cctv-types`, ...). This is deliberately
+**not** normalized before v1: the prefix appears in every `import` and
+every qualified reference, so a rename is a large repo-wide edit with no
+external (wire) benefit — RFC 7951 identityref values are keyed by module
+*name*, not prefix. Revisit at v1.
+
 ## Related documents
 
 - [Extension model](../06-extension-model.md) — Core / Augments /

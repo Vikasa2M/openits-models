@@ -1,0 +1,13 @@
+{
+  "openits-signal-control:signal-controller": {
+    "config": { "id": "c1", "name": "c1" },
+    "phases": { "phase": [
+      { "phase-number": 2, "config": { "phase-number": 2, "ring": 1, "barrier": 1,
+        "options": { "ped-recall": true },
+        "timing": { "min-green": "10.0", "max-green": "40.0", "yellow-change": "3.5", "red-clear": "1.5", "walk": 7, "ped-clear": 15 } } }
+    ] },
+    "coordination": { "timing-plan": [
+      { "plan-id": 1, "cycle-length": 60, "split": [ { "phase-number": 2, "split-seconds": 27 } ] }
+    ] }
+  }
+}

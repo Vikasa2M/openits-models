@@ -11,6 +11,8 @@ message Camera {
   CameraState state = 2;
   Mounting mounting = 3;
   Ptz ptz = 4;
+  Lens lens = 9;
+  PrivacyMasks privacy_masks = 10;
   Streams streams = 5;
   Environment environment = 6;
   Faults faults = 7;
@@ -21,32 +23,65 @@ message CameraConfig {
   string elevation = 1;
   uint32 heading = 2;
   string id = 3;
+  google.protobuf.Timestamp install_date = 8;
   string latitude = 4;
+  CameraConfigLinearReference linear_reference = 9;
   string longitude = 5;
+  string maintained_by = 10;
   string name = 6;
+  string owner = 11;
   string road_reference = 7;
+  string site_id = 12;
+}
+
+message CameraConfigLinearReference {
+  string route_designator = 1;
+  string direction = 2;
+  string measure = 3;
+  string lrs_method = 4;
 }
 
 message CameraState {
+  OperationalStatus operational_status = 14;
   string elevation = 1;
   string firmware = 2;
   string firmware_build = 3;
   string hardware_version = 4;
   uint32 heading = 5;
   string id = 6;
+  google.protobuf.Timestamp install_date = 15;
   string latitude = 7;
+  CameraStateLinearReference linear_reference = 16;
   string longitude = 8;
+  string maintained_by = 17;
   string make = 9;
   string model = 10;
   string name = 11;
+  string owner = 18;
   string road_reference = 12;
   string serial = 13;
+  string site_id = 19;
+}
+
+enum OperationalStatus {
+  OPERATIONAL_STATUS_ONLINE = 0;
+  OPERATIONAL_STATUS_DEGRADED = 1;
+  OPERATIONAL_STATUS_OFFLINE = 2;
+  OPERATIONAL_STATUS_UNKNOWN = 3;
+}
+
+message CameraStateLinearReference {
+  string route_designator = 1;
+  string direction = 2;
+  string measure = 3;
+  string lrs_method = 4;
 }
 
 message Mounting {
   MountingStructure structure = 1;
   string height_m = 2;
-  repeated string co_located_device = 3;
+  uint32 pan_reference_offset_deg = 4;
+  repeated AssociatedDevice associated_device = 5;
 }
 
 enum MountingStructure {
@@ -58,8 +93,15 @@ enum MountingStructure {
   MOUNTING_STRUCTURE_OTHER = 5;
 }
 
+message AssociatedDevice {
+  string device_id = 1;
+  string role = 2;
+  string note = 3;
+}
+
 message Ptz {
   Capabilities capabilities = 1;
+  PtzConfig config = 5;
   PtzState state = 2;
   Presets presets = 3;
   Tours tours = 4;
@@ -71,11 +113,37 @@ message Capabilities {
   bool pan_continuous = 3;
 }
 
+message PtzConfig {
+  Absolute absolute = 1;
+  Velocity velocity = 2;
+}
+
+message Absolute {
+  string pan_degrees = 1;
+  string tilt_degrees = 2;
+  uint32 zoom_percent = 3;
+}
+
+message Velocity {
+  int32 pan_speed = 1;
+  int32 tilt_speed = 2;
+  int32 zoom_speed = 3;
+}
+
 message PtzState {
   string pan_degrees = 1;
   string tilt_degrees = 2;
   uint32 zoom_percent = 3;
   bool moving = 4;
+  PtzMoveMode move_mode = 5;
+}
+
+enum PtzMoveMode {
+  PTZ_MOVE_MODE_ABSOLUTE = 0;
+  PTZ_MOVE_MODE_VELOCITY = 1;
+  PTZ_MOVE_MODE_PRESET = 2;
+  PTZ_MOVE_MODE_TOUR = 3;
+  PTZ_MOVE_MODE_IDLE = 4;
 }
 
 message Presets {
@@ -126,6 +194,40 @@ enum OpenitsCctvTourRunState {
   OPENITS_CCTV_TOUR_RUN_STATE_PAUSED = 2;
 }
 
+message Lens {
+  LensConfig config = 1;
+  LensState state = 2;
+}
+
+message LensConfig {
+  LensMode focus_mode = 1;
+  uint32 focus_position = 2;
+  LensMode iris_mode = 3;
+  uint32 iris_position = 4;
+}
+
+enum LensMode {
+  LENS_MODE_AUTO = 0;
+  LENS_MODE_MANUAL = 1;
+}
+
+message LensState {
+  LensMode focus_mode = 1;
+  uint32 focus_position = 2;
+  LensMode iris_mode = 3;
+  uint32 iris_position = 4;
+}
+
+message PrivacyMasks {
+  repeated Mask mask = 1;
+}
+
+message Mask {
+  uint32 mask_id = 1;
+  string name = 2;
+  bool enabled = 3;
+}
+
 message Streams {
   repeated Stream stream = 1;
 }
@@ -156,6 +258,7 @@ message StreamState {
   uint32 bitrate_kbps = 4;
   string frame_rate = 5;
   StreamHealth health = 6;
+  string uri = 7;
 }
 
 enum StreamHealth {
@@ -172,6 +275,7 @@ message Environment {
 message EnvironmentConfig {
   bool wiper = 1;
   bool washer = 2;
+  uint32 washer_spray_duration_s = 4;
   HeaterMode heater_mode = 3;
 }
 
@@ -194,6 +298,7 @@ message Faults {
 
 message Fault {
   string category = 1;
+  string correlates_with = 6;
   string description = 2;
   string fault_id = 3;
   google.protobuf.Timestamp first_observed = 4;

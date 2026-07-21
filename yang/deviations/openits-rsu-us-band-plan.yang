@@ -1,0 +1,30 @@
+module openits-rsu-us-band-plan {
+  yang-version 1.1;
+  namespace "urn:openits:yang:rsu-us-band-plan";
+  prefix openits-rsu-usbp;
+
+  import openits-rsu { prefix openits-rsu; }
+
+  organization "OpenITS Working Group (proposal)";
+  contact "OpenITS Working Group (proposal)";
+  description
+    "US band-plan deviation: restrict DSRC channel numbers to the upper 30 MHz
+     retained for ITS after FCC 20-164 (channels 180, 182, 184 and the 20 MHz
+     183). A unit adhering to this deviation rejects the lower-band channels
+     172/174/175/176/178 the base union still admits for other jurisdictions.
+     Deviations only tighten; they never loosen the standard.";
+  reference "FCC 47 CFR / FCC 20-164.";
+
+  revision 2026-07-21 {
+    description "Initial US band-plan deviation: dsrc-channel-number restricted to 180|182|183|184.";
+    reference "FCC 20-164.";
+  }
+
+  deviation "/openits-rsu:rsu/openits-rsu:channels/openits-rsu:channel/openits-rsu:config/openits-rsu:dsrc-channel-number" {
+    deviate replace {
+      type uint8 {
+        range "180 | 182 | 183 | 184";
+      }
+    }
+  }
+}

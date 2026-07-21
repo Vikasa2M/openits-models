@@ -5,6 +5,9 @@
     "kind": {
       "type": "string"
     },
+    "lane-id": {
+      "type": "string"
+    },
     "lcs-direction-a": {
       "enum": [
         "dark",

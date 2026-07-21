@@ -1,0 +1,18 @@
+{
+  "openits-ramp-metering:ramp-meter": {
+    "config": { "id": "i405-nb-western-ave" },
+    "lanes": {
+      "lane": [
+        {
+          "lane-id": "meter-1",
+          "config": {
+            "lane-id": "meter-1",
+            "bypass": false,
+            "min-release-rate-vph": 1000,
+            "max-release-rate-vph": 240
+          }
+        }
+      ]
+    }
+  }
+}

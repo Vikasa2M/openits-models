@@ -10,7 +10,7 @@ module example-signal-control-vehicle-counts {
   organization
     "OpenITS Working Group — pedagogical example";
   contact
-    "noi@openits.example.org";
+    "OpenITS Working Group (proposal)";
   description
     "Example augment for the signal-control service. Adds per-phase
      vehicle-count statistics under each phase's state container. This

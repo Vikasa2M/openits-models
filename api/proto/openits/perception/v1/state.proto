@@ -9,11 +9,13 @@ import "google/protobuf/timestamp.proto";
 message PerceptionSensor {
   PerceptionSensorConfig config = 1;
   PerceptionSensorState state = 2;
+  Associations associations = 9;
   Configuration configuration = 3;
   Objects objects = 4;
   Zones zones = 5;
   Diagnostics diagnostics = 6;
   Incidents incidents = 7;
+  IncidentReview incident_review = 10;
   Faults faults = 8;
 }
 
@@ -21,10 +23,22 @@ message PerceptionSensorConfig {
   string elevation = 1;
   uint32 heading = 2;
   string id = 8;
+  google.protobuf.Timestamp install_date = 7;
   string latitude = 3;
+  PerceptionSensorConfigLinearReference linear_reference = 9;
   string longitude = 4;
+  string maintained_by = 10;
   string name = 5;
+  string owner = 11;
   string road_reference = 6;
+  string site_id = 12;
+}
+
+message PerceptionSensorConfigLinearReference {
+  string route_designator = 1;
+  string direction = 2;
+  string measure = 3;
+  string lrs_method = 4;
 }
 
 message PerceptionSensorState {
@@ -34,13 +48,35 @@ message PerceptionSensorState {
   string hardware_version = 14;
   uint32 heading = 3;
   string id = 12;
+  google.protobuf.Timestamp install_date = 10;
   string latitude = 4;
+  PerceptionSensorStateLinearReference linear_reference = 15;
   string longitude = 5;
+  string maintained_by = 16;
   string make = 6;
   string model = 7;
   string name = 8;
+  string owner = 17;
   string road_reference = 9;
   string serial = 11;
+  string site_id = 18;
+}
+
+message PerceptionSensorStateLinearReference {
+  string route_designator = 1;
+  string direction = 2;
+  string measure = 3;
+  string lrs_method = 4;
+}
+
+message Associations {
+  repeated AssociatedDevice associated_device = 1;
+}
+
+message AssociatedDevice {
+  string device_id = 1;
+  string role = 2;
+  string note = 3;
 }
 
 message Configuration {
@@ -53,6 +89,11 @@ message ConfigurationZone {
   string name = 2;
   ZoneFunction function = 3;
   uint32 legal_heading = 4;
+  uint32 dwell_s = 6;
+  uint32 persistence_s = 7;
+  uint32 min_confidence = 8;
+  string congestion_speed_threshold_kmh = 9;
+  string congestion_density_threshold = 10;
   repeated Vertex vertex = 5;
 }
 
@@ -125,10 +166,12 @@ message Incident {
   string type = 3;
   OpenitsPerceptionIncidentSeverity severity = 4;
   uint32 track_id = 8;
+  uint32 track_epoch = 12;
   string object_class = 9;
   string speed_kmh = 10;
   uint32 confidence = 11;
   google.protobuf.Timestamp first_observed = 5;
+  IncidentDisposition disposition = 13;
   string latitude = 6;
   string longitude = 7;
 }
@@ -139,12 +182,29 @@ enum OpenitsPerceptionIncidentSeverity {
   OPENITS_PERCEPTION_INCIDENT_SEVERITY_MAJOR = 2;
 }
 
+enum IncidentDisposition {
+  INCIDENT_DISPOSITION_PENDING = 0;
+  INCIDENT_DISPOSITION_CONFIRMED = 1;
+  INCIDENT_DISPOSITION_FALSE_ALARM = 2;
+}
+
+message IncidentReview {
+  repeated Review review = 1;
+}
+
+message Review {
+  string incident_id = 1;
+  IncidentDisposition disposition = 2;
+  string reviewed_by = 3;
+}
+
 message Faults {
   repeated Fault fault = 1;
 }
 
 message Fault {
   string category = 1;
+  string correlates_with = 6;
   string description = 2;
   string fault_id = 3;
   google.protobuf.Timestamp first_observed = 4;

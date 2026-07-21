@@ -161,11 +161,15 @@ def bare(keyword):
     return keyword.split(":")[-1]
 
 
+_KIND_GUARD_RE = re.compile(r"derived-from-or-self\(\s*\.\./kind\s*,\s*'([^']+)'\s*\)")
+
+
 class Schema:
     def __init__(self):
         self.groupings = {}       # (module, name) -> subbody text
         self.notifications = {}   # (module, name) -> subbody text
         self.prefix_map = {}      # module -> {prefix: target-module}
+        self.identity_bases = {}  # (module, name) -> [(module, base-name), ...]
 
     def load(self, path):
         text = open(path, encoding="utf-8").read()
@@ -201,6 +205,14 @@ class Schema:
                 self.groupings[(mod_name, arg)] = sub
             elif k == "notification" and sub is not None:
                 self.notifications[(mod_name, arg)] = sub
+            elif k == "identity" and sub is not None:
+                bases = []
+                for ik, iarg, _isub in strip_and_split(sub):
+                    if bare(ik) == "base" and iarg:
+                        tgt = self.resolve(mod_name, iarg)
+                        if tgt:
+                            bases.append(tgt)
+                self.identity_bases[(mod_name, arg)] = bases
 
     def resolve(self, from_module, ref):
         """Resolve a possibly-prefixed grouping reference to (module, name)."""
@@ -246,6 +258,138 @@ class Schema:
                 return self.mandatory_leaves(module, body)
         return None
 
+    def missing_mandatory(self, module, body, instance, visited=None):
+        """Instance-aware mandatory-leaf check. Returns a sorted list of
+        missing mandatory leaf paths given a schema block body and the
+        corresponding instance dict.
+
+        Extends mandatory_leaves() with one rule: a `container` that is
+        PRESENT in the instance is descended into, and its own mandatory
+        leaves become required (path-qualified as 'container/leaf'). This
+        makes a mandatory leaf inside a *presence* container enforceable
+        once the container is instantiated -- e.g. wire-source's
+        `container source` carries a mandatory `decoder`, so an instance
+        that includes `source` but omits `decoder` is flagged. A container
+        that is ABSENT stays optional (a presence container is optional by
+        definition; a non-presence container's mandatory descendants are
+        only synthesized when the container is actually instantiated), so
+        this never newly rejects a fixture that omits an optional subtree."""
+        if visited is None:
+            visited = frozenset()
+        if not isinstance(instance, dict):
+            instance = {}
+        present = {k.split(":")[-1]: v for k, v in instance.items()}
+        missing = []
+        for kw, arg, sub in strip_and_split(body):
+            k = bare(kw)
+            if k == "leaf" and sub is not None:
+                if any(
+                    bare(ik) == "mandatory" and iarg == "true"
+                    for ik, iarg, _isub in strip_and_split(sub)
+                ):
+                    if arg not in present:
+                        missing.append(arg)
+            elif k == "uses":
+                target = self.resolve(module, arg)
+                if target and target in self.groupings and target not in visited:
+                    missing += self.missing_mandatory(
+                        target[0], self.groupings[target], instance,
+                        visited | {target}
+                    )
+            elif k == "container" and sub is not None and arg in present:
+                for m in self.missing_mandatory(module, sub, present[arg], visited):
+                    missing.append(f"{arg}/{m}")
+            # list / choice / case / anydata / anyxml / leaf-list and absent
+            # containers: not descended into (see docstring / mandatory_leaves).
+        return sorted(missing)
+
+    def notification_missing(self, notif_name, instance):
+        """Instance-aware missing-mandatory list for a notification, or
+        None if no notification with that bare name was loaded."""
+        for (module, name), body in self.notifications.items():
+            if name == notif_name:
+                return self.missing_mandatory(module, body, instance)
+        return None
+
+    def _derived_from_or_self(self, ident, ancestor, seen=None):
+        """True if identity `ident` is `ancestor` or transitively derives
+        from it, per the loaded `base` graph."""
+        if ident == ancestor:
+            return True
+        if seen is None:
+            seen = set()
+        if ident in seen:
+            return False
+        seen.add(ident)
+        for base in self.identity_bases.get(ident, []):
+            if self._derived_from_or_self(base, ancestor, seen):
+                return True
+        return False
+
+    def _guarded_leaves(self, module, body, visited=None):
+        """Map leaf-name -> set of allowed kind identities (module,name) for
+        every notification leaf whose `when` is a pure
+        derived-from-or-self(../kind, 'X') guard (one or more OR'd clauses).
+        Crosses `uses` at the same depth; other `when` forms are ignored
+        (they reference sibling data this instance-only checker cannot
+        evaluate). yanglint's pinned build does not enforce `when` on a
+        notification instance, so this reproduces that one guard shape."""
+        if visited is None:
+            visited = frozenset()
+        out = {}
+        for kw, arg, sub in strip_and_split(body):
+            k = bare(kw)
+            if k == "leaf" and sub is not None:
+                for ik, iarg, _isub in strip_and_split(sub):
+                    if bare(ik) == "when" and iarg:
+                        ids = _KIND_GUARD_RE.findall(iarg)
+                        if ids:
+                            allowed = {t for t in (self.resolve(module, r) for r in ids) if t}
+                            out[arg] = allowed
+            elif k == "uses":
+                target = self.resolve(module, arg)
+                if target and target in self.groupings and target not in visited:
+                    out.update(
+                        self._guarded_leaves(
+                            target[0], self.groupings[target], visited | {target}
+                        )
+                    )
+        return out
+
+    def notification_when_violations(self, notif_name, instance):
+        """List of reason strings for kind-guarded leaves that are present
+        in the instance but whose 'kind' is not derived-from-or-self any of
+        the leaf's allowed kinds. Empty if none / notification not found."""
+        if not isinstance(instance, dict):
+            return []
+        for (module, name), body in self.notifications.items():
+            if name != notif_name:
+                continue
+            guarded = self._guarded_leaves(module, body)
+            if not guarded:
+                return []
+            present = {k.split(":")[-1] for k in instance.keys()}
+            kind_val = None
+            for k, v in instance.items():
+                if k.split(":")[-1] == "kind":
+                    kind_val = v
+                    break
+            if kind_val is None:
+                return []
+            if ":" in kind_val:
+                pfx, iname = kind_val.split(":", 1)
+                kind_id = (self.prefix_map.get(module, {}).get(pfx, module), iname)
+            else:
+                kind_id = (module, kind_val)
+            reasons = []
+            for leaf, allowed in guarded.items():
+                if leaf in present and not any(
+                    self._derived_from_or_self(kind_id, a) for a in allowed
+                ):
+                    reasons.append(f"{leaf}(kind={kind_val}-not-in-guard)")
+            return sorted(reasons)
+        return []
+
 
 def main(argv):
     if "--" not in argv:
@@ -273,17 +417,18 @@ def main(argv):
             continue
         (top_key,) = data.keys()
         notif_name = top_key.split(":")[-1]
-        required = schema.notification_mandatory_leaves(notif_name)
-        if required is None:
+        instance = data[top_key]
+        missing = schema.notification_missing(notif_name, instance)
+        if missing is None:
             # Not a known notification (e.g. a config/state datastore
             # fixture) -- out of scope for this check.
             print(f"OK {fpath}")
             continue
-        instance = data[top_key]
-        present = set(instance.keys()) if isinstance(instance, dict) else set()
-        missing = sorted(leaf for leaf in required if leaf not in present)
-        if missing:
-            print(f"MISSING {fpath} {','.join(missing)}")
+        problems = list(missing) + schema.notification_when_violations(
+            notif_name, instance
+        )
+        if problems:
+            print(f"MISSING {fpath} {','.join(problems)}")
         else:
             print(f"OK {fpath}")
     return 0

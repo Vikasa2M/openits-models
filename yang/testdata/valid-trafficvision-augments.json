@@ -51,6 +51,20 @@
       "latitude": "28.3548200",
       "longitude": "-81.4735300"
     },
+    "configuration": {
+      "zone": [
+        {
+          "zone-id": "nb-mainline",
+          "name": "NB mainline",
+          "function": "incident",
+          "vertex": [
+            { "vertex-index": 0, "latitude": "28.3547000", "longitude": "-81.4736000" },
+            { "vertex-index": 1, "latitude": "28.3549000", "longitude": "-81.4736000" },
+            { "vertex-index": 2, "latitude": "28.3549000", "longitude": "-81.4734000" }
+          ]
+        }
+      ]
+    },
     "incidents": {
       "incident": [
         {

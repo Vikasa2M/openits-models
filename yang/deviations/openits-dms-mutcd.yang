@@ -1,0 +1,42 @@
+module openits-dms-mutcd {
+  yang-version 1.1;
+  namespace "urn:openits:yang:dms-mutcd";
+  prefix openits-dms-mutcd;
+
+  import openits-dms { prefix openits-dms; }
+
+  organization "OpenITS Working Group (proposal)";
+  contact "OpenITS Working Group (proposal)";
+  description
+    "US MUTCD baseline deviation for dynamic message signs. Re-applies a
+     United States MUTCD page-display legibility floor that the
+     vendor-neutral core (openits-dms) deliberately does not impose, so a
+     US-jurisdiction sign declaring this deviation validates against the
+     national standard:
+
+       - default-page-on-time >= 2.0 s (MUTCD 2L / page display time:
+         a page must be shown long enough to be read).
+
+     Deviations only tighten: the `deviate add must` adds a constraint on
+     top of core's permissive engineering-sanity bounds. max-pages is left
+     advisory in the core capabilities description rather than constrained
+     here — a `must` on config-false telemetry is discouraged, so this
+     module keeps to the commanded page-on-time floor.";
+
+  revision 2026-07-21 {
+    description
+      "Initial revision. Re-applies the US MUTCD page-on-time legibility
+       floor (>= 2.0 s) that the vendor-neutral core does not impose.";
+    reference "MUTCD 11th ed. (2023) Chapter 2L; RFC 7950 section 7.20.3.";
+  }
+
+  deviation "/openits-dms:sign/openits-dms:control/openits-dms:config/openits-dms:default-page-on-time-s" {
+    deviate add {
+      must ". >= 2.0" {
+        error-message
+          "Default page-on time must be >= 2.0 s for legibility (MUTCD 2L / "
+        + "page display time).";
+      }
+    }
+  }
+}

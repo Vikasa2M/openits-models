@@ -124,17 +124,21 @@ PROTO_ROUTE_PREFIXES=(
     "openits-reversible-lane"
     "openits-cctv"
 )
+# Paths are relative to api/proto/openits/. The generator emits nested
+# per-service dirs (api/proto/openits/<service>/v1/events.proto), so each
+# route is "<service>/v1/events.proto"; the module's per-notification
+# schema.json files sit alongside in the same <service>/v1 directory.
 PROTO_ROUTE_FILES=(
-    "common_events.proto"
-    "signal_control_events.proto"
-    "dms_events.proto"
-    "ess_events.proto"
-    "rsu_events.proto"
-    "ramp_metering_events.proto"
-    "perception_events.proto"
-    "traffic_sensor_events.proto"
-    "reversible_lane_events.proto"
-    "cctv_events.proto"
+    "common/v1/events.proto"
+    "signal_control/v1/events.proto"
+    "dms/v1/events.proto"
+    "ess/v1/events.proto"
+    "rsu/v1/events.proto"
+    "ramp_metering/v1/events.proto"
+    "perception/v1/events.proto"
+    "traffic_sensor/v1/events.proto"
+    "reversible_lane/v1/events.proto"
+    "cctv/v1/events.proto"
 )
 
 # declares_notification returns success if the given YANG file declares
@@ -192,11 +196,14 @@ read_revision() {
 # deterministic.
 write_schema_json() {
     local m="$1" dest="$2"
+    local proto_file json_dir
+    proto_file="$(proto_file_for_module "${m}")" || return 0
+    json_dir="${ROOT_DIR}/api/proto/openits/$(dirname "${proto_file}")"
     local json_files=()
     local line
     while IFS= read -r line; do
         json_files+=("${line}")
-    done < <(find "${ROOT_DIR}/api/proto/openits/v1" -maxdepth 1 \
+    done < <(find "${json_dir}" -maxdepth 1 \
         -name "${m}.*.schema.json" 2>/dev/null | sort)
     if [[ ${#json_files[@]} -eq 1 ]]; then
         cp "${json_files[0]}" "${dest}/schema.json"
@@ -290,7 +297,7 @@ for m in "${MODULES[@]}"; do
             echo "Error: ${m} declares notifications but matches no proto route in PROTO_ROUTE_PREFIXES (see tools/yang-proto-gen/pkgmap.go)" >&2
             exit 1
         }
-        src_proto="${ROOT_DIR}/api/proto/openits/v1/${proto_file}"
+        src_proto="${ROOT_DIR}/api/proto/openits/${proto_file}"
         if [[ ! -f "${src_proto}" ]]; then
             echo "Error: ${m} declares notifications but ${src_proto} is missing; run 'make yang-proto-gen' first" >&2
             exit 1

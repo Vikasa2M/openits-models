@@ -168,8 +168,8 @@ func collectASC() (*yangpkg.Device, error) {
 		pc.Barrier = u8Ptr(barrierFor(n))
 		pc.Enabled = boolPtr(true)
 		t := pc.GetOrCreateTiming()
-		t.MinGreen = u16Ptr(5)
-		t.MaxGreen = u16Ptr(45)
+		t.MinGreen = f64Ptr(5)
+		t.MaxGreen = f64Ptr(45)
 		t.YellowChange = f64Ptr(3.5)
 		t.RedClear = f64Ptr(1.5)
 		t.Passage = f64Ptr(2.0)
@@ -205,7 +205,7 @@ func collectASC() (*yangpkg.Device, error) {
 	meas := detSt.GetOrCreateMeasurement()
 	meas.Volume = u64Ptr(842)
 	meas.Occupancy = f64Ptr(12.5)
-	meas.SpeedKmh = u16Ptr(61)
+	meas.SpeedKmh = f64Ptr(61)
 
 	// Overlaps: config/state split (NTCIP overlapTable). One FYA
 	// (flashing-yellow-arrow) left-turn overlap: included-phases names the
@@ -214,12 +214,12 @@ func collectASC() (*yangpkg.Device, error) {
 	// exercising the paired config/state and the fya sub-container
 	// together.
 	overlaps := sc.GetOrCreateOverlaps()
-	ol, err := overlaps.NewOverlap("ol-nb-left")
+	ol, err := overlaps.NewOverlap(1)
 	if err != nil {
 		return nil, err
 	}
 	olCfg := ol.GetOrCreateConfig()
-	olCfg.OverlapId = strPtr("ol-nb-left")
+	olCfg.OverlapNumber = u8Ptr(1)
 	olCfg.Name = strPtr("NB left FYA")
 	olCfg.Type = yangpkg.OpenitsSignalControlTypes_OverlapType_overlap_fya
 	olCfg.IncludedPhases = []uint8{5}
@@ -249,7 +249,7 @@ func collectASC() (*yangpkg.Device, error) {
 	if err != nil {
 		return nil, err
 	}
-	ch2.Overlap = strPtr("ol-nb-left")
+	ch2.Overlap = u8Ptr(1)
 	ch2.Movement = yangpkg.OpenitsSignalControlTypes_ChannelMovement_channel_vehicle
 	ch2.FlashState = yangpkg.OpenitsSignalControl_ChannelFlashState_red
 
@@ -274,7 +274,7 @@ func collectASC() (*yangpkg.Device, error) {
 	}
 	prc := pr.GetOrCreateConfig()
 	prc.PreemptorId = u8Ptr(1)
-	prc.Type = yangpkg.OpenitsSignalControlTypes_PreemptionType_railroad
+	prc.Type = yangpkg.OpenitsSignalControlTypes_PreemptionType_preempt_railroad
 	prc.PriorityOrder = u8Ptr(1)
 	prc.DelaySeconds = u16Ptr(0)
 	prc.MinGreenBeforeEntry = u16Ptr(5)
@@ -370,7 +370,7 @@ func subscribeASC(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6V8Y",
 			CETime:   time.Now().UTC(),
 			Data: &signalcontrolv1.PreemptionActivated{
-				Type: signalcontrolv1.PreemptionType_PREEMPTION_TYPE_EMERGENCY_VEHICLE,
+				Type: "openits-signal-control-types:preempt-emergency-vehicle",
 			},
 		},
 	}
@@ -423,10 +423,10 @@ func collectDMS() (*yangpkg.Device, error) {
 	caps.ColorCapability = yangpkg.OpenitsDms_Sign_State_Capabilities_ColorCapability_color
 	caps.MaxPages = u8Ptr(3)
 	caps.BeaconCapable = boolPtr(true)
-	caps.SupportedMultiTags = []yangpkg.E_OpenitsDms_Sign_State_Capabilities_SupportedMultiTags{
-		yangpkg.OpenitsDms_Sign_State_Capabilities_SupportedMultiTags_new_line,
-		yangpkg.OpenitsDms_Sign_State_Capabilities_SupportedMultiTags_new_page,
-		yangpkg.OpenitsDms_Sign_State_Capabilities_SupportedMultiTags_font,
+	caps.SupportedMultiTags = []yangpkg.E_OpenitsDmsTypes_MultiTag{
+		yangpkg.OpenitsDmsTypes_MultiTag_multi_tag_new_line,
+		yangpkg.OpenitsDmsTypes_MultiTag_multi_tag_new_page,
+		yangpkg.OpenitsDmsTypes_MultiTag_multi_tag_font,
 	}
 	font, err := caps.NewFont(1)
 	if err != nil {
@@ -461,26 +461,27 @@ func collectDMS() (*yangpkg.Device, error) {
 	// active-message readback that must match the library slot above.
 	control := sign.GetOrCreateControl()
 	ctrlCfg := control.GetOrCreateConfig()
-	ctrlCfg.ControlMode = yangpkg.OpenitsDmsTypes_DmsControlMode_control_central
+	ctrlCfg.ControlMode = yangpkg.OpenitsDmsTypes_DmsControlMode_dms_control_central
 	ctrlCfg.BrightnessSetpoint = u8Ptr(85)
 	ctrlCfg.IlluminationControl = yangpkg.OpenitsDms_Sign_Control_Config_IlluminationControl_photocell
 
 	activation := ctrlCfg.GetOrCreateActiveMessage()
 	activation.MemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_changeable
 	activation.SlotNumber = u16Ptr(1)
-	activation.DurationS = u32Ptr(0)
+	activation.Indefinite = boolPtr(true) // display until superseded (duration-s must be >=1 when finite)
 	activation.ActivationPriority = u8Ptr(200)
 	activation.Crc = u32Ptr(2863311530)
 	activation.Owner = strPtr("tmc-ops")
 
 	fallback := ctrlCfg.GetOrCreateFallback()
-	fallback.CommLossTimeoutS = u32Ptr(300)
-	fallback.CommLossMemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_blank
-	fallback.EndOfDurationMemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_blank
-	fallback.PowerLossMemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_blank
+	commLoss := fallback.GetOrCreateCommLoss()
+	commLoss.CommLossTimeoutS = u32Ptr(300)
+	commLoss.MemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_blank
+	fallback.GetOrCreateEndOfDuration().MemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_blank
+	fallback.GetOrCreatePowerLoss().MemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_blank
 
 	ctrlSt := control.GetOrCreateState()
-	ctrlSt.ControlMode = yangpkg.OpenitsDmsTypes_DmsControlMode_control_central
+	ctrlSt.ControlMode = yangpkg.OpenitsDmsTypes_DmsControlMode_dms_control_central
 	ctrlSt.DisplayState = yangpkg.OpenitsDmsTypes_SignMode_mode_normal
 	ctrlSt.BrightnessSetpoint = u8Ptr(85)
 	ctrlSt.IlluminationControl = yangpkg.OpenitsDms_Sign_Control_Config_IlluminationControl_photocell
@@ -488,7 +489,6 @@ func collectDMS() (*yangpkg.Device, error) {
 	ctrlSt.BrightnessCurrent = u8Ptr(80)
 	ctrlSt.CommLossActive = boolPtr(false)
 	ctrlSt.PowerLossActive = boolPtr(false)
-	ctrlSt.ControllerUptimeS = u32Ptr(43200)
 
 	active := ctrlSt.GetOrCreateActive()
 	active.MemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_changeable
@@ -691,7 +691,7 @@ func collectESS() (*yangpkg.Device, error) {
 	pvSt.SubsurfaceDepthMm = u16Ptr(300)
 
 	diag := station.GetOrCreateDiagnostics()
-	for _, sid := range []string{"atmos-1", "pv-eb-inside"} {
+	for _, sid := range []string{"atmos-1", "precip-1", "vis-1", "pv-eb-inside"} {
 		s, _ := diag.NewSensor(sid)
 		dCfg := s.GetOrCreateConfig()
 		dCfg.SensorId = strPtr(sid)
@@ -830,8 +830,8 @@ func collectRSU() (*yangpkg.Device, error) {
 		return nil, err
 	}
 	c.RadioTech = yangpkg.OpenitsV2XRadio_RadioTech_radio_dsrc
-	c.DsrcChannelNumber = u8Ptr(172) // valid only because radio-tech is DSRC (when tie)
 	chCfg := c.GetOrCreateConfig()
+	chCfg.DsrcChannelNumber = u8Ptr(172) // valid only because radio-tech is DSRC (when tie)
 	chCfg.Enabled = boolPtr(true)
 	chCfg.Mode = yangpkg.OpenitsV2XRadio_ChannelMode_mode_continuous
 	chCfg.Primary = boolPtr(true)
@@ -861,7 +861,7 @@ func collectRSU() (*yangpkg.Device, error) {
 	diag.Hdop = f64Ptr(0.9)
 	diag.PpsPresent = boolPtr(true)
 	diag.PositionDeviationM = f64Ptr(0.35)
-	diag.TimeSource = yangpkg.OpenitsRsu_Rsu_Diagnostics_TimeSource_gps
+	diag.TimeSource = yangpkg.OpenitsRsuTypes_TimeSource_gps
 	diag.UptimeSeconds = u64Ptr(864_000)
 	diag.RestartCount = u32Ptr(3)
 	diag.LastRestartReason = yangpkg.OpenitsTypes_RestartReason_restart_upgrade
@@ -910,8 +910,8 @@ func collectRSU() (*yangpkg.Device, error) {
 	}
 	req.VehicleId = strPtr("bus-cap-metro-7")
 	req.RequestType = yangpkg.OpenitsV2XMessagingTypes_SrmRequestType_srm_priority_request
-	req.Status = yangpkg.OpenitsRsu_Rsu_Messages_SrmSsm_ActiveRequests_Request_Status_approved
-	req.DecisionAuthority = yangpkg.OpenitsRsu_Rsu_Messages_SrmSsm_ActiveRequests_Request_DecisionAuthority_controller_prs
+	req.Status = yangpkg.OpenitsV2XMessagingTypes_SrmRequestStatus_approved
+	req.DecisionAuthority = yangpkg.OpenitsV2XMessagingTypes_DecisionAuthority_controller_prs
 
 	// SRM/SSM operator decisions (config): the approve/deny round-trip added
 	// by cut B (srm-ssm/decisions), replacing the retired rsu-approve-srm
@@ -940,7 +940,6 @@ func collectRSU() (*yangpkg.Device, error) {
 	tmCfg.Priority = u8Ptr(5)
 	tmCfg.ItisCode = []uint16{1025, 7186} // structured ITIS codes (J2540.2), not a string
 	tmCfg.StartTime = strPtr("2026-04-19T06:00:00Z")
-	tmCfg.EndTime = strPtr("2026-04-19T18:00:00Z") // after start-time (must)
 	tmSt := timMsg.GetOrCreateState()
 	tmSt.BroadcastCount = u64Ptr(1200)
 	tmSt.Broadcasting = boolPtr(true)
@@ -1047,7 +1046,7 @@ func subscribeRSU(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VCE",
 			CETime:   time.Now().UTC(),
 			Data: &rsuv1.RsuSecurityEvent{
-				EventType: rsuv1.EventType_EVENT_TYPE_INVALID_SIGNATURE,
+				EventType: "openits-rsu-types:sec-invalid-signature",
 				Source:    "misbehavior-detector",
 				Message:   "ECDSA verify failed on BSM from vehicle pseudonym-abc",
 			},
@@ -1107,8 +1106,8 @@ func collectRM() (*yangpkg.Device, error) {
 	pt := plan.GetOrCreatePhaseTiming()
 	// Ramp-meter cycle: short green, brief yellow/red-clear, all within the
 	// 5s headway (min-green+yellow+red-clear = 4.0 <= 5.0).
-	pt.MinGreen = u16Ptr(1)
-	pt.MaxGreen = u16Ptr(30)
+	pt.MinGreen = f64Ptr(1)
+	pt.MaxGreen = f64Ptr(30)
 	pt.YellowChange = f64Ptr(2.0)
 	pt.RedClear = f64Ptr(1.0)
 	pt.Passage = f64Ptr(0.5)
@@ -1121,19 +1120,19 @@ func collectRM() (*yangpkg.Device, error) {
 	ctrlCfg := control.GetOrCreateConfig()
 	ctrlCfg.Mode = yangpkg.OpenitsRampMeteringTypes_MeterMode_mode_active
 	ctrlCfg.ActivePlanId = u8Ptr(2)
-	ctrlCfg.CommandSource = yangpkg.OpenitsRampMetering_RampMeter_Control_Config_CommandSource_central
+	ctrlCfg.CommandSource = yangpkg.OpenitsTypes_ControlSource_control_central
 
 	ctrlSt := control.GetOrCreateState()
 	ctrlSt.Mode = yangpkg.OpenitsRampMeteringTypes_MeterMode_mode_active
 	ctrlSt.ActivePlanId = u8Ptr(2)
-	ctrlSt.CommandSource = yangpkg.OpenitsRampMetering_RampMeter_Control_Config_CommandSource_central
+	ctrlSt.CommandSource = yangpkg.OpenitsTypes_ControlSource_control_central
 	ctrlSt.LastModeChange = strPtr("2026-04-19T07:00:00Z")
 	ctrlSt.CurrentReleaseRateVph = u16Ptr(720)
 	ctrlSt.QueueLengthCurrentVehicles = u16Ptr(8)
 	ctrlSt.QueueOverrideActive = boolPtr(false)
 
 	lanes := rm.GetOrCreateLanes()
-	lanes.ReleaseCoordination = yangpkg.OpenitsRampMetering_RampMeter_Lanes_ReleaseCoordination_simultaneous
+	lanes.GetOrCreateConfig().ReleaseCoordination = yangpkg.OpenitsRampMetering_RampMeter_Lanes_Config_ReleaseCoordination_simultaneous
 	lane, err := lanes.NewLane("meter-1")
 	if err != nil {
 		return nil, err

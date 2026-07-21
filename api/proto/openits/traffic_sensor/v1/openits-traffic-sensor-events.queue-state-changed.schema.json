@@ -2,6 +2,11 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
+    "back-of-queue-m": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "type": "integer"
+    },
     "kind": {
       "type": "string"
     },
@@ -19,6 +24,11 @@
       "type": "string"
     },
     "queue-duration-s": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "queue-length-m": {
       "maximum": 4294967295,
       "minimum": 0,
       "type": "integer"

@@ -55,6 +55,11 @@
     "speed-kmh": {
       "type": "string"
     },
+    "track-epoch": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "type": "integer"
+    },
     "track-id": {
       "maximum": 4294967295,
       "minimum": 0,
@@ -64,6 +69,9 @@
       "type": "string"
     },
     "zone-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
       "type": "string"
     }
   },

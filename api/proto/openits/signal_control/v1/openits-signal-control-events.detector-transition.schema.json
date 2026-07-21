@@ -47,8 +47,8 @@
       "type": "string"
     },
     "channel": {
-      "maximum": 4294967295,
-      "minimum": 0,
+      "maximum": 65535,
+      "minimum": 1,
       "type": "integer"
     },
     "kind": {
@@ -71,8 +71,8 @@
       "type": "string"
     },
     "phase-served": {
-      "maximum": 255,
-      "minimum": 0,
+      "maximum": 40,
+      "minimum": 1,
       "type": "integer"
     },
     "sequence": {

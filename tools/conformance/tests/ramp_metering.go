@@ -116,11 +116,40 @@ func TestRMPlans_ActivePlanTimingSane(t *T, obs *Observation) {
 	}
 }
 
+// rmServedLaneCount counts non-bypass (metered) lanes — the lanes over which a
+// release cycle is shared. Matches the schema must's
+// count(lanes/lane[not(config/bypass='true')]); a lane marked bypass in either
+// config or state is excluded.
+func rmServedLaneCount(rm *yangpkg.OpenitsRampMetering_RampMeter) int {
+	l := rm.GetLanes()
+	if l == nil {
+		return 0
+	}
+	n := 0
+	for _, lane := range l.Lane {
+		if lane.GetConfig().GetBypass() || lane.GetState().GetBypass() {
+			continue
+		}
+		n++
+	}
+	return n
+}
+
+// rmAlternateRelease reports whether the meter coordinates its release lanes in
+// an alternating sequence (each lane's cycle spans all served lanes).
+func rmAlternateRelease(rm *yangpkg.OpenitsRampMetering_RampMeter) bool {
+	return rm.GetLanes().GetConfig().GetReleaseCoordination() ==
+		yangpkg.OpenitsRampMetering_RampMeter_Lanes_Config_ReleaseCoordination_alternate
+}
+
 func TestRMPlans_HeadwayFitsTiming(t *T, obs *Observation) {
-	plans := obs.Device.GetRampMeter().GetPlans()
+	rm := obs.Device.GetRampMeter()
+	plans := rm.GetPlans()
 	if plans == nil {
 		return
 	}
+	served := rmServedLaneCount(rm)
+	alt := rmAlternateRelease(rm)
 	for id, plan := range plans.Plan {
 		pt := plan.GetPhaseTiming()
 		if pt == nil || plan.HeadwayS == nil || pt.MinGreen == nil || pt.YellowChange == nil || pt.RedClear == nil {
@@ -128,11 +157,17 @@ func TestRMPlans_HeadwayFitsTiming(t *T, obs *Observation) {
 		}
 		// Minimum feasible cycle includes min-green, not just clearance:
 		// a headway shorter than min-green+yellow+red-clear certifies a
-		// cycle that cannot physically complete.
+		// cycle that cannot physically complete. For alternate release each
+		// lane's cycle spans all served lanes, so the feasible cycle is
+		// headway * served-lanes; for simultaneous release it is the headway.
 		cycle := float64(*pt.MinGreen) + *pt.YellowChange + *pt.RedClear
-		if cycle > *plan.HeadwayS {
-			t.Errorf("plan %d min feasible cycle %.1fs (min-green+yellow+red-clear) > headway %.1fs; cannot complete one release cycle",
-				id, cycle, *plan.HeadwayS)
+		feasible := *plan.HeadwayS
+		if alt && served > 0 {
+			feasible = *plan.HeadwayS * float64(served)
+		}
+		if cycle > feasible {
+			t.Errorf("plan %d min feasible cycle %.1fs (min-green+yellow+red-clear) > feasible cycle %.1fs; cannot complete one release cycle",
+				id, cycle, feasible)
 		}
 	}
 }
@@ -144,7 +179,7 @@ func TestRMControl_CommandSourcePresent(t *T, obs *Observation) {
 	if st == nil {
 		return
 	}
-	if st.CommandSource == yangpkg.OpenitsRampMetering_RampMeter_Control_Config_CommandSource_UNSET {
+	if st.CommandSource == yangpkg.OpenitsTypes_ControlSource_UNSET {
 		t.Errorf("control/state/command-source is unset; the commanding authority (central/TOD/local) is unknown")
 	}
 }
@@ -172,10 +207,18 @@ func TestRMPlans_QueueOverrideHysteresis(t *T, obs *Observation) {
 // vehicles-per-green / release-rate-vph. A rate and headway that disagree
 // mean the meter's advertised throughput and its actual cycle contradict.
 func TestRMPlans_HeadwayConsistentWithRate(t *T, obs *Observation) {
-	plans := obs.Device.GetRampMeter().GetPlans()
+	rm := obs.Device.GetRampMeter()
+	plans := rm.GetPlans()
 	if plans == nil {
 		return
 	}
+	served := rmServedLaneCount(rm)
+	if served == 0 {
+		// No served lanes declared: the band would collapse; the schema must
+		// short-circuits this case too.
+		return
+	}
+	alt := rmAlternateRelease(rm)
 	for id, plan := range plans.Plan {
 		if plan.ReleaseRateVph == nil || plan.HeadwayS == nil {
 			continue
@@ -185,10 +228,17 @@ func TestRMPlans_HeadwayConsistentWithRate(t *T, obs *Observation) {
 			vpg = float64(*plan.VehiclesPerGreen)
 		}
 		product := float64(*plan.ReleaseRateVph) * *plan.HeadwayS
+		// Simultaneous release: aggregate rate serves all lanes at once, so the
+		// band scales by served-lanes; alternate release: the aggregate is
+		// 3600*vpg/headway (per-release interval), band is the single-lane band.
 		lo, hi := 3060*vpg, 4140*vpg
+		if !alt {
+			lo *= float64(served)
+			hi *= float64(served)
+		}
 		if product < lo || product > hi {
-			t.Errorf("plan %d: release-rate %d * headway %.1f = %.0f outside [%.0f,%.0f] for %.0f veh/green",
-				id, *plan.ReleaseRateVph, *plan.HeadwayS, product, lo, hi, vpg)
+			t.Errorf("plan %d: release-rate %d * headway %.1f = %.0f outside [%.0f,%.0f] for %.0f veh/green over %d served lane(s)",
+				id, *plan.ReleaseRateVph, *plan.HeadwayS, product, lo, hi, vpg, served)
 		}
 	}
 }

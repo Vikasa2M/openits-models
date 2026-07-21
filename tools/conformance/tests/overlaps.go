@@ -34,16 +34,16 @@ func TestOverlaps_FYAProtectedAndOpposingPhasesResolve(t *T, obs *Observation) {
 		}
 		protected := fya.GetProtectedLeftPhase()
 		if protected == 0 {
-			t.Errorf("overlap %s is FYA but protected-left-phase is unset", id)
+			t.Errorf("overlap %d is FYA but protected-left-phase is unset", id)
 		} else if !phases[protected] {
-			t.Errorf("overlap %s protected-left-phase %d does not resolve to a configured phase", id, protected)
+			t.Errorf("overlap %d protected-left-phase %d does not resolve to a configured phase", id, protected)
 		}
 
 		opposing := fya.GetOpposingThroughPhase()
 		if opposing == 0 {
-			t.Errorf("overlap %s is FYA but opposing-through-phase is unset", id)
+			t.Errorf("overlap %d is FYA but opposing-through-phase is unset", id)
 		} else if !phases[opposing] {
-			t.Errorf("overlap %s opposing-through-phase %d does not resolve to a configured phase", id, opposing)
+			t.Errorf("overlap %d opposing-through-phase %d does not resolve to a configured phase", id, opposing)
 		}
 
 		if protected != 0 {
@@ -55,7 +55,7 @@ func TestOverlaps_FYAProtectedAndOpposingPhasesResolve(t *T, obs *Observation) {
 				}
 			}
 			if !included {
-				t.Errorf("overlap %s protected-left-phase %d is not in included-phases %v", id, protected, o.GetConfig().GetIncludedPhases())
+				t.Errorf("overlap %d protected-left-phase %d is not in included-phases %v", id, protected, o.GetConfig().GetIncludedPhases())
 			}
 		}
 	}

@@ -1,0 +1,31 @@
+{
+  "openits-signal-control:signal-controller": {
+    "config": { "id": "c1", "name": "c1" },
+    "phases": { "phase": [
+      { "phase-number": 1, "config": { "phase-number": 1, "ring": 1, "barrier": 1,
+        "timing": { "min-green": "5.0", "max-green": "40.0", "yellow-change": "3.5", "red-clear": "1.5" } } },
+      { "phase-number": 2, "config": { "phase-number": 2, "ring": 1, "barrier": 1,
+        "timing": { "min-green": "5.0", "max-green": "40.0", "yellow-change": "3.5", "red-clear": "1.5" } } },
+      { "phase-number": 5, "config": { "phase-number": 5, "ring": 2, "barrier": 1,
+        "timing": { "min-green": "5.0", "max-green": "40.0", "yellow-change": "3.5", "red-clear": "1.5" } } },
+      { "phase-number": 6, "config": { "phase-number": 6, "ring": 2, "barrier": 1,
+        "timing": { "min-green": "5.0", "max-green": "40.0", "yellow-change": "3.5", "red-clear": "1.5" } } }
+    ] },
+    "sequences": { "sequence": [
+      { "sequence-id": 1, "name": "lead-lag-am",
+        "ring-sequence": [
+          { "ring": 1, "ordered-phases": [1, 2] },
+          { "ring": 2, "ordered-phases": [5, 6] }
+        ] }
+    ] },
+    "coordination": { "timing-plan": [
+      { "plan-id": 1, "cycle-length": 60, "sequence-id": 1,
+        "split": [
+          { "phase-number": 1, "split-seconds": 30 },
+          { "phase-number": 2, "split-seconds": 30 },
+          { "phase-number": 5, "split-seconds": 30 },
+          { "phase-number": 6, "split-seconds": 30 }
+        ] }
+    ] }
+  }
+}

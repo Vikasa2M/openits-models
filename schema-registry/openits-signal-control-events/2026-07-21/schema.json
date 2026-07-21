@@ -1,0 +1,1459 @@
+{
+  "controller-fault-event": {
+  "$defs": {
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "message-id": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        },
+        "oid-value": {
+          "type": "string"
+        },
+        "register": {
+          "type": "string"
+        },
+        "register-value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "description": {
+      "type": "string"
+    },
+    "fault-id": {
+      "type": "string"
+    },
+    "flash-cause": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "raised": {
+      "type": "boolean"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "severity": {
+      "enum": [
+        "critical",
+        "info",
+        "major",
+        "minor",
+        "warning"
+      ],
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "fault-id",
+    "kind",
+    "occurred-at",
+    "raised",
+    "sequence",
+    "severity",
+    "source-device-id"
+  ],
+  "type": "object"
+},
+  "coordination-change": {
+  "$defs": {
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "message-id": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        },
+        "oid-value": {
+          "type": "string"
+        },
+        "register": {
+          "type": "string"
+        },
+        "register-value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string"
+    },
+    "new-value": {
+      "maximum": 2147483647,
+      "minimum": -2147483648,
+      "type": "integer"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "previous-value": {
+      "maximum": 2147483647,
+      "minimum": -2147483648,
+      "type": "integer"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "split-number": {
+      "maximum": 40,
+      "minimum": 1,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+},
+  "detector-report": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "detector": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "detector-id": {
+            "maximum": 65535,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "occupancy": {
+            "type": "string"
+          },
+          "phase-served": {
+            "maximum": 40,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "volume": {
+            "maximum": 4294967295,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "interval-duration-s": {
+      "maximum": 3600,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "interval-start": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+},
+  "detector-transition": {
+  "$defs": {
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "message-id": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        },
+        "oid-value": {
+          "type": "string"
+        },
+        "register": {
+          "type": "string"
+        },
+        "register-value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "approach": {
+      "type": "string"
+    },
+    "channel": {
+      "maximum": 65535,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "lane": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "phase-served": {
+      "maximum": 40,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "channel",
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+},
+  "operational-status-report": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "flash-active": {
+      "type": "boolean"
+    },
+    "flash-cause": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "last-mode-change": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "mode": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "uptime-seconds": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+},
+  "overlap-change": {
+  "$defs": {
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "message-id": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        },
+        "oid-value": {
+          "type": "string"
+        },
+        "register": {
+          "type": "string"
+        },
+        "register-value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "overlap-number": {
+      "maximum": 255,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "overlap-number",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+},
+  "pedestrian-event": {
+  "$defs": {
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "message-id": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        },
+        "oid-value": {
+          "type": "string"
+        },
+        "register": {
+          "type": "string"
+        },
+        "register-value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "detector-channel": {
+      "maximum": 65535,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "phase-number": {
+      "maximum": 40,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+},
+  "phase-state-change": {
+  "$defs": {
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "message-id": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        },
+        "oid-value": {
+          "type": "string"
+        },
+        "register": {
+          "type": "string"
+        },
+        "register-value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "call-registered": {
+      "type": "boolean"
+    },
+    "hold-active": {
+      "type": "boolean"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "phase-number": {
+      "maximum": 40,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "phase-number",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+},
+  "plan-applied": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "cycle-length-s": {
+      "maximum": 65535,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "offset-s": {
+      "maximum": 65535,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "plan-id": {
+      "maximum": 255,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source": {
+      "enum": [
+        "adaptive",
+        "operator",
+        "preemption",
+        "schedule",
+        "unspecified"
+      ],
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "split-set": {
+      "maximum": 255,
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+},
+  "preemption-activated": {
+  "$defs": {
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "message-id": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        },
+        "oid-value": {
+          "type": "string"
+        },
+        "register": {
+          "type": "string"
+        },
+        "register-value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "preempt-number": {
+      "maximum": 255,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "source-id": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "preempt-number",
+    "sequence",
+    "source-device-id",
+    "type"
+  ],
+  "type": "object"
+},
+  "preemption-cleared": {
+  "$defs": {
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "message-id": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        },
+        "oid-value": {
+          "type": "string"
+        },
+        "register": {
+          "type": "string"
+        },
+        "register-value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "preempt-number": {
+      "maximum": 255,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "source-id": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "preempt-number",
+    "sequence",
+    "source-device-id",
+    "type"
+  ],
+  "type": "object"
+},
+  "preemption-event": {
+  "$defs": {
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "message-id": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        },
+        "oid-value": {
+          "type": "string"
+        },
+        "register": {
+          "type": "string"
+        },
+        "register-value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "preempt-number": {
+      "maximum": 255,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "source-id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+},
+  "tsam-mode-changed": {
+  "$defs": {
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "message-id": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        },
+        "oid-value": {
+          "type": "string"
+        },
+        "register": {
+          "type": "string"
+        },
+        "register-value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "current": {
+      "enum": [
+        "active",
+        "advisory",
+        "disabled",
+        "suspended"
+      ],
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "prior": {
+      "enum": [
+        "active",
+        "advisory",
+        "disabled",
+        "suspended"
+      ],
+      "type": "string"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "current",
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+},
+  "tsam-recommendation-applied": {
+  "$defs": {
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "message-id": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        },
+        "oid-value": {
+          "type": "string"
+        },
+        "register": {
+          "type": "string"
+        },
+        "register-value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "adjustment-type": {
+      "enum": [
+        "cycle-length",
+        "offset-adjustment",
+        "other",
+        "phase-extension",
+        "phase-truncation",
+        "plan-change",
+        "split-adjustment"
+      ],
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "magnitude-seconds": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "phase-number": {
+      "maximum": 40,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "rationale": {
+      "type": "string"
+    },
+    "recommendation-id": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "adjustment-type",
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+},
+  "tsp-event": {
+  "$defs": {
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "message-id": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        },
+        "oid-value": {
+          "type": "string"
+        },
+        "register": {
+          "type": "string"
+        },
+        "register-value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "adjustment-seconds": {
+      "type": "string"
+    },
+    "denial-reason": {
+      "enum": [
+        "coord-constraint",
+        "disabled",
+        "higher-priority-conflict",
+        "other",
+        "reservice-lock"
+      ],
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "priority-class": {
+      "maximum": 7,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "tsp-number": {
+      "maximum": 255,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "vehicle-id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id",
+    "tsp-number"
+  ],
+  "type": "object"
+},
+  "unmapped-event": {
+  "$defs": {
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "message-id": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        },
+        "oid-value": {
+          "type": "string"
+        },
+        "register": {
+          "type": "string"
+        },
+        "register-value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+}
+}

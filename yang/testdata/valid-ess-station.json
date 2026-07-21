@@ -29,6 +29,7 @@
       "wind-speed-ms": "6.2",
       "wind-gust-ms": "11.0",
       "wind-direction-deg": "280.0",
+      "wind-direction-avg-deg": "182.0",
       "wind-speed-avg-ms": "7.5",
       "quality": "valid"
     },
@@ -56,11 +57,13 @@
           "sensor-id": "pv-eb-inside",
           "config": {
             "sensor-id": "pv-eb-inside",
-            "lane-reference": "eastbound-inside"
+            "lane-reference": "eastbound-inside",
+            "sensing-method": "embedded"
           },
           "state": {
             "sensor-id": "pv-eb-inside",
             "lane-reference": "eastbound-inside",
+            "sensing-method": "embedded",
             "observed-at": "2026-04-19T12:00:00Z",
             "surface-temperature-c": "-2.3",
             "condition": "ice-warning",

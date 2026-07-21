@@ -1,0 +1,179 @@
+{
+  "queue-override-activated": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occupancy-pct": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "plan-id": {
+      "maximum": 255,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "queue-length-vehicles": {
+      "maximum": 999,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "threshold-vehicles": {
+      "maximum": 999,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "trigger": {
+      "enum": [
+        "occupancy",
+        "vehicle-count"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+},
+  "queue-override-cleared": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "plan-id": {
+      "maximum": 255,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "queue-length-vehicles": {
+      "maximum": 999,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+},
+  "release-rate-changed": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "cause": {
+      "enum": [
+        "operator-override",
+        "other",
+        "plan-switch",
+        "queue-override",
+        "schedule",
+        "traffic-responsive"
+      ],
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "new-rate-vph": {
+      "maximum": 3600,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "plan-id": {
+      "maximum": 255,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "previous-rate-vph": {
+      "maximum": 3600,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+}
+}

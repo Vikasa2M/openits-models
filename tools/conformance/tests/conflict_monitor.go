@@ -50,3 +50,43 @@ func TestConflictMonitor_PermissiveCanonicalOrder(t *T, obs *Observation) {
 		}
 	}
 }
+
+// TestConflictMonitor_NoSameRingPermissive enforces the same-ring cross-check
+// that is deliberately NOT a YANG `must` (a correct XPath expression needs a
+// double deref() through the channel `choice source` and is undefined for
+// overlap-sourced channels; ygot's Validate() does not evaluate `must`
+// regardless). Two channels driven by phases in the SAME ring can never be
+// green together (a ring serves one phase at a time), so a permissive between
+// them is meaningless and masks a programming error. Channels whose source is
+// an overlap (no single ring) are skipped. Early-returns on absent data.
+func TestConflictMonitor_NoSameRingPermissive(t *T, obs *Observation) {
+	sc := obs.Device.GetSignalController()
+	cm := sc.GetConflictMonitor()
+	ch := sc.GetChannels()
+	ph := sc.GetPhases()
+	if cm == nil || ch == nil || ph == nil {
+		return
+	}
+	ringOf := map[uint8]uint8{}
+	for _, p := range ph.Phase {
+		ringOf[p.GetConfig().GetPhaseNumber()] = p.GetConfig().GetRing()
+	}
+	// Map channel-number -> ring of its driving phase (overlap-sourced skipped).
+	chRing := map[uint16]uint8{}
+	for n, c := range ch.Channel {
+		if phase := c.GetPhase(); phase != 0 {
+			if r, ok := ringOf[phase]; ok {
+				chRing[n] = r
+			}
+		}
+	}
+	for key, p := range cm.Permissive {
+		a, b := p.GetChannelA(), p.GetChannelB()
+		ra, aok := chRing[a]
+		rb, bok := chRing[b]
+		if aok && bok && ra == rb {
+			t.Errorf("permissive %v pairs channels %d and %d, both driven by ring %d phases; "+
+				"same-ring phases are never green together, so this permissive is meaningless", key, a, b, ra)
+		}
+	}
+}

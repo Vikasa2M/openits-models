@@ -44,8 +44,8 @@
           "vehicles-per-green": 1,
           "queue-override-threshold-vehicles": 25,
           "phase-timing": {
-            "min-green": 1,
-            "max-green": 30,
+            "min-green": "1.0",
+            "max-green": "30.0",
             "yellow-change": "2.0",
             "red-clear": "1.0",
             "passage": "0.5"

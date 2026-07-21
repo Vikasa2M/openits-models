@@ -2,10 +2,27 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
+    "decision-authority": {
+      "enum": [
+        "controller-prs",
+        "evp-auto",
+        "none",
+        "operator",
+        "rsu-local"
+      ],
+      "type": "string"
+    },
     "kind": {
       "type": "string"
     },
     "new-status": {
+      "enum": [
+        "active",
+        "approved",
+        "completed",
+        "denied",
+        "pending"
+      ],
       "type": "string"
     },
     "observed-by": {
@@ -22,6 +39,13 @@
       "type": "string"
     },
     "previous-status": {
+      "enum": [
+        "active",
+        "approved",
+        "completed",
+        "denied",
+        "pending"
+      ],
       "type": "string"
     },
     "request-id": {

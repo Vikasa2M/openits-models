@@ -30,6 +30,60 @@ func TestCoordination_SplitsWithinCycle(t *T, obs *Observation) {
 	}
 }
 
+// TestCoordination_BarrierCrossingAlignment enforces NEMA TS-2 §3.5 barrier
+// alignment: rings cross a barrier together, so within a barrier the per-ring
+// split sums must be equal. This is NOT a YANG `must` — a correct XPath 1.0
+// expression would false-positive on legitimate single-ring or partially
+// populated barriers (an unpopulated ring sums to 0 != the populated ring)
+// and needs both-populated guards across 4 barriers x up to 4 rings, which is
+// brittle; ygot's Validate() does not evaluate `must` regardless. Enforced
+// here, mirroring TestCoordination_SplitsWithinCycle.
+func TestCoordination_BarrierCrossingAlignment(t *T, obs *Observation) {
+	c := obs.Device.GetSignalController().GetCoordination()
+	ph := obs.Device.GetSignalController().GetPhases()
+	if c == nil || ph == nil {
+		return
+	}
+	ringOf := map[uint8]uint8{}
+	barrierOf := map[uint8]uint8{}
+	for _, p := range ph.Phase {
+		pn := p.GetConfig().GetPhaseNumber()
+		ringOf[pn] = p.GetConfig().GetRing()
+		barrierOf[pn] = p.GetConfig().GetBarrier()
+	}
+	for _, tp := range c.TimingPlan {
+		// sum[barrier][ring] = total split seconds
+		sum := map[uint8]map[uint8]uint32{}
+		for _, s := range tp.Split {
+			pn := s.GetPhaseNumber()
+			b, r := barrierOf[pn], ringOf[pn]
+			if sum[b] == nil {
+				sum[b] = map[uint8]uint32{}
+			}
+			sum[b][r] += uint32(s.GetSplitSeconds())
+		}
+		for b, byRing := range sum {
+			if len(byRing) < 2 {
+				continue // single populated ring in this barrier: nothing to align
+			}
+			var want uint32
+			first := true
+			for _, total := range byRing {
+				if first {
+					want = total
+					first = false
+					continue
+				}
+				if total != want {
+					t.Errorf("plan %d barrier %d: cross-ring split sums differ (%v); "+
+						"rings must cross a barrier together (NEMA TS-2 §3.5)", tp.GetPlanId(), b, byRing)
+					break
+				}
+			}
+		}
+	}
+}
+
 func TestCoordination_ActivePlan(t *T, obs *Observation) {
 	c := obs.Device.GetSignalController().GetCoordination()
 	if c == nil {

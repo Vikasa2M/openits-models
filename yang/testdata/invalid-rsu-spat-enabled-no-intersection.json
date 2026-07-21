@@ -1,0 +1,11 @@
+{
+  "openits-rsu:rsu": {
+    "config": { "id": "rsu-no-intersection", "name": "SPaT enabled, no intersection" },
+    "messages": {
+      "spat": { "config": {
+        "enabled": true, "broadcast-interval": 100, "max-data-age-ms": 300,
+        "source-asc": "asc-01"
+      } }
+    }
+  }
+}

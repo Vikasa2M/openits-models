@@ -1,0 +1,13 @@
+{
+  "openits-rsu:rsu": {
+    "config": { "id": "rsu-rtcm-01", "name": "RTCM correction broadcast RSU" },
+    "messages": {
+      "rtcm": { "config": {
+        "enabled": true,
+        "source-url": "ntrip://caster.example:2101/MOUNT",
+        "message-set": [1005, 1074],
+        "broadcast-interval": 1000
+      } }
+    }
+  }
+}

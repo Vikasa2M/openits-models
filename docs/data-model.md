@@ -206,6 +206,49 @@ event) rather than by tree duplication. If a future deployment needs
 NMDA-style datastores over NETCONF/gNMI, the models work unchanged —
 the convention is a packaging choice, not a capability limit.
 
+### Fault lifecycle boundary
+
+OpenITS models the **device half** of a fault's lifecycle only: a device
+RAISES a fault (fault-raised + an entry in its config-false active-fault
+inventory) and CLEARS it (fault-cleared + entry removal). It deliberately
+does NOT model acknowledgement, assignment, or closure — those are
+center-side workflow that belongs to the maintenance/C2F system, not the
+device contract. A center keys its own ack/assign/close records on the
+tuple (source-device-id, fault-id, first-observed): fault-id is
+condition-scoped and stable across raise/clear of the same condition, so
+that tuple is a durable correlation key even as the device re-raises. The
+optional correlates-with leaf lets a device hint causality between its own
+faults; cross-device correlation is likewise a center concern.
+
+## Write path
+
+*(Contract-of-intent — not yet implemented in the telemetry model.)*
+
+The models are **telemetry-first**: the reference binding (CloudEvents
+over NATS) is read-shaped, and there is today **no specified write
+binding**. Command feedback is currently ad hoc per family — DMS has a
+`message-activation-failed` notification, CCTV surfaces a losing control
+acquisition as config/state divergence plus a lockout-denied event (with
+no dedicated command-status leaf), and several families have no command
+feedback at all. See the "future config-push path" note under
+[Config and state](#config-and-state).
+
+The **intended** contract, stated here as an architecture decision:
+
+- Configuration is the default (config-true) tree. A future config-push
+  binding (NETCONF / gNMI / RESTCONF, or a dedicated command channel)
+  carries writes; the telemetry model adds **no new RPCs or actions**.
+- Results are observed as events: a write's effect appears as config/state
+  divergence plus the relevant fault/mode notification — the same
+  observation surface a physical field override uses.
+- A future **standardized cross-service `command-rejected` notification**
+  is the write-path analogue of the unified fault/mode events: a `kind`
+  identityref + the `command-provenance` envelope
+  (`actor-id`/`actor-class`/`schedule-id`) + a `reason` + the target
+  device — unifying today's per-family command feedback exactly as
+  fault-raised/mode-changed unified telemetry. It would carry the
+  `openits-types:command-provenance` grouping as its provenance envelope.
+
 ## Encodings and transports: the schema is the contract
 
 **The YANG models are the contract. Everything else is a binding.**
@@ -353,4 +396,5 @@ its conventions:
 - [05 — Standards alignment](05-standards-alignment.md) — NTCIP / J2735 / ARC-IT mapping.
 - [06 — Extension model](06-extension-model.md) — augments, deviations, graduation.
 - [08 — Capability architecture](08-capability-architecture.md) — model by function; thin device profiles compose capability modules.
+- [09 — Coverage / scope and roadmap](09-coverage-scope.md) — ARC-IT service packages covered, planned, and out of scope.
 - [YANG reference-citation conventions](reference/yang-reference-conventions.md) — how modules cite normative sources.

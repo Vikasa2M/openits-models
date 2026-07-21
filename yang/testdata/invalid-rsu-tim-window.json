@@ -12,13 +12,13 @@
             "mode": "openits-v2x-radio:mode-continuous",
             "tx-power": 20,
             "primary": true,
+            "dsrc-channel-number": 172,
             "dcc": {
               "policy": "adaptive",
               "cbr-target-percent": 65
             }
           },
-          "radio-tech": "openits-v2x-radio:radio-dsrc",
-          "dsrc-channel-number": 172
+          "radio-tech": "openits-v2x-radio:radio-dsrc"
         }
       ]
     },
@@ -43,7 +43,7 @@
                 "name": "bad window",
                 "enabled": true,
                 "start-time": "2026-04-19T18:00:00Z",
-                "end-time": "2026-04-19T06:00:00Z"
+                "duration-minutes": -5
               }
             }
           ]

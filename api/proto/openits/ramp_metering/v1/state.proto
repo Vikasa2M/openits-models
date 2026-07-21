@@ -13,7 +13,10 @@ message RampMeter {
   Sequencing sequencing = 8;
   AdvanceWarningSign advance_warning_sign = 9;
   Plans plans = 4;
+  Schedule schedule = 10;
+  TrafficResponsive traffic_responsive = 11;
   Lanes lanes = 5;
+  MainlineDetectors mainline_detectors = 12;
   Diagnostics diagnostics = 6;
   Faults faults = 7;
 }
@@ -22,10 +25,22 @@ message RampMeterConfig {
   string elevation = 5;
   uint32 heading = 6;
   string id = 7;
+  google.protobuf.Timestamp install_date = 3;
   string latitude = 1;
+  RampMeterConfigLinearReference linear_reference = 4;
   string longitude = 2;
+  string maintained_by = 10;
   string name = 8;
+  string owner = 11;
   string road_reference = 9;
+  string site_id = 12;
+}
+
+message RampMeterConfigLinearReference {
+  string route_designator = 1;
+  string direction = 2;
+  string measure = 3;
+  string lrs_method = 4;
 }
 
 message RampMeterState {
@@ -35,13 +50,25 @@ message RampMeterState {
   string hardware_version = 15;
   uint32 heading = 10;
   string id = 11;
+  google.protobuf.Timestamp install_date = 5;
   string latitude = 2;
+  RampMeterStateLinearReference linear_reference = 7;
   string longitude = 3;
+  string maintained_by = 16;
   string make = 4;
   string model = 6;
   string name = 12;
+  string owner = 17;
   string road_reference = 13;
   string serial = 8;
+  string site_id = 18;
+}
+
+message RampMeterStateLinearReference {
+  string route_designator = 1;
+  string direction = 2;
+  string measure = 3;
+  string lrs_method = 4;
 }
 
 message Control {
@@ -51,17 +78,10 @@ message Control {
 
 message ControlConfig {
   uint32 active_plan_id = 1;
-  CommandSource command_source = 4;
+  string command_source = 4;
   uint32 manual_release_rate_vph = 2;
   string mode = 3;
   NonMeteringDisplay non_metering_display = 10;
-}
-
-enum CommandSource {
-  COMMAND_SOURCE_CENTRAL = 0;
-  COMMAND_SOURCE_SCHEDULE = 1;
-  COMMAND_SOURCE_LOCAL = 2;
-  COMMAND_SOURCE_OTHER = 3;
 }
 
 enum NonMeteringDisplay {
@@ -75,7 +95,7 @@ message ControlState {
   uint32 queue_length_current_vehicles = 3;
   bool queue_override_active = 4;
   uint32 active_plan_id = 5;
-  CommandSource command_source = 8;
+  string command_source = 8;
   uint32 manual_release_rate_vph = 6;
   string mode = 7;
   NonMeteringDisplay non_metering_display = 18;
@@ -112,6 +132,12 @@ message AdvanceWarningSign {
 
 message AdvanceWarningSignConfig {
   bool enabled = 1;
+  AwsFaultAction aws_fault_action = 2;
+}
+
+enum AwsFaultAction {
+  AWS_FAULT_ACTION_SUSPEND_METERING = 0;
+  AWS_FAULT_ACTION_CONTINUE_METERING = 1;
 }
 
 message AdvanceWarningSignState {
@@ -140,20 +166,107 @@ message Plan {
   uint32 queue_override_clear_threshold_vehicles = 8;
   uint32 queue_override_rate_vph = 9;
   uint32 queue_override_occupancy_threshold_pct = 10;
+  uint32 queue_override_occupancy_clear_threshold_pct = 11;
+  uint32 queue_override_persistence_s = 12;
   PhaseTiming phase_timing = 6;
 }
 
 message PhaseTiming {
-  uint32 max_green = 1;
-  uint32 min_green = 2;
+  string max_green = 1;
+  string min_green = 2;
   string passage = 3;
   string red_clear = 4;
   string yellow_change = 5;
 }
 
+message Schedule {
+  repeated DayPlan day_plan = 1;
+  repeated ScheduleEntry schedule_entry = 2;
+  ScheduleState state = 3;
+}
+
+message DayPlan {
+  uint32 day_plan_id = 1;
+  string name = 2;
+  repeated Action action = 3;
+}
+
+message Action {
+  string start_time = 1;
+  uint32 plan_id = 2;
+}
+
+message ScheduleEntry {
+  uint32 schedule_id = 1;
+  repeated Months months = 2;
+  repeated DaysOfWeek days_of_week = 3;
+  repeated uint32 days_of_month = 4;
+  uint32 day_plan = 5;
+}
+
+enum Months {
+  MONTHS_UNSPECIFIED = 0;
+  MONTHS_JANUARY = 1;
+  MONTHS_FEBRUARY = 2;
+  MONTHS_MARCH = 3;
+  MONTHS_APRIL = 4;
+  MONTHS_MAY = 5;
+  MONTHS_JUNE = 6;
+  MONTHS_JULY = 7;
+  MONTHS_AUGUST = 8;
+  MONTHS_SEPTEMBER = 9;
+  MONTHS_OCTOBER = 10;
+  MONTHS_NOVEMBER = 11;
+  MONTHS_DECEMBER = 12;
+}
+
+enum DaysOfWeek {
+  DAYS_OF_WEEK_UNSPECIFIED = 0;
+  DAYS_OF_WEEK_MONDAY = 1;
+  DAYS_OF_WEEK_TUESDAY = 2;
+  DAYS_OF_WEEK_WEDNESDAY = 3;
+  DAYS_OF_WEEK_THURSDAY = 4;
+  DAYS_OF_WEEK_FRIDAY = 5;
+  DAYS_OF_WEEK_SATURDAY = 6;
+  DAYS_OF_WEEK_SUNDAY = 7;
+}
+
+message ScheduleState {
+  uint32 active_day_plan_id = 1;
+  google.protobuf.Timestamp next_action_at = 2;
+}
+
+message TrafficResponsive {
+  TrafficResponsiveConfig config = 1;
+  TrafficResponsiveState state = 2;
+}
+
+message TrafficResponsiveConfig {
+  string algorithm = 1;
+  repeated Band band = 2;
+}
+
+message Band {
+  uint32 band_id = 1;
+  uint32 min_occupancy_pct = 2;
+  uint32 max_occupancy_pct = 3;
+  uint32 min_flow_vph = 4;
+  uint32 max_flow_vph = 5;
+  uint32 plan_id = 6;
+}
+
+message TrafficResponsiveState {
+  uint32 active_band_id = 1;
+}
+
 message Lanes {
-  ReleaseCoordination release_coordination = 2;
+  LanesConfig config = 3;
+  LanesState state = 4;
   repeated Lane lane = 1;
+}
+
+message LanesConfig {
+  ReleaseCoordination release_coordination = 1;
 }
 
 enum ReleaseCoordination {
@@ -161,11 +274,15 @@ enum ReleaseCoordination {
   RELEASE_COORDINATION_ALTERNATE = 1;
 }
 
+message LanesState {
+  ReleaseCoordination release_coordination = 1;
+}
+
 message Lane {
   string lane_id = 1;
   LaneConfig config = 15;
   LaneState state = 16;
-  repeated Detector detector = 17;
+  repeated LaneDetector detector = 17;
 }
 
 message LaneConfig {
@@ -201,13 +318,13 @@ enum HeadState {
   HEAD_STATE_YELLOW = 3;
 }
 
-message Detector {
+message LaneDetector {
   string detector_id = 1;
-  DetectorConfig config = 5;
-  DetectorState state = 6;
+  LaneDetectorConfig config = 2;
+  LaneDetectorState state = 3;
 }
 
-message DetectorConfig {
+message LaneDetectorConfig {
   string detector_id = 1;
   DetectorRole role = 2;
 }
@@ -222,14 +339,39 @@ enum DetectorRole {
   DETECTOR_ROLE_ADVANCE = 6;
 }
 
-message DetectorState {
+message LaneDetectorState {
   bool active = 1;
   uint32 count_vph = 2;
-  uint32 occupancy_pct = 3;
-  string speed_kmh = 4;
-  google.protobuf.Timestamp last_update = 5;
-  string detector_id = 6;
-  DetectorRole role = 7;
+  string detector_id = 3;
+  google.protobuf.Timestamp last_update = 4;
+  uint32 occupancy_pct = 5;
+  DetectorRole role = 6;
+  string speed_kmh = 7;
+}
+
+message MainlineDetectors {
+  repeated MainlineDetectorsDetector detector = 1;
+}
+
+message MainlineDetectorsDetector {
+  string detector_id = 1;
+  MainlineDetectorsDetectorConfig config = 2;
+  MainlineDetectorsDetectorState state = 3;
+}
+
+message MainlineDetectorsDetectorConfig {
+  string detector_id = 1;
+  DetectorRole role = 2;
+}
+
+message MainlineDetectorsDetectorState {
+  bool active = 1;
+  uint32 count_vph = 2;
+  string detector_id = 3;
+  google.protobuf.Timestamp last_update = 4;
+  uint32 occupancy_pct = 5;
+  DetectorRole role = 6;
+  string speed_kmh = 7;
 }
 
 message Diagnostics {
@@ -244,6 +386,7 @@ message Faults {
 
 message Fault {
   string category = 1;
+  string correlates_with = 6;
   string description = 2;
   string fault_id = 3;
   google.protobuf.Timestamp first_observed = 4;

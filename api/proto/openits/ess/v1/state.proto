@@ -23,10 +23,22 @@ message StationConfig {
   string elevation = 7;
   uint32 heading = 8;
   string id = 9;
+  google.protobuf.Timestamp install_date = 1;
   string latitude = 2;
+  StationConfigLinearReference linear_reference = 6;
   string longitude = 3;
+  string maintained_by = 10;
   string name = 4;
+  string owner = 11;
   string road_reference = 5;
+  string site_id = 12;
+}
+
+message StationConfigLinearReference {
+  string route_designator = 1;
+  string direction = 2;
+  string measure = 3;
+  string lrs_method = 4;
 }
 
 message StationState {
@@ -36,13 +48,25 @@ message StationState {
   string hardware_version = 15;
   uint32 heading = 12;
   string id = 13;
+  google.protobuf.Timestamp install_date = 1;
   string latitude = 3;
+  StationStateLinearReference linear_reference = 10;
   string longitude = 4;
+  string maintained_by = 16;
   string make = 5;
   string model = 6;
   string name = 7;
+  string owner = 17;
   string road_reference = 8;
   string serial = 9;
+  string site_id = 18;
+}
+
+message StationStateLinearReference {
+  string route_designator = 1;
+  string direction = 2;
+  string measure = 3;
+  string lrs_method = 4;
 }
 
 message Configuration {
@@ -60,6 +84,7 @@ message Atmospheric {
   string wind_speed_avg_ms = 10;
   string wind_gust_ms = 6;
   string wind_direction_deg = 7;
+  string wind_direction_avg_deg = 12;
   google.protobuf.Timestamp observed_at = 8;
   Quality quality = 11;
   string sensor_id = 9;
@@ -143,7 +168,14 @@ message PavementSensor {
 
 message PavementSensorConfig {
   string lane_reference = 1;
+  SensingMethod sensing_method = 3;
   string sensor_id = 2;
+}
+
+enum SensingMethod {
+  SENSING_METHOD_EMBEDDED = 0;
+  SENSING_METHOD_NON_INVASIVE_REMOTE = 1;
+  SENSING_METHOD_UNKNOWN = 2;
 }
 
 message PavementSensorState {
@@ -160,6 +192,7 @@ message PavementSensorState {
   string subsurface_temperature_c = 7;
   uint32 subsurface_depth_mm = 8;
   string lane_reference = 9;
+  SensingMethod sensing_method = 15;
   string sensor_id = 10;
 }
 
@@ -227,6 +260,7 @@ message Faults {
 
 message Fault {
   string category = 1;
+  string correlates_with = 6;
   string description = 2;
   string fault_id = 3;
   google.protobuf.Timestamp first_observed = 4;
