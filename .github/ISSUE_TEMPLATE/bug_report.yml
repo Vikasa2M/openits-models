@@ -21,7 +21,7 @@ body:
       label: Steps to reproduce
       description: >
         The exact commands (e.g. `make check-gen`, `go run ./tools/...`,
-        `go get github.com/openits/openits-models@...`) and any input files.
+        `go get github.com/Vikasa2M/openits-models@...`) and any input files.
       render: shell
     validations:
       required: true

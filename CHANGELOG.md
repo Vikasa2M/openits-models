@@ -33,7 +33,7 @@ compatibility relate.
 ## [0.1.0] - 2026-07-17
 
 Initial public release of the OpenITS data-model layer as a standalone,
-importable Go module (`github.com/openits/openits-models`).
+importable Go module (`github.com/Vikasa2M/openits-models`).
 
 ### Added
 
@@ -56,5 +56,5 @@ importable Go module (`github.com/openits/openits-models`).
 - **Documentation** (`docs/`) — design decisions, standards alignment, the
   extension/graduation model, capability architecture, and conformance.
 
-[Unreleased]: https://github.com/openits/openits-models/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/openits/openits-models/releases/tag/v0.1.0
+[Unreleased]: https://github.com/Vikasa2M/openits-models/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/Vikasa2M/openits-models/releases/tag/v0.1.0

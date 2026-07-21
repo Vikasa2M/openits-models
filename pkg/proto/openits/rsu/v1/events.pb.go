@@ -1893,7 +1893,7 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\x1aREASON_CLEARED_BY_OPERATOR\x10\x01\x12\x15\n" +
 	"\x11REASON_SUPERSEDED\x10\x02\x12\x16\n" +
 	"\x12REASON_RSU_RESTART\x10\x03\x12\x10\n" +
-	"\fREASON_OTHER\x10\x04BBZ@github.com/openits/openits-models/pkg/proto/openits/rsu/v1;rsuv1b\x06proto3"
+	"\fREASON_OTHER\x10\x04BCZAgithub.com/Vikasa2M/openits-models/pkg/proto/openits/rsu/v1;rsuv1b\x06proto3"
 
 var (
 	file_openits_rsu_v1_events_proto_rawDescOnce sync.Once

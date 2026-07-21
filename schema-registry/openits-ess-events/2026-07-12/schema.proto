@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package openits.ess.v1;
 
-option go_package = "github.com/openits/openits-models/pkg/proto/openits/v1;openitspb";
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/v1;openitspb";
 
 import "google/protobuf/timestamp.proto";
 

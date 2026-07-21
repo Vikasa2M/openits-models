@@ -32,8 +32,8 @@ protoc \
     --proto_path="$PROTO_DIR" \
     --go_out="$OUT_DIR" \
     --go_opt=paths=source_relative \
-    --go_opt=Mcommand.proto=github.com/openits/openits-models/pkg/proto/openits/v1 \
-    --go_opt=Mdevice.proto=github.com/openits/openits-models/pkg/proto/openits/v1 \
+    --go_opt=Mcommand.proto=github.com/Vikasa2M/openits-models/pkg/proto/openits/v1 \
+    --go_opt=Mdevice.proto=github.com/Vikasa2M/openits-models/pkg/proto/openits/v1 \
     "$PROTO_DIR"/command.proto "$PROTO_DIR"/device.proto
 
 # protoc with paths=source_relative respects the source path. command.proto and

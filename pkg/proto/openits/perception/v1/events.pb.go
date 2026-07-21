@@ -798,7 +798,7 @@ const file_openits_perception_v1_events_proto_rawDesc = "" +
 	"\x10IncidentSeverity\x12\x1b\n" +
 	"\x17INCIDENT_SEVERITY_MINOR\x10\x00\x12\"\n" +
 	"\x1eINCIDENT_SEVERITY_INTERMEDIATE\x10\x01\x12\x1b\n" +
-	"\x17INCIDENT_SEVERITY_MAJOR\x10\x02BPZNgithub.com/openits/openits-models/pkg/proto/openits/perception/v1;perceptionv1b\x06proto3"
+	"\x17INCIDENT_SEVERITY_MAJOR\x10\x02BQZOgithub.com/Vikasa2M/openits-models/pkg/proto/openits/perception/v1;perceptionv1b\x06proto3"
 
 var (
 	file_openits_perception_v1_events_proto_rawDescOnce sync.Once

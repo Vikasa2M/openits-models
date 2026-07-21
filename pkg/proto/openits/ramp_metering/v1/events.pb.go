@@ -521,7 +521,7 @@ const file_openits_ramp_metering_v1_events_proto_rawDesc = "" +
 	" RATE_CHANGE_CAUSE_QUEUE_OVERRIDE\x10\x02\x12'\n" +
 	"#RATE_CHANGE_CAUSE_OPERATOR_OVERRIDE\x10\x03\x12\x1e\n" +
 	"\x1aRATE_CHANGE_CAUSE_SCHEDULE\x10\x04\x12\x1b\n" +
-	"\x17RATE_CHANGE_CAUSE_OTHER\x10\x05BUZSgithub.com/openits/openits-models/pkg/proto/openits/ramp_metering/v1;rampmeteringv1b\x06proto3"
+	"\x17RATE_CHANGE_CAUSE_OTHER\x10\x05BVZTgithub.com/Vikasa2M/openits-models/pkg/proto/openits/ramp_metering/v1;rampmeteringv1b\x06proto3"
 
 var (
 	file_openits_ramp_metering_v1_events_proto_rawDescOnce sync.Once

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package openits.types.v1;
 
-option go_package = "github.com/openits/openits-models/pkg/proto/openits/types/v1;typesv1";
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/types/v1;typesv1";
 
 message WireSource {
   string decoder = 1;

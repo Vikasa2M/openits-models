@@ -5,7 +5,7 @@ standalone, importable Go module. This repo owns the vendor-neutral model
 definitions and the code generated from them; downstream components
 (e.g. `openits-collector`) consume it as a dependency.
 
-Module path: `github.com/openits/openits-models`
+Module path: `github.com/Vikasa2M/openits-models`
 
 ## Layout
 
@@ -46,8 +46,8 @@ See:
 
 ```go
 import (
-    openitspb "github.com/openits/openits-models/pkg/proto/openits/v1"
-    openits   "github.com/openits/openits-models/pkg/yang/openits"
+    openitspb "github.com/Vikasa2M/openits-models/pkg/proto/openits/v1"
+    openits   "github.com/Vikasa2M/openits-models/pkg/yang/openits"
 )
 ```
 

@@ -31,13 +31,13 @@ import (
 // (one per go_package/service) with real cross-package imports between them
 // (e.g. openits/common/v1 imports openits/types/v1 for the shared
 // WireSource message) — not one flat package. To compile that as a whole
-// and have every absolute `github.com/openits/openits-models/pkg/proto/...`
+// and have every absolute `github.com/Vikasa2M/openits-models/pkg/proto/...`
 // import resolve to what Generate JUST produced (not whatever happens to be
 // committed on disk in the real pkg/proto tree, which this test must catch a
 // regression in even before `make gen` has been re-run for real), the test
 // lays the generated .go files out under a synthetic module root shaped
 // exactly like the real repo (pkg/proto/... under module
-// github.com/openits/openits-models) and copies this repo's own go.mod/
+// github.com/Vikasa2M/openits-models) and copies this repo's own go.mod/
 // go.sum into it verbatim, so `go build ./...` resolves both the protobuf
 // runtime dependency and every cross-generated-package import against the
 // files this test just generated, using the already-warm local module cache

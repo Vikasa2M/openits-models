@@ -14,7 +14,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/openits/openits-models/tools/conformance/tests"
+	"github.com/Vikasa2M/openits-models/tools/conformance/tests"
 )
 
 func main() {

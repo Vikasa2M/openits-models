@@ -21,7 +21,7 @@ import (
 // one shared openitspb package, so two services can each declare a message
 // named e.g. "Detector" without colliding — they're different Go packages.
 func goPackageFor(pkg string) string {
-	return "github.com/openits/openits-models/pkg/proto/" + strings.ReplaceAll(pkg, ".", "/") + ";" + goPkgName(pkg)
+	return "github.com/Vikasa2M/openits-models/pkg/proto/" + strings.ReplaceAll(pkg, ".", "/") + ";" + goPkgName(pkg)
 }
 
 // goPkgName derives the bare Go package name from a proto package: strip the

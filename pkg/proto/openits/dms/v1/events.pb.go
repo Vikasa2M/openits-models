@@ -300,7 +300,7 @@ const file_openits_dms_v1_events_proto_rawDesc = "" +
 	"\x1cERROR_TYPE_GRAPHIC_NOT_FOUND\x10\x03\x12\x17\n" +
 	"\x13ERROR_TYPE_TOO_LONG\x10\x04\x12\x17\n" +
 	"\x13ERROR_TYPE_HARDWARE\x10\x05\x12\x14\n" +
-	"\x10ERROR_TYPE_OTHER\x10\x06BBZ@github.com/openits/openits-models/pkg/proto/openits/dms/v1;dmsv1b\x06proto3"
+	"\x10ERROR_TYPE_OTHER\x10\x06BCZAgithub.com/Vikasa2M/openits-models/pkg/proto/openits/dms/v1;dmsv1b\x06proto3"
 
 var (
 	file_openits_dms_v1_events_proto_rawDescOnce sync.Once

@@ -3,7 +3,7 @@ package tests
 import (
 	"strings"
 
-	yangpkg "github.com/openits/openits-models/pkg/yang/openits"
+	yangpkg "github.com/Vikasa2M/openits-models/pkg/yang/openits"
 )
 
 // TestPreemption_RailTrackClearance re-implements, in Go, the cut-2c

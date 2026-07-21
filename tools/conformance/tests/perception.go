@@ -3,8 +3,8 @@ package tests
 import (
 	"strings"
 
-	perceptionv1 "github.com/openits/openits-models/pkg/proto/openits/perception/v1"
-	yangpkg "github.com/openits/openits-models/pkg/yang/openits"
+	perceptionv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/perception/v1"
+	yangpkg "github.com/Vikasa2M/openits-models/pkg/yang/openits"
 )
 
 // ----- identity -----

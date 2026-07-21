@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package openits.rsu.v1;
 
-option go_package = "github.com/openits/openits-models/pkg/proto/openits/rsu/v1;rsuv1";
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/rsu/v1;rsuv1";
 
 import "google/protobuf/timestamp.proto";
 

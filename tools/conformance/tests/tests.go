@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"time"
 
-	yangpkg "github.com/openits/openits-models/pkg/yang/openits"
+	yangpkg "github.com/Vikasa2M/openits-models/pkg/yang/openits"
 	"google.golang.org/protobuf/proto"
 )
 

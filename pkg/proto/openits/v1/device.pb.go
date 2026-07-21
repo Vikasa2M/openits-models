@@ -387,7 +387,7 @@ const file_device_proto_rawDesc = "" +
 	"\x14DEVICE_STATUS_ONLINE\x10\x01\x12\x19\n" +
 	"\x15DEVICE_STATUS_OFFLINE\x10\x02\x12\x1a\n" +
 	"\x16DEVICE_STATUS_DEGRADED\x10\x03\x12\x1d\n" +
-	"\x19DEVICE_STATUS_MAINTENANCE\x10\x04BBZ@github.com/openits/openits-models/pkg/proto/openits/v1;openitspbb\x06proto3"
+	"\x19DEVICE_STATUS_MAINTENANCE\x10\x04BCZAgithub.com/Vikasa2M/openits-models/pkg/proto/openits/v1;openitspbb\x06proto3"
 
 var (
 	file_device_proto_rawDescOnce sync.Once

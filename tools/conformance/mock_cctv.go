@@ -4,10 +4,10 @@ import (
 	"context"
 	"time"
 
-	cctvv1 "github.com/openits/openits-models/pkg/proto/openits/cctv/v1"
-	commonv1 "github.com/openits/openits-models/pkg/proto/openits/common/v1"
-	yangpkg "github.com/openits/openits-models/pkg/yang/openits"
-	"github.com/openits/openits-models/tools/conformance/tests"
+	cctvv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/cctv/v1"
+	commonv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/common/v1"
+	yangpkg "github.com/Vikasa2M/openits-models/pkg/yang/openits"
+	"github.com/Vikasa2M/openits-models/tools/conformance/tests"
 )
 
 // collectCctv builds a fully-populated, spec-compliant CCTV/PTZ observation:

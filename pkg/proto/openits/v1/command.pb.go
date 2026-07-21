@@ -1556,7 +1556,7 @@ const file_command_proto_rawDesc = "" +
 	"\x16COMMAND_RESULT_TIMEOUT\x10\x03\x12\x1b\n" +
 	"\x17COMMAND_RESULT_REJECTED\x10\x04\x12\x1a\n" +
 	"\x16COMMAND_RESULT_EXPIRED\x10\x05\x12\x1e\n" +
-	"\x1aCOMMAND_RESULT_UNSUPPORTED\x10\x06BBZ@github.com/openits/openits-models/pkg/proto/openits/v1;openitspbb\x06proto3"
+	"\x1aCOMMAND_RESULT_UNSUPPORTED\x10\x06BCZAgithub.com/Vikasa2M/openits-models/pkg/proto/openits/v1;openitspbb\x06proto3"
 
 var (
 	file_command_proto_rawDescOnce sync.Once

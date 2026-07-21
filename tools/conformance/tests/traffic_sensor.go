@@ -3,9 +3,9 @@ package tests
 import (
 	"strings"
 
-	commonv1 "github.com/openits/openits-models/pkg/proto/openits/common/v1"
-	trafficsensorv1 "github.com/openits/openits-models/pkg/proto/openits/traffic_sensor/v1"
-	yangpkg "github.com/openits/openits-models/pkg/yang/openits"
+	commonv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/common/v1"
+	trafficsensorv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/traffic_sensor/v1"
+	yangpkg "github.com/Vikasa2M/openits-models/pkg/yang/openits"
 )
 
 // ----- identity -----

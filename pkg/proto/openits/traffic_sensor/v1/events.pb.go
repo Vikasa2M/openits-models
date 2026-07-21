@@ -804,7 +804,7 @@ const file_openits_traffic_sensor_v1_events_proto_rawDesc = "" +
 	"\x11OperationalStatus\x12\x1d\n" +
 	"\x19OPERATIONAL_STATUS_ACTIVE\x10\x00\x12\x1f\n" +
 	"\x1bOPERATIONAL_STATUS_INACTIVE\x10\x01\x12\x1f\n" +
-	"\x1bOPERATIONAL_STATUS_DEGRADED\x10\x02BWZUgithub.com/openits/openits-models/pkg/proto/openits/traffic_sensor/v1;trafficsensorv1b\x06proto3"
+	"\x1bOPERATIONAL_STATUS_DEGRADED\x10\x02BXZVgithub.com/Vikasa2M/openits-models/pkg/proto/openits/traffic_sensor/v1;trafficsensorv1b\x06proto3"
 
 var (
 	file_openits_traffic_sensor_v1_events_proto_rawDescOnce sync.Once

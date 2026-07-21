@@ -313,7 +313,7 @@ func renderEventsProto(s service) string {
 	var b strings.Builder
 	fmt.Fprintf(&b, "syntax = \"proto3\";\n\n")
 	fmt.Fprintf(&b, "package openits.%s.v1;\n\n", s.Snake)
-	fmt.Fprintf(&b, "option go_package = \"github.com/openits/openits-models/pkg/proto/openits/%s/v1;%sv1\";\n\n", s.Snake, goPkgName(s.Snake))
+	fmt.Fprintf(&b, "option go_package = \"github.com/Vikasa2M/openits-models/pkg/proto/openits/%s/v1;%sv1\";\n\n", s.Snake, goPkgName(s.Snake))
 	fmt.Fprintf(&b, "import \"google/protobuf/timestamp.proto\";\n\n")
 	fmt.Fprintf(&b, "// %s — %s\n", s.Service, s.Description)
 	if s.Reference != "" {

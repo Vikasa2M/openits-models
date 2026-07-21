@@ -1,4 +1,4 @@
-module github.com/openits/openits-models
+module github.com/Vikasa2M/openits-models
 
 go 1.26
 

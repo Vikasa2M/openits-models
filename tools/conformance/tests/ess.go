@@ -4,7 +4,7 @@ import (
 	"strings"
 	"time"
 
-	yangpkg "github.com/openits/openits-models/pkg/yang/openits"
+	yangpkg "github.com/Vikasa2M/openits-models/pkg/yang/openits"
 )
 
 // ----- identity -----

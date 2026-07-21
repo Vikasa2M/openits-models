@@ -459,7 +459,7 @@ const file_openits_cctv_v1_events_proto_rawDesc = "" +
 	"\fTourRunState\x12\x1a\n" +
 	"\x16TOUR_RUN_STATE_STOPPED\x10\x00\x12\x1a\n" +
 	"\x16TOUR_RUN_STATE_RUNNING\x10\x01\x12\x19\n" +
-	"\x15TOUR_RUN_STATE_PAUSED\x10\x02BDZBgithub.com/openits/openits-models/pkg/proto/openits/cctv/v1;cctvv1b\x06proto3"
+	"\x15TOUR_RUN_STATE_PAUSED\x10\x02BEZCgithub.com/Vikasa2M/openits-models/pkg/proto/openits/cctv/v1;cctvv1b\x06proto3"
 
 var (
 	file_openits_cctv_v1_events_proto_rawDescOnce sync.Once

@@ -429,7 +429,7 @@ const file_openits_ess_v1_events_proto_rawDesc = "" +
 	"*8\n" +
 	"\tDirection\x12\x15\n" +
 	"\x11DIRECTION_ENTERED\x10\x00\x12\x14\n" +
-	"\x10DIRECTION_EXITED\x10\x01BBZ@github.com/openits/openits-models/pkg/proto/openits/ess/v1;essv1b\x06proto3"
+	"\x10DIRECTION_EXITED\x10\x01BCZAgithub.com/Vikasa2M/openits-models/pkg/proto/openits/ess/v1;essv1b\x06proto3"
 
 var (
 	file_openits_ess_v1_events_proto_rawDescOnce sync.Once

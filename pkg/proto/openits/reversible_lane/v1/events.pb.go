@@ -618,7 +618,7 @@ const file_openits_reversible_lane_v1_events_proto_rawDesc = "" +
 	"\x14LCS_INDICATION_RED_X\x10\x02\x12\x1b\n" +
 	"\x17LCS_INDICATION_YELLOW_X\x10\x03\x12$\n" +
 	" LCS_INDICATION_FLASHING_YELLOW_X\x10\x04\x12\x1e\n" +
-	"\x1aLCS_INDICATION_GREEN_ARROW\x10\x05BYZWgithub.com/openits/openits-models/pkg/proto/openits/reversible_lane/v1;reversiblelanev1b\x06proto3"
+	"\x1aLCS_INDICATION_GREEN_ARROW\x10\x05BZZXgithub.com/Vikasa2M/openits-models/pkg/proto/openits/reversible_lane/v1;reversiblelanev1b\x06proto3"
 
 var (
 	file_openits_reversible_lane_v1_events_proto_rawDescOnce sync.Once

@@ -4,14 +4,14 @@ import (
 	"context"
 	"time"
 
-	commonv1 "github.com/openits/openits-models/pkg/proto/openits/common/v1"
-	dmsv1 "github.com/openits/openits-models/pkg/proto/openits/dms/v1"
-	essv1 "github.com/openits/openits-models/pkg/proto/openits/ess/v1"
-	rampmeteringv1 "github.com/openits/openits-models/pkg/proto/openits/ramp_metering/v1"
-	rsuv1 "github.com/openits/openits-models/pkg/proto/openits/rsu/v1"
-	signalcontrolv1 "github.com/openits/openits-models/pkg/proto/openits/signal_control/v1"
-	yangpkg "github.com/openits/openits-models/pkg/yang/openits"
-	"github.com/openits/openits-models/tools/conformance/tests"
+	commonv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/common/v1"
+	dmsv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/dms/v1"
+	essv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/ess/v1"
+	rampmeteringv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/ramp_metering/v1"
+	rsuv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/rsu/v1"
+	signalcontrolv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/signal_control/v1"
+	yangpkg "github.com/Vikasa2M/openits-models/pkg/yang/openits"
+	"github.com/Vikasa2M/openits-models/tools/conformance/tests"
 )
 
 // mockDriver produces a fully-populated, spec-compliant observation so

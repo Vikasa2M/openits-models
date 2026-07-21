@@ -6141,7 +6141,7 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"-OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_WARNING\x10\x01\x12/\n" +
 	"+OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_MINOR\x10\x02\x12/\n" +
 	"+OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_MAJOR\x10\x03\x122\n" +
-	".OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_CRITICAL\x10\x04BWZUgithub.com/openits/openits-models/pkg/proto/openits/signal_control/v1;signalcontrolv1b\x06proto3"
+	".OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_CRITICAL\x10\x04BXZVgithub.com/Vikasa2M/openits-models/pkg/proto/openits/signal_control/v1;signalcontrolv1b\x06proto3"
 
 var (
 	file_openits_signal_control_v1_state_proto_rawDescOnce sync.Once

@@ -8959,7 +8959,7 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x14REGION_TYPE_CIRCULAR\x10\x01\x12\x1b\n" +
 	"\x17REGION_TYPE_RECTANGULAR\x10\x02\x12\x19\n" +
 	"\x15REGION_TYPE_POLYGONAL\x10\x03\x12\x1a\n" +
-	"\x16REGION_TYPE_IDENTIFIED\x10\x04BBZ@github.com/openits/openits-models/pkg/proto/openits/rsu/v1;rsuv1b\x06proto3"
+	"\x16REGION_TYPE_IDENTIFIED\x10\x04BCZAgithub.com/Vikasa2M/openits-models/pkg/proto/openits/rsu/v1;rsuv1b\x06proto3"
 
 var (
 	file_openits_rsu_v1_state_proto_rawDescOnce sync.Once

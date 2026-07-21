@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package openits.ramp_metering.v1;
 
-option go_package = "github.com/openits/openits-models/pkg/proto/openits/ramp_metering/v1;rampmeteringv1";
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/ramp_metering/v1;rampmeteringv1";
 
 import "google/protobuf/timestamp.proto";
 

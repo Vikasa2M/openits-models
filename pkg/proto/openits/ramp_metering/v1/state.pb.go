@@ -3917,7 +3917,7 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\x16FAULT_SEVERITY_WARNING\x10\x01\x12\x18\n" +
 	"\x14FAULT_SEVERITY_MINOR\x10\x02\x12\x18\n" +
 	"\x14FAULT_SEVERITY_MAJOR\x10\x03\x12\x1b\n" +
-	"\x17FAULT_SEVERITY_CRITICAL\x10\x04BUZSgithub.com/openits/openits-models/pkg/proto/openits/ramp_metering/v1;rampmeteringv1b\x06proto3"
+	"\x17FAULT_SEVERITY_CRITICAL\x10\x04BVZTgithub.com/Vikasa2M/openits-models/pkg/proto/openits/ramp_metering/v1;rampmeteringv1b\x06proto3"
 
 var (
 	file_openits_ramp_metering_v1_state_proto_rawDescOnce sync.Once

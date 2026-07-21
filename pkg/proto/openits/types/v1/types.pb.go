@@ -321,7 +321,7 @@ const file_openits_types_v1_types_proto_rawDesc = "" +
 	"\vPlcRegister\x12\x1a\n" +
 	"\bregister\x18\x01 \x01(\tR\bregister\x12%\n" +
 	"\x0eregister_value\x18\x02 \x01(\tR\rregisterValueB\x05\n" +
-	"\x03tagBFZDgithub.com/openits/openits-models/pkg/proto/openits/types/v1;typesv1b\x06proto3"
+	"\x03tagBGZEgithub.com/Vikasa2M/openits-models/pkg/proto/openits/types/v1;typesv1b\x06proto3"
 
 var (
 	file_openits_types_v1_types_proto_rawDescOnce sync.Once

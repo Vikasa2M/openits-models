@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	yangpkg "github.com/openits/openits-models/pkg/yang/openits"
-	"github.com/openits/openits-models/tools/conformance/tests"
+	yangpkg "github.com/Vikasa2M/openits-models/pkg/yang/openits"
+	"github.com/Vikasa2M/openits-models/tools/conformance/tests"
 )
 
 // Driver is the minimal interface the harness needs to observe a device

@@ -25,7 +25,7 @@ func TestGenerate_producesBuildableProto(t *testing.T) {
 	s := string(b)
 	for _, want := range []string{
 		"syntax = \"proto3\";",
-		"option go_package = \"github.com/openits/openits-models/pkg/proto/openits/common/v1;commonv1\";",
+		"option go_package = \"github.com/Vikasa2M/openits-models/pkg/proto/openits/common/v1;commonv1\";",
 		"message FaultRaised {",
 	} {
 		if !strings.Contains(s, want) {

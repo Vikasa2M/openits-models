@@ -1,7 +1,7 @@
 package tests
 
 import (
-	yangpkg "github.com/openits/openits-models/pkg/yang/openits"
+	yangpkg "github.com/Vikasa2M/openits-models/pkg/yang/openits"
 )
 
 // Cabinet power is the leading comm-loss indicator; an unreported power source
