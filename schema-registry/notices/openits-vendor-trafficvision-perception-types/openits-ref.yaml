@@ -1,7 +1,7 @@
 augment: openits-vendor-trafficvision-perception-types
 revision: 2026-07-07
 implementer: openits-ref
-implementer_contact: noi@openits.example.org
+implementer_contact: noi@openits.vikasa.io
 implementer_type: conformance-reference
 deployment_scale: test
 first_observed: 2026-07-08
@@ -12,4 +12,4 @@ notes: >
   openits-perception:incident-type base). Real TrafficVision
   adoption files its own NoI under this directory with
   implementer_type: vendor.
-proof_url: https://github.com/openits/openits/blob/main/yang/openits-vendor-trafficvision-perception-types.yang
+proof_url: https://github.com/Vikasa2M/openits-models/blob/main/yang/openits-vendor-trafficvision-perception-types.yang

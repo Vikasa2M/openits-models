@@ -101,8 +101,7 @@ func BuildSchemas(cat []CeType, mods []*yang.Entry, shared map[string]string) (m
 // ce-type Type): one channel + one send/receive operation pair + one
 // components.messages entry per ce-type, with the message payload set to
 // the ce-type's own embedded JSON Schema rather than a URL pointer to an
-// out-of-repo schema-registry snapshot (the property the old
-// collector-sourced asyncapi.yaml lacked — see docs/asyncapi-delta.md).
+// out-of-repo schema-registry snapshot.
 //
 // Determinism: every value built here is a plain Go map/slice, and
 // yaml.v3's Marshal sorts every map's keys before encoding (see

@@ -1,7 +1,7 @@
 augment: example-signal-control-vehicle-counts
 revision: 2026-04-27
 implementer: example-org
-implementer_contact: noi@openits.example.org
+implementer_contact: noi@openits.vikasa.io
 implementer_type: conformance-reference
 deployment_scale: test
 first_observed: 2026-04-27
@@ -11,4 +11,4 @@ notes: >
   implementation — exists so the validator and graduation tools have
   data to operate on without forcing an external party to be the
   first NoI on file.
-proof_url: https://github.com/openits/openits/blob/main/yang/augments/example-signal-control-vehicle-counts.yang
+proof_url: https://github.com/Vikasa2M/openits-models/blob/main/yang/augments/example-signal-control-vehicle-counts.yang
