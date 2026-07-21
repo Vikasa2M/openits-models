@@ -360,6 +360,40 @@ A consumer reading `asyncapi.yaml` sees the same shape the `fault-raised`
 example above shows in JSON — there is no second, hand-copied
 description of the payload to drift out of sync with the schema.
 
+### Self-index
+
+The standard also emits a neutral, machine-readable self-description —
+[`schema-registry/index.json`](../schema-registry/index.json) — that any
+consumer (the open-its.org website, vendors, third-party tooling) can read
+with zero knowledge of any particular consumer. It lists every service
+(slug, namespace, description, published revisions, the CloudEvents
+`ce-type`s it emits, and its normative references), the shared foundation
+modules, and a registry map of `module → revision → snapshot paths` — the
+same snapshots described under [Encodings and transports](#encodings-and-transports-the-schema-is-the-contract).
+It is served alongside the registry at
+`https://schemas.open-its.org/index.json`. Like `asyncapi.yaml` it is
+generated (`make catalog`) from the YANG-derived catalog and the registry
+tree, byte-stable, `check-gen`-gated, and never hand-edited — a small excerpt:
+
+```json
+{
+  "standard": "OpenITS",
+  "indexVersion": "1",
+  "services": [
+    {
+      "slug": "dms",
+      "namespace": "urn:openits:yang:dms",
+      "revisions": ["2026-04-19", "…", "2026-07-21"],
+      "events": ["openits.dms.fault-raised.v1", "openits.dms.message-activation-failed.v1", "…"],
+      "refStd": ["NTCIP 1203 v03", "MUTCD", "ARC-IT 9.1 Service Package TI06 (Traffic Information Dissemination)", "…"],
+      "modules": [{ "name": "openits-dms", "namespace": "urn:openits:yang:dms", "revisions": ["…"], "refStd": ["…"] }, "…"]
+    }
+  ],
+  "foundation": [{ "name": "openits-types", "namespace": "urn:openits:yang:types", "revisions": ["…"], "refStd": ["…"] }],
+  "registry": { "openits-dms": { "2026-07-21": ["openits-dms/2026-07-21/schema.yang", "…"] } }
+}
+```
+
 ## Lessons applied — a summary
 
 | Lesson | Source | Where it lives in OpenITS |
