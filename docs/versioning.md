@@ -86,6 +86,16 @@ run — approve from the PR's Checks tab or via
 Config lives in [`release-please-config.json`](../release-please-config.json)
 (`release-type: go`, `bump-minor-pre-major`).
 
+**Only model-contract changes drive versions.** The config's `exclude-paths`
+ignores commits that touch nothing but `.github/`, `docs/`, `scripts/`,
+`tools/`, or root meta/build files (README, LICENSE, Makefile, buf configs,
+the changelog, release-please's own files). The tracked surface is what a
+consumer's version pin actually protects: `yang/`, `api/`, `bindings/`,
+`pkg/`, `schema-registry/`, `field-numbers.yaml`, and `go.mod`/`go.sum`.
+Note the sources-vs-artifacts distinction: a generator fix in `tools/`
+releases not because `tools/` changed but because its regenerated output
+under `api/`/`pkg/` did.
+
 ### Pinning an exact version / bootstrap
 
 release-please derives its baseline from

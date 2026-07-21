@@ -36,14 +36,10 @@ compatibility relate.
 
 * pin first release version ([c184e99](https://github.com/Vikasa2M/openits-models/commit/c184e99eb4a22881c085ea923c0f5adbc4836469))
 
-## [Unreleased]
-
-## [0.1.0] - 2026-07-17
+### Initial release contents
 
 Initial public release of the OpenITS data-model layer as a standalone,
-importable Go module (`github.com/Vikasa2M/openits-models`).
-
-### Added
+importable Go module (`github.com/Vikasa2M/openits-models`):
 
 - **YANG source modules** (`yang/`) — the vendor-neutral source of truth for
   the model: signal control, DMS, ESS, RSU/V2X, ramp metering, traffic sensor,

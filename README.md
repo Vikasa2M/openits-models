@@ -44,12 +44,29 @@ See:
 
 ## Using it
 
+```sh
+go get github.com/Vikasa2M/openits-models@latest
+```
+
+While this repository is private, Go consumers need the standard
+private-module configuration — skip the public proxy/checksum services and
+authenticate git over SSH:
+
+```sh
+export GOPRIVATE=github.com/Vikasa2M
+git config --global url."git@github.com:".insteadOf "https://github.com/"
+```
+
 ```go
 import (
     openitspb "github.com/Vikasa2M/openits-models/pkg/proto/openits/v1"
     openits   "github.com/Vikasa2M/openits-models/pkg/yang/openits"
 )
 ```
+
+Non-Go implementers should start from the curated release bundle instead
+(`yang/`, `api/proto/`, `schema-registry/`, `bindings/` — attached to each
+[GitHub release](https://github.com/Vikasa2M/openits-models/releases)).
 
 ## Regeneration
 
