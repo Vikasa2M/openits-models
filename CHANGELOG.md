@@ -7,6 +7,14 @@ for the Go module. See [`docs/versioning.md`](docs/versioning.md) for how the
 Go module version, per-module YANG revision dates, and protobuf wire
 compatibility relate.
 
+## [0.1.1](https://github.com/Vikasa2M/openits-models/compare/v0.1.0...v0.1.1) (2026-07-21)
+
+
+### Bug Fixes
+
+* correct Go module path to the repo's permanent home ([991b4bb](https://github.com/Vikasa2M/openits-models/commit/991b4bb86b37408664570af4a31da0c6e1252cf6))
+* reword NATS profile README to satisfy check-naming guard ([17d295f](https://github.com/Vikasa2M/openits-models/commit/17d295f2665ad78991501ac71f231125bc9fd89f))
+
 ## [0.1.0](https://github.com/Vikasa2M/openits-models/compare/v0.1.0...v0.1.0) (2026-07-21)
 
 
