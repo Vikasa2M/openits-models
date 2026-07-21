@@ -31,7 +31,8 @@ cp -r "$ROOT_DIR/yang"            "$STAGE/yang"
 cp -r "$ROOT_DIR/api/proto"       "$STAGE/api/proto"
 rm -rf "$STAGE/api/proto/yang"    # drop the ygot-generated extension tree
 cp -r "$ROOT_DIR/schema-registry" "$STAGE/schema-registry"
-cp "$ROOT_DIR/asyncapi.yaml" "$ROOT_DIR/CHANGELOG.md" \
+cp -r "$ROOT_DIR/bindings"        "$STAGE/bindings"
+cp "$ROOT_DIR/CHANGELOG.md" \
    "$ROOT_DIR/LICENSE" "$ROOT_DIR/NOTICE" "$STAGE/"
 
 ( cd "$STAGE_PARENT" && zip -qr "$OUT_DIR/openits-models-${TAG}.zip" "openits-models-${TAG}" )

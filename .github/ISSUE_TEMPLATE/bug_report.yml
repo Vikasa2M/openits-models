@@ -29,7 +29,7 @@ body:
     id: area
     attributes:
       label: Area
-      description: Which module, tool, or artifact? (e.g. `yang/openits-dms.yang`, `tools/yang-proto-gen`, `asyncapi.yaml`)
+      description: Which module, tool, or artifact? (e.g. `yang/openits-dms.yang`, `tools/yang-proto-gen`, `bindings/nats/asyncapi.yaml`)
     validations:
       required: false
   - type: textarea

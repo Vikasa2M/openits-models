@@ -16,7 +16,7 @@ Module path: `github.com/openits/openits-models`
 | `pkg/proto/openits/v1/` | Generated Go protobuf types (package `openitspb`). |
 | `pkg/yang/openits/` | Generated ygot Go types (package `openits`). |
 | `schema-registry/` | AsyncAPI/JSON-schema registry entries per service. |
-| `asyncapi.yaml` | Published AsyncAPI document (see note below). |
+| `bindings/nats/` | NATS reference profile: subject grammar, CloudEvents envelope, JetStream notes (`README.md`) and the generated `asyncapi.yaml` (see note below). The transport-neutral model layer above does not depend on it. |
 | `scripts/`, `tools/` | Model generation, validation, and lint tooling. |
 | `docs/` | Design rationale — how the model is shaped and why. |
 
@@ -69,8 +69,12 @@ untouched by `make yang-proto-gen`.
 Requires `protoc`/`buf`, `ygot`/`goyang`, and (optionally) `pyang` and
 `yanglint`.
 
-> **asyncapi.yaml** is carried here as a published artifact, regenerated
-> in-repo from the YANG-derived ce-type catalog by `make asyncapi`.
+> **`bindings/nats/asyncapi.yaml`** is carried here as a published
+> artifact of the NATS reference profile, regenerated in-repo from the
+> YANG-derived ce-type catalog by `make asyncapi`. See
+> [`bindings/nats/README.md`](bindings/nats/README.md) for the profile
+> spec and [`docs/07-conformance.md`](docs/07-conformance.md) for the
+> two-tier (model vs. NATS-profile) conformance model.
 
 ## Provenance
 

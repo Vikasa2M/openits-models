@@ -44,13 +44,15 @@ yang-go:
 
 # YANG -> AsyncAPI 3.0. Derives the ce-type catalog (tools/yang-proto-gen:
 # BuildCatalog) and embeds each ce-type's JSON Schema (EmitJSONSchema) as its
-# message payload. Writes the root asyncapi.yaml.
+# message payload. Writes bindings/nats/asyncapi.yaml — the AsyncAPI document
+# belongs to the NATS reference profile (see bindings/nats/README.md), not the
+# transport-neutral model layer.
 asyncapi:
-	$(GOCMD) run ./tools/yang-proto-gen -asyncapi -yang yang -out .
+	$(GOCMD) run ./tools/yang-proto-gen -asyncapi -yang yang -out bindings/nats
 
 # Fail if regenerating asyncapi.yaml drifts from what's committed.
 asyncapi-check: asyncapi
-	git diff --exit-code -- asyncapi.yaml
+	git diff --exit-code -- bindings/nats/asyncapi.yaml
 
 # --- Validation / lint -------------------------------------------------------
 # Validate golden YANG instance data against modules (yanglint in Docker).
@@ -109,5 +111,5 @@ tidy:
 build-tools:
 	$(GOCMD) build ./...
 
-# asyncapi.yaml is generated in-repo (see the `asyncapi` target above) from
-# the YANG-derived ce-type catalog, not copied in from the collector.
+# bindings/nats/asyncapi.yaml is generated in-repo (see the `asyncapi` target
+# above) from the YANG-derived ce-type catalog, not copied in from the collector.

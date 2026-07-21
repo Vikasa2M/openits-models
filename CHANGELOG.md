@@ -46,8 +46,9 @@ importable Go module (`github.com/openits/openits-models`).
   `command.proto` / `device.proto` core, with a stable field-number lock
   (`field-numbers.yaml`).
 - **Generated ygot Go types** (`pkg/yang/openits/`).
-- **AsyncAPI 3.0 document** (`asyncapi.yaml`) generated from the YANG-derived
-  ce-type catalog, and the per-service `schema-registry/` snapshots.
+- **AsyncAPI 3.0 document** (`bindings/nats/asyncapi.yaml`, part of the NATS
+  reference profile) generated from the YANG-derived ce-type catalog, and the
+  per-service `schema-registry/` snapshots.
 - **Generation, validation, and lint tooling** (`scripts/`, `tools/`): the
   YANG→proto generator, revision/naming/deviation/augment-collision/
   events-layering guards, NoI validator, graduation report, and the
