@@ -135,9 +135,10 @@ binding. They select events by the subject's last token only, which is
 the model-level event name; they do not depend on the transport. Those
 checks stay with the model layer.
 
-The `scripts/check-naming.sh` guard also rejects the legacy 5-token
-subject and `urn:tc:*` / `tc.*` forms in favor of the shapes above; it
-is a repository-hygiene gate for this profile's conventions.
+The `scripts/check-naming.sh` guard also rejects the legacy five-token
+subject hierarchy and the pre-OpenITS schema-URN and ce-type forms in
+favor of the shapes above; it is a repository-hygiene gate for this
+profile's conventions.
 
 ## When this profile moves out
 
