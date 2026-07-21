@@ -2,4 +2,4 @@
 
 Immutable snapshot of the `openits-scms` YANG module at revision 2026-07-21.
 Referenced from openits CloudEvents `ce-dataschema` URLs of the form
-`https://schemas.openits.example.org/openits-scms/2026-07-21/`.
+`https://schemas.openits.vikasa.io/openits-scms/2026-07-21/`.

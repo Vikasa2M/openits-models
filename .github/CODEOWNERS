@@ -1,10 +1,11 @@
-# Default owners for everything in the repo. Replace with the appropriate
-# GitHub team or usernames before enabling required reviews.
-* @Vikasa2M
+# Default owners for everything in the repo. CODEOWNERS entries must be
+# GitHub users or teams (@org/team) with write access — an org name alone
+# is not a valid owner.
+* @jp2195
 
 # Generated artifacts — reviewers should confirm these changed only as a
 # result of a YANG edit + `make gen`, never hand-edited.
-/pkg/proto/   @Vikasa2M
-/pkg/yang/    @Vikasa2M
-/asyncapi.yaml @Vikasa2M
-/field-numbers.yaml @Vikasa2M
+/pkg/proto/   @jp2195
+/pkg/yang/    @jp2195
+/bindings/nats/asyncapi.yaml @jp2195
+/field-numbers.yaml @jp2195

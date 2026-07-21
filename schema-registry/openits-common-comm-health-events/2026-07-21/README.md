@@ -2,4 +2,4 @@
 
 Immutable snapshot of the `openits-common-comm-health-events` YANG module at revision 2026-07-21.
 Referenced from openits CloudEvents `ce-dataschema` URLs of the form
-`https://schemas.openits.example.org/openits-common-comm-health-events/2026-07-21/`.
+`https://schemas.openits.vikasa.io/openits-common-comm-health-events/2026-07-21/`.
