@@ -7,6 +7,13 @@ for the Go module. See [`docs/versioning.md`](docs/versioning.md) for how the
 Go module version, per-module YANG revision dates, and protobuf wire
 compatibility relate.
 
+## [0.2.0](https://github.com/Vikasa2M/openits-models/compare/v0.1.1...v0.2.0) (2026-07-21)
+
+
+### Features
+
+* emit neutral machine-readable self-index of the standard ([76944a3](https://github.com/Vikasa2M/openits-models/commit/76944a30788aa001f3c3270641086c1466d6f4a7))
+
 ## [0.1.1](https://github.com/Vikasa2M/openits-models/compare/v0.1.0...v0.1.1) (2026-07-21)
 
 
