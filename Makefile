@@ -15,12 +15,12 @@ YANG_GO_OUT := pkg/yang
 .PHONY: all gen check-gen yang-proto-gen proto yang yang-go validate-yang \
 	check-revisions check-naming validate-noi check-graduation \
 	check-augment-collisions check-deviations check-events-layering proto-lint yang-lint vet fmt tidy build-tools \
-	asyncapi asyncapi-check
+	asyncapi asyncapi-check catalog catalog-check
 
 # Regenerate every generated model artifact from source: YANG -> proto
 # (tools/yang-proto-gen), proto -> Go (protoc), YANG -> Go (ygot).
 all: gen
-gen: yang-proto-gen proto yang-go asyncapi
+gen: yang-proto-gen proto yang-go asyncapi catalog
 
 # Fail if regenerating drifts from what's committed — the freshness gate.
 check-gen: gen
@@ -53,6 +53,19 @@ asyncapi:
 # Fail if regenerating asyncapi.yaml drifts from what's committed.
 asyncapi-check: asyncapi
 	git diff --exit-code -- bindings/nats/asyncapi.yaml
+
+# YANG + schema-registry -> schema-registry/index.json. Emits the neutral
+# machine-readable self-index of the standard (services, foundation modules,
+# ce-types, revisions, normative references, and the registry snapshot map)
+# that any consumer — the open-its.org website, vendors, tooling — reads with
+# zero knowledge of any particular consumer. Scans schema-registry/ for the
+# snapshot map and writes index.json beside it. Generated, never hand-edited.
+catalog:
+	$(GOCMD) run ./tools/yang-proto-gen -catalog -yang yang -out schema-registry
+
+# Fail if regenerating index.json drifts from what's committed.
+catalog-check: catalog
+	git diff --exit-code -- schema-registry/index.json
 
 # --- Validation / lint -------------------------------------------------------
 # Validate golden YANG instance data against modules (yanglint in Docker).

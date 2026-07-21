@@ -666,10 +666,22 @@ func main() {
 	outDir := flag.String("out", "api/proto", "output directory for generated .proto files (with -asyncapi, the directory asyncapi.yaml is written into)")
 	lockPath := flag.String("lock", "tools/yang-proto-gen/field-numbers.yaml", "path to the field-number lock file")
 	asyncAPI := flag.Bool("asyncapi", false, "emit asyncapi.yaml from the derived ce-type catalog + JSON Schemas into -out, instead of generating proto")
+	catalog := flag.Bool("catalog", false, "emit index.json (the neutral machine-readable self-index) into -out, scanning -out for the registry snapshot map, instead of generating proto")
 	flag.Parse()
 
 	if *asyncAPI {
 		if err := GenerateAsyncAPI(*yangDir, filepath.Join(*outDir, "asyncapi.yaml")); err != nil {
+			fmt.Fprintln(os.Stderr, "yang-proto-gen:", err)
+			os.Exit(1)
+		}
+		return
+	}
+
+	if *catalog {
+		// -out is both the directory scanned for the registry snapshot map
+		// and where index.json is written (see GenerateIndex): the index
+		// lands beside the registry it describes.
+		if err := GenerateIndex(*yangDir, *outDir); err != nil {
 			fmt.Fprintln(os.Stderr, "yang-proto-gen:", err)
 			os.Exit(1)
 		}
