@@ -7,6 +7,27 @@ for the Go module. See [`docs/versioning.md`](docs/versioning.md) for how the
 Go module version, per-module YANG revision dates, and protobuf wire
 compatibility relate.
 
+## [0.1.0](https://github.com/Vikasa2M/openits-models/compare/v0.1.0...v0.1.0) (2026-07-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* pre-v1 wire changes — signal cycle-state enum trim, overlap numeric re-key + shared id typedefs, nema-common min/max-green to decimal64 tenths, preemption-type to identityref, TIM end-time removal, message-stats counter collapse, backhaul-cellular rename, DMS MULTI-tag identityref conversion, mode trigger identityref, ramp command-source convergence, control-mode identity prefixing, vendor module namespace moves.
+
+### Features
+
+* full model review remediation across all nine device families ([8c37bb4](https://github.com/Vikasa2M/openits-models/commit/8c37bb43274ff3704c5d31359a25236bd45aa16c))
+
+
+### Bug Fixes
+
+* **registry:** record contact normalization as a revision on the example augment ([edfff30](https://github.com/Vikasa2M/openits-models/commit/edfff30c8cae6bf795b4916ef7e5f25e84955280))
+
+
+### Miscellaneous Chores
+
+* pin first release version ([c184e99](https://github.com/Vikasa2M/openits-models/commit/c184e99eb4a22881c085ea923c0f5adbc4836469))
+
 ## [Unreleased]
 
 ## [0.1.0] - 2026-07-17
