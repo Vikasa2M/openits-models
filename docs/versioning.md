@@ -13,8 +13,9 @@ release.
 | **Protobuf wire compatibility** | field numbers in `field-numbers.yaml` + `buf breaking` | On-the-wire and JSON-tag stability of the generated messages. | Enforced continuously; never "released" on its own. |
 
 The **Go module version is the release**. There is no binary artifact — Go
-consumers pull the tag directly (`go get github.com/openits/openits-models@vX.Y.Z`),
+consumers pull the tag directly (`go get github.com/Vikasa2M/openits-models@vX.Y.Z`),
 so cutting a release is: land the changes, update the changelog, push a tag.
+The module path is the repo URL, so the tag is immediately consumable.
 
 ## Go module semver
 
@@ -70,19 +71,42 @@ tag or edit the changelog by hand for the normal cadence.
    `main` and maintains a standing **release PR** that bumps the version in
    [`.release-please-manifest.json`](../.release-please-manifest.json) and
    rewrites [`CHANGELOG.md`](../CHANGELOG.md) from those commits.
-3. When the changelog and version look right, **merge the release PR**. That
-   tags `vX.Y.Z`, creates the GitHub Release with generated notes, and the
-   `upload-assets` job attaches the curated bundle (below).
+3. When the changelog and version look right, **merge the release PR**. Merging
+   it is what tags `vX.Y.Z` and creates the GitHub Release with generated notes;
+   the `upload-assets` job in the same workflow then builds the curated bundle
+   from the tagged tree and attaches it (below). Verified on `v0.1.0`: the
+   Release carried `.tar.gz`, `.zip`, and `SHA256SUMS`.
+
+The release PR is authored by the release-please bot. Depending on the org's
+GitHub Actions policy for bot/first-time-contributor PRs, the CI runs on it may
+land in `action_required` and need a maintainer to approve them before they
+run — approve from the PR's Checks tab or via
+`gh api -X POST repos/<owner>/<repo>/actions/runs/<id>/approve`.
 
 Config lives in [`release-please-config.json`](../release-please-config.json)
 (`release-type: go`, `bump-minor-pre-major`).
 
-### Manual / bootstrap path
+### Pinning an exact version / bootstrap
 
-The first release (`v0.1.0`) and any one-off are cut by hand: push a semver tag
-and the [`release`](../.github/workflows/release.yml) workflow re-runs the gate,
-creates the Release from the matching `CHANGELOG.md` section, and attaches the
-bundle (`-rc` suffixes are marked pre-release automatically):
+release-please derives its baseline from
+[`.release-please-manifest.json`](../.release-please-manifest.json), **not** from
+git tags. If the manifest names a version that has no corresponding tag,
+release-please assumes that version already shipped and proposes the *next* one.
+So the manifest — not any tag — is the source of truth for "where we are."
+
+To pin an exact next version (the first release, or any deliberate jump), land
+an **empty commit with a `Release-As: X.Y.Z` footer**; release-please then
+proposes exactly that version in the release PR. This is how `v0.1.0` was
+actually cut:
+
+```
+git commit --allow-empty -m "chore: release 0.1.0" -m "Release-As: 0.1.0"
+```
+
+A hand-pushed semver tag remains available as an escape hatch: the
+[`release`](../.github/workflows/release.yml) workflow re-runs the gate, creates
+the Release from the matching `CHANGELOG.md` section, and attaches the bundle
+(`-rc` / pre-release suffixes are marked pre-release automatically):
 
 ```
 git tag vX.Y.Z
@@ -91,10 +115,6 @@ git push origin vX.Y.Z
 
 release-please tags with `GITHUB_TOKEN`, which does not trigger this tag-based
 workflow, so the automated and manual paths never double-fire.
-
-> **Ordering:** cut `v0.1.0` (manual) *before* merging `feat:`/`fix:` commits,
-> so release-please — whose baseline manifest is `0.1.0` — starts proposing
-> `0.1.1`/`0.2.0` from an existing `v0.1.0` tag rather than pre-empting it.
 
 ## Release artifacts
 
@@ -107,24 +127,11 @@ tooling, tests, or docs:
 
 - `openits-models-vX.Y.Z.zip` and `openits-models-vX.Y.Z.tar.gz`, each
   containing `yang/`, `api/proto/` (minus the ygot-generated extension tree),
-  `schema-registry/`, `asyncapi.yaml`, `CHANGELOG.md`, `LICENSE`, and `NOTICE`
-  under a top-level `openits-models-vX.Y.Z/` directory.
+  `schema-registry/`, the `bindings/` tree (the NATS reference profile plus its
+  `bindings/nats/asyncapi.yaml`), `CHANGELOG.md`, `LICENSE`, and `NOTICE` under a
+  top-level `openits-models-vX.Y.Z/` directory. (Exact set:
+  [`scripts/build-release-bundle.sh`](../scripts/build-release-bundle.sh).)
 - `SHA256SUMS` — checksums for both archives, for consumers who vendor them.
 
 There are no compiled binaries to publish (this repo builds none) and no
 package-registry publishing (npm/PyPI) until a consumer needs it.
-
-## ⚠️ Prerequisite: module path must match the repo URL
-
-The Go module path in `go.mod` is `github.com/openits/openits-models`, but the
-repository currently lives at `github.com/Vikasa2M/openits-models`. For
-`go get github.com/openits/openits-models@vX.Y.Z` to resolve, **one of these
-must be true before the first tag is consumable**:
-
-- the repo is moved/mirrored to `github.com/openits/openits-models`, **or**
-- a vanity import redirect is served at that path, **or**
-- `go.mod`'s module path is changed to match the actual repo location (and
-  every consumer's import updated in lockstep).
-
-Tagging works regardless, but downstream `go get` of the current module path
-will fail until this is resolved.
