@@ -1,4 +1,4 @@
-# 04 — Design decisions
+# Design decisions
 
 This document explains the major architectural choices and the
 reasoning behind each. The format is consistent: **what we chose,
@@ -426,7 +426,8 @@ for an industry standard.
 
 ## Generated AsyncAPI, not hand-maintained
 
-**What we chose.** The `asyncapi.yaml` at the repository root is
+**What we chose.** The `asyncapi.yaml` under `bindings/nats/` — a
+NATS reference-profile artifact, not a model-layer one — is
 generated in-repo by `make asyncapi`
 (`tools/yang-proto-gen -asyncapi`): the ce-type catalog is derived
 from the YANG event-kind taxonomy (`BuildCatalog` — the identity
@@ -436,7 +437,7 @@ its notification's JSON Schema (`EmitJSONSchema`, the P2b-1 backend),
 embedded directly rather than referenced by URL
 (`schemaFormat: application/schema+json;version=draft-2020-12`).
 `make asyncapi-check` (`make asyncapi` plus `git diff --exit-code --
-asyncapi.yaml`) is the CI drift gate. This retires the earlier
+bindings/nats/asyncapi.yaml`) is the CI drift gate. This retires the earlier
 collector-generate-and-copy-back workflow described in prior
 revisions of this doc.
 

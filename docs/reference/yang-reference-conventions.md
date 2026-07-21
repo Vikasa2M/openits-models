@@ -1,6 +1,29 @@
-# YANG reference-citation conventions
+# YANG authoring & citation conventions
 
-This document defines how OpenITS YANG modules cite normative sources
+This is the conventions reference for authoring OpenITS YANG modules. It
+covers two things: the **authoring doctrine** every module follows (where
+`must` constraints belong, the config/state idiom, identity-vs-enum, and
+module placement), and the **citation conventions** for how modules cite
+normative sources in `reference` substatements.
+
+## Contents
+
+Authoring doctrine — the load-bearing rules for writing a module:
+
+- [Constraint placement (`must`) doctrine](#constraint-placement-must-doctrine)
+- [Identity vs. enum: which axis gets which](#identity-vs-enum-which-axis-gets-which)
+- [Module placement: the ≥3-service rule](#module-placement-the-3-service-rule)
+- [Config/state idiom](#configstate-idiom)
+
+Citation conventions — how modules cite normative sources:
+
+- [Normative-source citation formats](#normative-source-citation-formats)
+- [Revision-block references](#revision-block-references)
+- [Application rules](#application-rules)
+
+## Citing normative sources
+
+This section defines how OpenITS YANG modules cite normative sources
 in `reference` substatements. The conventions cover both **revision-block
 references** (the `reference` substatement of a `revision` statement)
 and **node-level references** (the `reference` substatement of any

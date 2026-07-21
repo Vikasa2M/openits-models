@@ -1,4 +1,4 @@
-# 06 — Extension model
+# Extension model
 
 OpenITS is designed to grow. The mechanism by which it grows is the
 single most important governance feature of the project; it
@@ -185,7 +185,7 @@ submitted as a PR to
 augment: siemens-signal-control-vehicle-counts
 revision: 2026-04-19
 implementer: caltrans
-implementer_contact: noi@dot.ca.gov
+implementer_contact: noi@vikasa.io
 implementer_type: operator
 deployment_scale: 1200
 first_observed: 2026-08-12
@@ -296,7 +296,7 @@ The repository ships tools that make the extension model real:
 | `make check-graduation` | Report per-augment NoI counts, operator presence, eligibility. |
 | `make check-augment-collisions` | Warn on YANG path collisions between augments. |
 | `make check-deviations` | Validate every `yang/deviations/*` module resolves against its base; classify `deviate` statements (add = tightening; `not-supported` / `delete`-of-`must` = loosening, fail; `replace` = note) plus a Docker tightening proof over the `invalid-*-under-*` fixtures. |
-| `make asyncapi` | Regenerate `asyncapi.yaml` from the taxonomy-derived ce-type catalog, embedding each message's JSON Schema payload; see [04 — Design decisions](04-design-decisions.md#generated-asyncapi-not-hand-maintained). |
+| `make asyncapi` | Regenerate `asyncapi.yaml` from the taxonomy-derived ce-type catalog, embedding each message's JSON Schema payload; see [Design decisions](04-design-decisions.md#generated-asyncapi-not-hand-maintained). |
 | `make asyncapi-check` | `make asyncapi` plus a `git diff --exit-code`, failing CI when the spec is out of date. |
 
 A contributor adding an augment runs `make yang-lint`,

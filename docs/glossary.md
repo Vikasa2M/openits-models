@@ -1,7 +1,11 @@
 # Glossary
 
-Acronyms, terms, and project-specific vocabulary used in the
-OpenITS documentation and codebase.
+Acronyms, terms, and project-specific vocabulary used across the
+OpenITS documentation. This is the data-model repo; a few
+deployment-side terms (poller, TMC, storage backends) are defined here
+only for the context in which they appear in these docs — their
+implementation lives in the deployment/collector layer, not in this
+repo.
 
 ---
 
@@ -22,8 +26,8 @@ OpenITS YANG modules carry `arc-it-flow` annotations.
 runs an intersection's signal timing. NTCIP 1202.
 
 **ASC3** — Econolite's third-generation Actuated Signal Controller
-product line. One of two vendor controllers exercised by the demo
-fleet (the other being McCain MaxTime).
+product line. Its vendor-alarm identities are the worked example in
+`openits-vendor-econolite-signal-control-types`.
 
 **ATSPM** — Automated Traffic Signal Performance Measures. A set
 of measures (Purdue phase-termination, split failures, green-time
@@ -51,12 +55,6 @@ headers (binary mode).
 **ClickHouse** — Column-oriented database. OpenITS' default
 history / analytics backend.
 
-**Corridor** — A multi-DOT roadway (e.g. I-85 spanning GDOT,
-SCDOT, NCDOT) where operators across state lines need a shared
-real-time signal-status picture. In OpenITS, corridor cabinets carry
-a `cab-i85-` prefix in their controller_id and are the explicit
-subject set named in DMZ-to-DMZ peer subscriptions.
-
 **CloudEvents** — CNCF specification for a common envelope around
 event data. OpenITS uses CloudEvents 1.0 binary mode.
 
@@ -82,14 +80,6 @@ IEEE 1609.x.
 **ESS / RWIS** — Environmental Sensor Station / Road Weather
 Information System. Roadside weather sensors. NTCIP 1204.
 
-
-**Infrahub** — Opsmill's network-as-code inventory and topology
-graph. OpenITS uses Infrahub as the source-of-truth inventory
-adapter: cabinets, controllers, RSUs, approaches, phases, and
-detectors are seeded from `deploy/fleet.yaml` into Infrahub by
-`deploy/infrahub/seed.py` on `make demo`, and the poller queries
-Infrahub at startup to discover what devices to poll.
-
 **gNMI** — gRPC Network Management Interface. One transport for
 pushing/pulling YANG-modelled data. OpenITS uses NATS, not gNMI;
 the YANG models are transport-independent, so a deployment that
@@ -100,19 +90,10 @@ onto its preferred transport without schema changes.
 Tier 1 core. Three independent NoIs (with at least one operator)
 plus TSC operator-weighted majority vote.
 
-**JetStream** — NATS' durable streaming layer. Provides at-least-
-once delivery, replay, and consumer groups. In the multi-tier
-topology OpenITS uses four families of streams: one `OPENITS_BUFFER`
-on each cabinet's own single-node JetStream server (the durable edge
-buffer the poller publishes to over loopback); one
-`OPENITS_REGIONAL_<DOT>_<REGION>` per ops_region (created by the
-`stream-init` Job on first bring-up, which *sources* every cabinet's
-`OPENITS_BUFFER` so offline cabinets catch up by sequence); one
-`OPENITS_ORG_<DOT>` per DOT on org-core that sources from the DOT's
-regional streams (NACK-managed); and one cross-DOT
-`OPENITS_FEDERATION` stream that sources from each `OPENITS_ORG_<DOT>`
-(NACK-managed). A `COMMANDS` stream carries the bidirectional command
-path.
+**JetStream** — NATS' durable streaming layer. Provides at-least-once
+delivery, replay, and consumer groups. The reference deployment's
+multi-tier stream topology is a deployment concern, out of scope for
+this model repo.
 
 **KV** — Key-Value. OpenITS uses NATS KV (default) or Valkey
 (at scale) for live state — the latest snapshot per device.
@@ -125,9 +106,7 @@ connects outbound to central.
 **MAP** — SAE J2735 V2X message broadcasting intersection
 geometry to vehicles.
 
-**MaxTime** — McCain's signal-controller product line. One of two
-vendor controllers exercised by the demo fleet (the other being
-Econolite ASC3).
+**MaxTime** — McCain's signal-controller product line.
 
 **MUTCD** — Manual on Uniform Traffic Control Devices. The U.S.
 federal manual whose §4F.17 sets the yellow-change interval (3–6 s)
@@ -167,8 +146,8 @@ with its own ce-type, NATS subject, and schema revision. As
 opposed to a bundled telemetry blob.
 
 **Poller** — The edge process running in (or near) each cabinet
-that polls devices and emits OpenITS events. Reference
-implementation is `cmd/poller/`.
+that polls devices and emits OpenITS events. Its reference
+implementation lives in the deployment/collector layer, not this repo.
 
 **Profile** — A scope for a conformance claim: `core`,
 `core-plus-augments=<list>`, `core-plus-deviations=<list>`, or
@@ -191,13 +170,6 @@ immutable snapshots of YANG and Protobuf at each revision.
 **Region** — A jurisdiction at the state-or-equivalent level.
 The `{region}` token in OpenITS subjects (e.g., `us-tx`).
 
-**ops_region** — An operations subdivision *within* a DOT, modelling
-distinct field-ops territories (e.g., GDOT splits into `atlanta` and
-`savannah`). Each ops_region has its own regional NATS server in the
-4-tier topology; cabinets connect to their ops_region's NATS and the
-ops_region's `OPENITS_REGIONAL_<DOT>_<REGION>` stream is the first
-durable hop. Carried on cabinet pods as `openits.ops_region=<code>`.
-
 **RSA** — Roadside Alert. SAE J2735 V2X advisory message.
 
 **RSU** — Roadside Unit. V2X-equipped roadside hardware that
@@ -218,11 +190,6 @@ broadcast by RSUs (and originating from signal controllers).
 
 **SRM / SSM** — Signal Request Message / Signal Status Message.
 SAE J2735 V2X messages for signal priority/preemption requests.
-
-**Subject ACL** — A NATS authorization rule that grants or denies a
-credential the ability to publish or subscribe to a specific subject
-pattern. In OpenITS, subject ACLs at DOT DMZ boundaries enforce which
-subjects external parties (peer DOTs, third parties, vendors) can see.
 
 **TIM** — Traveler Information Message. SAE J2735 V2X message
 broadcast by RSUs to convey advisories, work-zone info,

@@ -1,4 +1,4 @@
-# 05 — Standards alignment
+# Standards alignment
 
 OpenITS is a layer above the device-level standards, not a
 replacement for them. This document maps OpenITS to the standards

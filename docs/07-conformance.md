@@ -1,46 +1,112 @@
-# 07 — Conformance
+# Conformance
 
 Conformance is what makes "OpenITS-compatible" a contract clause
 rather than a marketing claim. This document describes what
 conformance means, how to claim it, and how operators verify
 vendor claims.
 
-## What conformance means
+## Two tiers of conformance
 
-An implementation conforms to OpenITS for a given service when:
+Conformance splits along the same seam the model layer draws
+everywhere else: **the YANG schema is the contract; the transport is a
+binding.** A deployment can conform to the model without adopting the
+reference transport, and the two claims are verified separately.
+
+- **Tier 1 — Model conformance** is transport-neutral. It is about the
+  data: does the payload match the schema, does the service behave per
+  its shape rules, is event identity honored. Tier 1 holds whether the
+  events flow over NATS, RESTCONF, gNMI, a Kafka topic, or an HTTPS
+  webhook.
+- **Tier 2 — NATS reference-profile conformance** is about the wire:
+  the seven-token subject hierarchy, the CloudEvents header set, and
+  JetStream delivery. Tier 2 is one binding profile; its full
+  specification lives in
+  [`bindings/nats/README.md`](../bindings/nats/README.md).
+
+### Tier 1 — Model conformance (transport-neutral)
+
+An implementation conforms to the OpenITS **model** for a given service
+when:
+
+1. **Payloads parse against the schema-registry snapshot.** Each
+   message body validates against the immutable schema-registry
+   snapshot the implementation declares — the snapshot directory
+   always carries `schema.yang`, the YANG source of truth. (Every
+   notification-bearing snapshot additionally ships a generated
+   `schema.proto` and `schema.json`; the guarantee is the YANG match,
+   not a specific generated file's presence.) In the reference binding
+   the declared snapshot is the one `ce-dataschema` points at; in
+   another binding it is whatever resolvable schema reference that
+   binding carries.
+
+2. **Per-service shape rules hold.** Each service has additional
+   assertions: signal-control's `OperationalStatus` emits at the
+   configured cadence; RSU's TIM-broadcast events follow the
+   declared lifecycle; traffic-sensor interval reports arrive within
+   their configured data interval; and so on.
+
+3. **Event identity and dedup semantics are honored.** Every event
+   carries the deterministic, content-derived identity the YANG
+   event-header / sequence semantics define, so that a retried publish
+   produces the **same** event id and consumers can deduplicate
+   without coordination. This is a model-level rule — it is rooted in
+   the schema, not in any transport — and it is carried by whatever
+   envelope the binding provides (`ce-id` in the reference binding).
+
+4. **The implementation's NoIs are filed for any augments it
+   ships.** If you ship `vendor-x-signal-control-feature-y`, you
+   file a Notice of Implementation against that augment. This
+   creates the public record that drives graduation.
+
+### Tier 2 — NATS reference profile conformance
+
+On top of Tier 1, an implementation conforms to the **NATS reference
+profile** when:
 
 1. **It emits events on the canonical subject hierarchy.** Every
    message uses the seven-token shape
    `openits.{region}.{agency}.{agency-unit}.{service}.{controller-id}.{event}`
-   with valid tokens (validated against the agency registry).
+   with valid tokens (`{region}`/`{agency}`/`{agency-unit}` validated
+   against the agency registry).
 
 2. **Headers carry the CloudEvents envelope.** Every message has
    the required CloudEvents headers (`ce-specversion`, `ce-type`,
    `ce-source`, `ce-id`, `ce-time`, `ce-dataschema`,
    `ce-datacontenttype`) populated correctly.
 
-3. **Payloads parse against the schema-registry snapshot.** The
-   `ce-dataschema` URL points at an immutable snapshot directory
-   that always carries `schema.yang` — the YANG source of truth the
-   message body is validated against. Every notification-bearing
-   snapshot additionally ships a generated `schema.proto` and
-   `schema.json`; the guarantee conformance relies on is the YANG
-   match, not a specific generated file's presence.
+3. **Delivery and cadence carriage follow the profile.** JetStream
+   durable delivery and the redelivery behavior that makes the
+   deterministic `ce-id` load-bearing are profile properties.
 
-4. **Per-service shape rules hold.** Each service has additional
-   assertions: signal-control's `OperationalStatus` emits at the
-   configured cadence; RSU's TIM-broadcast events follow the
-   declared lifecycle; traffic-sensor interval reports arrive within
-   their configured data interval; and so on.
+The subject grammar, the full header semantics, and the JetStream
+notes are specified in
+[`bindings/nats/README.md`](../bindings/nats/README.md).
 
-5. **Idempotent retries.** A retried publish produces the same
-   `ce-id`, allowing consumers to deduplicate without
-   coordination.
+### What "OpenITS-compatible" means for procurement
 
-6. **The implementation's NoIs are filed for any augments it
-   ships.** If you ship `vendor-x-signal-control-feature-y`, you
-   file a Notice of Implementation against that augment. This
-   creates the public record that drives graduation.
+Today, an unqualified claim of **"OpenITS-compatible" means Tier 1 +
+Tier 2** — the model conformance and the NATS reference profile
+together — because the NATS profile is the only binding profile that
+exists. As other bindings land (an MQTT profile, a Kafka profile, a
+RESTCONF profile), each is a **sibling Tier 2 profile**, and a
+procurement can name the profile it requires. **Tier 1 alone is a
+meaningful, verifiable claim** for a deployment that does not use NATS —
+an agency serving RFC 7951 JSON to a partner over HTTPS, or a vendor
+bridging YANG-modelled state over gNMI, can conform to the model
+without adopting the reference transport. Write the RFP to the tier and
+profile you actually need.
+
+### When the NATS profile moves out of this repo
+
+The NATS profile lives in this repository — spec and generated AsyncAPI
+under `bindings/nats/`, its Tier 2 checks in `tools/conformance/` — for
+now, so the reference binding and the model it binds evolve in one
+change set. It moves to its own repository, consuming released model
+bundles, when any of the following becomes true: (a) a second binding
+profile exists, so the model repo would otherwise privilege one
+transport; (b) an external implementer needs profile conformance
+without the model toolchain; or (c) the profile needs its own release
+cadence, decoupled from model revisions.
 
 ## Profiles
 
@@ -63,7 +129,14 @@ and deviation profiles layer on top.
 ## How to claim conformance
 
 The conformance kit lives in `tools/conformance/` in the
-reference repository. To claim conformance:
+reference repository. It runs against a NATS endpoint and verifies
+both tiers in one pass, so it certifies the Tier 1 + Tier 2 claim that
+"OpenITS-compatible" means today. A deployment claiming **Tier 1 only**
+over a non-NATS binding validates the same model rules — payloads
+against the declared schema-registry snapshot, per-service shape rules,
+event identity — against its own transport; a binding-specific harness
+is the sibling of the NATS kit's Tier 2 checks. To claim conformance
+with the reference profile:
 
 1. **Stand up your implementation against a test NATS endpoint.**
    The kit subscribes to `openits.>` on your endpoint and
@@ -151,21 +224,37 @@ When a vendor claims conformance and gives you a report:
 
 ## What the kit checks today
 
-The conformance kit's current checks include:
+The conformance kit exercises both tiers in one run against the test
+NATS endpoint. Its current checks include:
 
-- **Subject hierarchy.** Every published event lives on the
-  seven-token shape with valid tokens.
-- **CloudEvents envelope.** `ce-type` matches the configured
-  service; `ce-source` is a valid `urn:openits:controller:`
-  URN; `ce-id` is a deterministic ULID; `ce-dataschema` points
-  at a snapshotted revision.
+**Tier 1 — model checks (transport-neutral):**
+
 - **Per-event payload.** Body parses cleanly against the
   schema-registry copy at the declared revision (Protobuf, where
   that snapshot ships a `schema.proto`; validated against the
   snapshot's `schema.yang` otherwise).
-- **Per-service shape rules.** See
-  `tools/conformance/tests/<service>.go` for the assertion list
-  per service.
+- **Per-service shape rules.** Cadence, lifecycle, and interval
+  assertions. See `tools/conformance/tests/<service>.go` for the
+  assertion list per service.
+- **Event identity present.** `ce-id` is present so replay can
+  deduplicate (`TestCEID_Present`).
+
+**Tier 2 — NATS reference-profile checks:**
+
+- **Subject hierarchy.** Every published event lives on the
+  seven-token shape with valid tokens
+  (`tools/conformance/tests/subject.go`).
+- **CloudEvents envelope.** `ce-type` matches the configured
+  service; `ce-source` is a well-formed `urn:openits:` URN
+  (`tools/conformance/tests/cetype.go`); `ce-dataschema` points
+  at a snapshotted revision.
+
+The Tier 1 shape checks select events by the subject's last token — the
+model-level event name — so they hold under any binding. The Tier 2
+subject/envelope checks are documented as profile tooling in
+[`bindings/nats/README.md`](../bindings/nats/README.md). When a second
+binding profile lands, its checks are a sibling suite; the Tier 1
+checks are shared.
 
 ## What the kit does NOT check yet
 

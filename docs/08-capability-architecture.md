@@ -1,12 +1,21 @@
-# 08 — Capability-first module architecture
+# Capability-first module architecture
 
 This document records the organizing principle for the openits module
 family: **model by capability (function), not by device type.** A
 physical device is described by the *union* of the capability modules
 it implements, composed onto a thin device profile.
 
-It is written in the same shape as [04 — Design decisions](04-design-decisions.md):
+It is written in the same shape as [Design decisions](04-design-decisions.md):
 what we chose, what we considered, why, and what we'd revisit.
+
+> **Status: this is the target architecture, partially realized.** The
+> principle is settled and the first capabilities ship today (see
+> [Migration](#migration) for exactly what is built). Several capability
+> and thin-profile modules named below are *planned*, not yet in `yang/`;
+> they are marked **(planned)**. The service families that have not been
+> re-laid yet still ship as the monolithic service cores described in
+> [the data model](data-model.md) — that doc describes the tree as it is
+> today; this doc describes the shape it is moving toward.
 
 ## What we chose
 
@@ -16,8 +25,8 @@ Four layers, organized by *function* rather than by *device type*:
 |-------|---------|------|
 | **Foundation** | `openits-types` | Cross-service scalars, identities, and shared groupings (`event-header`, `fault-entry`, `geo-location`, `device-hardware`, `comm-link-state`, `wire-source`). |
 | **Platform** | `openits-device-diagnostics`, and the platform groupings in `openits-types` | What *every* field device has regardless of function: identity, location, device hardware, communications health, compute diagnostics (CPU/memory/disk/temperature, uptime/restart), the active-fault inventory. |
-| **Capability** | `openits-v2x-radio`, `openits-v2x-messaging`, `openits-scms`, `openits-vehicle-detection`, `openits-incident-detection`, `openits-environmental-sensing`, `openits-signal-timing`, `openits-dms-display`, `openits-ramp-control`, `openits-reversible-lane-control`, … | One coherent function each — the unit a vendor advertises ("this unit does SCMS", "this sensor does incident detection"). Versioned independently. |
-| **Device profile** | `openits-rsu`, `openits-signal-controller`, `openits-dms`, `openits-ess`, `openits-traffic-sensor`, `openits-perception`, `openits-ramp-meter`, `openits-reversible-lane` | *Thin* — an identity plus `uses`/composition of the capabilities that device type has. Optional capabilities are gated by `feature` / `if-feature`. |
+| **Capability** | Built: `openits-v2x-radio`, `openits-v2x-messaging`, `openits-scms`, `openits-vehicle-detection`. Planned: `openits-signal-timing`, `openits-dms-display`, `openits-ramp-control`, `openits-incident-detection`, `openits-environmental-sensing`, `openits-reversible-lane-control`. | One coherent function each — the unit a vendor advertises ("this unit does SCMS", "this sensor does incident detection"). Versioned independently. |
+| **Device profile** | Built as a thin, capability-composing profile: `openits-rsu`. Still monolithic service cores pending migration: `openits-signal-control`, `openits-dms`, `openits-ess`, `openits-traffic-sensor`, `openits-perception`, `openits-ramp-metering`, `openits-reversible-lane` (their thin-profile target names would be e.g. `openits-signal-controller`, `openits-ramp-meter`). | *Thin* — an identity plus `uses`/composition of the capabilities that device type has. Optional capabilities are gated by `feature` / `if-feature`. |
 
 A device profile is a composition, not a monolith. An RSU:
 
@@ -52,7 +61,7 @@ container rsu {                                   // a singleton device, like ev
   content it scatters one device's tree across many modules and makes
   the whole tree hard to read in one place. We keep `augment` for its
   existing role — *vendor* extension (Tier 2, see
-  [06 — Extension model](06-extension-model.md)) — not as the core
+  [Extension model](06-extension-model.md)) — not as the core
   composition mechanism.
 
 ## Why capability-first
@@ -129,13 +138,19 @@ the table: it is the shape this document exists to replace.
 ## Migration
 
 This supersedes the "decompose the RSU mega-module slice by slice"
-framing with "re-lay the family along capability lines." The first
-brick — `openits-device-diagnostics` — already landed. RSU is the
-prototype device profile; the remaining device families follow the same
-composition once the capability modules exist.
+framing with "re-lay the family along capability lines."
+
+Built today: the platform brick `openits-device-diagnostics`, the
+capability modules `openits-v2x-radio`, `openits-v2x-messaging`,
+`openits-scms`, and `openits-vehicle-detection`, and `openits-rsu` as
+the prototype thin device profile composing them. The remaining device
+families (signal-control, dms, ess, ramp-metering, traffic-sensor,
+perception, reversible-lane) still ship as monolithic service cores and
+follow the same composition as the capability modules they need are
+carved out.
 
 ## Related documents
 
 - [data model](data-model.md) — the module family and event taxonomy.
-- [04 — Design decisions](04-design-decisions.md) — the load-bearing choices.
-- [06 — Extension model](06-extension-model.md) — augments / deviations / graduation.
+- [Design decisions](04-design-decisions.md) — the load-bearing choices.
+- [Extension model](06-extension-model.md) — augments / deviations / graduation.

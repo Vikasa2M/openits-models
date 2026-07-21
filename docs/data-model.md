@@ -3,11 +3,12 @@
 This document describes the OpenITS data-model layer for implementers:
 how the YANG module family is organised, how the event taxonomy works,
 how wire provenance and safety constraints are carried in the schema,
-and how the schema maps onto encodings and transports. Read the
-system architecture doc (in the source monorepo) first for how events
-move; this document covers what the events *are*.
+and how the schema maps onto encodings and transports. It covers what the
+events *are*; how they move (the NATS subject topology and stream
+layout) is a deployment concern layered on top of this model, not part
+of the model itself.
 
-[04 — Design decisions](04-design-decisions.md) explains *why* the
+[Design decisions](04-design-decisions.md) explains *why* the
 model is shaped this way; this document explains the shape itself and
 shows the machinery working. The two recurring sources of
 lessons-learned are **NTCIP** (whose data model was bound to SNMP as a
@@ -33,7 +34,7 @@ OpenConfig converged on ~30 focused modules (`openconfig-bgp`,
 | Service types | `openits-{signal-control,dms,ess,rsu,ramp-metering,perception,traffic-sensor,reversible-lane}-types` | Per-service event-kind identity hierarchies (plus, for signal-control, shared typedefs), importable without pulling in the service core. |
 | Event modules | `openits-signal-control-{phase,detector,overlap,pedestrian,preemption,coordination,tsp,tsam,raw}-events` | One module per behavioral concern, each ~50–180 lines, each with its own revision cycle. |
 | Cross-service events | `openits-common-{fault,mode,comm-health}-events` | Generic notifications (fault-raised / fault-cleared / mode-changed / …) that every service emits with a service-derived `kind` identity. The generation-1 per-service fault/mode notifications are deprecated in favor of these. |
-| Vendor identity modules | `openits-vendor-econolite-signal-control-types` | Vendor-derived identities filling open extension slots. See [06 — Extension model](06-extension-model.md). |
+| Vendor identity modules | `openits-vendor-econolite-signal-control-types` | Vendor-derived identities filling open extension slots. See [Extension model](06-extension-model.md). |
 | Augments | `yang/augments/*` | Net-new nodes in contributor namespaces. |
 
 Two structural rules keep the family healthy:
@@ -118,7 +119,7 @@ never forces services through a universal envelope: each service
 derives its *own* sub-bases, and the cross-service queries fall out of
 the identity graph rather than from shared message shape. (The same
 reasoning rejected a universal "fact envelope" — see the notification
-taxonomy section of [04 — Design decisions](04-design-decisions.md).)
+taxonomy section of [Design decisions](04-design-decisions.md).)
 
 **Identities, not enums, wherever vendors plausibly extend.** An enum
 is closed; an identity hierarchy is open. Event kinds, fault classes,
@@ -146,7 +147,7 @@ running end-to-end:
   augments.
 
 The governance side of this — namespaces, NoIs, the graduation rule —
-is [06 — Extension model](06-extension-model.md).
+is [Extension model](06-extension-model.md).
 
 ## Wire provenance is structural
 
@@ -257,8 +258,9 @@ The reference binding — what the in-tree implementation ships — is:
 
 - **Encoding:** per-event Protobuf, generated from the YANG via ygot.
 - **Envelope:** CloudEvents 1.0 binary mode.
-- **Transport:** NATS JetStream, with the subject hierarchy described
-  in the system architecture doc (in the source monorepo).
+- **Transport:** NATS JetStream, with the seven-token subject
+  hierarchy specified in the
+  [NATS reference profile](../bindings/nats/README.md).
 
 None of these is the only valid choice, and the model layer is
 deliberately ignorant of all three:
@@ -286,13 +288,12 @@ the same schema-registry snapshot. What any binding must preserve:
 
 A quick proof rather than an assertion. First, a `fault-raised`
 notification (module `openits-common-fault-events`) in the reference
-binding — the full envelope is in the system architecture doc's
-wire-format section (in the source monorepo):
+binding — NATS subject, CloudEvents attributes, and binary body:
 
 ```
 NATS subject:   openits.us-tx.txdot.d07.signal-control.i35-exit-214.fault-raised
 ce-type:        openits.signal-control.fault-raised.v1
-ce-dataschema:  https://schemas.openits.example.org/openits-common-fault-events/<revision>/
+ce-dataschema:  https://schemas.openits.vikasa.io/openits-common-fault-events/<revision>/
 NATS body:      [binary Protobuf — FaultRaised]
 ```
 
@@ -343,17 +344,18 @@ This separation is the central NTCIP lesson, restated: NTCIP bound its
 data model to SNMP, so the model aged with the transport. OpenITS
 picks a schema language with no transport opinion, then makes
 transport choices per deployment. See also
-[05 — Standards alignment](05-standards-alignment.md) ("YANG — schema
+[Standards alignment](05-standards-alignment.md) ("YANG — schema
 language, not transport").
 
 The pub/sub *interface* that documents all of this for a consumer —
-one channel/operation/message per ce-type — is `asyncapi.yaml` at the
-repository root, and it is generated in-repo (`make asyncapi`), not
-hand-maintained: the ce-type catalog is derived from the same
+one channel/operation/message per ce-type — is `asyncapi.yaml` under
+[`bindings/nats/`](../bindings/nats/README.md), and it is generated
+in-repo (`make asyncapi`), not hand-maintained: it is a NATS-profile
+artifact, and the ce-type catalog is derived from the same
 YANG event-kind taxonomy as the reference binding above, and each
 message's payload is that notification's actual JSON Schema, embedded
 directly rather than a URL pointer to the schema registry (see
-[04 — Design decisions](04-design-decisions.md#generated-asyncapi-not-hand-maintained)).
+[Design decisions](04-design-decisions.md#generated-asyncapi-not-hand-maintained)).
 A consumer reading `asyncapi.yaml` sees the same shape the `fault-raised`
 example above shows in JSON — there is no second, hand-copied
 description of the payload to drift out of sync with the schema.
@@ -391,10 +393,11 @@ its conventions:
 
 ## Related documents
 
-- **Architecture** (in the source monorepo) — how events move.
-- [04 — Design decisions](04-design-decisions.md) — why these choices.
-- [05 — Standards alignment](05-standards-alignment.md) — NTCIP / J2735 / ARC-IT mapping.
-- [06 — Extension model](06-extension-model.md) — augments, deviations, graduation.
-- [08 — Capability architecture](08-capability-architecture.md) — model by function; thin device profiles compose capability modules.
-- [09 — Coverage / scope and roadmap](09-coverage-scope.md) — ARC-IT service packages covered, planned, and out of scope.
-- [YANG reference-citation conventions](reference/yang-reference-conventions.md) — how modules cite normative sources.
+- [Conformance](07-conformance.md) — the subject hierarchy and
+  envelope a conforming emitter must produce.
+- [Design decisions](04-design-decisions.md) — why these choices.
+- [Standards alignment](05-standards-alignment.md) — NTCIP / J2735 / ARC-IT mapping.
+- [Extension model](06-extension-model.md) — augments, deviations, graduation.
+- [Capability architecture](08-capability-architecture.md) — model by function; thin device profiles compose capability modules.
+- [Coverage / scope and roadmap](09-coverage-scope.md) — ARC-IT service packages covered, planned, and out of scope.
+- [YANG authoring & citation conventions](reference/yang-reference-conventions.md) — `must` doctrine, config/state idiom, identity-vs-enum, and how modules cite normative sources.
