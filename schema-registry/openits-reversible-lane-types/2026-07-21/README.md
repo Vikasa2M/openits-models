@@ -2,4 +2,4 @@
 
 Immutable snapshot of the `openits-reversible-lane-types` YANG module at revision 2026-07-21.
 Referenced from openits CloudEvents `ce-dataschema` URLs of the form
-`https://schemas.openits.vikasa.io/openits-reversible-lane-types/2026-07-21/`.
+`https://schemas.open-its.org/openits-reversible-lane-types/2026-07-21/`.

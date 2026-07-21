@@ -314,7 +314,7 @@ for m in "${MODULES[@]}"; do
 
 Immutable snapshot of the \`${m}\` YANG module at revision ${rev}.
 Referenced from openits CloudEvents \`ce-dataschema\` URLs of the form
-\`https://schemas.openits.vikasa.io/${m}/${rev}/\`.
+\`https://schemas.open-its.org/${m}/${rev}/\`.
 EOF
 
     echo "Wrote ${dest}"

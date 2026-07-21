@@ -2,4 +2,4 @@
 
 Immutable snapshot of the `openits-vendor-trafficvision-perception-types` YANG module at revision 2026-07-07.
 Referenced from openits CloudEvents `ce-dataschema` URLs of the form
-`https://schemas.openits.vikasa.io/openits-vendor-trafficvision-perception-types/2026-07-07/`.
+`https://schemas.open-its.org/openits-vendor-trafficvision-perception-types/2026-07-07/`.

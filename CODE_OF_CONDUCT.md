@@ -50,12 +50,10 @@ an individual is officially representing the community in public spaces.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the community leaders responsible for enforcement — the
-maintainers team, [@Vikasa2M/openits-maintainers](https://github.com/orgs/Vikasa2M/teams/openits-maintainers).
-Open an issue in this repository asking a maintainer to arrange a private
-channel (you do not need to include details in the public issue), or use
-GitHub's [Report abuse](https://github.com/contact/report-abuse) for
-platform-level violations. All complaints will be reviewed and
+reported to the community leaders responsible for enforcement at
+[@Vikasa2M/openits-maintainers](https://github.com/orgs/Vikasa2M/teams/openits-maintainers)
+(open an issue asking a maintainer to arrange a private channel — details
+are not required in the public issue). All complaints will be reviewed and
 investigated promptly and fairly. All community leaders are obligated to respect
 the privacy and security of the reporter of any incident.
 

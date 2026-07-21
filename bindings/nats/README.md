@@ -66,7 +66,7 @@ encoded payload. The required header set:
 | `ce-source` | `urn:openits:<entity-kind>:<region>:<agency>:<unit>:<id>` — a well-formed OpenITS source URN identifying the emitting device or service instance. |
 | `ce-id` | Event identifier, unique within the source. The reference binding derives it deterministically from event content so a retried publish carries the **same** `ce-id`, letting consumers deduplicate without coordination. |
 | `ce-time` | RFC 3339 / ISO 8601 timestamp. |
-| `ce-dataschema` | URL of the immutable schema-registry snapshot the body validates against, e.g. `https://schemas.openits.vikasa.io/openits-common-fault-events/<revision>/`. |
+| `ce-dataschema` | URL of the immutable schema-registry snapshot the body validates against, e.g. `https://schemas.open-its.org/openits-common-fault-events/<revision>/`. |
 | `ce-datacontenttype` | Media type of the body — `application/protobuf` for the reference binding's per-event Protobuf encoding. |
 
 `traceparent` (W3C Trace Context) is optional but recommended.

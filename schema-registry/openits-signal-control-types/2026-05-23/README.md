@@ -2,4 +2,4 @@
 
 Immutable snapshot of the `openits-signal-control-types` YANG module at revision 2026-05-23.
 Referenced from openits CloudEvents `ce-dataschema` URLs of the form
-`https://schemas.openits.vikasa.io/openits-signal-control-types/2026-05-23/`.
+`https://schemas.open-its.org/openits-signal-control-types/2026-05-23/`.

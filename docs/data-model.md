@@ -293,7 +293,7 @@ binding — NATS subject, CloudEvents attributes, and binary body:
 ```
 NATS subject:   openits.us-tx.txdot.d07.signal-control.i35-exit-214.fault-raised
 ce-type:        openits.signal-control.fault-raised.v1
-ce-dataschema:  https://schemas.openits.vikasa.io/openits-common-fault-events/<revision>/
+ce-dataschema:  https://schemas.open-its.org/openits-common-fault-events/<revision>/
 NATS body:      [binary Protobuf — FaultRaised]
 ```
 

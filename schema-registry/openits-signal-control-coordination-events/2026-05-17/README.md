@@ -2,4 +2,4 @@
 
 Immutable snapshot of the `openits-signal-control-coordination-events` YANG module at revision 2026-05-17.
 Referenced from openits CloudEvents `ce-dataschema` URLs of the form
-`https://schemas.openits.vikasa.io/openits-signal-control-coordination-events/2026-05-17/`.
+`https://schemas.open-its.org/openits-signal-control-coordination-events/2026-05-17/`.
