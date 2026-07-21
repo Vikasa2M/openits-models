@@ -1,7 +1,7 @@
 augment: example-signal-control-vehicle-counts
 revision: 2026-04-27
 implementer: example-org
-implementer_contact: noi@openits.vikasa.io
+implementer_contact: https://github.com/Vikasa2M/openits-models/issues
 implementer_type: conformance-reference
 deployment_scale: test
 first_observed: 2026-04-27

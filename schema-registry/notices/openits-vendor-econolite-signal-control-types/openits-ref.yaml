@@ -1,7 +1,7 @@
 augment: openits-vendor-econolite-signal-control-types
 revision: 2026-05-17
 implementer: openits-ref
-implementer_contact: noi@openits.vikasa.io
+implementer_contact: https://github.com/Vikasa2M/openits-models/issues
 implementer_type: conformance-reference
 deployment_scale: test
 first_observed: 2026-05-17

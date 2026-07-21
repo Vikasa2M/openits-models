@@ -79,7 +79,7 @@ func TestValidateDeviations_syntheticDeviateDeleteMust_isLoosening(t *testing.T)
   import openits-signal-control { prefix openits-sc; }
 
   organization "test";
-  contact "test@vikasa.io";
+  contact "test-org";
   description
     "Synthetic deviation for check-deviations tests: deletes the base
      yellow-change must, which loosens the standard.";
@@ -139,7 +139,7 @@ func TestValidateDeviations_unresolvableTarget_isErrorFinding(t *testing.T) {
   import openits-signal-control { prefix openits-sc; }
 
   organization "test";
-  contact "test@vikasa.io";
+  contact "test-org";
   description "Synthetic deviation targeting a node that does not exist.";
 
   revision 2026-07-10 {

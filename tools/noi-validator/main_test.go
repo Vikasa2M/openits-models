@@ -38,7 +38,7 @@ func writeNoI(t *testing.T, dir, augment, implementer, body string) string {
 const validBody = `augment: test-augment
 revision: 2026-07-08
 implementer: ref-org
-implementer_contact: ref@vikasa.io
+implementer_contact: https://github.com/ref-org
 implementer_type: conformance-reference
 first_observed: 2026-07-08
 `
@@ -56,7 +56,7 @@ func TestValidateFile_valid(t *testing.T) {
 // silently ignored.
 func TestValidateFile_unknownFieldRejected(t *testing.T) {
 	schema := realSchema(t)
-	body := validBody + "implementer_contct: oops@vikasa.io\n" // typo'd key
+	body := validBody + "implementer_contct: https://github.com/oops\n" // typo'd key
 	p := writeNoI(t, t.TempDir(), "test-augment", "ref-org", body)
 	errs := validateFile(schema, p)
 	if len(errs) == 0 {

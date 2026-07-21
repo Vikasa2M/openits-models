@@ -109,7 +109,7 @@ func TestExtractImports(t *testing.T) {
   }
 
   organization "test";
-  contact "test@vikasa.io";
+  contact "test-org";
   description
     "Prose that mentions the word import but is not a statement.";
 
@@ -155,7 +155,7 @@ func TestCheckDir_compliantAndViolating(t *testing.T) {
   import openits-good-types { prefix openits-good-types; }
 
   organization "test";
-  contact "test@vikasa.io";
+  contact "test-org";
   description "Compliant fixture.";
 
   revision 2026-07-14 {
@@ -172,7 +172,7 @@ func TestCheckDir_compliantAndViolating(t *testing.T) {
   import openits-bad { prefix openits-bad; }
 
   organization "test";
-  contact "test@vikasa.io";
+  contact "test-org";
   description "Violating fixture: imports its service core.";
 
   revision 2026-07-14 {
@@ -188,7 +188,7 @@ func TestCheckDir_compliantAndViolating(t *testing.T) {
   import openits-bad { prefix openits-bad; }
 
   organization "test";
-  contact "test@vikasa.io";
+  contact "test-org";
   description "Not an events module: must be ignored even though it also imports a core.";
 
   revision 2026-07-14 {
@@ -257,7 +257,7 @@ func TestCheckDir_rsuEventsGrandfatherRemoved(t *testing.T) {
   import openits-rsu { prefix openits-rsu; }
 
   organization "test";
-  contact "test@vikasa.io";
+  contact "test-org";
   description "Fixture: the two formerly-grandfathered imports plus a bare service core.";
 
   revision 2026-07-14 {
@@ -276,7 +276,7 @@ func TestCheckDir_rsuEventsGrandfatherRemoved(t *testing.T) {
   import openits-v2x-radio { prefix openits-v2x-radio; }
 
   organization "test";
-  contact "test@vikasa.io";
+  contact "test-org";
   description "Fixture: same import, different module.";
 
   revision 2026-07-14 {

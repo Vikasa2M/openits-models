@@ -29,7 +29,7 @@ func writeAugment(t *testing.T, dir, fileBase, moduleName, importPrefix, augment
   }
 
   organization "test";
-  contact "test@vikasa.io";
+  contact "test-org";
   description "Synthetic augment for check-augment-collisions tests.";
 
   revision 2026-07-10 {

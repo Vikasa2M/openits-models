@@ -185,7 +185,7 @@ submitted as a PR to
 augment: siemens-signal-control-vehicle-counts
 revision: 2026-04-19
 implementer: caltrans
-implementer_contact: noi@vikasa.io
+implementer_contact: https://github.com/caltrans
 implementer_type: operator
 deployment_scale: 1200
 first_observed: 2026-08-12

@@ -34,8 +34,13 @@ properties:
 
   implementer_contact:
     type: string
-    format: email
-    description: Email contact for graduation review correspondence.
+    format: uri
+    pattern: '^https://'
+    description: >
+      URL point of contact for graduation review correspondence —
+      typically the implementer's GitHub org/user page or an issue
+      tracker. The OpenITS project itself is reached via this
+      repository's issues.
 
   implementer_type:
     type: string
