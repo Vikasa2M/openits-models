@@ -48,15 +48,6 @@ See:
 go get github.com/Vikasa2M/openits-models@latest
 ```
 
-While this repository is private, Go consumers need the standard
-private-module configuration — skip the public proxy/checksum services and
-authenticate git over SSH:
-
-```sh
-export GOPRIVATE=github.com/Vikasa2M
-git config --global url."git@github.com:".insteadOf "https://github.com/"
-```
-
 ```go
 import (
     openitspb "github.com/Vikasa2M/openits-models/pkg/proto/openits/v1"
