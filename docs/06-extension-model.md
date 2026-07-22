@@ -142,6 +142,14 @@ Docker-based tightening proof (a `must`-violating fixture that the base
 accepts but base+deviation must reject) is the empirical backstop for
 those cases.
 
+**Vendor implementation deviations are a different animal.** The
+deviations in this repository refine the *standard* for an agency and
+may only tighten. A vendor declaring that its product does not
+implement part of the model writes an *implementation* deviation
+module — `deviate not-supported`, vendor namespace, shipped with the
+product, never merged here. That lane is specified in the
+[vendor implementation guide](10-vendor-implementation.md).
+
 ### Tier 4 — Proprietary
 
 **Path.** Outside `yang/` entirely; lives in the vendor's own

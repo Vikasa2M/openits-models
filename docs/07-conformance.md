@@ -126,6 +126,12 @@ implementation correctly, on the right subject, with the right
 envelope, with a parseable payload." That's the floor. Augment
 and deviation profiles layer on top.
 
+A vendor whose hardware genuinely lacks part of the core surface
+declares it with a vendor implementation-deviation module and cites
+that module in its claim; the
+[vendor implementation guide](10-vendor-implementation.md) specifies
+the mechanics and the floor that must not be deviated.
+
 ## How to claim conformance
 
 The conformance kit lives in `tools/conformance/` in the
