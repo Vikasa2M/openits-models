@@ -1,0 +1,10 @@
+{
+  "openits-signal-control-events:tsp-event": {
+    "kind": "openits-signal-control-types:tsp-check-in",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence": "1",
+    "tsp-number": 1,
+    "priority-class": 9,
+    "occurred-at": "2026-07-11T14:05:00Z"
+  }
+}

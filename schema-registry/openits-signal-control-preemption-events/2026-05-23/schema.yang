@@ -1,0 +1,180 @@
+module openits-signal-control-preemption-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:signal-control-preemption-events";
+  prefix openits-sc-preempt;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-signal-control-types {
+    prefix openits-sc-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Signal-controller preemption stage notifications: preempt-call
+     lifecycle, track-clearance, dwell-service, exit-interval, and
+     the high-resolution preemption-event detail stream.";
+
+  revision 2026-05-23 {
+    description
+      "Two same-day edits:
+       - Reference preemption-type via openits-sc-types: rather than
+         openits-sc:. Typedef migrated to openits-signal-control-types.
+         Drop the openits-signal-control import since this module no
+         longer references anything from the service core.
+       - Add the preemption-cleared notification as the companion to
+         preemption-activated. Closes the gap where the CE catalog
+         declared openits.signal-control.preemption-cleared.v1 with
+         no YANG schema home.";
+  }
+  revision 2026-05-17 {
+    description
+      "Initial revision. Hosts the preemption-activated and
+       preemption-event notifications migrated from
+       the signal-control notifications companion module@2026-05-15.";
+    reference "ATSPM Indiana enumeration codes 101-111, 116 (preemption stages).";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification preemption-activated {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> TMC : preemption activity";
+    description
+      "A preemption became active on the controller. The 'kind'
+       identityref names the specific preemption stage (call-on,
+       gate-down, dwell-service, etc.); 'wire-source' carries the
+       original wire identifier when decoded from a wire vocabulary.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-preemption-event-kind; }
+      mandatory true;
+      description "Specific preemption-stage class.";
+    }
+
+    leaf source-device-id {
+      type openits-types:device-id;
+      mandatory true;
+      description "Controller this preemption pertains to.";
+    }
+
+    leaf type {
+      type openits-sc-types:preemption-type;
+      description
+        "Source class of the preemption (rail, EV, transit-priority,
+         freight-priority). When unknown, leave absent.";
+    }
+
+    leaf source-id {
+      type string;
+      description "Identifier of the requestor (vehicle, rail-gate, etc.).";
+    }
+
+    leaf occurred-at {
+      type yang:date-and-time;
+      mandatory true;
+      description
+        "Wall-clock time the preemption activated at the controller.";
+    }
+
+    uses openits-types:wire-source;
+  }
+
+  notification preemption-cleared {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> TMC : preemption activity";
+    description
+      "An active preemption ended on the controller. Companion to
+       preemption-activated; emitted on the exit-interval / force-off
+       transition that returns the controller to normal sequencing.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-preemption-event-kind; }
+      mandatory true;
+      description "Specific preemption-stage class for the clear transition (exit-interval, force-off, call-off).";
+    }
+
+    leaf source-device-id {
+      type openits-types:device-id;
+      mandatory true;
+      description "Controller this preemption pertains to.";
+    }
+
+    leaf type {
+      type openits-sc-types:preemption-type;
+      description
+        "Source class of the preemption that just cleared (rail, EV,
+         transit-priority, freight-priority). Matches the type from
+         the corresponding preemption-activated emission.";
+    }
+
+    leaf source-id {
+      type string;
+      description "Identifier of the requestor from the corresponding preemption-activated.";
+    }
+
+    leaf occurred-at {
+      type yang:date-and-time;
+      mandatory true;
+      description
+        "Wall-clock time the preemption cleared at the controller.";
+    }
+
+    uses openits-types:wire-source;
+  }
+
+  notification preemption-event {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> ATSPM / TMC : preemption activity";
+    description
+      "High-resolution preemption stage transition from the controller's
+       HR log. Collapses ATSPM codes 101-111 + 116 into one notification
+       keyed on the preempt-number + stage; 'kind' identityref names the
+       specific stage.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-preemption-event-kind; }
+      mandatory true;
+      description "Specific preemption-stage class for this transition.";
+    }
+    leaf source-device-id {
+      type openits-types:device-id;
+      mandatory true;
+      description "Controller emitting the preemption-stage transition.";
+    }
+    leaf preempt-number { type uint32; description "Preempt slot number on the controller (1-based)."; }
+    leaf stage {
+      type enumeration {
+        enum unspecified; enum advance-warning; enum call-on; enum gate-down;
+        enum call-off; enum entry-started; enum track-clearance; enum dwell-service;
+        enum link-active-on; enum link-active-off; enum max-presence-exceeded;
+        enum exit-interval; enum force-off;
+      }
+      description
+        "Preemption stage: advance-warning, call-on/off, gate-down,
+         entry-started, track-clearance, dwell-service, link-active
+         on/off, max-presence-exceeded, exit-interval, force-off.";
+    }
+    leaf source-id { type string; description "Free-form preempt source id (EVP unit id, etc.)."; }
+    leaf occurred-at {
+      type yang:date-and-time;
+      mandatory true;
+      description "Wall-clock time of the preemption-stage transition.";
+    }
+
+    uses openits-types:wire-source;
+  }
+}

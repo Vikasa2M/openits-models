@@ -1,0 +1,57 @@
+{
+  "generated": "2026-04-18",
+  "source": "Hand-curated from arc-it.net 9.1 service-package pages. Flow names match the ARC-IT physical flow label.",
+  "service_packages": [
+    {
+      "id": "TI01",
+      "name": "Traffic Signal Control",
+      "flows": [
+        {"flow": "TMC -> Roadway Signal Controller : signal control plan"},
+        {"flow": "TMC -> Roadway Signal Controller : signal coordination plan"},
+        {"flow": "Roadway Signal Controller -> TMC : signal system operational status"},
+        {"flow": "Roadway Signal Controller -> TMC : preemption activity"},
+        {"flow": "Vehicle/Pedestrian -> Roadway Signal Controller : vehicle detection"},
+        {"flow": "Emergency Vehicle / Rail -> Roadway Signal Controller : preemption request"},
+        {"flow": "Roadway Signal Controller -> Maintenance : signal fault data"},
+        {"flow": "TMC -> Roadway Signal Controller : signal timing update"}
+      ]
+    },
+    {
+      "id": "TI06",
+      "name": "Traffic Information Dissemination",
+      "flows": [
+        {"flow": "TMC -> Roadway Equipment : traffic information"},
+        {"flow": "Roadway Equipment -> TMC : roadway equipment status"},
+        {"flow": "Roadway Equipment -> Maintenance : equipment maintenance status"}
+      ]
+    },
+    {
+      "id": "MC01",
+      "name": "Environmental Monitoring Station",
+      "flows": [
+        {"flow": "Environmental Sensors -> TMC : road weather information"},
+        {"flow": "Environmental Sensors -> Maintenance : equipment maintenance status"}
+      ]
+    },
+    {
+      "id": "TI03",
+      "name": "Traffic Metering",
+      "flows": [
+        {"flow": "TMC -> Roadway Equipment : traffic information"},
+        {"flow": "Roadway Equipment -> TMC : roadway equipment status"},
+        {"flow": "Roadway Equipment -> Maintenance : equipment maintenance status"}
+      ]
+    },
+    {
+      "id": "VS06",
+      "name": "Infrastructure-Based Safety Broadcast (RSU)",
+      "flows": [
+        {"flow": "Vehicle -> Roadside Equipment : signal request message"},
+        {"flow": "Roadside Equipment -> TMC : roadside equipment status"},
+        {"flow": "Roadside Equipment -> Maintenance : equipment maintenance status"},
+        {"flow": "Roadside Equipment -> Security Management : credential status"},
+        {"flow": "Roadside Equipment -> Security Management : security event"}
+      ]
+    }
+  ]
+}

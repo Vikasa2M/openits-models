@@ -1,0 +1,58 @@
+{
+  "openits-ramp-metering:ramp-meter": {
+    "config": {
+      "id": "i405-nb-western-ave",
+      "road-reference": "I-405 NB @ Western Ave on-ramp"
+    },
+    "plans": {
+      "plan": [
+        {
+          "plan-id": 2,
+          "name": "am-peak",
+          "release-rate-vph": 720,
+          "headway-s": "5.0",
+          "vehicles-per-green": 1,
+          "queue-override-threshold-vehicles": 25
+        }
+      ]
+    },
+    "schedule": {
+      "day-plan": [
+        {
+          "day-plan-id": 1,
+          "name": "weekday",
+          "action": [
+            { "start-time": "06:00:00", "plan-id": 2 }
+          ]
+        }
+      ],
+      "schedule-entry": [
+        {
+          "schedule-id": 1,
+          "days-of-week": ["monday", "tuesday", "wednesday", "thursday", "friday"],
+          "day-plan": 1
+        }
+      ],
+      "state": {
+        "active-day-plan-id": 1,
+        "next-action-at": "2026-04-20T06:00:00Z"
+      }
+    },
+    "traffic-responsive": {
+      "config": {
+        "algorithm": "openits-ramp-metering-types:metering-algorithm-alinea",
+        "band": [
+          {
+            "band-id": 1,
+            "min-occupancy-pct": 15,
+            "max-occupancy-pct": 25,
+            "plan-id": 2
+          }
+        ]
+      },
+      "state": {
+        "active-band-id": 1
+      }
+    }
+  }
+}

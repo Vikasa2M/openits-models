@@ -1,0 +1,15 @@
+augment: trafficvision-perception-incident-media
+revision: 2026-07-07
+implementer: openits-ref
+implementer_contact: https://github.com/Vikasa2M/openits-models/issues
+implementer_type: conformance-reference
+deployment_scale: test
+first_observed: 2026-07-08
+notes: >
+  In-repo reference NoI for the trafficvision-perception-incident-media
+  augment (snapshot / clip media references on TrafficVision
+  incidents). Core incident detection rides on openits-perception;
+  this augment carries only the vendor-local media paths. Real
+  TrafficVision adoption files its own NoI under this directory with
+  implementer_type: vendor.
+proof_url: https://github.com/Vikasa2M/openits-models/blob/main/yang/augments/trafficvision-perception-incident-media.yang

@@ -1,0 +1,103 @@
+module openits-v2x-radio-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:v2x-radio-types";
+  prefix openits-v2x-radio-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+  description
+    "Shared V2X radio types: the DSRC channel-number typedef and the
+     channel-fault-type identity vocabulary. Split into a -types module so
+     event modules (openits-rsu-events) and the capability core
+     (openits-v2x-radio) share one vocabulary without the events module
+     importing the capability core.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.2.0";
+
+  revision 2026-07-21 {
+    description
+      "V2X/RSU review fixes (types). Absorb the radio-fault-type identity
+       family from the openits-v2x-radio capability core, so an event/state
+       consumer of radio faults depends on -types, not the core. Also
+       admits a us-band-plan deviation restriction. Add the channel-ref
+       grouping (channel-id + dsrc-channel-number) for reuse by RSU
+       channel-scoped events. Additive.";
+    reference "IEEE 1609.4.";
+  }
+  revision 2026-07-16 {
+    description
+      "Radio regulatory compliance: tighten dsrc-channel to the explicit
+       legal-channel union (even DSRC channels + the 20 MHz
+       175/183) instead of a 172..184 span that admitted off-channel odd
+       values, and document the FCC 20-164 band-plan reallocation.";
+    reference "FCC 47 CFR / FCC 20-164; IEEE 1609.4.";
+  }
+  revision 2026-07-15 {
+    description
+      "Initial revision. Extract dsrc-channel and the channel-fault-type
+       identity family from openits-v2x-radio so openits-rsu-events depends
+       on shared types instead of the capability core.";
+  }
+
+  typedef dsrc-channel {
+    type uint8 {
+      range "172 | 174 | 175 | 176 | 178 | 180 | 182 | 183 | 184";
+    }
+    description
+      "5.9 GHz ITS-band channel number. The valid set is the even DSRC
+       channels 172, 174, 176, 178, 180, 182, 184 plus the two 20 MHz
+       channels 175 and 183; a range union of the individual legal values
+       (not a 172..184 span) so off-channel odd values are rejected.
+       NOTE the FCC 20-164 reallocation (2020) reassigned the lower 45 MHz
+       of this band to unlicensed use and retained the upper 30 MHz
+       (channels 180/182/184, and the 20 MHz 183) for ITS C-V2X; deployments
+       must follow the current band plan for their jurisdiction.";
+    reference "FCC 47 CFR / FCC 20-164; IEEE 1609.4; SAE J2945.";
+  }
+
+  grouping channel-ref {
+    description
+      "Technology-neutral reference to one radio channel: the opaque
+       channel-id key plus the optional DSRC channel number. Shared by the
+       RSU event module's channel-scoped notifications so the pair is defined
+       once.";
+    leaf channel-id {
+      type string;
+      description
+        "Technology-neutral channel identifier; correlates to the v2x-radio
+         channels/channel key. Opaque for C-V2X.";
+    }
+    leaf dsrc-channel-number {
+      type dsrc-channel;
+      description
+        "DSRC channel number for a DSRC channel; absent for C-V2X channels.";
+    }
+  }
+
+  identity channel-fault-type         { description "Base identity for channel fault types"; }
+  identity channel-fault-none         { base channel-fault-type; description "No fault"; }
+  identity channel-fault-congestion   { base channel-fault-type; description "Channel congestion"; }
+  identity channel-fault-interference { base channel-fault-type; description "Interference detected"; }
+  identity channel-fault-disabled     { base channel-fault-type; description "Channel disabled"; }
+  identity channel-fault-no-signal    { base channel-fault-type; description "No signal on channel"; }
+  identity channel-fault-tx-failure      { base channel-fault-type; description "Transmit failure on this channel"; }
+  identity channel-fault-rx-failure      { base channel-fault-type; description "Receive failure on this channel"; }
+  identity channel-fault-high-error-rate { base channel-fault-type; description "High error rate on this channel"; }
+
+  identity radio-fault-type        { description "Base identity for radio fault types"; }
+  identity radio-fault-none        { base radio-fault-type; description "No fault"; }
+  identity radio-fault-tx-failure  { base radio-fault-type; description "Transmit failure"; }
+  identity radio-fault-rx-failure  { base radio-fault-type; description "Receive failure"; }
+  identity radio-fault-antenna     { base radio-fault-type; description "Antenna fault"; }
+  identity radio-fault-pll-unlock  { base radio-fault-type; description "PLL unlock"; }
+  identity radio-fault-temperature { base radio-fault-type; description "Over-temperature"; }
+  identity radio-fault-power-amp   { base radio-fault-type; description "Power amplifier fault"; }
+}

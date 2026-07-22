@@ -1,0 +1,12 @@
+{
+  "openits-cctv-events:ptz-preset-recalled": {
+    "kind": "openits-cctv-types:cctv-ptz-preset-recalled",
+    "source-device-id": "cctv-i35-mm214",
+    "occurred-at": "2026-07-17T14:05:00Z",
+    "sequence": "1",
+    "preset-id": 1,
+    "preset-name": "NB approach",
+    "recalled-by": "op-tmc-07",
+    "via-tour": false
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "in-conflict-flash": {
+      "type": "boolean"
+    },
+    "last-mode-change": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "mode": {
+      "enum": [
+        "coordinated",
+        "flash",
+        "free",
+        "manual",
+        "normal",
+        "off",
+        "preempt",
+        "priority"
+      ],
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "uptime-seconds": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "occurred-at",
+    "source-device-id"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,11 @@
+# Default owners for everything in the repo. CODEOWNERS entries must be
+# GitHub users or teams (@org/team) with write access — an org name alone
+# is not a valid owner.
+* @Vikasa2M/openits-maintainers
+
+# Generated artifacts — reviewers should confirm these changed only as a
+# result of a YANG edit + `make gen`, never hand-edited.
+/pkg/proto/   @Vikasa2M/openits-maintainers
+/pkg/yang/    @Vikasa2M/openits-maintainers
+/bindings/nats/asyncapi.yaml @Vikasa2M/openits-maintainers
+/field-numbers.yaml @Vikasa2M/openits-maintainers

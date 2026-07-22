@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package openits.perception.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/v1;openitspb";
+
+import "google/protobuf/timestamp.proto";
+
+message ZoneIncidentCleared {
+  string incident_id = 1;
+  string zone_id = 2;
+  google.protobuf.Timestamp cleared_at = 3;
+}
+
+message ZoneIncidentDetected {
+  string incident_id = 1;
+  string zone_id = 2;
+  string type = 3;
+  OpenitsPerceptionEventsFaultSeverity severity = 4;
+  uint32 track_id = 5;
+  string object_class = 6;
+  string speed_kmh = 9;
+  uint32 confidence = 10;
+  string latitude = 7;
+  string longitude = 8;
+}
+
+enum OpenitsPerceptionEventsFaultSeverity {
+  OPENITS_PERCEPTION_EVENTS_FAULT_SEVERITY_INFO = 0;
+  OPENITS_PERCEPTION_EVENTS_FAULT_SEVERITY_WARNING = 1;
+  OPENITS_PERCEPTION_EVENTS_FAULT_SEVERITY_MINOR = 2;
+  OPENITS_PERCEPTION_EVENTS_FAULT_SEVERITY_MAJOR = 3;
+  OPENITS_PERCEPTION_EVENTS_FAULT_SEVERITY_CRITICAL = 4;
+}
+
+message ZoneIntervalReport {
+  repeated Zone zone = 1;
+}
+
+message Zone {
+  string zone_id = 1;
+  google.protobuf.Timestamp interval_start = 2;
+  uint32 interval_duration_s = 3;
+  string average_speed_kmh = 4;
+  repeated ClassCount class_count = 5;
+}
+
+message ClassCount {
+  string class = 1;
+  uint32 count = 2;
+}
+

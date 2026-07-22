@@ -1,0 +1,26 @@
+{
+  "openits-signal-control:signal-controller": {
+    "config": { "id": "c1", "name": "c1" },
+    "phases": { "phase": [
+      { "phase-number": 2, "config": { "phase-number": 2, "ring": 1, "barrier": 1,
+        "timing": { "min-green": "5.0", "max-green": "45.0", "yellow-change": "3.5", "red-clear": "1.5" } } }
+    ] },
+    "priority": {
+      "strategy": [
+        { "strategy-id": 1, "config": {
+          "strategy-id": 1,
+          "priority-class": "transit",
+          "max-early-green-seconds": 10,
+          "max-green-extension-seconds": 15,
+          "reservice-interval-seconds": 120,
+          "served-phases": [2] } }
+      ],
+      "state": {
+        "active-request": [
+          { "request-id": "prs-4471", "priority-type": "transit",
+            "vehicle-id": "bus-1029", "stage": "granted", "strategy-id": 1 }
+        ]
+      }
+    }
+  }
+}

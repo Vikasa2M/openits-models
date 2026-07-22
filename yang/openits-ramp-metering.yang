@@ -1,0 +1,964 @@
+module openits-ramp-metering {
+  yang-version 1.1;
+  namespace "urn:openits:yang:ramp-metering";
+  prefix openits-rm;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-nema-common {
+    prefix openits-nema;
+  }
+
+  import openits-ramp-metering-types {
+    prefix openits-rm-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "YANG data model for freeway entrance-ramp metering devices.
+
+     Transport-independent replacement for NTCIP 1207 v02, aligned
+     with ARC-IT 9.1 service package TI03 (Traffic Metering).
+
+     Ramp meters share NEMA phase-timing vocabulary with signal
+     controllers; the shared grouping lives in openits-nema-common
+     so the MUTCD minimums stay in one place across services.
+     Ramp-meter-specific constructs (release rate, headway, queue
+     override, per-lane operation) are modelled here.
+
+     Copyright (c) 2026.  Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.9.0";
+
+  revision 2026-07-21 {
+    description
+      "Lane-count / coordination-aware rate-headway math: the
+       headway-consistency and phase-feasibility musts now use the
+       served (non-bypass) lane count and lanes/release-coordination
+       so a dual-lane simultaneous or alternate plan is not wrongly
+       rejected. BREAKING(pre-v1): plans/plan/release-rate-vph must be > 0
+       (rest-in-red is a mode, not a zero-rate plan). Add schedule
+       (day-plan/schedule-entry reusing the DMS idiom), traffic-responsive
+       (algorithm + occupancy/flow band table), and a time-of-day typedef;
+       add the metering-algorithm identity family in -types. Add
+       occupancy-axis override hysteresis
+       (queue-override-occupancy-clear-threshold-pct) +
+       queue-override-persistence-s (both axes). Add meter-level
+       mainline-detectors (advance/merge) so a lane-less mainline loop has a
+       home; extract detector-readings grouping. Set active-plan-id
+       (meter-control-config grouping, instantiated on config+state) leafref
+       require-instance false. BREAKING(pre-v1): move lanes/release-coordination
+       into lanes/config + lanes/state (paired idiom). Add
+       advance-warning-sign/config/aws-fault-action (fail-safe default
+       suspend-metering); add AWS-interlock default-tree guard comment. Add
+       max>=min release-rate must on lanes/lane/config (config-side only).
+       NITs: add explicit enum ordinals to head-state, sequence-phase, and the
+       advance-warning-sign lamp-status; convert detector-role inline
+       comments to per-enum descriptions; collapse the three same-date
+       2026-07-13 revision statements into one.
+       - command-source enum -> identityref(openits-types:control-source). BREAKING value strings.";
+    reference "NTCIP 1207 v02; MUTCD; ARC-IT TI03.";
+  }
+  revision 2026-07-16 {
+    description
+      "Traffic-responsive + minors (Cut 2d): add lanes/release-coordination
+       (simultaneous / alternate) to model dual-lane alternate release (the
+       lane-dependency arrangement); add lane-config/bypass-operation
+       (free-flow / metered) so an HOV bypass is more than presence-only.
+       Per-lane rates + command source (Cut 2c): add per-lane
+       min/max-release-rate-vph and vehicles-per-green to lane-config
+       (resolving the per-lane vs per-meter rate ambiguity; the plan rate
+       is the meter aggregate, the lane bounds are per-lane) plus a per-lane
+       current-release-rate-vph; replace the lanes/lane/state green-active
+       boolean with a head-state enum (dark/red/green/yellow) so dark
+       (meter off) is distinguishable from red (holding); add a
+       control command-source (central/schedule/local) capturing the
+       NTCIP 1207 control dimension. Pre-1.0 breaking: green-active removed.
+       Queue-override hysteresis (Cut 2b): add a plan-level
+       queue-override-clear-threshold-vehicles (deactivation threshold,
+       must be below the activation threshold) so the flush override does
+       not flap on a queue hovering at one threshold; add
+       queue-override-rate-vph (flush rate) and an optional
+       queue-override-occupancy-threshold-pct activation trigger.
+       Rate/timing correctness (Cut 2a): bound headway-s to the physical
+       metering range (2..15 s); add plan/vehicles-per-green and a
+       consistency must tying headway to release-rate-vph
+       (headway ~= 3600 * vehicles-per-green / release-rate-vph, +/-15%);
+       fix the plan phase-timing feasibility must to include min-green
+       (min feasible cycle = min-green + yellow + red-clear <= headway,
+       previously omitted min-green and certified infeasible cycles); add
+       the 'advance' detector-role (far-upstream traffic-responsive input,
+       previously advertised in prose but missing from the enum).";
+    reference "NTCIP 1207 v02; MUTCD; ARC-IT TI03.";
+  }
+  revision 2026-07-15 {
+    description
+      "Ramp-meter safety surface (cut 1): add startup/shutdown sequencing
+       (advance-warning + initial steady-green before first red, optional
+       shutdown flush) with an observable sequence-phase; add an
+       advance-warning-sign container (commanded enable + lamp-status and
+       aws-fault-while-metering state) and a metering-requires-AWS
+       interlock must; split the display axis from the operating mode via
+       non-metering-display (dark vs rest-in-green). BREAKING (pre-v1):
+       the new interlock must rejects a formerly-valid metering-mode
+       config whose advance-warning sign is not enabled.";
+    reference
+      "NTCIP 1207 v02 (startup/shutdown objects); MUTCD advance-warning
+       signing; ARC-IT 9.1 TI03.";
+  }
+  revision 2026-07-14 {
+    description
+      "Cut 3c (events layering): move typedefs release-rate-vph and
+       queue-vehicles to openits-ramp-metering-types so the events
+       module imports -types, not this core; the core's own leaf
+       types (manual-release-rate-vph, current-release-rate-vph, the
+       plan's release-rate-vph, queue-length-current-vehicles,
+       queue-override-threshold-vehicles) are re-prefixed to
+       openits-rm-types: accordingly. Wire-neutral (a typedef emits
+       no proto); pre-v1 consumers repoint the prefix.";
+  }
+  revision 2026-07-13 {
+    description
+      "Adopt the shared openits-types:fault-entry grouping in the
+       config-false faults list, replacing the inline fault-id +
+       severity + description + first-observed leaves. The
+       service-specific category identityref is unchanged.
+
+       Also adopt the shared openits-types:device-hardware grouping
+       (make/model/firmware/serial) in the identity container,
+       replacing the inline config-false leaves.
+
+       Convert the meter 'mode' leaf from the local meter-mode
+       enumeration to an identityref on
+       openits-rm-types:meter-mode, so vendors can add proprietary
+       metering modes without a base-model revision.
+
+       Rename the config-false 'operational-status' containers (meter
+       level and per-lane) to 'state', standardising the read-only
+       operational rollup on one container name across services.
+
+       Strip the config-false state must from
+       state/current-release-rate-vph (mode=active implied a positive
+       rate). A must on config-false readback made a misbehaving
+       meter's telemetry illegal data instead of a reportable fault;
+       a stopped meter in active mode is now representable and is
+       reported via openits-common-fault-events:fault-raised. No
+       schema change; must-only removal.
+
+       Presence-guard the plan phase-timing feasibility must: the
+       must now short-circuits when yellow-change, red-clear, or the
+       plan's headway-s is absent, instead of coercing an absent
+       operand to NaN via the '* 10' scaling (a YANG XPath number
+       comparison against NaN is always false, silently passing
+       instead of skipping). Drop the now-unnecessary '* 10' no-op —
+       decimal64 addition and comparison do not need integer
+       scaling.";
+  }
+  revision 2026-07-12 {
+    description
+      "Move the fault taxonomy to gen-2: delete the gen-1
+       fault-category identity and its fault-controller /
+       fault-detector / fault-signal-head / fault-power /
+       fault-communication children, replaced by the service-prefixed
+       ramp-meter-fault-event-kind tree already present in the
+       openits-ramp-metering-types module. The faults/fault 'category'
+       leaf now bases on
+       openits-rm-types:ramp-meter-fault-event-kind. Breaking:
+       identity names change (e.g. fault-controller ->
+       ramp-meter-fault-controller); wire-neutral since the wire
+       representation of an identityref is a string (pre-v1,
+       acceptable). Completes the fault-taxonomy consolidation for
+       this service.";
+    reference "RFC 7950 section 11 (breaking YANG evolution: identity rename).";
+  }
+  revision 2026-07-10 {
+    description
+      "Replace the inline severity enumeration on the fault-inventory
+       list with the shared openits-types:fault-severity typedef.
+       Member set and order unchanged — wire-stable.
+
+       Also, replace the inline meter-identity latitude/longitude
+       leaves (decimal64 fraction-digits 6) with
+       openits-types:geo-point (fraction-digits 7), correcting a
+       precision drift versus the shared geo-location grouping used
+       elsewhere. Member set unchanged (latitude, longitude); the
+       fraction-digits mantissa widens from 6 to 7.
+
+       Also, add base openits-types:fault-event-kind to the
+       fault-category root so this service's faults are reachable by
+       fleet-wide derived-from-or-self(fault-event-kind) queries.
+       Additive (identity gains a base); no child renamed.";
+    reference "RFC 7950 section 11 (additive YANG evolution).";
+  }
+  revision 2026-04-19 {
+    description
+      "Initial revision.  Minimum viable model covering identity,
+       operational status, metering plans, lanes with detector
+       inventories, diagnostics, and a live fault inventory.";
+    reference
+      "ARC-IT 9.1 Service Package TI03 (Traffic Metering); NTCIP
+       1207 v02 (functional reference only; no wire compatibility).";
+  }
+
+  /* --------------------------------------------------------------
+   * Typedefs
+   * -------------------------------------------------------------- */
+
+  typedef detector-role {
+    type enumeration {
+      enum unknown    { value 0; description "Detector role not specified."; }
+      enum demand     { value 1; description "Upstream demand detector — counts arrivals."; }
+      enum passage    { value 2; description "At the stop line — confirms a release."; }
+      enum queue      { value 3; description "Midway up the ramp — triggers the queue override."; }
+      enum hov-bypass { value 4; description "HOV/HOT bypass-lane detector."; }
+      enum merge      { value 5; description "Mainline downstream — speed / occupancy at the merge."; }
+      enum advance    { value 6; description "Far-upstream mainline — traffic-responsive input."; }
+    }
+    description "Role of a detector in the ramp-metering topology.";
+  }
+
+  typedef time-of-day {
+    type string {
+      pattern '(([01][0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]';
+    }
+    description "Wall-clock time of day, 24-hour HH:MM:SS.";
+  }
+
+  /* --------------------------------------------------------------
+   * Reusable groupings
+   * -------------------------------------------------------------- */
+
+  grouping meter-control-config {
+    description
+      "Commanded metering control (intended). Read control/config vs
+       control/state to see whether the meter has applied the command:
+       equal = applied, divergent = not applied (pending or refused).";
+    leaf mode {
+      type identityref { base openits-rm-types:meter-mode; }
+      description
+        "Intended meter mode. Operator-commandable: mode-off,
+         mode-on-standby, mode-active, mode-manual. mode-unknown and
+         mode-fault are device-entered only; a request for one is not
+         honored (observable as config/state divergence).";
+    }
+    leaf active-plan-id {
+      type leafref { path "../../../plans/plan/plan-id"; require-instance false; }
+      description "Intended active metering plan (references the plan library).";
+    }
+    leaf command-source {
+      type identityref { base openits-types:control-source; }
+      description
+        "Authority commanding the meter — the NTCIP 1207 central / TOD /
+         local dimension, orthogonal to the mode taxonomy, now on the
+         shared openits-types:control-source axis (control-central =
+         central, control-schedule = TOD, control-manual = local field
+         override, control-other = unclassified). In config the requested
+         authority; in state the authority in effect.";
+    }
+    leaf manual-release-rate-vph {
+      type openits-rm-types:release-rate-vph;
+      description "Release rate to hold while mode-manual is active.";
+    }
+    leaf non-metering-display {
+      type enumeration {
+        enum dark         { description "Signal head powered off."; }
+        enum rest-in-green { description "Signal head holds steady green (ramp open, not metering)."; }
+      }
+      default "dark";
+      description
+        "Signal-head display while the meter is NOT actively releasing
+         vehicles, and the terminal display after a shutdown flush. This
+         is the display axis, orthogonal to 'mode' (what the meter is
+         doing): dark powers the head off, rest-in-green keeps the ramp
+         open. Safe fresh-provision default is dark.";
+    }
+  }
+
+  grouping lane-config {
+    description "Per-lane intended configuration.";
+    leaf lane-id {
+      type string;
+      description
+        "Agency-scoped lane identifier (e.g., \"meter-1\",
+         \"bypass\").";
+    }
+    leaf bypass {
+      type boolean;
+      description
+        "True if this lane is an HOV/HOT bypass (released on a
+         different schedule, typically free-flow).";
+    }
+    leaf bypass-operation {
+      type enumeration {
+        enum free-flow { description "Bypass is unmetered (free-flow) — the common case."; }
+        enum metered   { description "Bypass is itself metered (e.g. HOV-preferential metering)."; }
+      }
+      description
+        "How an HOV/HOT bypass lane operates. Only meaningful when
+         bypass = true; distinguishes a free-flow bypass from a metered one
+         (previously the model recorded only that a lane was a bypass).";
+    }
+    leaf min-release-rate-vph {
+      type openits-rm-types:release-rate-vph;
+      description
+        "Lower bound of THIS lane's release rate. Resolves the per-lane
+         vs per-meter ambiguity: the plan's release-rate-vph is the meter
+         aggregate target, while each lane of a dual-lane meter carries its
+         own rate envelope (per-lane practice ~240-1000 vph).";
+    }
+    leaf max-release-rate-vph {
+      type openits-rm-types:release-rate-vph;
+      description
+        "Upper bound (saturation) of this lane's release rate. Should be
+         >= min-release-rate-vph; enforced by a must on lanes/lane/config
+         (the config-side container), which does not constrain the state
+         mirror.";
+    }
+    leaf vehicles-per-green {
+      type uint8 {
+        range "1..2";
+      }
+      default "1";
+      description
+        "Vehicles released per green on THIS lane: 1 single-release, 2 for
+         tandem two-per-green.";
+    }
+  }
+
+  grouping detector-config {
+    description "Per-detector intended configuration.";
+    leaf detector-id { type string; description "Detector identifier within the lane."; }
+    leaf role        { type detector-role; description "Detector function (demand / passage / queue / merge)."; }
+  }
+
+  grouping detector-readings {
+    description "Live detector readings (config-false); shared by ramp-lane and mainline detectors.";
+    leaf active        { type boolean; description "True if the detector is currently sensing a call."; }
+    leaf count-vph     { type uint16; description "Vehicles-per-hour rate observed by this detector."; }
+    leaf occupancy-pct { type openits-types:percentage; description "Detector occupancy percentage (0-100)."; }
+    leaf speed-kmh     { type openits-types:speed-kmh; description "Average speed observed by this detector, where measurable."; }
+    leaf last-update   { type yang:date-and-time; description "Wall-clock time of the most recent detector reading."; }
+  }
+
+  /* --------------------------------------------------------------
+   * Main tree
+   * -------------------------------------------------------------- */
+
+  container ramp-meter {
+    description
+      "Top-level container for a single ramp-metering device.
+       A meter may control one or more metered lanes plus an
+       optional HOV/HOT bypass lane.";
+
+    /* ----- identity ----- */
+    container config {
+      description "Intended meter identity.";
+      uses openits-types:device-identity-config;
+    }
+    container state {
+      config false;
+      description "Applied identity (mirror) + device-reported hardware.";
+      uses openits-types:device-identity-config;
+      uses openits-types:device-hardware;
+    }
+
+    // -----------------------------------------------------------------
+    // SAFETY INTERLOCK: a meter in a metering mode must drive its
+    // advance-warning sign (NTCIP 1207; MUTCD advance warning).
+    // -----------------------------------------------------------------
+    // GUARD (default-tree must): this must's antecedent tests
+    // control/config/mode, which is UNDEFAULTED, so it passes vacuously on the
+    // implicit default tree today. advance-warning-sign/config/enabled has a
+    // default (false); if control/config/mode is ever given a default in a
+    // metering class, this safety interlock would fire on the default tree for
+    // every fixture repo-wide. Re-guard before defaulting mode.
+    must "not(derived-from-or-self(control/config/mode, 'openits-rm-types:metering-mode'))"
+       + " or advance-warning-sign/config/enabled = 'true'" {
+      error-message
+        "A ramp meter commanded into a metering mode must have its
+         advance-warning sign enabled; metering with the advance-warning
+         sign disabled is a rear-end-collision hazard (a dark ramp signal
+         with no upstream warning).";
+    }
+
+    /* ----- commanded metering control ----- */
+    container control {
+      description
+        "Commanded metering surface: commands are config-writes. Write
+         control/config to command the meter; control/state reports the
+         applied/actual result. Whether a command took effect is read as
+         control/config vs control/state divergence — there is deliberately no
+         command-status field.";
+      container config {
+        description "Intended metering control.";
+        uses meter-control-config;
+      }
+      container state {
+        config false;
+        openits-types:arc-it-flow
+          "Roadway Equipment -> TMC : roadway equipment status";
+        description "Applied/actual metering control (mirror) + live operation.";
+        uses meter-control-config;
+        leaf current-release-rate-vph {
+          type openits-rm-types:release-rate-vph;
+          description
+            "Release rate the meter is commanding right now. 0 vph while
+             mode-active is a real, reportable stopped-meter fault — emitted
+             via openits-common-fault-events:fault-raised, not rejected here.";
+        }
+        leaf last-mode-change {
+          type yang:date-and-time;
+          description "Timestamp of the last mode transition.";
+        }
+        leaf queue-length-current-vehicles {
+          type openits-rm-types:queue-vehicles;
+          description "Live queue-length estimate from the queue detector's occupancy.";
+        }
+        leaf queue-override-active {
+          type boolean;
+          description
+            "True while releasing extra vehicles because the queue detector
+             passed the plan's override threshold.";
+        }
+      }
+    }
+
+    /* ----- startup / shutdown sequencing ----- */
+    container sequencing {
+      description
+        "Meter-on / meter-off sequencing. A dark-to-red transition with
+         no warning is a documented rear-end-crash mechanism, so meter
+         activation runs advance-warning then an initial steady green
+         before the first red, and deactivation optionally flushes the
+         queue (NTCIP 1207 startup objects; Caltrans / WSDOT / MnDOT
+         practice).";
+      container config {
+        description "Intended sequencing timing.";
+        leaf advance-warning-duration {
+          type uint16 { range "3..60"; }
+          units "seconds";
+          default "8";
+          description
+            "Time the advance-warning sign warns before the meter drops
+             its first red on activation.";
+        }
+        leaf startup-steady-green-duration {
+          type uint16 { range "1..30"; }
+          units "seconds";
+          default "5";
+          description
+            "Initial steady-green interval held after advance warning and
+             before the first red, so approaching drivers see green before
+             the meter begins cycling.";
+        }
+        leaf shutdown-flush-enabled {
+          type boolean;
+          default "true";
+          description
+            "When true, deactivation releases the standing queue (steady
+             green) before reverting to the non-metering display.";
+        }
+        leaf shutdown-flush-max-duration {
+          type uint16 { range "0..120"; }
+          units "seconds";
+          default "30";
+          description
+            "Upper bound on the shutdown flush interval.";
+        }
+      }
+      container state {
+        config false;
+        description "Live sequencing phase.";
+        leaf sequence-phase {
+          type enumeration {
+            enum idle                 { value 0; description "Not metering; no sequence in progress."; }
+            enum advance-warning      { value 1; description "Advance-warning sign warning ahead of first red."; }
+            enum startup-steady-green { value 2; description "Initial steady green before first red."; }
+            enum metering             { value 3; description "Normal metering cycle."; }
+            enum shutdown-flush       { value 4; description "Releasing the queue before reverting to non-metering display."; }
+          }
+          description
+            "The sequencing phase the meter is currently in — makes the
+             safe meter-on sequence observable and provable rather than
+             inferred from mode transitions.";
+        }
+      }
+    }
+
+    /* ----- advance warning sign ----- */
+    container advance-warning-sign {
+      description
+        "The upstream 'RAMP METERED WHEN FLASHING' advance-warning sign.
+         Commanded via config/enabled; the interlock on ramp-meter
+         requires it enabled while a metering mode is commanded.";
+      container config {
+        description "Intended advance-warning-sign control.";
+        leaf enabled {
+          type boolean;
+          default "false";
+          description
+            "True when this meter drives an advance-warning sign. Must be
+             true while a metering mode is commanded (see the ramp-meter
+             interlock). Safe fresh-provision default is false — an
+             operator enables it after the sign is installed and verified.";
+        }
+        leaf aws-fault-action {
+          type enumeration {
+            enum suspend-metering  { description "On an AWS fault while metering, suspend metering (fail-safe): a dark warning sign must not accompany active metering."; }
+            enum continue-metering { description "On an AWS fault while metering, continue metering and raise a fault only (agency accepts the risk)."; }
+          }
+          default "suspend-metering";
+          description
+            "Policy for an advance-warning-sign fault detected while metering
+             (aws-fault-while-metering). Fail-safe default suspends metering.";
+        }
+      }
+      container state {
+        config false;
+        openits-types:arc-it-flow
+          "Roadway Equipment -> TMC : roadway equipment status";
+        description "Actual advance-warning-sign state.";
+        leaf lamp-status {
+          type enumeration {
+            enum dark     { value 0; description "Beacon off."; }
+            enum flashing { value 1; description "Beacon flashing (warning active)."; }
+            enum steady   { value 2; description "Beacon steady (non-standard / test)."; }
+            enum fault    { value 3; description "Beacon lamp faulted."; }
+          }
+          description "Observed advance-warning-sign beacon state.";
+        }
+        leaf aws-fault-while-metering {
+          type boolean;
+          description
+            "Derived: true when the meter is in a metering mode or an
+             advance-warning / startup sequence phase but the beacon is
+             not flashing (dark or faulted) — the 'metering active, sign
+             dark' safety defect. Reported via
+             openits-common-fault-events:fault-raised.";
+        }
+      }
+    }
+
+    /* ----- metering plans ----- */
+    container plans {
+      openits-types:arc-it-flow
+        "TMC -> Roadway Equipment : traffic information";
+      description
+        "Library of metering plans available to the meter.  The
+         central controller (or a local traffic-responsive
+         algorithm) selects which plan is active via
+         control/config/active-plan-id.";
+
+      list plan {
+        key "plan-id";
+        description "One entry per metering plan available to the meter.";
+        leaf plan-id { type uint8; description "Plan identifier; used as key and referenced by active-plan-id."; }
+
+        leaf name {
+          type string;
+          description "Operator-facing plan name (informational).";
+        }
+        leaf release-rate-vph {
+          type openits-rm-types:release-rate-vph;
+          must ". > 0" {
+            error-message
+              "A metering plan's release-rate-vph must be positive; a meter that
+               releases no vehicles is expressed by mode (off / on-standby) and
+               non-metering-display, not by a zero-rate plan.";
+          }
+          description "Target release rate while this plan is active (must be > 0).";
+        }
+        leaf headway-s {
+          type decimal64 {
+            fraction-digits 1;
+            range "2.0 .. 15.0";
+          }
+          units "seconds";
+          description
+            "Cycle headway between vehicle releases.  Derived from
+             release-rate-vph but stored explicitly so that
+             phase-timing fits-within-headway can be enforced.  Bounded to
+             the physical metering range: 2 s (~1800 vph, saturation) to
+             15 s (~240 vph, minimum practical release).";
+        }
+        leaf vehicles-per-green {
+          type uint8 {
+            range "1..2";
+          }
+          default "1";
+          description
+            "Vehicles released per green interval: 1 for single-release
+             metering, 2 for dual/tandem 'two-per-green'. Relates the
+             release rate to the cycle headway:
+             headway-s ~= 3600 * vehicles-per-green / release-rate-vph.";
+        }
+        leaf queue-override-threshold-vehicles {
+          type openits-rm-types:queue-vehicles;
+          must ". > 0" {
+            error-message
+              "queue-override-threshold-vehicles must be positive.";
+          }
+          description
+            "Queue length at which the plan ACTIVATES a flush override
+             (the upper hysteresis threshold).";
+        }
+        leaf queue-override-clear-threshold-vehicles {
+          type openits-rm-types:queue-vehicles;
+          description
+            "Queue length at which an active override DEACTIVATES (the
+             lower hysteresis threshold). Must be below the activation
+             threshold so the override does not flap on a queue hovering at
+             a single threshold. When absent, the override clears at the
+             activation threshold (no hysteresis band).";
+        }
+        leaf queue-override-rate-vph {
+          type openits-rm-types:release-rate-vph;
+          description
+            "Elevated release rate applied while the override is active
+             (the flush rate). When absent, the meter releases at its
+             maximum during override.";
+        }
+        leaf queue-override-occupancy-threshold-pct {
+          type openits-types:percentage;
+          description
+            "Optional occupancy-based activation trigger: the override may
+             also activate when the queue detector's occupancy exceeds this
+             percentage, for sites where occupancy is a more reliable
+             queue signal than a vehicle count.";
+        }
+        leaf queue-override-occupancy-clear-threshold-pct {
+          type openits-types:percentage;
+          description
+            "Occupancy at which an occupancy-triggered override DEACTIVATES.
+             Must be below queue-override-occupancy-threshold-pct so the override
+             does not flap. When absent, clears at the activation threshold.";
+        }
+        leaf queue-override-persistence-s {
+          type uint16 { range "0..600"; }
+          units "seconds";
+          description
+            "Dwell a trigger (vehicle-count OR occupancy) must persist before the
+             override activates, damping transient spikes on either axis.";
+        }
+
+        must
+          "not(queue-override-occupancy-clear-threshold-pct)
+           or not(queue-override-occupancy-threshold-pct)
+           or queue-override-occupancy-clear-threshold-pct
+              < queue-override-occupancy-threshold-pct"
+        {
+          error-message
+            "queue-override-occupancy-clear-threshold-pct (deactivation) must be
+             below queue-override-occupancy-threshold-pct (activation).";
+        }
+
+        must
+          "not(queue-override-clear-threshold-vehicles)
+           or not(queue-override-threshold-vehicles)
+           or queue-override-clear-threshold-vehicles
+              < queue-override-threshold-vehicles"
+        {
+          error-message
+            "queue-override-clear-threshold-vehicles (deactivation) must be
+             below queue-override-threshold-vehicles (activation); an equal
+             or higher clear threshold defeats the anti-flap hysteresis.";
+        }
+
+        must
+          "not(release-rate-vph) or not(headway-s)
+           or count(../../lanes/lane[not(config/bypass = 'true')]) = 0
+           or (../../lanes/config/release-coordination = 'alternate'
+               and (release-rate-vph * headway-s) >= (3060 * vehicles-per-green)
+               and (release-rate-vph * headway-s) <= (4140 * vehicles-per-green))
+           or (not(../../lanes/config/release-coordination = 'alternate')
+               and (release-rate-vph * headway-s)
+                   >= (3060 * vehicles-per-green * count(../../lanes/lane[not(config/bypass = 'true')]))
+               and (release-rate-vph * headway-s)
+                   <= (4140 * vehicles-per-green * count(../../lanes/lane[not(config/bypass = 'true')])))"
+        {
+          error-message
+            "headway-s must be consistent with release-rate-vph, vehicles-per-green,
+             the served (non-bypass) lane count, and lanes/release-coordination:
+             simultaneous release -> headway ~= 3600 * vpg * served-lanes /
+             aggregate-rate; alternate release -> headway ~= 3600 * vpg /
+             aggregate-rate (per-release interval). Accepted within +/-15%.";
+        }
+
+        container phase-timing {
+          description
+            "Per-plan release phase timing.  Uses the NEMA-common
+             vehicle-phase-timing grouping so MUTCD minimums are
+             enforced identically to signal controllers.  Carries
+             vehicle change/clearance timing only (min-green,
+             max-green, yellow-change, red-clear, passage); a ramp
+             meter has no pedestrian phase, so it does not use the
+             full phase-timing grouping and does not accept
+             walk/ped-clear.";
+          uses openits-nema:vehicle-phase-timing;
+
+          must
+            "not(min-green) or not(yellow-change) or not(red-clear)
+             or not(../headway-s)
+             or (../../../lanes/config/release-coordination = 'alternate'
+                 and (min-green + yellow-change + red-clear)
+                     <= (../headway-s * count(../../../lanes/lane[not(config/bypass = 'true')])))
+             or (not(../../../lanes/config/release-coordination = 'alternate')
+                 and (min-green + yellow-change + red-clear) <= ../headway-s)"
+          {
+            error-message
+              "min-green + yellow-change + red-clear must not exceed the feasible
+               cycle: headway-s for simultaneous release, or headway-s * served-lanes
+               for alternate release (each lane's cycle spans all served lanes).";
+          }
+        }
+      }
+    }
+
+    /* ----- time-of-day schedule ----- */
+    container schedule {
+      description
+        "Time-of-day plan selection (reuses the DMS day-plan idiom): a
+         day-plan is an ordered set of time-of-day actions each selecting a
+         metering plan; a schedule-entry maps calendar dates to a day-plan.
+         An empty calendar axis means 'all'.";
+      reference "NTCIP 1207 (schedule); NTCIP 1201 (dayPlan).";
+      list day-plan {
+        key "day-plan-id";
+        must "action" { error-message "A day-plan must contain at least one action."; }
+        leaf day-plan-id { type uint8 { range "1..255"; } description "Day-plan identifier (key)."; }
+        leaf name { type string; description "Operator-facing day-plan name."; }
+        list action {
+          key "start-time";
+          description "At start-time, select the named metering plan; it holds until the next action.";
+          leaf start-time { type time-of-day; description "Wall-clock time this action takes effect."; }
+          leaf plan-id { type leafref { path "../../../../plans/plan/plan-id"; } description "Metering plan to activate."; }
+        }
+      }
+      list schedule-entry {
+        key "schedule-id";
+        description "Calendar rule mapping a set of dates to a day-plan. An empty axis means 'all'.";
+        reference "NTCIP 1201 (dayPlanScheduleTable).";
+        leaf schedule-id { type uint8 { range "1..255"; } description "Schedule-entry identifier (key)."; }
+        leaf-list months {
+          type enumeration {
+            enum january { value 1; } enum february { value 2; } enum march { value 3; }
+            enum april { value 4; } enum may { value 5; } enum june { value 6; }
+            enum july { value 7; } enum august { value 8; } enum september { value 9; }
+            enum october { value 10; } enum november { value 11; } enum december { value 12; }
+          }
+          description "Months this rule applies to. Empty means all months.";
+        }
+        leaf-list days-of-week {
+          type enumeration {
+            enum monday { value 1; } enum tuesday { value 2; } enum wednesday { value 3; }
+            enum thursday { value 4; } enum friday { value 5; } enum saturday { value 6; }
+            enum sunday { value 7; }
+          }
+          description "Days of week this rule applies to. Empty means all days of week.";
+        }
+        leaf-list days-of-month {
+          type uint8 { range "1..31"; }
+          description "Days of month this rule applies to. Empty means all days of month.";
+        }
+        leaf day-plan { type leafref { path "../../day-plan/day-plan-id"; } description "Day-plan to run on matching dates."; }
+      }
+      container state {
+        config false;
+        description "Scheduler readback.";
+        leaf active-day-plan-id { type leafref { path "../../day-plan/day-plan-id"; require-instance false; } description "Day-plan currently running (absent if none matches)."; }
+        leaf next-action-at { type yang:date-and-time; description "Wall-clock time of the next scheduled action."; }
+      }
+    }
+
+    /* ----- traffic-responsive metering ----- */
+    container traffic-responsive {
+      description
+        "Local traffic-responsive metering: an algorithm plus a band table
+         mapping mainline occupancy/flow to a metering plan. Consumes the
+         advance / merge mainline detectors.";
+      container config {
+        description "Intended traffic-responsive configuration.";
+        leaf algorithm { type identityref { base openits-rm-types:metering-algorithm; } description "Traffic-responsive algorithm in effect."; }
+        list band {
+          key "band-id";
+          description "Occupancy/flow band -> plan selection (evaluated in ascending band-id).";
+          leaf band-id { type uint8; description "Band identifier / evaluation order (key)."; }
+          leaf min-occupancy-pct { type openits-types:percentage; description "Lower occupancy bound (inclusive) for this band."; }
+          leaf max-occupancy-pct { type openits-types:percentage; description "Upper occupancy bound (exclusive) for this band."; }
+          leaf min-flow-vph { type uint16; description "Optional lower mainline-flow bound (vph)."; }
+          leaf max-flow-vph { type uint16; description "Optional upper mainline-flow bound (vph)."; }
+          leaf plan-id { type leafref { path "../../../../plans/plan/plan-id"; } description "Plan selected while mainline occupancy/flow is in this band."; }
+        }
+      }
+      container state {
+        config false;
+        description "Traffic-responsive readback.";
+        leaf active-band-id { type leafref { path "../../config/band/band-id"; require-instance false; } description "Band currently selected by the algorithm."; }
+      }
+    }
+
+    /* ----- lanes ----- */
+    container lanes {
+      openits-types:arc-it-flow
+        "Roadway Equipment -> TMC : roadway equipment status";
+      description "Per-lane operation.";
+
+      container config {
+        description "Intended meter-wide lane coordination.";
+        leaf release-coordination {
+          type enumeration {
+            enum simultaneous { description "All metered lanes release together on the same cycle."; }
+            enum alternate    { description "Metered lanes release in an alternating sequence (only one head green at a time)."; }
+          }
+          description "How the meter's release lanes are coordinated.";
+        }
+      }
+      container state {
+        config false;
+        description "Applied meter-wide lane coordination (mirror).";
+        leaf release-coordination {
+          type enumeration {
+            enum simultaneous { description "All metered lanes release together."; }
+            enum alternate    { description "Lanes release alternately."; }
+          }
+          description "Coordination the meter is actually applying.";
+        }
+      }
+
+      list lane {
+        key "lane-id";
+        description "One entry per metering lane (release lane or bypass).";
+
+        leaf lane-id {
+          type leafref { path "../config/lane-id"; }
+          description "Lane identifier (key; references config/lane-id).";
+        }
+        container config {
+          description "Intended lane configuration.";
+          must "not(min-release-rate-vph) or not(max-release-rate-vph)
+                or max-release-rate-vph >= min-release-rate-vph" {
+            error-message
+              "max-release-rate-vph must be >= min-release-rate-vph on the
+               intended lane config.";
+          }
+          uses lane-config;
+        }
+        container state {
+          config false;
+          description "Applied lane config (mirror) + release-head state.";
+          uses lane-config;
+          leaf head-state {
+            type enumeration {
+              enum dark   { value 0; description "Signal head is dark/unlit — the meter is not running on this lane."; }
+              enum red    { value 1; description "Red — holding; no release."; }
+              enum green  { value 2; description "Green — releasing."; }
+              enum yellow { value 3; description "Yellow — clearance interval, where the head uses one."; }
+            }
+            description
+              "Displayed state of this lane's release signal head.
+               Distinguishes dark (meter off) from red (running but
+               holding), which the previous single green-active boolean
+               could not.";
+          }
+          leaf current-release-rate-vph {
+            type openits-rm-types:release-rate-vph;
+            description "This lane's actual current release rate.";
+          }
+          leaf last-release {
+            type yang:date-and-time;
+            description "Timestamp of the most recent release.";
+          }
+        }
+
+        list detector {
+          key "detector-id";
+          description "One entry per detector installed in this lane.";
+          leaf detector-id {
+            type leafref { path "../config/detector-id"; }
+            description "Detector identifier (key; references config/detector-id).";
+          }
+          container config {
+            description "Intended detector configuration.";
+            uses detector-config;
+          }
+          container state {
+            config false;
+            description "Applied detector config (mirror) + live readings.";
+            uses detector-config;
+            uses detector-readings;
+          }
+        }
+      }
+    }
+
+    /* ----- mainline detectors ----- */
+    container mainline-detectors {
+      openits-types:arc-it-flow "Roadway Equipment -> TMC : roadway equipment status";
+      description
+        "Mainline detectors (advance / merge) that belong to the METER, not to
+         any ramp lane — e.g. a far-upstream advance loop feeding the
+         traffic-responsive algorithm.";
+      list detector {
+        key "detector-id";
+        leaf detector-id { type leafref { path "../config/detector-id"; } description "Detector identifier (key)."; }
+        container config { description "Intended mainline-detector configuration."; uses detector-config; }
+        container state { config false; description "Applied config (mirror) + live readings."; uses detector-config; uses detector-readings; }
+      }
+    }
+
+    /* ----- diagnostics ----- */
+    container diagnostics {
+      config false;
+      openits-types:arc-it-flow
+        "Roadway Equipment -> Maintenance : equipment maintenance status";
+      description
+        "Per-component health and self-test outcomes.";
+
+      leaf controller-uptime-s {
+        type uint32;
+        units "seconds";
+        description "Seconds since the ramp-meter controller last booted.";
+      }
+      leaf last-self-test {
+        type yang:date-and-time;
+        description "Wall-clock time of the most recent self-test.";
+      }
+      leaf signal-head-faults {
+        type uint16;
+        description "Count of signal-head faults observed since reset.";
+      }
+    }
+
+    /* ----- fault inventory ----- */
+    container faults {
+      config false;
+      openits-types:arc-it-flow
+        "Roadway Equipment -> Maintenance : equipment maintenance status";
+      description
+        "Live fault inventory.  Each entry mirrors a
+         `ramp-meter-fault-raised` notification and clears when the
+         condition resolves.";
+
+      list fault {
+        key "fault-id";
+        description "One entry per active fault on the meter.";
+        uses openits-types:fault-entry;
+        leaf category {
+          type identityref { base openits-rm-types:ramp-meter-fault-event-kind; }
+          description "Fault class (sensor / communication / controller / etc.).";
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+module openits-common-collision-b {
+  namespace "urn:test:openits-common-collision-b";
+  prefix occb;
+
+  // See openits-common-collision-a.yang: same notification name, same
+  // mapped output file (common_events.proto) — both produce
+  // "message FooBar {", which Generate must reject.
+  notification foo-bar {
+    leaf y { type string; }
+  }
+}

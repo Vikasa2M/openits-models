@@ -1,0 +1,31 @@
+# Canonical organization registry for NoI independence checks.
+#
+# The graduation rule requires "three independent organisations" — same
+# parent counts once. This file maps NoI implementer ids to a canonical
+# org id; the graduation checker collapses NoIs by canonical org before
+# counting.
+#
+# Format:
+#   organizations:
+#     - id: <canonical-id>           # canonical org id (lowercase + hyphens)
+#       aliases: [<alias1>, ...]     # NoI implementer ids that collapse to this org
+#
+# Adding an organization is a normal PR. The TSC reviews aliases for
+# legitimacy (e.g., subsidiary mergers should land here).
+
+organizations:
+  - id: example-org
+    aliases: []
+
+  - id: openits-ref
+    aliases: []
+
+  # Production examples (uncomment + extend as real implementers file NoIs):
+  # - id: siemens
+  #   aliases: [siemens-us, siemens-de, siemens-mobility]
+  # - id: caltrans
+  #   aliases: []
+  # - id: txdot
+  #   aliases: []
+  # - id: econolite
+  #   aliases: []

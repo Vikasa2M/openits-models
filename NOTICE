@@ -1,0 +1,12 @@
+openits-models
+Copyright 2026 OpenITS Working Group
+
+This product includes software developed by the OpenITS Working Group.
+
+Licensed under the Apache License, Version 2.0. See the LICENSE file
+for the full license text.
+
+The YANG modules under yang/ietf/ are unmodified copies of IETF-published
+modules and are governed by the license terms in their respective module
+headers (IETF Trust / Simplified BSD License). They are vendored here for
+offline generation and validation only.

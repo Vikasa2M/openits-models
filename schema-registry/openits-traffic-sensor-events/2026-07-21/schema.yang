@@ -1,0 +1,218 @@
+module openits-traffic-sensor-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:traffic-sensor-events";
+  prefix openits-ts-events;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-traffic-sensor-types {
+    prefix openits-traffic-sensor-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Notifications for openits-traffic-sensor.  Split into a
+     companion module so ygot's proto backend can generate protobuf
+     from the base module (ygot's proto generator fails on modules
+     containing notification statements).";
+
+  openits-types:openits-version "0.4.0";
+
+  revision 2026-07-21 {
+    description
+      "queue-state-changed now carries queue-length-m / back-of-queue-m via
+       the shared queue-zone-state grouping (additive mirror fix; the 2b cut
+       had dropped them). Tidy truncated revision prose (doc-only).
+       - Collapse duplicate same-date revision statements.";
+    reference "NTCIP 1209.";
+  }
+  revision 2026-07-14 {
+    description
+      "Cut 3c (events layering): reference lane-interval-data and
+       operational-status via openits-traffic-sensor-types and drop
+       the openits-traffic-sensor core import — the events module now
+       imports only -types (+ shared). Wire-neutral.";
+  }
+  revision 2026-07-13 {
+    description
+      "Adopt the unified event contract: every notification now
+       'uses openits-types:event-header' (source-device-id, occurred-at,
+       sequence) and carries a mandatory 'kind' identityref under
+       traffic-sensor-event-kind (periodic reports dual-based on
+       report-event-kind). Breaking, pre-v1: notifications gain mandatory
+       device identity + sequence.
+
+      Repoint the inactive-reason identityref base to
+       openits-traffic-sensor-types (it moved there from the service
+       core). Import openits-traffic-sensor-types. Wire-neutral
+       (an identityref's wire form is the identity name, unchanged).";
+    reference "RFC 7950 section 11.";
+  }
+  revision 2026-07-12 {
+    description
+      "Rename this module (file, module name, namespace, prefix) from
+       the legacy notifications-suffixed name to
+       openits-traffic-sensor-events: standardize every
+       service notification module on the events-suffixed name.
+       Mechanical rename only — no notification content changed;
+       ce-types (service-derived, not module-derived) and proto are
+       unaffected. Delete the bespoke
+       traffic-sensor-fault-raised/cleared notifications;
+       traffic-sensor now emits
+       openits-common-fault-events:{fault-raised,fault-cleared} with
+       kind derived from
+       openits-traffic-sensor-types:traffic-sensor-fault-event-kind,
+       completing the orphan-service fault consolidation.";
+  }
+  revision 2026-07-11 {
+    description
+      "Repoint traffic-sensor-fault-raised's 'category' base from the
+       deleted gen-1 openits-ts:fault-category to
+       openits-traffic-sensor-types:traffic-sensor-fault-event-kind.
+       Breaking: identity names change; wire-neutral since the wire
+       representation of an identityref is a string (pre-v1,
+       acceptable).";
+    reference "RFC 7950 section 11 (breaking YANG evolution: identity rename).";
+  }
+  revision 2026-07-10 {
+    description
+      "Replace the inline severity enumeration on
+       traffic-sensor-fault-raised with the shared
+       openits-types:fault-severity typedef. Member set and order
+       unchanged — wire-stable.
+
+       Also, replace the inline latitude/longitude leaves on
+       traffic-sensor-status-report with openits-types:geo-point.
+       Already fraction-digits 7 — no precision change. Member set
+       and field tags unchanged (latitude/longitude keep their
+       locked tags).";
+  }
+  revision 2026-07-07 {
+    description "Initial release.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification traffic-interval-report {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : traffic flow";
+    description
+      "Periodic per-lane aggregate report, emitted once per
+       configured data-interval.  Carries every monitored lane's
+       interval data in a single event so consumers see a coherent
+       cross-lane snapshot.";
+
+    leaf kind {
+      type identityref {
+        base openits-traffic-sensor-types:traffic-sensor-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-traffic-sensor-types:
+         ts-traffic-interval-report for this notification.";
+    }
+    uses openits-types:event-header;
+
+    list lane {
+      key "lane-id";
+      description "Interval data for one monitored lane.";
+
+      leaf lane-id {
+        type uint8 {
+          range "1..32";
+        }
+        description "Sensor-local lane number.";
+      }
+      leaf name {
+        type string;
+        description
+          "Operator-facing lane label (e.g. the sensor's native lane
+           identifier).  Optional; consumers fall back to lane-id.";
+      }
+      leaf carriageway {
+        type string;
+        description
+          "Carriageway / travel-direction grouping this lane belongs
+           to (see openits-traffic-sensor lane/carriageway).";
+      }
+      uses openits-traffic-sensor-types:lane-interval-data;
+    }
+  }
+
+  notification queue-state-changed {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : traffic flow";
+    description
+      "A queue-detection zone changed state (queue started, cleared,
+       or its persisted duration was re-reported).  The
+       traffic-sensor/queues container is the digital-twin rollup of
+       these events.";
+
+    leaf kind {
+      type identityref {
+        base openits-traffic-sensor-types:traffic-sensor-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-traffic-sensor-types:
+         ts-queue-state-changed for this notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf zone-id {
+      type string;
+      description "Sensor-local queue-zone identifier.";
+    }
+    uses openits-traffic-sensor-types:queue-zone-state;
+  }
+
+  notification traffic-sensor-status-report {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> Maintenance : equipment maintenance status";
+    description
+      "Periodic station health / availability report.  Carries the
+       station identity and generic operational status so downstream
+       systems can locate the station and trend its availability;
+       vendor diagnostics (e.g. camera view quality, frame rate) ride
+       as augments on this notification.";
+
+    leaf kind {
+      type identityref {
+        base openits-traffic-sensor-types:traffic-sensor-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-traffic-sensor-types:ts-status-report
+         for this notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf name {
+      type string;
+      description "Operator-facing sensor name.";
+    }
+    uses openits-types:geo-point;
+    leaf operational-status {
+      type openits-traffic-sensor-types:operational-status;
+      description "Whether the sensor is currently producing usable data.";
+    }
+    leaf inactive-reason {
+      type identityref {
+        base openits-traffic-sensor-types:inactive-reason;
+      }
+      description
+        "Why the sensor is inactive, when operational-status is
+         inactive.  Open identity slot; vendors derive concrete
+         reasons.  Absent when the sensor is active.";
+    }
+  }
+}

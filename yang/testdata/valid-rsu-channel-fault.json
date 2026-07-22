@@ -1,0 +1,12 @@
+{
+  "openits-rsu-events:rsu-channel-fault": {
+    "kind": "openits-rsu-types:rsu-channel-fault-kind",
+    "source-device-id": "rsu-i35-mm214",
+    "occurred-at": "2026-07-11T14:05:00Z",
+    "sequence": "1",
+    "channel-id": "172",
+    "dsrc-channel-number": 172,
+    "fault-type": "openits-v2x-radio-types:channel-fault-high-error-rate",
+    "message": "CRC error rate exceeded 5% over 60s window"
+  }
+}

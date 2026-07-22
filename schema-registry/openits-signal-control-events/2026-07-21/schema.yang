@@ -1,0 +1,654 @@
+module openits-signal-control-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:signal-control-events";
+  prefix openits-sc-events;
+
+  import ietf-yang-types { prefix yang; }
+  import openits-types { prefix openits-types; }
+  import openits-signal-control-types { prefix openits-sc-types; }
+  import openits-nema-common { prefix openits-nema; }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Signal-controller event notifications, one companion module for the
+     whole service. Each notification carries the unified event-header +
+     'kind' identityref contract (kind derived from
+     openits-signal-control-types:sc-*-event-kind) and, where decoded from a
+     wire vocabulary, a 'wire-source' grouping. Split from the service core
+     (openits-signal-control) because ygot's proto backend fails on modules
+     containing notification statements; collapsed from 11 per-domain modules
+     into this one, since they versioned in lockstep.";
+
+  openits-types:openits-version "0.1.0";
+
+  revision 2026-07-21 {
+    description
+      "Model-review remediation (2026-07):
+       - Align detector-report occupancy precision with the core
+         measurement/occupancy type (percentage -> percentage-precise).
+       - Add explicit enum value statements to every inline enum
+         (plan-applied/source, tsp-event/denial-reason,
+         tsam-recommendation-applied/adjustment-type) without reordering, so
+         the append-only positional-ordinal policy the core module follows is
+         honored here too.
+       - Replace the duplicated inline tsam prior/current enums with the shared
+         openits-signal-control-types:tsam-engagement-state typedef.
+       - Fix the stale operational-status-report/mode description (mode-normal
+         collapsed into mode-free).
+       - BREAKING: retype identifier leaves onto the shared identifier typedefs
+         (detector-channel, preempt-slot, plan-id, overlap-number) and
+         openits-nema:phase-number, and change preemption-type leaves to an
+         identityref, so the event surfaces correlate with the core config
+         tree.
+       - Fix plan-applied/source enum: the 'unspecified' member must sit at
+         value 0 (proto3 open-enum rule; it maps to the generated
+         <ENUM>_UNSPECIFIED zero value), so renumber the members to 0..4.
+         Restores the pre-stamp wire encoding; the earlier stamp erroneously
+         started at 1 and did not generate.";
+    reference
+      "NTCIP 1202:2019 §5; NTCIP 1211; NEMA TS-2 §3.5.";
+  }
+  revision 2026-07-14 {
+    description
+      "Initial revision. Collapses the 11 openits-signal-control-<domain>-events
+       modules into one companion module (domain grouping via section
+       comments): coordination, detector, fault, overlap, pedestrian, phase,
+       preemption, raw, status, tsam, tsp. All 16 notifications, their
+       payloads, names, and generated proto/ce-types are unchanged — the
+       generator already routed all 11 to one proto package by module-name
+       prefix, so only the YANG module boundary changes. Supersedes those 11
+       modules.";
+    reference "ATSPM Indiana enumeration; NTCIP 1202 (signal-control events).";
+  }
+
+  /* ===== Phase ===== */
+
+  notification phase-state-change {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> ATSPM / TMC : signal phase state";
+    description
+      "Phase state-change event from the controller's high-resolution
+       log. The 'kind' identityref names the specific transition.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-phase-event-kind; }
+      mandatory true;
+      description "Specific phase-event identity from the Indiana taxonomy.";
+    }
+
+    uses openits-types:event-header;
+
+    leaf phase-number {
+      type openits-nema:phase-number;
+      mandatory true;
+      description "Phase the event applies to.";
+    }
+    leaf hold-active     { type boolean; description "Operator or coordination hold is currently active on this phase."; }
+    leaf call-registered { type boolean; description "A vehicle or pedestrian call has been registered on this phase."; }
+
+    uses openits-types:wire-source;
+  }
+
+  /* ===== Pedestrian ===== */
+
+  notification pedestrian-event {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> ATSPM / TMC : pedestrian event";
+    description
+      "A pedestrian-related transition. The 'kind' identityref names
+       the specific event class (walk interval, call registered, ped
+       detector transition, etc.). Collapses ATSPM codes 21-26, 45,
+       67-70, 89-92.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-pedestrian-event-kind; }
+      mandatory true;
+      description "Specific pedestrian-event identity from the Indiana taxonomy.";
+    }
+    uses openits-types:event-header;
+
+    leaf phase-number     { type openits-nema:phase-number; description "Pedestrian phase the event belongs to."; }
+    leaf detector-channel { type openits-sc-types:detector-channel; description "Ped-detector channel, when the event is detector-side."; }
+    uses openits-types:wire-source;
+  }
+
+  /* ===== Detector ===== */
+
+  notification detector-transition {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> ATSPM / TMC : vehicle detection";
+    description
+      "A vehicle detector channel changed state. The 'kind' identityref
+       names the specific transition (on, off, restored, or a fault
+       class); 'wire-source' carries the original Indiana wire identifier.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-detector-event-kind; }
+      mandatory true;
+      description "Specific detector-transition identity from the Indiana taxonomy.";
+    }
+    uses openits-types:event-header;
+
+    leaf channel { type openits-sc-types:detector-channel; mandatory true; description "Detector channel number on the controller."; }
+    leaf lane         { type string; description "Inventory-enriched lane label."; }
+    leaf approach     { type string; description "Inventory-enriched approach label."; }
+    leaf phase-served { type openits-nema:phase-number; description "Phase this detector calls; omitted when the detector calls no phase."; }
+    uses openits-types:wire-source;
+  }
+
+  notification detector-report {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> ATSPM / TMC : traffic detector data";
+    description
+      "Periodic per-detector volume/occupancy aggregate, one entry per
+       detector channel, emitted once per configured data interval.
+       Distinct from detector-transition, which fires on each individual
+       detector state change.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-detector-event-kind; }
+      mandatory true;
+      description
+        "Always openits-signal-control-types:sc-detector-report: a
+         periodic per-detector interval report.";
+    }
+    uses openits-types:event-header;
+
+    leaf interval-start {
+      type yang:date-and-time;
+      description "Wall-clock time the reporting interval opened.";
+    }
+    leaf interval-duration-s {
+      type uint16 { range "1..3600"; }
+      units "seconds";
+      description "Length of the reporting interval.";
+    }
+    list detector {
+      key "detector-id";
+      description "Interval aggregate for one detector channel.";
+
+      leaf detector-id {
+        type openits-sc-types:detector-channel;
+        description "Controller-local detector channel number.";
+      }
+      leaf phase-served {
+        type openits-nema:phase-number;
+        description "Phase this detector calls; omitted when unassigned.";
+      }
+      leaf volume {
+        type uint32;
+        units "vehicles";
+        description "Vehicle count over the interval.";
+      }
+      leaf occupancy {
+        type openits-types:percentage-precise;
+        description
+          "Detector occupancy over the interval (0.0-100.0%). Uses
+           percentage-precise to align with the core
+           detectors/detector/state/measurement/occupancy type.";
+      }
+    }
+  }
+
+  /* ===== Overlap ===== */
+
+  notification overlap-change {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> ATSPM / TMC : overlap state";
+    description
+      "Overlap phase transitioned state. Collapses ATSPM codes 61-66
+       into one notification keyed on overlap-number + event-kind.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-overlap-event-kind; }
+      mandatory true;
+      description "Specific overlap-state identity from the Indiana taxonomy.";
+    }
+    uses openits-types:event-header;
+
+    leaf overlap-number { type openits-sc-types:overlap-number; mandatory true; description "Overlap number on the controller (1-based)."; }
+    uses openits-types:wire-source;
+  }
+
+  /* ===== Coordination ===== */
+
+  notification coordination-change {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> ATSPM / TMC : coordination change";
+    description
+      "Coordination plan / cycle / offset / split changed. Collapses
+       ATSPM codes 134-149 (the 16 SplitNChange codes become one
+       notification with split-number as a field) plus 50-54
+       (MAX-in-effect transitions) and 131-133 (pattern / cycle /
+       offset). The 'kind' identityref names the specific change.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-coordination-event-kind; }
+      mandatory true;
+      description "Specific coordination-change identity from the Indiana taxonomy.";
+    }
+    uses openits-types:event-header;
+
+    leaf new-value      { type int32; description "Pattern / cycle / offset / split value depending on kind."; }
+    leaf split-number   { type openits-nema:phase-number; description "Populated when kind=coord-programmed-split-change (the changed split's phase)."; }
+    leaf previous-value { type int32; description "Optional; some controllers report only the new value."; }
+    uses openits-types:wire-source;
+  }
+
+  notification plan-applied {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> ATSPM / TMC : coordination change";
+    description
+      "A timing plan / coordination pattern became active on the
+       controller. Snapshot of the now-in-effect plan (cycle / offset /
+       split-set), distinct from coordination-change, which reports a
+       single changed dimension.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-coordination-event-kind; }
+      mandatory true;
+      description
+        "Always openits-signal-control-types:sc-plan-applied: a
+         coordination plan was applied.";
+    }
+    uses openits-types:event-header;
+
+    leaf plan-id {
+      type openits-sc-types:plan-id;
+      description "Pattern / plan number now in effect.";
+    }
+    leaf cycle-length-s {
+      type uint16;
+      units "seconds";
+      description "Active cycle length.";
+    }
+    leaf offset-s {
+      type uint16;
+      units "seconds";
+      description "Active coordination offset.";
+    }
+    leaf split-set {
+      type uint8;
+      description "Active split set / timing set, when applicable.";
+    }
+    leaf source {
+      type enumeration {
+        enum unspecified { value 0; description "Selection source not reported."; }
+        enum schedule    { value 1; description "Time-of-day schedule selected the plan."; }
+        enum operator    { value 2; description "Operator command selected the plan."; }
+        enum adaptive    { value 3; description "An adaptive engine selected the plan."; }
+        enum preemption  { value 4; description "Plan applied on preemption recovery."; }
+      }
+      description "What selected this plan.";
+    }
+  }
+
+  /* ===== Preemption ===== */
+
+  notification preemption-activated {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> TMC : preemption activity";
+    description
+      "A preemption became active on the controller. The 'kind'
+       identityref names the specific preemption stage (call-on,
+       gate-down, dwell-service, etc.); 'wire-source' carries the
+       original wire identifier when decoded from a wire vocabulary.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-preemption-event-kind; }
+      mandatory true;
+      description "Specific preemption-stage class.";
+    }
+
+    uses openits-types:event-header;
+
+    leaf preempt-number {
+      type openits-sc-types:preempt-slot;
+      mandatory true;
+      description
+        "Preempt slot (1-based) on the controller; pairs
+         activated/cleared with the hi-res stream.";
+    }
+
+    leaf type {
+      type identityref { base openits-sc-types:preemption-type; }
+      mandatory true;
+      description
+        "Source class of the preemption (rail, EV, other).";
+    }
+
+    leaf source-id {
+      type string;
+      description "Identifier of the requestor (vehicle, rail-gate, etc.).";
+    }
+
+    uses openits-types:wire-source;
+  }
+
+  notification preemption-cleared {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> TMC : preemption activity";
+    description
+      "Emitted at the END of preemption service: exit-interval
+       completion / resumption of normal operation (Indiana 111).
+       Companion to preemption-activated, keyed by the same
+       preempt-number.
+
+       A mid-dwell call-off (input drop, Indiana 104) is NOT a
+       trigger for this summary event — call-off lives only in the
+       hi-res preemption-event stream, since a controller may drop
+       and re-assert the preempt input more than once during a single
+       dwell without ending preemption service. The full NTCIP 1202 v03
+       stage sequence is: call-on (102) -> gate-down (103) -> entry
+       (105) -> track-clear (106) -> dwell (107) -> call-off (104, may
+       recur mid-dwell) -> exit (111); preemption-cleared corresponds
+       only to the terminal exit transition.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-preemption-event-kind; }
+      mandatory true;
+      description "Specific preemption-stage class for the clear transition (exit-interval, force-off).";
+    }
+
+    uses openits-types:event-header;
+
+    leaf preempt-number {
+      type openits-sc-types:preempt-slot;
+      mandatory true;
+      description
+        "Preempt slot (1-based) on the controller; pairs
+         activated/cleared with the hi-res stream.";
+    }
+
+    leaf type {
+      type identityref { base openits-sc-types:preemption-type; }
+      mandatory true;
+      description
+        "Source class of the preemption that just cleared (rail, EV,
+         other). Matches the type from the corresponding
+         preemption-activated emission.";
+    }
+
+    leaf source-id {
+      type string;
+      description "Identifier of the requestor from the corresponding preemption-activated.";
+    }
+
+    uses openits-types:wire-source;
+  }
+
+  notification preemption-event {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> ATSPM / TMC : preemption activity";
+    description
+      "High-resolution preemption stage transition from the controller's
+       HR log. Collapses ATSPM codes 101-111 + 116 into one notification
+       keyed on the preempt-number + stage; 'kind' identityref names the
+       specific stage.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-preemption-event-kind; }
+      mandatory true;
+      description "Specific preemption-stage class for this transition.";
+    }
+    uses openits-types:event-header;
+
+    leaf preempt-number { type openits-sc-types:preempt-slot; description "Preempt slot number on the controller (1-based)."; }
+    leaf source-id { type string; description "Free-form preempt source id (EVP unit id, etc.)."; }
+    uses openits-types:wire-source;
+  }
+
+  /* ===== TSP ===== */
+
+  notification tsp-event {
+    openits-types:arc-it-flow
+      "Transit Vehicle -> Roadway Signal Controller : TSP request";
+    description
+      "Transit signal priority transition: check-in / check-out /
+       timing adjustment. Collapses ATSPM codes 19 (early force-off
+       phase), 93-94 (TSP detector), 112-115 (cycle events), 117-119
+       (cycle/service-start/end) plus NTCIP 1211 priority-class
+       extensions.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-tsp-event-kind; }
+      mandatory true;
+      description "Specific TSP-event identity from the Indiana taxonomy.";
+    }
+    uses openits-types:event-header;
+
+    leaf tsp-number {
+      type uint8;
+      mandatory true;
+      description
+        "TSP slot/request number (Indiana 112-119 event param); pairs
+         check-in/check-out and attributes adjustments.";
+    }
+
+    leaf vehicle-id     { type string; description "Transit vehicle identifier."; }
+    leaf priority-class {
+      type uint8 { range "0..7"; }
+      description "Requested/granted priority class, 0..7 per NTCIP 1211.";
+    }
+    leaf adjustment-seconds {
+      type decimal64 { fraction-digits 1; }
+      description "Signed timing adjustment for adjustment-* events.";
+    }
+    leaf denial-reason {
+      type enumeration {
+        enum reservice-lock           { value 1; }
+        enum coord-constraint         { value 2; }
+        enum higher-priority-conflict { value 3; }
+        enum disabled                 { value 4; }
+        enum other                    { value 5; }
+      }
+      description
+        "Present when kind=tsp-request-denied: why priority was
+         denied.";
+      reference "NTCIP 1211 (Priority Request Server denial outcomes).";
+    }
+    uses openits-types:wire-source;
+  }
+
+  /* ===== TSAM ===== */
+
+  notification tsam-mode-changed {
+    openits-types:arc-it-flow
+      "TMC -> Roadway Signal Controller : adaptive control mode";
+    description "TSAM engagement state changed. Emitted on transitions only.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-tsam-event-kind; }
+      mandatory true;
+      description "Specific TSAM-event identity (mode-changed in this notification).";
+    }
+
+    uses openits-types:event-header;
+
+    leaf prior {
+      type openits-sc-types:tsam-engagement-state;
+      description "TSAM engagement state before the transition.";
+    }
+    leaf current {
+      type openits-sc-types:tsam-engagement-state;
+      mandatory true;
+      description "TSAM engagement state after the transition.";
+    }
+    leaf reason { type string; description "Free-form reason for the mode change (e.g., 'operator-enabled', 'detector-quality-below-threshold')."; }
+
+    uses openits-types:wire-source;
+  }
+
+  notification tsam-recommendation-applied {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> TMC : adaptive timing adjustment";
+    description
+      "TSAM produced a recommendation that was applied to the
+       controller's running timing plan.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-tsam-event-kind; }
+      mandatory true;
+      description "Specific TSAM-event identity (recommendation-applied in this notification).";
+    }
+
+    uses openits-types:event-header;
+
+    leaf recommendation-id {
+      type string;
+      description "TSAM-side correlation id for the recommendation.";
+    }
+    leaf adjustment-type {
+      type enumeration {
+        enum cycle-length     { value 1; }
+        enum split-adjustment { value 2; }
+        enum offset-adjustment { value 3; }
+        enum phase-extension  { value 4; }
+        enum phase-truncation { value 5; }
+        enum plan-change      { value 6; }
+        enum other            { value 7; }
+      }
+      mandatory true;
+      description
+        "What kind of timing change was applied: cycle-length,
+         split / offset adjustment, phase-extension or phase-truncation,
+         plan-change, or other.";
+    }
+    leaf magnitude-seconds {
+      type decimal64 { fraction-digits 1; }
+      units "seconds";
+      description
+        "Signed magnitude of the timing change in seconds. Positive =
+         lengthen / extend; negative = shorten / truncate.";
+    }
+    leaf phase-number {
+      type openits-nema:phase-number;
+      description "Phase the adjustment targets, when phase-scoped.";
+    }
+    leaf rationale {
+      type string;
+      description "Free-form rationale from the TSAM decision system.";
+    }
+
+    uses openits-types:wire-source;
+  }
+
+  /* ===== Fault ===== */
+
+  notification controller-fault-event {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> Maintenance : log-derived fault";
+    description
+      "High-resolution controller fault transition from the controller's
+       HR event log (Indiana codes 173-185). Distinct from fault-raised
+       which sources from NTCIP shortAlarmStatus polling; this one
+       carries millisecond-precision fault transitions.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-fault-event-kind; }
+      mandatory true;
+      description
+        "Specific HR-fault class. Typically derived from
+         openits-signal-control-types:controller-fault-event-kind
+         (e.g., fault-unit-flash-status, fault-power-failure,
+         fault-vendor-alarm).";
+    }
+    uses openits-types:event-header;
+
+    leaf fault-id    { type string; mandatory true; description "Device-local fault identifier; stable across raise/clear pairs."; }
+    leaf severity {
+      type openits-types:fault-severity;
+      mandatory true;
+      description "Operator-visible severity escalation.";
+    }
+    leaf description { type string; description "Human-readable fault description from the device."; }
+    leaf raised {
+      type boolean;
+      mandatory true;
+      description "True=raised, false=cleared. Mandatory: every fault event must state which.";
+    }
+    leaf flash-cause {
+      type identityref { base openits-sc-types:flash-cause; }
+      description
+        "For unit-flash faults (kind=fault-unit-flash-status): the current
+         flash cause. Indiana 173 (unit flash status) is a STATE report of
+         the cause, not a raise/clear pair; consumers read flash-cause for
+         the transition.";
+    }
+
+    uses openits-types:wire-source;
+  }
+
+  /* ===== Status ===== */
+
+  notification operational-status-report {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> TMC : signal system operational status";
+    description
+      "Periodic snapshot of the controller's operational status. Mirrors
+       the config-false `state` container; emitted on a
+       heartbeat cadence (distinct from mode-changed, which fires on
+       transitions only).";
+
+    leaf kind {
+      type identityref { base openits-sc-types:signal-control-event-kind; }
+      mandatory true;
+      description
+        "Always openits-signal-control-types:sc-operational-status-report:
+         a periodic controller status report.";
+    }
+    uses openits-types:event-header;
+
+    leaf mode {
+      type identityref { base openits-sc-types:controller-mode; }
+      description "Top-level operational mode (coordinated / free / flash / preempt / priority / manual / off).";
+    }
+    leaf flash-active {
+      type boolean;
+      description "The intersection is in a flashing state.";
+    }
+    leaf flash-cause {
+      type identityref { base openits-sc-types:flash-cause; }
+      description
+        "Why it is flashing — MMU conflict, programmed TOD, startup,
+         etc. (Indiana 173 param).";
+    }
+    leaf last-mode-change {
+      type yang:date-and-time;
+      description "Wall-clock time of the most recent controller-mode transition.";
+    }
+    leaf uptime-seconds {
+      type uint64;
+      units "seconds";
+      description "Controller uptime at the time of the snapshot.";
+    }
+  }
+
+  /* ===== Raw ===== */
+
+  notification unmapped-event {
+    description
+      "Emitted when the decoder cannot type a wire row. The wire-source
+       grouping preserves the original identifier so downstream consumers
+       can interpret it offline if/when a typed mapping is added.";
+
+    leaf kind {
+      type identityref {
+        base openits-sc-types:signal-control-event-kind;
+      }
+      mandatory true;
+      description
+        "Always openits-signal-control-types:sc-unmapped-event: a raw
+         controller HR-log row with no mapped openits event identity
+         yet.";
+    }
+    uses openits-types:event-header;
+
+    uses openits-types:wire-source;
+  }
+}

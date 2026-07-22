@@ -1,0 +1,10 @@
+{
+  "openits-ramp-metering-events:queue-override-cleared": {
+    "kind": "openits-ramp-metering-types:rm-queue-override-cleared",
+    "source-device-id": "i405-nb-western-ave",
+    "occurred-at": "2026-07-13T12:00:00Z",
+    "sequence": "1",
+    "queue-length-vehicles": 6,
+    "plan-id": 3
+  }
+}

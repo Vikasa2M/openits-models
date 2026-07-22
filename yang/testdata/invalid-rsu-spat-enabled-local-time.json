@@ -1,0 +1,16 @@
+{
+  "openits-rsu:rsu": {
+    "config": { "id": "rsu-safety-02", "name": "Safety Test RSU (bad time source)" },
+    "operating": {
+      "config": {
+        "configured-time-source": "local"
+      }
+    },
+    "messages": {
+      "spat": { "config": {
+        "enabled": true, "broadcast-interval": 100, "max-data-age-ms": 300,
+        "source-asc": "asc-01", "intersection": { "region": 1, "id": 42 }
+      } }
+    }
+  }
+}

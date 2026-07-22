@@ -1,0 +1,15 @@
+{
+  "openits-rsu:rsu": {
+    "config": { "id": "rsu-bsm-fwd-01", "name": "BSM forwarding RSU" },
+    "messages": {
+      "bsm": { "config": {
+        "forward-enabled": true,
+        "forward-destination": "10.0.0.9",
+        "forward-port": 5001,
+        "forward-protocol": "udp",
+        "forward-format": "uper-1609dot2",
+        "strip-path-history": true
+      } }
+    }
+  }
+}

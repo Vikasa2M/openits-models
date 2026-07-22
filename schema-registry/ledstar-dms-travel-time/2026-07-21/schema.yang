@@ -1,0 +1,170 @@
+module ledstar-dms-travel-time {
+  yang-version 1.1;
+  namespace "urn:ledstar:yang:dms-travel-time";
+  prefix ledstar-tt;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-dms {
+    prefix openits-dms;
+  }
+
+  organization
+    "Ledstar Inc. (vendor)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Vendor augment for Ledstar dynamic message signs: route
+     travel-time messaging.  Core sign control — message slots,
+     activation, brightness, mode — is already covered by
+     openits-dms; this augment adds the travel-time route table
+     Ledstar controllers render into the active message via template
+     substitution.
+
+     A consumer that does not load this module sees a normal
+     openits-dms sign whose active MULTI string happens to contain
+     travel times; one that does gets the per-route structure and
+     staleness semantics.
+
+     This module is a reference-implementation worked example of the
+     openits vendor-augmentation pattern (docs/06-extension-model.md).
+     Ledstar Inc. has not ratified this file; openits maintains it
+     under the conformance-reference NoI until a real Ledstar-aligned
+     org adopts it.
+
+     Copyright (c) 2026.  Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.1.0";
+
+  revision 2026-07-21 {
+    description
+      "Absence-guard the max-display-minutes must so a ceiling-only route
+       (min-display-minutes absent) validates; add an optional
+       round-to-minutes display-rounding rule for corridor consistency.";
+    reference "ARC-IT 9.1 Service Package TI06.";
+  }
+  revision 2026-07-07 {
+    description
+      "Initial revision.  Adds /sign/travel-time with a per-route
+       config table (destination, template, display bounds,
+       staleness policy) and per-route state (current minutes,
+       source, displayed).";
+    reference
+      "ARC-IT 9.1 Service Package TI06 (Traffic Information
+       Dissemination).";
+  }
+
+  /* --------------------------------------------------------------
+   * Augments
+   * -------------------------------------------------------------- */
+
+  augment "/openits-dms:sign" {
+    description
+      "Travel-time route table rendered by the sign controller.";
+
+    container travel-time {
+      description
+        "Routes this sign publishes travel times for.  The
+         controller substitutes each route's current minutes into
+         its MULTI template and composes the active message; when a
+         route goes stale it is blanked or dropped per its
+         staleness policy.";
+
+      list route {
+        key "route-id";
+        description "One entry per destination published on the sign.";
+
+        leaf route-id {
+          type string {
+            length "1..64";
+            pattern '[a-zA-Z0-9_-]+';
+          }
+          description "Agency-internal route identifier.";
+        }
+        leaf destination-name {
+          type string;
+          description "Operator-facing destination name (e.g., \"DOWNTOWN\").";
+        }
+        leaf multi-template {
+          type string {
+            length "0..65535";
+          }
+          description
+            "MULTI text with the '{tt}' placeholder token the
+             controller replaces with the route's current minutes.";
+        }
+        leaf min-display-minutes {
+          type uint16;
+          units "minutes";
+          description
+            "Floor for the displayed value; lower feeds display this
+             value instead (avoids advertising unachievable times).";
+        }
+        leaf max-display-minutes {
+          type uint16;
+          must "not(../min-display-minutes) or . >= ../min-display-minutes" {
+            error-message "max-display-minutes, when min-display-minutes is set, must be >= it";
+          }
+          units "minutes";
+          description
+            "Ceiling for the displayed value; higher feeds display
+             'OVER <max>' per the controller's rendering rules.";
+        }
+        leaf stale-after-s {
+          type uint32;
+          units "seconds";
+          default "300";
+          description
+            "Feed age beyond which the route's value is stale.";
+        }
+        leaf blank-when-stale {
+          type boolean;
+          default "true";
+          description
+            "Drop the route from the composed message when stale
+             (true) or keep displaying the last value (false).";
+        }
+        leaf round-to-minutes {
+          type uint8 { range "1..15"; }
+          units "minutes";
+          description
+            "Optional: round the displayed travel time to the nearest N minutes
+             for corridor-wide display consistency. Absent = no rounding.";
+        }
+
+        leaf current-minutes {
+          type uint16;
+          config false;
+          units "minutes";
+          description "Most recent travel-time value for the route.";
+        }
+        leaf source {
+          type string;
+          config false;
+          description
+            "Feed that produced the current value (probe, toll-tag
+             reidentification, connected-vehicle, manual).";
+        }
+        leaf updated-at {
+          type yang:date-and-time;
+          config false;
+          description "Wall-clock time the current value arrived.";
+        }
+        leaf displayed {
+          type boolean;
+          config false;
+          description
+            "The route is currently rendered in the active message.";
+        }
+      }
+    }
+  }
+}

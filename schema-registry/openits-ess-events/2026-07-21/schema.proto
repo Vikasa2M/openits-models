@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package openits.ess.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/ess/v1;essv1";
+
+import "google/protobuf/timestamp.proto";
+
+message SensorRecalibrated {
+  string kind = 99;
+  string sensor_id = 1;
+  string calibrated_by = 2;
+  string observed_by = 4;
+  google.protobuf.Timestamp occurred_at = 5;
+  string owner = 6;
+  uint64 sequence = 7;
+  string source_device_id = 8;
+}
+
+message WeatherAlert {
+  string kind = 99;
+  string threshold_id = 1;
+  string observed_value = 2;
+  string threshold_value = 3;
+  string sensor_id = 12;
+  Unit unit = 4;
+  Direction direction = 5;
+  string human_description = 6;
+  string observed_by = 7;
+  google.protobuf.Timestamp occurred_at = 8;
+  string owner = 9;
+  uint64 sequence = 10;
+  string source_device_id = 11;
+}
+
+enum Unit {
+  UNIT_CELSIUS = 0;
+  UNIT_METERS_PER_SECOND = 1;
+  UNIT_METERS = 2;
+  UNIT_MILLIMETERS = 3;
+  UNIT_MILLIMETERS_PER_HOUR = 4;
+  UNIT_PERCENT = 5;
+  UNIT_HECTOPASCALS = 6;
+  UNIT_WATTS_PER_SQUARE_METER = 7;
+  UNIT_PARTS_PER_MILLION = 8;
+  UNIT_DEGREES = 9;
+  UNIT_DIMENSIONLESS = 10;
+}
+
+enum Direction {
+  DIRECTION_ENTERED = 0;
+  DIRECTION_EXITED = 1;
+}
+

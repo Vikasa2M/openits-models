@@ -1,0 +1,10 @@
+{
+  "openits-ess:station": {
+    "config": {
+      "id": "i70-rwis-mm312"
+    },
+    "atmospheric": {
+      "humidity-percent": "150.0"
+    }
+  }
+}

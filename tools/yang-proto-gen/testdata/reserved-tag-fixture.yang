@@ -1,0 +1,54 @@
+module reserved-tag-fixture {
+  namespace "urn:test:reserved-tag-fixture";
+  prefix rtf;
+
+  // Mirrors the shape of the real openits-types:wire-source grouping
+  // (container-shaped, single member "source") so SharedGroupings treats it
+  // as shared once uses'd at >=2 sites below — exactly the mechanism that
+  // makes the real corpus's `source` field the reserved WireSource
+  // reference (see grouping.go).
+  grouping wire-source {
+    description
+      "Fixture stand-in for openits-types:wire-source, isolated to this
+       module so the test doesn't depend on the real corpus.";
+    container source {
+      leaf decoder { type string; }
+    }
+  }
+
+  identity fixture-kind {
+    description "Fixture stand-in base identity for an identityref kind leaf.";
+  }
+
+  // A plain domain leaf that happens to be named "source"/"kind" — the bug
+  // this fixture guards against is these getting the reserved WireSource
+  // (100) / identityref-kind (99) tags purely because of their name.
+  notification scalar-source-event {
+    description
+      "kind/source are ordinary string leaves here, not the reserved
+       identityref-kind / WireSource-reference shapes.";
+    leaf kind { type string; }
+    leaf source { type string; }
+    leaf detail { type string; }
+  }
+
+  // Two uses sites so SharedGroupings' >=2-site threshold treats
+  // "wire-source" as shared (see grouping.go).
+  notification wire-source-event-a {
+    leaf detail { type string; }
+    uses wire-source;
+  }
+
+  notification wire-source-event-b {
+    leaf detail { type string; }
+    uses wire-source;
+  }
+
+  notification identityref-kind-event {
+    description "kind here IS an identityref, so it must keep tag 99.";
+    leaf kind {
+      type identityref { base fixture-kind; }
+    }
+    leaf detail { type string; }
+  }
+}

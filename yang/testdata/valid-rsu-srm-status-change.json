@@ -1,0 +1,13 @@
+{
+  "openits-rsu-events:rsu-srm-status-change": {
+    "kind": "openits-rsu-types:rsu-srm-status-change-kind",
+    "source-device-id": "rsu-i35-mm214",
+    "occurred-at": "2026-07-11T14:05:03Z",
+    "sequence": "2",
+    "request-id": "srm-000482",
+    "vehicle-id": "transit-bus-4471",
+    "previous-status": "pending",
+    "new-status": "approved",
+    "decision-authority": "controller-prs"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "openits-reversible-lane:reversible-lane": {
+    "config": {
+      "id": "rl-blocked-01",
+      "direction-a": "northbound",
+      "direction-b": "southbound"
+    },
+    "control": {
+      "config": { "target-state": "open", "target-direction": "northbound" },
+      "state": {
+        "current-state": "closed",
+        "changeover-permitted": false,
+        "direction-open-permitted": false,
+        "blocking-interlocks": ["intrusion-1"]
+      }
+    },
+    "interlocks": {
+      "interlock": [
+        {
+          "interlock-id": "intrusion-1",
+          "config": { "interlock-id": "intrusion-1", "kind": "openits-reversible-lane-types:intrusion-clear", "name": "No intrusion in section", "required": true, "evaluation-point": "changeover-start" },
+          "state": { "satisfied": false }
+        }
+      ]
+    }
+  }
+}

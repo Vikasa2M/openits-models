@@ -1,0 +1,131 @@
+{
+  "openits-ess:station": {
+    "config": {
+      "id": "i70-rwis-mm312",
+      "name": "I-70 EB @ MM 312 RWIS",
+      "latitude": "39.6703",
+      "longitude": "-105.5256",
+      "elevation": "2520.0",
+      "road-reference": "I-70 EB @ MP 312"
+    },
+    "state": {
+      "id": "i70-rwis-mm312",
+      "name": "I-70 EB @ MM 312 RWIS",
+      "latitude": "39.6703",
+      "longitude": "-105.5256",
+      "elevation": "2520.0",
+      "road-reference": "I-70 EB @ MP 312",
+      "make": "Vaisala",
+      "model": "RWS200",
+      "firmware": "3.9.1"
+    },
+    "atmospheric": {
+      "observed-at": "2026-04-19T12:00:00Z",
+      "sensor-id": "atmos-1",
+      "air-temperature-c": "-4.5",
+      "dewpoint-c": "-6.0",
+      "humidity-percent": "82.0",
+      "pressure-hpa": "740.5",
+      "wind-speed-ms": "6.2",
+      "wind-gust-ms": "11.0",
+      "wind-direction-deg": "280.0",
+      "wind-direction-avg-deg": "182.0",
+      "wind-speed-avg-ms": "7.5",
+      "quality": "valid"
+    },
+    "precipitation": {
+      "observed-at": "2026-04-19T12:00:00Z",
+      "sensor-id": "precip-1",
+      "type": "freezing-rain",
+      "intensity": "light",
+      "rate-mm-h": "0.80",
+      "accumulated-mm": "12.4",
+      "snow-depth-mm": "45.0",
+      "snow-rate-mm-h": "2.50",
+      "accumulated-1h-mm": "3.0",
+      "accumulated-24h-mm": "22.0"
+    },
+    "visibility": {
+      "observed-at": "2026-04-19T12:00:00Z",
+      "sensor-id": "vis-1",
+      "range-m": 4800,
+      "situation": "blowing-snow"
+    },
+    "pavement": {
+      "sensor": [
+        {
+          "sensor-id": "pv-eb-inside",
+          "config": {
+            "sensor-id": "pv-eb-inside",
+            "lane-reference": "eastbound-inside",
+            "sensing-method": "embedded"
+          },
+          "state": {
+            "sensor-id": "pv-eb-inside",
+            "lane-reference": "eastbound-inside",
+            "sensing-method": "embedded",
+            "observed-at": "2026-04-19T12:00:00Z",
+            "surface-temperature-c": "-2.3",
+            "condition": "ice-warning",
+            "freeze-point-c": "-6.5",
+            "water-depth-mm": "0.20",
+            "salinity-ppm": 0,
+            "subsurface-temperature-c": "1.1",
+            "subsurface-depth-mm": 300,
+            "grip-coefficient": "0.35",
+            "chemical-percent": "12.5",
+            "chemical-factor": "3.20",
+            "ice-depth-mm": "0.80"
+          }
+        }
+      ]
+    },
+    "radiation": {
+      "observed-at": "2026-04-19T12:00:00Z",
+      "sensor-id": "solar-1",
+      "solar-radiation-wm2": "320.0",
+      "solar-radiation-hourly-avg-wm2": "295.5"
+    },
+    "diagnostics": {
+      "sensor": [
+        {
+          "sensor-id": "atmos-1",
+          "config": {
+            "sensor-id": "atmos-1",
+            "sample-interval-s": 60
+          },
+          "state": {
+            "sensor-id": "atmos-1",
+            "sample-interval-s": 60,
+            "type": "atmospheric",
+            "health": "ok",
+            "last-observation": "2026-04-19T12:00:00Z",
+            "last-calibration": "2026-01-15T10:00:00Z",
+            "next-calibration": "2027-01-15T10:00:00Z"
+          }
+        },
+        {
+          "sensor-id": "pv-eb-inside",
+          "config": {
+            "sensor-id": "pv-eb-inside",
+            "sample-interval-s": 60
+          },
+          "state": {
+            "sensor-id": "pv-eb-inside",
+            "sample-interval-s": 60,
+            "type": "pavement",
+            "health": "ok",
+            "last-observation": "2026-04-19T12:00:00Z",
+            "last-calibration": "2026-03-01T09:00:00Z",
+            "next-calibration": "2027-03-01T09:00:00Z"
+          }
+        }
+      ]
+    },
+    "configuration": {
+      "wind-sensor-height-m": "10.0",
+      "air-temperature-sensor-height-m": "2.0",
+      "visibility-sensor-height-m": "3.0"
+    }
+  }
+}

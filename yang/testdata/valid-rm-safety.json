@@ -1,0 +1,25 @@
+{
+  "openits-ramp-metering:ramp-meter": {
+    "config": {
+      "id": "i405-nb-safety",
+      "road-reference": "I-405 NB safety test on-ramp",
+      "latitude": "47.6205",
+      "longitude": "-122.3493"
+    },
+    "control": {
+      "config": {
+        "mode": "openits-ramp-metering-types:mode-active",
+        "non-metering-display": "rest-in-green"
+      }
+    },
+    "advance-warning-sign": { "config": { "enabled": true } },
+    "sequencing": {
+      "config": {
+        "advance-warning-duration": 8,
+        "startup-steady-green-duration": 5,
+        "shutdown-flush-enabled": true,
+        "shutdown-flush-max-duration": 30
+      }
+    }
+  }
+}

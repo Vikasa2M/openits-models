@@ -1,0 +1,281 @@
+module openits-ramp-metering-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:ramp-metering-types";
+  prefix openits-rm-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Ramp-metering service types: the release-rate-vph / queue-vehicles
+     typedefs, the rate-change-cause enumeration, the metering-algorithm
+     identity family, the ramp-meter mode families, and the ramp-metering
+     event-kind identity hierarchy. Derives from the cross-service
+     openits-types:device-event-kind root so ramp-meter events emitted via
+     the generic cross-service notifications (openits-common-fault-events,
+     openits-common-mode-events) carry a service-classified 'kind'
+     identityref.
+
+     Leaf fault identities classify ramp-meter fault events on the wire; the
+     device's active-fault list reuses the same ramp-meter-fault-event-kind
+     base. New identities are additive.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.5.0";
+
+  revision 2026-07-21 {
+    description
+      "BREAKING(none): widen release-rate-vph ceiling 1800->3600 (range
+       widen, wire-neutral) so a dual-lane aggregate rate is expressible.
+       Add the metering-algorithm identity family (demand-capacity / alinea
+       / fuzzy / local-adaptive / other) for the traffic-responsive
+       algorithm leaf. Additive. Refresh stale gen-1 description text (no
+       fault-category catalog; no flush mode).
+       - Collapse duplicate same-date revision statements.
+       - Document that meter-mode mode-value identities are module-scoped (no wire collision).";
+    reference "NTCIP 1207 v02; ARC-IT TI03.";
+  }
+  revision 2026-07-16 {
+    description
+      "Add a rate-change-cause enumeration (plan-switch / traffic-responsive
+       / queue-override / operator-override / schedule / other) so the
+       release-rate-changed notification classifies why the rate changed,
+       replacing a free-form reason string (Cut 2d).";
+    reference "NTCIP 1207 v02; ARC-IT TI03.";
+  }
+  revision 2026-07-15 {
+    description
+      "Ramp-meter mode taxonomy for the safety interlock: add an abstract
+       metering-mode base (mode-active and mode-manual now derive from it)
+       so the advance-warning-sign interlock covers every active-metering
+       mode via derived-from(); remove mode-flush, which duplicated the
+       queue-override-active state flag rather than naming a commandable
+       operating mode. BREAKING (pre-v1): mode-flush is removed and two
+       identities are reparented (wire-neutral — an identityref serialises
+       as a string).";
+    reference "RFC 7950 section 11 (YANG identity evolution).";
+  }
+  revision 2026-07-14 {
+    description
+      "Cut 3c (events layering): adopt typedefs release-rate-vph and
+       queue-vehicles moved here from openits-ramp-metering.
+       Additive.";
+  }
+  revision 2026-07-13 {
+    description
+      "Add three notification-kind identities under
+       ramp-meter-event-kind: rm-release-rate-changed,
+       rm-queue-override-activated, rm-queue-override-cleared. These
+       are the 'kind' identityref targets adopted by the
+       corresponding openits-ramp-metering-events notifications under
+       the unified event contract (every notification now carries a
+       mandatory 'kind' plus 'uses openits-types:event-header'). None
+       is a periodic report, so none dual-bases on
+       openits-types:report-event-kind. Additive.
+
+      Stamp openits-version (borrowed from OpenConfig's
+       openconfig-version practice) so tooling can read a
+       compatibility-intent signal independent of the revision date.
+       Add the meter-mode identity hierarchy (converted from the
+       enumeration formerly in openits-ramp-metering) so vendors can
+       add proprietary metering modes without a base-model revision.
+       meter-mode derives from openits-types:operational-mode so its
+       values can be carried in the generic mode-changed
+       prior/current identityref.";
+    reference "RFC 7950 section 11.";
+  }
+  revision 2026-06-11 {
+    description
+      "Initial revision. Service root, dual-classified fault and mode
+       sub-bases, and leaf fault identities mirroring the
+       openits-ramp-metering fault-category catalog.";
+    reference
+      "NTCIP 1207:2017 (ramp-meter functional reference; fault
+       classes, metering modes).";
+  }
+
+  /* --------------------------------------------------------------
+   * Typedefs
+   * -------------------------------------------------------------- */
+
+  typedef release-rate-vph {
+    type uint16 {
+      range "0 .. 3600";
+    }
+    units "vehicles-per-hour";
+    description
+      "Released-vehicle rate. Per-lane practice ~240..1000 vph; a single
+       metered lane rarely exceeds ~1800. This typedef is used for BOTH
+       per-lane rates and the meter AGGREGATE (plan) rate, so the ceiling
+       is 3600 to admit a dual-lane / tandem aggregate. Zero means no
+       vehicles are being released (off / on-standby modes).";
+  }
+
+  typedef rate-change-cause {
+    type enumeration {
+      enum plan-switch        { description "The active metering plan changed."; }
+      enum traffic-responsive { description "A traffic-responsive algorithm adjusted the rate from mainline / advance detector inputs."; }
+      enum queue-override      { description "A queue-override flush raised or restored the rate."; }
+      enum operator-override   { description "An operator manually set the rate."; }
+      enum schedule            { description "A time-of-day schedule changed the rate."; }
+      enum other               { description "Cause not otherwise classified."; }
+    }
+    description
+      "Why a ramp meter's release rate changed. Replaces a free-form
+       reason string so consumers can classify and aggregate rate changes.";
+  }
+
+  typedef queue-vehicles {
+    type uint16 {
+      range "0 .. 999";
+    }
+    description "Observed or configured queue length, in vehicles.";
+  }
+
+  /* --------------------------------------------------------------
+   * Service root + dual-classified sub-bases
+   * -------------------------------------------------------------- */
+
+  identity ramp-meter-event-kind {
+    base openits-types:device-event-kind;
+    description "Root for ramp-meter events.";
+  }
+
+  identity ramp-meter-fault-event-kind {
+    base openits-types:fault-event-kind;
+    base ramp-meter-event-kind;
+    description
+      "Ramp-meter fault events. Dual-classified: by behavioral class
+       (fault-event-kind) and by service (ramp-meter-event-kind).
+       Used as the fallback kind when a decoder cannot map a more
+       specific leaf identity.";
+  }
+
+  identity ramp-meter-mode-event-kind {
+    base openits-types:mode-event-kind;
+    base ramp-meter-event-kind;
+    description
+      "Ramp-meter operational-mode transitions (off / on-standby /
+       active / fault / manual). The mode-changed
+       notification's prior/current strings are interpreted in this
+       mode-space.";
+    reference "NTCIP 1207:2017 (metering modes).";
+  }
+
+  /* --------------------------------------------------------------
+   * Fault leaf identities (mirror openits-ramp-metering
+   * fault-category)
+   * -------------------------------------------------------------- */
+
+  identity ramp-meter-fault-controller {
+    base ramp-meter-fault-event-kind;
+    description "Internal ramp-meter-controller fault.";
+  }
+  identity ramp-meter-fault-detector {
+    base ramp-meter-fault-event-kind;
+    description
+      "Detector fault (demand / passage / queue / advance loop).";
+  }
+  identity ramp-meter-fault-signal-head {
+    base ramp-meter-fault-event-kind;
+    description
+      "Signal-head fault (lamp out, wrong indication, etc.).";
+  }
+  identity ramp-meter-fault-power {
+    base ramp-meter-fault-event-kind;
+    description "Power-supply or input-voltage fault at the meter.";
+  }
+  identity ramp-meter-fault-communication {
+    base ramp-meter-fault-event-kind;
+    description
+      "Communication fault between meter and upstream system.";
+  }
+
+  /*
+   * Ramp-meter operating mode. Modelled as an identity (not an
+   * enumeration) so vendors can add proprietary metering modes by
+   * deriving from meter-mode in their own module without a
+   * base-model revision.
+   */
+  identity meter-mode {
+    base openits-types:operational-mode;
+    description
+      "Base identity for the operational mode of a ramp meter.
+       Mode-value identities here (mode-off, mode-unknown, ...) are
+       intentionally module-scoped; on the wire they are module-qualified
+       (openits-ramp-metering-types:mode-off vs openits-dms-types:mode-off)
+       so there is no collision. Not service-prefixed pre-v1 to avoid
+       churn.";
+  }
+  identity metering-mode {
+    base meter-mode;
+    description
+      "Abstract base for modes in which the meter is actively releasing
+       vehicles, and therefore the advance-warning sign must be warning.
+       Vendors adding a proprietary active-metering mode should derive
+       from this so the metering safety interlocks apply automatically.";
+  }
+  identity mode-unknown {
+    base meter-mode;
+    description "Operating mode is unknown or not reported.";
+  }
+  identity mode-off {
+    base meter-mode;
+    description "Meter is powered down / not metering.";
+  }
+  identity mode-on-standby {
+    base meter-mode;
+    description "Meter is armed but not currently releasing vehicles.";
+  }
+  identity mode-active {
+    base metering-mode;
+    description "Normal metering state.";
+  }
+  identity mode-fault {
+    base meter-mode;
+    description "Meter is in a fault state and not metering normally.";
+  }
+  identity mode-manual {
+    base metering-mode;
+    description "Meter is under manual/field control.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notification-kind identities ('kind' identityref targets for
+   * openits-ramp-metering-events notifications)
+   * -------------------------------------------------------------- */
+
+  /* --------------------------------------------------------------
+   * Traffic-responsive metering algorithm (open, vendor-extensible)
+   * -------------------------------------------------------------- */
+
+  identity metering-algorithm {
+    description "Base for a ramp-meter traffic-responsive algorithm (vendor-extensible).";
+  }
+  identity metering-algorithm-demand-capacity { base metering-algorithm; description "Classic demand-capacity metering."; }
+  identity metering-algorithm-alinea          { base metering-algorithm; description "ALINEA occupancy-feedback metering."; }
+  identity metering-algorithm-fuzzy           { base metering-algorithm; description "Fuzzy-logic metering (e.g. SDRMS-style)."; }
+  identity metering-algorithm-local-adaptive  { base metering-algorithm; description "Local adaptive/traffic-responsive metering not otherwise classified."; }
+  identity metering-algorithm-other           { base metering-algorithm; description "Vendor-specific algorithm not covered above."; }
+
+  identity rm-release-rate-changed {
+    base ramp-meter-event-kind;
+    description "Meter release rate changed.";
+  }
+  identity rm-queue-override-activated {
+    base ramp-meter-event-kind;
+    description "Queue override engaged.";
+  }
+  identity rm-queue-override-cleared {
+    base ramp-meter-event-kind;
+    description "Queue override cleared.";
+  }
+}

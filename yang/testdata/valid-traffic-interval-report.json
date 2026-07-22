@@ -1,0 +1,32 @@
+{
+  "openits-traffic-sensor-events:traffic-interval-report": {
+    "kind": "openits-traffic-sensor-types:ts-traffic-interval-report",
+    "source-device-id": "i35-mm214-nb-ts-01",
+    "occurred-at": "2026-07-11T14:00:00Z",
+    "sequence": "1",
+    "lane": [
+      {
+        "lane-id": 2,
+        "name": "NB inside",
+        "carriageway": "northbound",
+        "interval-start": "2026-07-11T14:00:00Z",
+        "interval-duration-s": 300,
+        "volume": 412,
+        "occupancy": "18.5",
+        "speed-average-kmh": "91.2",
+        "speed-space-mean-kmh": "90.3",
+        "speed-85th-percentile-kmh": "104.7",
+        "headway-average-s": "2.3",
+        "gap-average-s": "1.1",
+        "density": "12.4",
+        "flow-rate-vph": 4944,
+        "data-quality": "valid",
+        "uptime-percent": "100.0",
+        "class-volume": [
+          { "class-id": 1, "volume": 380 },
+          { "class-id": 2, "volume": 32 }
+        ]
+      }
+    ]
+  }
+}

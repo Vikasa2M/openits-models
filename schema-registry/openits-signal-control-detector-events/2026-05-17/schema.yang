@@ -1,0 +1,82 @@
+module openits-signal-control-detector-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:signal-control-detector-events";
+  prefix openits-sc-det;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-signal-control-types {
+    prefix openits-sc-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Signal-controller vehicle and TSP detector transition + fault
+     notifications. Each notification carries a 'kind' identityref
+     derived from openits-signal-control-types:sc-detector-event-kind
+     and a 'wire-source' grouping.";
+
+  revision 2026-05-17 {
+    description
+      "Initial revision. Hosts the detector-transition notification
+       migrated from openits-signal-control-notifications@2026-05-15.";
+    reference "ATSPM Indiana enumeration (detector event codes).";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification detector-transition {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> ATSPM / TMC : vehicle detection";
+    description
+      "A vehicle detector channel changed state. The 'kind' identityref
+       names the specific transition (on, off, restored, or a fault
+       class); 'wire-source' carries the original Indiana wire identifier.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-detector-event-kind; }
+      mandatory true;
+      description "Specific detector-transition identity from the Indiana taxonomy.";
+    }
+    leaf source-device-id {
+      type openits-types:device-id;
+      mandatory true;
+      description "Controller hosting this detector channel.";
+    }
+    leaf channel { type uint32; mandatory true; description "Detector channel number on the controller."; }
+    leaf transition {
+      type enumeration {
+        enum unspecified; enum on; enum off; enum restored;
+        enum fault-other; enum fault-watchdog; enum fault-open-loop;
+        enum fault-shorted-loop; enum fault-excessive-change;
+      }
+      description
+        "What the channel did: on/off transition, restoration, or a
+         specific fault class (watchdog, open-loop, shorted-loop,
+         excessive-change).";
+    }
+    leaf lane         { type string; description "Inventory-enriched lane label."; }
+    leaf approach     { type string; description "Inventory-enriched approach label."; }
+    leaf phase-served { type uint8;  description "Phase this detector calls."; }
+    leaf occurred-at {
+      type yang:date-and-time;
+      mandatory true;
+      description "Wall-clock time the detector transition occurred at the controller.";
+    }
+
+    uses openits-types:wire-source;
+  }
+}

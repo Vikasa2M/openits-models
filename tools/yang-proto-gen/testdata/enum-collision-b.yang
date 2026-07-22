@@ -1,0 +1,22 @@
+module enum-collision-b {
+  namespace "urn:test:enum-collision-b";
+  prefix ecb;
+
+  // Paired with enum-collision-a.yang for TestEmit_enumNoCrossModuleCollision:
+  // both modules declare an inline `enumeration` on a same-named leaf
+  // ("state") with different, partially-overlapping value sets, mirroring
+  // the real prior/current collision between openits-rsu-events and
+  // openits-signal-control-events.
+
+  notification event-b {
+    leaf state {
+      type enumeration {
+        enum disabled;
+        enum advisory;
+        enum active;
+        enum suspended;
+      }
+      description "State before/after some module-b transition.";
+    }
+  }
+}

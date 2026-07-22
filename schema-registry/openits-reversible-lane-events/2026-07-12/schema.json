@@ -1,0 +1,125 @@
+{
+  "lane-state-changed": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "changed-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "initiated-by": {
+      "type": "string"
+    },
+    "new-direction": {
+      "enum": [
+        "eastbound",
+        "northbound",
+        "southbound",
+        "unknown",
+        "westbound"
+      ],
+      "type": "string"
+    },
+    "new-state": {
+      "enum": [
+        "closed",
+        "in-transition",
+        "open",
+        "unknown"
+      ],
+      "type": "string"
+    },
+    "previous-direction": {
+      "enum": [
+        "eastbound",
+        "northbound",
+        "southbound",
+        "unknown",
+        "westbound"
+      ],
+      "type": "string"
+    },
+    "previous-state": {
+      "enum": [
+        "closed",
+        "in-transition",
+        "open",
+        "unknown"
+      ],
+      "type": "string"
+    }
+  },
+  "type": "object"
+},
+  "lcs-conflict-detected": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "lcs-direction-a": {
+      "enum": [
+        "dark",
+        "flashing-yellow-x",
+        "green-arrow",
+        "red-x",
+        "unknown",
+        "yellow-x"
+      ],
+      "type": "string"
+    },
+    "lcs-direction-b": {
+      "enum": [
+        "dark",
+        "flashing-yellow-x",
+        "green-arrow",
+        "red-x",
+        "unknown",
+        "yellow-x"
+      ],
+      "type": "string"
+    },
+    "segment-id": {
+      "type": "string"
+    }
+  },
+  "type": "object"
+},
+  "transition-timeout": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "from-direction": {
+      "enum": [
+        "eastbound",
+        "northbound",
+        "southbound",
+        "unknown",
+        "westbound"
+      ],
+      "type": "string"
+    },
+    "sequence-step": {
+      "type": "string"
+    },
+    "started-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "timeout-s": {
+      "maximum": 65535,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "to-direction": {
+      "enum": [
+        "eastbound",
+        "northbound",
+        "southbound",
+        "unknown",
+        "westbound"
+      ],
+      "type": "string"
+    }
+  },
+  "type": "object"
+}
+}

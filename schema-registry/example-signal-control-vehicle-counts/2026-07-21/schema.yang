@@ -1,0 +1,76 @@
+module example-signal-control-vehicle-counts {
+  yang-version 1.1;
+  namespace "urn:example:yang:signal-control-vehicle-counts";
+  prefix ex-vc;
+
+  import openits-signal-control {
+    prefix openits-sc;
+  }
+
+  organization
+    "OpenITS Working Group — pedagogical example";
+  contact
+    "OpenITS Working Group (proposal)";
+  description
+    "Example augment for the signal-control service. Adds per-phase
+     vehicle-count statistics under each phase's state container. This
+     module is shipped in-tree as the canonical pattern reference for
+     contributors authoring real augments; it is NOT a real vendor
+     implementation and SHOULD NOT be cited as one.
+
+     Real vendor augments live in their own namespace (e.g.,
+     urn:siemens:yang:signal-control-vehicle-counts) and are authored
+     in this directory following the same shape.";
+
+  revision 2026-07-21 {
+    description
+      "Normalize the module contact string to the repo-wide
+       'OpenITS Working Group (proposal)' placeholder. No schema
+       changes.";
+  }
+
+  revision 2026-04-27 {
+    description
+      "Initial example. Adds /signal-controller/phases/phase/state/
+       vehicle-counts/{count-1min, count-1hour, total-since-cycle-start}
+       per phase.";
+  }
+
+  // =========================================================================
+  // Augments
+  // =========================================================================
+
+  augment "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:state" {
+    description
+      "Per-phase rolling vehicle counts. Operators that have detector
+       infrastructure can populate these; consumers without the augment
+       loaded simply ignore the extra leaves.";
+
+    container vehicle-counts {
+      description
+        "Rolling vehicle-count windows for the phase. Counts accumulate
+         in the controller's local clock; reset semantics are
+         vendor-defined and not specified here.";
+
+      leaf count-1min {
+        type uint32;
+        units "vehicles";
+        description "Vehicles observed by detector in the last 60 seconds.";
+      }
+
+      leaf count-1hour {
+        type uint32;
+        units "vehicles";
+        description "Vehicles observed by detector in the last 3600 seconds.";
+      }
+
+      leaf total-since-cycle-start {
+        type uint32;
+        units "vehicles";
+        description
+          "Vehicles observed since the current cycle started; resets at
+           cycle boundaries (vendor-defined).";
+      }
+    }
+  }
+}

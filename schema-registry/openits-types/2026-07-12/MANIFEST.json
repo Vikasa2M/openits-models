@@ -1,0 +1,7 @@
+{
+  "module": "openits-types",
+  "revision": "2026-07-12",
+  "files": [
+    "schema.yang"
+  ]
+}

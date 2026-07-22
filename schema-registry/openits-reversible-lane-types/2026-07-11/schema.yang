@@ -1,0 +1,103 @@
+module openits-reversible-lane-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:reversible-lane-types";
+  prefix openits-reversible-lane-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Reversible-lane event-kind identity hierarchy. Derives from the
+     cross-service openits-types:device-event-kind root so
+     reversible-lane events emitted via the generic cross-service
+     notifications (openits-common-fault-events) carry a
+     service-classified 'kind' identityref, filterable with
+     derived-from-or-self at any altitude.
+
+     The leaf fault identities mirror the fault-category catalog
+     formerly carried in-module by openits-reversible-lane (the gen-1
+     hierarchy, now deleted): reversible-lane-event-kind is the
+     service root, and reversible-lane-fault-event-kind is the
+     dual-classified fault sub-base whose children classify entries in
+     the facility's active-fault list. New identities are additive;
+     removing or renaming one is a breaking change.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  revision 2026-07-11 {
+    description
+      "Initial revision. Service root, dual-classified fault sub-base,
+       and leaf fault identities migrated from the gen-1
+       openits-reversible-lane fault-category catalog (deleted from
+       the service module in the same change) as part of the fault-
+       taxonomy gen-2 consolidation.";
+    reference
+      "ARC-IT 9.1 Service Package TM16 (Reversible Lane Management);
+       MUTCD 11th Ed. Chapter 4M (Lane-Use Control Signals).";
+  }
+
+  /* --------------------------------------------------------------
+   * Service root + dual-classified sub-base
+   * -------------------------------------------------------------- */
+
+  identity reversible-lane-event-kind {
+    base openits-types:device-event-kind;
+    description
+      "Root for reversible-lane events. Service dimension of the
+       event-kind taxonomy; behavioral roots derive from this.";
+  }
+
+  identity reversible-lane-fault-event-kind {
+    base openits-types:fault-event-kind;
+    base reversible-lane-event-kind;
+    description
+      "Reversible-lane fault events. Dual-classified: by behavioral
+       class (fault-event-kind) and by service
+       (reversible-lane-event-kind). Used as the fallback kind when a
+       decoder cannot map a more specific leaf identity.";
+  }
+
+  /* --------------------------------------------------------------
+   * Fault leaf identities (mirror the former openits-reversible-lane
+   * fault-category catalog)
+   * -------------------------------------------------------------- */
+
+  identity reversible-lane-fault-plc-communication {
+    base reversible-lane-fault-event-kind;
+    description
+      "Communication fault between gateway and the facility PLC.";
+  }
+  identity reversible-lane-fault-interlock {
+    base reversible-lane-fault-event-kind;
+    description
+      "A safety interlock is unsatisfied or failed its self-check.";
+  }
+  identity reversible-lane-fault-conflict {
+    base reversible-lane-fault-event-kind;
+    description
+      "Conflicting indications detected (e.g., green-arrow both
+       ways).";
+  }
+  identity reversible-lane-fault-gate {
+    base reversible-lane-fault-event-kind;
+    description
+      "Barrier gate failed to reach its commanded position.";
+  }
+  identity reversible-lane-fault-lcs-head {
+    base reversible-lane-fault-event-kind;
+    description
+      "A lane-control-signal head failed verification or lamp check.";
+  }
+  identity reversible-lane-fault-power {
+    base reversible-lane-fault-event-kind;
+    description
+      "Power-supply or input-voltage fault at the facility.";
+  }
+}

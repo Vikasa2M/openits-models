@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "initiated-by": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "new-direction": {
+      "enum": [
+        "eastbound",
+        "northbound",
+        "southbound",
+        "unknown",
+        "westbound"
+      ],
+      "type": "string"
+    },
+    "new-state": {
+      "enum": [
+        "closed",
+        "in-transition",
+        "open",
+        "unknown"
+      ],
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "previous-direction": {
+      "enum": [
+        "eastbound",
+        "northbound",
+        "southbound",
+        "unknown",
+        "westbound"
+      ],
+      "type": "string"
+    },
+    "previous-state": {
+      "enum": [
+        "closed",
+        "in-transition",
+        "open",
+        "unknown"
+      ],
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+}

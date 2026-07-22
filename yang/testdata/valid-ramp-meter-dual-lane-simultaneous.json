@@ -1,0 +1,102 @@
+{
+  "openits-ramp-metering:ramp-meter": {
+    "config": {
+      "id": "i5-nb-mercer-st",
+      "road-reference": "I-5 NB @ Mercer St on-ramp (dual-lane)",
+      "latitude": "47.6247",
+      "longitude": "-122.3316"
+    },
+    "state": {
+      "id": "i5-nb-mercer-st",
+      "road-reference": "I-5 NB @ Mercer St on-ramp (dual-lane)",
+      "latitude": "47.6247",
+      "longitude": "-122.3316",
+      "make": "Siemens",
+      "model": "m60-ramp",
+      "firmware": "9.4.1"
+    },
+    "control": {
+      "config": {
+        "mode": "openits-ramp-metering-types:mode-active",
+        "active-plan-id": 2,
+        "command-source": "openits-types:control-central"
+      },
+      "state": {
+        "mode": "openits-ramp-metering-types:mode-active",
+        "active-plan-id": 2,
+        "current-release-rate-vph": 1600,
+        "last-mode-change": "2026-04-19T07:00:00Z",
+        "queue-override-active": false,
+        "command-source": "openits-types:control-central"
+      }
+    },
+    "advance-warning-sign": {
+      "config": {
+        "enabled": true
+      }
+    },
+    "plans": {
+      "plan": [
+        {
+          "plan-id": 2,
+          "name": "am-peak-dual",
+          "release-rate-vph": 1600,
+          "headway-s": "4.5",
+          "vehicles-per-green": 1,
+          "queue-override-threshold-vehicles": 30,
+          "phase-timing": {
+            "min-green": "1.0",
+            "max-green": "30.0",
+            "yellow-change": "2.0",
+            "red-clear": "1.0",
+            "passage": "0.5"
+          }
+        }
+      ]
+    },
+    "lanes": {
+      "lane": [
+        {
+          "lane-id": "meter-1",
+          "config": {
+            "lane-id": "meter-1",
+            "bypass": false,
+            "min-release-rate-vph": 240,
+            "max-release-rate-vph": 1000,
+            "vehicles-per-green": 1,
+            "bypass-operation": "free-flow"
+          },
+          "state": {
+            "lane-id": "meter-1",
+            "bypass": false,
+            "head-state": "red",
+            "current-release-rate-vph": 800
+          }
+        },
+        {
+          "lane-id": "meter-2",
+          "config": {
+            "lane-id": "meter-2",
+            "bypass": false,
+            "min-release-rate-vph": 240,
+            "max-release-rate-vph": 1000,
+            "vehicles-per-green": 1,
+            "bypass-operation": "free-flow"
+          },
+          "state": {
+            "lane-id": "meter-2",
+            "bypass": false,
+            "head-state": "red",
+            "current-release-rate-vph": 800
+          }
+        }
+      ],
+      "config": { "release-coordination": "simultaneous" }
+    },
+    "diagnostics": {
+      "controller-uptime-s": 345600,
+      "last-self-test": "2026-04-19T06:55:00Z",
+      "signal-head-faults": 0
+    }
+  }
+}

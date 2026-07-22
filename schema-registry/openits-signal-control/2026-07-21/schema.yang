@@ -1,0 +1,1589 @@
+module openits-signal-control {
+  yang-version 1.1;
+  namespace "urn:openits:yang:signal-control";
+  prefix openits-sc;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-nema-common {
+    prefix openits-nema;
+  }
+
+  import openits-signal-control-types {
+    prefix openits-sc-types;
+  }
+  import openits-cabinet-power {
+    prefix openits-cabinet-power;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "A YANG data model for roadside traffic signal controllers.
+
+     This module is designed to align with the ARC-IT (Architecture
+     Reference for Cooperative and Intelligent Transportation)
+     Traffic Signal Control service package, providing a transport-
+     independent replacement for the SNMP/MIB coupling of NTCIP 1202.
+
+     Nodes are annotated with the 'arc-it-flow' extension to document
+     which ARC-IT information flow each data element participates in.
+     Tooling can walk the module tree and emit coverage reports
+     against ARC-IT for conformance review.
+
+     Copyright (c) 2026.  Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.15.0";
+
+  revision 2026-07-21 {
+    description
+      "Model-review remediation (2026-07). Correctness/consistency:
+       - Relocate the yellow-change and ped-clear safety musts off the
+         non-presence timing container onto phases/phase/config, so a phase
+         that omits timing entirely no longer bypasses them.
+       - Drop the false max-green-2 >= max-green relation (MAX-2 is an
+         independent alternate maximum); keep only 'requires max-green present'.
+       - Rewrite the split minimum-service must as max(vehicle, pedestrian)
+         minimum via two comparisons (walk/FDW time concurrently with green).
+       - Add core engineering floors on overlap trailing-yellow/red-clear.
+       - Make conflict-monitor a config-false readback of the MMU program card
+         (not a writable command surface); same-ring cross-check moves to the
+         conformance harness.
+       - active-plan readback uses require-instance false.
+       - channels: mandatory source choice, ranged channel-number typedef,
+         aligned mmu faulting-channels type; forbid pedestrian channels
+         flashing in cabinet flash.
+       - Require coordination offset < cycle-length.
+       - BREAKING: restrict sampled cycle-state to persistent sub-states
+         (local-zero/begin-pickup/master-cycle-zero are log-only, carried by
+         the coord-cycle-state-change notification).
+       - Add preemptor min-ped-clear-before-entry; append phase-omit/none
+         split-mode members; correct minus-green overlap semantics + add
+         modifier-phases; add phase red-revert; add detector diagnostic
+         thresholds; added-initial to tenths + min-gap<=passage guard; add
+         detector measurement collection provenance + shared speed typedef;
+         add timebase timezone/DST; add crossing-distance leaf; canonical
+         must statement ordering; normalize organization string; fix stale
+         'normal' mode descriptions.
+       - BREAKING: shared identifier typedefs (detector-channel, preempt-slot,
+         plan-id, overlap-number) repointing core+event surfaces; overlap list
+         re-keyed numerically (NTCIP overlapTable indexing) so core and events
+         correlate.
+       Capability additions: phase sequence table + per-plan reference; TSP/
+       priority strategy config + active-request state; BREAKING preemption-type
+       enum -> identity hierarchy; start-up flash config + preempt flash-dwell;
+       leading pedestrian interval.
+       - Collapse duplicate same-date revision statements.";
+    reference
+      "NTCIP 1202:2019 §5; NTCIP 1211; NTCIP 1201; NEMA TS-2 §3.5/§4;
+       MUTCD 11th ed. 4F.17/4I.06/Ch.8C; RFC 7950 §7.5.1.";
+  }
+  revision 2026-07-17 {
+    description
+      "Compose the shared openits-cabinet-power grouping into a config-false
+       cabinet-power container on the signal-controller: AC line / UPS battery
+       (state-of-charge, runtime-remaining) / generator / cabinet + police-panel
+       door telemetry. Power state precedes most comm failures, so this is the
+       leading indicator and dispatch discriminator the opaque sc-fault-power
+       fault alone could not carry. Additive; the specific power fault kinds
+       (cabinet-power-on-battery etc.) ride the shared fault notifications.";
+    reference "IEC 62040 (UPS); NEMA TS 2 (cabinet).";
+  }
+  revision 2026-07-14 {
+    description
+      "Config completeness cut 2d (timebase): add a top-level timebase container
+       (NTCIP 1201). Config: day-plan list (each an ordered set of time-of-day
+       actions; a choice selects a coordination timing-plan or a special-
+       operation free/flash mode) and a schedule-entry list (months / days-of-week /
+       days-of-month calendar rules -> day-plan, where an empty axis means all).
+       State: a clock container (current-time, time-source identityref,
+       sync-status, offset-ms). One config-true must: a day-plan must contain at
+       least one action. Adds a time-of-day (HH:MM:SS) typedef. Additive. The
+       action/special leaf is named 'special-operation' rather than 'operation'
+       to avoid a generated-code name collision with the existing top-level
+       operation container (both would otherwise map to a proto/Go 'Operation'
+       type in the same package).
+
+      Config completeness cut 2c (mode collapse + parked musts): add
+       coordination/state/cycle-state (free / in-step / transition sub-states,
+       Indiana 0-7) so a coordinated-but-transitioning controller is
+       distinguishable without a separate mode. Add two config-true phase musts:
+       max-green-2 requires max-green present and >= max-green; a phase with
+       ped-recall or rest-in-walk must serve a pedestrian movement (walk > 0).
+       Companion to the -types mode-normal removal.
+
+      Config completeness cut 2c (preempt table): restructure the state-only
+       preemption container into a paired config/state preemptor list (NTCIP 1202
+       preemption). config carries type, priority-order, delay, min green/walk
+       before entry, a presence track-clearance container (phases + mandatory
+       green-seconds), dwell/exit phases, min-dwell, and max-presence; state
+       carries active, active-since, current-stage (new preempt-stage enum), and
+       source-id. A config-true must requires every railroad preemptor to define
+       track clearance (MUTCD Ch. 8C). Now represents concurrent preemptors.
+       BREAKING: the flat preemption/active-since and preemption/source-id move
+       under preemption/preemptor/state (same names); the old scalar
+       preemption/active-type has no direct successor — the preemptor class is
+       now preemption/preemptor/config/type and the active preemptor(s) are
+       those with preemption/preemptor/state/active = true.
+
+      Config completeness cut 2c (coordination): add coordination-semantics
+       config to timing-plan (coordinated-phases, offset-reference,
+       transition-mode, force-off-mode) and a per-split split-mode enum; make
+       cycle-length mandatory and range 1..65535 (a coordination plan always
+       has a positive cycle). BREAKING: an existing timing-plan that omits
+       cycle-length becomes invalid and must add one. Add two config-true
+       consistency musts: per-ring
+       sum-of-splits must not exceed cycle-length, and each split must be at
+       least its phase minimum service time (min-green + yellow + red-clear, plus
+       walk + ped-clear under ped recall / rest-in-walk) — the ITE split-failure
+       / ped-trap guard. First use of deref() in the model (validation-only).
+
+      Config completeness cut 2b (conflict monitor): add a config-only
+       conflict-monitor container holding the programmed MMU permissive
+       matrix — a permissive list keyed by (channel-a, channel-b), both
+       leafrefs into channels, each entry a channel pair allowed to show
+       green together (anything unlisted is a conflict). A canonicalization
+       must (channel-a < channel-b) stores each pair once. Runtime MMU
+       state remains in operation/mmu. Additive plus one config-true must.
+
+      Config completeness cut 2b (channels): add a config-only channels
+       container implementing the NTCIP channelTable — each load-switch
+       channel maps to a phase or an overlap (choice source), carries a
+       movement identityref (openits-signal-control-types:channel-movement)
+       and a channel-flash-state enum. This is what makes logical phases
+       become physical displays. Additive.
+
+      Config completeness cut 2b (overlaps): add an overlaps container
+       (paired config/state) implementing the NTCIP overlapTable,
+       including FYA left turns via a presence 'fya' sub-container naming
+       the protected-left and opposing-through phases. overlap type is an
+       identityref (openits-signal-control-types:overlap-type); overlap
+       state exposes current-interval (overlap-interval-type enum) +
+       active. Additive.
+
+      Detector config completeness (cut 2a part 3): add NTCIP 1202
+       vehicleDetectorTable config (delay, extend, mode presence/pulse,
+       extend-phases, fail-action) to detectors/detector/config, and a
+       per-detector volume/occupancy/speed 'measurement' container to
+       detectors/detector/state. Additive.
+
+      Phase config completeness (cut 2a part 2): split the phase runtime
+       interval so a phase serving green + WALK simultaneously is
+       representable (NTCIP 1202 phaseStatusGroup). Replace the single
+       current-interval (interval-type) with vehicle-interval
+       (veh-interval-type) + ped-interval (ped-interval-type), each with
+       its own *-elapsed-ms; drop flashing-yellow/flashing-red from the
+       per-phase vehicle enum (cabinet flash is operation/flash-*, FYA is
+       an overlap). BREAKING: interval-type removed; state/current-interval
+       splits into vehicle-interval + ped-interval.
+
+      Phase config completeness (cut 2a part 1): add per-phase NTCIP
+       1202 phaseOptions (min/max/ped/soft recall, dual-entry,
+       rest-in-walk, simultaneous-gap, call-to-nonactuated) as an
+       'options' container of named booleans; a presence 'volume-density'
+       container (added-initial, max-initial, time-before-reduction,
+       time-to-reduce, min-gap); and a signal-control-local max-green-2
+       leaf. Also make 'barrier' mandatory and widen its range 1..2 ->
+       1..4 so ring+barrier fully define phase concurrency (diamonds /
+       DDIs need more than two barriers). BREAKING: barrier is now
+       mandatory. Additive otherwise.";
+    reference
+      "NTCIP 1201 (time-base / dayPlan / dayPlanSchedule).;
+      NTCIP 1202:2019 §5 (maxGreen2 / phaseOptions); Indiana coord-cycle-state.;
+      NTCIP 1202:2019 §5 (preemption); MUTCD 11th ed. Ch. 8C.;
+      NEMA TS-2 §4 (conflict monitor / MMU).;
+      NTCIP 1202:2019 §5 (channelTable).;
+      NTCIP 1202:2019 §5 (overlapTable); NEMA TS-2-2016 (FYA).;
+      NTCIP 1202:2019 §5 (vehicleDetectorTable).;
+      NTCIP 1202:2019 §5 (phaseStatusGroup).;
+      NTCIP 1202:2019 §5 (phaseOptions / volume-density); NEMA TS-2 §3.5 (concurrency).";
+  }
+  revision 2026-07-13 {
+    description
+      "Restructure signal-controller onto the config/state idiom, matching
+       the other converted services (ess, dms, reversible-lane):
+       - Top-level config/state pair is identity only: config adopts
+         openits-types:device-identity-config (controller-id -> id,
+         intersection-name -> name, geo-point -> geo-location); state
+         mirrors it and adds device-hardware.
+       - phases/phase and detectors/detector become paired config/state
+         lists; each list key is a leafref into ../config/<key> and the
+         typed key + configuration live in the entry's config container.
+         The phase timing musts move with the timing container into config.
+       - coordination becomes a config-only timing-plan library plus a
+         state container carrying active-plan.
+       - preemption and faults stay state-only (config false).
+       - The former top-level operational rollup (mode / flash-active /
+         flash-cause / mmu / last-mode-change) moves out of the identity
+         'state' name into a new state-only 'operation' container.
+       - detector type moves from a closed enum to
+         identityref openits-signal-control-types:detector-type; the local
+         detector-type enum typedef is deleted.
+       BREAKING: data paths change and proto fields renumber (pre-v1).
+       Wire consumers (openits-collector) remap paths, notably
+       state/mode -> operation/mode and identity/controller-id ->
+       config/id.
+
+      Replace the config-false state/in-conflict-flash boolean with
+       flash-active (boolean) + flash-cause (identityref, base
+       openits-signal-control-types:flash-cause), and add a new
+       state/mmu container (fault-type identityref + faulting-channels
+       leaf-list + latched boolean) carrying Malfunction Management
+       Unit detail. A single boolean could not say *why* an
+       intersection was flashing (MMU conflict requiring an on-site
+       manual reset, vs. normal programmed time-of-day flash); this
+       makes the cause and MMU detail queryable. All new leaves are
+       config-false readback — no `must` added. BREAKING for readers
+       of state/in-conflict-flash (e.g. openits-collector), which must
+       switch to state/flash-active + state/flash-cause.
+
+       Also correct the preemption/active-type description, which
+       still listed transit/freight as active-type values after those
+       moved to priority-type: it now reads none / railroad /
+       emergency-vehicle / other, with a pointer to the still-pending
+       dedicated priority state leaf.
+
+      Add two presence `must`s to the config-true phase `timing`
+       container: `yellow-change` must be present (every signalized
+       phase requires a yellow change per MUTCD 11th ed. 4F.17), and a
+       phase serving a pedestrian walk (walk > 0) must carry a
+       ped-clear of at least 1 second (MUTCD 2009 4E.06 / 11th ed.
+       4I.06). A `must` on the optional `ped-clear` leaf itself never
+       fires when the leaf is absent (RFC 7950 section 7.5.3), so the
+       check moves to the parent container where both walk and
+       ped-clear are visible; the leaf-level ped-clear `must` in
+       openits-nema-common is removed in the companion bump as it is
+       now subsumed.
+
+      Put signal-control faults on the identity tree and share the
+       fault-entry grouping:
+       - Rename the config-false 'active-fault' list to 'fault', matching
+         every other service's faults/fault shape.
+       - Convert 'category' from an inline enumeration to an identityref
+         (base openits-signal-control-types:sc-fault-event-kind), so a
+         signal-controller fault is filterable fleet-wide via
+         derived-from-or-self(openits-types:fault-event-kind) — it was
+         previously off the identity tree and silently missed by that
+         filter.
+       - Adopt openits-types:fault-entry for fault-id/severity/
+         description/first-observed.
+
+       Also adopt the shared openits-types:device-hardware grouping
+       (make/model/firmware/serial) in the identity container,
+       replacing the inline config-false leaves.
+
+       operational-status/mode is now an identityref on
+       openits-signal-control-types:controller-mode (was an enum).
+
+       Rename the config-false 'operational-status' container to 'state',
+       standardising the read-only operational rollup on one container
+       name across services. The operational-status-report notification
+       (a separate ce-type) is unchanged.";
+    reference
+      "NTCIP 1202:2019 §5 (vehicleDetectorTable); NEMA TS-2 §4 (MMU).;
+      NEMA TS2-2021 section 4; Indiana 173 (fault-unit-flash-status).;
+      RFC 7950 section 7.5.3; MUTCD 11th ed. 4F.17.";
+  }
+  revision 2026-07-10 {
+    description
+      "Replace the inline severity enumeration on the active-fault
+       list with the shared openits-types:fault-severity typedef.
+       Member set and order unchanged — wire-stable.
+
+       Also, replace the inline controller-identity latitude/longitude
+       leaves with openits-types:geo-point. Already fraction-digits 7
+       and ranged — this consolidates onto the shared grouping without
+       a precision change. Member set and order unchanged.";
+  }
+  revision 2026-05-23 {
+    description
+      "Two same-day edits:
+       - Move preemption-type and controller-mode typedefs out to
+         openits-signal-control-types. This module now imports both
+         from openits-sc-types: rather than defining them inline.
+         Reachable schema nodes are unchanged from a consumer's
+         perspective; only the typedef's home module changes.
+       - Make `require-instance true` explicit on the three leafrefs
+         (detector.assigned-phases, coordination.active-plan,
+         split.phase-number). RFC 7950 §9.9.2 makes true the default;
+         explicit declarations are clearer to readers and tool authors.";
+  }
+  revision 2026-04-28 {
+    description
+      "Companion bump for the signal-control notifications companion
+       module@2026-04-28 which adds tsam-mode-changed and tsam-recommendation-applied.
+       The base module's data tree is byte-equivalent; the revision bump
+       keeps ce-dataschema URLs in lockstep with the notifications
+       companion so consumers fetch the right schema-registry directory.";
+  }
+  revision 2026-04-19 {
+    description
+      "Minor bump.  Two changes land together:
+
+       1. (M5 follow-through) Tightened phase-timing with six
+          MUTCD-derived `must`-constraints on min-green, max-green,
+          yellow-change, red-clear, walk, and ped-clear.  The
+          constraints were introduced in the 2026-04-18 snapshot but
+          their revision bump was deferred until this window; the
+          logic is unchanged.
+
+       2. (M9) Extracted phase-number typedef and phase-timing
+          grouping to a new openits-nema-common module so ramp
+          metering and signal control share one source of truth for
+          MUTCD minimums.  Reachable schema nodes are unchanged from
+          a consumer's perspective.";
+    reference
+      "MUTCD 4D.26 (vehicle change intervals), 4E.06 (pedestrian
+       intervals); ARC-IT 9.1 Service Package TI01; NTCIP 1202 v03.";
+  }
+  revision 2026-04-18 {
+    description
+      "Initial revision.  Minimum viable model covering phases,
+       detectors, coordination, preemption, operational status,
+       and faults.";
+    reference
+      "ARC-IT 9.1 Service Package: Traffic Signal Control (SU01)
+       NTCIP 1202 v03 (functional reference only; no wire compat)";
+  }
+
+  /* --------------------------------------------------------------
+   * Typedefs
+   * -------------------------------------------------------------- */
+
+  typedef ring-number {
+    type uint8 {
+      range "1..4";
+    }
+    description
+      "Ring identifier.  Standard dual-ring configuration is 1..2;
+       quad-ring installations use 1..4.";
+  }
+
+  typedef channel-number {
+    type uint16 { range "1..255"; }
+    description
+      "Physical load-switch channel number. Range 1..255 covers NTCIP
+       channelTable indexing and NEMA TS-2 MMU channel numbering.";
+    reference "NTCIP 1202:2019 §5 (channelTable); NEMA TS-2 §4.";
+  }
+
+  typedef veh-interval-type {
+    type enumeration {
+      enum green         { value 1; }
+      enum yellow-change { value 2; }
+      enum red-clear     { value 3; }
+      enum red           { value 4; }
+      enum dark          { value 5; }
+    }
+    description
+      "Vehicle signal-head interval a phase is displaying. Cabinet flash
+       is reported separately in operation/flash-*, and flashing-yellow
+       -arrow (FYA) is an overlap indication, so neither appears here.";
+    reference "NTCIP 1202:2019 §5 (phaseStatusGroup vehicle interval).";
+  }
+
+  typedef ped-interval-type {
+    type enumeration {
+      enum walk      { value 1; }
+      enum ped-clear { value 2; }
+      enum dont-walk { value 3; }
+      enum dark      { value 4; }
+      enum none      { value 5; }
+    }
+    description
+      "Pedestrian signal-head interval a phase is displaying. 'none'
+       means the phase serves no pedestrian movement.";
+    reference "NTCIP 1202:2019 §5 (phaseStatusGroup pedestrian interval).";
+  }
+
+  typedef detector-mode {
+    type enumeration {
+      enum presence { value 1; }
+      enum pulse    { value 2; }
+    }
+    description "Detector output mode: presence (call held while occupied) vs pulse (momentary call per actuation).";
+    reference "NTCIP 1202:2019 §5 (vehicleDetectorTable).";
+  }
+
+  typedef detector-fail-action {
+    type enumeration {
+      enum none         { value 1; }
+      enum min-recall   { value 2; }
+      enum max-recall   { value 3; }
+      enum max-presence { value 4; }
+    }
+    description "Recall action applied to the assigned phases when this detector is diagnosed failed.";
+    reference "NTCIP 1202:2019 §5 (vehicleDetectorTable fail action).";
+  }
+
+  typedef overlap-interval-type {
+    type enumeration {
+      enum green                 { value 1; }
+      enum trailing-green        { value 2; }
+      enum yellow                { value 3; }
+      enum red-clearance         { value 4; }
+      enum off                   { value 5; }
+      enum dark                  { value 6; }
+      enum flashing-yellow-arrow { value 7; }
+    }
+    description
+      "Interval an overlap is currently displaying. flashing-yellow-arrow
+       is the FYA permissive indication. Aligns with the overlap-* event
+       identities.";
+    reference "NTCIP 1202:2019 §5 (overlapTable).";
+  }
+
+  typedef channel-flash-state {
+    type enumeration {
+      enum red    { value 1; }
+      enum yellow { value 2; }
+      enum none   { value 3; }
+    }
+    description "What a load-switch channel displays during cabinet flash.";
+    reference "NEMA TS-2 §4 (cabinet flash).";
+  }
+
+  typedef preempt-stage {
+    type enumeration {
+      enum none            { value 1; }
+      enum delay           { value 2; }
+      enum entry           { value 3; }
+      enum track-clearance { value 4; }
+      enum dwell           { value 5; }
+      enum exit            { value 6; }
+      enum max-presence    { value 7; }
+    }
+    description "Stage of an active preemption sequence.";
+    reference "NTCIP 1202:2019 §5 (preemption sequence).";
+  }
+
+  typedef time-of-day {
+    type string {
+      pattern '(([01][0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]';
+    }
+    description "Wall-clock time of day, 24-hour HH:MM:SS.";
+  }
+
+  /* --------------------------------------------------------------
+   * Reusable groupings
+   * -------------------------------------------------------------- */
+
+  // `phase-timing` moved to openits-nema-common 2026-04-19; see
+  // openits-signal-control revision 2026-04-19 for the extract
+  // record.  Callers should `uses openits-nema:phase-timing` where
+  // they previously used a local phase-timing grouping.
+
+  grouping phase-runtime-state {
+    description "Runtime state of a single phase (vehicle + pedestrian displays reported separately).";
+
+    leaf vehicle-interval {
+      type veh-interval-type;
+      config false;
+      description "Vehicle signal-head interval the phase is currently displaying.";
+    }
+    leaf vehicle-interval-elapsed-ms {
+      type uint32;
+      units "milliseconds";
+      config false;
+      description "Elapsed time in the current vehicle interval.";
+    }
+    leaf ped-interval {
+      type ped-interval-type;
+      config false;
+      description "Pedestrian signal-head interval the phase is currently displaying.";
+    }
+    leaf ped-interval-elapsed-ms {
+      type uint32;
+      units "milliseconds";
+      config false;
+      description "Elapsed time in the current pedestrian interval.";
+    }
+    leaf next-phase {
+      type openits-nema:phase-number;
+      config false;
+      description "Next phase scheduled in the sequence.";
+    }
+  }
+
+  /* --------------------------------------------------------------
+   * Main tree
+   * -------------------------------------------------------------- */
+
+  container signal-controller {
+    description
+      "Top-level container representing a single instance of the
+       ARC-IT 'Roadway Signal Controller' subsystem.";
+
+    /* ----- identity ----- */
+    container config {
+      description "Intended controller identity and location.";
+      uses openits-types:device-identity-config;
+    }
+    container state {
+      config false;
+      openits-types:arc-it-flow
+        "Roadway Signal Controller -> TMC : signal system operational status";
+      description "Applied controller identity (mirror) + device-reported hardware.";
+      uses openits-types:device-identity-config;
+      uses openits-types:device-hardware;
+    }
+
+    /* ----- start-up behavior ----- */
+    container startup {
+      openits-types:arc-it-flow "TMC -> Roadway Signal Controller : signal control plan";
+      description
+        "Controller start-up behavior (NTCIP 1202 unitStartUpFlash): how long the
+         cabinet flashes at power-up and which phases remain flashing before
+         normal service begins.";
+      reference "NTCIP 1202:2019 §5 (unitStartUpFlash).";
+      leaf flash-duration-seconds {
+        type uint16;
+        units "seconds";
+        description "Duration of the start-up flash interval at power-up.";
+      }
+      leaf-list flash-phases {
+        type leafref { path "../../phases/phase/phase-number"; require-instance true; }
+        description "Phases that remain in flash during start-up (empty = all).";
+      }
+      leaf all-red-duration-seconds {
+        type uint16;
+        units "seconds";
+        description "All-red interval served after start-up flash before the first green.";
+      }
+    }
+
+    /* ----- phases ----- */
+    container phases {
+      openits-types:arc-it-flow
+        "TMC -> Roadway Signal Controller : signal control plan";
+      description
+        "Phase configuration + runtime state. Implements the ARC-IT
+         'signal control plan' information flow.";
+
+      list phase {
+        key "phase-number";
+        description "One entry per configured phase.";
+
+        leaf phase-number {
+          type leafref { path "../config/phase-number"; }
+          description "Phase identifier within the controller (key).";
+        }
+        container config {
+          description "Intended phase configuration.";
+
+          must "timing/yellow-change" {
+            error-message
+              "Every signalized phase requires a yellow-change interval "
+            + "(MUTCD 11th ed. 4F.17: a yellow change shall follow every "
+            + "green). Enforced on config, not the optional timing "
+            + "container, so a phase that omits timing entirely still fails "
+            + "(RFC 7950 section 7.5.1).";
+          }
+          must "not(timing/walk > 0) or (timing/ped-clear and timing/ped-clear >= 1)" {
+            error-message
+              "A phase serving a pedestrian walk (walk > 0) requires a "
+            + "pedestrian clearance interval of at least 1 second "
+            + "(MUTCD 2009 4E.06 / 11th ed. 4I.06).";
+          }
+
+          leaf phase-number {
+            type openits-nema:phase-number;
+            description "Phase identifier within the controller.";
+          }
+          leaf enabled {
+            type boolean;
+            default "true";
+            description "Whether the phase participates in normal service.";
+          }
+          leaf ring {
+            type ring-number;
+            mandatory true;
+            description "Ring this phase belongs to.";
+          }
+          leaf barrier {
+            type uint8 { range "1..4"; }
+            mandatory true;
+            description
+              "Barrier group. Ring and barrier together define phase
+               concurrency (NEMA dual-ring). Range 1..4 supports
+               diamond / DDI layouts that exceed the textbook quad-left
+               two-barrier arrangement.";
+            reference "NEMA TS-2 §3.5 (ring/barrier concurrency).";
+          }
+          container timing {
+            description "Phase timing parameters per NEMA-common phase-timing grouping.";
+            uses openits-nema:phase-timing;
+          }
+          leaf max-green-2 {
+            type decimal64 { fraction-digits 1; }
+            units "seconds";
+            description
+              "Second maximum-green limit (dynamic max / max-2), in tenths.
+               Signal-control-specific; deliberately not part of the
+               shared openits-nema-common phase-timing grouping.";
+            reference "NTCIP 1202:2019 §5 (maxGreen2).";
+          }
+          leaf red-revert {
+            type decimal64 { fraction-digits 1; }
+            units "seconds";
+            description
+              "Minimum red dwell before the same phase may be re-served, "
+            + "preventing a green flicker on a short cycle (NEMA TS-2 minimum "
+            + "typically >= 2 s). Signal-control-local; not part of the shared "
+            + "nema-common phase-timing grouping.";
+            reference "NTCIP 1202:2019 §5 (phaseRedRevert); NEMA TS-2.";
+          }
+          leaf crossing-distance-m {
+            type decimal64 { fraction-digits 1; }
+            units "meters";
+            description
+              "Pedestrian crossing distance for this phase's walk movement, used "
+            + "to check ped-clearance sufficiency (a jurisdiction deviation may "
+            + "require ped-clear >= crossing-distance-m / walk-speed). Optional; "
+            + "absent when not surveyed.";
+            reference "MUTCD 11th ed. 4I.06 (pedestrian clearance time).";
+          }
+          leaf leading-ped-interval-seconds {
+            type decimal64 { fraction-digits 1; }
+            units "seconds";
+            description
+              "Leading Pedestrian Interval: WALK is shown this many seconds "
+            + "before the concurrent vehicle green begins, so pedestrians "
+            + "establish presence in the crosswalk first. Absent/zero = no LPI.";
+            reference "MUTCD 11th ed. 4I (leading pedestrian interval).";
+          }
+          container options {
+            description
+              "NTCIP phaseOptions, modeled as explicit named booleans
+               rather than the packed MIB bitmask.";
+            reference "NTCIP 1202:2019 §5 (phaseOptions).";
+            leaf min-recall  { type boolean; default "false"; description "Continuous minimum-vehicle recall on the phase."; }
+            leaf max-recall  { type boolean; default "false"; description "Continuous maximum-vehicle recall on the phase."; }
+            leaf ped-recall  { type boolean; default "false"; description "Continuous pedestrian recall on the phase."; }
+            leaf soft-recall { type boolean; default "false"; description "Soft recall: serve the phase only when no other demand exists."; }
+            leaf dual-entry  { type boolean; default "false"; description "Phase comes up with a compatible phase even with no call on it."; }
+            leaf rest-in-walk { type boolean; default "false"; description "Phase rests in WALK rather than DONT-WALK absent conflicting demand."; }
+            leaf simultaneous-gap { type boolean; default "false"; description "Both rings must gap out simultaneously to cross the barrier."; }
+            leaf call-to-nonactuated { type boolean; default "false"; description "Phase runs as a nonactuated (coordinated) phase."; }
+          }
+          container volume-density {
+            presence "Volume-density operation is enabled for this phase.";
+            description
+              "Volume-density (variable-initial + gap-reduction)
+               parameters. Present iff V/D is enabled on the phase.";
+            reference "NTCIP 1202:2019 §5 (volume-density).";
+
+            must "not(min-gap) or not(../timing/passage) or min-gap <= ../timing/passage" {
+              error-message
+                "The reducing gap floor (min-gap) must not exceed the passage "
+              + "time it decays from.";
+            }
+
+            leaf added-initial {
+              type decimal64 { fraction-digits 1; }
+              units "seconds";
+              description "Initial-green seconds added per vehicle actuation logged during the phase's red.";
+            }
+            leaf max-initial   { type uint16; units "seconds"; description "Upper bound on the computed variable-initial interval."; }
+            leaf time-before-reduction { type uint16; units "seconds"; description "Time after the phase turns green before gap reduction begins."; }
+            leaf time-to-reduce { type uint16; units "seconds"; description "Time over which the gap reduces from passage to min-gap."; }
+            leaf min-gap { type decimal64 { fraction-digits 1; } units "seconds"; description "Floor the reducing gap decays to."; }
+          }
+
+          must "not(max-green-2) or timing/max-green" {
+            error-message
+              "max-green-2 (dynamic / second maximum green) is meaningful only "
+            + "when a primary max-green is also configured. It is NOT required "
+            + "to be >= max-green: MAX-2 is an independent alternate maximum and "
+            + "is routinely lower than MAX-1 for off-peak operation.";
+          }
+          must "not(options/ped-recall = 'true' or options/rest-in-walk = 'true') "
+             + "or timing/walk > 0" {
+            error-message
+              "A phase with pedestrian recall or rest-in-walk must serve a pedestrian "
+            + "movement (walk > 0).";
+          }
+        }
+        container state {
+          config false;
+          description "Phase runtime state (current interval, elapsed time, next phase).";
+          uses phase-runtime-state;
+        }
+      }
+    }
+
+    /* ----- detectors ----- */
+    container detectors {
+      openits-types:arc-it-flow
+        "Vehicle/Pedestrian -> Roadway Signal Controller : vehicle detection";
+      description
+        "Detector configuration + runtime state. Implements the inbound
+         detection flow from vehicles and pedestrians.";
+
+      list detector {
+        key "detector-id";
+        description "One entry per detector channel installed on the controller.";
+
+        leaf detector-id {
+          type leafref { path "../config/detector-id"; }
+          description "Detector channel number on the controller (key).";
+        }
+        container config {
+          description "Intended detector configuration.";
+          leaf detector-id {
+            type openits-sc-types:detector-channel;
+            description "Detector channel number on the controller (1-based).";
+          }
+          leaf type {
+            type identityref { base openits-sc-types:detector-type; }
+            mandatory true;
+            description
+              "Detector technology (inductive-loop, video, radar,
+               ped-pushbutton, etc.). An identity so a vendor can derive a
+               newer technology without a core change.";
+            reference "NTCIP 1202:2019 §5 (vehicleDetectorTable).";
+          }
+          leaf-list assigned-phases {
+            type leafref {
+              path "../../../../phases/phase/phase-number";
+              require-instance true;
+            }
+            description "Phase(s) this detector calls.";
+          }
+          leaf enabled {
+            type boolean;
+            default "true";
+            description "Whether this detector channel is currently in service.";
+          }
+          leaf delay {
+            type uint16;
+            units "seconds";
+            description "Delay before a sustained call is registered (call filtered until presence persists this long).";
+            reference "NTCIP 1202:2019 §5 (vehicleDetectorTable delay).";
+          }
+          leaf extend {
+            type decimal64 { fraction-digits 1; }
+            units "seconds";
+            description "Time the call is carried after the actuation ends (carryover / stretch).";
+            reference "NTCIP 1202:2019 §5 (vehicleDetectorTable extend).";
+          }
+          leaf mode {
+            type detector-mode;
+            description "Presence vs pulse output mode.";
+          }
+          leaf-list extend-phases {
+            type leafref {
+              path "../../../../phases/phase/phase-number";
+              require-instance true;
+            }
+            description "Phases this detector extends when different from its call set (assigned-phases). Empty when it extends the phases it calls.";
+          }
+          leaf fail-action {
+            type detector-fail-action;
+            description "Recall action applied to the assigned phases when this detector is diagnosed failed.";
+          }
+          container diagnostics {
+            presence "Automatic detector fault diagnosis is enabled for this channel.";
+            description
+              "Thresholds the controller uses to DIAGNOSE this detector as "
+            + "failed (the fail-action is then applied). Present iff automatic "
+            + "diagnosis is enabled.";
+            reference "NTCIP 1202:2019 §5 (vehicleDetectorTable diagnostics).";
+            leaf no-activity-minutes {
+              type uint16;
+              units "minutes";
+              description "Diagnose 'no-activity' if no actuation for this long.";
+            }
+            leaf max-presence-minutes {
+              type uint16;
+              units "minutes";
+              description "Diagnose 'stuck-on' if presence held continuously for this long.";
+            }
+            leaf erratic-counts-per-minute {
+              type uint16;
+              units "counts/minute";
+              description "Diagnose 'erratic' above this actuation rate.";
+            }
+          }
+        }
+        container state {
+          config false;
+          description "Runtime state of this detector channel.";
+          leaf active {
+            type boolean;
+            description "True if the detector is currently sensing a call.";
+          }
+          leaf last-activation {
+            type yang:date-and-time;
+            description "Wall-clock time of the most recent detector activation.";
+          }
+          leaf actuation-count {
+            type yang:counter64;
+            description "Actuations since last reset.";
+          }
+          leaf fault {
+            type boolean;
+            description "True if stuck-on, no-activity, or comms failure.";
+          }
+          container measurement {
+            description "Per-detector volume / occupancy / speed collection (config-false telemetry).";
+            reference "NTCIP 1202:2019 §5 (vehicleDetectorTable V/O/S).";
+            leaf volume {
+              type yang:counter64;
+              units "vehicles";
+              description "Vehicles counted in the current collection period.";
+            }
+            leaf occupancy {
+              type openits-types:percentage-precise;
+              description "Detector occupancy over the collection period.";
+            }
+            leaf speed-kmh {
+              type openits-types:speed-kmh;
+              description "Mean speed over the collection period.";
+            }
+            leaf collection-period-seconds {
+              type uint16 { range "1..3600"; }
+              units "seconds";
+              description "Length of the collection period the V/O/S values cover.";
+            }
+            leaf collected-at {
+              type yang:date-and-time;
+              description "Wall-clock time this measurement was collected.";
+            }
+          }
+        }
+      }
+    }
+
+    /* ----- overlaps ----- */
+    container overlaps {
+      openits-types:arc-it-flow "TMC -> Roadway Signal Controller : signal control plan";
+      description "Overlap configuration + runtime state (NTCIP overlapTable), including FYA left turns.";
+
+      list overlap {
+        key "overlap-number";
+        description "One entry per configured overlap.";
+
+        leaf overlap-number {
+          type leafref { path "../config/overlap-number"; }
+          description "Overlap number (key).";
+        }
+        container config {
+          description "Intended overlap configuration.";
+
+          must "not(trailing-yellow) or trailing-yellow > 0.0" {
+            error-message
+              "An overlap that specifies a trailing-yellow interval must make "
+            + "it positive; an overlap drives a real signal head and follows "
+            + "the same change-interval logic as a phase.";
+          }
+          must "not(trailing-red-clear) or trailing-red-clear >= 0.0" {
+            error-message
+              "Overlap trailing-red-clear must be non-negative when specified.";
+          }
+
+          leaf overlap-number { type openits-sc-types:overlap-number; description "Overlap number (key), NTCIP overlapTable index. Operator-facing label is in 'name'."; }
+          leaf name { type string; description "Operator-facing overlap name."; }
+          leaf type {
+            type identityref { base openits-sc-types:overlap-type; }
+            mandatory true;
+            description "Overlap behavior class.";
+            reference "NTCIP 1202:2019 §5 (overlapTable overlapType).";
+          }
+          leaf-list included-phases {
+            type leafref { path "../../../../phases/phase/phase-number"; require-instance true; }
+            description "Phases whose green drives this overlap green.";
+          }
+          leaf-list modifier-phases {
+            type leafref { path "../../../../phases/phase/phase-number"; require-instance true; }
+            description
+              "Phases whose green SUPPRESSES this overlap (minus-green / "
+            + "minusGreenYellow overlaps). Empty for non-minus-green overlaps.";
+            reference "NTCIP 1202:2019 §5 (overlapTable modifier phases).";
+          }
+          leaf trailing-green    { type decimal64 { fraction-digits 1; } units "seconds"; description "Overlap green extension after the last included phase terminates."; }
+          leaf trailing-yellow   { type decimal64 { fraction-digits 1; } units "seconds"; description "Overlap yellow-change interval."; }
+          leaf trailing-red-clear { type decimal64 { fraction-digits 1; } units "seconds"; description "Overlap red-clearance interval."; }
+
+          container fya {
+            presence "This overlap operates as a flashing-yellow-arrow (FYA) left turn.";
+            description "FYA arrangement (protected/permissive left turn). Present iff the overlap is an FYA.";
+            reference "NEMA TS-2-2016 (FYA channel arrangement).";
+            leaf protected-left-phase {
+              type leafref { path "../../../../../phases/phase/phase-number"; require-instance true; }
+              description "Protected left-turn phase (green-arrow).";
+            }
+            leaf opposing-through-phase {
+              type leafref { path "../../../../../phases/phase/phase-number"; require-instance true; }
+              description "Opposing through phase whose green drives the flashing-yellow-arrow permissive.";
+            }
+          }
+        }
+        container state {
+          config false;
+          description "Overlap runtime state.";
+          leaf current-interval {
+            type overlap-interval-type;
+            description "Interval the overlap is currently displaying.";
+          }
+          leaf active {
+            type boolean;
+            description "True when the overlap is displaying a non-off, non-dark indication.";
+          }
+        }
+      }
+    }
+
+    /* ----- channels (load-switch mapping) ----- */
+    container channels {
+      openits-types:arc-it-flow "TMC -> Roadway Signal Controller : signal control plan";
+      description "Load-switch channel table (NTCIP channelTable): the logical phase/overlap -> physical load-switch mapping. Config-only static mapping; the channel's live output mirrors its source.";
+
+      list channel {
+        must "not(derived-from-or-self(movement, 'openits-sc-types:channel-pedestrian')) "
+           + "or not(flash-state) or flash-state = 'none'" {
+          error-message
+            "A pedestrian channel must be dark (flash-state 'none') during "
+          + "cabinet flash; pedestrian heads shall not flash (MUTCD).";
+        }
+        key "channel-number";
+        description "One entry per physical load-switch channel.";
+
+        leaf channel-number { type channel-number; description "Physical load-switch channel number."; }
+
+        choice source {
+          mandatory true;
+          description "The logical element that drives this channel.";
+          case phase {
+            leaf phase {
+              type leafref { path "../../../phases/phase/phase-number"; require-instance true; }
+              description "Phase driving this channel.";
+            }
+          }
+          case overlap {
+            leaf overlap {
+              type leafref { path "../../../overlaps/overlap/overlap-number"; require-instance true; }
+              description "Overlap driving this channel.";
+            }
+          }
+        }
+        leaf movement {
+          type identityref { base openits-sc-types:channel-movement; }
+          description "Signal head this channel drives (vehicle / pedestrian / …).";
+        }
+        leaf flash-state {
+          type channel-flash-state;
+          description "What this channel shows during cabinet flash.";
+        }
+      }
+    }
+
+    /* ----- conflict monitor (MMU permissive card) ----- */
+    container conflict-monitor {
+      config false;
+      openits-types:arc-it-flow "Roadway Signal Controller -> TMC : signal system operational status";
+      description
+        "Read-back of the programmed MMU channel-compatibility (permissive)
+         matrix. Each permissive names a channel pair the MMU allows to show
+         green simultaneously; any pair not listed is a conflict. This is the
+         RECORD of the physically independent MMU program card (NEMA TS-2 §4),
+         exposed for audit and compare — NOT a command surface. The conflict
+         interlock is deliberately outside the controller's writable datastore
+         so a corrupted controller database can never delete a conflict; a
+         config-false readback preserves that safety property while still
+         letting a TMC verify the card against intended programming. Runtime
+         MMU fault state is in operation/mmu.";
+      reference "NEMA TS-2 §4 (conflict monitor / MMU).";
+
+      /* The same-ring cross-check (forbid a permissive whose two channels are
+         driven by phases in the same ring) is NOT expressed as a YANG `must`:
+         it requires a double deref() through the `choice source`
+         (deref(deref(channel-a)/../phase)/../config/ring) and is undefined for
+         overlap-sourced channels (an overlap has no single ring). ygot's
+         Validate() does not evaluate `must` at all, so the invariant is
+         enforced in the conformance harness
+         (TestConflictMonitor_NoSameRingPermissive), where the same precedent
+         (TestCoordination_SplitsWithinCycle) already lives. */
+      list permissive {
+        must "channel-a < channel-b" {
+          error-message
+            "A permissive must be stored canonically with channel-a < "
+          + "channel-b, so each compatible channel pair appears exactly once.";
+        }
+        key "channel-a channel-b";
+        description "One permitted concurrent-green channel pair (record of the MMU card).";
+
+        leaf channel-a {
+          type leafref { path "../../../channels/channel/channel-number"; require-instance true; }
+          description "Lower-numbered channel of the compatible pair.";
+        }
+        leaf channel-b {
+          type leafref { path "../../../channels/channel/channel-number"; require-instance true; }
+          description "Higher-numbered channel of the compatible pair.";
+        }
+      }
+    }
+
+    /* ----- coordination ----- */
+    container coordination {
+      openits-types:arc-it-flow
+        "TMC -> Roadway Signal Controller : signal coordination plan";
+      description
+        "Coordination timing-plan library (config) + active-plan readback
+         (state). Typically driven by time-of-day schedule from the TMC.";
+
+      list timing-plan {
+        key "plan-id";
+        description "One entry per timing plan available to the controller (config-only library).";
+
+        must "sum(split[deref(phase-number)/../config/ring = 1]/split-seconds) <= cycle-length "
+           + "and sum(split[deref(phase-number)/../config/ring = 2]/split-seconds) <= cycle-length "
+           + "and sum(split[deref(phase-number)/../config/ring = 3]/split-seconds) <= cycle-length "
+           + "and sum(split[deref(phase-number)/../config/ring = 4]/split-seconds) <= cycle-length" {
+          error-message
+            "In each ring, the sum of phase splits must not exceed the cycle length; "
+          + "an over-allocated ring guarantees a split failure.";
+        }
+        must "not(offset) or offset < cycle-length" {
+          error-message
+            "The coordination offset must be less than the cycle length "
+          + "(offset is a point within the cycle, 0 <= offset < cycle-length).";
+        }
+
+        leaf plan-id {
+          type openits-sc-types:plan-id;
+          description "Timing-plan identifier; used as key and by state/active-plan.";
+        }
+        leaf cycle-length {
+          type uint16 { range "1..65535"; }
+          units "seconds";
+          mandatory true;
+          description "Total cycle length for the plan, in seconds. A coordination plan always has a positive cycle.";
+        }
+        leaf offset {
+          type uint16;
+          units "seconds";
+          description "Offset from system master time reference.";
+        }
+        leaf-list coordinated-phases {
+          type leafref { path "../../../phases/phase/phase-number"; require-instance true; }
+          description "Coordinated (sync) phases held to the cycle for this plan.";
+        }
+        leaf offset-reference {
+          type enumeration {
+            enum begin-of-green  { value 1; }
+            enum begin-of-yellow { value 2; }
+            enum end-of-green    { value 3; }
+          }
+          description "Point in the coordinated phase the offset is measured from.";
+          reference "NTCIP 1202:2019 §5 (coordination offset reference).";
+        }
+        leaf transition-mode {
+          type enumeration {
+            enum dwell         { value 1; }
+            enum shortway      { value 2; }
+            enum add-only      { value 3; }
+            enum subtract-only { value 4; }
+          }
+          description "Method used to recover coordination after a disruption.";
+          reference "NTCIP 1202:2019 §5 (coordination correction/transition mode).";
+        }
+        leaf force-off-mode {
+          type enumeration {
+            enum fixed    { value 1; }
+            enum floating { value 2; }
+          }
+          description "Whether phase force-off points are fixed to the cycle or float with demand.";
+          reference "NTCIP 1202:2019 §5 (force-off mode).";
+        }
+        leaf sequence-id {
+          type leafref { path "../../../sequences/sequence/sequence-id"; require-instance true; }
+          description "Phase sequence this plan runs (NTCIP 1202 sequenceTable reference).";
+        }
+        list split {
+          key "phase-number";
+          description "One entry per phase in this plan, naming its split time.";
+
+          must "split-seconds >= "
+             + "sum(deref(phase-number)/../config/timing/min-green) "
+             + "+ sum(deref(phase-number)/../config/timing/yellow-change) "
+             + "+ sum(deref(phase-number)/../config/timing/red-clear)" {
+            error-message
+              "A phase split must be at least min-green + yellow-change + "
+            + "red-clear (its vehicle minimum service time); a shorter split "
+            + "forces a split failure.";
+          }
+          must "not(deref(phase-number)/../config/options"
+             + "        [ped-recall = 'true' or rest-in-walk = 'true']) "
+             + "or split-seconds >= "
+             + "     sum(deref(phase-number)/../config/timing/walk) "
+             + "   + sum(deref(phase-number)/../config/timing/ped-clear) "
+             + "   + sum(deref(phase-number)/../config/timing/yellow-change) "
+             + "   + sum(deref(phase-number)/../config/timing/red-clear)" {
+            error-message
+              "A phase that runs a pedestrian recall or rests in walk must have "
+            + "a split of at least walk + ped-clear + yellow-change + red-clear "
+            + "(its pedestrian minimum service time). Walk/FDW time concurrently "
+            + "with green, so this is a separate max() operand, NOT added on top "
+            + "of the vehicle minimum.";
+          }
+
+          leaf phase-number {
+            type leafref {
+              path "../../../../phases/phase/phase-number";
+              require-instance true;
+            }
+            description "Phase the split applies to.";
+          }
+          leaf split-seconds {
+            type uint16;
+            units "seconds";
+            description "Allocated time for this phase within the cycle, in seconds.";
+          }
+          leaf split-mode {
+            type enumeration {
+              enum other                { value 1; }
+              enum minimum-recall       { value 2; }
+              enum maximum-recall       { value 3; }
+              enum ped-recall           { value 4; }
+              enum coordinated-fixed    { value 5; }
+              enum coordinated-floating { value 6; }
+              enum phase-omit           { value 7; }
+              enum none                 { value 8; }
+            }
+            description
+              "Coordination behavior of this phase within the plan. phase-omit
+               omits the phase this plan (e.g. an overnight protected-left
+               omit); none applies no special coordination behavior.";
+            reference "NTCIP 1202:2019 §5 (coordTable split mode).";
+          }
+        }
+      }
+      container state {
+        config false;
+        description "Coordination runtime readback.";
+        leaf active-plan {
+          type leafref {
+            path "../../timing-plan/plan-id";
+            require-instance false;
+          }
+          description
+            "Currently-running timing plan. require-instance false: a controller
+             may run a plan not present in the intended config (a backup plan, a
+             just-deleted plan, or a free-operation pseudo-plan) without
+             invalidating the whole operational datastore.";
+        }
+        leaf cycle-state {
+          type enumeration {
+            enum free                 { value 0; }
+            enum in-step              { value 1; }
+            enum transition-add       { value 2; }
+            enum transition-subtract  { value 3; }
+            enum transition-dwell     { value 4; }
+          }
+          description
+            "Coordination cycle state: free vs in-step vs a transition sub-state. Lets
+             a coordinated-but-transitioning controller be distinguished without a
+             separate operating mode. Only the persistent sampled states are
+             modeled here; the instantaneous HR-log markers local-zero,
+             begin-pickup and master-cycle-zero are meaningless as a polled
+             value and are intentionally excluded — they remain fully
+             represented in the coord-cycle-state-change notification payload.";
+          reference "Indiana coord-cycle-state; NTCIP 1202:2019 §5.";
+        }
+      }
+    }
+
+    /* ----- phase sequence library (NTCIP 1202 sequenceTable) ----- */
+    container sequences {
+      openits-types:arc-it-flow "TMC -> Roadway Signal Controller : signal control plan";
+      description
+        "Phase sequence library (NTCIP 1202 sequenceTable). A sequence defines,
+         per ring, the ORDER phases are served in (ring+barrier give only
+         concurrency, not order), so lead-lag and yellow-trap-avoiding
+         arrangements are representable and vendor pattern databases round-trip.";
+      reference "NTCIP 1202:2019 §5 (sequenceTable).";
+
+      list sequence {
+        key "sequence-id";
+        description "One phase-sequence definition, referenced by timing plans.";
+
+        leaf sequence-id { type openits-sc-types:plan-id; description "Sequence identifier (key)."; }
+        leaf name { type string; description "Operator-facing sequence name."; }
+
+        list ring-sequence {
+          key "ring";
+          description "Ordered phase list for one ring under this sequence.";
+          leaf ring { type ring-number; description "Ring this ordering applies to."; }
+          leaf-list ordered-phases {
+            type leafref { path "../../../../phases/phase/phase-number"; require-instance true; }
+            ordered-by user;
+            description "Phases in the order they are served within this ring.";
+          }
+        }
+      }
+    }
+
+    /* ----- time-base (NTCIP 1201): TOD schedule + clock ----- */
+    container timebase {
+      openits-types:arc-it-flow
+        "TMC -> Roadway Signal Controller : signal control plan";
+      description
+        "NTCIP 1201 time-base: day plans + a calendar schedule (config) that
+         select coordination timing plans by time of day, plus clock /
+         time-source readback (state).";
+      reference "NTCIP 1201 (time-base / dayPlan / dayPlanSchedule).";
+
+      leaf timezone {
+        type string;
+        description
+          "IANA timezone name (e.g. 'America/Chicago') the day-plan/schedule "
+        + "wall-clock times are interpreted in.";
+        reference "NTCIP 1201 (global time); IANA tz database.";
+      }
+      leaf observe-dst {
+        type boolean;
+        default "true";
+        description
+          "Whether the controller shifts scheduled times for daylight saving "
+        + "in its timezone (NTCIP 1201 globalDaylightSaving).";
+        reference "NTCIP 1201 (globalDaylightSaving).";
+      }
+
+      list day-plan {
+        must "action" {
+          error-message
+            "A day-plan must contain at least one action; an empty day-plan schedules "
+          + "nothing. Express 'free all day' as an explicit 00:00:00 -> free action.";
+        }
+        key "day-plan-id";
+        description "One entry per day plan (an ordered set of time-of-day actions).";
+
+        leaf day-plan-id { type uint8 { range "1..255"; } description "Day-plan identifier (key)."; }
+        leaf name { type string; description "Operator-facing day-plan name."; }
+
+        list action {
+          key "start-time";
+          description "One scheduled change during the day; at start-time the controller activates the named plan or special mode.";
+          reference "NTCIP 1201 (timebaseAscActionTable).";
+
+          leaf start-time { type time-of-day; description "Wall-clock time this action takes effect."; }
+          choice activate {
+            mandatory true;
+            description "What runs from this time: a coordination plan, or a special (free/flash) mode.";
+            case plan {
+              leaf timing-plan {
+                type leafref { path "../../../../coordination/timing-plan/plan-id"; require-instance true; }
+                description "Coordination timing plan to activate.";
+              }
+            }
+            case special {
+              leaf special-operation {
+                type enumeration { enum free { value 1; } enum flash { value 2; } }
+                description
+                  "Special operation to run instead of a coordination plan. Named
+                   'special-operation', not 'operation', to avoid colliding with
+                   the sibling operational-rollup container of the same name
+                   (signal-controller/operation) in generated code.";
+              }
+            }
+          }
+        }
+      }
+
+      list schedule-entry {
+        key "schedule-id";
+        description "Calendar rule mapping a set of dates to a day plan (NTCIP dayPlanScheduleTable). An empty calendar axis means 'all'.";
+        reference "NTCIP 1201 (dayPlanScheduleTable).";
+
+        leaf schedule-id { type uint8 { range "1..255"; } description "Schedule-entry identifier (key)."; }
+        leaf-list months {
+          type enumeration {
+            enum january { value 1; } enum february { value 2; } enum march { value 3; }
+            enum april { value 4; } enum may { value 5; } enum june { value 6; }
+            enum july { value 7; } enum august { value 8; } enum september { value 9; }
+            enum october { value 10; } enum november { value 11; } enum december { value 12; }
+          }
+          description "Months this rule applies to. Empty means all months.";
+        }
+        leaf-list days-of-week {
+          type enumeration {
+            enum monday { value 1; } enum tuesday { value 2; } enum wednesday { value 3; }
+            enum thursday { value 4; } enum friday { value 5; } enum saturday { value 6; }
+            enum sunday { value 7; }
+          }
+          description "Days of week this rule applies to. Empty means all days of week.";
+        }
+        leaf-list days-of-month {
+          type uint8 { range "1..31"; }
+          description "Days of month this rule applies to. Empty means all days of month.";
+        }
+        leaf day-plan {
+          type leafref { path "../../day-plan/day-plan-id"; require-instance true; }
+          description "Day plan to run on matching dates.";
+        }
+      }
+
+      container clock {
+        config false;
+        description "Controller clock / time-source readback. Clock drift is a leading cause of broken coordination.";
+        reference "NTCIP 1201 (global time / time-base).";
+
+        leaf current-time { type yang:date-and-time; description "Controller's current wall-clock time."; }
+        leaf time-source { type identityref { base openits-sc-types:time-source; } description "How the clock is disciplined."; }
+        leaf sync-status {
+          type enumeration {
+            enum synced { value 1; } enum holdover { value 2; }
+            enum unsynced { value 3; } enum free-running { value 4; }
+          }
+          description "Clock synchronization state.";
+        }
+        leaf offset-ms { type int32; units "milliseconds"; description "Signed clock offset from the time reference (drift)."; }
+      }
+    }
+
+    /* ----- preemption / priority ----- */
+    container preemption {
+      openits-types:arc-it-flow
+        "Emergency Vehicle / Rail -> Roadway Signal Controller : preemption request";
+      description
+        "Commanded preempt table (config) + per-preemptor active readback (state).
+         Supports concurrent preemptors (rail + emergency-vehicle calls are real).";
+
+      list preemptor {
+        key "preemptor-id";
+        description "One entry per configured preemptor.";
+
+        leaf preemptor-id {
+          type leafref { path "../config/preemptor-id"; }
+          description "Preemptor identifier (key).";
+        }
+        container config {
+          description "Intended preemptor configuration.";
+
+          must "not(derived-from-or-self(type, 'openits-sc-types:preempt-railroad')) or track-clearance" {
+            error-message
+              "A railroad preemptor must define track-clearance phases and green "
+            + "time (MUTCD Ch. 8C: rail preemption shall clear the tracks before "
+            + "conflicting movements are served).";
+          }
+
+          leaf preemptor-id { type openits-sc-types:preempt-slot; description "Preemptor identifier."; }
+          leaf type {
+            type identityref { base openits-sc-types:preemption-type; }
+            mandatory true;
+            description "Preemptor class (railroad / emergency-vehicle / other).";
+          }
+          leaf priority-order { type uint8; description "Servicing priority; lower is higher priority (rail typically 1)."; }
+          leaf delay-seconds { type uint16; units "seconds"; description "Delay after the call before the preemption sequence begins."; }
+          leaf min-green-before-entry { type uint16; units "seconds"; description "Minimum green served on active phases before entry."; }
+          leaf min-walk-before-entry  { type uint16; units "seconds"; description "Minimum walk served before entry when a ped phase is active."; }
+          leaf min-ped-clear-before-entry {
+            type uint16;
+            units "seconds";
+            description
+              "Minimum pedestrian clearance (flashing don't walk) served before "
+            + "preemption entry when a pedestrian movement is active. Prevents a "
+            + "preemption from truncating FDW and stranding pedestrians in the "
+            + "crossing (MUTCD Ch. 8C / 4I).";
+            reference "NTCIP 1202:2019 §5 (preemption enter-ped-clear); MUTCD 11th ed. Ch. 8C.";
+          }
+          container track-clearance {
+            presence "This preemptor performs rail track clearance.";
+            description "Rail track-clearance interval (MUTCD Ch. 8C).";
+            reference "MUTCD 11th ed. Ch. 8C (railroad preemption).";
+            leaf-list phases {
+              type leafref { path "../../../../../phases/phase/phase-number"; require-instance true; }
+              description "Phases served to clear the track before conflicting movements.";
+            }
+            leaf green-seconds {
+              type uint16 { range "1..65535"; }
+              units "seconds";
+              mandatory true;
+              description "Track-clearance green time.";
+            }
+          }
+          leaf-list dwell-phases {
+            type leafref { path "../../../../phases/phase/phase-number"; require-instance true; }
+            description "Dwell / limited-service phases held during preemption.";
+          }
+          leaf min-dwell-seconds { type uint16; units "seconds"; description "Minimum dwell time before exit."; }
+          leaf flash-dwell-seconds {
+            type uint16;
+            units "seconds";
+            description "Flash-dwell interval served during preemption dwell, when the preemptor dwells in flash rather than a fixed indication.";
+          }
+          leaf-list exit-phases {
+            type leafref { path "../../../../phases/phase/phase-number"; require-instance true; }
+            description "Phases served on exit from preemption.";
+          }
+          leaf max-presence-seconds { type uint16; units "seconds"; description "Maximum time the preemption call is honored before timeout."; }
+        }
+        container state {
+          config false;
+          description "Per-preemptor active readback.";
+          leaf active { type boolean; description "True while this preemptor is being serviced."; }
+          leaf active-since { type yang:date-and-time; description "Wall-clock time the active preemption began."; }
+          leaf current-stage { type preempt-stage; description "Stage of the active preemption sequence."; }
+          leaf source-id { type string; description "Identifier of the vehicle or system that requested the preemption."; }
+        }
+      }
+    }
+
+    /* ----- transit signal priority (TSP) ----- */
+    container priority {
+      openits-types:arc-it-flow
+        "Transit Vehicle -> Roadway Signal Controller : TSP request";
+      description
+        "Transit Signal Priority strategy config (NTCIP 1211) + active-request
+         readback. Priority biases the sequence without overriding it (contrast
+         preemption). Mirrors the preemptor list idiom.";
+      reference "NTCIP 1211 (Priority Request Server / strategies).";
+
+      list strategy {
+        key "strategy-id";
+        description "One TSP strategy available to the priority request server.";
+
+        leaf strategy-id { type uint8 { range "1..255"; } description "Strategy identifier (key)."; }
+        container config {
+          description "Intended TSP strategy configuration.";
+          leaf strategy-id { type uint8 { range "1..255"; } description "Strategy identifier."; }
+          leaf priority-class {
+            type openits-sc-types:priority-type;
+            description "Priority class this strategy serves (transit / freight / other).";
+          }
+          leaf max-early-green-seconds { type uint16; units "seconds"; description "Maximum coordinated-phase early-green (green advance)."; }
+          leaf max-green-extension-seconds { type uint16; units "seconds"; description "Maximum green extension granted to hold a phase for the vehicle."; }
+          leaf reservice-interval-seconds { type uint16; units "seconds"; description "Minimum time before this strategy may be granted again (reservice lock)."; }
+          leaf-list served-phases {
+            type leafref { path "../../../../phases/phase/phase-number"; require-instance true; }
+            description "Phases this strategy may advance or extend.";
+          }
+        }
+      }
+
+      container state {
+        config false;
+        description "Active priority-request readback.";
+        list active-request {
+          key "request-id";
+          description "One in-progress priority request.";
+          leaf request-id { type string; description "PRS request identifier."; }
+          leaf priority-type { type openits-sc-types:priority-type; description "Class of this request."; }
+          leaf vehicle-id { type string; description "Requesting transit/freight vehicle identifier."; }
+          leaf stage {
+            type enumeration {
+              enum requested { value 1; }
+              enum granted   { value 2; }
+              enum active    { value 3; }
+              enum completed { value 4; }
+              enum denied    { value 5; }
+            }
+            description "Priority-request lifecycle stage.";
+          }
+          leaf strategy-id {
+            type leafref { path "../../../strategy/strategy-id"; require-instance false; }
+            description "Strategy serving this request (require-instance false: a request may reference a just-removed strategy).";
+          }
+        }
+      }
+    }
+
+    /* ----- operational rollup (state-only) ----- */
+    container operation {
+      config false;
+      openits-types:arc-it-flow
+        "Roadway Signal Controller -> TMC : signal system operational status";
+      description
+        "Controller-wide operational rollup: current mode, flash state,
+         and Malfunction Management Unit detail. State-only — the MMU
+         forces flash as a safety response; nothing writes this subtree.";
+
+      leaf mode {
+        type identityref { base openits-sc-types:controller-mode; }
+        description "Top-level operational mode of the controller (coordinated / free / flash / preempt / priority / manual / off).";
+      }
+      leaf flash-active {
+        type boolean;
+        description "The intersection is in a flashing state.";
+      }
+      leaf flash-cause {
+        type identityref { base openits-sc-types:flash-cause; }
+        description "Why it is flashing — MMU conflict, programmed TOD, startup, etc.";
+        reference "NEMA TS-2 §4 (MMU); Indiana 173 (fault-unit-flash-status).";
+      }
+      container mmu {
+        description "Malfunction Management Unit state (config-false readback). NEMA TS-2 §4.";
+        leaf fault-type {
+          type identityref { base openits-sc-types:mmu-fault-type; }
+          description "Active MMU fault class.";
+        }
+        leaf-list faulting-channels {
+          type channel-number;
+          description
+            "Channel numbers (from the channels table) the MMU flagged
+             (e.g. the conflicting pair).";
+        }
+        leaf latched {
+          type boolean;
+          description "True when the MMU flash is latched and requires an on-site manual reset.";
+        }
+      }
+      leaf last-mode-change {
+        type yang:date-and-time;
+        description "Wall-clock time of the most recent controller-mode transition.";
+      }
+    }
+
+    /* ----- cabinet power / UPS (platform capability) ----- */
+    container cabinet-power {
+      config false;
+      openits-types:arc-it-flow
+        "Roadway Signal Controller -> Maintenance : signal fault data";
+      description
+        "Cabinet AC / UPS power and battery health, composed from the shared
+         platform grouping. Power state precedes most comm failures, so this
+         is the leading indicator and the dispatch discriminator that the
+         opaque sc-fault-power fault alone cannot carry.";
+      uses openits-cabinet-power:cabinet-power;
+    }
+
+    /* ----- faults (state-only) ----- */
+    container faults {
+      config false;
+      openits-types:arc-it-flow
+        "Roadway Signal Controller -> Maintenance : signal fault data";
+      description "Active faults. Exported via the ARC-IT 'signal fault data' flow to maintenance systems.";
+
+      list fault {
+        key "fault-id";
+        description "One entry per active fault on the controller.";
+
+        uses openits-types:fault-entry;
+        leaf category {
+          type identityref { base openits-sc-types:sc-fault-event-kind; }
+          description
+            "Fault class (detector / lamp / conflict / communication /
+             power / cabinet / software). An identityref off
+             sc-fault-event-kind so a signal-controller fault is
+             filterable fleet-wide via
+             derived-from-or-self(openits-types:fault-event-kind).";
+        }
+      }
+    }
+  }
+
+  /* Notifications live in the signal-control events companion module
+     (openits-signal-control-events), split from this core because ygot's
+     proto backend fails on modules containing notification statements. */
+}

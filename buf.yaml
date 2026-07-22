@@ -1,0 +1,34 @@
+version: v2
+modules:
+  - path: api/proto
+    excludes:
+      # ygot-generated tree. References yext.yang_name and other extensions
+      # whose source proto isn't in our tree; regenerated from the YANG
+      # modules and not part of our hand-authored wire contract.
+      - api/proto/yang
+
+# Lint configuration: kept narrow so the existing per-event proto layout
+# (one proto package per file in a shared directory, package names that
+# pre-date buf-style PACKAGE_DIRECTORY_MATCH conventions) doesn't trip
+# the lint. Tightening lint is a follow-up project that would refactor the
+# generated package paths in lockstep with consumers.
+lint:
+  use:
+    - MINIMAL
+  except:
+    # Our top-level core protos (command.proto, device.proto) live at
+    # api/proto/ root, intentionally — they're the cross-service core, not
+    # part of any one service's per-event tree.
+    - PACKAGE_DIRECTORY_MATCH
+    # Our per-service protos co-locate at api/proto/openits/v1/ — one
+    # proto package per file, multiple service packages in one directory.
+    # Intentional: each service version-bumps its package independently
+    # without forcing a directory move.
+    - DIRECTORY_SAME_PACKAGE
+
+# Wire-compatibility rules. WIRE_JSON is stricter than WIRE alone — it also
+# catches changes that affect JSON-tag stability, which we'll need when M19
+# generates AsyncAPI from the protos.
+breaking:
+  use:
+    - WIRE_JSON

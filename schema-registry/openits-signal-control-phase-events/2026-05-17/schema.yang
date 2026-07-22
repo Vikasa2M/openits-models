@@ -1,0 +1,97 @@
+module openits-signal-control-phase-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:signal-control-phase-events";
+  prefix openits-sc-phase;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-signal-control-types {
+    prefix openits-sc-types;
+  }
+
+  import openits-nema-common {
+    prefix openits-nema;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Signal-controller phase events: state changes, terminations,
+     hold/call lifecycle, omit, FYA, advance-warning. Each notification
+     carries a 'kind' identityref derived from openits-signal-control-
+     types:sc-phase-event-kind and a 'wire-source' grouping locating
+     the original wire identifier.";
+
+  revision 2026-05-17 {
+    description
+      "Initial revision. Hosts the phase-state-change notification
+       migrated from the signal-control notifications companion module@2026-05-15.";
+    reference "ATSPM Indiana enumeration (phase event codes).";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification phase-state-change {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> ATSPM / TMC : signal phase state";
+    description
+      "Phase state-change event from the controller's high-resolution
+       log. The 'kind' identityref names the specific transition.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-phase-event-kind; }
+      mandatory true;
+      description "Specific phase-event identity from the Indiana taxonomy.";
+    }
+
+    leaf source-device-id {
+      type openits-types:device-id;
+      mandatory true;
+      description "Controller hosting the phase.";
+    }
+
+    leaf phase-number {
+      type openits-nema:phase-number;
+      mandatory true;
+      description "Phase the event applies to.";
+    }
+    leaf to-state {
+      type enumeration {
+        enum unspecified; enum green; enum yellow; enum red-clearance; enum red; enum dark;
+      }
+      description "Interval the phase transitioned to (green, yellow, red-clearance, red, dark).";
+    }
+    leaf termination-reason {
+      type enumeration {
+        enum unspecified; enum gap-out; enum max-out; enum force-off; enum skipped;
+      }
+      description
+        "Why the phase terminated, when the event is a termination. gap-out =
+         no more vehicle calls within passage; max-out = max-green hit;
+         force-off = coordinator forced termination; skipped = phase had no
+         demand and was skipped.";
+    }
+    leaf hold-active     { type boolean; description "Operator or coordination hold is currently active on this phase."; }
+    leaf call-registered { type boolean; description "A vehicle or pedestrian call has been registered on this phase."; }
+
+    leaf occurred-at {
+      type yang:date-and-time;
+      mandatory true;
+      description "Wall-clock time the phase event occurred at the controller.";
+    }
+
+    uses openits-types:wire-source;
+  }
+}

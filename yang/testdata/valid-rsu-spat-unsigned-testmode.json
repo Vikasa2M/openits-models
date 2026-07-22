@@ -1,0 +1,18 @@
+{
+  "openits-rsu:rsu": {
+    "config": { "id": "rsu-testmode-01", "name": "SPaT enabled, signing off, lab test mode" },
+    "operating": {
+      "config": { "configured-time-source": "gnss-pps" }
+    },
+    "security": {
+      "config": { "security-enabled": false, "permit-unsigned-broadcast": true }
+    },
+    "messages": {
+      "srm-ssm": { "config": { "evp-auto-grant": false } },
+      "spat": { "config": {
+        "enabled": true, "broadcast-interval": 100, "max-data-age-ms": 300,
+        "source-asc": "asc-01", "intersection": [ { "region": 1, "id": 42 } ]
+      } }
+    }
+  }
+}

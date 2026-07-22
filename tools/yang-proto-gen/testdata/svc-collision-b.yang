@@ -1,0 +1,14 @@
+module svc-collision-b {
+  yang-version 1.1;
+  namespace "urn:openits:test:svcb";
+  prefix b;
+
+  // A different service's control/config tree. Same container path as
+  // svc-collision-a (control/config -> ControlConfig) but disjoint leaves.
+  container control {
+    container config {
+      leaf b-only { type uint32; }
+      leaf b-two { type string; }
+    }
+  }
+}

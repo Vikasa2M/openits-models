@@ -1,0 +1,6 @@
+{
+  "module": "trafficvision-perception-incident-media",
+  "revision": "2026-07-12",
+  "kind": "augment",
+  "files": ["schema.yang"]
+}

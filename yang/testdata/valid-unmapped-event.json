@@ -1,0 +1,13 @@
+{
+  "openits-signal-control-events:unmapped-event": {
+    "kind": "openits-signal-control-types:sc-unmapped-event",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "occurred-at": "2026-07-11T14:05:00Z",
+    "sequence": "1",
+    "source": {
+      "decoder": "indiana",
+      "indiana-code": 179,
+      "indiana-param": 3
+    }
+  }
+}

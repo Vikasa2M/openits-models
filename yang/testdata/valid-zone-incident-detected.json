@@ -1,0 +1,18 @@
+{
+  "openits-perception-events:zone-incident-detected": {
+    "kind": "openits-perception-types:pcp-zone-incident-detected",
+    "source-device-id": "eb-travel-lanes-cam-03",
+    "occurred-at": "2026-07-11T14:11:52Z",
+    "sequence": "1",
+    "incident-id": "inc-2026-07-11-0004",
+    "zone-id": "eb-travel-lanes",
+    "type": "openits-perception-types:incident-wrong-way-vehicle",
+    "severity": "major",
+    "track-id": 2044,
+    "object-class": "openits-perception-types:object-passenger-vehicle",
+    "latitude": "32.8560400",
+    "longitude": "-96.7279200",
+    "speed-kmh": "42.5",
+    "confidence": 91
+  }
+}

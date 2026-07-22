@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "current-holder": {
+      "type": "string"
+    },
+    "held-priority": {
+      "maximum": 255,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "requested-by": {
+      "type": "string"
+    },
+    "requested-priority": {
+      "maximum": 255,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "requested-by",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+}

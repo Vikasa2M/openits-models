@@ -1,0 +1,19 @@
+module action-fixture {
+  yang-version 1.1;
+  namespace "urn:openits:test:action";
+  prefix act;
+
+  container device {
+    leaf name { type string; }
+    action reboot {
+      input {
+        leaf delay-seconds { type uint32; }
+        leaf reason { type string; }
+      }
+      output {
+        leaf accepted { type boolean; }
+        leaf estimated-downtime-seconds { type uint32; }
+      }
+    }
+  }
+}

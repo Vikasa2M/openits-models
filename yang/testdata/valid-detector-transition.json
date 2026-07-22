@@ -1,0 +1,17 @@
+{
+  "openits-signal-control-events:detector-transition": {
+    "kind": "openits-signal-control-types:vehicle-detector-on",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence": "1",
+    "channel": 12,
+    "lane": "NB Lane 2",
+    "approach": "Northbound",
+    "phase-served": 2,
+    "occurred-at": "2026-07-11T14:05:00Z",
+    "source": {
+      "decoder": "indiana",
+      "indiana-code": 132,
+      "indiana-param": 300
+    }
+  }
+}

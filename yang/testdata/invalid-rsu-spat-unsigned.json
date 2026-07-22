@@ -1,0 +1,18 @@
+{
+  "openits-rsu:rsu": {
+    "config": { "id": "rsu-unsigned-01", "name": "SPaT enabled, signing off, no escape hatch" },
+    "operating": {
+      "config": { "configured-time-source": "gnss-pps" }
+    },
+    "security": {
+      "config": { "security-enabled": false }
+    },
+    "messages": {
+      "srm-ssm": { "config": { "evp-auto-grant": false } },
+      "spat": { "config": {
+        "enabled": true, "broadcast-interval": 100, "max-data-age-ms": 300,
+        "source-asc": "asc-01", "intersection": [ { "region": 1, "id": 42 } ]
+      } }
+    }
+  }
+}

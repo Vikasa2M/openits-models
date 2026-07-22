@@ -1,0 +1,12 @@
+{
+  "openits-rsu-events:rsu-tim-broadcast": {
+    "kind": "openits-rsu-types:rsu-tim-broadcast-kind",
+    "source-device-id": "rsu-i35-mm214",
+    "occurred-at": "2026-07-11T14:05:00Z",
+    "sequence": "1",
+    "msg-id": "0x1A2B",
+    "channel-id": "172",
+    "dsrc-channel-number": 172,
+    "priority": 3
+  }
+}

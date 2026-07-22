@@ -1,0 +1,248 @@
+syntax = "proto3";
+
+package openits.traffic_sensor.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/traffic_sensor/v1;trafficsensorv1";
+
+import "google/protobuf/timestamp.proto";
+
+message TrafficSensor {
+  TrafficSensorConfig config = 1;
+  TrafficSensorState state = 2;
+  Associations associations = 8;
+  Configuration configuration = 3;
+  Lanes lanes = 4;
+  Queues queues = 5;
+  Diagnostics diagnostics = 6;
+  Faults faults = 7;
+}
+
+message TrafficSensorConfig {
+  string elevation = 1;
+  uint32 heading = 2;
+  string id = 8;
+  google.protobuf.Timestamp install_date = 7;
+  string latitude = 3;
+  TrafficSensorConfigLinearReference linear_reference = 9;
+  string longitude = 4;
+  string maintained_by = 10;
+  string name = 5;
+  string owner = 11;
+  string road_reference = 6;
+  string site_id = 12;
+}
+
+message TrafficSensorConfigLinearReference {
+  string route_designator = 1;
+  string direction = 2;
+  string measure = 3;
+  string lrs_method = 4;
+}
+
+message TrafficSensorState {
+  OpenitsTrafficSensorOperationalStatus operational_status = 1;
+  string inactive_reason = 2;
+  string elevation = 3;
+  string firmware = 4;
+  string firmware_build = 15;
+  string hardware_version = 16;
+  uint32 heading = 5;
+  string id = 14;
+  google.protobuf.Timestamp install_date = 12;
+  string latitude = 6;
+  TrafficSensorStateLinearReference linear_reference = 17;
+  string longitude = 7;
+  string maintained_by = 18;
+  string make = 8;
+  string model = 9;
+  string name = 10;
+  string owner = 19;
+  string road_reference = 11;
+  string serial = 13;
+  string site_id = 20;
+}
+
+enum OpenitsTrafficSensorOperationalStatus {
+  OPENITS_TRAFFIC_SENSOR_OPERATIONAL_STATUS_ACTIVE = 0;
+  OPENITS_TRAFFIC_SENSOR_OPERATIONAL_STATUS_INACTIVE = 1;
+  OPENITS_TRAFFIC_SENSOR_OPERATIONAL_STATUS_DEGRADED = 2;
+}
+
+message TrafficSensorStateLinearReference {
+  string route_designator = 1;
+  string direction = 2;
+  string measure = 3;
+  string lrs_method = 4;
+}
+
+message Associations {
+  repeated AssociatedDevice associated_device = 1;
+}
+
+message AssociatedDevice {
+  string device_id = 1;
+  string role = 2;
+  string note = 3;
+}
+
+message Configuration {
+  uint32 data_interval_s = 1;
+  LaneNumberingOrigin lane_numbering_origin = 4;
+  MountingSide mounting_side = 5;
+  string classification_scheme = 3;
+  repeated VehicleClass vehicle_class = 2;
+  repeated ConfigurationQueueZone queue_zone = 6;
+}
+
+enum LaneNumberingOrigin {
+  LANE_NUMBERING_ORIGIN_LEFTMOST_IN_TRAVEL = 0;
+  LANE_NUMBERING_ORIGIN_RIGHTMOST_IN_TRAVEL = 1;
+  LANE_NUMBERING_ORIGIN_FROM_SENSOR = 2;
+  LANE_NUMBERING_ORIGIN_FROM_MEDIAN = 3;
+}
+
+enum MountingSide {
+  MOUNTING_SIDE_ROADSIDE = 0;
+  MOUNTING_SIDE_MEDIAN = 1;
+  MOUNTING_SIDE_OVERHEAD = 2;
+  MOUNTING_SIDE_UNKNOWN = 3;
+}
+
+message VehicleClass {
+  uint32 class_id = 1;
+  string name = 2;
+  string min_length_m = 3;
+  string max_length_m = 4;
+  uint32 min_axle_count = 5;
+  uint32 max_axle_count = 6;
+}
+
+message ConfigurationQueueZone {
+  string zone_id = 1;
+  string name = 2;
+  uint32 lane_reference = 3;
+  string carriageway = 4;
+  string downstream_reference = 5;
+}
+
+message Lanes {
+  repeated LanesLane lane = 1;
+}
+
+message LanesLane {
+  uint32 lane_id = 1;
+  LanesLaneConfig config = 2;
+  LanesLaneState state = 3;
+}
+
+message LanesLaneConfig {
+  string carriageway = 1;
+  string effective_zone_length_m = 5;
+  uint32 lane_id = 2;
+  string name = 3;
+  uint32 travel_heading = 4;
+}
+
+message LanesLaneState {
+  OpenitsTrafficSensorOperationalStatus operational_status = 8;
+  Interval interval = 1;
+  Presence presence = 2;
+  string carriageway = 3;
+  string effective_zone_length_m = 7;
+  uint32 lane_id = 4;
+  string name = 5;
+  uint32 travel_heading = 6;
+}
+
+message Interval {
+  repeated IntervalClassVolume class_volume = 1;
+  OpenitsTrafficSensorDataQuality data_quality = 12;
+  string density = 2;
+  uint32 flow_rate_vph = 3;
+  string gap_average_s = 4;
+  string headway_average_s = 5;
+  uint32 interval_duration_s = 6;
+  google.protobuf.Timestamp interval_start = 7;
+  string mean_vehicle_length_m = 16;
+  string occupancy = 8;
+  string speed_85th_percentile_kmh = 9;
+  string speed_average_kmh = 10;
+  string speed_space_mean_kmh = 13;
+  string speed_std_dev_kmh = 17;
+  uint32 unclassified_volume = 15;
+  string uptime_percent = 14;
+  uint32 volume = 11;
+  uint32 wrong_way_volume = 18;
+}
+
+message IntervalClassVolume {
+  uint32 class_id = 1;
+  uint32 volume = 2;
+}
+
+enum OpenitsTrafficSensorDataQuality {
+  OPENITS_TRAFFIC_SENSOR_DATA_QUALITY_VALID = 0;
+  OPENITS_TRAFFIC_SENSOR_DATA_QUALITY_SUSPECT = 1;
+  OPENITS_TRAFFIC_SENSOR_DATA_QUALITY_INVALID = 2;
+}
+
+message Presence {
+  bool occupied = 1;
+  google.protobuf.Timestamp last_detection = 2;
+}
+
+message Queues {
+  repeated QueuesQueueZone queue_zone = 1;
+}
+
+message QueuesQueueZone {
+  string zone_id = 1;
+  uint32 back_of_queue_m = 2;
+  uint32 queue_duration_s = 3;
+  uint32 queue_length_m = 4;
+  google.protobuf.Timestamp queue_start = 5;
+  bool queueing = 6;
+}
+
+message Diagnostics {
+  uint32 signal_quality = 1;
+  string internal_temperature_c = 6;
+  uint64 uptime_s = 7;
+  google.protobuf.Timestamp last_self_test = 3;
+  Calibration calibration = 2;
+}
+
+message Calibration {
+  google.protobuf.Timestamp last_calibrated = 1;
+  Status status = 2;
+}
+
+enum Status {
+  STATUS_CALIBRATED = 0;
+  STATUS_DUE = 1;
+  STATUS_OVERDUE = 2;
+  STATUS_FAILED = 3;
+  STATUS_UNKNOWN = 4;
+}
+
+message Faults {
+  repeated Fault fault = 1;
+}
+
+message Fault {
+  string category = 1;
+  string correlates_with = 6;
+  string description = 2;
+  string fault_id = 3;
+  google.protobuf.Timestamp first_observed = 4;
+  FaultSeverity severity = 5;
+}
+
+enum FaultSeverity {
+  FAULT_SEVERITY_INFO = 0;
+  FAULT_SEVERITY_WARNING = 1;
+  FAULT_SEVERITY_MINOR = 2;
+  FAULT_SEVERITY_MAJOR = 3;
+  FAULT_SEVERITY_CRITICAL = 4;
+}
+

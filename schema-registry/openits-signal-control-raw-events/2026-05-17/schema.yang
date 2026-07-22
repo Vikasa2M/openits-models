@@ -1,0 +1,54 @@
+module openits-signal-control-raw-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:signal-control-raw-events";
+  prefix openits-sc-raw;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Per-service catch-all for wire rows the signal-control decoder
+     cannot type. Companion to the per-domain event modules established
+     in Phase 0c; governed by the single-emit policy from the taxonomy
+     design:
+     decoder emits the typed notification when it can map the wire
+     identifier, and emits unmapped-event only when it cannot.";
+
+  revision 2026-05-17 {
+    description "Initial — Phase 0d raw catch-all.";
+    reference "ATSPM Indiana enumeration (unmapped HR-event codes).";
+  }
+
+  notification unmapped-event {
+    description
+      "Emitted when the decoder cannot type a wire row. The wire-source
+       grouping preserves the original identifier so downstream consumers
+       can interpret it offline if/when a typed mapping is added.";
+
+    uses openits-types:wire-source;
+
+    leaf occurred-at {
+      type yang:date-and-time;
+      mandatory true;
+      description
+        "Controller-local time the wire row was emitted, as decoded
+         from the file or trap.";
+    }
+    leaf source-controller-id {
+      type string;
+      mandatory true;
+      description "Inventory-side identifier for the source controller.";
+    }
+  }
+}

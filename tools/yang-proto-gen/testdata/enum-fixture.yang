@@ -1,0 +1,23 @@
+module enum-fixture {
+  namespace "urn:test:enum-fixture";
+  prefix ef;
+
+  typedef severity {
+    type enumeration {
+      enum info;
+      enum warning;
+      enum critical;
+    }
+  }
+
+  notification widget-event {
+    leaf name { type string; }
+    leaf severity { type severity; }
+    leaf mode {
+      type enumeration {
+        enum on;
+        enum off;
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "openits-signal-control:signal-controller": {
+    "config": { "id": "c1", "name": "c1" },
+    "phases": { "phase": [
+      { "phase-number": 1, "config": { "phase-number": 1, "ring": 1, "barrier": 1,
+        "timing": { "min-green": "5.0", "max-green": "40.0", "yellow-change": "3.5", "red-clear": "1.5" } } },
+      { "phase-number": 2, "config": { "phase-number": 2, "ring": 1, "barrier": 1,
+        "timing": { "min-green": "5.0", "max-green": "40.0", "yellow-change": "3.5", "red-clear": "1.5" } } }
+    ] },
+    "coordination": { "timing-plan": [
+      { "plan-id": 1, "cycle-length": 60, "offset": 0,
+        "coordinated-phases": [1], "offset-reference": "begin-of-green",
+        "transition-mode": "shortway", "force-off-mode": "floating",
+        "split": [
+          { "phase-number": 1, "split-seconds": 30, "split-mode": "coordinated-fixed" },
+          { "phase-number": 2, "split-seconds": 30, "split-mode": "other" }
+        ] }
+    ] }
+  }
+}

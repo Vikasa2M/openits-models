@@ -1,0 +1,2289 @@
+module openits-rsu {
+  yang-version 1.1;
+  namespace "urn:openits:yang:rsu";
+  prefix openits-rsu;
+
+  import openits-types {
+    prefix openits-types;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  organization
+    "Traffic Cabinet YANG Project";
+  contact
+    "https://github.com/yang-gateway";
+  description
+    "Roadside Unit (RSU) YANG module for V2X communication.
+     Models NTCIP 1218-compliant RSUs including DSRC/C-V2X channels,
+     V2X message broadcasting (SPaT, MAP, TIM, BSM), and security.";
+
+  revision 2026-07-10 {
+    description
+      "Replace the inline latitude/longitude leaves on the
+       broadcast-tim RPC's 'region' input container with
+       openits-types:geo-point. Already fraction-digits 7 — no
+       precision change. Member set unchanged (latitude, longitude,
+       radius); this is the one openits-rsu site that duplicated
+       lat/lon inline alongside the module's otherwise-clean use of
+       openits-types:geo-location elsewhere in the state tree.
+
+       Also, rename SCREAMING_SNAKE_CASE identities to kebab-case per
+       RFC 8407 (pre-v1 wire-facing change). Mechanical 1:1 transform;
+       no identity added or removed.";
+    reference "RFC 8407 section 4.3 (identifier naming).";
+  }
+  revision 2026-04-28 {
+    description
+      "Companion bump for the rsu notifications companion module@2026-04-28
+       which adds the TIM lifecycle notifications (rsu-tim-loaded,
+       rsu-tim-cleared, rsu-tim-broadcast-state-changed). Base data
+       tree byte-equivalent.";
+  }
+  revision 2026-04-27 {
+    description
+      "Whitespace-only canonicalization to 2-space indentation
+       (M14 follow-up to the M8 retrospective). No semantic
+       content changes; the schema tree is byte-equivalent at
+       the libyang level.";
+  }
+  revision 2026-04-19 {
+    description
+      "Split notifications into the rsu notifications companion module
+       (openits-rsu-events as of the rename). Content of the
+       data tree is unchanged — consumers of
+       the base module see the same reachable schema nodes.
+       The split is required so ygot's proto backend can
+       generate protobuf from this module.";
+  }
+  revision 2024-12-26 {
+    description
+      "Initial version - greenfield design for V2X RSU";
+    reference
+      "NTCIP 1218 (RSU communications); SAE J2735 (V2X message types:
+       BSM, SPaT, MAP, TIM, SRM, SSM, PSM); IEEE 1609.2 (security),
+       1609.3 (WSMP), 1609.4 (multi-channel operation).";
+  }
+
+  // =========================================================================
+  // RSU-SPECIFIC IDENTITIES
+  // =========================================================================
+
+  identity channel-mode {
+    description
+      "Base identity for channel operating mode";
+  }
+
+  identity mode-continuous {
+    base channel-mode;
+    description
+      "Continuous operation on single channel";
+  }
+
+  identity mode-alternating {
+    base channel-mode;
+    description
+      "Alternating between channels";
+  }
+
+  identity mode-immediate {
+    base channel-mode;
+    description
+      "Immediate access";
+  }
+
+  identity radio-type {
+    description
+      "Base identity for radio technology";
+  }
+
+  identity radio-dsrc {
+    base radio-type;
+    description
+      "DSRC (802.11p) radio";
+  }
+
+  identity radio-cv2x {
+    base radio-type;
+    description
+      "Cellular V2X (C-V2X) radio";
+  }
+
+  identity radio-dual-mode {
+    base radio-type;
+    description
+      "Dual-mode DSRC/C-V2X radio";
+  }
+
+  identity certificate-status {
+    description
+      "Base identity for certificate status";
+  }
+
+  identity cert-valid {
+    base certificate-status;
+    description
+      "Certificate is valid";
+  }
+
+  identity cert-expiring {
+    base certificate-status;
+    description
+      "Certificate expiring soon";
+  }
+
+  identity cert-expired {
+    base certificate-status;
+    description
+      "Certificate has expired";
+  }
+
+  identity cert-revoked {
+    base certificate-status;
+    description
+      "Certificate has been revoked";
+  }
+
+  identity srm-request-type {
+    description
+      "Base identity for Signal Request Message types";
+  }
+
+  identity srm-priority-request {
+    base srm-request-type;
+    description
+      "TSP priority request";
+  }
+
+  identity srm-preemption-request {
+    base srm-request-type;
+    description
+      "EVP preemption request";
+  }
+
+  identity srm-priority-cancel {
+    base srm-request-type;
+    description
+      "Cancel priority request";
+  }
+
+  // =========================================================================
+  // TOP-LEVEL RSU CONTAINER
+  // =========================================================================
+
+  container rsu-units {
+    description
+      "Roadside unit inventory and V2X state.";
+    list rsu {
+      key "rsu-id";
+      description
+        "Roadside Unit V2X data";
+      leaf rsu-id {
+        type openits-types:device-id;
+        description
+          "Unique RSU identifier";
+      }
+      // -----------------------------------------------------------------
+      // RADIO CHANNELS
+      // -----------------------------------------------------------------
+      container channels {
+        description
+          "V2X radio channel configuration";
+        leaf radio-type {
+          type identityref {
+            base radio-type;
+          }
+          config false;
+          description
+            "Radio technology type";
+        }
+        list channel {
+          key "number";
+          description
+            "Individual radio channel";
+          leaf number {
+            type openits-types:dsrc-channel;
+            description
+              "DSRC channel number";
+          }
+          container config {
+            description
+              "Channel configuration";
+            leaf enabled {
+              type boolean;
+              default "true";
+              description
+                "Channel is enabled";
+            }
+            leaf mode {
+              type identityref {
+                base channel-mode;
+              }
+              default "mode-continuous";
+              description
+                "Channel operating mode";
+            }
+            leaf tx-power {
+              type openits-types:tx-power-dbm;
+              default "20";
+              description
+                "Transmit power in dBm";
+            }
+            leaf-list message-types {
+              type identityref {
+                base openits-types:v2x-message-type;
+              }
+              description
+                "Message types on this channel";
+            }
+            leaf primary {
+              type boolean;
+              default "false";
+              description
+                "Primary channel for safety messages";
+            }
+          }
+          container state {
+            config false;
+            description
+              "Channel operational state";
+            leaf operational {
+              type boolean;
+              description
+                "Channel is operational";
+            }
+            leaf packets-tx {
+              type uint64;
+              description
+                "Packets transmitted";
+            }
+            leaf packets-rx {
+              type uint64;
+              description
+                "Packets received";
+            }
+            leaf bytes-tx {
+              type uint64;
+              description
+                "Bytes transmitted";
+            }
+            leaf bytes-rx {
+              type uint64;
+              description
+                "Bytes received";
+            }
+            leaf tx-errors {
+              type uint32;
+              description
+                "Transmit errors";
+            }
+            leaf rx-errors {
+              type uint32;
+              description
+                "Receive errors";
+            }
+            leaf channel-busy-ratio {
+              type openits-types:percentage;
+              description
+                "Channel busy ratio (CBR)";
+            }
+            leaf tx-power-dbm {
+              type openits-types:tx-power-dbm;
+              description
+                "Current transmit power";
+            }
+            container queue-depths {
+              description
+                "Per-message-type queue depths";
+              leaf spat {
+                type uint32;
+                description
+                  "SPaT message queue depth";
+              }
+              leaf map {
+                type uint32;
+                description
+                  "MAP message queue depth";
+              }
+              leaf tim {
+                type uint32;
+                description
+                  "TIM message queue depth";
+              }
+              leaf bsm {
+                type uint32;
+                description
+                  "BSM message queue depth";
+              }
+              leaf srm {
+                type uint32;
+                description
+                  "SRM message queue depth";
+              }
+              leaf ssm {
+                type uint32;
+                description
+                  "SSM message queue depth";
+              }
+            }
+            leaf fault-type {
+              type identityref {
+                base openits-types:channel-fault-type;
+              }
+              description
+                "Channel fault type (if any)";
+            }
+            leaf tx-queue-depth {
+              type uint32;
+              description
+                "Total transmit queue depth";
+            }
+            leaf tx-failures {
+              type uint64;
+              description
+                "Total transmit failures";
+            }
+            leaf rx-decode-errors {
+              type uint64;
+              description
+                "Receive decode errors";
+            }
+            leaf security-failures {
+              type uint64;
+              description
+                "Security verification failures";
+            }
+            container message-counts {
+              description
+                "Per-message type TX/RX counts";
+              leaf spat-tx {
+                type uint64;
+                description
+                  "SPaT messages transmitted";
+              }
+              leaf map-tx {
+                type uint64;
+                description
+                  "MAP messages transmitted";
+              }
+              leaf bsm-rx {
+                type uint64;
+                description
+                  "BSM messages received";
+              }
+              leaf srm-rx {
+                type uint64;
+                description
+                  "SRM messages received";
+              }
+              leaf ssm-tx {
+                type uint64;
+                description
+                  "SSM messages transmitted";
+              }
+              leaf tim-tx {
+                type uint64;
+                description
+                  "TIM messages transmitted";
+              }
+            }
+          }
+        }
+      }
+      // -----------------------------------------------------------------
+      // V2X MESSAGES
+      // -----------------------------------------------------------------
+      container messages {
+        description
+          "V2X message configuration and status";
+        container spat {
+          description
+            "Signal Phase and Timing (SPaT) message";
+          container config {
+            description
+              "SPaT configuration";
+            leaf enabled {
+              type boolean;
+              default "true";
+              description
+                "SPaT broadcasting enabled";
+            }
+            leaf broadcast-interval {
+              type uint16;
+              units "milliseconds";
+              default "100";
+              description
+                "Broadcast interval";
+            }
+            leaf source-asc {
+              type openits-types:device-id;
+              description
+                "ASC device to source SPaT data from";
+            }
+            leaf intersection-id {
+              type uint32;
+              description
+                "Intersection reference ID";
+            }
+            leaf include-timing-prediction {
+              type boolean;
+              default "true";
+              description
+                "Include timing predictions";
+            }
+          }
+          container state {
+            config false;
+            description
+              "SPaT state";
+            leaf broadcasting {
+              type boolean;
+              description
+                "Currently broadcasting";
+            }
+            leaf broadcast-count {
+              type uint64;
+              description
+                "Messages broadcast";
+            }
+            leaf last-broadcast {
+              type yang:date-and-time;
+              description
+                "Last broadcast timestamp";
+            }
+            leaf asc-connected {
+              type boolean;
+              description
+                "Connected to source ASC";
+            }
+          }
+        }
+        container map {
+          description
+            "MAP (intersection geometry) message";
+          container config {
+            description
+              "MAP configuration";
+            leaf enabled {
+              type boolean;
+              default "true";
+              description
+                "MAP broadcasting enabled";
+            }
+            leaf broadcast-interval {
+              type uint16;
+              units "milliseconds";
+              default "1000";
+              description
+                "Broadcast interval";
+            }
+            leaf geometry-version {
+              type uint8;
+              description
+                "MAP geometry version";
+            }
+          }
+          container state {
+            config false;
+            description
+              "MAP state";
+            leaf broadcasting {
+              type boolean;
+              description
+                "Currently broadcasting";
+            }
+            leaf broadcast-count {
+              type uint64;
+              description
+                "Messages broadcast";
+            }
+            leaf intersection-id {
+              type uint32;
+              description
+                "Intersection ID from MAP";
+            }
+            leaf lane-count {
+              type uint8;
+              description
+                "Number of lanes defined";
+            }
+            leaf approach-count {
+              type uint8;
+              description
+                "Number of approaches defined";
+            }
+          }
+        }
+        container tim {
+          description
+            "Traveler Information Messages";
+          container config {
+            description
+              "TIM configuration";
+            leaf enabled {
+              type boolean;
+              default "true";
+              description
+                "TIM broadcasting enabled";
+            }
+            leaf max-active-messages {
+              type uint8;
+              default "10";
+              description
+                "Maximum concurrent TIM messages";
+            }
+          }
+          container active {
+            description
+              "Active TIM messages";
+            list message {
+              key "id";
+              description
+                "Active TIM message";
+              leaf id {
+                type string {
+                  length "1..32";
+                }
+                description
+                  "TIM message identifier";
+              }
+              container config {
+                description
+                  "TIM message configuration";
+                leaf name {
+                  type string;
+                  description
+                    "Message name";
+                }
+                leaf enabled {
+                  type boolean;
+                  default "true";
+                  description
+                    "Message is enabled";
+                }
+                leaf priority {
+                  type uint8 {
+                    range "1..7";
+                  }
+                  default "4";
+                  description
+                    "Message priority";
+                }
+                leaf start-time {
+                  type yang:date-and-time;
+                  description
+                    "Start broadcasting";
+                }
+                leaf end-time {
+                  type yang:date-and-time;
+                  description
+                    "Stop broadcasting";
+                }
+                leaf itis-codes {
+                  type string;
+                  description
+                    "ITIS codes (comma-separated)";
+                }
+                leaf text {
+                  type string;
+                  description
+                    "Human-readable text";
+                }
+                container region {
+                  description
+                    "Geographic region";
+                  uses openits-types:geo-location;
+                  leaf radius {
+                    type uint32;
+                    units "meters";
+                    description
+                      "Region radius";
+                  }
+                  leaf direction {
+                    type openits-types:heading-degrees;
+                    description
+                      "Heading filter";
+                  }
+                  leaf direction-tolerance {
+                    type uint16;
+                    units "degrees";
+                    description
+                      "Heading tolerance";
+                  }
+                }
+              }
+              container state {
+                config false;
+                description
+                  "TIM state";
+                leaf broadcast-count {
+                  type uint64;
+                  description
+                    "Times broadcast";
+                }
+                leaf last-broadcast {
+                  type yang:date-and-time;
+                  description
+                    "Last broadcast";
+                }
+              }
+            }
+          }
+        }
+        container bsm {
+          description
+            "Basic Safety Message receive/forward";
+          container config {
+            description
+              "BSM configuration";
+            leaf receive-enabled {
+              type boolean;
+              default "true";
+              description
+                "BSM receive enabled";
+            }
+            leaf forward-enabled {
+              type boolean;
+              default "false";
+              description
+                "Forward BSMs to central";
+            }
+            leaf forward-destination {
+              type inet:host;
+              description
+                "Forward destination address";
+            }
+            leaf forward-port {
+              type inet:port-number;
+              description
+                "Forward destination port";
+            }
+            leaf filter-by-region {
+              type boolean;
+              default "true";
+              description
+                "Filter by geographic region";
+            }
+            leaf region-radius {
+              type uint32;
+              units "meters";
+              default "500";
+              description
+                "Region radius for filtering";
+            }
+          }
+          container state {
+            config false;
+            description
+              "BSM state";
+            leaf received-count {
+              type uint64;
+              description
+                "BSMs received";
+            }
+            leaf forwarded-count {
+              type uint64;
+              description
+                "BSMs forwarded";
+            }
+            leaf unique-vehicles-1min {
+              type uint32;
+              description
+                "Unique vehicles in last minute";
+            }
+            leaf unique-vehicles-1hr {
+              type uint32;
+              description
+                "Unique vehicles in last hour";
+            }
+            leaf average-speed {
+              type openits-types:speed-kmh;
+              description
+                "Average vehicle speed";
+            }
+            leaf last-received {
+              type yang:date-and-time;
+              description
+                "Last BSM received";
+            }
+          }
+        }
+        container psm {
+          description
+            "Personal Safety Message receive";
+          container config {
+            description
+              "PSM configuration";
+            leaf enabled {
+              type boolean;
+              default "true";
+              description
+                "PSM receive enabled";
+            }
+            leaf alert-asc {
+              type boolean;
+              default "true";
+              description
+                "Alert ASC of pedestrians";
+            }
+          }
+          container state {
+            config false;
+            description
+              "PSM state";
+            leaf received-count {
+              type uint64;
+              description
+                "PSMs received";
+            }
+            leaf pedestrians-detected-1min {
+              type uint32;
+              description
+                "Pedestrians in last minute";
+            }
+            leaf pedestrians-detected-1hr {
+              type uint32;
+              description
+                "Unique pedestrians in last hour";
+            }
+            leaf last-received {
+              type yang:date-and-time;
+              description
+                "Last PSM received";
+            }
+            leaf invalid-count {
+              type uint64;
+              description
+                "Invalid PSMs rejected";
+            }
+          }
+        }
+        container srm-ssm {
+          description
+            "Signal Request/Status Messages for TSP/EVP";
+          container config {
+            description
+              "SRM/SSM configuration";
+            leaf srm-receive-enabled {
+              type boolean;
+              default "true";
+              description
+                "Receive SRMs from vehicles";
+            }
+            leaf ssm-broadcast-enabled {
+              type boolean;
+              default "true";
+              description
+                "Broadcast SSMs";
+            }
+            leaf forward-to-asc {
+              type boolean;
+              default "true";
+              description
+                "Forward requests to ASC";
+            }
+            leaf asc-device {
+              type openits-types:device-id;
+              description
+                "Target ASC for requests";
+            }
+            leaf auto-approve-tsp {
+              type boolean;
+              default "false";
+              description
+                "Auto-approve TSP requests";
+            }
+            leaf max-active-requests {
+              type uint8;
+              default "5";
+              description
+                "Max concurrent requests";
+            }
+          }
+          container state {
+            config false;
+            description
+              "SRM/SSM state";
+            leaf srm-received {
+              type uint64;
+              description
+                "SRMs received";
+            }
+            leaf ssm-broadcast {
+              type uint64;
+              description
+                "SSMs broadcast";
+            }
+            leaf active-requests {
+              type uint8;
+              description
+                "Currently active requests";
+            }
+            leaf approved-requests {
+              type uint64;
+              description
+                "Total approved requests";
+            }
+            leaf denied-requests {
+              type uint64;
+              description
+                "Total denied requests";
+            }
+          }
+          container active-requests {
+            config false;
+            description
+              "Currently active priority requests";
+            list request {
+              key "id";
+              description
+                "Active request";
+              leaf id {
+                type string;
+                description
+                  "Request ID";
+              }
+              leaf vehicle-id {
+                type string;
+                description
+                  "Requesting vehicle";
+              }
+              leaf request-type {
+                type identityref {
+                  base srm-request-type;
+                }
+                description
+                  "Request type";
+              }
+              leaf approach {
+                type uint8;
+                description
+                  "Approach lane";
+              }
+              leaf eta-seconds {
+                type uint16;
+                description
+                  "ETA in seconds";
+              }
+              leaf received-at {
+                type yang:date-and-time;
+                description
+                  "Request received time";
+              }
+              leaf status {
+                type enumeration {
+                  enum pending {
+                    description
+                      "Pending approval";
+                  }
+                  enum approved {
+                    description
+                      "Approved";
+                  }
+                  enum active {
+                    description
+                      "Currently active";
+                  }
+                  enum completed {
+                    description
+                      "Completed";
+                  }
+                  enum denied {
+                    description
+                      "Denied";
+                  }
+                }
+                description
+                  "Request status";
+              }
+              leaf priority {
+                type uint8 {
+                  range "1..7";
+                }
+                description
+                  "Request priority level (1-7)";
+              }
+              leaf vehicle-class {
+                type string;
+                description
+                  "Vehicle class (BUS, EMERGENCY, etc.)";
+              }
+            }
+          }
+        }
+      }
+      // -----------------------------------------------------------------
+      // SECURITY
+      // -----------------------------------------------------------------
+      container security {
+        description
+          "V2X security and certificates";
+        container config {
+          description
+            "Security configuration";
+          leaf security-enabled {
+            type boolean;
+            default "true";
+            description
+              "Message signing enabled";
+          }
+          leaf scms-url {
+            type inet:uri;
+            description
+              "SCMS server URL";
+          }
+          leaf auto-renewal {
+            type boolean;
+            default "true";
+            description
+              "Auto-renew certificates";
+          }
+          leaf renewal-days-before-expiry {
+            type uint16;
+            default "30";
+            description
+              "Days before expiry to renew";
+          }
+        }
+        container state {
+          config false;
+          description
+            "Security state";
+          leaf scms-connected {
+            type boolean;
+            description
+              "Connected to SCMS";
+          }
+          leaf last-scms-contact {
+            type yang:date-and-time;
+            description
+              "Last SCMS contact";
+          }
+          leaf enrollment-status {
+            type enumeration {
+              enum not-enrolled {
+                description
+                  "Not enrolled";
+              }
+              enum enrolling {
+                description
+                  "Enrollment in progress";
+              }
+              enum enrolled {
+                description
+                  "Enrolled and operational";
+              }
+              enum error {
+                description
+                  "Enrollment error";
+              }
+            }
+            description
+              "SCMS enrollment status";
+          }
+          leaf pseudonym-certs-available {
+            type uint32;
+            description
+              "Number of pseudonym certificates available";
+          }
+          leaf pseudonym-certs-used {
+            type uint32;
+            description
+              "Number of pseudonym certificates used";
+          }
+          leaf app-certs-available {
+            type uint32;
+            description
+              "Number of application certificates available";
+          }
+          leaf days-to-enrollment-expiry {
+            type int32;
+            description
+              "Days until enrollment certificate expiry";
+          }
+          leaf days-to-pseudonym-expiry {
+            type int32;
+            description
+              "Days until pseudonym certificate expiry";
+          }
+          leaf earliest-cert-expiry {
+            type yang:date-and-time;
+            description
+              "Earliest certificate expiration date";
+          }
+          leaf last-cert-download {
+            type yang:date-and-time;
+            description
+              "Timestamp of last certificate download";
+          }
+          leaf certs-downloaded-total {
+            type uint64;
+            description
+              "Total certificates downloaded";
+          }
+          leaf cert-download-failures {
+            type uint64;
+            description
+              "Certificate download failures";
+          }
+          leaf cert-download-queue {
+            type uint32;
+            description
+              "Certificates in download queue";
+          }
+          leaf last-crl-update {
+            type yang:date-and-time;
+            description
+              "Timestamp of last CRL update";
+          }
+          leaf crl-entries {
+            type uint32;
+            description
+              "Number of entries in CRL";
+          }
+          leaf revocation-checks {
+            type uint64;
+            description
+              "Total revocation checks performed";
+          }
+          leaf revocation-rejections {
+            type uint64;
+            description
+              "Messages rejected due to revocation";
+          }
+        }
+        container certificates {
+          description
+            "Certificate management";
+          list certificate {
+            key "id";
+            description
+              "Certificate entry";
+            leaf id {
+              type string;
+              description
+                "Certificate identifier";
+            }
+            container state {
+              config false;
+              description
+                "Certificate state";
+              leaf type {
+                type enumeration {
+                  enum enrollment {
+                    description
+                      "Enrollment certificate";
+                  }
+                  enum pseudonym {
+                    description
+                      "Pseudonym certificate";
+                  }
+                  enum application {
+                    description
+                      "Application certificate";
+                  }
+                }
+                description
+                  "Certificate type";
+              }
+              leaf status {
+                type identityref {
+                  base certificate-status;
+                }
+                description
+                  "Certificate status";
+              }
+              leaf valid-from {
+                type yang:date-and-time;
+                description
+                  "Valid from date";
+              }
+              leaf valid-until {
+                type yang:date-and-time;
+                description
+                  "Expiration date";
+              }
+              leaf days-until-expiry {
+                type int16;
+                description
+                  "Days until expiry";
+              }
+            }
+          }
+        }
+      }
+      // -----------------------------------------------------------------
+      // STORE AND FORWARD
+      // -----------------------------------------------------------------
+      container store-forward {
+        description
+          "Message store and forward for intermittent connectivity";
+        container config {
+          description
+            "Store-forward configuration";
+          leaf enabled {
+            type boolean;
+            default "true";
+            description
+              "Store-forward enabled";
+          }
+          leaf max-messages {
+            type uint32;
+            default "10000";
+            description
+              "Maximum messages to store";
+          }
+          leaf max-age {
+            type uint32;
+            units "seconds";
+            default "3600";
+            description
+              "Maximum message age";
+          }
+          leaf forward-on-connect {
+            type boolean;
+            default "true";
+            description
+              "Forward when connectivity restored";
+          }
+        }
+        container state {
+          config false;
+          description
+            "Store-forward state";
+          leaf stored-messages {
+            type uint32;
+            description
+              "Currently stored messages";
+          }
+          leaf storage-used-percent {
+            type openits-types:percentage;
+            description
+              "Storage utilization";
+          }
+          leaf messages-forwarded-today {
+            type uint64;
+            description
+              "Messages forwarded today";
+          }
+          leaf oldest-message-age {
+            type uint32;
+            units "seconds";
+            description
+              "Age of oldest stored message";
+          }
+        }
+      }
+      // -----------------------------------------------------------------
+      // DIAGNOSTICS
+      // -----------------------------------------------------------------
+      container diagnostics {
+        config false;
+        description
+          "RSU diagnostics";
+        // Radio hardware diagnostics
+        container radio {
+          description
+            "Radio hardware diagnostics";
+          leaf rssi-dbm {
+            type int32;
+            units "dBm";
+            description
+              "Received Signal Strength Indicator";
+          }
+          leaf noise-floor-dbm {
+            type int32;
+            units "dBm";
+            description
+              "Noise floor level";
+          }
+          leaf snr-db {
+            type int32;
+            units "dB";
+            description
+              "Signal-to-Noise Ratio";
+          }
+          leaf tx-power-dbm {
+            type int32;
+            units "dBm";
+            description
+              "Current transmit power";
+          }
+          leaf packets-tx {
+            type uint64;
+            description
+              "Total packets transmitted";
+          }
+          leaf packets-rx {
+            type uint64;
+            description
+              "Total packets received";
+          }
+          leaf bytes-tx {
+            type uint64;
+            description
+              "Total bytes transmitted";
+          }
+          leaf bytes-rx {
+            type uint64;
+            description
+              "Total bytes received";
+          }
+          leaf tx-errors {
+            type uint64;
+            description
+              "Transmit errors";
+          }
+          leaf rx-errors {
+            type uint64;
+            description
+              "Receive errors";
+          }
+          leaf crc-errors {
+            type uint64;
+            description
+              "CRC errors";
+          }
+          leaf collision-count {
+            type uint64;
+            description
+              "Collision count";
+          }
+          leaf operational {
+            type boolean;
+            description
+              "Radio is operational";
+          }
+          leaf fault-type {
+            type identityref {
+              base openits-types:radio-fault-type;
+            }
+            description
+              "Radio fault type (if any)";
+          }
+          leaf channel-busy-avg-pct {
+            type uint8;
+            description
+              "Average channel busy percentage";
+          }
+          leaf last-successful-tx {
+            type yang:date-and-time;
+            description
+              "Timestamp of last successful transmit";
+          }
+        }
+        // V2X message encoding/decoding errors
+        container message-errors {
+          description
+            "V2X message encoding/decoding errors";
+          container encoding {
+            description
+              "Encoding errors by message type";
+            leaf spat {
+              type uint64;
+              description
+                "SPaT encoding errors";
+            }
+            leaf map {
+              type uint64;
+              description
+                "MAP encoding errors";
+            }
+            leaf ssm {
+              type uint64;
+              description
+                "SSM encoding errors";
+            }
+            leaf tim {
+              type uint64;
+              description
+                "TIM encoding errors";
+            }
+          }
+          container decoding {
+            description
+              "Decoding errors by message type";
+            leaf bsm {
+              type uint64;
+              description
+                "BSM decoding errors";
+            }
+            leaf srm {
+              type uint64;
+              description
+                "SRM decoding errors";
+            }
+          }
+          container security {
+            description
+              "Security-related errors";
+            leaf sign-failures {
+              type uint64;
+              description
+                "Message signing failures";
+            }
+            leaf verify-failures {
+              type uint64;
+              description
+                "Signature verification failures";
+            }
+            leaf cert-errors {
+              type uint64;
+              description
+                "Certificate errors";
+            }
+          }
+          container drops {
+            description
+              "Message drop statistics";
+            leaf queue {
+              type uint64;
+              description
+                "Dropped due to queue full";
+            }
+            leaf timeout {
+              type uint64;
+              description
+                "Dropped due to timeout";
+            }
+            leaf congestion {
+              type uint64;
+              description
+                "Dropped due to congestion";
+            }
+          }
+          leaf asc-data-errors {
+            type uint64;
+            description
+              "Errors receiving data from ASC";
+          }
+          leaf invalid-bsm-count {
+            type uint64;
+            description
+              "Invalid BSM messages rejected";
+          }
+          leaf invalid-srm-count {
+            type uint64;
+            description
+              "Invalid SRM messages rejected";
+          }
+        }
+        // V2X message delivery statistics
+        container message-stats {
+          description
+            "V2X message delivery statistics";
+          container spat {
+            description
+              "SPaT message statistics";
+            leaf total-sent {
+              type uint64;
+              description
+                "Total SPaT messages sent";
+            }
+            leaf success {
+              type uint64;
+              description
+                "Successfully delivered";
+            }
+            leaf avg-latency-ms {
+              type uint32;
+              description
+                "Average latency in milliseconds";
+            }
+            leaf rate-per-sec {
+              type uint32;
+              description
+                "Current rate per second";
+            }
+          }
+          container map {
+            description
+              "MAP message statistics";
+            leaf total-sent {
+              type uint64;
+              description
+                "Total MAP messages sent";
+            }
+            leaf success {
+              type uint64;
+              description
+                "Successfully delivered";
+            }
+            leaf avg-latency-ms {
+              type uint32;
+              description
+                "Average latency in milliseconds";
+            }
+            leaf rate-per-sec {
+              type uint32;
+              description
+                "Current rate per second";
+            }
+          }
+          container bsm {
+            description
+              "BSM message statistics";
+            leaf total-received {
+              type uint64;
+              description
+                "Total BSM messages received";
+            }
+            leaf valid {
+              type uint64;
+              description
+                "Valid messages processed";
+            }
+            leaf invalid {
+              type uint64;
+              description
+                "Invalid messages rejected";
+            }
+            leaf rate-per-sec {
+              type uint32;
+              description
+                "Current rate per second";
+            }
+          }
+          container srm {
+            description
+              "SRM message statistics";
+            leaf total-received {
+              type uint64;
+              description
+                "Total SRM messages received";
+            }
+            leaf valid {
+              type uint64;
+              description
+                "Valid messages processed";
+            }
+            leaf invalid {
+              type uint64;
+              description
+                "Invalid messages rejected";
+            }
+            leaf rate-per-sec {
+              type uint32;
+              description
+                "Current rate per second";
+            }
+          }
+          container ssm {
+            description
+              "SSM message statistics";
+            leaf total-sent {
+              type uint64;
+              description
+                "Total SSM messages sent";
+            }
+            leaf success {
+              type uint64;
+              description
+                "Successfully delivered";
+            }
+            leaf avg-latency-ms {
+              type uint32;
+              description
+                "Average latency in milliseconds";
+            }
+            leaf rate-per-sec {
+              type uint32;
+              description
+                "Current rate per second";
+            }
+          }
+          container tim {
+            description
+              "TIM message statistics";
+            leaf total-sent {
+              type uint64;
+              description
+                "Total TIM messages sent";
+            }
+            leaf success {
+              type uint64;
+              description
+                "Successfully delivered";
+            }
+            leaf rate-per-sec {
+              type uint32;
+              description
+                "Current rate per second";
+            }
+          }
+        }
+        // SPaT/ASC synchronization status
+        container spat-sync {
+          description
+            "SPaT/ASC synchronization status";
+          leaf asc-connected {
+            type boolean;
+            description
+              "Connected to source ASC";
+          }
+          leaf asc-poll-interval-ms {
+            type uint32;
+            description
+              "ASC polling interval in milliseconds";
+          }
+          leaf last-asc-update {
+            type yang:date-and-time;
+            description
+              "Timestamp of last ASC data update";
+          }
+          leaf phase-mismatch-count {
+            type uint32;
+            description
+              "Phase data mismatch count";
+          }
+          leaf timing-mismatch-count {
+            type uint32;
+            description
+              "Timing data mismatch count";
+          }
+          leaf total-spat-generated {
+            type uint64;
+            description
+              "Total SPaT messages generated";
+          }
+          leaf sync-quality-pct {
+            type uint8 {
+              range "0..100";
+            }
+            description
+              "Synchronization quality percentage";
+          }
+          leaf avg-data-age-ms {
+            type uint32;
+            description
+              "Average ASC data age in milliseconds";
+          }
+          leaf min-yellow-violation {
+            type uint32;
+            description
+              "Minimum yellow time violations detected";
+          }
+          leaf max-green-exceeded {
+            type uint32;
+            description
+              "Maximum green exceeded events";
+          }
+          leaf phase-gap-errors {
+            type uint32;
+            description
+              "Phase gap/sequencing errors";
+          }
+        }
+        // System resource utilization
+        container resources {
+          description
+            "System resource utilization";
+          container cpu {
+            description
+              "CPU utilization";
+            leaf usage-pct {
+              type uint8 {
+                range "0..100";
+              }
+              description
+                "CPU usage percentage";
+            }
+            leaf temperature-c {
+              type decimal64 {
+                fraction-digits 1;
+              }
+              description
+                "CPU temperature in Celsius";
+            }
+            leaf load-1min {
+              type decimal64 {
+                fraction-digits 2;
+              }
+              description
+                "1-minute load average";
+            }
+            leaf load-5min {
+              type decimal64 {
+                fraction-digits 2;
+              }
+              description
+                "5-minute load average";
+            }
+            leaf load-15min {
+              type decimal64 {
+                fraction-digits 2;
+              }
+              description
+                "15-minute load average";
+            }
+            leaf alarm {
+              type boolean;
+              description
+                "CPU alarm active";
+            }
+          }
+          container memory {
+            description
+              "Memory utilization";
+            leaf total-kb {
+              type uint64;
+              description
+                "Total memory in KB";
+            }
+            leaf used-kb {
+              type uint64;
+              description
+                "Used memory in KB";
+            }
+            leaf free-kb {
+              type uint64;
+              description
+                "Free memory in KB";
+            }
+            leaf usage-pct {
+              type uint8 {
+                range "0..100";
+              }
+              description
+                "Memory usage percentage";
+            }
+            leaf alarm {
+              type boolean;
+              description
+                "Memory alarm active";
+            }
+          }
+          container disk {
+            description
+              "Disk utilization";
+            leaf total-kb {
+              type uint64;
+              description
+                "Total disk space in KB";
+            }
+            leaf used-kb {
+              type uint64;
+              description
+                "Used disk space in KB";
+            }
+            leaf free-kb {
+              type uint64;
+              description
+                "Free disk space in KB";
+            }
+            leaf usage-pct {
+              type uint8 {
+                range "0..100";
+              }
+              description
+                "Disk usage percentage";
+            }
+            leaf alarm {
+              type boolean;
+              description
+                "Disk alarm active";
+            }
+          }
+        }
+        // Critical process status
+        list process {
+          key "name";
+          description
+            "Critical process status";
+          leaf name {
+            type string;
+            description
+              "Process name";
+          }
+          leaf pid {
+            type uint32;
+            description
+              "Process ID";
+          }
+          leaf state {
+            type identityref {
+              base openits-types:process-state;
+            }
+            description
+              "Process state";
+          }
+          leaf cpu-usage-pct {
+            type uint8;
+            description
+              "CPU usage percentage";
+          }
+          leaf memory-kb {
+            type uint64;
+            description
+              "Memory usage in KB";
+          }
+          leaf uptime-seconds {
+            type uint64;
+            description
+              "Process uptime in seconds";
+          }
+          leaf restart-count {
+            type uint32;
+            description
+              "Process restart count";
+          }
+          leaf last-restart {
+            type yang:date-and-time;
+            description
+              "Timestamp of last restart";
+          }
+          leaf required {
+            type boolean;
+            description
+              "Process is required for operation";
+          }
+        }
+        // Log statistics
+        container logs {
+          description
+            "Log statistics";
+          leaf total-entries {
+            type uint64;
+            description
+              "Total log entries";
+          }
+          container errors {
+            description
+              "Error log statistics";
+            leaf count-1h {
+              type uint64;
+              description
+                "Errors in last hour";
+            }
+            leaf count-24h {
+              type uint64;
+              description
+                "Errors in last 24 hours";
+            }
+          }
+          container warnings {
+            description
+              "Warning log statistics";
+            leaf count-1h {
+              type uint64;
+              description
+                "Warnings in last hour";
+            }
+            leaf count-24h {
+              type uint64;
+              description
+                "Warnings in last 24 hours";
+            }
+          }
+          container critical {
+            description
+              "Critical log statistics";
+            leaf count-1h {
+              type uint64;
+              description
+                "Critical events in last hour";
+            }
+            leaf count-24h {
+              type uint64;
+              description
+                "Critical events in last 24 hours";
+            }
+          }
+          leaf most-recent-error {
+            type string;
+            description
+              "Most recent error message";
+          }
+          leaf most-recent-error-time {
+            type yang:date-and-time;
+            description
+              "Timestamp of most recent error";
+          }
+          leaf storage-used-pct {
+            type uint8 {
+              range "0..100";
+            }
+            description
+              "Log storage usage percentage";
+          }
+        }
+        // Temperature sensors
+        list temperature-sensor {
+          key "id";
+          description
+            "Temperature sensor readings";
+          leaf id {
+            type uint8;
+            description
+              "Sensor identifier";
+          }
+          leaf name {
+            type string;
+            description
+              "Sensor name";
+          }
+          leaf temperature-c {
+            type decimal64 {
+              fraction-digits 1;
+            }
+            units "celsius";
+            description
+              "Current temperature reading";
+          }
+          leaf status {
+            type identityref {
+              base openits-types:temperature-status;
+            }
+            description
+              "Temperature status";
+          }
+          leaf threshold-high-c {
+            type decimal64 {
+              fraction-digits 1;
+            }
+            description
+              "High temperature threshold";
+          }
+          leaf threshold-low-c {
+            type decimal64 {
+              fraction-digits 1;
+            }
+            description
+              "Low temperature threshold";
+          }
+        }
+        leaf gps-status {
+          type enumeration {
+            enum no-fix {
+              description
+                "No GPS fix";
+            }
+            enum fix-2d {
+              description
+                "2D fix";
+            }
+            enum fix-3d {
+              description
+                "3D fix";
+            }
+            enum dgps {
+              description
+                "Differential GPS";
+            }
+            enum rtk {
+              description
+                "RTK fix";
+            }
+          }
+          description
+            "GPS fix status";
+        }
+        leaf satellites-visible {
+          type uint8;
+          description
+            "GPS satellites visible";
+        }
+        leaf time-source {
+          type enumeration {
+            enum gps {
+              description
+                "GPS time";
+            }
+            enum ntp {
+              description
+                "NTP time";
+            }
+            enum local {
+              description
+                "Local clock";
+            }
+          }
+          description
+            "Time synchronization source";
+        }
+        leaf time-accuracy-us {
+          type uint32;
+          units "microseconds";
+          description
+            "Time accuracy";
+        }
+        container cellular {
+          description
+            "Cellular diagnostics for C-V2X RSUs";
+          leaf operational {
+            type boolean;
+            description
+              "Cellular modem is operational";
+          }
+          leaf operator-name {
+            type string;
+            description
+              "Cellular operator name";
+          }
+          leaf signal-quality {
+            type enumeration {
+              enum excellent {
+                description
+                  "Excellent signal";
+              }
+              enum good {
+                description
+                  "Good signal";
+              }
+              enum fair {
+                description
+                  "Fair signal";
+              }
+              enum poor {
+                description
+                  "Poor signal";
+              }
+              enum none {
+                description
+                  "No signal";
+              }
+            }
+            description
+              "Cellular signal quality";
+          }
+          leaf rsrp-dbm {
+            type int32;
+            units "dBm";
+            description
+              "Reference Signal Received Power";
+          }
+          leaf rsrq-db {
+            type int32;
+            units "dB";
+            description
+              "Reference Signal Received Quality";
+          }
+          leaf sinr-db {
+            type int32;
+            units "dB";
+            description
+              "Signal-to-Interference-plus-Noise Ratio";
+          }
+          leaf lte-band {
+            type string;
+            description
+              "LTE band in use";
+          }
+          leaf nr-band {
+            type string;
+            description
+              "5G NR band in use";
+          }
+          leaf data-usage-bytes {
+            type uint64;
+            units "bytes";
+            description
+              "Data usage in bytes";
+          }
+          leaf roaming {
+            type boolean;
+            description
+              "Currently roaming";
+          }
+        }
+        container vehicle-analytics {
+          description
+            "V2X vehicle analytics from BSM data";
+          container counts {
+            description
+              "Vehicle counts by time window";
+            leaf vehicles-1min {
+              type uint32;
+              description
+                "Unique vehicles in last minute";
+            }
+            leaf vehicles-1hr {
+              type uint32;
+              description
+                "Unique vehicles in last hour";
+            }
+            leaf vehicles-24hr {
+              type uint32;
+              description
+                "Unique vehicles in last 24 hours";
+            }
+          }
+          container speed-metrics {
+            description
+              "Speed statistics from BSM data";
+            leaf average-kmh {
+              type openits-types:speed-kmh;
+              description
+                "Average vehicle speed";
+            }
+            leaf median-kmh {
+              type openits-types:speed-kmh;
+              description
+                "Median vehicle speed";
+            }
+            leaf percentile-85-kmh {
+              type openits-types:speed-kmh;
+              description
+                "85th percentile speed";
+            }
+            leaf percentile-95-kmh {
+              type openits-types:speed-kmh;
+              description
+                "95th percentile speed";
+            }
+          }
+          container vehicle-class-breakdown {
+            description
+              "Vehicle class breakdown (percentages)";
+            leaf passenger-pct {
+              type openits-types:percentage;
+              description
+                "Passenger vehicles percentage";
+            }
+            leaf truck-pct {
+              type openits-types:percentage;
+              description
+                "Trucks percentage";
+            }
+            leaf emergency-pct {
+              type openits-types:percentage;
+              description
+                "Emergency vehicles percentage";
+            }
+            leaf transit-pct {
+              type openits-types:percentage;
+              description
+                "Transit vehicles percentage";
+            }
+          }
+          list approach {
+            key "number";
+            description
+              "Per-approach vehicle analytics";
+            leaf number {
+              type uint8;
+              description
+                "Approach number";
+            }
+            leaf vehicles-1min {
+              type uint32;
+              description
+                "Vehicles in last minute";
+            }
+            leaf average-speed-kmh {
+              type openits-types:speed-kmh;
+              description
+                "Average speed on approach";
+            }
+            leaf queue-vehicles {
+              type uint32;
+              description
+                "Estimated queue length in vehicles";
+            }
+          }
+        }
+      }
+      // -----------------------------------------------------------------
+      // SYSTEM INFORMATION
+      // -----------------------------------------------------------------
+      container system {
+        config false;
+        description
+          "System information and communication links";
+        uses openits-types:system-info;
+        list comm-link {
+          key "link-id";
+          description
+            "Communication link status";
+          uses openits-types:comm-link-state;
+        }
+      }
+    }
+  }
+
+  // =========================================================================
+  // RSU RPCs
+  // =========================================================================
+
+  rpc rsu-broadcast-tim {
+    description
+      "Broadcast a Traveler Information Message";
+    input {
+      leaf device-id {
+        type openits-types:device-id;
+        mandatory true;
+        description
+          "Target RSU";
+      }
+      leaf message-id {
+        type string;
+        mandatory true;
+        description
+          "TIM message identifier";
+      }
+      leaf itis-codes {
+        type string;
+        description
+          "ITIS event codes (comma-separated)";
+      }
+      leaf text {
+        type string;
+        description
+          "Human-readable message text";
+      }
+      leaf duration {
+        type uint32;
+        units "seconds";
+        default "3600";
+        description
+          "Broadcast duration";
+      }
+      leaf priority {
+        type uint8 {
+          range "1..7";
+        }
+        default "4";
+        description
+          "Message priority";
+      }
+      container region {
+        description
+          "Geographic region";
+        uses openits-types:geo-point {
+          description "Center point of the broadcast region.";
+        }
+        leaf radius {
+          type uint32;
+          units "meters";
+          description
+            "Region radius";
+        }
+      }
+    }
+    output {
+      leaf success {
+        type boolean;
+        description
+          "Broadcast started";
+      }
+      leaf message-id {
+        type string;
+        description
+          "Assigned message ID";
+      }
+      leaf message {
+        type string;
+        description
+          "Status message";
+      }
+    }
+  }
+
+  rpc rsu-cancel-tim {
+    description
+      "Cancel an active TIM broadcast";
+    input {
+      leaf device-id {
+        type openits-types:device-id;
+        mandatory true;
+        description
+          "Target RSU";
+      }
+      leaf message-id {
+        type string;
+        mandatory true;
+        description
+          "TIM message to cancel";
+      }
+    }
+    output {
+      leaf success {
+        type boolean;
+        description
+          "Cancellation succeeded";
+      }
+      leaf message {
+        type string;
+        description
+          "Status message";
+      }
+    }
+  }
+
+  rpc rsu-refresh-certificates {
+    description
+      "Request certificate refresh from SCMS";
+    input {
+      leaf device-id {
+        type openits-types:device-id;
+        mandatory true;
+        description
+          "Target RSU";
+      }
+      leaf force {
+        type boolean;
+        default "false";
+        description
+          "Force refresh even if not expiring";
+      }
+    }
+    output {
+      leaf success {
+        type boolean;
+        description
+          "Refresh initiated";
+      }
+      leaf message {
+        type string;
+        description
+          "Status message";
+      }
+    }
+  }
+
+  rpc rsu-approve-srm {
+    description
+      "Approve or deny a pending signal request";
+    input {
+      leaf device-id {
+        type openits-types:device-id;
+        mandatory true;
+        description
+          "Target RSU";
+      }
+      leaf request-id {
+        type string;
+        mandatory true;
+        description
+          "Request to approve/deny";
+      }
+      leaf approve {
+        type boolean;
+        mandatory true;
+        description
+          "Approve (true) or deny (false)";
+      }
+      leaf reason {
+        type string;
+        description
+          "Reason for decision";
+      }
+    }
+    output {
+      leaf success {
+        type boolean;
+        description
+          "Action succeeded";
+      }
+      leaf message {
+        type string;
+        description
+          "Status message";
+      }
+    }
+  }
+}

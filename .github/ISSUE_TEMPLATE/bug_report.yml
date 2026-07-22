@@ -1,0 +1,42 @@
+name: Bug report
+description: A generation/validation/tooling defect, or a model that doesn't behave as documented.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a report. For **security** issues, stop here and use
+        [private advisory reporting](https://github.com/Vikasa2M/openits-models/security/advisories/new)
+        instead. For open-ended questions, please use Discussions.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What went wrong, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: >
+        The exact commands (e.g. `make check-gen`, `go run ./tools/...`,
+        `go get github.com/Vikasa2M/openits-models@...`) and any input files.
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: area
+    attributes:
+      label: Area
+      description: Which module, tool, or artifact? (e.g. `yang/openits-dms.yang`, `tools/yang-proto-gen`, `bindings/nats/asyncapi.yaml`)
+    validations:
+      required: false
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      description: Go version, OS, and tool versions (protoc, buf, ygot, yanglint/pyang) if relevant.
+      render: shell
+    validations:
+      required: false

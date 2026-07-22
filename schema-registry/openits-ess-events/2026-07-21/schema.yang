@@ -1,0 +1,196 @@
+module openits-ess-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:ess-events";
+  prefix openits-ess-events;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-ess-types {
+    prefix openits-ess-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Notifications for openits-ess.  Split into a companion module
+     so ygot's proto backend can generate protobuf from the base
+     module (ygot's proto generator fails on modules containing
+     notification statements).";
+
+  openits-types:openits-version "0.4.0";
+
+  revision 2026-07-21 {
+    description
+      "Sensing/ESS review fixes: type the weather-alert / sensor-recalibrated
+       sensor-id leaves via the shared openits-ess-types:sensor-id typedef;
+       extend the weather-alert unit enum with watts-per-square-meter /
+       parts-per-million / degrees / dimensionless (append-only) and stamp
+       explicit values on the existing members plus the direction enum for
+       append-only discipline; tidy stray revision-reference prose (doc-only).
+       Additive.";
+    reference "NTCIP 1204.";
+  }
+  revision 2026-07-16 {
+    description
+      "weather-alert (Cut 1c): add a sensor-id (which sensor within the
+       station crossed the threshold — actionable for spot treatment; the
+       station id was already in the event-header) and replace the free-form
+       unit string with a canonical-SI enum so an alert value cannot be
+       reported in a non-SI unit (e.g. mph). Pre-1.0 breaking (unit retype).";
+    reference "NTCIP 1204 v04.";
+  }
+  revision 2026-07-13 {
+    description
+      "Adopt the unified event contract: every notification now
+       'uses openits-types:event-header' (source-device-id, occurred-at,
+       sequence) and carries a mandatory 'kind' identityref under
+       openits-ess-types:ess-event-kind. Delete sensor-recalibrated's
+       'calibrated-at' leaf; the event-occurrence time is now carried
+       by event-header's 'occurred-at'. Breaking, pre-v1: notifications
+       gain mandatory device identity + sequence, and
+       sensor-recalibrated drops a leaf.
+
+       Also stamp openits-version (borrowed from OpenConfig's
+       openconfig-version practice) so tooling can read a
+       compatibility-intent signal independent of the revision date.";
+    reference "RFC 7950 section 11.";
+  }
+  revision 2026-07-12 {
+    description
+      "Rename this module (file, module name, namespace, prefix) from
+       the legacy notifications-suffixed name to openits-ess-events: standardize every service notification module on the
+       events-suffixed name. Mechanical rename only — no notification
+       content changed; ce-types (service-derived, not module-derived)
+       and proto are unaffected. Repoint ess-fault-raised's 'category'
+       base from the deleted gen-1 openits-ess:fault-category to
+       openits-ess-types:ess-fault-event-kind — breaking, since
+       identity names change, but wire-neutral since the wire
+       representation of an identityref is a string (pre-v1,
+       acceptable). Delete the deprecated per-service fault/mode
+       shims (ess-fault-raised, ess-fault-cleared), superseded by
+       openits-common-fault-events:{fault-raised,fault-cleared} and
+       openits-common-mode-events:mode-changed, discriminated by kind
+       derived from openits-ess-types.";
+    reference
+      "RFC 7950 section 11 (breaking YANG evolution: identity rename).";
+  }
+  revision 2026-07-10 {
+    description
+      "Replace the inline severity enumeration on ess-fault-raised
+       with the shared openits-types:fault-severity typedef. Member
+       set and order unchanged — wire-stable.";
+  }
+  revision 2026-06-12 {
+    description
+      "Deprecate ess-fault-raised and ess-fault-cleared in favour of
+       the cross-service openits-common-fault-events notifications,
+       which carry an ess-classified kind identityref
+       (openits-ess-types:ess-fault-event-kind tree) plus wire-source
+       provenance. No emitter ever shipped for the deprecated
+       notifications; they remain for the deprecation window only.";
+  }
+  revision 2026-04-19 {
+    description "Initial release.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification weather-alert {
+    openits-types:arc-it-flow
+      "Environmental Sensors -> TMC : road weather information";
+    description
+      "Emitted when an observation crosses a configured threshold
+       (ice-warning pavement, visibility below X, wind above Y).
+       `direction` distinguishes entering the threshold from leaving
+       it so downstream systems can reconcile cleared alerts.";
+
+    leaf kind {
+      type identityref {
+        base openits-ess-types:ess-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-ess-types:ess-weather-alert for
+         this notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf threshold-id { type string; description "Operator-assigned identifier for the threshold rule that fired."; }
+    leaf observed-value {
+      type decimal64 { fraction-digits 2; }
+      description "Sensor observation value that triggered (or cleared) the threshold.";
+    }
+    leaf threshold-value {
+      type decimal64 { fraction-digits 2; }
+      description "Configured threshold value the observation crossed.";
+    }
+    leaf sensor-id {
+      type openits-ess-types:sensor-id;
+      description
+        "Sensor within the station whose reading crossed the threshold, so a
+         crew can target spot treatment. The station id is carried by the
+         event-header (source-device-id); this identifies which sensor.";
+    }
+    leaf unit {
+      type enumeration {
+        enum celsius              { value 0; description "degrees Celsius"; }
+        enum meters-per-second    { value 1; description "m/s (wind)"; }
+        enum meters               { value 2; description "meters (e.g. visibility)"; }
+        enum millimeters          { value 3; description "millimeters (precipitation / depth)"; }
+        enum millimeters-per-hour { value 4; description "mm/h (rate)"; }
+        enum percent              { value 5; description "percent (humidity)"; }
+        enum hectopascals         { value 6; description "hPa (pressure)"; }
+        enum watts-per-square-meter { value 7; description "W/m^2 (solar radiation)"; }
+        enum parts-per-million      { value 8; description "ppm (salinity / chemical)"; }
+        enum degrees                { value 9; description "degrees (wind direction / bearing)"; }
+        enum dimensionless          { value 10; description "dimensionless ratio (e.g. grip coefficient 0.00-1.00)"; }
+      }
+      description
+        "Canonical-SI unit of the observed and threshold values. An enum
+         (not a free-form string) so it cannot contradict the model's
+         SI contract — e.g. an alert value must not be reported in mph.";
+    }
+    leaf direction {
+      type enumeration {
+        enum entered { value 0; description "The observation entered the threshold band."; }
+        enum exited  { value 1; description "The observation exited the threshold band."; }
+      }
+      description "Whether the observation entered the threshold band or exited it.";
+    }
+    leaf human-description { type string; description "Operator-friendly summary of the alert."; }
+  }
+
+  notification sensor-recalibrated {
+    openits-types:arc-it-flow
+      "Environmental Sensors -> Maintenance : equipment maintenance status";
+    description
+      "Audit-trail notification emitted whenever a sensor is
+       calibrated or recalibrated, whether by field staff or via a
+       remote maintenance workflow.";
+
+    leaf kind {
+      type identityref {
+        base openits-ess-types:ess-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-ess-types:ess-sensor-recalibrated
+         for this notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf sensor-id {
+      type openits-ess-types:sensor-id;
+      description "Identifier of the sensor that was calibrated.";
+    }
+    leaf calibrated-by { type string; description "Identifier of the actor (operator id, automation workflow) that performed the calibration."; }
+  }
+}

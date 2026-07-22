@@ -1,0 +1,65 @@
+{
+  "openits-rsu:rsu": {
+    "config": {
+      "id": "rsu-i35-mm214"
+    },
+    "channels": {
+      "channel": [
+        {
+          "channel-id": "172",
+          "config": {
+            "enabled": true,
+            "mode": "openits-v2x-radio:mode-continuous",
+            "tx-power": 20,
+            "antenna-gain-dbi": "8.0",
+            "primary": true,
+            "dsrc-channel-number": 172,
+            "dcc": {
+              "policy": "adaptive",
+              "cbr-target-percent": 65
+            }
+          },
+          "radio-tech": "openits-v2x-radio:radio-dsrc"
+        }
+      ]
+    },
+    "messages": {
+      "srm-ssm": {
+        "decisions": {
+          "decision": [
+            {
+              "request-id": "srm-000482",
+              "action": "approve",
+              "reason": "transit priority"
+            }
+          ]
+        }
+      }
+    },
+    "diagnostics": {
+      "vehicle-analytics": {
+        "sample-basis": {
+          "window-type": "rolling",
+          "stats-window-seconds": 300,
+          "sample-count": 420,
+          "penetration-estimate-pct": "8.0",
+          "computed-at": "2026-07-15T12:00:00Z"
+        },
+        "counts": {
+          "count-basis": "observation-sessions",
+          "vehicles-1min": 12,
+          "vehicles-1hr": 640,
+          "vehicles-24hr": 9800
+        },
+        "speed-metrics": {
+          "average-kmh": "62.0",
+          "percentile-85-kmh": "71.0"
+        },
+        "vehicle-class-breakdown": {
+          "passenger-pct": 88,
+          "truck-pct": 9
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "sensor-recalibrated": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "calibrated-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "calibrated-by": {
+      "type": "string"
+    },
+    "sensor-id": {
+      "type": "string"
+    }
+  },
+  "type": "object"
+},
+  "weather-alert": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "direction": {
+      "enum": [
+        "entered",
+        "exited"
+      ],
+      "type": "string"
+    },
+    "human-description": {
+      "type": "string"
+    },
+    "observed-value": {
+      "type": "string"
+    },
+    "threshold-id": {
+      "type": "string"
+    },
+    "threshold-value": {
+      "type": "string"
+    },
+    "unit": {
+      "type": "string"
+    }
+  },
+  "type": "object"
+}
+}

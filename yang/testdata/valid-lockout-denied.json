@@ -1,0 +1,12 @@
+{
+  "openits-cctv-events:lockout-denied": {
+    "kind": "openits-cctv-types:cctv-lockout-denied",
+    "source-device-id": "cctv-i35-mm214",
+    "occurred-at": "2026-07-17T14:07:00Z",
+    "sequence": "3",
+    "requested-by": "op-tmc-12",
+    "requested-priority": 50,
+    "current-holder": "op-tmc-07",
+    "held-priority": 200
+  }
+}

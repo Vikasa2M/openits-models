@@ -1,0 +1,13 @@
+{
+  "openits-dms:sign": {
+    "config": {
+      "id": "i35-mm214-nb-dms"
+    },
+    "diagnostics": {
+      "pixels-total": 100,
+      "pixels-failed": 200,
+      "lamps-total": 0,
+      "lamps-failed": 0
+    }
+  }
+}

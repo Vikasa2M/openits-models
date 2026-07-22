@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string"
+    },
+    "lane": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "carriageway": {
+            "type": "string"
+          },
+          "class-volume": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "class-id": {
+                  "maximum": 16,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "volume": {
+                  "maximum": 4294967295,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "data-quality": {
+            "enum": [
+              "invalid",
+              "suspect",
+              "valid"
+            ],
+            "type": "string"
+          },
+          "density": {
+            "type": "string"
+          },
+          "flow-rate-vph": {
+            "maximum": 4294967295,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "gap-average-s": {
+            "type": "string"
+          },
+          "headway-average-s": {
+            "type": "string"
+          },
+          "interval-duration-s": {
+            "maximum": 3600,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "interval-start": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "lane-id": {
+            "maximum": 32,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "mean-vehicle-length-m": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "occupancy": {
+            "type": "string"
+          },
+          "speed-85th-percentile-kmh": {
+            "type": "string"
+          },
+          "speed-average-kmh": {
+            "type": "string"
+          },
+          "speed-space-mean-kmh": {
+            "type": "string"
+          },
+          "speed-std-dev-kmh": {
+            "type": "string"
+          },
+          "unclassified-volume": {
+            "maximum": 4294967295,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "uptime-percent": {
+            "type": "string"
+          },
+          "volume": {
+            "maximum": 4294967295,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "wrong-way-volume": {
+            "maximum": 4294967295,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+}

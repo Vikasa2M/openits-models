@@ -1,0 +1,11 @@
+module choice-multi-fixture {
+  namespace "urn:test:choice-multi-fixture";
+  prefix cmf;
+  notification tagged {
+    leaf decoder { type string; }
+    choice tag {
+      case a { leaf a-code { type uint16; } leaf a-note { type string; } }
+      case b { leaf b-oid { type string; } }
+    }
+  }
+}

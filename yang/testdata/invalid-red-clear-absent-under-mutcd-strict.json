@@ -1,0 +1,24 @@
+{
+  "openits-signal-control:signal-controller": {
+    "config": { "id": "i35-exit-214", "name": "I-35 NB @ Exit 214" },
+    "state": {
+      "id": "i35-exit-214", "name": "I-35 NB @ Exit 214",
+      "make": "Econolite", "model": "Cobalt", "firmware": "Econolite Cobalt 9.2.3"
+    },
+    "phases": {
+      "phase": [
+        {
+          "phase-number": 2,
+          "config": {
+            "phase-number": 2, "ring": 1, "barrier": 1, "enabled": true,
+            "timing": {
+              "min-green": "5.0",
+              "max-green": "45.0", "yellow-change": "4.0",
+              "walk": 7, "ped-clear": 20, "passage": "2.0"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

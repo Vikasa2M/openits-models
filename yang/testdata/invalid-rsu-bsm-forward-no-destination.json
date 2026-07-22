@@ -1,0 +1,10 @@
+{
+  "openits-rsu:rsu": {
+    "config": { "id": "rsu-bsm-01", "name": "BSM forward, no destination" },
+    "messages": {
+      "bsm": { "config": {
+        "forward-enabled": true
+      } }
+    }
+  }
+}

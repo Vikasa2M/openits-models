@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "attempted-memory-type": {
+      "enum": [
+        "blank",
+        "changeable",
+        "permanent",
+        "schedule",
+        "volatile"
+      ],
+      "type": "string"
+    },
+    "attempted-slot-number": {
+      "maximum": 65535,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "reason": {
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

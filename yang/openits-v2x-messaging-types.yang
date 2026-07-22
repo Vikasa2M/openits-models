@@ -1,0 +1,121 @@
+module openits-v2x-messaging-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:v2x-messaging-types";
+  prefix openits-v2x-messaging-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+  description
+    "Shared V2X messaging types: the SAE J2735 v2x-message-type identity
+     vocabulary and the srm-request-type identity hierarchy. Split into a
+     -types module so event modules (openits-rsu-events) and the capability
+     core (openits-v2x-messaging) share one vocabulary without the events
+     module importing the capability core.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.2.0";
+
+  revision 2026-07-21 {
+    description
+      "V2X/RSU review fixes (types). Add the shared srm-request-status enum
+       typedef so the SRM lifecycle status is one closed vocabulary across
+       the messaging state tree and the rsu-srm-status-change event.
+       Add the shared decision-authority enum typedef used by the messaging
+       state tree and the rsu-srm-status-change event.";
+    reference "SAE J2735.";
+  }
+  revision 2026-07-17 {
+    description
+      "Complete the SAE J2735 message-type and request-type vocabularies:
+       add msg-rtcm (RTCM SC-104 corrections, J2735 rtcmCorrections) so the
+       broadcast-sample message-type covers correction traffic an RSU puts
+       on the air, and add srm-priority-update (J2735 requestType
+       priorityRequestUpdate) so the SRM request-type hierarchy carries the
+       update-to-outstanding-request case alongside request / preemption /
+       cancel. Non-breaking: identityref values render as strings on the
+       proto/AsyncAPI wire, so the new members only widen the accepted set.";
+  }
+  revision 2026-07-15 {
+    description
+      "Initial revision. Extract v2x-message-type and srm-request-type from
+       openits-v2x-messaging so openits-rsu-events depends on shared types
+       instead of the capability core.";
+  }
+
+  identity v2x-message-type { description "Base identity for V2X message types"; }
+  identity msg-bsm  { base v2x-message-type; description "Basic Safety Message"; }
+  identity msg-spat { base v2x-message-type; description "Signal Phase and Timing"; }
+  identity msg-map  { base v2x-message-type; description "MAP/Intersection Geometry"; }
+  identity msg-tim  { base v2x-message-type; description "Traveler Information Message"; }
+  identity msg-psm  { base v2x-message-type; description "Personal Safety Message"; }
+  identity msg-srm  { base v2x-message-type; description "Signal Request Message"; }
+  identity msg-ssm  { base v2x-message-type; description "Signal Status Message"; }
+  identity msg-rtcm { base v2x-message-type; description "RTCM corrections (RTCM SC-104), per SAE J2735 rtcmCorrections"; }
+
+  identity srm-request-type {
+    description
+      "Base identity for Signal Request Message types";
+  }
+  identity srm-priority-request {
+    base srm-request-type;
+    description
+      "TSP priority request";
+  }
+  identity srm-preemption-request {
+    base srm-request-type;
+    description
+      "EVP preemption request";
+  }
+  identity srm-priority-cancel {
+    base srm-request-type;
+    description
+      "Cancel priority request";
+  }
+  identity srm-priority-update {
+    base srm-request-type;
+    description
+      "Update to an outstanding priority request (SAE J2735 requestType
+       priorityRequestUpdate)";
+  }
+
+  typedef srm-request-status {
+    type enumeration {
+      enum pending   { description "Pending a decision."; }
+      enum approved  { description "Approved / granted (SSM prsStatus granted)."; }
+      enum active    { description "Currently active."; }
+      enum completed { description "Completed."; }
+      enum denied    { description "Denied / rejected (SSM prsStatus rejected)."; }
+    }
+    description
+      "Lifecycle status of a received SRM priority/preemption request. Shared
+       by the messaging state tree (active-requests/request/status) and the
+       rsu-srm-status-change event so both name the status from one closed
+       vocabulary. The on-air SSM prsStatus (granted/rejected) maps to
+       approved/denied at the decoder; active/completed are RSU-lifecycle
+       states with no prsStatus equivalent.";
+    reference "SAE J2735 (SignalStatusMessage prsStatus).";
+  }
+
+  typedef decision-authority {
+    type enumeration {
+      enum none           { description "No decision yet (status pending)."; }
+      enum controller-prs { description "Granted or denied by the controller PRS (NTCIP 1211)."; }
+      enum rsu-local      { description "Decided by the RSU's local grant policy."; }
+      enum operator       { description "Decided by a management-plane operator."; }
+      enum evp-auto       { description "Granted by the controller via expedited EVP forwarding (evp-auto-grant)."; }
+    }
+    description
+      "Provenance of an SRM grant/deny decision — which authority acted. A
+       superset of the config-side grant-authority values (adds none for the
+       pending case and evp-auto for expedited EVP), sharing identical member
+       spellings so config intent and state provenance line up.";
+    reference "NTCIP 1211 (Signal Control and Prioritization).";
+  }
+}

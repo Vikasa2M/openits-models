@@ -1,0 +1,231 @@
+module openits-reversible-lane-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:reversible-lane-types";
+  prefix openits-reversible-lane-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Reversible-lane event-kind identity hierarchy. Derives from the
+     cross-service openits-types:device-event-kind root so
+     reversible-lane events emitted via the generic cross-service
+     notifications (openits-common-fault-events) carry a
+     service-classified 'kind' identityref, filterable with
+     derived-from-or-self at any altitude.
+
+     The leaf fault identities mirror the fault-category catalog
+     formerly carried in-module by openits-reversible-lane (the gen-1
+     hierarchy, now deleted): reversible-lane-event-kind is the
+     service root, and reversible-lane-fault-event-kind is the
+     dual-classified fault sub-base whose children classify entries in
+     the facility's active-fault list. New identities are additive;
+     removing or renaming one is a breaking change.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.4.0";
+
+  revision 2026-07-21 {
+    description
+      "Collapse duplicate same-date revision statements (RFC 8525 module
+       identity is (name, revision-date)); descriptions merged, no
+       schema-node change.";
+  }
+  revision 2026-07-15 {
+    description
+      "Add the interlock-kind identity family (sweep-confirmed,
+       gate-agreement, red-x-confirmed, lockout-clear, ingress-secured,
+       egress-secured, intrusion-clear, wrong-way-clear) so a facility's
+       changeover interlocks are typed named preconditions instead of
+       free-form strings; add a reversible-lane-fault-transition-timeout
+       fault category. Additive (identities gain a base; none renamed).";
+    reference "MUTCD 11th ed. Chapter 4M; ARC-IT 9.1 TM16.";
+  }
+  revision 2026-07-14 {
+    description
+      "Cut 3c (events layering): adopt typedefs travel-direction,
+       lane-flow-state, and lcs-indication moved here from
+       openits-reversible-lane. Additive.";
+  }
+  revision 2026-07-13 {
+    description
+      "Add three notification-kind identities under
+       reversible-lane-event-kind: rl-lane-state-changed,
+       rl-transition-timeout, rl-lcs-conflict-detected. These are the
+       'kind' identityref targets adopted by the corresponding
+       openits-reversible-lane-events notifications under the unified
+       event contract (every notification now carries a mandatory
+       'kind' plus 'uses openits-types:event-header'). None is a
+       periodic report, so none dual-bases on
+       openits-types:report-event-kind. Additive.
+
+      Stamp openits-version (borrowed from OpenConfig's
+       openconfig-version practice) so tooling can read a
+       compatibility-intent signal independent of the revision date.";
+    reference "RFC 7950 section 11.";
+  }
+  revision 2026-07-11 {
+    description
+      "Initial revision. Service root, dual-classified fault sub-base,
+       and leaf fault identities migrated from the gen-1
+       openits-reversible-lane fault-category catalog (deleted from
+       the service module in the same change) as part of the fault-
+       taxonomy gen-2 consolidation.";
+    reference
+      "ARC-IT 9.1 Service Package TM16 (Reversible Lane Management);
+       MUTCD 11th Ed. Chapter 4M (Lane-Use Control Signals).";
+  }
+
+  /* --------------------------------------------------------------
+   * Typedefs
+   * -------------------------------------------------------------- */
+
+  typedef travel-direction {
+    type enumeration {
+      enum unknown    { value 0; }
+      enum northbound { value 1; }
+      enum southbound { value 2; }
+      enum eastbound  { value 3; }
+      enum westbound  { value 4; }
+    }
+    description "Cardinal direction of legal travel.";
+  }
+
+  typedef lane-flow-state {
+    type enumeration {
+      enum unknown       { value 0; }
+      enum closed        { value 1; }
+      enum open          { value 2; }
+      enum in-transition { value 3; }
+    }
+    description
+      "Facility state machine.  `open` is qualified by
+       open-direction; `in-transition` means the changeover
+       sequence (sweep, gate movement, LCS changeover) is running
+       and the facility is closed to new entries.";
+  }
+
+  typedef lcs-indication {
+    type enumeration {
+      enum unknown           { value 0; }
+      enum dark              { value 1; }
+      enum red-x             { value 2; }
+      enum yellow-x          { value 3; }
+      enum flashing-yellow-x { value 4; }
+      enum green-arrow       { value 5; }
+    }
+    description
+      "Lane-use control signal indication per MUTCD Chapter 4M.
+       yellow-x / flashing-yellow-x are the clearance indications
+       shown while a direction is being closed.";
+  }
+
+  /* --------------------------------------------------------------
+   * Service root + dual-classified sub-base
+   * -------------------------------------------------------------- */
+
+  identity reversible-lane-event-kind {
+    base openits-types:device-event-kind;
+    description
+      "Root for reversible-lane events. Service dimension of the
+       event-kind taxonomy; behavioral roots derive from this.";
+  }
+
+  identity reversible-lane-fault-event-kind {
+    base openits-types:fault-event-kind;
+    base reversible-lane-event-kind;
+    description
+      "Reversible-lane fault events. Dual-classified: by behavioral
+       class (fault-event-kind) and by service
+       (reversible-lane-event-kind). Used as the fallback kind when a
+       decoder cannot map a more specific leaf identity.";
+  }
+
+  /* --------------------------------------------------------------
+   * Fault leaf identities (mirror the former openits-reversible-lane
+   * fault-category catalog)
+   * -------------------------------------------------------------- */
+
+  identity reversible-lane-fault-plc-communication {
+    base reversible-lane-fault-event-kind;
+    description
+      "Communication fault between gateway and the facility PLC.";
+  }
+  identity reversible-lane-fault-interlock {
+    base reversible-lane-fault-event-kind;
+    description
+      "A safety interlock is unsatisfied or failed its self-check.";
+  }
+  identity reversible-lane-fault-conflict {
+    base reversible-lane-fault-event-kind;
+    description
+      "Conflicting indications detected (e.g., green-arrow both
+       ways).";
+  }
+  identity reversible-lane-fault-gate {
+    base reversible-lane-fault-event-kind;
+    description
+      "Barrier gate failed to reach its commanded position.";
+  }
+  identity reversible-lane-fault-lcs-head {
+    base reversible-lane-fault-event-kind;
+    description
+      "A lane-control-signal head failed verification or lamp check.";
+  }
+  identity reversible-lane-fault-power {
+    base reversible-lane-fault-event-kind;
+    description
+      "Power-supply or input-voltage fault at the facility.";
+  }
+  identity reversible-lane-fault-transition-timeout {
+    base reversible-lane-fault-event-kind;
+    description
+      "A changeover exceeded control/config/transition-timeout-s.
+       Complements the rl-transition-timeout event kind.";
+  }
+
+  /* --------------------------------------------------------------
+   * Interlock-kind identities (named safety-gate preconditions the
+   * facility PLC evaluates before honouring a changeover)
+   * -------------------------------------------------------------- */
+
+  identity interlock-kind {
+    description
+      "Base for reversible-lane changeover interlock preconditions — a
+       named safety gate the PLC evaluates before honouring a changeover.";
+  }
+  identity sweep-confirmed  { base interlock-kind; description "A physical sweep has confirmed the section is clear of traffic."; }
+  identity gate-agreement   { base interlock-kind; description "Barrier-gate positions agree with the commanded facility state."; }
+  identity red-x-confirmed  { base interlock-kind; description "A steady red-X is confirmed on every lane facing the direction being closed."; }
+  identity lockout-clear    { base interlock-kind; description "No manual lockout is engaged — the facility is not locally locked out of a changeover."; }
+  identity ingress-secured  { base interlock-kind; description "The ingress control point for the direction being closed is secured."; }
+  identity egress-secured   { base interlock-kind; description "The egress control point is secured."; }
+  identity intrusion-clear  { base interlock-kind; description "No intrusion is detected within the section."; }
+  identity wrong-way-clear  { base interlock-kind; description "No wrong-way movement is detected."; }
+
+  /* --------------------------------------------------------------
+   * Notification-kind identities ('kind' identityref targets for
+   * openits-reversible-lane-events notifications)
+   * -------------------------------------------------------------- */
+
+  identity rl-lane-state-changed {
+    base reversible-lane-event-kind;
+    description "Reversible-lane flow state/direction changed.";
+  }
+  identity rl-transition-timeout {
+    base reversible-lane-event-kind;
+    description "A direction-change transition timed out.";
+  }
+  identity rl-lcs-conflict-detected {
+    base reversible-lane-event-kind;
+    description "Conflicting LCS indications detected.";
+  }
+}

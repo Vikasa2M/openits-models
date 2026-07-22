@@ -1,0 +1,86 @@
+module openits-signal-control-tsp-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:signal-control-tsp-events";
+  prefix openits-sc-tsp;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-signal-control-types {
+    prefix openits-sc-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Signal-controller Transit Signal Priority cycle + timing-detail
+     notifications. Distinct from preemption: TSP biases timing
+     without overriding it.";
+
+  revision 2026-05-17 {
+    description
+      "Initial revision. Hosts the tsp-event notification migrated
+       from the signal-control notifications companion module@2026-05-15.";
+    reference "ATSPM Indiana enumeration (TSP event codes).";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification tsp-event {
+    openits-types:arc-it-flow
+      "Transit Vehicle -> Roadway Signal Controller : TSP request";
+    description
+      "Transit signal priority transition: check-in / check-out /
+       timing adjustment. Collapses ATSPM codes 19 (early force-off
+       phase), 93-94 (TSP detector), 112-115 (cycle events), 117-119
+       (cycle/service-start/end) plus NTCIP 1211 priority-class
+       extensions.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-tsp-event-kind; }
+      mandatory true;
+      description "Specific TSP-event identity from the Indiana taxonomy.";
+    }
+    leaf source-device-id {
+      type openits-types:device-id;
+      mandatory true;
+      description "Controller this TSP event pertains to.";
+    }
+    leaf event {
+      type enumeration {
+        enum unspecified;
+        enum early-force-off; enum detector-on; enum detector-off;
+        enum check-in; enum adjustment-early-green; enum adjustment-extend-green;
+        enum check-out; enum service-start; enum service-end;
+      }
+      description
+        "TSP-event class: check-in / check-out, detector on/off,
+         early-force-off, timing adjustment (early-green or extend-green),
+         service start/end.";
+    }
+    leaf vehicle-id     { type string; description "Transit vehicle identifier."; }
+    leaf priority-class { type uint32; description "0..7 per NTCIP 1211."; }
+    leaf adjustment-seconds {
+      type decimal64 { fraction-digits 1; }
+      description "Signed timing adjustment for adjustment-* events.";
+    }
+    leaf occurred-at {
+      type yang:date-and-time;
+      mandatory true;
+      description "Wall-clock time the TSP event occurred at the controller.";
+    }
+
+    uses openits-types:wire-source;
+  }
+}

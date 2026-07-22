@@ -1,0 +1,48 @@
+name: Model change / new capability
+description: Propose a new service/capability, or a change to an existing YANG model.
+labels: ["model"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for concrete model proposals. If you're still exploring an
+        idea or want to discuss trade-offs first, please open a
+        [Discussion](https://github.com/Vikasa2M/openits-models/discussions).
+        See `docs/06-extension-model.md` for how augments, deviations, and
+        graduation work.
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What should the model express?
+      description: The capability, device, or data you want represented, and the real-world use case behind it.
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of change
+      options:
+        - New service/capability module
+        - Change to an existing module
+        - Augment (vendor/deployment extension)
+        - Deviation (constraint tightening)
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: standards
+    attributes:
+      label: Relevant standards
+      description: Any NTCIP / J2735 / ARC-IT / other reference this maps to (see docs/05-standards-alignment.md).
+    validations:
+      required: false
+  - type: textarea
+    id: compat
+    attributes:
+      label: Backward compatibility
+      description: >
+        Would this break existing wire/JSON or the YANG contract? New fields
+        appended and new identities are non-breaking; renumbering or removing
+        fields is not. See docs/versioning.md.
+    validations:
+      required: false

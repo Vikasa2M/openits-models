@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package openits.cctv.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/cctv/v1;cctvv1";
+
+import "google/protobuf/timestamp.proto";
+
+message LockoutDenied {
+  string kind = 99;
+  string requested_by = 1;
+  uint32 requested_priority = 2;
+  string current_holder = 3;
+  uint32 held_priority = 4;
+  string observed_by = 5;
+  google.protobuf.Timestamp occurred_at = 6;
+  string owner = 7;
+  uint64 sequence = 8;
+  string source_device_id = 9;
+}
+
+message PtzPresetRecalled {
+  string kind = 99;
+  uint32 preset_id = 1;
+  string preset_name = 2;
+  string recalled_by = 3;
+  bool via_tour = 4;
+  string observed_by = 5;
+  google.protobuf.Timestamp occurred_at = 6;
+  string owner = 7;
+  uint64 sequence = 8;
+  string source_device_id = 9;
+}
+
+message TourStateChanged {
+  string kind = 99;
+  uint32 tour_id = 1;
+  TourRunState previous_state = 2;
+  TourRunState current_state = 3;
+  string observed_by = 4;
+  google.protobuf.Timestamp occurred_at = 5;
+  string owner = 6;
+  uint64 sequence = 7;
+  string source_device_id = 8;
+}
+
+enum TourRunState {
+  TOUR_RUN_STATE_STOPPED = 0;
+  TOUR_RUN_STATE_RUNNING = 1;
+  TOUR_RUN_STATE_PAUSED = 2;
+}
+

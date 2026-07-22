@@ -1,0 +1,102 @@
+{
+  "openits-reversible-lane:reversible-lane": {
+    "config": {
+      "id": "us75-contraflow",
+      "name": "US-75 Contraflow MP 3.1-8.4",
+      "road-reference": "US-75 contraflow, MP 3.1-8.4",
+      "latitude": "32.8213000",
+      "longitude": "-96.7716000",
+      "direction-a": "northbound",
+      "direction-b": "southbound"
+    },
+    "state": {
+      "id": "us75-contraflow",
+      "name": "US-75 Contraflow MP 3.1-8.4",
+      "road-reference": "US-75 contraflow, MP 3.1-8.4",
+      "latitude": "32.8213000",
+      "longitude": "-96.7716000",
+      "make": "PACSystems",
+      "model": "RX3i CPE330",
+      "firmware": "10.05"
+    },
+    "control": {
+      "config": {
+        "target-state": "open",
+        "target-direction": "northbound",
+        "transition-timeout-s": 900,
+        "min-clearance-duration-s": 20,
+        "min-verification-dwell-s": 10
+      },
+      "state": {
+        "current-state": "open",
+        "open-direction": "northbound",
+        "last-command-source": "tmc-ops",
+        "last-command-at": "2026-07-07T06:30:00Z",
+        "changeover-permitted": true,
+        "direction-open-permitted": true
+      }
+    },
+    "segments": {
+      "segment": [
+        {
+          "segment-id": "seg-1",
+          "config": {
+            "segment-id": "seg-1",
+            "name": "MP 3.1 gantry"
+          },
+          "lane": [
+            {
+              "lane-id": "lane-1",
+              "config": {
+                "lane-id": "lane-1",
+                "lcs-direction-a": "green-arrow",
+                "lcs-direction-b": "red-x"
+              },
+              "state": {
+                "lcs-direction-a": "green-arrow",
+                "lcs-direction-b": "red-x",
+                "gate-state": "open"
+              }
+            }
+          ]
+        },
+        {
+          "segment-id": "seg-2",
+          "config": {
+            "segment-id": "seg-2",
+            "name": "MP 5.8 gantry"
+          },
+          "lane": [
+            {
+              "lane-id": "lane-1",
+              "config": {
+                "lane-id": "lane-1",
+                "lcs-direction-a": "green-arrow",
+                "lcs-direction-b": "red-x"
+              },
+              "state": {
+                "lcs-direction-a": "green-arrow",
+                "lcs-direction-b": "red-x",
+                "gate-state": "open"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "interlocks": {
+      "interlock": [
+        {
+          "interlock-id": "sweep-confirm",
+          "config": { "interlock-id": "sweep-confirm", "kind": "openits-reversible-lane-types:sweep-confirmed", "name": "Sweep vehicle confirmed clear", "required": true, "evaluation-point": "direction-open" },
+          "state": { "satisfied": true }
+        },
+        {
+          "interlock-id": "gate-agreement",
+          "config": { "interlock-id": "gate-agreement", "kind": "openits-reversible-lane-types:gate-agreement", "name": "All gate positions agree with commanded state", "required": true, "evaluation-point": "direction-open" },
+          "state": { "satisfied": true }
+        }
+      ]
+    }
+  }
+}

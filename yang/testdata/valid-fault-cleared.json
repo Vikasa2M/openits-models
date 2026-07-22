@@ -1,0 +1,9 @@
+{
+  "openits-common-fault-events:fault-cleared": {
+    "kind": "openits-dms-types:dms-fault-lamp",
+    "source-device-id": "us40-dms-014",
+    "sequence": "1",
+    "fault-id": "dms014-lamp-0091",
+    "occurred-at": "2026-07-11T10:47:02Z"
+  }
+}

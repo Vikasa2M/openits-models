@@ -1,0 +1,44 @@
+module leafref-choice-fixture {
+  yang-version 1.1;
+  namespace "urn:openits:test:leafref-choice";
+  prefix lcf;
+
+  // Fixture for the leafref-inside-choice/case type-resolution test.
+  // `channel/source` is a choice whose cases each hold a single leafref:
+  //   - item-ref  -> item/n     (uint16 target; must render uint32)
+  //   - label-ref -> item/label (string target; must render string)
+  // A leafref path is written against the DATA tree, where choice/case are
+  // transparent, so item-ref's `../../item/n` is two data hops up (out of
+  // channel, up to root) then down. A schema-tree resolver that treats
+  // choice/case as real `..` steps under-counts and fails to resolve.
+
+  container root {
+    list item {
+      key "n";
+      leaf n     { type uint16; }
+      leaf label { type string; }
+    }
+    list channel {
+      key "channel-number";
+      leaf channel-number { type uint16; }
+      choice source {
+        case by-item {
+          leaf item-ref {
+            type leafref {
+              path "../../item/n";
+              require-instance true;
+            }
+          }
+        }
+        case by-label {
+          leaf label-ref {
+            type leafref {
+              path "../../item/label";
+              require-instance true;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "openits-signal-control-events:plan-applied": {
+    "kind": "openits-signal-control-types:sc-plan-applied",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence": "1",
+    "plan-id": 4,
+    "cycle-length-s": 120,
+    "offset-s": 35,
+    "split-set": 2,
+    "source": "schedule",
+    "occurred-at": "2026-07-11T14:05:00Z"
+  }
+}

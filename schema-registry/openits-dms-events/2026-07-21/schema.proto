@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package openits.dms.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/dms/v1;dmsv1";
+
+import "google/protobuf/timestamp.proto";
+
+message MessageActivationFailed {
+  string kind = 99;
+  MessageMemoryType attempted_memory_type = 1;
+  uint32 attempted_slot_number = 2;
+  string reason = 3;
+  ErrorType error_type = 9;
+  uint32 error_position = 10;
+  string observed_by = 4;
+  google.protobuf.Timestamp occurred_at = 5;
+  string owner = 6;
+  uint64 sequence = 7;
+  string source_device_id = 8;
+}
+
+enum MessageMemoryType {
+  MESSAGE_MEMORY_TYPE_UNSPECIFIED = 0;
+  MESSAGE_MEMORY_TYPE_PERMANENT = 1;
+  MESSAGE_MEMORY_TYPE_CHANGEABLE = 2;
+  MESSAGE_MEMORY_TYPE_VOLATILE = 3;
+  MESSAGE_MEMORY_TYPE_SCHEDULE = 4;
+  MESSAGE_MEMORY_TYPE_BLANK = 5;
+}
+
+enum ErrorType {
+  ERROR_TYPE_SYNTAX = 0;
+  ERROR_TYPE_UNSUPPORTED_TAG = 1;
+  ERROR_TYPE_FONT_NOT_FOUND = 2;
+  ERROR_TYPE_GRAPHIC_NOT_FOUND = 3;
+  ERROR_TYPE_TOO_LONG = 4;
+  ERROR_TYPE_HARDWARE = 5;
+  ERROR_TYPE_OTHER = 6;
+}
+

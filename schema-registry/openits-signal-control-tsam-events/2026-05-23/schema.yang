@@ -1,0 +1,148 @@
+module openits-signal-control-tsam-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:signal-control-tsam-events";
+  prefix openits-sc-tsam;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-signal-control-types {
+    prefix openits-sc-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Traffic Signal Adaptive Management (TSAM) notifications: mode
+     transitions and applied timing recommendations.";
+
+  revision 2026-05-23 {
+    description
+      "Remove invalid `default` declarations on the two mandatory
+       `kind` leaves of tsam-mode-changed and tsam-recommendation-applied.
+       RFC 7950 §3 forbids defaults on mandatory nodes; the defaults
+       also used an undefined prefix
+       (openits-signal-control-types vs the imported openits-sc-types).
+       The kind leaf is fully determined by the emitting notification
+       so no default is needed.";
+    reference "RFC 7950 §3, §7.6.1.";
+  }
+  revision 2026-05-17 {
+    description
+      "Initial revision. Hosts the tsam-mode-changed and
+       tsam-recommendation-applied notifications migrated from
+       the signal-control notifications companion module@2026-04-28.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification tsam-mode-changed {
+    openits-types:arc-it-flow
+      "TMC -> Roadway Signal Controller : adaptive control mode";
+    description "TSAM engagement state changed. Emitted on transitions only.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-tsam-event-kind; }
+      mandatory true;
+      description "Specific TSAM-event identity (mode-changed in this notification).";
+    }
+
+    leaf source-device-id {
+      type openits-types:device-id;
+      mandatory true;
+      description "Controller whose TSAM engagement state changed.";
+    }
+
+    leaf prior {
+      type enumeration {
+        enum disabled; enum advisory; enum active; enum suspended;
+      }
+      description "TSAM engagement state before the transition.";
+    }
+    leaf current {
+      type enumeration {
+        enum disabled; enum advisory; enum active; enum suspended;
+      }
+      mandatory true;
+      description "TSAM engagement state after the transition.";
+    }
+    leaf reason { type string; description "Free-form reason for the mode change (e.g., 'operator-enabled', 'detector-quality-below-threshold')."; }
+    leaf changed-at { type yang:date-and-time; description "Wall-clock time the mode change took effect at the controller."; }
+
+    uses openits-types:wire-source;
+  }
+
+  notification tsam-recommendation-applied {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> TMC : adaptive timing adjustment";
+    description
+      "TSAM produced a recommendation that was applied to the
+       controller's running timing plan.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-tsam-event-kind; }
+      mandatory true;
+      description "Specific TSAM-event identity (recommendation-applied in this notification).";
+    }
+
+    leaf source-device-id {
+      type openits-types:device-id;
+      mandatory true;
+      description "Controller the recommendation was applied to.";
+    }
+
+    leaf recommendation-id {
+      type string;
+      description "TSAM-side correlation id for the recommendation.";
+    }
+    leaf adjustment-type {
+      type enumeration {
+        enum cycle-length;
+        enum split-adjustment;
+        enum offset-adjustment;
+        enum phase-extension;
+        enum phase-truncation;
+        enum plan-change;
+        enum other;
+      }
+      mandatory true;
+      description
+        "What kind of timing change was applied: cycle-length,
+         split / offset adjustment, phase-extension or phase-truncation,
+         plan-change, or other.";
+    }
+    leaf magnitude-seconds {
+      type decimal64 { fraction-digits 1; }
+      units "seconds";
+      description
+        "Signed magnitude of the timing change in seconds. Positive =
+         lengthen / extend; negative = shorten / truncate.";
+    }
+    leaf phase-number {
+      type uint8;
+      description "Phase the adjustment targets, when phase-scoped.";
+    }
+    leaf rationale {
+      type string;
+      description "Free-form rationale from the TSAM decision system.";
+    }
+    leaf applied-at {
+      type yang:date-and-time;
+      mandatory true;
+      description "Wall-clock time the recommendation was applied at the controller.";
+    }
+
+    uses openits-types:wire-source;
+  }
+}

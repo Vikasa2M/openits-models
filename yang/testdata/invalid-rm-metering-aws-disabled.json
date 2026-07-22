@@ -1,0 +1,14 @@
+{
+  "openits-ramp-metering:ramp-meter": {
+    "config": {
+      "id": "i405-nb-unsafe",
+      "road-reference": "I-405 NB unsafe test on-ramp",
+      "latitude": "47.6205",
+      "longitude": "-122.3493"
+    },
+    "control": {
+      "config": { "mode": "openits-ramp-metering-types:mode-active" }
+    },
+    "advance-warning-sign": { "config": { "enabled": false } }
+  }
+}

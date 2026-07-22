@@ -1,0 +1,9 @@
+{
+  "module": "openits-signal-control-preemption-events",
+  "revision": "2026-05-23",
+  "files": [
+    "schema.yang",
+    "schema.proto",
+    "schema.json"
+  ]
+}

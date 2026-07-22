@@ -1,0 +1,116 @@
+module openits-common-mode-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:common-mode-events";
+  prefix openits-common-mode;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Cross-service operational-mode-change notifications. Every device
+     in openits has an operational mode (signal-controller normal /
+     coordinated / free / flash / preempt; ramp-meter active /
+     inactive; DMS auto / manual / blanked; etc.). This module defines
+     the generic mode-changed notification with the mode-kind
+     identityref identifying the specific mode space.
+
+     Service-specific mode-kind identities derive from
+     openits-types:mode-event-kind in each service's -types module.";
+
+  revision 2026-05-23 {
+    description
+      "Rename the notification `operational-mode-changed` to
+       `mode-changed` so the YANG name matches the openits CE
+       event-name slot. Consumers fetching the dataschema URL for
+       openits.<service>.mode-changed.v1 expect to find a
+       `notification mode-changed` at the snapshot; the rename
+       closes that contract gap.";
+  }
+
+  revision 2026-05-17 {
+    description
+      "Add descriptions to source-device-id and occurred-at leaves
+       in operational-mode-changed so the notification contract is
+       self-documenting for Phase 0c decoder implementers.";
+  }
+  revision 2026-05-16 {
+    description "Initial revision.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification mode-changed {
+    openits-types:arc-it-flow
+      "Device -> NMS : operational status";
+    description
+      "A device transitioned between operational modes. The 'kind'
+       identityref names the mode-space (e.g., signal-controller mode,
+       ramp-meter mode); 'prior' and 'current' are free-form strings
+       interpreted in the context of the mode-space.";
+
+    leaf kind {
+      type identityref { base openits-types:mode-event-kind; }
+      mandatory true;
+      description
+        "Mode-space identifier. Service-derived (e.g.,
+         openits-signal-control-types:sc-mode-event-kind).";
+    }
+
+    leaf source-device-id {
+      type openits-types:device-id;
+      mandatory true;
+      description
+        "Device this mode change pertains to, using the openits-types:
+         device-id pattern '[a-zA-Z0-9_-]+'. Typically the
+         controller-id / sign-id / RSU-id from the inventory.";
+    }
+
+    leaf prior {
+      type string;
+      description
+        "Prior mode value. Free-form string interpreted in the context
+         of the mode-space identityref. Absent when the device just
+         started up.";
+    }
+
+    leaf current {
+      type string;
+      mandatory true;
+      description
+        "Current mode value. Free-form string interpreted in the
+         context of the mode-space identityref.";
+    }
+
+    leaf reason {
+      type string;
+      description
+        "Human-readable reason for the transition (operator-induced,
+         fault-triggered, schedule-triggered, etc.).";
+    }
+
+    leaf occurred-at {
+      type yang:date-and-time;
+      mandatory true;
+      description
+        "Wall-clock time the mode transition occurred at the device.
+         Distinct from CloudEvents ce-time (when the publisher
+         observed it); the two diverge for HR-log backfill or when
+         device NTP is broken.";
+    }
+
+    uses openits-types:wire-source;
+  }
+}

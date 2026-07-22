@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package openits.reversible_lane.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/v1;openitspb";
+
+import "google/protobuf/timestamp.proto";
+
+message LaneStateChanged {
+  LaneFlowState previous_state = 1;
+  TravelDirection previous_direction = 2;
+  LaneFlowState new_state = 3;
+  TravelDirection new_direction = 4;
+  string initiated_by = 5;
+  google.protobuf.Timestamp changed_at = 6;
+}
+
+enum LaneFlowState {
+  LANE_FLOW_STATE_UNKNOWN = 0;
+  LANE_FLOW_STATE_CLOSED = 1;
+  LANE_FLOW_STATE_OPEN = 2;
+  LANE_FLOW_STATE_IN_TRANSITION = 3;
+}
+
+enum TravelDirection {
+  TRAVEL_DIRECTION_UNKNOWN = 0;
+  TRAVEL_DIRECTION_NORTHBOUND = 1;
+  TRAVEL_DIRECTION_SOUTHBOUND = 2;
+  TRAVEL_DIRECTION_EASTBOUND = 3;
+  TRAVEL_DIRECTION_WESTBOUND = 4;
+}
+
+message LcsConflictDetected {
+  string segment_id = 1;
+  LcsIndication lcs_direction_a = 2;
+  LcsIndication lcs_direction_b = 3;
+}
+
+enum LcsIndication {
+  LCS_INDICATION_UNKNOWN = 0;
+  LCS_INDICATION_DARK = 1;
+  LCS_INDICATION_RED_X = 2;
+  LCS_INDICATION_YELLOW_X = 3;
+  LCS_INDICATION_FLASHING_YELLOW_X = 4;
+  LCS_INDICATION_GREEN_ARROW = 5;
+}
+
+message TransitionTimeout {
+  TravelDirection from_direction = 1;
+  TravelDirection to_direction = 2;
+  google.protobuf.Timestamp started_at = 3;
+  uint32 timeout_s = 4;
+  string sequence_step = 5;
+}
+

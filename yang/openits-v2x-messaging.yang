@@ -1,0 +1,1143 @@
+module openits-v2x-messaging {
+  yang-version 1.1;
+  namespace "urn:openits:yang:v2x-messaging";
+  prefix openits-v2x-messaging;
+
+  import openits-types {
+    prefix openits-types;
+  }
+  import openits-v2x-messaging-types {
+    prefix openits-v2x-messaging-types;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "V2X messaging capability: broadcast configuration and state for the
+     SAE J2735 message families a V2X unit sends/receives (SPaT, MAP,
+     TIM, BSM, PSM, SRM/SSM), plus a per-message-type broadcast-stats
+     list. A device profile with V2X messaging (e.g. openits-rsu) 'uses'
+     the 'messaging' grouping. Extracted from openits-rsu as part of the
+     capability-first re-architecture (docs/08-capability-architecture.md).
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.7.0";
+
+  revision 2026-07-21 {
+    description
+      "V2X/RSU review fixes. TIM window: remove the always-false
+       end-time > start-time must (XPath 1.0 coerces date-and-time to NaN,
+       so it rejected every two-bound window) and remodel the TIM broadcast
+       window as start-time + duration-minutes (SAE J2735 minute-valued
+       duration); the effective end is start-time + duration-minutes.
+       BREAKING (pre-v1): end-time removed, duration-minutes added.
+       Redefine evp-auto-grant as expedited forwarding (the RSU expedites, the
+       controller PRS decides — the RSU never originates a preemption grant);
+       reword decision-authority evp-auto accordingly. Semantics only.
+       Retype active-requests/request/status to the shared srm-request-status
+       typedef; widen active-requests/request/priority 1..7 -> 0..7
+       (config-false, proto-neutral).
+       SPaT/MAP intersection consistency: add mandatory-when-enabled guards so
+       an enabled SPaT/MAP with no intersection is a clear error, not a
+       misleading mismatch on empty node-sets.
+       BSM forwarding: add a must requiring forward-destination when
+       forward-enabled (safe: forward-enabled defaults false).
+       Collapse redundant message-stats counters: drop
+       total-sent/total-received (duplicated tx-count/rx-count). BREAKING
+       (pre-v1): those config-false fields are removed.
+       Rename grant-authority member rsu-local-policy -> rsu-local to match
+       decision-authority; retype active-requests/request/decision-authority to
+       the shared decision-authority typedef. BREAKING (pre-v1): grant-authority
+       enum member renamed / decision-authority ordinals via typedef.
+       Add psid (uint32, IEEE 1609 PSID registry) to each broadcast config
+       container, per-TIM config, and message-stats entries — the
+       routing/authorization primitive NTCIP 1218 and IEEE 1609.3 key on.
+       Additive.
+       Add SPaT/MAP source-mode (rsu-generated | immediate-forward-ingest,
+       default rsu-generated) and an ingest endpoint container (gated when
+       immediate-forward-ingest), plus a MAP max-data-age-ms freshness
+       threshold, so the generic NTCIP 1218 Immediate-Forward ingest path is
+       expressible. Additive.
+       Multi-intersection SPaT/MAP: intersection becomes a region+id keyed list
+       under SPaT/MAP config and state; the single-id equality must is replaced
+       by per-list presence musts, with the SPaT subset-of-MAP subset
+       consistency moved to the conformance harness (XPath 1.0 cannot join two
+       lists on equality). BREAKING (pre-v1): intersection container -> list.
+       Add PSM broadcast (broadcast-config/broadcast-state) so
+       infrastructure-originated PSM (roadside perception) is expressible,
+       alongside the existing PSM receive. Additive.
+       Add BSM forward-protocol / forward-format enums and a strip-path-history
+       privacy control to BSM forwarding. Additive.
+       Add an rtcm broadcast container (config/state) giving the msg-rtcm
+       message type a configuration home (NTRIP/local-base source, message-set,
+       cadence). Additive.
+       - Collapse duplicate same-date revision statements.";
+    reference "SAE J2735 (TIM duration).";
+  }
+  revision 2026-07-17 {
+    description
+      "SRM/EVP grant authority (NTCIP 1211). Model where SRM grant decisions
+       are made rather than defaulting to a management-plane operator round-trip:
+       add srm-ssm/config/grant-authority (controller-prs | rsu-local-policy |
+       operator, default controller-prs — the deployable real-time PRS path);
+       add evp-auto-grant (default true — emergency-vehicle preemption is never
+       gated on PRS queueing or operator approval); and re-scope auto-approve-tsp
+       to rsu-local-policy (controller-prs forwards to asc-device instead). Add
+       grant provenance to active-requests/request: decision-authority (who
+       granted / denied — the NTCIP 1211 audit + TSP-grant-rate KPI) and
+       denial-reason.";
+    reference
+      "NTCIP 1211 (Signal Control and Prioritization); SAE J2735.";
+  }
+  revision 2026-07-16 {
+    description
+      "Message-content fidelity: replace the TIM itis-codes comma-separated
+       string with an ordered leaf-list of uint16 itis-code (SAE J2540.2 —
+       the encoder consumes structured codes, not a parsed string); harmonize
+       TIM priority to 0..7 (SAE J2735, was 1..7); bound MAP geometry-version
+       to 0..127 (SAE J2735 MsgCount, was an unbounded uint8). Pre-1.0
+       breaking (itis-codes retype).
+       Store-and-Repeat expiry semantics for TIM: add tim/config/suppress-expired
+       (stop re-broadcasting a TIM once its end-time passes; do not resume a
+       lapsed TIM after a comm outage), a must that a TIM message's end-time is
+       after its start-time, and per-message state broadcasting/expired so that
+       'a TIM past its end-time is still being broadcast' (post-outage stale
+       replay) becomes an expressible, observable defect. Distinguishes TIM
+       Store-and-Repeat from SPaT Immediate-Forward and backhaul store-and-forward
+       (NTCIP 1218; SAE J2735 TIM expiry).";
+    reference "NTCIP 1218; SAE J2735.";
+  }
+  revision 2026-07-15 {
+    description
+      "V2X safety gating (broadcast side): bound SPaT (100..1000 ms) and
+       MAP (500..5000 ms) broadcast-interval; default the SPaT/MAP/TIM
+       air-broadcast enables OFF (operator enables after validation, NTCIP
+       1218); add a SPaT max-data-age-ms freshness threshold + halted-stale
+       state; split intersection-id into a region+id container on SPaT and
+       MAP and require SPaT/MAP intersection consistency. BREAKING (pre-v1):
+       intersection-id becomes a container; broadcast defaults flip to
+       false.
+
+      Move the v2x-message-type and srm-request-type identity families to
+       the new openits-v2x-messaging-types module; repoint local uses.
+       BREAKING (pre-v1): those identityref values change module prefix to
+       openits-v2x-messaging-types.";
+  }
+  revision 2026-07-14 {
+    description
+      "Add srm-ssm/decisions: an operator approve/deny config list for active
+       SRM priority requests (replaces the retired rsu-approve-srm RPC).
+       Correlated to active-requests/request by id at runtime.";
+  }
+  revision 2026-07-13 {
+    description
+      "Initial revision. The V2X message broadcast subtree
+       (spat/map/tim/bsm/psm/srm-ssm config+state) and the
+       v2x-message-type-keyed message-stats list extracted from
+       openits-rsu into the 'messaging' grouping; the srm-request-type
+       identity hierarchy (SRM is a V2X message) moved here too.";
+  }
+
+  grouping messaging {
+    description
+      "V2X message broadcast configuration and state for a device.";
+
+    grouping intersection-ref {
+      description
+        "SAE J2735 intersection reference: region + intersection id. A flat
+         id loses the region qualifier J2735 carries.";
+      leaf region {
+        type uint16;
+        description "SAE J2735 intersection region id.";
+      }
+      leaf id {
+        type uint16;
+        description "SAE J2735 intersection id within the region.";
+      }
+    }
+
+    container messages {
+      description
+        "V2X message configuration and status";
+      // The SPaT/MAP subset consistency (every enabled SPaT intersection must
+      // appear in the MAP intersection set) is enforced by the conformance
+      // harness, since XPath 1.0 cannot express a cross-list equality join
+      // (no current(), no cross-list correlation). Only per-list presence is
+      // expressible here.
+      must "not(spat/config/enabled = 'true') or spat/config/intersection" {
+        error-message "SPaT is enabled but advertises no intersection.";
+      }
+      must "not(map/config/enabled = 'true') or map/config/intersection" {
+        error-message "MAP is enabled but advertises no intersection geometry.";
+      }
+      container spat {
+        description
+          "Signal Phase and Timing (SPaT) message";
+        container config {
+          description
+            "SPaT configuration";
+          leaf enabled {
+            type boolean;
+            default "false";
+            description
+              "SPaT broadcasting enabled. Disabled on fresh provision; an
+               operator MUST explicitly enable after validating source /
+               intersection / MAP (NTCIP 1218 practice).";
+          }
+          leaf broadcast-interval {
+            type uint16 {
+              range "100..1000";
+            }
+            units "milliseconds";
+            default "100";
+            description
+              "Broadcast interval";
+          }
+          leaf max-data-age-ms {
+            type uint16 {
+              range "100..2000";
+            }
+            units "milliseconds";
+            default "300";
+            description
+              "SPaT broadcasting MUST halt when the source ASC's SPaT
+               data age exceeds this, or when asc-connected is false.
+               NTCIP 1218 places SPaT in Immediate Forward so stale
+               controller data is never re-emitted (a wrong minEndTime /
+               eventState is a safety-of-life failure). This is the
+               configured threshold; the halt itself is runtime and
+               reported by state/halted-stale.";
+          }
+          leaf source-asc {
+            type openits-types:device-id;
+            description
+              "ASC device to source SPaT data from";
+          }
+          leaf source-mode {
+            type enumeration {
+              enum rsu-generated {
+                description
+                  "The RSU generates SPaT itself by polling the source ASC
+                   (source-asc / asc-poll). Default — the current behaviour.";
+              }
+              enum immediate-forward-ingest {
+                description
+                  "A network source pushes pre-encoded (UPER) SPaT to the RSU's
+                   ingest endpoint for air transmission; the RSU forwards without
+                   interpreting content (NTCIP 1218 Immediate Forward / IFM).";
+              }
+            }
+            default "rsu-generated";
+            description "Where broadcast SPaT comes from.";
+            reference "NTCIP 1218 (rsuIFMTable / Immediate Forward).";
+          }
+          container ingest {
+            when "../source-mode = 'immediate-forward-ingest'";
+            description
+              "Immediate-Forward ingest endpoint the network source pushes
+               pre-encoded SPaT to (applies only in immediate-forward-ingest).";
+            leaf transport {
+              type enumeration {
+                enum udp  { description "UDP."; }
+                enum tcp  { description "TCP."; }
+                enum mqtt { description "MQTT."; }
+              }
+              description "Ingest transport.";
+            }
+            leaf address { type inet:host; description "Ingest listen/source address."; }
+            leaf port    { type inet:port-number; description "Ingest port."; }
+            leaf psid    { type uint32; description "PSID the ingested messages are forwarded under (IEEE 1609 registry)."; }
+          }
+          list intersection {
+            key "region id";
+            description "Advertised intersection(s) (region + id). Multi-entry for RSUs covering closely spaced signals.";
+            uses intersection-ref;
+          }
+          leaf include-timing-prediction {
+            type boolean;
+            default "true";
+            description
+              "Include timing predictions";
+          }
+          leaf psid {
+            type uint32;
+            description
+              "Provider Service Identifier this service is broadcast under
+               (IEEE 1609 PSID registry; SPaT = 0x8002). Keys NTCIP 1218
+               forwarding (rsuIFMTable) and IEEE 1609.3 dispatch.";
+            reference "IEEE 1609.3 (PSID); NTCIP 1218.";
+          }
+        }
+        container state {
+          config false;
+          description
+            "SPaT state";
+          leaf broadcasting {
+            type boolean;
+            description
+              "Currently broadcasting";
+          }
+          leaf broadcast-count {
+            type uint64;
+            description
+              "Messages broadcast";
+          }
+          leaf last-broadcast {
+            type yang:date-and-time;
+            description
+              "Last broadcast timestamp";
+          }
+          leaf asc-connected {
+            type boolean;
+            description
+              "Connected to source ASC";
+          }
+          leaf halted-stale {
+            type boolean;
+            description
+              "True when SPaT broadcasting is currently halted because
+               the source data age exceeded max-data-age-ms or the ASC
+               is disconnected.";
+          }
+        }
+      }
+      container map {
+        description
+          "MAP (intersection geometry) message";
+        container config {
+          description
+            "MAP configuration";
+          leaf enabled {
+            type boolean;
+            default "false";
+            description
+              "MAP broadcasting enabled. Disabled on fresh provision; an
+               operator MUST explicitly enable after validating source /
+               intersection / MAP (NTCIP 1218 practice).";
+          }
+          leaf broadcast-interval {
+            type uint16 {
+              range "500..5000";
+            }
+            units "milliseconds";
+            default "1000";
+            description
+              "Broadcast interval";
+          }
+          list intersection {
+            key "region id";
+            description "Advertised intersection(s) (region + id). Multi-entry for RSUs covering closely spaced signals.";
+            uses intersection-ref;
+          }
+          leaf geometry-version {
+            type uint8 {
+              range "0..127";
+            }
+            description
+              "MAP geometry version — the layer-active MsgCount an OBU uses to
+               detect a geometry change (SAE J2735 MsgCount, range 0..127; a
+               plain uint8 wrongly admitted 128..255).";
+            reference "SAE J2735 (MsgCount).";
+          }
+          leaf psid {
+            type uint32;
+            description
+              "Provider Service Identifier this service is broadcast under
+               (IEEE 1609 PSID registry; MAP = 0x8003). Keys NTCIP 1218
+               forwarding (rsuIFMTable) and IEEE 1609.3 dispatch.";
+            reference "IEEE 1609.3 (PSID); NTCIP 1218.";
+          }
+          leaf source-mode {
+            type enumeration {
+              enum rsu-generated {
+                description
+                  "The RSU generates MAP itself. Default — the current
+                   behaviour.";
+              }
+              enum immediate-forward-ingest {
+                description
+                  "A network source pushes pre-encoded (UPER) MAP to the RSU's
+                   ingest endpoint for air transmission; the RSU forwards without
+                   interpreting content (NTCIP 1218 Immediate Forward / IFM).";
+              }
+            }
+            default "rsu-generated";
+            description "Where broadcast MAP comes from.";
+            reference "NTCIP 1218 (rsuIFMTable / Immediate Forward).";
+          }
+          container ingest {
+            when "../source-mode = 'immediate-forward-ingest'";
+            description
+              "Immediate-Forward ingest endpoint the network source pushes
+               pre-encoded MAP to (applies only in immediate-forward-ingest).";
+            leaf transport {
+              type enumeration {
+                enum udp  { description "UDP."; }
+                enum tcp  { description "TCP."; }
+                enum mqtt { description "MQTT."; }
+              }
+              description "Ingest transport.";
+            }
+            leaf address { type inet:host; description "Ingest listen/source address."; }
+            leaf port    { type inet:port-number; description "Ingest port."; }
+            leaf psid    { type uint32; description "PSID the ingested messages are forwarded under (IEEE 1609 registry)."; }
+          }
+          leaf max-data-age-ms {
+            type uint16 {
+              range "100..5000";
+            }
+            units "milliseconds";
+            default "1000";
+            description
+              "Freshness threshold for ingested MAP: broadcasting MUST halt
+               when the ingested MAP's data age exceeds this. Gates the
+               Immediate-Forward ingest freshness for MAP as max-data-age-ms
+               does for SPaT.";
+          }
+        }
+        container state {
+          config false;
+          description
+            "MAP state";
+          leaf broadcasting {
+            type boolean;
+            description
+              "Currently broadcasting";
+          }
+          leaf broadcast-count {
+            type uint64;
+            description
+              "Messages broadcast";
+          }
+          list intersection {
+            key "region id";
+            description "Advertised intersection(s) readback (region + id).";
+            uses intersection-ref;
+          }
+          leaf lane-count {
+            type uint8;
+            description
+              "Number of lanes defined";
+          }
+          leaf approach-count {
+            type uint8;
+            description
+              "Number of approaches defined";
+          }
+        }
+      }
+      container tim {
+        description
+          "Traveler Information Messages";
+        container config {
+          description
+            "TIM configuration";
+          leaf enabled {
+            type boolean;
+            default "false";
+            description
+              "TIM broadcasting enabled. Disabled on fresh provision; an
+               operator MUST explicitly enable after validating source /
+               intersection / MAP (NTCIP 1218 practice).";
+          }
+          leaf max-active-messages {
+            type uint8;
+            default "10";
+            description
+              "Maximum concurrent TIM messages";
+          }
+          leaf suppress-expired {
+            type boolean;
+            default "true";
+            description
+              "Store-and-Repeat policy: when true, the unit stops re-broadcasting
+               a TIM once its end-time passes and never resumes a lapsed TIM
+               after a comm outage — the correct behaviour, so a stale advisory
+               is not replayed. TIM broadcasting is Store-and-Repeat (the RSU
+               caches and re-broadcasts on a schedule), distinct from SPaT's
+               Immediate-Forward (no caching) and the backhaul store-and-forward
+               of uplink telemetry (NTCIP 1218).";
+          }
+        }
+        container active {
+          description
+            "Active TIM messages";
+          list message {
+            key "id";
+            description
+              "Active TIM message";
+            leaf id {
+              type string {
+                length "1..32";
+              }
+              description
+                "TIM message identifier";
+            }
+            container config {
+              description
+                "TIM message configuration";
+              leaf name {
+                type string;
+                description
+                  "Message name";
+              }
+              leaf psid {
+                type uint32;
+                description
+                  "Provider Service Identifier this TIM is broadcast under
+                   (IEEE 1609 PSID registry; TIM = 0x8003). Keys NTCIP 1218
+                   forwarding (rsuIFMTable) and IEEE 1609.3 dispatch.";
+                reference "IEEE 1609.3 (PSID); NTCIP 1218.";
+              }
+              leaf enabled {
+                type boolean;
+                default "false";
+                description
+                  "Message is enabled. Disabled on fresh provision; an
+                   operator MUST explicitly enable after validating source /
+                   intersection / MAP (NTCIP 1218 practice).";
+              }
+              leaf priority {
+                type uint8 {
+                  range "0..7";
+                }
+                default "4";
+                description
+                  "TIM message priority (SAE J2735 range 0..7). Harmonized to
+                   0..7 to match the on-air range and the event side (was
+                   1..7, which excluded the valid lowest priority).";
+              }
+              leaf start-time {
+                type yang:date-and-time;
+                description
+                  "Broadcast window start; absent = broadcast immediately. The
+                   window end is start-time + duration-minutes (there is no
+                   end-time leaf: XPath 1.0 cannot order date-and-time strings,
+                   so an end-time > start-time must was unsatisfiable and is
+                   replaced by a non-negative duration).";
+              }
+              leaf duration-minutes {
+                type uint32;
+                units "minutes";
+                description
+                  "Broadcast-window length from start-time, in minutes (SAE
+                   J2735 TravelerDataFrame duration is minute-valued). 0 = until
+                   explicitly cleared. The effective end-time is start-time +
+                   duration-minutes.";
+                reference "SAE J2735 (TIM TravelerDataFrame duration).";
+              }
+              leaf-list itis-code {
+                type uint16;
+                ordered-by user;
+                description
+                  "ITIS codes carried by the TIM, in display order (SAE
+                   J2540.2). A leaf-list of structured uint16 codes, not a
+                   comma-separated string: the on-air encoder consumes the
+                   codes directly, so a parsed free-text field is both
+                   lossy and a parsing hazard.";
+                reference "SAE J2540.2 (ITIS phrase codes); SAE J2735 (TIM).";
+              }
+              leaf text {
+                type string;
+                description
+                  "Human-readable text";
+              }
+              container region {
+                description
+                  "Geographic region";
+                uses openits-types:geo-location;
+                leaf radius {
+                  type uint32;
+                  units "meters";
+                  description
+                    "Region radius";
+                }
+                leaf direction {
+                  type openits-types:heading-degrees;
+                  description
+                    "Heading filter";
+                }
+                leaf direction-tolerance {
+                  type uint16;
+                  units "degrees";
+                  description
+                    "Heading tolerance";
+                }
+              }
+            }
+            container state {
+              config false;
+              description
+                "TIM state";
+              leaf broadcast-count {
+                type uint64;
+                description
+                  "Times broadcast";
+              }
+              leaf last-broadcast {
+                type yang:date-and-time;
+                description
+                  "Last broadcast";
+              }
+              leaf broadcasting {
+                type boolean;
+                description
+                  "This TIM is currently being re-broadcast (Store-and-Repeat).";
+              }
+              leaf expired {
+                type boolean;
+                description
+                  "The message's window (start-time + duration-minutes) has
+                   elapsed. Store-and-Repeat must
+                   stop at expiry, so broadcasting = true AND expired = true is
+                   a defect: replaying a stale advisory (e.g. after a comm
+                   outage the unit resumed re-broadcasting a TIM whose window
+                   already closed). Separating these leaves is what makes that
+                   post-outage stale-replay expressible and observable.";
+              }
+            }
+          }
+        }
+      }
+      container bsm {
+        description
+          "Basic Safety Message receive/forward";
+        container config {
+          description
+            "BSM configuration";
+          must "not(forward-enabled = 'true') or forward-destination" {
+            error-message
+              "BSM forwarding is enabled but no forward-destination is set — "
+            + "forwarding has nowhere to go.";
+          }
+          leaf receive-enabled {
+            type boolean;
+            default "true";
+            description
+              "BSM receive enabled";
+          }
+          leaf psid {
+            type uint32;
+            description
+              "Provider Service Identifier BSM is carried under (IEEE 1609
+               PSID registry; BSM = 0x20). Keys NTCIP 1218 forwarding
+               (rsuIFMTable) and IEEE 1609.3 dispatch.";
+            reference "IEEE 1609.3 (PSID); NTCIP 1218.";
+          }
+          leaf forward-enabled {
+            type boolean;
+            default "false";
+            description
+              "Forward BSMs to central";
+          }
+          leaf forward-destination {
+            type inet:host;
+            description
+              "Forward destination address";
+          }
+          leaf forward-port {
+            type inet:port-number;
+            description
+              "Forward destination port";
+          }
+          leaf forward-protocol {
+            type enumeration {
+              enum udp  { description "UDP."; }
+              enum tcp  { description "TCP."; }
+              enum mqtt { description "MQTT."; }
+            }
+            description "Transport used to forward BSMs.";
+          }
+          leaf forward-format {
+            type enumeration {
+              enum uper-1609dot2 { description "UPER-encoded BSM wrapped in an IEEE 1609.2 secured header."; }
+              enum uper-bare     { description "UPER-encoded BSM, no 1609.2 header."; }
+              enum hex           { description "Hex-encoded raw bytes."; }
+              enum json          { description "Decoded JSON representation."; }
+            }
+            description "Payload format of forwarded BSMs.";
+          }
+          leaf strip-path-history {
+            type boolean;
+            default "false";
+            description
+              "Privacy control: when true, path-history is removed from
+               forwarded BSMs. FHWA guidance treats BSM path-history as
+               potentially re-identifiable.";
+            reference "FHWA V2X privacy guidance.";
+          }
+          leaf filter-by-region {
+            type boolean;
+            default "true";
+            description
+              "Filter by geographic region";
+          }
+          leaf region-radius {
+            type uint32;
+            units "meters";
+            default "500";
+            description
+              "Region radius for filtering";
+          }
+        }
+        container state {
+          config false;
+          description
+            "BSM state";
+          leaf received-count {
+            type uint64;
+            description
+              "BSMs received";
+          }
+          leaf forwarded-count {
+            type uint64;
+            description
+              "BSMs forwarded";
+          }
+          leaf unique-vehicles-1min {
+            type uint32;
+            description
+              "Unique vehicles in last minute";
+          }
+          leaf unique-vehicles-1hr {
+            type uint32;
+            description
+              "Unique vehicles in last hour";
+          }
+          leaf average-speed {
+            type openits-types:speed-kmh;
+            description
+              "Average vehicle speed";
+          }
+          leaf last-received {
+            type yang:date-and-time;
+            description
+              "Last BSM received";
+          }
+        }
+      }
+      container psm {
+        description
+          "Personal Safety Message receive";
+        container config {
+          description
+            "PSM configuration";
+          leaf enabled {
+            type boolean;
+            default "true";
+            description
+              "PSM receive enabled";
+          }
+          leaf alert-asc {
+            type boolean;
+            default "true";
+            description
+              "Alert ASC of pedestrians";
+          }
+          leaf psid {
+            type uint32;
+            description
+              "Provider Service Identifier PSM is carried under (IEEE 1609
+               PSID registry; PSM = 0x27). Keys NTCIP 1218 forwarding
+               (rsuIFMTable) and IEEE 1609.3 dispatch.";
+            reference "IEEE 1609.3 (PSID); NTCIP 1218.";
+          }
+        }
+        container state {
+          config false;
+          description
+            "PSM state";
+          leaf received-count {
+            type uint64;
+            description
+              "PSMs received";
+          }
+          leaf pedestrians-detected-1min {
+            type uint32;
+            description
+              "Pedestrians in last minute";
+          }
+          leaf pedestrians-detected-1hr {
+            type uint32;
+            description
+              "Unique pedestrians in last hour";
+          }
+          leaf last-received {
+            type yang:date-and-time;
+            description
+              "Last PSM received";
+          }
+          leaf invalid-count {
+            type uint64;
+            description
+              "Invalid PSMs rejected";
+          }
+        }
+        container broadcast-config {
+          description
+            "Infrastructure-originated PSM broadcast (e.g. roadside perception
+             warning approaching vehicles). Distinct from PSM receive above.";
+          leaf enabled {
+            type boolean;
+            default "false";
+            description "PSM broadcast enabled (off on fresh provision).";
+          }
+          leaf source {
+            type openits-types:device-id;
+            description "Device (e.g. perception unit) sourcing PSM content.";
+          }
+          leaf broadcast-interval {
+            type uint16 { range "100..1000"; }
+            units "milliseconds";
+            default "500";
+            description "PSM broadcast interval.";
+          }
+          leaf psid {
+            type uint32;
+            description "PSID PSM is broadcast under (IEEE 1609 registry; PSM = 0x27).";
+          }
+        }
+        container broadcast-state {
+          config false;
+          description "PSM broadcast state.";
+          leaf broadcasting    { type boolean; description "Currently broadcasting PSM."; }
+          leaf broadcast-count { type uint64;  description "PSMs broadcast."; }
+          leaf last-broadcast  { type yang:date-and-time; description "Last PSM broadcast timestamp."; }
+        }
+      }
+      container rtcm {
+        description
+          "RTCM SC-104 correction broadcast (SAE J2735 rtcmCorrections). An
+           RSU can rebroadcast GNSS corrections from an NTRIP caster or local
+           base for lane-level positioning.";
+        reference "RTCM SC-104; SAE J2735 (rtcmCorrections).";
+        container config {
+          description "RTCM configuration.";
+          leaf enabled {
+            type boolean;
+            default "false";
+            description "RTCM broadcast enabled (off on fresh provision).";
+          }
+          leaf source-url {
+            type inet:uri;
+            description "Correction source (NTRIP caster URL or local base endpoint).";
+          }
+          leaf-list message-set {
+            type uint16;
+            description "RTCM message numbers to broadcast (e.g. 1005, 1074, 1084).";
+          }
+          leaf broadcast-interval {
+            type uint16 { range "100..10000"; }
+            units "milliseconds";
+            default "1000";
+            description "RTCM broadcast interval.";
+          }
+          leaf psid {
+            type uint32;
+            description "PSID RTCM is broadcast under (IEEE 1609 registry).";
+          }
+        }
+        container state {
+          config false;
+          description "RTCM broadcast state.";
+          leaf broadcasting    { type boolean; description "Currently broadcasting RTCM."; }
+          leaf broadcast-count { type uint64;  description "RTCM messages broadcast."; }
+          leaf last-broadcast  { type yang:date-and-time; description "Last RTCM broadcast timestamp."; }
+        }
+      }
+      container srm-ssm {
+        description
+          "Signal Request/Status Messages for TSP/EVP";
+        container config {
+          description
+            "SRM/SSM configuration";
+          leaf psid {
+            type uint32;
+            description
+              "Provider Service Identifier SRM/SSM is carried under (per the
+               IEEE 1609 PSID registry). Keys NTCIP 1218 forwarding
+               (rsuIFMTable) and IEEE 1609.3 dispatch.";
+            reference "IEEE 1609.3 (PSID); NTCIP 1218.";
+          }
+          leaf srm-receive-enabled {
+            type boolean;
+            default "true";
+            description
+              "Receive SRMs from vehicles";
+          }
+          leaf ssm-broadcast-enabled {
+            type boolean;
+            default "true";
+            description
+              "Broadcast SSMs";
+          }
+          leaf forward-to-asc {
+            type boolean;
+            default "true";
+            description
+              "Forward requests to ASC";
+          }
+          leaf asc-device {
+            type openits-types:device-id;
+            description
+              "Target ASC for requests";
+          }
+          leaf grant-authority {
+            type enumeration {
+              enum controller-prs {
+                description
+                  "Grant decisions are made by the signal controller's Priority
+                   Request Server (PRS): the RSU forwards received SRMs to the
+                   controller (asc-device), which arbitrates competing priority
+                   and preemption requests in real time and returns grants. The
+                   deployable NTCIP 1211 path — arbitration at the intersection,
+                   not a management-plane round-trip.";
+              }
+              enum rsu-local {
+                description
+                  "The RSU applies its own local grant policy (e.g.
+                   auto-approve-tsp) with no controller PRS. For standalone
+                   deployments without an NTCIP 1211 PRS.";
+              }
+              enum operator {
+                description
+                  "Grants are made by a management-plane operator via the
+                   decisions list. Highest latency; unsuitable for time-critical
+                   requests and never appropriate for EVP (see evp-auto-grant).";
+              }
+            }
+            default "controller-prs";
+            description
+              "Where SRM grant authority lives (NTCIP 1211). Names the decision
+               locus explicitly so the deployable real-time path (controller
+               PRS) is the default, rather than an operator round-trip being the
+               effective default.";
+          }
+          leaf evp-auto-grant {
+            type boolean;
+            default "true";
+            description
+              "Expedited forwarding of emergency-vehicle preemption requests
+               (request-type srm-preemption-request): when true, a received EVP
+               SRM is forwarded to the signal controller (asc-device)
+               IMMEDIATELY, bypassing PRS priority queueing, so an approaching
+               emergency vehicle is not delayed by TSP arbitration. The RSU does
+               NOT itself grant preemption — the controller PRS remains the
+               decision authority and enforces the NEMA/MUTCD preemption
+               hierarchy (rail-preempt supremacy, ped-clearance minimums,
+               NTCIP 1211 arbitration); the RSU only expedites delivery. Applies
+               only when the SRM's signature verifies (security-enabled must be
+               true — see the RSU-level signing must). Set false to make EVP
+               follow the same PRS queue as TSP.";
+            reference "NTCIP 1211 (preemption arbitration); IEEE 1609.2.";
+          }
+          leaf auto-approve-tsp {
+            type boolean;
+            default "false";
+            description
+              "Applies only when grant-authority is rsu-local: auto-grant
+               transit signal priority (srm-priority-request) without operator
+               involvement. Ignored under controller-prs (the PRS decides) and
+               operator (the operator decides).";
+          }
+          leaf max-active-requests {
+            type uint8;
+            default "5";
+            description
+              "Max concurrent requests";
+          }
+        }
+        container state {
+          config false;
+          description
+            "SRM/SSM state";
+          leaf srm-received {
+            type uint64;
+            description
+              "SRMs received";
+          }
+          leaf ssm-broadcast {
+            type uint64;
+            description
+              "SSMs broadcast";
+          }
+          leaf active-requests {
+            type uint8;
+            description
+              "Currently active requests";
+          }
+          leaf approved-requests {
+            type uint64;
+            description
+              "Total approved requests";
+          }
+          leaf denied-requests {
+            type uint64;
+            description
+              "Total denied requests";
+          }
+        }
+        container active-requests {
+          config false;
+          description
+            "Currently active priority requests";
+          list request {
+            key "id";
+            description
+              "Active request";
+            leaf id {
+              type string;
+              description
+                "Request ID";
+            }
+            leaf vehicle-id {
+              type string;
+              description
+                "Requesting vehicle";
+            }
+            leaf request-type {
+              type identityref {
+                base openits-v2x-messaging-types:srm-request-type;
+              }
+              description
+                "Request type";
+            }
+            leaf approach {
+              type uint8;
+              description
+                "Approach lane";
+            }
+            leaf eta-seconds {
+              type uint16;
+              description
+                "ETA in seconds";
+            }
+            leaf received-at {
+              type yang:date-and-time;
+              description
+                "Request received time";
+            }
+            leaf status {
+              type openits-v2x-messaging-types:srm-request-status;
+              description
+                "Request status.";
+            }
+            leaf priority {
+              type uint8 {
+                range "0..7";
+              }
+              description
+                "Request priority level (SAE J2735 / NTCIP 1211, 0..7; 0 =
+                 lowest). Harmonized to 0..7 to match TIM and the event side.";
+            }
+            leaf vehicle-class {
+              type string;
+              description
+                "Vehicle class (BUS, EMERGENCY, etc.)";
+            }
+            leaf decision-authority {
+              type openits-v2x-messaging-types:decision-authority;
+              description
+                "Which authority granted or denied this request — the
+                 provenance the SSM and the NTCIP 1211 audit / TSP-grant-rate
+                 KPI need. 'none' while the request is still pending.";
+            }
+            leaf denial-reason {
+              type string;
+              description
+                "Reason a request was denied (status 'denied'). Without it the
+                 TSP grant rate is computable but not explainable.";
+            }
+          }
+        }
+        container decisions {
+          description
+            "Operator approve/deny decisions for active SRM priority requests.
+             Correlated to active-requests/request by id at runtime; the device
+             applies the decision and reflects it in the request's status. A
+             decision present with the request still 'pending' means
+             not-yet-applied.";
+          list decision {
+            key "request-id";
+            description "A decision for one active priority request.";
+            leaf request-id {
+              type string;
+              description
+                "Id of the active request being decided (matches
+                 ../../active-requests/request/id). A plain string, not a
+                 leafref: the target inventory is config-false, so config must
+                 not depend on it for validation.";
+            }
+            leaf action {
+              type enumeration {
+                enum approve { description "Approve the request."; }
+                enum deny    { description "Deny the request."; }
+              }
+              mandatory true;
+              description "Approve or deny the priority request.";
+            }
+            leaf reason {
+              type string;
+              description "Operator-supplied reason for the decision.";
+            }
+          }
+        }
+      }
+      container message-stats {
+        config false;
+        description
+          "Per-V2X-message-type broadcast statistics. Replaces the
+           former per-channel queue-depths / message-counts blocks (a
+           messaging concern, not a radio one), keyed by message type.";
+        list per-message-type {
+          key "message-type";
+          description "Broadcast statistics for one V2X message type.";
+          leaf message-type {
+            type identityref { base openits-v2x-messaging-types:v2x-message-type; }
+            description "The V2X message type these statistics are for.";
+          }
+          leaf psid { type uint32; description "PSID these statistics are for (IEEE 1609 registry), when the RSU tracks stats per PSID rather than per J2735 type."; }
+          leaf queue-depth     { type uint32; description "Current outbound queue depth for this message type."; }
+          leaf tx-count        { type uint64; description "Total messages of this type transmitted (TX types)."; }
+          leaf rx-count        { type uint64; description "Total messages of this type received (RX types)."; }
+          leaf success         { type uint64; description "Successfully delivered (TX) or valid-and-processed (RX)."; }
+          leaf invalid         { type uint64; description "Invalid / rejected messages of this type."; }
+          leaf avg-latency-ms  { type uint32; units "milliseconds"; description "Average processing latency for this message type."; }
+          leaf rate-per-sec    { type uint32; description "Current rate for this message type."; }
+          leaf encoding-errors { type uint64; description "Encoding errors for this message type (TX)."; }
+          leaf decoding-errors { type uint64; description "Decoding errors for this message type (RX)."; }
+        }
+      }
+
+      container message-errors {
+        config false;
+        description
+          "Aggregate (not per-message-type) V2X messaging error counters:
+           security failures, message drops, and source-data errors.";
+        container security {
+          description "Message-security error counters.";
+          leaf sign-failures   { type uint64; description "Message signing failures."; }
+          leaf verify-failures { type uint64; description "Signature verification failures."; }
+          leaf cert-errors     { type uint64; description "Certificate errors."; }
+        }
+        container drops {
+          description "Message drop counters.";
+          leaf queue      { type uint64; description "Dropped due to queue full."; }
+          leaf timeout    { type uint64; description "Dropped due to timeout."; }
+          leaf congestion { type uint64; description "Dropped due to congestion."; }
+        }
+        leaf asc-data-errors { type uint64; description "Errors receiving data from the source ASC."; }
+      }
+    }
+  }
+}

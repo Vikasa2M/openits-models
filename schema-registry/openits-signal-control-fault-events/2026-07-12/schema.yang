@@ -1,0 +1,85 @@
+module openits-signal-control-fault-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:signal-control-fault-events";
+  prefix openits-sc-fault;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-signal-control-types {
+    prefix openits-sc-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Signal-controller high-resolution fault-transition notifications.
+     Hosts controller-fault-event, whose 'kind' identityref is narrowed
+     to openits-signal-control-types:sc-fault-event-kind so it routes
+     to signal-control only, distinct from the cross-service
+     fault-raised/fault-cleared pair in openits-common-fault-events.";
+
+  revision 2026-07-12 {
+    description
+      "Initial revision. Hosts controller-fault-event, moved out of
+       openits-common-fault-events so it routes to signal-control only;
+       kind narrowed to sc-fault-event-kind. Resolves the catalog
+       over-fan.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification controller-fault-event {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> Maintenance : log-derived fault";
+    description
+      "High-resolution controller fault transition from the controller's
+       HR event log (Indiana codes 173-185). Distinct from fault-raised
+       which sources from NTCIP shortAlarmStatus polling; this one
+       carries millisecond-precision fault transitions.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-fault-event-kind; }
+      mandatory true;
+      description
+        "Specific HR-fault class. Typically derived from
+         openits-signal-control-types:controller-fault-event-kind
+         (e.g., fault-unit-flash-status, fault-power-failure,
+         fault-vendor-alarm).";
+    }
+    leaf source-device-id {
+      type openits-types:device-id;
+      mandatory true;
+      description "Device that experienced the fault.";
+    }
+    leaf fault-id    { type string; mandatory true; description "Device-local fault identifier; stable across raise/clear pairs."; }
+    leaf severity {
+      type openits-types:fault-severity;
+      mandatory true;
+      description "Operator-visible severity escalation.";
+    }
+    leaf description { type string; description "Human-readable fault description from the device."; }
+    leaf raised {
+      type boolean;
+      description "True=raised, false=cleared.";
+    }
+    leaf occurred-at {
+      type yang:date-and-time;
+      mandatory true;
+      description "Wall-clock time of the fault transition at the device.";
+    }
+
+    uses openits-types:wire-source;
+  }
+}

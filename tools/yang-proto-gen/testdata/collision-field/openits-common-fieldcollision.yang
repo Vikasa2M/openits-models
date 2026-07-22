@@ -1,0 +1,13 @@
+module openits-common-fieldcollision {
+  namespace "urn:test:openits-common-fieldcollision";
+  prefix ocf;
+
+  // foo-bar and foo_bar both convert to the proto field name "foo_bar"
+  // (fieldName just replaces "-" with "_") — the fixture
+  // TestGenerate_duplicateFieldTagFails needs to exercise Generate's
+  // field-name/tag uniqueness guard.
+  notification event {
+    leaf foo-bar { type string; }
+    leaf foo_bar { type string; }
+  }
+}

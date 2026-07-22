@@ -1,0 +1,13 @@
+{
+  "openits-traffic-sensor-events:traffic-sensor-status-report": {
+    "kind": "openits-traffic-sensor-types:ts-status-report",
+    "source-device-id": "i35-mm214-nb-ts-01",
+    "occurred-at": "2026-07-11T14:05:00Z",
+    "sequence": "1",
+    "name": "I-35 NB MM214 Sensor",
+    "latitude": "32.8560000",
+    "longitude": "-96.7280000",
+    "operational-status": "inactive",
+    "inactive-reason": "openits-traffic-sensor-types:inactive-comms-loss"
+  }
+}

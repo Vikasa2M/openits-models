@@ -1,0 +1,10 @@
+{
+  "openits-perception:perception-sensor": {
+    "config": {
+      "id": "loop12-lidar-04",
+      "name": "Loop 12 @ Skillman LiDAR",
+      "latitude": "95.0000000",
+      "longitude": "-96.7280000"
+    }
+  }
+}

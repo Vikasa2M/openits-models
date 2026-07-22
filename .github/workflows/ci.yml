@@ -1,0 +1,193 @@
+name: CI
+
+# Full release gate. Every job mirrors a Make target that already exists in
+# the repo, so `make <target>` locally reproduces exactly what CI enforces.
+#
+# Security posture (public-repo + fork PR threat model):
+#   * Trigger is `pull_request`, never `pull_request_target` — fork PRs run
+#     with a read-only GITHUB_TOKEN and NO access to secrets. Do not add
+#     `pull_request_target` or reference `secrets.*` here; that reintroduces
+#     the fork-secret-exfiltration class of bug.
+#   * Least privilege: the workflow token is read-only (below), and every job
+#     that executes PR-authored code checks out with `persist-credentials:
+#     false` so that code cannot read the git token from the runner.
+#   * All third-party/marketplace actions are pinned to a full commit SHA
+#     (a tag is mutable; a SHA is not). Go/CLI tools are installed at pinned
+#     versions and verified (Go module checksum DB; explicit SHA256 for protoc).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# Read-only by default; no job here needs to write to the repo.
+permissions:
+  contents: read
+
+env:
+  # Pinned to match scripts/proto-gen.sh and scripts/yang-gen.sh. The protoc
+  # version string is normalized out of generated headers by proto-gen.sh, so
+  # protoc's exact version does not affect the check-gen drift gate.
+  PROTOC_VERSION: "29.3"
+  PROTOC_SHA256: "3e866620c5be27664f3d2fa2d656b5f3e09b5152b42f1bedbf427b333e90021a"
+  PROTOC_GEN_GO_VERSION: "v1.36.11"
+  YGOT_GENERATOR_VERSION: "v0.34.0"
+  BUF_VERSION: "v1.50.0"
+
+jobs:
+  # go build / vet / unit tests for every tool and generated package.
+  go-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - run: go build ./...
+      - run: go vet ./...
+      - run: go test ./...
+
+  # Freshness gate: regenerate every artifact (yang->proto->Go, yang->ygot,
+  # yang->asyncapi) and fail if the working tree drifts from what's committed.
+  check-gen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - name: Install protoc (version + SHA256 pinned)
+        run: |
+          set -euo pipefail
+          curl -sSL -o /tmp/protoc.zip \
+            "https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip"
+          echo "${PROTOC_SHA256}  /tmp/protoc.zip" | sha256sum -c -
+          sudo unzip -oq /tmp/protoc.zip -d /usr/local
+          protoc --version
+      - name: Install generators (pinned; verified by Go checksum DB)
+        run: |
+          set -euo pipefail
+          go install "google.golang.org/protobuf/cmd/protoc-gen-go@${PROTOC_GEN_GO_VERSION}"
+          go install "github.com/openconfig/ygot/generator@${YGOT_GENERATOR_VERSION}"
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+      - name: make check-gen (regenerate + assert no drift)
+        run: make check-gen
+      - name: Show drift on failure
+        if: failure()
+        run: git --no-pager diff --stat
+
+  # Protobuf wire-contract gates. This job does NOT execute PR-authored code
+  # (buf only parses .proto files; go installs a pinned, checksum-verified
+  # buf), so it keeps the checkout credentials it needs to fetch the base
+  # branch from a private repo. Do not add PR-authored build/test steps here.
+  buf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - name: Install buf (pinned; verified by Go checksum DB)
+        run: |
+          set -euo pipefail
+          go install "github.com/bufbuild/buf/cmd/buf@${BUF_VERSION}"
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+      - name: buf lint
+        run: buf lint
+      - name: buf breaking (vs main)
+        run: |
+          set -euo pipefail
+          # Resolve main to a concrete SHA and point buf at that commit. Works
+          # identically for push-to-main (HEAD vs main tip == no-op) and PRs
+          # (HEAD vs base). A depth-1 fetch carries the full tree at that commit,
+          # which is all buf needs to read the .proto files.
+          git fetch --no-tags --depth=1 origin main
+          BASE_SHA="$(git rev-parse FETCH_HEAD)"
+          echo "Comparing against main @ ${BASE_SHA}"
+          buf breaking --against ".git#ref=${BASE_SHA}"
+
+  # YANG governance / layering / naming gates (Go + bash, no external deps).
+  yang-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - run: make check-revisions
+      - run: make check-naming
+      - run: make check-deviations
+      - run: make check-augment-collisions
+      - run: make check-events-layering
+      - run: make validate-noi
+      - run: make check-graduation
+
+  # Golden YANG instance data validated against the modules with yanglint
+  # (libyang) in Docker — Docker is preinstalled on ubuntu runners.
+  validate-yang:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - run: make validate-yang
+
+  # pyang --strict structural lint of every YANG module.
+  yang-lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+      - run: pip install pyang
+      - run: make yang-lint
+
+  # Conformance harness against the built-in mock device, one job per kind.
+  conformance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        kind:
+          - asc
+          - rsu
+          - dms
+          - ess
+          - ramp-metering
+          - traffic-sensor
+          - reversible-lane
+          - perception
+          - cctv
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      # matrix.kind is a fixed, in-repo list (not untrusted input); passed via
+      # env rather than inlined into the shell as a matter of hygiene.
+      - env:
+          KIND: ${{ matrix.kind }}
+        run: go run ./tools/conformance -driver mock -kind "$KIND"

@@ -1,0 +1,231 @@
+syntax = "proto3";
+
+package openits.reversible_lane.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/reversible_lane/v1;reversiblelanev1";
+
+import "google/protobuf/timestamp.proto";
+
+message ReversibleLane {
+  ReversibleLaneConfig config = 1;
+  ReversibleLaneState state = 2;
+  Control control = 3;
+  Segments segments = 4;
+  Interlocks interlocks = 5;
+  Faults faults = 6;
+}
+
+message ReversibleLaneConfig {
+  OpenitsReversibleLaneTravelDirection direction_a = 1;
+  OpenitsReversibleLaneTravelDirection direction_b = 2;
+  string elevation = 3;
+  uint32 heading = 4;
+  string id = 5;
+  google.protobuf.Timestamp install_date = 10;
+  string latitude = 6;
+  ReversibleLaneConfigLinearReference linear_reference = 11;
+  string longitude = 7;
+  string maintained_by = 12;
+  string name = 8;
+  string owner = 13;
+  string road_reference = 9;
+  string site_id = 14;
+}
+
+enum OpenitsReversibleLaneTravelDirection {
+  OPENITS_REVERSIBLE_LANE_TRAVEL_DIRECTION_UNKNOWN = 0;
+  OPENITS_REVERSIBLE_LANE_TRAVEL_DIRECTION_NORTHBOUND = 1;
+  OPENITS_REVERSIBLE_LANE_TRAVEL_DIRECTION_SOUTHBOUND = 2;
+  OPENITS_REVERSIBLE_LANE_TRAVEL_DIRECTION_EASTBOUND = 3;
+  OPENITS_REVERSIBLE_LANE_TRAVEL_DIRECTION_WESTBOUND = 4;
+}
+
+message ReversibleLaneConfigLinearReference {
+  string route_designator = 1;
+  string direction = 2;
+  string measure = 3;
+  string lrs_method = 4;
+}
+
+message ReversibleLaneState {
+  string elevation = 1;
+  string firmware = 2;
+  string firmware_build = 12;
+  string hardware_version = 13;
+  uint32 heading = 3;
+  string id = 4;
+  google.protobuf.Timestamp install_date = 14;
+  string latitude = 5;
+  ReversibleLaneStateLinearReference linear_reference = 15;
+  string longitude = 6;
+  string maintained_by = 16;
+  string make = 7;
+  string model = 8;
+  string name = 9;
+  string owner = 17;
+  string road_reference = 10;
+  string serial = 11;
+  string site_id = 18;
+}
+
+message ReversibleLaneStateLinearReference {
+  string route_designator = 1;
+  string direction = 2;
+  string measure = 3;
+  string lrs_method = 4;
+}
+
+message Control {
+  ControlConfig config = 1;
+  ControlState state = 2;
+}
+
+message ControlConfig {
+  TargetState target_state = 7;
+  OpenitsReversibleLaneTravelDirection target_direction = 8;
+  uint32 transition_timeout_s = 9;
+  uint32 min_clearance_duration_s = 1;
+  uint32 min_verification_dwell_s = 2;
+}
+
+enum TargetState {
+  TARGET_STATE_UNSPECIFIED = 0;
+  TARGET_STATE_CLOSED = 1;
+  TARGET_STATE_OPEN = 2;
+}
+
+message ControlState {
+  OpenitsReversibleLaneLaneFlowState current_state = 13;
+  OpenitsReversibleLaneTravelDirection open_direction = 14;
+  string last_command_source = 15;
+  google.protobuf.Timestamp last_command_at = 16;
+  bool changeover_permitted = 19;
+  bool direction_open_permitted = 1;
+  repeated string blocking_interlocks = 20;
+  Transition transition = 17;
+}
+
+enum OpenitsReversibleLaneLaneFlowState {
+  OPENITS_REVERSIBLE_LANE_LANE_FLOW_STATE_UNKNOWN = 0;
+  OPENITS_REVERSIBLE_LANE_LANE_FLOW_STATE_CLOSED = 1;
+  OPENITS_REVERSIBLE_LANE_LANE_FLOW_STATE_OPEN = 2;
+  OPENITS_REVERSIBLE_LANE_LANE_FLOW_STATE_IN_TRANSITION = 3;
+}
+
+message Transition {
+  Phase phase = 1;
+  OpenitsReversibleLaneTravelDirection from_direction = 2;
+  OpenitsReversibleLaneTravelDirection to_direction = 3;
+  google.protobuf.Timestamp started_at = 4;
+  string sequence_step = 5;
+}
+
+enum Phase {
+  PHASE_REQUESTED = 0;
+  PHASE_CLEARANCE = 1;
+  PHASE_SWEEP_VERIFY = 2;
+  PHASE_GATE_MOVEMENT = 3;
+  PHASE_LCS_REVERSE = 4;
+  PHASE_COMPLETE = 5;
+}
+
+message Segments {
+  repeated Segment segment = 1;
+}
+
+message Segment {
+  string segment_id = 1;
+  SegmentConfig config = 2;
+  repeated Lane lane = 3;
+}
+
+message SegmentConfig {
+  string segment_id = 1;
+  string name = 2;
+}
+
+message Lane {
+  string lane_id = 1;
+  LaneConfig config = 15;
+  LaneState state = 16;
+}
+
+message LaneConfig {
+  string lane_id = 2;
+  OpenitsReversibleLaneLcsIndication lcs_direction_a = 3;
+  OpenitsReversibleLaneLcsIndication lcs_direction_b = 4;
+}
+
+enum OpenitsReversibleLaneLcsIndication {
+  OPENITS_REVERSIBLE_LANE_LCS_INDICATION_UNKNOWN = 0;
+  OPENITS_REVERSIBLE_LANE_LCS_INDICATION_DARK = 1;
+  OPENITS_REVERSIBLE_LANE_LCS_INDICATION_RED_X = 2;
+  OPENITS_REVERSIBLE_LANE_LCS_INDICATION_YELLOW_X = 3;
+  OPENITS_REVERSIBLE_LANE_LCS_INDICATION_FLASHING_YELLOW_X = 4;
+  OPENITS_REVERSIBLE_LANE_LCS_INDICATION_GREEN_ARROW = 5;
+}
+
+message LaneState {
+  OpenitsReversibleLaneLcsIndication lcs_direction_a = 5;
+  OpenitsReversibleLaneLcsIndication lcs_direction_b = 6;
+  GateState gate_state = 7;
+}
+
+enum GateState {
+  GATE_STATE_UNKNOWN = 0;
+  GATE_STATE_OPEN = 1;
+  GATE_STATE_CLOSED = 2;
+  GATE_STATE_MOVING = 3;
+  GATE_STATE_FAULT = 4;
+  GATE_STATE_LOCKED = 5;
+  GATE_STATE_MANUAL_RELEASE = 6;
+}
+
+message Interlocks {
+  repeated Interlock interlock = 2;
+}
+
+message Interlock {
+  string interlock_id = 1;
+  InterlockConfig config = 4;
+  InterlockState state = 5;
+}
+
+message InterlockConfig {
+  string interlock_id = 1;
+  string kind = 99;
+  string name = 2;
+  bool required = 3;
+  EvaluationPoint evaluation_point = 4;
+}
+
+enum EvaluationPoint {
+  EVALUATION_POINT_CHANGEOVER_START = 0;
+  EVALUATION_POINT_DIRECTION_OPEN = 1;
+}
+
+message InterlockState {
+  bool satisfied = 1;
+}
+
+message Faults {
+  repeated Fault fault = 1;
+}
+
+message Fault {
+  string category = 1;
+  string correlates_with = 6;
+  string description = 2;
+  string fault_id = 3;
+  google.protobuf.Timestamp first_observed = 4;
+  FaultSeverity severity = 5;
+}
+
+enum FaultSeverity {
+  FAULT_SEVERITY_INFO = 0;
+  FAULT_SEVERITY_WARNING = 1;
+  FAULT_SEVERITY_MINOR = 2;
+  FAULT_SEVERITY_MAJOR = 3;
+  FAULT_SEVERITY_CRITICAL = 4;
+}
+

@@ -1,0 +1,23 @@
+module enum-unspecified-fixture {
+  namespace "urn:test:enum-unspecified-fixture";
+  prefix euf;
+
+  // Mirrors the real openits-signal-control-events
+  // `change-kind` leaf (yang/openits-signal-control-events.yang):
+  // an inline `enumeration` whose first declared member is literally named
+  // `unspecified`, which YANG assigns value 0. Before the emitEnum fix, the
+  // generator always prepended a synthetic CHANGE_KIND_UNSPECIFIED = 0
+  // sentinel regardless, colliding with the proto value name this member
+  // maps to on its own and producing two `CHANGE_KIND_UNSPECIFIED` entries
+  // in the same enum — which protoc rejects.
+  notification change-event {
+    leaf change-kind {
+      type enumeration {
+        enum unspecified;
+        enum pattern;
+        enum cycle-length;
+      }
+      description "Which dimension changed.";
+    }
+  }
+}

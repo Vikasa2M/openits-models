@@ -1,0 +1,138 @@
+module openits-ess-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:ess-types";
+  prefix openits-ess-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "ESS / RWIS event-kind identity hierarchy. Derives from the
+     cross-service openits-types:device-event-kind root so ESS events
+     emitted via openits-common-fault-events carry a service-classified
+     'kind' identityref.
+
+     No mode sub-base is defined: an environmental sensor station is an
+     observation platform without an operator-meaningful operational
+     mode-space; modeling one would be an abstraction that fights
+     reality. The leaf fault identities mirror the fault-category
+     catalog in openits-ess (state-tree classification) — the two
+     hierarchies are deliberately separate namespaces.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.3.0";
+
+  revision 2026-07-21 {
+    description
+      "Add a shared sensor-id typedef so both the service core and the events
+       module type sensor identifiers uniformly (used by the notification
+       sensor-id leaves, which cannot leafref). Additive.
+       - Collapse duplicate same-date revision statements.";
+    reference "NTCIP 1204.";
+  }
+  revision 2026-07-13 {
+    description
+      "Add two notification-kind identities under ess-event-kind:
+       ess-weather-alert, ess-sensor-recalibrated. These are the 'kind'
+       identityref targets adopted by the corresponding
+       openits-ess-events notifications under the unified event
+       contract (every notification now carries a mandatory 'kind'
+       plus 'uses openits-types:event-header'). Neither is a periodic
+       report, so neither dual-bases on openits-types:report-event-kind.
+       Additive.
+
+      Stamp openits-version (borrowed from OpenConfig's
+       openconfig-version practice) so tooling can read a
+       compatibility-intent signal independent of the revision date.";
+    reference "RFC 7950 section 11.";
+  }
+  revision 2026-06-11 {
+    description
+      "Initial revision. Service root, dual-classified fault sub-base,
+       and leaf fault identities mirroring the openits-ess
+       fault-category catalog.";
+    reference
+      "NTCIP 1204:2017 (ESS functional reference; fault classes).";
+  }
+
+  /* --------------------------------------------------------------
+   * Typedefs
+   * -------------------------------------------------------------- */
+
+  typedef sensor-id {
+    type string;
+    description "Identifier of a physical sensor within an ESS station.";
+  }
+
+  /* --------------------------------------------------------------
+   * Service root + dual-classified sub-base
+   * -------------------------------------------------------------- */
+
+  identity ess-event-kind {
+    base openits-types:device-event-kind;
+    description
+      "Root for environmental-sensor-station events.";
+  }
+
+  identity ess-fault-event-kind {
+    base openits-types:fault-event-kind;
+    base ess-event-kind;
+    description
+      "ESS fault events. Dual-classified: by behavioral class
+       (fault-event-kind) and by service (ess-event-kind). Used as
+       the fallback kind when a decoder cannot map a more specific
+       leaf identity.";
+  }
+
+  /* --------------------------------------------------------------
+   * Fault leaf identities (mirror openits-ess fault-category)
+   * -------------------------------------------------------------- */
+
+  identity ess-fault-sensor-failure {
+    base ess-fault-event-kind;
+    description
+      "Individual sensor failed self-test or stopped responding.";
+  }
+  identity ess-fault-power {
+    base ess-fault-event-kind;
+    description "Power-supply or input-voltage fault at the station.";
+  }
+  identity ess-fault-communication {
+    base ess-fault-event-kind;
+    description
+      "Communication fault between station and upstream system.";
+  }
+  identity ess-fault-calibration-drift {
+    base ess-fault-event-kind;
+    description
+      "Sensor calibration has drifted outside its tolerance band.";
+  }
+  identity ess-fault-environmental {
+    base ess-fault-event-kind;
+    description
+      "Environmental fault (cabinet temperature, humidity, door,
+       etc.).";
+  }
+
+  /* --------------------------------------------------------------
+   * Notification-kind identities ('kind' identityref targets for
+   * openits-ess-events notifications)
+   * -------------------------------------------------------------- */
+
+  identity ess-weather-alert {
+    base ess-event-kind;
+    description "Threshold-crossing weather alert.";
+  }
+  identity ess-sensor-recalibrated {
+    base ess-event-kind;
+    description "A station sensor was recalibrated.";
+  }
+}

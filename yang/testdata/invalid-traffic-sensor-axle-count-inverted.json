@@ -1,0 +1,7 @@
+{
+  "openits-traffic-sensor:traffic-sensor": {
+    "config": { "id": "i35-radar-mm214" },
+    "configuration": { "classification-scheme": "openits-traffic-sensor-types:scheme-fhwa-13",
+      "vehicle-class": [ { "class-id": 1, "name": "class-5", "min-axle-count": 3, "max-axle-count": 2 } ] }
+  }
+}

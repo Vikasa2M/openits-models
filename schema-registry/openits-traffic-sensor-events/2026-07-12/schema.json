@@ -1,0 +1,133 @@
+{
+  "queue-state-changed": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "queue-duration-s": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "queue-start": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "queueing": {
+      "type": "boolean"
+    },
+    "zone-id": {
+      "type": "string"
+    }
+  },
+  "type": "object"
+},
+  "traffic-interval-report": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "lane": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "carriageway": {
+            "type": "string"
+          },
+          "class-volume": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "class-id": {
+                  "maximum": 255,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "volume": {
+                  "maximum": 4294967295,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "density": {
+            "type": "string"
+          },
+          "flow-rate-vph": {
+            "maximum": 4294967295,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "gap-average-s": {
+            "type": "string"
+          },
+          "headway-average-s": {
+            "type": "string"
+          },
+          "interval-duration-s": {
+            "maximum": 3600,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "interval-start": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "lane-id": {
+            "maximum": 32,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "occupancy": {
+            "type": "string"
+          },
+          "speed-85th-percentile-kmh": {
+            "type": "string"
+          },
+          "speed-average-kmh": {
+            "type": "string"
+          },
+          "volume": {
+            "maximum": 4294967295,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object"
+},
+  "traffic-sensor-status-report": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "inactive-reason": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "string"
+    },
+    "longitude": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "operational-status": {
+      "enum": [
+        "active",
+        "inactive"
+      ],
+      "type": "string"
+    }
+  },
+  "type": "object"
+}
+}

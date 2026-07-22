@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package openits.common.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/v1;openitspb";
+
+import "google/protobuf/timestamp.proto";
+import "openits/v1/types.proto";
+
+message CommHealthEvent {
+  string kind = 99;
+  string source_device_id = 1;
+  google.protobuf.Timestamp occurred_at = 2;
+  int64 drift_milliseconds = 3;
+  uint32 attempts_total = 4;
+  uint32 attempts_failed = 5;
+  uint32 percent_loss = 6;
+  uint32 avg_response_ms = 7;
+  uint32 link_id = 8;
+  openits.types.v1.WireSource source = 100;
+}
+
+message FaultCleared {
+  string kind = 99;
+  string source_device_id = 1;
+  string fault_id = 2;
+  google.protobuf.Timestamp occurred_at = 3;
+  openits.types.v1.WireSource source = 100;
+}
+
+message FaultRaised {
+  string kind = 99;
+  string source_device_id = 1;
+  string fault_id = 2;
+  FaultSeverity severity = 3;
+  string description = 4;
+  google.protobuf.Timestamp occurred_at = 5;
+  openits.types.v1.WireSource source = 100;
+}
+
+enum FaultSeverity {
+  FAULT_SEVERITY_INFO = 0;
+  FAULT_SEVERITY_WARNING = 1;
+  FAULT_SEVERITY_MINOR = 2;
+  FAULT_SEVERITY_MAJOR = 3;
+  FAULT_SEVERITY_CRITICAL = 4;
+}
+
+message ModeChanged {
+  string kind = 99;
+  string source_device_id = 1;
+  string prior = 2;
+  string current = 3;
+  string reason = 4;
+  google.protobuf.Timestamp occurred_at = 5;
+  openits.types.v1.WireSource source = 100;
+}
+

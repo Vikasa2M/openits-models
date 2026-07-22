@@ -1,0 +1,6 @@
+{
+  "openits-traffic-sensor:traffic-sensor": {
+    "config": { "id": "i35-radar-mm214" },
+    "configuration": { "vehicle-class": [ { "class-id": 1, "name": "empty", "min-length-m": "6.0", "max-length-m": "6.0" } ] }
+  }
+}

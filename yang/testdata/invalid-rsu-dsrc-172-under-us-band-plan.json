@@ -1,0 +1,17 @@
+{
+  "openits-rsu:rsu": {
+    "config": { "id": "rsu-usbp-01", "name": "US band-plan: lower-band DSRC channel" },
+    "channels": {
+      "channel": [
+        {
+          "channel-id": "172",
+          "config": {
+            "enabled": true,
+            "dsrc-channel-number": 172
+          },
+          "radio-tech": "openits-v2x-radio:radio-dsrc"
+        }
+      ]
+    }
+  }
+}

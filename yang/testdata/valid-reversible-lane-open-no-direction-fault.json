@@ -1,0 +1,15 @@
+{
+  "openits-reversible-lane:reversible-lane": {
+    "config": {
+      "id": "us75-contraflow",
+      "direction-a": "northbound",
+      "direction-b": "southbound"
+    },
+    "control": {
+      "state": {
+        "current-state": "open",
+        "last-command-source": "tmc-ops"
+      }
+    }
+  }
+}

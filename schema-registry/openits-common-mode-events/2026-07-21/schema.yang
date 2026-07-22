@@ -1,0 +1,145 @@
+module openits-common-mode-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:common-mode-events";
+  prefix openits-common-mode;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Cross-service operational-mode-change notifications. Every device
+     in openits has an operational mode (signal-controller normal /
+     coordinated / free / flash / preempt; ramp-meter active /
+     inactive; DMS auto / manual / blanked; etc.). This module defines
+     the generic mode-changed notification with the mode-kind
+     identityref identifying the specific mode space.
+
+     Service-specific mode-kind identities derive from
+     openits-types:mode-event-kind in each service's -types module.";
+
+  openits-types:openits-version "0.2.0";
+
+  revision 2026-07-21 {
+    description
+      "Retype mode-changed/trigger from a closed enumeration to an
+       identityref on openits-types:mode-change-trigger — the cause set
+       is open (comm-loss, adaptive, ...). BREAKING value-string change
+       (e.g. 'schedule' -> 'openits-types:trigger-schedule'), acceptable
+       pre-v1: the leaf is optional and was added this cycle.
+       - Collapse duplicate same-date revision statements.";
+  }
+  revision 2026-07-13 {
+    description
+      "Add optional 'control-source' (identityref, base
+       openits-types:control-source) and 'trigger' (enumeration:
+       operator/schedule/fault/preemption/unknown) leaves to
+       mode-changed, beside the free-form 'reason'. Both optional so
+       existing instances stay valid. Additive only.
+
+      Adopt the shared openits-types:event-header grouping in
+       mode-changed, replacing the inline source-device-id + occurred-at
+       leaf pair. Wire-stable.
+
+       Retype the mode-changed prior/current leaves from free-form
+       string to identityref on openits-types:operational-mode, so mode
+       transitions carry typed, enumerable mode values instead of
+       uninterpreted strings. Wire-neutral: identityref serialises as
+       the module-qualified identity name (proto/JSON stay string;
+       field numbers unchanged).";
+  }
+  revision 2026-05-23 {
+    description
+      "Rename the notification `operational-mode-changed` to
+       `mode-changed` so the YANG name matches the openits CE
+       event-name slot. Consumers fetching the dataschema URL for
+       openits.<service>.mode-changed.v1 expect to find a
+       `notification mode-changed` at the snapshot; the rename
+       closes that contract gap.";
+  }
+  revision 2026-05-17 {
+    description
+      "Add descriptions to source-device-id and occurred-at leaves
+       in operational-mode-changed so the notification contract is
+       self-documenting for Phase 0c decoder implementers.";
+  }
+  revision 2026-05-16 {
+    description "Initial revision.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification mode-changed {
+    openits-types:arc-it-flow
+      "Device -> NMS : operational status";
+    description
+      "A device transitioned between operational modes. The 'kind'
+       identityref names the mode-space (e.g., signal-controller mode,
+       ramp-meter mode); 'prior' and 'current' are concrete
+       operating-mode identities (openits-types:operational-mode
+       descendants) interpreted in the context of the mode-space.";
+
+    leaf kind {
+      type identityref { base openits-types:mode-event-kind; }
+      mandatory true;
+      description
+        "Mode-space identifier. Service-derived (e.g.,
+         openits-signal-control-types:sc-mode-event-kind).";
+    }
+
+    uses openits-types:event-header;
+
+    leaf prior {
+      type identityref { base openits-types:operational-mode; }
+      description
+        "Prior mode value, a concrete operating-mode identity from the
+         service's mode-value set (e.g.
+         openits-signal-control-types:mode-free). Interpreted in the
+         context of the 'kind' mode-space. Absent when the device just
+         started up.";
+    }
+
+    leaf current {
+      type identityref { base openits-types:operational-mode; }
+      mandatory true;
+      description
+        "Current mode value, a concrete operating-mode identity from
+         the service's mode-value set (e.g.
+         openits-signal-control-types:mode-coordinated). Interpreted in
+         the context of the 'kind' mode-space.";
+    }
+
+    leaf reason {
+      type string;
+      description
+        "Human-readable reason for the transition (operator-induced,
+         fault-triggered, schedule-triggered, etc.).";
+    }
+
+    leaf control-source {
+      type identityref { base openits-types:control-source; }
+      description
+        "Which control authority is driving the new mode (orthogonal to
+         the mode value).";
+    }
+
+    leaf trigger {
+      type identityref { base openits-types:mode-change-trigger; }
+      description
+        "Machine-readable cause of the mode change, beside the free-form
+         'reason'. Orthogonal to 'control-source' (which authority is
+         driving the new mode) — trigger is WHY it changed, control-source
+         is WHO now holds it.";
+    }
+
+    uses openits-types:wire-source;
+  }
+}

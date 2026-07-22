@@ -1,0 +1,7 @@
+{
+  "module": "openits-dms",
+  "revision": "2026-07-10",
+  "files": [
+    "schema.yang"
+  ]
+}

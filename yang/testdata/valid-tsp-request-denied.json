@@ -1,0 +1,12 @@
+{
+  "openits-signal-control-events:tsp-event": {
+    "kind": "openits-signal-control-types:tsp-request-denied",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence": "2",
+    "tsp-number": 1,
+    "vehicle-id": "bus-4471",
+    "priority-class": 3,
+    "denial-reason": "coord-constraint",
+    "occurred-at": "2026-07-11T14:05:10Z"
+  }
+}

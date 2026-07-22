@@ -1,0 +1,67 @@
+module openits-vendor-trafficvision-traffic-sensor-types {
+  yang-version 1.1;
+  namespace "urn:trafficvision:yang:traffic-sensor-types";
+  prefix openits-vendor-trafficvision-ts-types;
+
+  import openits-traffic-sensor {
+    prefix openits-ts;
+  }
+
+  organization
+    "TrafficVision (vendor)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Vendor identity module for TrafficVision inactive reasons.
+     Declares specialized reasons derived from the open
+     openits-traffic-sensor:inactive-reason base for the
+     TrafficVision-specific conditions that take a video station out
+     of service.  A consumer that does not load this module sees the
+     base inactive-reason; one that does sees the specific derived
+     identity in the same identityref field.
+
+     This module is a reference-implementation worked example of the
+     openits vendor-augmentation pattern (identity-only Tier-2,
+     docs/06-extension-model.md).  TrafficVision has not ratified
+     this file; openits maintains it under the conformance-reference
+     NoI until a real TrafficVision-aligned org adopts it.
+
+     Copyright (c) 2026.  Distributed under Apache 2.0.";
+
+  revision 2026-07-07 {
+    description
+      "Initial revision.  Declares inactive-low-fps,
+       inactive-away-from-preset, inactive-disabled-by-user, and
+       inactive-low-view-quality derived from
+       openits-traffic-sensor:inactive-reason.";
+    reference
+      "TrafficVision TMC-3.6 realtime API (inactive_reason values).";
+  }
+
+  identity inactive-low-fps {
+    base openits-ts:inactive-reason;
+    description
+      "TrafficVision station inactive — processed frame rate fell
+       below the usable threshold (LOW_FPS).";
+  }
+  identity inactive-away-from-preset {
+    base openits-ts:inactive-reason;
+    description
+      "TrafficVision station inactive — the PTZ camera is off its
+       calibrated preset (AWAY_FROM_PRESET_*).";
+  }
+  identity inactive-disabled-by-user {
+    base openits-ts:inactive-reason;
+    description
+      "TrafficVision station inactive — disabled by the operator
+       (DISABLED_BY_USER).";
+  }
+  identity inactive-low-view-quality {
+    base openits-ts:inactive-reason;
+    description
+      "TrafficVision station inactive — view quality below the usable
+       threshold (AWAY_FROM_PRESET_AND_LOW_VIEW_QUALITY).";
+  }
+}

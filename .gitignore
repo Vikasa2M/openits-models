@@ -1,0 +1,32 @@
+# Binaries / build artifacts
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+/bin/
+
+# Coverage
+*.out
+coverage.*
+
+# Go workspace
+go.work
+go.work.sum
+
+# Editor/IDE
+.idea/
+.vscode/
+.env
+
+# Python (yang tooling)
+__pycache__/
+*.pyc
+
+# stray binary from building a main package in its own dir
+tools/yang-proto-gen/yang-proto-gen
+/noi-validator
+
+# Superpowers internal planning docs (not committed)
+docs/superpowers/
+.superpowers/

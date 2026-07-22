@@ -1,0 +1,7 @@
+{
+  "openits-traffic-sensor:traffic-sensor": {
+    "config": { "id": "i35-radar-mm214" },
+    "configuration": { "queue-zone": [ { "zone-id": "nb-mainline" } ] },
+    "queues": { "queue-zone": [ { "zone-id": "does-not-exist", "queueing": true } ] }
+  }
+}

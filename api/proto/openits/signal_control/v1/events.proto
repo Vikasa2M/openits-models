@@ -1,0 +1,269 @@
+syntax = "proto3";
+
+package openits.signal_control.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/signal_control/v1;signalcontrolv1";
+
+import "google/protobuf/timestamp.proto";
+import "openits/types/v1/types.proto";
+
+message ControllerFaultEvent {
+  string kind = 99;
+  string fault_id = 2;
+  FaultSeverity severity = 3;
+  string description = 4;
+  bool raised = 5;
+  string flash_cause = 10;
+  string observed_by = 7;
+  google.protobuf.Timestamp occurred_at = 6;
+  string owner = 8;
+  uint64 sequence = 9;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+enum FaultSeverity {
+  FAULT_SEVERITY_INFO = 0;
+  FAULT_SEVERITY_WARNING = 1;
+  FAULT_SEVERITY_MINOR = 2;
+  FAULT_SEVERITY_MAJOR = 3;
+  FAULT_SEVERITY_CRITICAL = 4;
+}
+
+message CoordinationChange {
+  string kind = 99;
+  int32 new_value = 3;
+  uint32 split_number = 4;
+  int32 previous_value = 5;
+  string observed_by = 7;
+  google.protobuf.Timestamp occurred_at = 6;
+  string owner = 8;
+  uint64 sequence = 9;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message DetectorReport {
+  string kind = 99;
+  google.protobuf.Timestamp interval_start = 2;
+  uint32 interval_duration_s = 3;
+  repeated DetectorReportDetector detector = 4;
+  string observed_by = 6;
+  google.protobuf.Timestamp occurred_at = 5;
+  string owner = 7;
+  uint64 sequence = 8;
+  string source_device_id = 1;
+}
+
+message DetectorReportDetector {
+  uint32 detector_id = 1;
+  uint32 phase_served = 2;
+  uint32 volume = 3;
+  string occupancy = 4;
+}
+
+message DetectorTransition {
+  string kind = 99;
+  uint32 channel = 2;
+  string lane = 4;
+  string approach = 5;
+  uint32 phase_served = 6;
+  string observed_by = 8;
+  google.protobuf.Timestamp occurred_at = 7;
+  string owner = 9;
+  uint64 sequence = 10;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message OperationalStatusReport {
+  string kind = 99;
+  string mode = 2;
+  bool flash_active = 10;
+  string flash_cause = 11;
+  google.protobuf.Timestamp last_mode_change = 4;
+  uint64 uptime_seconds = 5;
+  string observed_by = 7;
+  google.protobuf.Timestamp occurred_at = 6;
+  string owner = 8;
+  uint64 sequence = 9;
+  string source_device_id = 1;
+}
+
+message OverlapChange {
+  string kind = 99;
+  uint32 overlap_number = 2;
+  string observed_by = 5;
+  google.protobuf.Timestamp occurred_at = 4;
+  string owner = 6;
+  uint64 sequence = 7;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message PedestrianEvent {
+  string kind = 99;
+  uint32 phase_number = 2;
+  uint32 detector_channel = 3;
+  string observed_by = 6;
+  google.protobuf.Timestamp occurred_at = 5;
+  string owner = 7;
+  uint64 sequence = 8;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message PhaseStateChange {
+  string kind = 99;
+  uint32 phase_number = 2;
+  bool hold_active = 5;
+  bool call_registered = 6;
+  string observed_by = 8;
+  google.protobuf.Timestamp occurred_at = 7;
+  string owner = 9;
+  uint64 sequence = 10;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message PlanApplied {
+  string kind = 99;
+  uint32 plan_id = 2;
+  uint32 cycle_length_s = 3;
+  uint32 offset_s = 4;
+  uint32 split_set = 5;
+  Source source = 6;
+  string observed_by = 8;
+  google.protobuf.Timestamp occurred_at = 7;
+  string owner = 9;
+  uint64 sequence = 10;
+  string source_device_id = 1;
+}
+
+enum Source {
+  SOURCE_UNSPECIFIED = 0;
+  SOURCE_SCHEDULE = 1;
+  SOURCE_OPERATOR = 2;
+  SOURCE_ADAPTIVE = 3;
+  SOURCE_PREEMPTION = 4;
+}
+
+message PreemptionActivated {
+  string kind = 99;
+  uint32 preempt_number = 8;
+  string type = 2;
+  string source_id = 3;
+  string observed_by = 5;
+  google.protobuf.Timestamp occurred_at = 4;
+  string owner = 6;
+  uint64 sequence = 7;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message PreemptionCleared {
+  string kind = 99;
+  uint32 preempt_number = 8;
+  string type = 2;
+  string source_id = 3;
+  string observed_by = 5;
+  google.protobuf.Timestamp occurred_at = 4;
+  string owner = 6;
+  uint64 sequence = 7;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message PreemptionEvent {
+  string kind = 99;
+  uint32 preempt_number = 2;
+  string source_id = 4;
+  string observed_by = 6;
+  google.protobuf.Timestamp occurred_at = 5;
+  string owner = 7;
+  uint64 sequence = 8;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message TsamModeChanged {
+  string kind = 99;
+  TsamEngagementState prior = 2;
+  TsamEngagementState current = 3;
+  string reason = 4;
+  string observed_by = 7;
+  google.protobuf.Timestamp occurred_at = 6;
+  string owner = 8;
+  uint64 sequence = 9;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+enum TsamEngagementState {
+  TSAM_ENGAGEMENT_STATE_UNSPECIFIED = 0;
+  TSAM_ENGAGEMENT_STATE_DISABLED = 1;
+  TSAM_ENGAGEMENT_STATE_ADVISORY = 2;
+  TSAM_ENGAGEMENT_STATE_ACTIVE = 3;
+  TSAM_ENGAGEMENT_STATE_SUSPENDED = 4;
+}
+
+message TsamRecommendationApplied {
+  string kind = 99;
+  string recommendation_id = 2;
+  AdjustmentType adjustment_type = 3;
+  string magnitude_seconds = 4;
+  uint32 phase_number = 5;
+  string rationale = 6;
+  string observed_by = 9;
+  google.protobuf.Timestamp occurred_at = 8;
+  string owner = 10;
+  uint64 sequence = 11;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+enum AdjustmentType {
+  ADJUSTMENT_TYPE_UNSPECIFIED = 0;
+  ADJUSTMENT_TYPE_CYCLE_LENGTH = 1;
+  ADJUSTMENT_TYPE_SPLIT_ADJUSTMENT = 2;
+  ADJUSTMENT_TYPE_OFFSET_ADJUSTMENT = 3;
+  ADJUSTMENT_TYPE_PHASE_EXTENSION = 4;
+  ADJUSTMENT_TYPE_PHASE_TRUNCATION = 5;
+  ADJUSTMENT_TYPE_PLAN_CHANGE = 6;
+  ADJUSTMENT_TYPE_OTHER = 7;
+}
+
+message TspEvent {
+  string kind = 99;
+  uint32 tsp_number = 10;
+  string vehicle_id = 3;
+  uint32 priority_class = 4;
+  string adjustment_seconds = 5;
+  DenialReason denial_reason = 11;
+  string observed_by = 7;
+  google.protobuf.Timestamp occurred_at = 6;
+  string owner = 8;
+  uint64 sequence = 9;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+enum DenialReason {
+  DENIAL_REASON_UNSPECIFIED = 0;
+  DENIAL_REASON_RESERVICE_LOCK = 1;
+  DENIAL_REASON_COORD_CONSTRAINT = 2;
+  DENIAL_REASON_HIGHER_PRIORITY_CONFLICT = 3;
+  DENIAL_REASON_DISABLED = 4;
+  DENIAL_REASON_OTHER = 5;
+}
+
+message UnmappedEvent {
+  string kind = 99;
+  string observed_by = 3;
+  google.protobuf.Timestamp occurred_at = 1;
+  string owner = 4;
+  uint64 sequence = 5;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 6;
+}
+

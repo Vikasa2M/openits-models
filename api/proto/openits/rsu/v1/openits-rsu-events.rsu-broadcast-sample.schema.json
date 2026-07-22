@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "broadcast": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "channel-id": {
+            "type": "string"
+          },
+          "dsrc-channel-number": {
+            "maximum": 184,
+            "minimum": 172,
+            "type": "integer"
+          },
+          "msg-id": {
+            "type": "string"
+          },
+          "msg-type": {
+            "type": "string"
+          },
+          "priority": {
+            "maximum": 7,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "rate-hz": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "sample-window-s": {
+      "maximum": 3600,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+}

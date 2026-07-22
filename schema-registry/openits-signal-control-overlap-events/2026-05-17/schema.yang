@@ -1,0 +1,73 @@
+module openits-signal-control-overlap-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:signal-control-overlap-events";
+  prefix openits-sc-overlap;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-signal-control-types {
+    prefix openits-sc-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Signal-controller phase-overlap state-change notifications.";
+
+  revision 2026-05-17 {
+    description
+      "Initial revision. Hosts the overlap-change notification
+       migrated from the signal-control notifications companion module@2026-05-15.";
+    reference "ATSPM Indiana enumeration (overlap event codes).";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification overlap-change {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> ATSPM / TMC : overlap state";
+    description
+      "Overlap phase transitioned state. Collapses ATSPM codes 61-66
+       into one notification keyed on overlap-number + event-kind.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-overlap-event-kind; }
+      mandatory true;
+      description "Specific overlap-state identity from the Indiana taxonomy.";
+    }
+    leaf source-device-id {
+      type openits-types:device-id;
+      mandatory true;
+      description "Controller hosting this overlap.";
+    }
+    leaf overlap-number { type uint32; mandatory true; description "Overlap number on the controller (1-based)."; }
+    leaf event {
+      type enumeration {
+        enum unspecified; enum begin-green; enum begin-trailing-green-extension;
+        enum begin-yellow; enum begin-red-clearance; enum off; enum dark;
+      }
+      description
+        "Overlap state transition: begin-green, trailing-green-extension,
+         yellow, red-clearance, off, or dark.";
+    }
+    leaf occurred-at {
+      type yang:date-and-time;
+      mandatory true;
+      description "Wall-clock time the overlap transition occurred at the controller.";
+    }
+
+    uses openits-types:wire-source;
+  }
+}

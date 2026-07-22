@@ -1,0 +1,14 @@
+{
+  "openits-rsu-events:rsu-srm-received": {
+    "kind": "openits-rsu-types:rsu-srm-received-kind",
+    "source-device-id": "rsu-i35-mm214",
+    "occurred-at": "2026-07-11T14:05:00Z",
+    "sequence": "1",
+    "request-id": "srm-000482",
+    "vehicle-id": "transit-bus-4471",
+    "request-type": "openits-v2x-messaging-types:srm-priority-request",
+    "approach": 2,
+    "eta-seconds": 18,
+    "vehicle-class": "transit"
+  }
+}

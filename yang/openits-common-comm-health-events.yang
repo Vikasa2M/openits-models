@@ -1,0 +1,207 @@
+module openits-common-comm-health-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:common-comm-health-events";
+  prefix openits-common-comm-health;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Cross-service communication-health notifications. Every openits
+     service (signal-control, dms, ess, rsu, ramp-metering,
+     perception, traffic-sensor, reversible-lane) uses these
+     notifications for time-drift, comm-attempt statistics,
+     percent-loss windows, and link-flap events. Service-specific
+     content (e.g., which controller-id reports it) is carried in
+     the notification payload via standard leaves and via the
+     wire-source grouping.
+
+     The 'kind' identityref discriminates the specific comm-health
+     event class. Service-specific or vendor-specific kinds derive
+     from openits-types:comm-health-event-kind in their own modules.";
+
+  openits-types:openits-version "0.2.0";
+
+  revision 2026-07-21 {
+    description
+      "Add 'when' guards to the kind-specific comm-health-event leaves so
+       a contradictory instance (e.g. kind=comm-lost carrying attempt
+       counters) no longer validates: drift-milliseconds gated on
+       time-drift-observed; attempts-*/percent-loss/avg-response-ms on
+       comm-attempt-window; link-id on the four link-scoped kinds.
+       Constraint-tightening on optional leaves.
+       - Add a guarded 'link-type' leaf (base openits-types:comm-link-type)
+         to comm-health-event and document that the degraded threshold is
+         operator/vendor policy, not model-fixed. Additive.
+       - Collapse duplicate same-date revision statements.";
+  }
+  revision 2026-07-13 {
+    description
+      "Add 'comm-lost' and 'comm-restored' identities (base
+       comm-health-event-kind), splitting total loss of communication
+       from comm-link-degraded, which is amended to explicitly exclude
+       total loss. Dispatch-relevant distinction: comm-lost is the
+       first split on a TMC comm dashboard. Additive only.
+
+      Adopt the shared openits-types:event-header grouping in
+       comm-health-event, replacing the inline source-device-id +
+       occurred-at leaf pair. Wire-stable. Also drop gateway
+       from the service list in the module description — the
+       collector/gateway model was removed.";
+  }
+  revision 2026-05-17 {
+    description
+      "Add descriptions to source-device-id and occurred-at leaves
+       in comm-health-event so the notification contract is
+       self-documenting for Phase 0c decoder implementers.";
+  }
+  revision 2026-05-16 {
+    description "Initial revision.";
+  }
+
+  /* --------------------------------------------------------------
+   * Base kinds (derive from openits-types:comm-health-event-kind)
+   * -------------------------------------------------------------- */
+
+  identity time-drift-observed {
+    base openits-types:comm-health-event-kind;
+    description
+      "Device clock observed to drift relative to a reference time
+       source. Magnitude carried in the payload.";
+  }
+
+  identity comm-attempt-window {
+    base openits-types:comm-health-event-kind;
+    description
+      "Periodic snapshot of comm-attempt counters (total, failed,
+       percent-loss, average response-time) over a reporting window.";
+  }
+
+  identity comm-link-degraded {
+    base openits-types:comm-health-event-kind;
+    description
+      "Comm link transitioned from healthy to degraded — elevated
+       latency, elevated error rate, or partial loss above threshold —
+       NOT total loss, which is comm-lost. THRESHOLD SEMANTICS: the
+       healthy->degraded threshold (latency / error-rate / loss) is
+       operator or vendor policy, NOT fixed by this model; consumers MUST
+       NOT assume a uniform threshold across devices.";
+  }
+
+  identity comm-link-recovered {
+    base openits-types:comm-health-event-kind;
+    description
+      "Comm link transitioned from degraded back to healthy.";
+  }
+
+  identity comm-lost {
+    base openits-types:comm-health-event-kind;
+    description
+      "Total loss of communication with the device (device unreachable).
+       Dispatch-relevant; distinct from degraded. The first split on a
+       TMC comm dashboard.";
+  }
+
+  identity comm-restored {
+    base openits-types:comm-health-event-kind;
+    description
+      "Communication re-established with the device after a loss.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification comm-health-event {
+    openits-types:arc-it-flow
+      "Device -> NMS : communication-health observation";
+    description
+      "Generic comm-health observation. The 'kind' identityref names
+       the specific event class; the payload leaves carry magnitudes,
+       and wire-source carries the original wire identifier if the
+       event was decoded from a wire vocabulary (NTCIP status OID,
+       SNMP trap, etc.) rather than synthesized internally.";
+
+    leaf kind {
+      type identityref { base openits-types:comm-health-event-kind; }
+      mandatory true;
+      description "Specific comm-health event class.";
+    }
+
+    uses openits-types:event-header;
+
+    leaf drift-milliseconds {
+      when "derived-from-or-self(../kind, 'openits-common-comm-health:time-drift-observed')";
+      type int64;
+      units "milliseconds";
+      description
+        "Time-drift magnitude (positive = device ahead of reference,
+         negative = device behind). Only meaningful when kind is
+         time-drift-observed.";
+    }
+
+    leaf attempts-total {
+      when "derived-from-or-self(../kind, 'openits-common-comm-health:comm-attempt-window')";
+      type uint32;
+      description
+        "Total comm attempts in this reporting window. Only meaningful
+         when kind is comm-attempt-window.";
+    }
+
+    leaf attempts-failed {
+      when "derived-from-or-self(../kind, 'openits-common-comm-health:comm-attempt-window')";
+      type uint32;
+      description
+        "Failed comm attempts in this reporting window. Only meaningful
+         when kind is comm-attempt-window.";
+    }
+
+    leaf percent-loss {
+      when "derived-from-or-self(../kind, 'openits-common-comm-health:comm-attempt-window')";
+      type openits-types:percentage;
+      description
+        "Percent-loss over this reporting window. Only meaningful when
+         kind is comm-attempt-window.";
+    }
+
+    leaf avg-response-ms {
+      when "derived-from-or-self(../kind, 'openits-common-comm-health:comm-attempt-window')";
+      type uint32;
+      units "milliseconds";
+      description
+        "Average response time over this reporting window. Only
+         meaningful when kind is comm-attempt-window.";
+    }
+
+    leaf link-id {
+      when "derived-from-or-self(../kind, 'openits-common-comm-health:comm-link-degraded')
+         or derived-from-or-self(../kind, 'openits-common-comm-health:comm-link-recovered')
+         or derived-from-or-self(../kind, 'openits-common-comm-health:comm-lost')
+         or derived-from-or-self(../kind, 'openits-common-comm-health:comm-restored')";
+      type uint8;
+      description
+        "Comm-link identifier. Used for link-degraded / link-recovered
+         events to identify which link transitioned.";
+    }
+
+    leaf link-type {
+      when "derived-from-or-self(../kind, 'openits-common-comm-health:comm-link-degraded')
+         or derived-from-or-self(../kind, 'openits-common-comm-health:comm-link-recovered')
+         or derived-from-or-self(../kind, 'openits-common-comm-health:comm-lost')
+         or derived-from-or-self(../kind, 'openits-common-comm-health:comm-restored')";
+      type identityref { base openits-types:comm-link-type; }
+      description
+        "Type of the comm link this event pertains to (ethernet, serial,
+         cellular, ...). Pairs with link-id to name the transitioning link.";
+    }
+
+    uses openits-types:wire-source;
+  }
+}

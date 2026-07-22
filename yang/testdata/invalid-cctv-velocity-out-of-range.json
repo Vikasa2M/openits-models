@@ -1,0 +1,6 @@
+{
+  "openits-cctv:camera": {
+    "config": { "id": "cctv-bad" },
+    "ptz": { "config": { "velocity": { "pan-speed": 150 } } }
+  }
+}

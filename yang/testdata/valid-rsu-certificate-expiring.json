@@ -1,0 +1,12 @@
+{
+  "openits-rsu-events:rsu-certificate-expiring": {
+    "kind": "openits-rsu-types:rsu-certificate-expiring-kind",
+    "source-device-id": "rsu-i35-mm214",
+    "occurred-at": "2026-07-11T14:05:00Z",
+    "sequence": "1",
+    "certificate-id": "scms-cert-7f3a9c",
+    "certificate-type": "pseudonym",
+    "days-until-expiry": 5,
+    "expiry-date": "2026-07-16T00:00:00Z"
+  }
+}

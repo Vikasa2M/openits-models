@@ -1,0 +1,99 @@
+{
+  "$defs": {
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 255,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "message-id": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        },
+        "oid-value": {
+          "type": "string"
+        },
+        "register": {
+          "type": "string"
+        },
+        "register-value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "change-kind": {
+      "enum": [
+        "cycle-length",
+        "dynamic-max-in-effect",
+        "dynamic-max-step-down",
+        "dynamic-max-step-up",
+        "max-1-in-effect",
+        "max-2-in-effect",
+        "offset",
+        "pattern",
+        "split",
+        "unspecified"
+      ],
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "new-value": {
+      "maximum": 2147483647,
+      "minimum": -2147483648,
+      "type": "integer"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "previous-value": {
+      "maximum": 2147483647,
+      "minimum": -2147483648,
+      "type": "integer"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "split-number": {
+      "maximum": 255,
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "source-device-id"
+  ],
+  "type": "object"
+}

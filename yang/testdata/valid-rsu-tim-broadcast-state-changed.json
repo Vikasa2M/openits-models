@@ -1,0 +1,11 @@
+{
+  "openits-rsu-events:rsu-tim-broadcast-state-changed": {
+    "kind": "openits-rsu-types:rsu-tim-broadcast-state-changed-kind",
+    "source-device-id": "rsu-i35-mm214",
+    "occurred-at": "2026-07-11T14:05:00Z",
+    "sequence": "1",
+    "prior": "idle",
+    "current": "active",
+    "active-tim-count": 2
+  }
+}

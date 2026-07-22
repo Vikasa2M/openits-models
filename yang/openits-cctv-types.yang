@@ -1,0 +1,236 @@
+module openits-cctv-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:cctv-types";
+  prefix openits-cctv-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+  description
+    "Shared types for openits-cctv (NTCIP 1205 CCTV / PTZ camera
+     management): the CCTV event-kind identity hierarchy (domain events +
+     fault categories) and the CCTV/PTZ enumerations reused across the core
+     and event modules. Split into a -types module so the events module can
+     share the vocabulary without importing the capability core.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.3.0";
+
+  revision 2026-07-21 {
+    description
+      "Sensing/CCTV review fixes. Add the ptz-move-mode typedef (which command
+       channel drives the current PTZ motion) and the cctv-ptz-move-commanded
+       domain-event identity; add the lens-mode typedef (auto/manual focus and
+       iris control); add the operational-status device-rollup enum. Stamp
+       explicit enum values on the mounting-structure / video-codec /
+       stream-health / tour-run-state typedefs for append-only discipline
+       (wire-neutral). Additive.
+       - Prefix control-authority identities (cctv-control-* / dms-control-*); BREAKING identityref strings.";
+    reference "NTCIP 1205.";
+  }
+  revision 2026-07-17 {
+    description
+      "Initial revision. CCTV/PTZ (NTCIP 1205) shared types: event-kind
+       hierarchy, fault categories, and PTZ / stream / mounting / tour
+       enumerations, plus the cctv-control-mode identity hierarchy for
+       joystick-ownership arbitration (cctv-control-central, cctv-control-local,
+       cctv-control-central-override, cctv-control-other).";
+    reference "NTCIP 1205.";
+  }
+
+  /* ---------------------------------------------------------------------
+   * Event-kind identity hierarchy. Every openits service derives its
+   * event-kind tree from the cross-service bases in openits-types so the
+   * shared fault/mode notifications can be discriminated by a service-
+   * specific 'kind'.
+   * ------------------------------------------------------------------- */
+  identity cctv-event-kind {
+    base openits-types:device-event-kind;
+    description
+      "Base for every CCTV domain event kind (NTCIP 1205).";
+  }
+  identity cctv-fault-event-kind {
+    base openits-types:fault-event-kind;
+    base cctv-event-kind;
+    description
+      "Base for CCTV fault categories — the 'category' on the active-fault
+       inventory and the 'kind' on the shared fault-raised / fault-cleared
+       notifications.";
+  }
+  identity cctv-mode-event-kind {
+    base openits-types:mode-event-kind;
+    base cctv-event-kind;
+    description
+      "Base for CCTV mode-change kinds carried on the shared mode-changed
+       notification — e.g. a control-ownership / local-override transition.";
+  }
+
+  /* ---------------------------------------------------------------------
+   * Control-ownership mode (NTCIP 1205 control-mode axis). Commanded in
+   * control/config and read back in control/state; a physical local override
+   * at the pole shows up as config<->state divergence and rides the shared
+   * mode-changed notification.
+   * ------------------------------------------------------------------- */
+  identity cctv-control-mode {
+    description "Base for CCTV control-ownership modes (NTCIP 1205).";
+  }
+  identity cctv-control-central {
+    base cctv-control-mode;
+    description "The camera is under central (TMC) control.";
+  }
+  identity cctv-control-local {
+    base cctv-control-mode;
+    description
+      "The camera is under local control at the pole (a field panel /
+       joystick has taken over); central commands are not being honoured.";
+  }
+  identity cctv-control-central-override {
+    base cctv-control-mode;
+    description
+      "Central has forcibly overridden a local session (priority takeover).";
+  }
+  identity cctv-control-other {
+    base cctv-control-mode;
+    description "A vendor-specific control mode outside the standard set.";
+  }
+
+  /* ---- domain event kinds ---- */
+  identity cctv-ptz-preset-recalled {
+    base cctv-event-kind;
+    description "A stored PTZ preset was recalled (goto).";
+  }
+  identity cctv-tour-state-changed {
+    base cctv-event-kind;
+    description "A camera preset tour started, stopped, or paused.";
+  }
+  identity cctv-lockout-denied {
+    base cctv-event-kind;
+    description
+      "A control-ownership acquisition was refused because the requester's
+       priority did not exceed the current holder's (soft arbitration).";
+  }
+  identity cctv-ptz-move-commanded {
+    base cctv-event-kind;
+    description
+      "A commanded PTZ move (absolute goto or velocity/joystick) was
+       issued. Distinct from cctv-ptz-preset-recalled, which covers
+       preset/tour motion.";
+  }
+
+  /* ---- fault categories ---- */
+  identity cctv-fault-video-loss {
+    base cctv-fault-event-kind;
+    description "Loss of video signal from the imager.";
+  }
+  identity cctv-fault-focus {
+    base cctv-fault-event-kind;
+    description "Focus mechanism fault.";
+  }
+  identity cctv-fault-iris {
+    base cctv-fault-event-kind;
+    description "Iris / exposure mechanism fault.";
+  }
+  identity cctv-fault-position-feedback {
+    base cctv-fault-event-kind;
+    description
+      "PTZ position-feedback fault: a commanded move was not confirmed by
+       position feedback (stuck / slipped / miscalibrated).";
+  }
+  identity cctv-fault-comms {
+    base cctv-fault-event-kind;
+    description "Communications fault to the camera or field encoder.";
+  }
+  identity cctv-fault-encoder {
+    base cctv-fault-event-kind;
+    description "Video encoder fault — a stream is unavailable or degraded.";
+  }
+  identity cctv-fault-enclosure {
+    base cctv-fault-event-kind;
+    description
+      "Enclosure environmental fault (heater / blower failure or over-temp).";
+  }
+
+  /* ---------------------------------------------------------------------
+   * Enumerations
+   * ------------------------------------------------------------------- */
+  typedef mounting-structure {
+    type enumeration {
+      enum pole      { value 0; description "Standalone pole."; }
+      enum mast-arm  { value 1; description "Signal mast arm."; }
+      enum span-wire { value 2; description "Span-wire suspension."; }
+      enum structure { value 3; description "Bridge / gantry / overhead structure."; }
+      enum building  { value 4; description "Building-mounted."; }
+      enum other     { value 5; description "Other mounting."; }
+    }
+    description "Physical structure the camera is mounted on.";
+  }
+
+  typedef video-codec {
+    type enumeration {
+      enum h264  { value 0; description "H.264 / AVC."; }
+      enum h265  { value 1; description "H.265 / HEVC."; }
+      enum mjpeg { value 2; description "Motion JPEG."; }
+      enum mpeg4 { value 3; description "MPEG-4 Part 2."; }
+      enum other { value 4; description "Other codec."; }
+    }
+    description "Video compression codec of an encoder stream.";
+  }
+
+  typedef stream-health {
+    type enumeration {
+      enum ok       { value 0; description "Stream present and within spec."; }
+      enum degraded { value 1; description "Stream present but degraded (packet loss / low bitrate / frame drops)."; }
+      enum down     { value 2; description "No stream."; }
+    }
+    description "Health of an encoder video stream.";
+  }
+
+  typedef tour-run-state {
+    type enumeration {
+      enum stopped { value 0; description "Tour not running."; }
+      enum running { value 1; description "Tour advancing through its stops."; }
+      enum paused  { value 2; description "Tour held at the current stop."; }
+    }
+    description "Run state of a camera preset tour.";
+  }
+
+  typedef operational-status {
+    type enumeration {
+      enum online   { value 0; description "Camera reachable and producing video/PTZ status."; }
+      enum degraded {
+        value 1;
+        description
+          "Reachable but impaired (a stream down, focus/iris fault, or PTZ
+           position-feedback fault) while other functions report.";
+      }
+      enum offline  { value 2; description "Camera unreachable / not reporting."; }
+      enum unknown  { value 3; description "Operational state not reported."; }
+    }
+    description "Device-level operational rollup for a CCTV camera.";
+  }
+
+  typedef ptz-move-mode {
+    type enumeration {
+      enum absolute { value 0; description "The most recent commanded move was an absolute pan/tilt/zoom goto."; }
+      enum velocity { value 1; description "The most recent commanded move was a velocity (joystick) move."; }
+      enum preset   { value 2; description "The most recent move was a preset recall (see ptz/presets)."; }
+      enum tour     { value 3; description "The most recent move was a tour advance (see ptz/tours)."; }
+      enum idle     { value 4; description "No commanded move is in effect (stopped)."; }
+    }
+    description "Which command channel produced the camera's current/last PTZ motion.";
+  }
+
+  typedef lens-mode {
+    type enumeration {
+      enum auto   { value 0; description "The lens element is under automatic control (auto-focus / auto-iris)."; }
+      enum manual { value 1; description "The lens element is under manual control at the commanded position."; }
+    }
+    description "Control mode of a lens element (focus or iris).";
+  }
+}

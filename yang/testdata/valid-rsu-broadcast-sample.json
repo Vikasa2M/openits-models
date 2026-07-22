@@ -1,0 +1,19 @@
+{
+  "openits-rsu-events:rsu-broadcast-sample": {
+    "kind": "openits-rsu-types:rsu-broadcast-sample-kind",
+    "source-device-id": "rsu-i35-mm214",
+    "occurred-at": "2026-07-11T14:05:00Z",
+    "sequence": "1",
+    "sample-window-s": 60,
+    "broadcast": [
+      {
+        "msg-id": "0x1A2B",
+        "msg-type": "openits-v2x-messaging-types:msg-tim",
+        "channel-id": "172",
+        "dsrc-channel-number": 172,
+        "rate-hz": "10.0",
+        "priority": 3
+      }
+    ]
+  }
+}

@@ -1,0 +1,114 @@
+module trafficvision-perception-incident-media {
+  yang-version 1.1;
+  namespace "urn:openits:yang:vendor-trafficvision-perception-incident-media";
+  prefix trafficvision-pn-media;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-perception {
+    prefix openits-pn;
+  }
+
+  import openits-perception-events {
+    prefix openits-pn-events;
+  }
+
+  organization
+    "TrafficVision (vendor)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Vendor augment for TrafficVision incident media.  Core incident
+     detection — type, zone, location, severity, detect/clear
+     lifecycle — is already covered by openits-perception; this
+     augment adds the vendor-specific media references TrafficVision
+     attaches to each incident: a still snapshot and video clips.
+     The values are TrafficVision-local paths, which is exactly why
+     they belong in a vendor augment rather than the vendor-neutral
+     core (docs/06-extension-model.md).
+
+     Augments both the live incident inventory
+     (/perception-sensor/incidents/incident) and the
+     zone-incident-detected notification, so the media references are
+     available on the event and in the digital-twin state.
+
+     A consumer that does not load this module sees a normal
+     openits-perception incident with no media references.
+
+     This module is a reference-implementation worked example of the
+     openits vendor-augmentation pattern.  TrafficVision has not
+     ratified this file; openits maintains it under the
+     conformance-reference NoI until a real TrafficVision-aligned org
+     adopts it.
+
+     Copyright (c) 2026.  Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.1.0";
+
+  revision 2026-07-21 {
+    description
+      "Move namespace from a vendor-owned URN (urn:trafficvision:…) to
+       urn:openits:yang:vendor-trafficvision-perception-incident-media
+       until the vendor formally adopts the module. Wire-neutral for
+       RFC 7951 JSON (identityref values are module-name-keyed).";
+  }
+  revision 2026-07-12 {
+    description
+      "Follow the perception notifications companion module's rename
+       from its legacy notifications-suffixed name to
+       openits-perception-events: update the import and
+       augment target prefix accordingly. No functional change.";
+  }
+  revision 2026-07-07 {
+    description
+      "Initial revision.  Adds snapshot / clip / clip-input media
+       references to the perception incident inventory and the
+       zone-incident-detected notification.";
+    reference
+      "TrafficVision TMC-3.6 realtime API (incident media paths).";
+  }
+
+  /* --------------------------------------------------------------
+   * Reusable grouping
+   * -------------------------------------------------------------- */
+
+  grouping incident-media {
+    description
+      "TrafficVision media references for an incident.  Values are
+       vendor-local paths; a consumer resolves them against the
+       station's media store.";
+
+    leaf snapshot {
+      type string;
+      description "Path to the still snapshot captured at detection.";
+    }
+    leaf clip {
+      type string;
+      description "Path to the rendered incident video clip.";
+    }
+    leaf clip-input {
+      type string;
+      description "Path to the source (pre-render) incident video clip.";
+    }
+  }
+
+  /* --------------------------------------------------------------
+   * Augments
+   * -------------------------------------------------------------- */
+
+  augment "/openits-pn:perception-sensor/openits-pn:incidents/openits-pn:incident" {
+    description
+      "TrafficVision media references on each active incident.";
+    uses incident-media;
+  }
+
+  augment "/openits-pn-events:zone-incident-detected" {
+    description
+      "TrafficVision media references on the incident-detected event.";
+    uses incident-media;
+  }
+}

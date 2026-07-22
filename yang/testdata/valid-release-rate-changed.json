@@ -1,0 +1,12 @@
+{
+  "openits-ramp-metering-events:release-rate-changed": {
+    "kind": "openits-ramp-metering-types:rm-release-rate-changed",
+    "source-device-id": "i405-nb-western-ave",
+    "occurred-at": "2026-07-13T12:00:00Z",
+    "sequence": "1",
+    "previous-rate-vph": 480,
+    "new-rate-vph": 720,
+    "plan-id": 3,
+    "cause": "traffic-responsive"
+  }
+}

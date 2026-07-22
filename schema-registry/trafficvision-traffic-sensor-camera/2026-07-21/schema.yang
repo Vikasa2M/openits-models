@@ -1,0 +1,245 @@
+module trafficvision-traffic-sensor-camera {
+  yang-version 1.1;
+  namespace "urn:openits:yang:vendor-trafficvision-traffic-sensor-camera";
+  prefix trafficvision-ts-camera;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-traffic-sensor {
+    prefix openits-ts;
+  }
+
+  import openits-traffic-sensor-events {
+    prefix openits-ts-events;
+  }
+
+  organization
+    "TrafficVision (vendor)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Vendor augment for TrafficVision (TMC-3.6) video traffic
+     detectors.  Core per-lane observation — volume, occupancy,
+     speed, flow-rate, density, queue detection, operational status —
+     is already covered by openits-traffic-sensor; this augment adds
+     the computer-vision / camera internals that are specific to a
+     video detector and have no analog on a radar or magnetometer
+     station: view quality, glare, frame rates, image geometry,
+     vanishing-point calibration, PTZ mode, camera-movement
+     detection, and product licensing.
+
+     A consumer that does not load this module sees a normal
+     openits-traffic-sensor station and simply ignores the camera
+     subtree.
+
+     This module is a reference-implementation worked example of the
+     openits vendor-augmentation pattern (docs/06-extension-model.md).
+     TrafficVision has not ratified this file; openits maintains it
+     under the conformance-reference NoI until a real
+     TrafficVision-aligned org adopts it.
+
+     Copyright (c) 2026.  Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.1.1";
+
+  revision 2026-07-21 {
+    description
+      "Note on the view-quality / vanishing-point / vp-drift sentinels: they
+       mirror the TrafficVision wire verbatim; a neutral consumer maps them
+       to 'unknown/absent'. Documentation only; no schema change.
+       Move namespace from urn:trafficvision:… to
+       urn:openits:yang:vendor-trafficvision-traffic-sensor-camera until
+       the vendor formally adopts the module. Wire-neutral for RFC 7951
+       JSON (identityref values are module-name-keyed).";
+  }
+  revision 2026-07-12 {
+    description
+      "Follow the traffic-sensor notifications companion module's
+       rename from its legacy notifications-suffixed name to
+       openits-traffic-sensor-events: update the import and
+       augment target prefix accordingly. No functional change.";
+  }
+  revision 2026-07-07 {
+    description
+      "Initial revision.  Adds /traffic-sensor/camera with the
+       TrafficVision computer-vision health, calibration, and
+       licensing state.";
+    reference
+      "TrafficVision TMC-3.6 realtime API (camera / calibration /
+       licensing fields).";
+  }
+
+  /* --------------------------------------------------------------
+   * Reusable grouping
+   * -------------------------------------------------------------- */
+
+  grouping camera-metrics {
+    description
+      "TrafficVision computer-vision health, calibration, and
+       licensing metrics.  Shared by the /traffic-sensor state
+       augment and the traffic-sensor-status-report notification
+       augment.";
+
+      leaf view-quality {
+        type int8 {
+          range "-1 .. 100";
+        }
+        units "percent";
+        description
+          "Auto-learned view-quality score, 0-100; -1 when the sensor
+           has not yet established a quality estimate. This mirrors the
+           TrafficVision wire sentinel verbatim; a neutral consumer maps
+           the sentinel to 'unknown/absent'.";
+      }
+      leaf glare-estimate {
+        type uint8 {
+          range "0 .. 5";
+        }
+        description
+          "Glare severity estimate, 0 (none) to 5 (severe).";
+      }
+      leaf output-fps {
+        type uint16;
+        units "frames/second";
+        description "Mean processed-output frame rate.";
+      }
+      leaf dfi-fps {
+        type decimal64 {
+          fraction-digits 4;
+        }
+        units "frames/second";
+        description
+          "Detector-frame-interval rate (internal analytics frame
+           cadence).";
+      }
+      leaf input-image-width {
+        type uint16;
+        units "pixels";
+        description "Width of the ingested video frame.";
+      }
+      leaf input-image-height {
+        type uint16;
+        units "pixels";
+        description "Height of the ingested video frame.";
+      }
+      leaf output-image-width {
+        type uint16;
+        units "pixels";
+        description "Width of the processed-output frame.";
+      }
+      leaf output-image-height {
+        type uint16;
+        units "pixels";
+        description "Height of the processed-output frame.";
+      }
+      leaf vanishing-point-u {
+        type decimal64 {
+          fraction-digits 4;
+        }
+        description
+          "Calibrated vanishing-point horizontal coordinate; the
+           sentinel -9999 indicates an uncalibrated view. This mirrors the
+           TrafficVision wire sentinel verbatim; a neutral consumer maps
+           the sentinel to 'unknown/absent'.";
+      }
+      leaf vanishing-point-v {
+        type decimal64 {
+          fraction-digits 4;
+        }
+        description
+          "Calibrated vanishing-point vertical coordinate; the
+           sentinel -9999 indicates an uncalibrated view. This mirrors the
+           TrafficVision wire sentinel verbatim; a neutral consumer maps
+           the sentinel to 'unknown/absent'.";
+      }
+      leaf vp-drift {
+        type decimal64 {
+          fraction-digits 9;
+        }
+        description
+          "Estimated drift of the vanishing point from its calibrated
+           position; the sentinel -1 indicates no estimate. This mirrors the
+           TrafficVision wire sentinel verbatim; a neutral consumer maps
+           the sentinel to 'unknown/absent'.";
+      }
+      leaf ptz-mode {
+        type enumeration {
+          enum ptz-unknown { description "PTZ state unknown / uncalibrated."; }
+          enum ptz-mps     { description "Multi-preset scan mode."; }
+          enum ptz-dpa     { description "Dynamic-preset auto mode."; }
+        }
+        description "TrafficVision PTZ operating mode.";
+      }
+      leaf autolearn-enabled {
+        type boolean;
+        description "Auto-learn calibration is enabled for this view.";
+      }
+      leaf camera-movement-detected-at {
+        type yang:date-and-time;
+        description
+          "Wall-clock time camera movement was last detected; absent
+           when no movement has been detected.";
+      }
+      leaf video-reconnect-at {
+        type yang:date-and-time;
+        description "Wall-clock time the video stream last reconnected.";
+      }
+
+      container license {
+        description "TrafficVision product-licensing state.";
+        leaf valid {
+          type boolean;
+          description "The station's TrafficVision license is valid.";
+        }
+        leaf invalid-reason {
+          type string;
+          description "Reason the license is invalid; empty when valid.";
+        }
+        leaf expiration {
+          type yang:date-and-time;
+          description "Wall-clock time the license expires.";
+        }
+      }
+  }
+
+  /* --------------------------------------------------------------
+   * Augments
+   * -------------------------------------------------------------- */
+
+  augment "/openits-ts:traffic-sensor" {
+    description
+      "TrafficVision camera / computer-vision internals for this
+       station.";
+
+    container camera {
+      config false;
+      openits-types:arc-it-flow
+        "ITS Roadway Equipment -> Maintenance : equipment maintenance status";
+      description
+        "TrafficVision-specific camera and computer-vision state.
+         Entirely observed (read-only).";
+      uses camera-metrics;
+    }
+  }
+
+  augment "/openits-ts-events:traffic-sensor-status-report" {
+    description
+      "TrafficVision camera / computer-vision metrics carried on the
+       periodic station status report.";
+
+    container camera {
+      description
+        "TrafficVision camera / computer-vision metrics for this
+         report.";
+      uses camera-metrics;
+    }
+  }
+}

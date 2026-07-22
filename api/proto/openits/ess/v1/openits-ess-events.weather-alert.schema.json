@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "direction": {
+      "enum": [
+        "entered",
+        "exited"
+      ],
+      "type": "string"
+    },
+    "human-description": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "observed-value": {
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "sensor-id": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "threshold-id": {
+      "type": "string"
+    },
+    "threshold-value": {
+      "type": "string"
+    },
+    "unit": {
+      "enum": [
+        "celsius",
+        "degrees",
+        "dimensionless",
+        "hectopascals",
+        "meters",
+        "meters-per-second",
+        "millimeters",
+        "millimeters-per-hour",
+        "parts-per-million",
+        "percent",
+        "watts-per-square-meter"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+}

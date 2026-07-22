@@ -1,0 +1,16 @@
+message WidgetEvent {
+  string name = 1;
+  Severity severity = 2;
+  Mode mode = 3;
+}
+
+enum Severity {
+  SEVERITY_INFO = 0;
+  SEVERITY_WARNING = 1;
+  SEVERITY_CRITICAL = 2;
+}
+
+enum Mode {
+  MODE_ON = 0;
+  MODE_OFF = 1;
+}

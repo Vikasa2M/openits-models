@@ -1,0 +1,174 @@
+syntax = "proto3";
+
+package openits.core.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/v1;openitspb";
+
+import "device.proto";
+
+// DeviceCommand - command sent to a device via openits.{region}.{agency}.{agency-unit}.{service}.{controller-id}.cmd.{action}
+message DeviceCommand {
+  string version = 1;                    // Schema version "1.0.0"
+  string command_id = 2;                 // Unique command identifier (UUID)
+  string device_id = 3;
+  DeviceType device_type = 4;
+  int64 issued_at_unix_ms = 5;           // When command was issued
+  int64 expires_at_unix_ms = 6;          // Command expiration (0 = no expiry)
+  string issued_by = 7;                  // User/system that issued command
+
+  oneof command {
+    ASCCommand asc = 10;
+    GenericCommand generic = 12;
+  }
+
+  // rsu = 11 retired in cut B — RSU is commanded via config/state, not RPC.
+  reserved 11;
+  reserved "rsu";
+  // Reserved for future use
+  reserved 50 to 99;
+}
+
+// ASCCommand - commands for Actuated Signal Controllers
+message ASCCommand {
+  oneof action {
+    SetPatternCommand set_pattern = 1;
+    SetFlashCommand set_flash = 2;
+    OmitPhaseCommand omit_phase = 3;
+    HoldPhaseCommand hold_phase = 4;
+    ForceOffCommand force_off = 5;
+    PedestrianCallCommand ped_call = 6;
+    VehicleCallCommand veh_call = 7;
+    PreemptCommand preempt = 8;
+    SetTimeCommand set_time = 9;
+  }
+}
+
+// SetPatternCommand changes the coordination pattern
+message SetPatternCommand {
+  int32 pattern = 1;                     // Pattern number (0=free, 255=flash)
+}
+
+// SetFlashCommand controls flash mode
+message SetFlashCommand {
+  bool enable = 1;
+  FlashType flash_type = 2;
+}
+
+enum FlashType {
+  FLASH_TYPE_UNSPECIFIED = 0;
+  FLASH_TYPE_ALL_RED = 1;
+  FLASH_TYPE_YELLOW = 2;
+}
+
+// OmitPhaseCommand omits phases from service
+message OmitPhaseCommand {
+  repeated int32 phases = 1;             // Phases to omit (1-16)
+  bool omit = 2;                         // true=omit, false=restore
+}
+
+// HoldPhaseCommand holds a phase green
+message HoldPhaseCommand {
+  int32 phase = 1;
+  bool hold = 2;                         // true=hold, false=release
+}
+
+// ForceOffCommand forces a phase to terminate
+message ForceOffCommand {
+  int32 phase = 1;
+}
+
+// PedestrianCallCommand places a pedestrian call
+message PedestrianCallCommand {
+  int32 phase = 1;
+}
+
+// VehicleCallCommand places a vehicle call
+message VehicleCallCommand {
+  int32 phase = 1;
+}
+
+// PreemptCommand activates/deactivates preemption
+message PreemptCommand {
+  int32 preempt_number = 1;              // Preempt input number
+  bool activate = 2;                     // true=activate, false=clear
+}
+
+// SetTimeCommand synchronizes controller time
+message SetTimeCommand {
+  int64 unix_timestamp_ms = 1;           // Target time
+}
+
+// GenericCommand - for device-agnostic operations
+message GenericCommand {
+  oneof action {
+    PingCommand ping = 1;
+    GetConfigCommand get_config = 2;
+    SetSnmpCommand set_snmp = 3;
+  }
+}
+
+// PingCommand requests a health check response
+message PingCommand {}
+
+// GetConfigCommand requests device configuration dump
+message GetConfigCommand {
+  repeated string oid_filters = 1;       // OID prefixes to include
+}
+
+// SetSnmpCommand sets an SNMP value directly
+message SetSnmpCommand {
+  string oid = 1;
+  oneof value {
+    int64 integer_value = 2;
+    string string_value = 3;
+    bytes octet_value = 4;
+  }
+}
+
+// CommandAck - acknowledgment of command receipt/execution
+// Published to: openits.{region}.{agency}.{agency-unit}.{service}.{controller-id}.cmd-ack
+message CommandAck {
+  string version = 1;                    // Schema version "1.0.0"
+  string command_id = 2;                 // References DeviceCommand.command_id
+  string device_id = 3;
+  DeviceType device_type = 4;
+  int64 received_at_unix_ms = 5;
+  int64 executed_at_unix_ms = 6;
+  CommandResult result = 7;
+  string error = 8;                      // Error message if result != SUCCESS
+  string details = 9;                    // Additional result details
+
+  // Reserved for future use
+  reserved 50 to 99;
+}
+
+enum CommandResult {
+  COMMAND_RESULT_UNSPECIFIED = 0;
+  COMMAND_RESULT_SUCCESS = 1;
+  COMMAND_RESULT_FAILED = 2;
+  COMMAND_RESULT_TIMEOUT = 3;
+  COMMAND_RESULT_REJECTED = 4;           // Command rejected by device
+  COMMAND_RESULT_EXPIRED = 5;            // Command expired before execution
+  COMMAND_RESULT_UNSUPPORTED = 6;        // Command not supported by device
+}
+
+// PollerHeartbeat - health status published to NATS every 30s
+// Published to: health.{region}.{site}.poller.{poller_id}
+message PollerHeartbeat {
+  string version = 1;                    // Schema version "1.0.0"
+  string poller_id = 2;
+  int64 timestamp_unix_ms = 3;
+  int64 uptime_seconds = 4;
+  int32 devices_total = 5;
+  int32 devices_healthy = 6;
+  int32 devices_degraded = 7;
+  int32 devices_offline = 8;
+  bool nats_connected = 9;
+  int64 last_poll_unix_ms = 10;
+  int32 queued_messages = 11;            // Messages in offline queue
+  int32 memory_used_mb = 12;
+  float cpu_percent = 13;
+
+  // Reserved for future use
+  reserved 50 to 99;
+}

@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package openits.traffic_sensor.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/v1;openitspb";
+
+import "google/protobuf/timestamp.proto";
+
+message QueueStateChanged {
+  string zone_id = 1;
+  bool queueing = 2;
+  uint32 queue_duration_s = 3;
+  google.protobuf.Timestamp queue_start = 4;
+}
+
+message TrafficIntervalReport {
+  repeated Lane lane = 1;
+}
+
+message Lane {
+  uint32 lane_id = 1;
+  string name = 2;
+  string carriageway = 3;
+  repeated ClassVolume class_volume = 4;
+  string density = 5;
+  uint32 flow_rate_vph = 6;
+  string gap_average_s = 7;
+  string headway_average_s = 8;
+  uint32 interval_duration_s = 9;
+  google.protobuf.Timestamp interval_start = 10;
+  string occupancy = 11;
+  string speed_85th_percentile_kmh = 12;
+  string speed_average_kmh = 13;
+  uint32 volume = 14;
+}
+
+message ClassVolume {
+  uint32 class_id = 1;
+  uint32 volume = 2;
+}
+
+message TrafficSensorStatusReport {
+  string name = 1;
+  OperationalStatus operational_status = 4;
+  string inactive_reason = 5;
+  string latitude = 2;
+  string longitude = 3;
+}
+
+enum OperationalStatus {
+  OPERATIONAL_STATUS_ACTIVE = 0;
+  OPERATIONAL_STATUS_INACTIVE = 1;
+}
+
