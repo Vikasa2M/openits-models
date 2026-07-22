@@ -19,8 +19,9 @@ go.work.sum
 .vscode/
 .env
 
-# Claude Code local settings
-.claude/
+# Claude Code: local settings stay out; repo skills ship with the repo
+.claude/*
+!.claude/skills/
 
 # Python (yang tooling)
 __pycache__/
