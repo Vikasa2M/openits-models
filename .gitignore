@@ -19,6 +19,9 @@ go.work.sum
 .vscode/
 .env
 
+# Claude Code local settings
+.claude/
+
 # Python (yang tooling)
 __pycache__/
 *.pyc
