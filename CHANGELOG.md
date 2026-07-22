@@ -6,3 +6,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 for the Go module. See [`docs/versioning.md`](docs/versioning.md) for how the
 Go module version, per-module YANG revision dates, and protobuf wire
 compatibility relate.
+
+## [0.2.1](https://github.com/Vikasa2M/openits-models/releases/tag/v0.2.1) (2026-07-21)
+
+Initial public baseline. The repository history was consolidated to a single
+root commit ahead of the public launch, and the earlier v0.1.0–v0.2.0 releases
+were retired along with it. The model surface (YANG modules, protobuf,
+AsyncAPI bindings, schema registry) is unchanged from the final
+pre-consolidation state; this release re-establishes the version line.
