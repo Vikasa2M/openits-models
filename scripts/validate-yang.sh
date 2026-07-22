@@ -7,7 +7,9 @@ set -u
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
-IMAGE="${YANGLINT_IMAGE:-sysrepo/sysrepo-netopeer2:latest}"
+# Pinned by digest: `latest` is a mutable tag, and this runs inside CI.
+# Digest of sysrepo/sysrepo-netopeer2:latest (yanglint 2.1.30) as of 2026-07-21.
+IMAGE="${YANGLINT_IMAGE:-sysrepo/sysrepo-netopeer2@sha256:36cc1d841c97f118d62f775024d60fb1ce210c3bca6b32135c1a9e5a358a1cc9}"
 
 cd "$ROOT_DIR"
 
