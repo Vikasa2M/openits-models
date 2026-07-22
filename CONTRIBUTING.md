@@ -96,8 +96,9 @@ Example: `feat(dms): add travel-time route table augment`.
 The repo ships agent skills under [`.claude/skills/`](.claude/skills/) that
 encode the contribution workflows above — extending a model, adding events or
 services, interpreting CI gates, and the review checklist. Claude Code picks
-them up automatically; users of other AI tools can point their agent at the
-same `SKILL.md` files, which are plain markdown. AI-assisted or not, the same
+them up automatically; other agent tools (Codex, Cursor, etc.) get the same
+guidance via the root [`AGENTS.md`](AGENTS.md), which indexes those skill
+files — they're all plain markdown. AI-assisted or not, the same
 bar applies: you are responsible for the change, and every gate must be green.
 
 ## Security

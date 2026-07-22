@@ -7,6 +7,8 @@
       "exclude-paths": [
         ".claude",
         ".github",
+        "AGENTS.md",
+        "CLAUDE.md",
         "docs",
         "scripts",
         "tools",
