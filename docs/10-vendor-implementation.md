@@ -99,11 +99,18 @@ face or several without changing the model underneath.
   over gNMI without moving that store to ygot — point at SONiC's own
   `sonic-gnmi` server and its `translib` translation layer as the
   worked open-source example of exactly this pattern.
-- **NATS** — the reference event binding (seven-token subjects,
-  CloudEvents envelope; see "Claiming conformance" below). A
-  symmetric command channel — intent flowing in over NATS, not just
-  events flowing out — is experimental and demo-only today; there is
-  no binding specification for it yet (see "Unpaved roads" below).
+- **NATS** — the reference event binding. Every event lands on the
+  seven-token subject
+  `openits.{region}.{agency}.{agency-unit}.{service}.{controller-id}.{event}`
+  (each token lowercase alphanumeric-and-hyphen) and carries a
+  CloudEvents envelope whose `ce-type` follows
+  `openits.<service>.<event>.v<major>` (e.g.
+  `openits.dms.message-activation-failed.v1`); see "Claiming
+  conformance" below for the full envelope and how a claim against it
+  is verified. A symmetric command channel — intent flowing in over
+  NATS, not just events flowing out — is experimental and demo-only
+  today; there is no binding specification for it yet (see "Unpaved
+  roads" below).
 
 Field reality: a lot of field-deployed devices sit behind cellular
 NAT with no reachable inbound address. That pushes hard toward
@@ -235,9 +242,11 @@ is grounds to reject or dispute the claim.
 
 - **The event header and deterministic event identity.** Every event
   you emit needs the header fields and content-derived identity the
-  model defines, so consumers can deduplicate retries. See the
-  [deterministic `ce-id` spec](ce-id-spec.md) for the identity
-  contract.
+  model defines, so consumers can deduplicate retries: the identity is
+  a SHA-256 digest over `ce-source`, `ce-type`, stable-time, and the
+  payload, folded into a ULID. See the
+  [deterministic `ce-id` spec](ce-id-spec.md) for the normative
+  algorithm — don't reimplement it from this summary.
 - **Device identity.** What device is this, and where — the
   identity surface every service composes.
 - **State-mirror truthfulness.** The state tree must reflect reality.
