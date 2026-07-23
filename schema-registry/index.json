@@ -1666,6 +1666,11 @@
         "openits-signal-control-mutcd/2026-07-21/MANIFEST.json",
         "openits-signal-control-mutcd/2026-07-21/README.md",
         "openits-signal-control-mutcd/2026-07-21/schema.yang"
+      ],
+      "2026-07-23": [
+        "openits-signal-control-mutcd/2026-07-23/MANIFEST.json",
+        "openits-signal-control-mutcd/2026-07-23/README.md",
+        "openits-signal-control-mutcd/2026-07-23/schema.yang"
       ]
     },
     "openits-signal-control-mutcd-strict": {
@@ -1673,6 +1678,11 @@
         "openits-signal-control-mutcd-strict/2026-07-21/MANIFEST.json",
         "openits-signal-control-mutcd-strict/2026-07-21/README.md",
         "openits-signal-control-mutcd-strict/2026-07-21/schema.yang"
+      ],
+      "2026-07-23": [
+        "openits-signal-control-mutcd-strict/2026-07-23/MANIFEST.json",
+        "openits-signal-control-mutcd-strict/2026-07-23/README.md",
+        "openits-signal-control-mutcd-strict/2026-07-23/schema.yang"
       ]
     },
     "openits-signal-control-overlap-events": {
