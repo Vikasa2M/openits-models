@@ -14,6 +14,13 @@
 #                    is a same-revision edit, re-snapshot deliberately)
 #   - if no snapshot exists for this revision → OK (first time for
 #     this revision; next `make update-schema-registry` will snapshot)
+#   - FAIL if the module carries two (or more) revision statements
+#     for the same date — the revision log is the compatibility
+#     contract and must stay lintable and legible
+#   - FAIL if a first-party module (yang/openits-*.yang; vendor
+#     modules under yang/openits-vendor-* keep their own) doesn't
+#     carry the "OpenITS Working Group (proposal)" organization and
+#     contact strings
 #
 # Exit 0 if every module is consistent; 1 if any drift is detected.
 set -u
@@ -35,6 +42,17 @@ read_revision() {
     ' "$1"
 }
 
+# read_meta <file> <keyword>: prints the first quoted string of the named
+# top-level statement (e.g. "organization" or "contact"), whether it's
+# written single-line (`organization "X";`) or multiline (`organization`
+# on one line, `"X";` on the next).
+read_meta() {
+    awk -v kw="$2" '
+      found && match($0, /"[^"]*"/) { print substr($0, RSTART+1, RLENGTH-2); exit }
+      $1 == kw { found=1; if (match($0, /"[^"]*"/)) { print substr($0, RSTART+1, RLENGTH-2); exit } }
+    ' "$1"
+}
+
 FAIL=0
 DRIFT=()
 
@@ -48,6 +66,13 @@ for src in "${ROOT_DIR}"/yang/*.yang "${ROOT_DIR}"/yang/augments/*.yang "${ROOT_
         continue
     fi
 
+    dup="$(grep -E '^[[:space:]]*revision[[:space:]]+[0-9]{4}-[0-9]{2}-[0-9]{2}' "$src" \
+            | awk '{print $2}' | sort | uniq -d)"
+    if [ -n "$dup" ]; then
+        echo "FAIL  $m has duplicate revision statement(s) for: $(echo $dup | tr '\n' ' ')" >&2
+        FAIL=1
+    fi
+
     # Every core openits module carries an openits-version stamp (vendor
     # modules under yang/openits-vendor-* keep their own versioning).
     case "$src" in
@@ -55,6 +80,16 @@ for src in "${ROOT_DIR}"/yang/*.yang "${ROOT_DIR}"/yang/augments/*.yang "${ROOT_
         */yang/openits-*.yang)
             if ! grep -q 'openits-version "' "$src"; then
                 echo "FAIL  $m has no openits-version stamp" >&2
+                FAIL=1
+            fi
+            org="$(read_meta "$src" organization)"
+            con="$(read_meta "$src" contact)"
+            if [ "$org" != "OpenITS Working Group (proposal)" ]; then
+                echo "FAIL  $m organization is '$org' (expected 'OpenITS Working Group (proposal)')" >&2
+                FAIL=1
+            fi
+            if [ "$con" != "OpenITS Working Group (proposal)" ]; then
+                echo "FAIL  $m contact is '$con' (expected 'OpenITS Working Group (proposal)')" >&2
                 FAIL=1
             fi
             ;;
@@ -78,9 +113,11 @@ done
 if [ "$FAIL" -ne 0 ]; then
     echo >&2
     echo "check-revisions: drift detected in ${#DRIFT[@]} module(s):" >&2
-    for d in "${DRIFT[@]}"; do
-        echo "  - $d" >&2
-    done
+    if [ "${#DRIFT[@]}" -gt 0 ]; then
+        for d in "${DRIFT[@]}"; do
+            echo "  - $d" >&2
+        done
+    fi
     echo >&2
     echo "Fix by either:" >&2
     echo "  (a) bumping the module's revision to record the change, then" >&2
