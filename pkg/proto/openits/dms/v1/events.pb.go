@@ -7,6 +7,7 @@
 package dmsv1
 
 import (
+	v1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/types/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -153,6 +154,7 @@ type MessageActivationFailed struct {
 	OccurredAt          *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner               string                 `protobuf:"bytes,6,opt,name=owner,proto3" json:"owner,omitempty"`
 	Sequence            uint64                 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	Source              *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId      string                 `protobuf:"bytes,8,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
@@ -258,6 +260,13 @@ func (x *MessageActivationFailed) GetSequence() uint64 {
 	return 0
 }
 
+func (x *MessageActivationFailed) GetSource() *v1.WireSource {
+	if x != nil {
+		return x.Source
+	}
+	return nil
+}
+
 func (x *MessageActivationFailed) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -269,7 +278,7 @@ var File_openits_dms_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_dms_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"\x1bopenits/dms/v1/events.proto\x12\x0eopenits.dms.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xeb\x03\n" +
+	"\x1bopenits/dms/v1/events.proto\x12\x0eopenits.dms.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1copenits/types/v1/types.proto\"\xa1\x04\n" +
 	"\x17MessageActivationFailed\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12U\n" +
 	"\x15attempted_memory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeR\x13attemptedMemoryType\x122\n" +
@@ -284,7 +293,8 @@ const file_openits_dms_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x14\n" +
 	"\x05owner\x18\x06 \x01(\tR\x05owner\x12\x1a\n" +
-	"\bsequence\x18\a \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\a \x01(\x04R\bsequence\x124\n" +
+	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceId*\xe2\x01\n" +
 	"\x11MessageMemoryType\x12#\n" +
 	"\x1fMESSAGE_MEMORY_TYPE_UNSPECIFIED\x10\x00\x12!\n" +
@@ -321,16 +331,18 @@ var file_openits_dms_v1_events_proto_goTypes = []any{
 	(ErrorType)(0),                  // 1: openits.dms.v1.ErrorType
 	(*MessageActivationFailed)(nil), // 2: openits.dms.v1.MessageActivationFailed
 	(*timestamppb.Timestamp)(nil),   // 3: google.protobuf.Timestamp
+	(*v1.WireSource)(nil),           // 4: openits.types.v1.WireSource
 }
 var file_openits_dms_v1_events_proto_depIdxs = []int32{
 	0, // 0: openits.dms.v1.MessageActivationFailed.attempted_memory_type:type_name -> openits.dms.v1.MessageMemoryType
 	1, // 1: openits.dms.v1.MessageActivationFailed.error_type:type_name -> openits.dms.v1.ErrorType
 	3, // 2: openits.dms.v1.MessageActivationFailed.occurred_at:type_name -> google.protobuf.Timestamp
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	4, // 3: openits.dms.v1.MessageActivationFailed.source:type_name -> openits.types.v1.WireSource
+	4, // [4:4] is the sub-list for method output_type
+	4, // [4:4] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_openits_dms_v1_events_proto_init() }

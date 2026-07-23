@@ -7,6 +7,7 @@
 package reversiblelanev1
 
 import (
+	v1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/types/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -199,6 +200,7 @@ type LaneStateChanged struct {
 	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner             string                 `protobuf:"bytes,9,opt,name=owner,proto3" json:"owner,omitempty"`
 	Sequence          uint64                 `protobuf:"varint,10,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	Source            *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId    string                 `protobuf:"bytes,11,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
@@ -304,6 +306,13 @@ func (x *LaneStateChanged) GetSequence() uint64 {
 	return 0
 }
 
+func (x *LaneStateChanged) GetSource() *v1.WireSource {
+	if x != nil {
+		return x.Source
+	}
+	return nil
+}
+
 func (x *LaneStateChanged) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -322,6 +331,7 @@ type LcsConflictDetected struct {
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner          string                 `protobuf:"bytes,6,opt,name=owner,proto3" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,8,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -418,6 +428,13 @@ func (x *LcsConflictDetected) GetSequence() uint64 {
 		return x.Sequence
 	}
 	return 0
+}
+
+func (x *LcsConflictDetected) GetSource() *v1.WireSource {
+	if x != nil {
+		return x.Source
+	}
+	return nil
 }
 
 func (x *LcsConflictDetected) GetSourceDeviceId() string {
@@ -555,7 +572,7 @@ var File_openits_reversible_lane_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_reversible_lane_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"'openits/reversible_lane/v1/events.proto\x12\x1aopenits.reversible_lane.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xcb\x04\n" +
+	"'openits/reversible_lane/v1/events.proto\x12\x1aopenits.reversible_lane.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1copenits/types/v1/types.proto\"\x81\x05\n" +
 	"\x10LaneStateChanged\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12P\n" +
 	"\x0eprevious_state\x18\x01 \x01(\x0e2).openits.reversible_lane.v1.LaneFlowStateR\rpreviousState\x12Z\n" +
@@ -569,8 +586,9 @@ const file_openits_reversible_lane_v1_events_proto_rawDesc = "" +
 	"occurredAt\x12\x14\n" +
 	"\x05owner\x18\t \x01(\tR\x05owner\x12\x1a\n" +
 	"\bsequence\x18\n" +
-	" \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\v \x01(\tR\x0esourceDeviceId\"\xc1\x03\n" +
+	" \x01(\x04R\bsequence\x124\n" +
+	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
+	"\x10source_device_id\x18\v \x01(\tR\x0esourceDeviceId\"\xf7\x03\n" +
 	"\x13LcsConflictDetected\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x1d\n" +
 	"\n" +
@@ -583,7 +601,8 @@ const file_openits_reversible_lane_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x14\n" +
 	"\x05owner\x18\x06 \x01(\tR\x05owner\x12\x1a\n" +
-	"\bsequence\x18\a \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\a \x01(\x04R\bsequence\x124\n" +
+	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceId\"\x82\x04\n" +
 	"\x11TransitionTimeout\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12R\n" +
@@ -642,6 +661,7 @@ var file_openits_reversible_lane_v1_events_proto_goTypes = []any{
 	(*LcsConflictDetected)(nil),   // 4: openits.reversible_lane.v1.LcsConflictDetected
 	(*TransitionTimeout)(nil),     // 5: openits.reversible_lane.v1.TransitionTimeout
 	(*timestamppb.Timestamp)(nil), // 6: google.protobuf.Timestamp
+	(*v1.WireSource)(nil),         // 7: openits.types.v1.WireSource
 }
 var file_openits_reversible_lane_v1_events_proto_depIdxs = []int32{
 	0,  // 0: openits.reversible_lane.v1.LaneStateChanged.previous_state:type_name -> openits.reversible_lane.v1.LaneFlowState
@@ -649,18 +669,20 @@ var file_openits_reversible_lane_v1_events_proto_depIdxs = []int32{
 	0,  // 2: openits.reversible_lane.v1.LaneStateChanged.new_state:type_name -> openits.reversible_lane.v1.LaneFlowState
 	1,  // 3: openits.reversible_lane.v1.LaneStateChanged.new_direction:type_name -> openits.reversible_lane.v1.TravelDirection
 	6,  // 4: openits.reversible_lane.v1.LaneStateChanged.occurred_at:type_name -> google.protobuf.Timestamp
-	2,  // 5: openits.reversible_lane.v1.LcsConflictDetected.lcs_direction_a:type_name -> openits.reversible_lane.v1.LcsIndication
-	2,  // 6: openits.reversible_lane.v1.LcsConflictDetected.lcs_direction_b:type_name -> openits.reversible_lane.v1.LcsIndication
-	6,  // 7: openits.reversible_lane.v1.LcsConflictDetected.occurred_at:type_name -> google.protobuf.Timestamp
-	1,  // 8: openits.reversible_lane.v1.TransitionTimeout.from_direction:type_name -> openits.reversible_lane.v1.TravelDirection
-	1,  // 9: openits.reversible_lane.v1.TransitionTimeout.to_direction:type_name -> openits.reversible_lane.v1.TravelDirection
-	6,  // 10: openits.reversible_lane.v1.TransitionTimeout.started_at:type_name -> google.protobuf.Timestamp
-	6,  // 11: openits.reversible_lane.v1.TransitionTimeout.occurred_at:type_name -> google.protobuf.Timestamp
-	12, // [12:12] is the sub-list for method output_type
-	12, // [12:12] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	7,  // 5: openits.reversible_lane.v1.LaneStateChanged.source:type_name -> openits.types.v1.WireSource
+	2,  // 6: openits.reversible_lane.v1.LcsConflictDetected.lcs_direction_a:type_name -> openits.reversible_lane.v1.LcsIndication
+	2,  // 7: openits.reversible_lane.v1.LcsConflictDetected.lcs_direction_b:type_name -> openits.reversible_lane.v1.LcsIndication
+	6,  // 8: openits.reversible_lane.v1.LcsConflictDetected.occurred_at:type_name -> google.protobuf.Timestamp
+	7,  // 9: openits.reversible_lane.v1.LcsConflictDetected.source:type_name -> openits.types.v1.WireSource
+	1,  // 10: openits.reversible_lane.v1.TransitionTimeout.from_direction:type_name -> openits.reversible_lane.v1.TravelDirection
+	1,  // 11: openits.reversible_lane.v1.TransitionTimeout.to_direction:type_name -> openits.reversible_lane.v1.TravelDirection
+	6,  // 12: openits.reversible_lane.v1.TransitionTimeout.started_at:type_name -> google.protobuf.Timestamp
+	6,  // 13: openits.reversible_lane.v1.TransitionTimeout.occurred_at:type_name -> google.protobuf.Timestamp
+	14, // [14:14] is the sub-list for method output_type
+	14, // [14:14] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_openits_reversible_lane_v1_events_proto_init() }

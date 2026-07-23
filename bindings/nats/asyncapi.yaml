@@ -1183,6 +1183,35 @@ components:
             name: openits.dms.message-activation-failed.v1
             payload:
                 schema:
+                    $defs:
+                        WireSource:
+                            additionalProperties: false
+                            properties:
+                                decoder:
+                                    type: string
+                                indiana-code:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                indiana-param:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                message-id:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                oid:
+                                    type: string
+                                oid-value:
+                                    type: string
+                                register:
+                                    type: string
+                                register-value:
+                                    type: string
+                            required:
+                                - decoder
+                            type: object
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
@@ -1228,6 +1257,8 @@ components:
                             type: string
                         sequence:
                             type: string
+                        source:
+                            $ref: '#/$defs/WireSource'
                         source-device-id:
                             maxLength: 64
                             minLength: 1
@@ -3005,6 +3036,35 @@ components:
             name: openits.reversible-lane.lane-state-changed.v1
             payload:
                 schema:
+                    $defs:
+                        WireSource:
+                            additionalProperties: false
+                            properties:
+                                decoder:
+                                    type: string
+                                indiana-code:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                indiana-param:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                message-id:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                oid:
+                                    type: string
+                                oid-value:
+                                    type: string
+                                register:
+                                    type: string
+                                register-value:
+                                    type: string
+                            required:
+                                - decoder
+                            type: object
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
@@ -3054,6 +3114,8 @@ components:
                             type: string
                         sequence:
                             type: string
+                        source:
+                            $ref: '#/$defs/WireSource'
                         source-device-id:
                             maxLength: 64
                             minLength: 1
@@ -3097,6 +3159,35 @@ components:
             name: openits.reversible-lane.lcs-conflict-detected.v1
             payload:
                 schema:
+                    $defs:
+                        WireSource:
+                            additionalProperties: false
+                            properties:
+                                decoder:
+                                    type: string
+                                indiana-code:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                indiana-param:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                message-id:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                oid:
+                                    type: string
+                                oid-value:
+                                    type: string
+                                register:
+                                    type: string
+                                register-value:
+                                    type: string
+                            required:
+                                - decoder
+                            type: object
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
@@ -3136,6 +3227,8 @@ components:
                             type: string
                         sequence:
                             type: string
+                        source:
+                            $ref: '#/$defs/WireSource'
                         source-device-id:
                             maxLength: 64
                             minLength: 1
@@ -3567,6 +3660,35 @@ components:
             name: openits.rsu.rsu-broadcast-sample.v1
             payload:
                 schema:
+                    $defs:
+                        WireSource:
+                            additionalProperties: false
+                            properties:
+                                decoder:
+                                    type: string
+                                indiana-code:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                indiana-param:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                message-id:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                oid:
+                                    type: string
+                                oid-value:
+                                    type: string
+                                register:
+                                    type: string
+                                register-value:
+                                    type: string
+                            required:
+                                - decoder
+                            type: object
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
@@ -3610,6 +3732,8 @@ components:
                             type: integer
                         sequence:
                             type: string
+                        source:
+                            $ref: '#/$defs/WireSource'
                         source-device-id:
                             maxLength: 64
                             minLength: 1
@@ -3724,6 +3848,35 @@ components:
             name: openits.rsu.rsu-channel-fault.v1
             payload:
                 schema:
+                    $defs:
+                        WireSource:
+                            additionalProperties: false
+                            properties:
+                                decoder:
+                                    type: string
+                                indiana-code:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                indiana-param:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                message-id:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                oid:
+                                    type: string
+                                oid-value:
+                                    type: string
+                                register:
+                                    type: string
+                                register-value:
+                                    type: string
+                            required:
+                                - decoder
+                            type: object
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
@@ -3751,6 +3904,8 @@ components:
                             type: string
                         sequence:
                             type: string
+                        source:
+                            $ref: '#/$defs/WireSource'
                         source-device-id:
                             maxLength: 64
                             minLength: 1
@@ -3794,6 +3949,35 @@ components:
             name: openits.rsu.rsu-gps-status-change.v1
             payload:
                 schema:
+                    $defs:
+                        WireSource:
+                            additionalProperties: false
+                            properties:
+                                decoder:
+                                    type: string
+                                indiana-code:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                indiana-param:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                message-id:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                oid:
+                                    type: string
+                                oid-value:
+                                    type: string
+                                register:
+                                    type: string
+                                register-value:
+                                    type: string
+                            required:
+                                - decoder
+                            type: object
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
@@ -3831,6 +4015,8 @@ components:
                             type: integer
                         sequence:
                             type: string
+                        source:
+                            $ref: '#/$defs/WireSource'
                         source-device-id:
                             maxLength: 64
                             minLength: 1
@@ -3940,6 +4126,35 @@ components:
             name: openits.rsu.rsu-srm-received.v1
             payload:
                 schema:
+                    $defs:
+                        WireSource:
+                            additionalProperties: false
+                            properties:
+                                decoder:
+                                    type: string
+                                indiana-code:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                indiana-param:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                message-id:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                oid:
+                                    type: string
+                                oid-value:
+                                    type: string
+                                register:
+                                    type: string
+                                register-value:
+                                    type: string
+                            required:
+                                - decoder
+                            type: object
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
@@ -3969,6 +4184,8 @@ components:
                             type: string
                         sequence:
                             type: string
+                        source:
+                            $ref: '#/$defs/WireSource'
                         source-device-id:
                             maxLength: 64
                             minLength: 1
@@ -4016,6 +4233,35 @@ components:
             name: openits.rsu.rsu-srm-status-change.v1
             payload:
                 schema:
+                    $defs:
+                        WireSource:
+                            additionalProperties: false
+                            properties:
+                                decoder:
+                                    type: string
+                                indiana-code:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                indiana-param:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                message-id:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                oid:
+                                    type: string
+                                oid-value:
+                                    type: string
+                                register:
+                                    type: string
+                                register-value:
+                                    type: string
+                            required:
+                                - decoder
+                            type: object
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
@@ -4059,6 +4305,8 @@ components:
                             type: string
                         sequence:
                             type: string
+                        source:
+                            $ref: '#/$defs/WireSource'
                         source-device-id:
                             maxLength: 64
                             minLength: 1
@@ -4181,6 +4429,35 @@ components:
             name: openits.rsu.rsu-tim-broadcast.v1
             payload:
                 schema:
+                    $defs:
+                        WireSource:
+                            additionalProperties: false
+                            properties:
+                                decoder:
+                                    type: string
+                                indiana-code:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                indiana-param:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                message-id:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                oid:
+                                    type: string
+                                oid-value:
+                                    type: string
+                                register:
+                                    type: string
+                                register-value:
+                                    type: string
+                            required:
+                                - decoder
+                            type: object
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
@@ -4210,6 +4487,8 @@ components:
                             type: integer
                         sequence:
                             type: string
+                        source:
+                            $ref: '#/$defs/WireSource'
                         source-device-id:
                             maxLength: 64
                             minLength: 1

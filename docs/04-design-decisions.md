@@ -650,6 +650,44 @@ gives one revision history per service's event surface.
 support, the companion split could be dropped entirely and notifications folded
 back into each service core.
 
+## Wire-source provenance is selective, not automatic
+
+**What we chose.** `openits-types:wire-source` is added to a notification's
+payload only when the event is decoded from a device's own wire protocol (an
+NTCIP MIB object, a J2735 message, a vendor HR log row, a PLC register read) —
+never as a default addition to every notification. A notification whose
+payload openits itself computes (an aggregate, a threshold evaluation, an
+inferred lifecycle classification, a command acknowledgment) leaves the
+grouping off entirely, even where a reviewer might expect provenance "for
+consistency."
+
+**The decoded-vs-synthesized test.** Read the notification's own payload
+leaves, not its ce-type or module doc, and ask: does at least one leaf name or
+mirror a concrete field the device itself reported (an OID, a message type, a
+register address, a diagnostic bit) that openits merely relays? Or did openits
+compute the payload from a rule, threshold, watchdog, or classification over
+some *other* observed state? The first is wire-sourced; the second is not,
+regardless of how device-adjacent the notification sounds.
+
+**Examples from a full-model sweep.**
+- **DMS `message-activation-failed` — yes.** Its `error-type`/`error-position`
+  leaves are direct citations of the sign's own reported NTCIP 1203
+  `dmsMultiSyntaxError`/`dmsMultiSyntaxErrorPosition` diagnostic objects, not an
+  openits-authored success/fail boolean.
+- **Reversible-lane `lane-state-changed` / `lcs-conflict-detected` — yes.** The
+  entire payload *is* the facility PLC's decoded register readback; "conflict"
+  is what the two decoded registers show, not an openits computation over
+  them.
+- **RSU `rsu-tim-cleared` — no.** Its `reason` (expired / cleared-by-operator /
+  superseded / rsu-restart / other) is an openits-inferred classification of
+  *why* broadcasting stopped, not a field the RSU itself reported on the wire.
+
+**What we'd revisit.** If a decoder family later ships a device-reported
+"clear reason" code instead of openits inferring one from lifecycle state,
+`rsu-tim-cleared` becomes a yes — the grouping is additive and presence-gated
+per instance, so retrofitting it onto an existing notification is
+non-breaking.
+
 ---
 
 The decisions in this document are the load-bearing ones. Smaller

@@ -40,6 +40,13 @@ enums drift and got deliberately removed repo-wide. Enums are fine for
 truly orthogonal axes (what-was-selected, source-class) that don't mirror
 kinds.
 
+**wire-source (selective):** add `uses openits-types:wire-source;` (last
+statement in the notification) **iff** the event is decoded from a
+device wire protocol (NTCIP MIB, J2735 message, vendor HR log).
+Synthesized events (computed intervals/reports, inferred state
+transitions, command acks) must NOT carry it — presence asserts wire
+provenance. When in doubt, leave it off: adding later is non-breaking.
+
 ## Naming
 
 The notification's last name token becomes the subject's `{event}` token:

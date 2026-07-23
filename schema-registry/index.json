@@ -71,7 +71,8 @@
         "2026-07-13",
         "2026-07-14",
         "2026-07-16",
-        "2026-07-21"
+        "2026-07-21",
+        "2026-07-23"
       ],
       "events": [
         "openits.dms.fault-cleared.v1",
@@ -127,7 +128,8 @@
             "2026-07-13",
             "2026-07-14",
             "2026-07-16",
-            "2026-07-21"
+            "2026-07-21",
+            "2026-07-23"
           ],
           "refStd": [
             "NTCIP 1203 v03",
@@ -441,7 +443,8 @@
         "2026-07-13",
         "2026-07-14",
         "2026-07-15",
-        "2026-07-21"
+        "2026-07-21",
+        "2026-07-23"
       ],
       "events": [
         "openits.reversible-lane.fault-cleared.v1",
@@ -491,7 +494,8 @@
             "2026-07-12",
             "2026-07-13",
             "2026-07-14",
-            "2026-07-21"
+            "2026-07-21",
+            "2026-07-23"
           ],
           "refStd": [
             "MUTCD 11th ed. Chapter 4M",
@@ -537,7 +541,8 @@
         "2026-07-15",
         "2026-07-16",
         "2026-07-17",
-        "2026-07-21"
+        "2026-07-21",
+        "2026-07-23"
       ],
       "events": [
         "openits.rsu.fault-cleared.v1",
@@ -615,10 +620,12 @@
             "2026-07-14",
             "2026-07-15",
             "2026-07-17",
-            "2026-07-21"
+            "2026-07-21",
+            "2026-07-23"
           ],
           "refStd": [
             "NTCIP 1211",
+            "NTCIP 1218",
             "RFC 7950 section 11",
             "RFC 8407 section 4.3 (identifier naming)",
             "SAE J2735",
@@ -1306,6 +1313,13 @@
         "openits-dms-events/2026-07-21/schema.json",
         "openits-dms-events/2026-07-21/schema.proto",
         "openits-dms-events/2026-07-21/schema.yang"
+      ],
+      "2026-07-23": [
+        "openits-dms-events/2026-07-23/MANIFEST.json",
+        "openits-dms-events/2026-07-23/README.md",
+        "openits-dms-events/2026-07-23/schema.json",
+        "openits-dms-events/2026-07-23/schema.proto",
+        "openits-dms-events/2026-07-23/schema.yang"
       ]
     },
     "openits-dms-mutcd": {
@@ -1505,6 +1519,13 @@
         "openits-reversible-lane-events/2026-07-21/schema.json",
         "openits-reversible-lane-events/2026-07-21/schema.proto",
         "openits-reversible-lane-events/2026-07-21/schema.yang"
+      ],
+      "2026-07-23": [
+        "openits-reversible-lane-events/2026-07-23/MANIFEST.json",
+        "openits-reversible-lane-events/2026-07-23/README.md",
+        "openits-reversible-lane-events/2026-07-23/schema.json",
+        "openits-reversible-lane-events/2026-07-23/schema.proto",
+        "openits-reversible-lane-events/2026-07-23/schema.yang"
       ]
     },
     "openits-reversible-lane-types": {
@@ -1543,6 +1564,13 @@
         "openits-rsu-events/2026-07-21/MANIFEST.json",
         "openits-rsu-events/2026-07-21/schema.json",
         "openits-rsu-events/2026-07-21/schema.yang"
+      ],
+      "2026-07-23": [
+        "openits-rsu-events/2026-07-23/MANIFEST.json",
+        "openits-rsu-events/2026-07-23/README.md",
+        "openits-rsu-events/2026-07-23/schema.json",
+        "openits-rsu-events/2026-07-23/schema.proto",
+        "openits-rsu-events/2026-07-23/schema.yang"
       ]
     },
     "openits-rsu-types": {

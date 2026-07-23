@@ -9,6 +9,10 @@
     "request-type": "openits-v2x-messaging-types:srm-priority-request",
     "approach": 2,
     "eta-seconds": 18,
-    "vehicle-class": "transit"
+    "vehicle-class": "transit",
+    "source": {
+      "decoder": "j2735",
+      "message-id": 29
+    }
   }
 }

@@ -502,6 +502,7 @@ messages:
         owner: 6
         reason: 3
         sequence: 7
+        source: 100
         source_device_id: 8
     openits.dms.v1.Messages:
         slot: 1
@@ -1297,6 +1298,7 @@ messages:
         previous_direction: 2
         previous_state: 1
         sequence: 10
+        source: 100
         source_device_id: 11
     openits.reversible_lane.v1.LcsConflictDetected:
         kind: 99
@@ -1308,6 +1310,7 @@ messages:
         owner: 6
         segment_id: 1
         sequence: 7
+        source: 100
         source_device_id: 8
     openits.reversible_lane.v1.ReversibleLane:
         config: 1
@@ -1785,6 +1788,7 @@ messages:
         owner: 6
         sample_window_s: 2
         sequence: 7
+        source: 100
         source_device_id: 1
     openits.rsu.v1.RsuCertificateExpiring:
         certificate_id: 2
@@ -1807,6 +1811,7 @@ messages:
         occurred_at: 7
         owner: 8
         sequence: 9
+        source: 100
         source_device_id: 10
     openits.rsu.v1.RsuConfig:
         elevation: 1
@@ -1835,6 +1840,7 @@ messages:
         previous_status: 2
         satellites: 4
         sequence: 9
+        source: 100
         source_device_id: 10
     openits.rsu.v1.RsuSecurity:
         certificates: 3
@@ -1902,6 +1908,7 @@ messages:
         request_id: 2
         request_type: 4
         sequence: 12
+        source: 100
         source_device_id: 13
         vehicle_class: 7
         vehicle_id: 3
@@ -1915,6 +1922,7 @@ messages:
         previous_status: 4
         request_id: 2
         sequence: 10
+        source: 100
         source_device_id: 11
         vehicle_id: 3
     openits.rsu.v1.RsuState:
@@ -1951,6 +1959,7 @@ messages:
         owner: 7
         priority: 3
         sequence: 8
+        source: 100
         source_device_id: 9
     openits.rsu.v1.RsuTimBroadcastStateChanged:
         active_tim_count: 3
