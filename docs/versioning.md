@@ -51,8 +51,14 @@ tag versions *the collection*; the revision versions *each module*.
 - Add new fields/messages/enums by **appending** — never renumber, never
   reuse a retired field number, never insert into the middle of an enum
   (ygot ordinals are positional).
-- `identityref` leaves render as proto **strings**, so adding new identities
-  is non-breaking.
+- `identityref` leaves render as proto **strings** carrying
+  `defining-module:identity-name`, so **adding** new identities is
+  non-breaking — but **renaming** an identity, or moving it to a different
+  module, changes the string every conforming producer emits and is
+  **wire-breaking**, exactly as if a field had been renumbered. (Some older
+  module revision histories describe identityref renames as "wire-neutral";
+  those notes are frozen in their revision statements and are superseded by
+  this rule.)
 
 If `buf breaking` flags a genuinely necessary wire break, that is a
 minor-version bump on the v0.x line (or a major + `/v2` post-1.0).

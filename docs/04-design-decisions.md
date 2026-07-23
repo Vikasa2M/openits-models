@@ -688,6 +688,43 @@ regardless of how device-adjacent the notification sounds.
 per instance, so retrofitting it onto an existing notification is
 non-breaking.
 
+## Identity renames are wire-breaking; ce-dataschema keys on the defining events module
+
+**What we chose.** `identityref` leaves render as proto **strings** carrying
+`defining-module:identity-name`. **Adding** a new identity is non-breaking.
+But **renaming** an identity, or moving it to a different module, changes
+the string every conforming producer emits and is **wire-breaking**, exactly
+as if a field had been renumbered. Some older module revision histories
+describe identityref renames as "wire-neutral" — those notes are frozen in
+their revision statements (frozen history is never rewritten) and are
+superseded by this rule going forward.
+
+**Why ce-dataschema keys on the defining events module, not a base module.**
+The generated AsyncAPI deliberately carries no per-module, revision-dated
+`ce-dataschema` constants: the earlier hand-maintained approach kept those
+constants in lockstep by hand, which forced no-op revision bumps on modules
+whose schema hadn't actually changed, just to keep the lockstep current.
+When a consumer or a binding needs a dataschema URL, it is keyed on the
+**defining events module and its revision**
+(`.../openits-<service>-events/<revision>`) — never on a base or types
+module the event's payload happens to compose. The events module owns the
+notification's shape; the modules it imports are not the versioning unit.
+
+**Augment-extended shapes are expected, not violations.** Schema-registry
+snapshots are per-module, including augments. Two conformant producers
+emitting the same `ce-type` can legitimately carry different wire shapes —
+one plain, one augment-extended — depending on which augments are deployed
+alongside the base module. Consumers must treat unknown additive fields on
+a known `ce-type` as an expected vendor/agency/community extension (per
+`06-extension-model.md`), not as a schema violation to reject.
+
+**What we'd revisit.** Nothing on the rename rule — that follows directly
+from proto strings being content-addressed by module and identity name. If
+a future generator version could express per-augment-set dataschema
+variants without reintroducing the no-op revision-bump churn the old
+lockstep constants caused, we'd reconsider emitting a richer
+`ce-dataschema` value instead of the plain defining-module URL.
+
 ---
 
 The decisions in this document are the load-bearing ones. Smaller

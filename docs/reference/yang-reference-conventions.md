@@ -12,6 +12,7 @@ Authoring doctrine — the load-bearing rules for writing a module:
 
 - [Constraint placement (`must`) doctrine](#constraint-placement-must-doctrine)
 - [Identity vs. enum: which axis gets which](#identity-vs-enum-which-axis-gets-which)
+- [counter64 vs uint64](#counter64-vs-uint64)
 - [Module placement: the ≥3-service rule](#module-placement-the-3-service-rule)
 - [Config/state idiom](#configstate-idiom)
 
@@ -480,6 +481,28 @@ A classification axis is either a YANG `identity` hierarchy or a closed
 
 When in doubt, ask whether a conforming vendor could ship a valid new member
 tomorrow. If yes, it is an identity.
+
+## counter64 vs uint64
+
+Another axis that's easy to pick wrong by size alone: whether a leaf is
+`yang:counter64` or a plain `uint64`/`uint32`. Choose by semantics, not by
+how large the value can get:
+
+- **Monotonically increasing, wrap-on-overflow ⇒ `yang:counter64`.** Use it
+  only for counters that always increase (until they wrap) and where that
+  wrap behavior is meaningful to a consumer computing a rate or a delta.
+  Signal-control's per-detector counts are the precedent: a poller reads
+  successive values and derives a rate, and must know the value can wrap
+  rather than reset.
+- **Everything else ⇒ plain `uint64`/`uint32`.** Gauges (a value that can go
+  up or down), sizes, durations, and identifiers are not counters — use the
+  plain unsigned integer typedefs even when the value happens to only ever
+  increase in practice.
+
+New counters follow this rule going forward. Existing leaves are not
+renamed or retyped to conform to it retroactively — that would be a
+wire-breaking change to a frozen revision for a naming-convention cleanup,
+which is not worth the churn.
 
 ## Module placement: the ≥3-service rule
 
