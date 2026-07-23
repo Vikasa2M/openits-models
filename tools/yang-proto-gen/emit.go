@@ -251,8 +251,14 @@ var configStateNames = map[string]bool{"config": true, "state": true}
 // under different parents (pavement/sensor + diagnostics/sensor) both qualify
 // to PavementSensor/DiagnosticsSensor regardless of declaration order — a
 // rename can never be triggered by reordering the YANG. Actions (c.RPC) are
-// skipped (their request/response messages are named separately). config/state
-// containers are traversed (deeper lists can collide) but never counted, since
+// skipped (their request/response messages are named separately). choice/case
+// nodes are transparent — the walk descends through them without counting the
+// choice/case itself — so a list/container declared inside a case is seen
+// exactly as if it were a direct child, matching EmitMessage's own choice/case
+// handling (a naive walk that stopped at the choice node would under-count and
+// miss a real collision between a case-nested name and one elsewhere in the
+// tree). config/state containers are traversed (deeper lists can collide) but
+// never counted, since
 // they are always parent-qualified anyway. A collision-free tree returns an
 // empty set, so every name stays bare and output is byte-identical to before.
 func collisionSet(root *yang.Entry) map[string]bool {
@@ -271,12 +277,34 @@ func collisionSet(root *yang.Entry) map[string]bool {
 // collision within one tree, while two trees that route to DIFFERENT
 // go_packages never see each other's names at all — each root's own
 // collisionSet call is just the len(roots) == 1 case of this.
+//
+// Deliberately NOT done here (deviation, not an oversight): mirroring
+// EmitMessage's shared-grouping shortcut by skipping the count for a
+// container that resolves to a registered shared grouping (via groupingOf +
+// a `shared map[string]string` parameter, so a shared message's single
+// nested emission doesn't get miscounted as a collision candidate). Doing
+// that properly requires threading `shared` through every caller of this
+// function and of collisionSet — including main.go's Generate (two call
+// sites) and this package's other test files — which is out of scope for a
+// change confined to this file plus its own test file. It is also lower risk
+// to defer: the only sharable shape (see SharedGroupings) is a single nested
+// container, which this walk already counts as ONE occurrence at its use
+// site regardless, so the gap this would close is collision-set/emission
+// mismatch for a shared grouping used at sites whose bare container name
+// also collides with an unrelated same-named container elsewhere in the
+// tree — a narrower and so-far unobserved case, unlike the choice/case gap
+// above (which affects any list/container nested in a case, and is fixed
+// here).
 func collisionSetForRoots(roots []*yang.Entry) map[string]bool {
 	counts := map[string]int{}
 	var walk func(e *yang.Entry)
 	walk = func(e *yang.Entry) {
 		for _, c := range sortedChildren(e) {
 			if c.RPC != nil {
+				continue
+			}
+			if c.IsChoice() || c.IsCase() {
+				walk(c) // transparent in the data tree: count what's inside, not the choice/case itself
 				continue
 			}
 			if !c.IsList() && !c.IsContainer() {
@@ -396,11 +424,21 @@ func EmitMessage(e *yang.Entry, msgName string, lock *FieldLock, shared map[stri
 			}
 			fmt.Fprintf(&body, "  repeated %s %s = %d;\n", sub, fn, tag)
 		case c.IsContainer():
-			if grpName, ok := groupingOf(c); ok {
-				if sharedMsg, isShared := shared[grpName]; isShared {
-					refName := emitSharedMessage(c, sharedMsg, lock, shared, out)
-					fmt.Fprintf(&body, "  %s %s = %d;\n", refName, fn, tag)
-					continue
+			// config/state containers always emit as per-parent nested
+			// messages, even when sourced from a shared grouping (the
+			// groupingOf/shared shortcut below is guarded off for them) —
+			// the config/state split is a per-service surface convention
+			// (see configStateNames/nestedMessageName), not a shared shape,
+			// so a "config" container must never be collapsed into one
+			// message shared across services just because its body happens
+			// to come from a >=2-site container-shaped `uses`.
+			if !configStateNames[c.Name] {
+				if grpName, ok := groupingOf(c); ok {
+					if sharedMsg, isShared := shared[grpName]; isShared {
+						refName := emitSharedMessage(c, sharedMsg, lock, shared, out)
+						fmt.Fprintf(&body, "  %s %s = %d;\n", refName, fn, tag)
+						continue
+					}
 				}
 			}
 			sub := nestedMessageName(msgName, c, out.Collisions)
@@ -602,30 +640,73 @@ func leafFieldType(c *yang.Entry, nested *strings.Builder, out *ProtoFile) strin
 // skipping choice/case ancestors on ".." and looking through them on descent.
 // Absolute paths (which need module-prefix resolution and never hit the
 // choice/case ascent bug) are delegated to Find unchanged.
+//
+// The returned entry is always the chain's final, non-leafref target (see
+// resolveLeafrefDepth): if that target is itself a leafref, resolution
+// continues through it rather than stopping at the first hop, up to
+// maxLeafrefDepth hops.
 func resolveLeafref(c *yang.Entry) *yang.Entry {
+	return resolveLeafrefDepth(c, 0)
+}
+
+// maxLeafrefDepth caps the number of leafref-to-leafref hops
+// resolveLeafrefDepth will follow while chasing leaf c's path to its
+// ultimate non-leafref target. RFC 7950 forbids a leafref chain from
+// cycling back on itself, and yanglint's upstream validator already rejects
+// a cyclic chain today — so on any input this generator actually processes,
+// no chain comes remotely close to this cap (the corpus's deepest chain
+// today is a single hop). It exists purely as a fail-safe: without it, a
+// cyclic chain (a hand-built synthetic Entry, as in this package's tests, or
+// some future looser upstream validator letting one through) would send
+// resolveLeafrefDepth into unbounded recursion and crash the process with a
+// stack overflow instead of falling back to the historical "string" proto
+// type.
+const maxLeafrefDepth = 16
+
+// resolveLeafrefDepth is resolveLeafref's depth-guarded core. depth counts
+// leafref hops already followed to reach c; once it reaches maxLeafrefDepth
+// this returns nil immediately, without attempting another hop, so a cyclic
+// leafref chain (c1 -> c2 -> c1 -> ...) terminates instead of recursing
+// forever. Otherwise it performs the one-hop path walk documented on
+// resolveLeafref above, and — if the resolved entry is ITSELF a leafref —
+// recurses to follow that next hop too, so every caller always receives
+// either the chain's final non-leafref leaf or nil, never an intermediate
+// leafref entry.
+func resolveLeafrefDepth(c *yang.Entry, depth int) *yang.Entry {
+	if depth >= maxLeafrefDepth {
+		return nil
+	}
 	path := stripLeafrefPredicates(c.Type.Path)
 	if path == "" {
 		return nil
 	}
+	var e *yang.Entry
 	if strings.HasPrefix(path, "/") {
-		return c.Find(path)
-	}
-	e := c
-	for _, part := range strings.Split(path, "/") {
-		switch part {
-		case "", ".":
-			// empty segment (e.g. a trailing "/") or current-node ref: skip
-		case "..":
-			e = dataParent(e)
-		default:
-			if i := strings.IndexByte(part, ':'); i >= 0 {
-				part = part[i+1:] // drop any "prefix:" qualifier
+		e = c.Find(path)
+	} else {
+		e = c
+		for _, part := range strings.Split(path, "/") {
+			switch part {
+			case "", ".":
+				// empty segment (e.g. a trailing "/") or current-node ref: skip
+			case "..":
+				e = dataParent(e)
+			default:
+				if i := strings.IndexByte(part, ':'); i >= 0 {
+					part = part[i+1:] // drop any "prefix:" qualifier
+				}
+				e = dataChild(e, part)
 			}
-			e = dataChild(e, part)
+			if e == nil {
+				return nil
+			}
 		}
-		if e == nil {
-			return nil
-		}
+	}
+	if e == nil {
+		return nil
+	}
+	if e.Type != nil && e.Type.Kind == yang.Yleafref {
+		return resolveLeafrefDepth(e, depth+1)
 	}
 	return e
 }
