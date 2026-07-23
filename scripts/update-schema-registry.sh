@@ -106,6 +106,12 @@ MODULES=(
 # without touching this script.
 AUGMENT_GLOB="${ROOT_DIR}/yang/augments/*.yang"
 
+# Deviation modules are versioned/snapshotted like augments: they are
+# published contract surface (check-revisions scans yang/deviations/),
+# but are not core modules. The loop below globs yang/deviations/*.yang
+# so new deviation modules are picked up automatically.
+DEVIATION_GLOB="${ROOT_DIR}/yang/deviations/*.yang"
+
 # PROTO_ROUTE_PREFIXES/PROTO_ROUTE_FILES mirror tools/yang-proto-gen's
 # pkgmap.go serviceRoutes table: a YANG module-name prefix maps to the
 # generated proto file (under api/proto/openits/v1/) that module's
@@ -352,6 +358,47 @@ EOF
 
 Immutable snapshot of the augment module \`${base}\` at revision ${rev}.
 Augments add nodes to a core OpenITS module without modifying it. See
+[../../docs/plans/yang-extension-model.md](../../docs/plans/yang-extension-model.md).
+EOF
+    echo "Wrote ${dest}"
+    wrote_any=1
+done
+
+# Deviations — mirrors the augment loop above. Deviation modules live
+# under yang/deviations/<subject>.yang and snapshot to
+# schema-registry/<subject>/<revision>/. Like augments, deviations never
+# declare notifications of their own, so there is no proto/schema.json
+# to carry — schema.yang + MANIFEST.json + README.md only.
+for src_yang in ${DEVIATION_GLOB}; do
+    [[ -f "${src_yang}" ]] || continue
+    base="$(basename "${src_yang}" .yang)"
+    rev="$(read_revision "${src_yang}")"
+    if [[ -z "${rev}" ]]; then
+        echo "Error: deviation ${base} has no revision statement" >&2
+        exit 1
+    fi
+    dest="${REGISTRY}/${base}/${rev}"
+    if [[ -d "${dest}" ]]; then
+        echo "Skip  ${base}@${rev} (already present; revisions are immutable)"
+        continue
+    fi
+    mkdir -p "${dest}"
+    cp "${src_yang}" "${dest}/schema.yang"
+    cat > "${dest}/MANIFEST.json" <<EOF
+{
+  "module": "${base}",
+  "revision": "${rev}",
+  "kind": "deviation",
+  "files": ["schema.yang"]
+}
+EOF
+    cat > "${dest}/README.md" <<EOF
+# ${base} — revision ${rev}
+
+Immutable snapshot of the deviation module \`${base}\` at revision ${rev}.
+Deviations tighten a core OpenITS module to conform to an external
+reference (e.g. MUTCD, FCC band plan) for a given jurisdiction, without
+modifying the core module. See
 [../../docs/plans/yang-extension-model.md](../../docs/plans/yang-extension-model.md).
 EOF
     echo "Wrote ${dest}"

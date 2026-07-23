@@ -1,0 +1,6 @@
+{
+  "module": "openits-signal-control-mutcd",
+  "revision": "2026-07-21",
+  "kind": "deviation",
+  "files": ["schema.yang"]
+}

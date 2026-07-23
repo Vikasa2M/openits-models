@@ -1308,6 +1308,13 @@
         "openits-dms-events/2026-07-21/schema.yang"
       ]
     },
+    "openits-dms-mutcd": {
+      "2026-07-21": [
+        "openits-dms-mutcd/2026-07-21/MANIFEST.json",
+        "openits-dms-mutcd/2026-07-21/README.md",
+        "openits-dms-mutcd/2026-07-21/schema.yang"
+      ]
+    },
     "openits-dms-types": {
       "2026-06-11": [
         "openits-dms-types/2026-06-11/MANIFEST.json",
@@ -1550,6 +1557,13 @@
         "openits-rsu-types/2026-07-21/schema.yang"
       ]
     },
+    "openits-rsu-us-band-plan": {
+      "2026-07-21": [
+        "openits-rsu-us-band-plan/2026-07-21/MANIFEST.json",
+        "openits-rsu-us-band-plan/2026-07-21/README.md",
+        "openits-rsu-us-band-plan/2026-07-21/schema.yang"
+      ]
+    },
     "openits-scms": {
       "2026-07-21": [
         "openits-scms/2026-07-21/MANIFEST.json",
@@ -1617,6 +1631,20 @@
         "openits-signal-control-fault-events/2026-07-12/schema.json",
         "openits-signal-control-fault-events/2026-07-12/schema.proto",
         "openits-signal-control-fault-events/2026-07-12/schema.yang"
+      ]
+    },
+    "openits-signal-control-mutcd": {
+      "2026-07-21": [
+        "openits-signal-control-mutcd/2026-07-21/MANIFEST.json",
+        "openits-signal-control-mutcd/2026-07-21/README.md",
+        "openits-signal-control-mutcd/2026-07-21/schema.yang"
+      ]
+    },
+    "openits-signal-control-mutcd-strict": {
+      "2026-07-21": [
+        "openits-signal-control-mutcd-strict/2026-07-21/MANIFEST.json",
+        "openits-signal-control-mutcd-strict/2026-07-21/README.md",
+        "openits-signal-control-mutcd-strict/2026-07-21/schema.yang"
       ]
     },
     "openits-signal-control-overlap-events": {
