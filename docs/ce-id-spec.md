@@ -26,6 +26,18 @@ ce-id  = ULID(timestamp = ce-time-ms, randomness = digest[0:10])
 - **Collision-resistant enough:** 80 bits of content-derived randomness inside
   the ULID within a millisecond window.
 
+## Test vector
+
+| Field | Value |
+|---|---|
+| `ce-source` | `urn:openits:us-xx:example-agency:d01:dms:demo-sign-1` |
+| `ce-type` | `openits.dms.message-activation-failed.v1` |
+| `stable-time` | `2026-07-22T12:00:00.000Z` |
+| payload | `openits.dms.v1.MessageActivationFailed{reason: "validation"}`, deterministic proto3 encoding `1a0a76616c69646174696f6e` |
+| **`ce-id`** | `01KY4V4VG0ZNQNVEQB1WEBSX24` |
+
+Any implementation of this algorithm must reproduce this `ce-id` exactly.
+
 ## Non-goals
 
 The transport, envelope framing, and the concrete Go implementation are the
