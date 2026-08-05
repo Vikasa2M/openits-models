@@ -1,0 +1,81 @@
+module openits-schedule {
+  yang-version 1.1;
+  namespace "urn:openits:yang:schedule";
+  prefix openits-schedule;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+  description
+    "Platform-layer time-of-day scheduling primitives shared by every
+     service that carries an NTCIP 1201-style day-plan scheduler
+     (signal-control time-base, DMS message scheduling, ramp-metering
+     plan selection): the wall-clock time-of-day typedef and the
+     calendar-selector grouping — the months / days-of-week /
+     days-of-month axes of a dayPlanScheduleTable entry.
+
+     Only the calendar primitives are shared. Day-plan ACTION payloads
+     (what happens at a scheduled time) are service-specific and stay in
+     each service module, as do the day-plan / schedule-entry lists
+     themselves, whose keys and day-plan references are local.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  reference "NTCIP 1201 (dayPlan / dayPlanScheduleTable).";
+
+  openits-types:openits-version "0.1.0";
+
+  revision 2026-08-05 {
+    description
+      "Initial revision: extract the time-of-day typedef and the
+       calendar-selector grouping previously triplicated verbatim in
+       openits-signal-control, openits-dms, and openits-ramp-metering
+       (model-review remediation, 2026-08). Wire-neutral: leaf names,
+       paths, and enum values are unchanged at every use site.";
+    reference "NTCIP 1201.";
+  }
+
+  typedef time-of-day {
+    type string {
+      pattern '(([01][0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]';
+    }
+    description "Wall-clock time of day, 24-hour HH:MM:SS.";
+  }
+
+  grouping calendar-selector {
+    description
+      "The calendar axes of a schedule-entry (NTCIP 1201
+       dayPlanScheduleTable): which months, days of week, and days of
+       month a rule applies to. An empty axis means 'all'. Compose into a
+       service's schedule-entry list alongside its local key and day-plan
+       reference.";
+    reference "NTCIP 1201 (dayPlanScheduleTable).";
+
+    leaf-list months {
+      type enumeration {
+        enum january { value 1; } enum february { value 2; } enum march { value 3; }
+        enum april { value 4; } enum may { value 5; } enum june { value 6; }
+        enum july { value 7; } enum august { value 8; } enum september { value 9; }
+        enum october { value 10; } enum november { value 11; } enum december { value 12; }
+      }
+      description "Months this rule applies to. Empty means all months.";
+    }
+    leaf-list days-of-week {
+      type enumeration {
+        enum monday { value 1; } enum tuesday { value 2; } enum wednesday { value 3; }
+        enum thursday { value 4; } enum friday { value 5; } enum saturday { value 6; }
+        enum sunday { value 7; }
+      }
+      description "Days of week this rule applies to. Empty means all days of week.";
+    }
+    leaf-list days-of-month {
+      type uint8 { range "1..31"; }
+      description "Days of month this rule applies to. Empty means all days of month.";
+    }
+  }
+}

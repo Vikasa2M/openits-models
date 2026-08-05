@@ -7,11 +7,11 @@ import (
 // Cabinet power is the leading comm-loss indicator; an unreported power source
 // defeats the whole point of modeling it as telemetry rather than a fault.
 func TestCabinetPower_SourceReported(t *T, obs *Observation) {
-	cp := obs.Device.GetSignalController().GetCabinetPower()
+	cp := obs.Device.GetSignalController().GetCabinetPower().GetState()
 	if cp == nil {
 		return
 	}
-	if cp.PowerSource == yangpkg.OpenitsSignalControl_SignalController_CabinetPower_PowerSource_UNSET {
+	if cp.PowerSource == yangpkg.OpenitsSignalControl_SignalController_CabinetPower_State_PowerSource_UNSET {
 		t.Errorf("cabinet-power/power-source is unset")
 	}
 }
@@ -19,7 +19,7 @@ func TestCabinetPower_SourceReported(t *T, obs *Observation) {
 // A reported battery must report its state-of-charge — a battery whose charge
 // cannot be read cannot inform the dispatch decision.
 func TestCabinetPower_BatteryChargeReported(t *T, obs *Observation) {
-	cp := obs.Device.GetSignalController().GetCabinetPower()
+	cp := obs.Device.GetSignalController().GetCabinetPower().GetState()
 	if cp == nil || cp.GetBattery() == nil {
 		return
 	}
@@ -32,11 +32,11 @@ func TestCabinetPower_BatteryChargeReported(t *T, obs *Observation) {
 // runtime remains — "two hours left" vs "on line power" is the maintenance
 // decision a fault-only model cannot express. Vacuous while on line power.
 func TestCabinetPower_OnBatteryHasRuntime(t *T, obs *Observation) {
-	cp := obs.Device.GetSignalController().GetCabinetPower()
+	cp := obs.Device.GetSignalController().GetCabinetPower().GetState()
 	if cp == nil {
 		return
 	}
-	onBattery := yangpkg.OpenitsSignalControl_SignalController_CabinetPower_PowerSource_on_battery
+	onBattery := yangpkg.OpenitsSignalControl_SignalController_CabinetPower_State_PowerSource_on_battery
 	if cp.PowerSource != onBattery {
 		return
 	}

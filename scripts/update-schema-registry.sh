@@ -62,6 +62,7 @@ MODULES=(
     openits-scms
     openits-vehicle-detection
     openits-cabinet-power
+    openits-schedule
     openits-nema-common
     openits-signal-control
     openits-rsu

@@ -401,6 +401,70 @@ func (DmsMessageStatus) EnumDescriptor() ([]byte, []int) {
 	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{6}
 }
 
+type DaysOfWeek int32
+
+const (
+	DaysOfWeek_DAYS_OF_WEEK_UNSPECIFIED DaysOfWeek = 0
+	DaysOfWeek_DAYS_OF_WEEK_MONDAY      DaysOfWeek = 1
+	DaysOfWeek_DAYS_OF_WEEK_TUESDAY     DaysOfWeek = 2
+	DaysOfWeek_DAYS_OF_WEEK_WEDNESDAY   DaysOfWeek = 3
+	DaysOfWeek_DAYS_OF_WEEK_THURSDAY    DaysOfWeek = 4
+	DaysOfWeek_DAYS_OF_WEEK_FRIDAY      DaysOfWeek = 5
+	DaysOfWeek_DAYS_OF_WEEK_SATURDAY    DaysOfWeek = 6
+	DaysOfWeek_DAYS_OF_WEEK_SUNDAY      DaysOfWeek = 7
+)
+
+// Enum value maps for DaysOfWeek.
+var (
+	DaysOfWeek_name = map[int32]string{
+		0: "DAYS_OF_WEEK_UNSPECIFIED",
+		1: "DAYS_OF_WEEK_MONDAY",
+		2: "DAYS_OF_WEEK_TUESDAY",
+		3: "DAYS_OF_WEEK_WEDNESDAY",
+		4: "DAYS_OF_WEEK_THURSDAY",
+		5: "DAYS_OF_WEEK_FRIDAY",
+		6: "DAYS_OF_WEEK_SATURDAY",
+		7: "DAYS_OF_WEEK_SUNDAY",
+	}
+	DaysOfWeek_value = map[string]int32{
+		"DAYS_OF_WEEK_UNSPECIFIED": 0,
+		"DAYS_OF_WEEK_MONDAY":      1,
+		"DAYS_OF_WEEK_TUESDAY":     2,
+		"DAYS_OF_WEEK_WEDNESDAY":   3,
+		"DAYS_OF_WEEK_THURSDAY":    4,
+		"DAYS_OF_WEEK_FRIDAY":      5,
+		"DAYS_OF_WEEK_SATURDAY":    6,
+		"DAYS_OF_WEEK_SUNDAY":      7,
+	}
+)
+
+func (x DaysOfWeek) Enum() *DaysOfWeek {
+	p := new(DaysOfWeek)
+	*p = x
+	return p
+}
+
+func (x DaysOfWeek) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (DaysOfWeek) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_dms_v1_state_proto_enumTypes[7].Descriptor()
+}
+
+func (DaysOfWeek) Type() protoreflect.EnumType {
+	return &file_openits_dms_v1_state_proto_enumTypes[7]
+}
+
+func (x DaysOfWeek) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use DaysOfWeek.Descriptor instead.
+func (DaysOfWeek) EnumDescriptor() ([]byte, []int) {
+	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{7}
+}
+
 type Months int32
 
 const (
@@ -464,11 +528,11 @@ func (x Months) String() string {
 }
 
 func (Months) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_state_proto_enumTypes[7].Descriptor()
+	return file_openits_dms_v1_state_proto_enumTypes[8].Descriptor()
 }
 
 func (Months) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_state_proto_enumTypes[7]
+	return &file_openits_dms_v1_state_proto_enumTypes[8]
 }
 
 func (x Months) Number() protoreflect.EnumNumber {
@@ -477,70 +541,6 @@ func (x Months) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Months.Descriptor instead.
 func (Months) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{7}
-}
-
-type DaysOfWeek int32
-
-const (
-	DaysOfWeek_DAYS_OF_WEEK_UNSPECIFIED DaysOfWeek = 0
-	DaysOfWeek_DAYS_OF_WEEK_MONDAY      DaysOfWeek = 1
-	DaysOfWeek_DAYS_OF_WEEK_TUESDAY     DaysOfWeek = 2
-	DaysOfWeek_DAYS_OF_WEEK_WEDNESDAY   DaysOfWeek = 3
-	DaysOfWeek_DAYS_OF_WEEK_THURSDAY    DaysOfWeek = 4
-	DaysOfWeek_DAYS_OF_WEEK_FRIDAY      DaysOfWeek = 5
-	DaysOfWeek_DAYS_OF_WEEK_SATURDAY    DaysOfWeek = 6
-	DaysOfWeek_DAYS_OF_WEEK_SUNDAY      DaysOfWeek = 7
-)
-
-// Enum value maps for DaysOfWeek.
-var (
-	DaysOfWeek_name = map[int32]string{
-		0: "DAYS_OF_WEEK_UNSPECIFIED",
-		1: "DAYS_OF_WEEK_MONDAY",
-		2: "DAYS_OF_WEEK_TUESDAY",
-		3: "DAYS_OF_WEEK_WEDNESDAY",
-		4: "DAYS_OF_WEEK_THURSDAY",
-		5: "DAYS_OF_WEEK_FRIDAY",
-		6: "DAYS_OF_WEEK_SATURDAY",
-		7: "DAYS_OF_WEEK_SUNDAY",
-	}
-	DaysOfWeek_value = map[string]int32{
-		"DAYS_OF_WEEK_UNSPECIFIED": 0,
-		"DAYS_OF_WEEK_MONDAY":      1,
-		"DAYS_OF_WEEK_TUESDAY":     2,
-		"DAYS_OF_WEEK_WEDNESDAY":   3,
-		"DAYS_OF_WEEK_THURSDAY":    4,
-		"DAYS_OF_WEEK_FRIDAY":      5,
-		"DAYS_OF_WEEK_SATURDAY":    6,
-		"DAYS_OF_WEEK_SUNDAY":      7,
-	}
-)
-
-func (x DaysOfWeek) Enum() *DaysOfWeek {
-	p := new(DaysOfWeek)
-	*p = x
-	return p
-}
-
-func (x DaysOfWeek) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (DaysOfWeek) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_state_proto_enumTypes[8].Descriptor()
-}
-
-func (DaysOfWeek) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_state_proto_enumTypes[8]
-}
-
-func (x DaysOfWeek) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use DaysOfWeek.Descriptor instead.
-func (DaysOfWeek) EnumDescriptor() ([]byte, []int) {
 	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{8}
 }
 
@@ -1971,10 +1971,10 @@ func (x *Action) GetSlotNumber() uint32 {
 type ScheduleEntry struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ScheduleId    uint32                 `protobuf:"varint,1,opt,name=schedule_id,json=scheduleId,proto3" json:"schedule_id,omitempty"`
-	Months        []Months               `protobuf:"varint,2,rep,packed,name=months,proto3,enum=openits.dms.v1.Months" json:"months,omitempty"`
-	DaysOfWeek    []DaysOfWeek           `protobuf:"varint,3,rep,packed,name=days_of_week,json=daysOfWeek,proto3,enum=openits.dms.v1.DaysOfWeek" json:"days_of_week,omitempty"`
-	DaysOfMonth   []uint32               `protobuf:"varint,4,rep,packed,name=days_of_month,json=daysOfMonth,proto3" json:"days_of_month,omitempty"`
 	DayPlan       uint32                 `protobuf:"varint,5,opt,name=day_plan,json=dayPlan,proto3" json:"day_plan,omitempty"`
+	DaysOfMonth   []uint32               `protobuf:"varint,4,rep,packed,name=days_of_month,json=daysOfMonth,proto3" json:"days_of_month,omitempty"`
+	DaysOfWeek    []DaysOfWeek           `protobuf:"varint,3,rep,packed,name=days_of_week,json=daysOfWeek,proto3,enum=openits.dms.v1.DaysOfWeek" json:"days_of_week,omitempty"`
+	Months        []Months               `protobuf:"varint,2,rep,packed,name=months,proto3,enum=openits.dms.v1.Months" json:"months,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2016,9 +2016,16 @@ func (x *ScheduleEntry) GetScheduleId() uint32 {
 	return 0
 }
 
-func (x *ScheduleEntry) GetMonths() []Months {
+func (x *ScheduleEntry) GetDayPlan() uint32 {
 	if x != nil {
-		return x.Months
+		return x.DayPlan
+	}
+	return 0
+}
+
+func (x *ScheduleEntry) GetDaysOfMonth() []uint32 {
+	if x != nil {
+		return x.DaysOfMonth
 	}
 	return nil
 }
@@ -2030,18 +2037,11 @@ func (x *ScheduleEntry) GetDaysOfWeek() []DaysOfWeek {
 	return nil
 }
 
-func (x *ScheduleEntry) GetDaysOfMonth() []uint32 {
+func (x *ScheduleEntry) GetMonths() []Months {
 	if x != nil {
-		return x.DaysOfMonth
+		return x.Months
 	}
 	return nil
-}
-
-func (x *ScheduleEntry) GetDayPlan() uint32 {
-	if x != nil {
-		return x.DayPlan
-	}
-	return 0
 }
 
 type ScheduleState struct {
@@ -3344,12 +3344,12 @@ const file_openits_dms_v1_state_proto_rawDesc = "" +
 	"slotNumber\"\xdd\x01\n" +
 	"\rScheduleEntry\x12\x1f\n" +
 	"\vschedule_id\x18\x01 \x01(\rR\n" +
-	"scheduleId\x12.\n" +
-	"\x06months\x18\x02 \x03(\x0e2\x16.openits.dms.v1.MonthsR\x06months\x12<\n" +
+	"scheduleId\x12\x19\n" +
+	"\bday_plan\x18\x05 \x01(\rR\adayPlan\x12\"\n" +
+	"\rdays_of_month\x18\x04 \x03(\rR\vdaysOfMonth\x12<\n" +
 	"\fdays_of_week\x18\x03 \x03(\x0e2\x1a.openits.dms.v1.DaysOfWeekR\n" +
-	"daysOfWeek\x12\"\n" +
-	"\rdays_of_month\x18\x04 \x03(\rR\vdaysOfMonth\x12\x19\n" +
-	"\bday_plan\x18\x05 \x01(\rR\adayPlan\"~\n" +
+	"daysOfWeek\x12.\n" +
+	"\x06months\x18\x02 \x03(\x0e2\x16.openits.dms.v1.MonthsR\x06months\"~\n" +
 	"\rScheduleState\x12+\n" +
 	"\x12active_day_plan_id\x18\x01 \x01(\rR\x0factiveDayPlanId\x12@\n" +
 	"\x0enext_action_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\fnextActionAt\"t\n" +
@@ -3506,7 +3506,17 @@ const file_openits_dms_v1_state_proto_rawDesc = "" +
 	"\x1cDMS_MESSAGE_STATUS_MODIFYING\x10\x01\x12!\n" +
 	"\x1dDMS_MESSAGE_STATUS_VALIDATING\x10\x02\x12\x1c\n" +
 	"\x18DMS_MESSAGE_STATUS_VALID\x10\x03\x12\x1c\n" +
-	"\x18DMS_MESSAGE_STATUS_ERROR\x10\x04*\x86\x02\n" +
+	"\x18DMS_MESSAGE_STATUS_ERROR\x10\x04*\xe1\x01\n" +
+	"\n" +
+	"DaysOfWeek\x12\x1c\n" +
+	"\x18DAYS_OF_WEEK_UNSPECIFIED\x10\x00\x12\x17\n" +
+	"\x13DAYS_OF_WEEK_MONDAY\x10\x01\x12\x18\n" +
+	"\x14DAYS_OF_WEEK_TUESDAY\x10\x02\x12\x1a\n" +
+	"\x16DAYS_OF_WEEK_WEDNESDAY\x10\x03\x12\x19\n" +
+	"\x15DAYS_OF_WEEK_THURSDAY\x10\x04\x12\x17\n" +
+	"\x13DAYS_OF_WEEK_FRIDAY\x10\x05\x12\x19\n" +
+	"\x15DAYS_OF_WEEK_SATURDAY\x10\x06\x12\x17\n" +
+	"\x13DAYS_OF_WEEK_SUNDAY\x10\a*\x86\x02\n" +
 	"\x06Months\x12\x16\n" +
 	"\x12MONTHS_UNSPECIFIED\x10\x00\x12\x12\n" +
 	"\x0eMONTHS_JANUARY\x10\x01\x12\x13\n" +
@@ -3522,17 +3532,7 @@ const file_openits_dms_v1_state_proto_rawDesc = "" +
 	"\x0eMONTHS_OCTOBER\x10\n" +
 	"\x12\x13\n" +
 	"\x0fMONTHS_NOVEMBER\x10\v\x12\x13\n" +
-	"\x0fMONTHS_DECEMBER\x10\f*\xe1\x01\n" +
-	"\n" +
-	"DaysOfWeek\x12\x1c\n" +
-	"\x18DAYS_OF_WEEK_UNSPECIFIED\x10\x00\x12\x17\n" +
-	"\x13DAYS_OF_WEEK_MONDAY\x10\x01\x12\x18\n" +
-	"\x14DAYS_OF_WEEK_TUESDAY\x10\x02\x12\x1a\n" +
-	"\x16DAYS_OF_WEEK_WEDNESDAY\x10\x03\x12\x19\n" +
-	"\x15DAYS_OF_WEEK_THURSDAY\x10\x04\x12\x17\n" +
-	"\x13DAYS_OF_WEEK_FRIDAY\x10\x05\x12\x19\n" +
-	"\x15DAYS_OF_WEEK_SATURDAY\x10\x06\x12\x17\n" +
-	"\x13DAYS_OF_WEEK_SUNDAY\x10\a*p\n" +
+	"\x0fMONTHS_DECEMBER\x10\f*p\n" +
 	"\x0fRequestSelfTest\x12\x1a\n" +
 	"\x16REQUEST_SELF_TEST_NONE\x10\x00\x12 \n" +
 	"\x1cREQUEST_SELF_TEST_PIXEL_TEST\x10\x01\x12\x1f\n" +
@@ -3576,8 +3576,8 @@ var file_openits_dms_v1_state_proto_goTypes = []any{
 	(OpenitsDmsMessageMemoryType)(0),  // 4: openits.dms.v1.OpenitsDmsMessageMemoryType
 	(Beacon)(0),                       // 5: openits.dms.v1.Beacon
 	(DmsMessageStatus)(0),             // 6: openits.dms.v1.DmsMessageStatus
-	(Months)(0),                       // 7: openits.dms.v1.Months
-	(DaysOfWeek)(0),                   // 8: openits.dms.v1.DaysOfWeek
+	(DaysOfWeek)(0),                   // 7: openits.dms.v1.DaysOfWeek
+	(Months)(0),                       // 8: openits.dms.v1.Months
 	(RequestSelfTest)(0),              // 9: openits.dms.v1.RequestSelfTest
 	(IlluminationControl)(0),          // 10: openits.dms.v1.IlluminationControl
 	(BeaconState)(0),                  // 11: openits.dms.v1.BeaconState
@@ -3645,8 +3645,8 @@ var file_openits_dms_v1_state_proto_depIdxs = []int32{
 	28, // 27: openits.dms.v1.Schedule.state:type_name -> openits.dms.v1.ScheduleState
 	26, // 28: openits.dms.v1.DayPlan.action:type_name -> openits.dms.v1.Action
 	4,  // 29: openits.dms.v1.Action.memory_type:type_name -> openits.dms.v1.OpenitsDmsMessageMemoryType
-	7,  // 30: openits.dms.v1.ScheduleEntry.months:type_name -> openits.dms.v1.Months
-	8,  // 31: openits.dms.v1.ScheduleEntry.days_of_week:type_name -> openits.dms.v1.DaysOfWeek
+	7,  // 30: openits.dms.v1.ScheduleEntry.days_of_week:type_name -> openits.dms.v1.DaysOfWeek
+	8,  // 31: openits.dms.v1.ScheduleEntry.months:type_name -> openits.dms.v1.Months
 	43, // 32: openits.dms.v1.ScheduleState.next_action_at:type_name -> google.protobuf.Timestamp
 	30, // 33: openits.dms.v1.Control.config:type_name -> openits.dms.v1.ControlConfig
 	36, // 34: openits.dms.v1.Control.state:type_name -> openits.dms.v1.ControlState

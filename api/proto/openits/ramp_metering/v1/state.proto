@@ -198,10 +198,21 @@ message Action {
 
 message ScheduleEntry {
   uint32 schedule_id = 1;
-  repeated Months months = 2;
-  repeated DaysOfWeek days_of_week = 3;
-  repeated uint32 days_of_month = 4;
   uint32 day_plan = 5;
+  repeated uint32 days_of_month = 4;
+  repeated DaysOfWeek days_of_week = 3;
+  repeated Months months = 2;
+}
+
+enum DaysOfWeek {
+  DAYS_OF_WEEK_UNSPECIFIED = 0;
+  DAYS_OF_WEEK_MONDAY = 1;
+  DAYS_OF_WEEK_TUESDAY = 2;
+  DAYS_OF_WEEK_WEDNESDAY = 3;
+  DAYS_OF_WEEK_THURSDAY = 4;
+  DAYS_OF_WEEK_FRIDAY = 5;
+  DAYS_OF_WEEK_SATURDAY = 6;
+  DAYS_OF_WEEK_SUNDAY = 7;
 }
 
 enum Months {
@@ -218,17 +229,6 @@ enum Months {
   MONTHS_OCTOBER = 10;
   MONTHS_NOVEMBER = 11;
   MONTHS_DECEMBER = 12;
-}
-
-enum DaysOfWeek {
-  DAYS_OF_WEEK_UNSPECIFIED = 0;
-  DAYS_OF_WEEK_MONDAY = 1;
-  DAYS_OF_WEEK_TUESDAY = 2;
-  DAYS_OF_WEEK_WEDNESDAY = 3;
-  DAYS_OF_WEEK_THURSDAY = 4;
-  DAYS_OF_WEEK_FRIDAY = 5;
-  DAYS_OF_WEEK_SATURDAY = 6;
-  DAYS_OF_WEEK_SUNDAY = 7;
 }
 
 message ScheduleState {

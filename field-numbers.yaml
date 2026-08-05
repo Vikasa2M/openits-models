@@ -2143,6 +2143,7 @@ messages:
         voltage_v: 3
     openits.signal_control.v1.CabinetPower:
         battery: 1
+        config: 11
         door_open: 2
         generator: 3
         line_frequency_hz: 4
@@ -2151,7 +2152,21 @@ messages:
         police_panel_open: 6
         power_source: 7
         signal_operation_on_battery: 10
+        state: 12
         transfer_count: 8
+    openits.signal_control.v1.CabinetPowerConfig:
+        on_battery_policy: 1
+    openits.signal_control.v1.CabinetPowerState:
+        battery: 1
+        door_open: 2
+        generator: 3
+        line_frequency_hz: 4
+        line_voltage_v: 5
+        on_battery_policy: 6
+        police_panel_open: 7
+        power_source: 8
+        signal_operation_on_battery: 9
+        transfer_count: 10
     openits.signal_control.v1.Channel:
         channel_number: 1
         flash_state: 5
@@ -2851,6 +2866,10 @@ messages:
         min_axle_count: 5
         min_length_m: 3
         name: 2
+    openits.types.v1.CabinetPowerPolicy:
+        mode: 1
+        transition_at_runtime_minutes: 3
+        transition_at_soc_pct: 2
     openits.types.v1.Indiana:
         indiana_code: 1
         indiana_param: 2

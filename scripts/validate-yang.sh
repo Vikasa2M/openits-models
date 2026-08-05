@@ -17,6 +17,7 @@ SCHEMAS=(
     yang/openits-types.yang
     yang/openits-device-diagnostics.yang
     yang/openits-cabinet-power.yang
+    yang/openits-schedule.yang
     yang/openits-v2x-radio.yang
     yang/openits-v2x-messaging.yang
     yang/openits-v2x-radio-types.yang

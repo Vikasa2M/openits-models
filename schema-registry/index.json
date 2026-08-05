@@ -72,7 +72,8 @@
         "2026-07-14",
         "2026-07-16",
         "2026-07-21",
-        "2026-07-23"
+        "2026-07-23",
+        "2026-08-05"
       ],
       "events": [
         "openits.dms.fault-cleared.v1",
@@ -84,6 +85,7 @@
         "ARC-IT 9.1 Service Package TI06 (Traffic Information Dissemination)",
         "MUTCD",
         "MUTCD (beacons)",
+        "NTCIP 1201 (dayPlan / dayPlanScheduleTable)",
         "NTCIP 1203 v03",
         "NTCIP 1203 v03 (MULTI)",
         "NTCIP 1203 v03 (dmsControlMode, dmsMessageStatus)",
@@ -104,12 +106,14 @@
             "2026-07-13",
             "2026-07-14",
             "2026-07-16",
-            "2026-07-21"
+            "2026-07-21",
+            "2026-08-05"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TI06 (Traffic Information Dissemination)",
             "MUTCD",
             "MUTCD (beacons)",
+            "NTCIP 1201 (dayPlan / dayPlanScheduleTable)",
             "NTCIP 1203 v03",
             "NTCIP 1203 v03 (functional reference only; no wire compatibility)",
             "RFC 7950 section 11 (additive YANG evolution)",
@@ -254,7 +258,8 @@
         "2026-07-12",
         "2026-07-13",
         "2026-07-16",
-        "2026-07-21"
+        "2026-07-21",
+        "2026-08-05"
       ],
       "events": [
         "openits.perception.fault-cleared.v1",
@@ -267,6 +272,7 @@
       "refStd": [
         "ARC-IT 9.1 Service Packages TM01 (Infrastructure-Based Traffic Surveillance) and TM08 (Traffic Incident Management System)",
         "FHWA Traffic Incident Management (TIM)",
+        "RFC 7950",
         "RFC 7950 section 11",
         "RFC 7950 section 11 (additive YANG evolution)",
         "RFC 7950 section 11 (breaking YANG evolution: identity rename)"
@@ -281,11 +287,13 @@
             "2026-07-11",
             "2026-07-13",
             "2026-07-16",
-            "2026-07-21"
+            "2026-07-21",
+            "2026-08-05"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Packages TM01 (Infrastructure-Based Traffic Surveillance) and TM08 (Traffic Incident Management System)",
             "FHWA Traffic Incident Management (TIM)",
+            "RFC 7950",
             "RFC 7950 section 11 (additive YANG evolution)",
             "RFC 7950 section 11 (breaking YANG evolution: identity rename)"
           ]
@@ -339,7 +347,8 @@
         "2026-07-14",
         "2026-07-15",
         "2026-07-16",
-        "2026-07-21"
+        "2026-07-21",
+        "2026-08-05"
       ],
       "events": [
         "openits.ramp-metering.fault-cleared.v1",
@@ -355,6 +364,7 @@
         "ARC-IT TI03",
         "MUTCD",
         "MUTCD advance-warning signing",
+        "NTCIP 1201 (dayPlan / dayPlanScheduleTable)",
         "NTCIP 1207 v02",
         "NTCIP 1207 v02 (functional reference only; no wire compatibility)",
         "NTCIP 1207 v02 (startup/shutdown objects)",
@@ -376,7 +386,8 @@
             "2026-07-14",
             "2026-07-15",
             "2026-07-16",
-            "2026-07-21"
+            "2026-07-21",
+            "2026-08-05"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TI03 (Traffic Metering)",
@@ -384,6 +395,7 @@
             "ARC-IT TI03",
             "MUTCD",
             "MUTCD advance-warning signing",
+            "NTCIP 1201 (dayPlan / dayPlanScheduleTable)",
             "NTCIP 1207 v02",
             "NTCIP 1207 v02 (functional reference only; no wire compatibility)",
             "NTCIP 1207 v02 (startup/shutdown objects)",
@@ -664,7 +676,8 @@
         "2026-07-13",
         "2026-07-14",
         "2026-07-17",
-        "2026-07-21"
+        "2026-07-21",
+        "2026-08-05"
       ],
       "events": [
         "openits.signal-control.comm-health-event.v1",
@@ -701,6 +714,7 @@
         "MUTCD 11th ed. 4F.17/4I.06/Ch.8C",
         "MUTCD 11th ed. Ch. 8C",
         "MUTCD 4D.26 (vehicle change intervals), 4E.06 (pedestrian intervals)",
+        "NEMA TS 2",
         "NEMA TS 2 (cabinet)",
         "NEMA TS-2 §3.5",
         "NEMA TS-2 §3.5 (concurrency)",
@@ -744,7 +758,8 @@
             "2026-07-13",
             "2026-07-14",
             "2026-07-17",
-            "2026-07-21"
+            "2026-07-21",
+            "2026-08-05"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TI01",
@@ -756,6 +771,7 @@
             "MUTCD 11th ed. 4F.17/4I.06/Ch.8C",
             "MUTCD 11th ed. Ch. 8C",
             "MUTCD 4D.26 (vehicle change intervals), 4E.06 (pedestrian intervals)",
+            "NEMA TS 2",
             "NEMA TS 2 (cabinet)",
             "NEMA TS-2 §3.5 (concurrency)",
             "NEMA TS-2 §3.5/§4",
@@ -838,7 +854,8 @@
         "2026-07-14",
         "2026-07-15",
         "2026-07-16",
-        "2026-07-21"
+        "2026-07-21",
+        "2026-08-05"
       ],
       "events": [
         "openits.traffic-sensor.fault-cleared.v1",
@@ -858,6 +875,7 @@
         "NEMA TS-2",
         "NTCIP 1209",
         "NTCIP 1209 v02 (functional reference only; no wire compatibility)",
+        "RFC 7950",
         "RFC 7950 section 11",
         "RFC 7950 section 11 (additive YANG evolution)",
         "RFC 7950 section 11 (breaking YANG evolution: identity rename)"
@@ -874,7 +892,8 @@
             "2026-07-14",
             "2026-07-15",
             "2026-07-16",
-            "2026-07-21"
+            "2026-07-21",
+            "2026-08-05"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TM01 (Infrastructure-Based Traffic Surveillance)",
@@ -884,6 +903,7 @@
             "FHWA Traffic Monitoring Guide (Scheme F)",
             "NTCIP 1209",
             "NTCIP 1209 v02 (functional reference only; no wire compatibility)",
+            "RFC 7950",
             "RFC 7950 section 11 (additive YANG evolution)",
             "RFC 7950 section 11 (breaking YANG evolution: identity rename)"
           ]
@@ -938,7 +958,8 @@
       "namespace": "urn:openits:yang:cabinet-power",
       "revisions": [
         "2026-07-17",
-        "2026-07-21"
+        "2026-07-21",
+        "2026-08-05"
       ],
       "refStd": [
         "IEC 62040",
@@ -1013,6 +1034,17 @@
         "MUTCD 2009 4E.06 / 11th ed. 4I.06",
         "NTCIP 1207 (ramp metering)",
         "RFC 7950 section 7.5.3"
+      ]
+    },
+    {
+      "name": "openits-schedule",
+      "namespace": "urn:openits:yang:schedule",
+      "revisions": [
+        "2026-08-05"
+      ],
+      "refStd": [
+        "NTCIP 1201",
+        "NTCIP 1201 (dayPlan / dayPlanScheduleTable)"
       ]
     },
     {
@@ -1195,6 +1227,11 @@
         "openits-cabinet-power/2026-07-21/MANIFEST.json",
         "openits-cabinet-power/2026-07-21/README.md",
         "openits-cabinet-power/2026-07-21/schema.yang"
+      ],
+      "2026-08-05": [
+        "openits-cabinet-power/2026-08-05/MANIFEST.json",
+        "openits-cabinet-power/2026-08-05/README.md",
+        "openits-cabinet-power/2026-08-05/schema.yang"
       ]
     },
     "openits-cctv": {
@@ -1297,6 +1334,11 @@
         "openits-dms/2026-07-21/MANIFEST.json",
         "openits-dms/2026-07-21/README.md",
         "openits-dms/2026-07-21/schema.yang"
+      ],
+      "2026-08-05": [
+        "openits-dms/2026-08-05/MANIFEST.json",
+        "openits-dms/2026-08-05/README.md",
+        "openits-dms/2026-08-05/schema.yang"
       ]
     },
     "openits-dms-events": {
@@ -1413,6 +1455,11 @@
         "openits-perception/2026-07-21/MANIFEST.json",
         "openits-perception/2026-07-21/README.md",
         "openits-perception/2026-07-21/schema.yang"
+      ],
+      "2026-08-05": [
+        "openits-perception/2026-08-05/MANIFEST.json",
+        "openits-perception/2026-08-05/README.md",
+        "openits-perception/2026-08-05/schema.yang"
       ]
     },
     "openits-perception-events": {
@@ -1458,6 +1505,11 @@
         "openits-ramp-metering/2026-07-21/MANIFEST.json",
         "openits-ramp-metering/2026-07-21/README.md",
         "openits-ramp-metering/2026-07-21/schema.yang"
+      ],
+      "2026-08-05": [
+        "openits-ramp-metering/2026-08-05/MANIFEST.json",
+        "openits-ramp-metering/2026-08-05/README.md",
+        "openits-ramp-metering/2026-08-05/schema.yang"
       ]
     },
     "openits-ramp-metering-events": {
@@ -1592,6 +1644,13 @@
         "openits-rsu-us-band-plan/2026-07-21/schema.yang"
       ]
     },
+    "openits-schedule": {
+      "2026-08-05": [
+        "openits-schedule/2026-08-05/MANIFEST.json",
+        "openits-schedule/2026-08-05/README.md",
+        "openits-schedule/2026-08-05/schema.yang"
+      ]
+    },
     "openits-scms": {
       "2026-07-21": [
         "openits-scms/2026-07-21/MANIFEST.json",
@@ -1609,6 +1668,11 @@
         "openits-signal-control/2026-07-21/MANIFEST.json",
         "openits-signal-control/2026-07-21/README.md",
         "openits-signal-control/2026-07-21/schema.yang"
+      ],
+      "2026-08-05": [
+        "openits-signal-control/2026-08-05/MANIFEST.json",
+        "openits-signal-control/2026-08-05/README.md",
+        "openits-signal-control/2026-08-05/schema.yang"
       ]
     },
     "openits-signal-control-coordination-events": {
@@ -1789,6 +1853,11 @@
         "openits-traffic-sensor/2026-07-21/MANIFEST.json",
         "openits-traffic-sensor/2026-07-21/README.md",
         "openits-traffic-sensor/2026-07-21/schema.yang"
+      ],
+      "2026-08-05": [
+        "openits-traffic-sensor/2026-08-05/MANIFEST.json",
+        "openits-traffic-sensor/2026-08-05/README.md",
+        "openits-traffic-sensor/2026-08-05/schema.yang"
       ]
     },
     "openits-traffic-sensor-events": {

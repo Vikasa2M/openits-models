@@ -141,12 +141,12 @@ func collectASC() (*yangpkg.Device, error) {
 	if err != nil {
 		return nil, err
 	}
-	se.DaysOfWeek = []yangpkg.E_OpenitsSignalControl_SignalController_Timebase_ScheduleEntry_DaysOfWeek{
-		yangpkg.OpenitsSignalControl_SignalController_Timebase_ScheduleEntry_DaysOfWeek_monday,
-		yangpkg.OpenitsSignalControl_SignalController_Timebase_ScheduleEntry_DaysOfWeek_tuesday,
-		yangpkg.OpenitsSignalControl_SignalController_Timebase_ScheduleEntry_DaysOfWeek_wednesday,
-		yangpkg.OpenitsSignalControl_SignalController_Timebase_ScheduleEntry_DaysOfWeek_thursday,
-		yangpkg.OpenitsSignalControl_SignalController_Timebase_ScheduleEntry_DaysOfWeek_friday,
+	se.DaysOfWeek = []yangpkg.E_OpenitsDms_Sign_Schedule_ScheduleEntry_DaysOfWeek{
+		yangpkg.OpenitsDms_Sign_Schedule_ScheduleEntry_DaysOfWeek_monday,
+		yangpkg.OpenitsDms_Sign_Schedule_ScheduleEntry_DaysOfWeek_tuesday,
+		yangpkg.OpenitsDms_Sign_Schedule_ScheduleEntry_DaysOfWeek_wednesday,
+		yangpkg.OpenitsDms_Sign_Schedule_ScheduleEntry_DaysOfWeek_thursday,
+		yangpkg.OpenitsDms_Sign_Schedule_ScheduleEntry_DaysOfWeek_friday,
 	}
 	se.DayPlan = u8Ptr(1)
 
@@ -292,8 +292,8 @@ func collectASC() (*yangpkg.Device, error) {
 	// Cabinet power / UPS (platform grouping): a cabinet on line power with a
 	// healthy battery, so the on-battery leading indicator and the
 	// runtime-remaining dispatch discriminator are exercised.
-	cp := sc.GetOrCreateCabinetPower()
-	cp.PowerSource = yangpkg.OpenitsSignalControl_SignalController_CabinetPower_PowerSource_on_line
+	cp := sc.GetOrCreateCabinetPower().GetOrCreateState()
+	cp.PowerSource = yangpkg.OpenitsSignalControl_SignalController_CabinetPower_State_PowerSource_on_line
 	cp.TransferCount = u32Ptr(4)
 	cp.LineVoltageV = f64Ptr(121.4)
 	cp.LineFrequencyHz = f64Ptr(60.0)
@@ -303,7 +303,7 @@ func collectASC() (*yangpkg.Device, error) {
 	bat.VoltageV = f64Ptr(27.3)
 	bat.TemperatureC = f64Ptr(24.5)
 	bat.ChargerFault = boolPtr(false)
-	bat.TestState = yangpkg.OpenitsSignalControl_SignalController_CabinetPower_Battery_TestState_passed
+	bat.TestState = yangpkg.OpenitsSignalControl_SignalController_CabinetPower_State_Battery_TestState_passed
 	bat.LastTest = strPtr("2026-07-15T02:00:00Z")
 	cp.DoorOpen = boolPtr(false)
 	cp.PolicePanelOpen = boolPtr(false)

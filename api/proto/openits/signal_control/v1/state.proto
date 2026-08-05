@@ -5,6 +5,7 @@ package openits.signal_control.v1;
 option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/signal_control/v1;signalcontrolv1";
 
 import "google/protobuf/timestamp.proto";
+import "openits/types/v1/types.proto";
 
 message SignalController {
   SignalControllerConfig config = 1;
@@ -406,10 +407,21 @@ enum SpecialOperation {
 
 message ScheduleEntry {
   uint32 schedule_id = 1;
-  repeated Months months = 2;
-  repeated DaysOfWeek days_of_week = 3;
-  repeated uint32 days_of_month = 4;
   uint32 day_plan = 5;
+  repeated uint32 days_of_month = 4;
+  repeated DaysOfWeek days_of_week = 3;
+  repeated Months months = 2;
+}
+
+enum DaysOfWeek {
+  DAYS_OF_WEEK_UNSPECIFIED = 0;
+  DAYS_OF_WEEK_MONDAY = 1;
+  DAYS_OF_WEEK_TUESDAY = 2;
+  DAYS_OF_WEEK_WEDNESDAY = 3;
+  DAYS_OF_WEEK_THURSDAY = 4;
+  DAYS_OF_WEEK_FRIDAY = 5;
+  DAYS_OF_WEEK_SATURDAY = 6;
+  DAYS_OF_WEEK_SUNDAY = 7;
 }
 
 enum Months {
@@ -426,17 +438,6 @@ enum Months {
   MONTHS_OCTOBER = 10;
   MONTHS_NOVEMBER = 11;
   MONTHS_DECEMBER = 12;
-}
-
-enum DaysOfWeek {
-  DAYS_OF_WEEK_UNSPECIFIED = 0;
-  DAYS_OF_WEEK_MONDAY = 1;
-  DAYS_OF_WEEK_TUESDAY = 2;
-  DAYS_OF_WEEK_WEDNESDAY = 3;
-  DAYS_OF_WEEK_THURSDAY = 4;
-  DAYS_OF_WEEK_FRIDAY = 5;
-  DAYS_OF_WEEK_SATURDAY = 6;
-  DAYS_OF_WEEK_SUNDAY = 7;
 }
 
 message Clock {
@@ -565,16 +566,25 @@ message Mmu {
 }
 
 message CabinetPower {
+  CabinetPowerConfig config = 11;
+  CabinetPowerState state = 12;
+}
+
+message CabinetPowerConfig {
+  openits.types.v1.CabinetPowerPolicy on_battery_policy = 1;
+}
+
+message CabinetPowerState {
   Battery battery = 1;
   bool door_open = 2;
   Generator generator = 3;
   string line_frequency_hz = 4;
   string line_voltage_v = 5;
-  OnBatteryPolicy on_battery_policy = 9;
-  bool police_panel_open = 6;
-  PowerSource power_source = 7;
-  SignalOperationOnBattery signal_operation_on_battery = 10;
-  uint32 transfer_count = 8;
+  openits.types.v1.CabinetPowerPolicy on_battery_policy = 6;
+  bool police_panel_open = 7;
+  PowerSource power_source = 8;
+  SignalOperationOnBattery signal_operation_on_battery = 9;
+  uint32 transfer_count = 10;
 }
 
 message Battery {
@@ -597,17 +607,6 @@ enum TestState {
 message Generator {
   bool running = 1;
   uint32 fuel_level_pct = 2;
-}
-
-message OnBatteryPolicy {
-  Mode mode = 1;
-  uint32 transition_at_soc_pct = 2;
-  uint32 transition_at_runtime_minutes = 3;
-}
-
-enum Mode {
-  MODE_FULL_OPERATION = 0;
-  MODE_FLASH = 1;
 }
 
 enum PowerSource {

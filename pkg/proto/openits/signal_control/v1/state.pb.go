@@ -7,6 +7,7 @@
 package signalcontrolv1
 
 import (
+	v1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/types/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -685,6 +686,70 @@ func (SpecialOperation) EnumDescriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{11}
 }
 
+type DaysOfWeek int32
+
+const (
+	DaysOfWeek_DAYS_OF_WEEK_UNSPECIFIED DaysOfWeek = 0
+	DaysOfWeek_DAYS_OF_WEEK_MONDAY      DaysOfWeek = 1
+	DaysOfWeek_DAYS_OF_WEEK_TUESDAY     DaysOfWeek = 2
+	DaysOfWeek_DAYS_OF_WEEK_WEDNESDAY   DaysOfWeek = 3
+	DaysOfWeek_DAYS_OF_WEEK_THURSDAY    DaysOfWeek = 4
+	DaysOfWeek_DAYS_OF_WEEK_FRIDAY      DaysOfWeek = 5
+	DaysOfWeek_DAYS_OF_WEEK_SATURDAY    DaysOfWeek = 6
+	DaysOfWeek_DAYS_OF_WEEK_SUNDAY      DaysOfWeek = 7
+)
+
+// Enum value maps for DaysOfWeek.
+var (
+	DaysOfWeek_name = map[int32]string{
+		0: "DAYS_OF_WEEK_UNSPECIFIED",
+		1: "DAYS_OF_WEEK_MONDAY",
+		2: "DAYS_OF_WEEK_TUESDAY",
+		3: "DAYS_OF_WEEK_WEDNESDAY",
+		4: "DAYS_OF_WEEK_THURSDAY",
+		5: "DAYS_OF_WEEK_FRIDAY",
+		6: "DAYS_OF_WEEK_SATURDAY",
+		7: "DAYS_OF_WEEK_SUNDAY",
+	}
+	DaysOfWeek_value = map[string]int32{
+		"DAYS_OF_WEEK_UNSPECIFIED": 0,
+		"DAYS_OF_WEEK_MONDAY":      1,
+		"DAYS_OF_WEEK_TUESDAY":     2,
+		"DAYS_OF_WEEK_WEDNESDAY":   3,
+		"DAYS_OF_WEEK_THURSDAY":    4,
+		"DAYS_OF_WEEK_FRIDAY":      5,
+		"DAYS_OF_WEEK_SATURDAY":    6,
+		"DAYS_OF_WEEK_SUNDAY":      7,
+	}
+)
+
+func (x DaysOfWeek) Enum() *DaysOfWeek {
+	p := new(DaysOfWeek)
+	*p = x
+	return p
+}
+
+func (x DaysOfWeek) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (DaysOfWeek) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_signal_control_v1_state_proto_enumTypes[12].Descriptor()
+}
+
+func (DaysOfWeek) Type() protoreflect.EnumType {
+	return &file_openits_signal_control_v1_state_proto_enumTypes[12]
+}
+
+func (x DaysOfWeek) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use DaysOfWeek.Descriptor instead.
+func (DaysOfWeek) EnumDescriptor() ([]byte, []int) {
+	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{12}
+}
+
 type Months int32
 
 const (
@@ -748,11 +813,11 @@ func (x Months) String() string {
 }
 
 func (Months) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[12].Descriptor()
+	return file_openits_signal_control_v1_state_proto_enumTypes[13].Descriptor()
 }
 
 func (Months) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[12]
+	return &file_openits_signal_control_v1_state_proto_enumTypes[13]
 }
 
 func (x Months) Number() protoreflect.EnumNumber {
@@ -761,70 +826,6 @@ func (x Months) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Months.Descriptor instead.
 func (Months) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{12}
-}
-
-type DaysOfWeek int32
-
-const (
-	DaysOfWeek_DAYS_OF_WEEK_UNSPECIFIED DaysOfWeek = 0
-	DaysOfWeek_DAYS_OF_WEEK_MONDAY      DaysOfWeek = 1
-	DaysOfWeek_DAYS_OF_WEEK_TUESDAY     DaysOfWeek = 2
-	DaysOfWeek_DAYS_OF_WEEK_WEDNESDAY   DaysOfWeek = 3
-	DaysOfWeek_DAYS_OF_WEEK_THURSDAY    DaysOfWeek = 4
-	DaysOfWeek_DAYS_OF_WEEK_FRIDAY      DaysOfWeek = 5
-	DaysOfWeek_DAYS_OF_WEEK_SATURDAY    DaysOfWeek = 6
-	DaysOfWeek_DAYS_OF_WEEK_SUNDAY      DaysOfWeek = 7
-)
-
-// Enum value maps for DaysOfWeek.
-var (
-	DaysOfWeek_name = map[int32]string{
-		0: "DAYS_OF_WEEK_UNSPECIFIED",
-		1: "DAYS_OF_WEEK_MONDAY",
-		2: "DAYS_OF_WEEK_TUESDAY",
-		3: "DAYS_OF_WEEK_WEDNESDAY",
-		4: "DAYS_OF_WEEK_THURSDAY",
-		5: "DAYS_OF_WEEK_FRIDAY",
-		6: "DAYS_OF_WEEK_SATURDAY",
-		7: "DAYS_OF_WEEK_SUNDAY",
-	}
-	DaysOfWeek_value = map[string]int32{
-		"DAYS_OF_WEEK_UNSPECIFIED": 0,
-		"DAYS_OF_WEEK_MONDAY":      1,
-		"DAYS_OF_WEEK_TUESDAY":     2,
-		"DAYS_OF_WEEK_WEDNESDAY":   3,
-		"DAYS_OF_WEEK_THURSDAY":    4,
-		"DAYS_OF_WEEK_FRIDAY":      5,
-		"DAYS_OF_WEEK_SATURDAY":    6,
-		"DAYS_OF_WEEK_SUNDAY":      7,
-	}
-)
-
-func (x DaysOfWeek) Enum() *DaysOfWeek {
-	p := new(DaysOfWeek)
-	*p = x
-	return p
-}
-
-func (x DaysOfWeek) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (DaysOfWeek) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[13].Descriptor()
-}
-
-func (DaysOfWeek) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[13]
-}
-
-func (x DaysOfWeek) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use DaysOfWeek.Descriptor instead.
-func (DaysOfWeek) EnumDescriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{13}
 }
 
@@ -1109,52 +1110,6 @@ func (TestState) EnumDescriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{18}
 }
 
-type Mode int32
-
-const (
-	Mode_MODE_FULL_OPERATION Mode = 0
-	Mode_MODE_FLASH          Mode = 1
-)
-
-// Enum value maps for Mode.
-var (
-	Mode_name = map[int32]string{
-		0: "MODE_FULL_OPERATION",
-		1: "MODE_FLASH",
-	}
-	Mode_value = map[string]int32{
-		"MODE_FULL_OPERATION": 0,
-		"MODE_FLASH":          1,
-	}
-)
-
-func (x Mode) Enum() *Mode {
-	p := new(Mode)
-	*p = x
-	return p
-}
-
-func (x Mode) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Mode) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[19].Descriptor()
-}
-
-func (Mode) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[19]
-}
-
-func (x Mode) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Mode.Descriptor instead.
-func (Mode) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{19}
-}
-
 type PowerSource int32
 
 const (
@@ -1191,11 +1146,11 @@ func (x PowerSource) String() string {
 }
 
 func (PowerSource) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[20].Descriptor()
+	return file_openits_signal_control_v1_state_proto_enumTypes[19].Descriptor()
 }
 
 func (PowerSource) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[20]
+	return &file_openits_signal_control_v1_state_proto_enumTypes[19]
 }
 
 func (x PowerSource) Number() protoreflect.EnumNumber {
@@ -1204,7 +1159,7 @@ func (x PowerSource) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use PowerSource.Descriptor instead.
 func (PowerSource) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{20}
+	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{19}
 }
 
 type SignalOperationOnBattery int32
@@ -1240,11 +1195,11 @@ func (x SignalOperationOnBattery) String() string {
 }
 
 func (SignalOperationOnBattery) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[21].Descriptor()
+	return file_openits_signal_control_v1_state_proto_enumTypes[20].Descriptor()
 }
 
 func (SignalOperationOnBattery) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[21]
+	return &file_openits_signal_control_v1_state_proto_enumTypes[20]
 }
 
 func (x SignalOperationOnBattery) Number() protoreflect.EnumNumber {
@@ -1253,7 +1208,7 @@ func (x SignalOperationOnBattery) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SignalOperationOnBattery.Descriptor instead.
 func (SignalOperationOnBattery) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{21}
+	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{20}
 }
 
 type OpenitsSignalControlFaultSeverity int32
@@ -1295,11 +1250,11 @@ func (x OpenitsSignalControlFaultSeverity) String() string {
 }
 
 func (OpenitsSignalControlFaultSeverity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[22].Descriptor()
+	return file_openits_signal_control_v1_state_proto_enumTypes[21].Descriptor()
 }
 
 func (OpenitsSignalControlFaultSeverity) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[22]
+	return &file_openits_signal_control_v1_state_proto_enumTypes[21]
 }
 
 func (x OpenitsSignalControlFaultSeverity) Number() protoreflect.EnumNumber {
@@ -1308,7 +1263,7 @@ func (x OpenitsSignalControlFaultSeverity) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use OpenitsSignalControlFaultSeverity.Descriptor instead.
 func (OpenitsSignalControlFaultSeverity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{22}
+	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{21}
 }
 
 type SignalController struct {
@@ -4206,10 +4161,10 @@ func (*Action_SpecialOperation) isAction_Activate() {}
 type ScheduleEntry struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ScheduleId    uint32                 `protobuf:"varint,1,opt,name=schedule_id,json=scheduleId,proto3" json:"schedule_id,omitempty"`
-	Months        []Months               `protobuf:"varint,2,rep,packed,name=months,proto3,enum=openits.signal_control.v1.Months" json:"months,omitempty"`
-	DaysOfWeek    []DaysOfWeek           `protobuf:"varint,3,rep,packed,name=days_of_week,json=daysOfWeek,proto3,enum=openits.signal_control.v1.DaysOfWeek" json:"days_of_week,omitempty"`
-	DaysOfMonth   []uint32               `protobuf:"varint,4,rep,packed,name=days_of_month,json=daysOfMonth,proto3" json:"days_of_month,omitempty"`
 	DayPlan       uint32                 `protobuf:"varint,5,opt,name=day_plan,json=dayPlan,proto3" json:"day_plan,omitempty"`
+	DaysOfMonth   []uint32               `protobuf:"varint,4,rep,packed,name=days_of_month,json=daysOfMonth,proto3" json:"days_of_month,omitempty"`
+	DaysOfWeek    []DaysOfWeek           `protobuf:"varint,3,rep,packed,name=days_of_week,json=daysOfWeek,proto3,enum=openits.signal_control.v1.DaysOfWeek" json:"days_of_week,omitempty"`
+	Months        []Months               `protobuf:"varint,2,rep,packed,name=months,proto3,enum=openits.signal_control.v1.Months" json:"months,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4251,9 +4206,16 @@ func (x *ScheduleEntry) GetScheduleId() uint32 {
 	return 0
 }
 
-func (x *ScheduleEntry) GetMonths() []Months {
+func (x *ScheduleEntry) GetDayPlan() uint32 {
 	if x != nil {
-		return x.Months
+		return x.DayPlan
+	}
+	return 0
+}
+
+func (x *ScheduleEntry) GetDaysOfMonth() []uint32 {
+	if x != nil {
+		return x.DaysOfMonth
 	}
 	return nil
 }
@@ -4265,18 +4227,11 @@ func (x *ScheduleEntry) GetDaysOfWeek() []DaysOfWeek {
 	return nil
 }
 
-func (x *ScheduleEntry) GetDaysOfMonth() []uint32 {
+func (x *ScheduleEntry) GetMonths() []Months {
 	if x != nil {
-		return x.DaysOfMonth
+		return x.Months
 	}
 	return nil
-}
-
-func (x *ScheduleEntry) GetDayPlan() uint32 {
-	if x != nil {
-		return x.DayPlan
-	}
-	return 0
 }
 
 type Clock struct {
@@ -5156,19 +5111,11 @@ func (x *Mmu) GetLatched() bool {
 }
 
 type CabinetPower struct {
-	state                    protoimpl.MessageState   `protogen:"open.v1"`
-	Battery                  *Battery                 `protobuf:"bytes,1,opt,name=battery,proto3" json:"battery,omitempty"`
-	DoorOpen                 bool                     `protobuf:"varint,2,opt,name=door_open,json=doorOpen,proto3" json:"door_open,omitempty"`
-	Generator                *Generator               `protobuf:"bytes,3,opt,name=generator,proto3" json:"generator,omitempty"`
-	LineFrequencyHz          string                   `protobuf:"bytes,4,opt,name=line_frequency_hz,json=lineFrequencyHz,proto3" json:"line_frequency_hz,omitempty"`
-	LineVoltageV             string                   `protobuf:"bytes,5,opt,name=line_voltage_v,json=lineVoltageV,proto3" json:"line_voltage_v,omitempty"`
-	OnBatteryPolicy          *OnBatteryPolicy         `protobuf:"bytes,9,opt,name=on_battery_policy,json=onBatteryPolicy,proto3" json:"on_battery_policy,omitempty"`
-	PolicePanelOpen          bool                     `protobuf:"varint,6,opt,name=police_panel_open,json=policePanelOpen,proto3" json:"police_panel_open,omitempty"`
-	PowerSource              PowerSource              `protobuf:"varint,7,opt,name=power_source,json=powerSource,proto3,enum=openits.signal_control.v1.PowerSource" json:"power_source,omitempty"`
-	SignalOperationOnBattery SignalOperationOnBattery `protobuf:"varint,10,opt,name=signal_operation_on_battery,json=signalOperationOnBattery,proto3,enum=openits.signal_control.v1.SignalOperationOnBattery" json:"signal_operation_on_battery,omitempty"`
-	TransferCount            uint32                   `protobuf:"varint,8,opt,name=transfer_count,json=transferCount,proto3" json:"transfer_count,omitempty"`
-	unknownFields            protoimpl.UnknownFields
-	sizeCache                protoimpl.SizeCache
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Config        *CabinetPowerConfig    `protobuf:"bytes,11,opt,name=config,proto3" json:"config,omitempty"`
+	State         *CabinetPowerState     `protobuf:"bytes,12,opt,name=state,proto3" json:"state,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CabinetPower) Reset() {
@@ -5201,70 +5148,174 @@ func (*CabinetPower) Descriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{52}
 }
 
-func (x *CabinetPower) GetBattery() *Battery {
+func (x *CabinetPower) GetConfig() *CabinetPowerConfig {
 	if x != nil {
-		return x.Battery
+		return x.Config
 	}
 	return nil
 }
 
-func (x *CabinetPower) GetDoorOpen() bool {
+func (x *CabinetPower) GetState() *CabinetPowerState {
 	if x != nil {
-		return x.DoorOpen
-	}
-	return false
-}
-
-func (x *CabinetPower) GetGenerator() *Generator {
-	if x != nil {
-		return x.Generator
+		return x.State
 	}
 	return nil
 }
 
-func (x *CabinetPower) GetLineFrequencyHz() string {
-	if x != nil {
-		return x.LineFrequencyHz
-	}
-	return ""
+type CabinetPowerConfig struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	OnBatteryPolicy *v1.CabinetPowerPolicy `protobuf:"bytes,1,opt,name=on_battery_policy,json=onBatteryPolicy,proto3" json:"on_battery_policy,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
-func (x *CabinetPower) GetLineVoltageV() string {
-	if x != nil {
-		return x.LineVoltageV
-	}
-	return ""
+func (x *CabinetPowerConfig) Reset() {
+	*x = CabinetPowerConfig{}
+	mi := &file_openits_signal_control_v1_state_proto_msgTypes[53]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
 }
 
-func (x *CabinetPower) GetOnBatteryPolicy() *OnBatteryPolicy {
+func (x *CabinetPowerConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CabinetPowerConfig) ProtoMessage() {}
+
+func (x *CabinetPowerConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_signal_control_v1_state_proto_msgTypes[53]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CabinetPowerConfig.ProtoReflect.Descriptor instead.
+func (*CabinetPowerConfig) Descriptor() ([]byte, []int) {
+	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{53}
+}
+
+func (x *CabinetPowerConfig) GetOnBatteryPolicy() *v1.CabinetPowerPolicy {
 	if x != nil {
 		return x.OnBatteryPolicy
 	}
 	return nil
 }
 
-func (x *CabinetPower) GetPolicePanelOpen() bool {
+type CabinetPowerState struct {
+	state                    protoimpl.MessageState   `protogen:"open.v1"`
+	Battery                  *Battery                 `protobuf:"bytes,1,opt,name=battery,proto3" json:"battery,omitempty"`
+	DoorOpen                 bool                     `protobuf:"varint,2,opt,name=door_open,json=doorOpen,proto3" json:"door_open,omitempty"`
+	Generator                *Generator               `protobuf:"bytes,3,opt,name=generator,proto3" json:"generator,omitempty"`
+	LineFrequencyHz          string                   `protobuf:"bytes,4,opt,name=line_frequency_hz,json=lineFrequencyHz,proto3" json:"line_frequency_hz,omitempty"`
+	LineVoltageV             string                   `protobuf:"bytes,5,opt,name=line_voltage_v,json=lineVoltageV,proto3" json:"line_voltage_v,omitempty"`
+	OnBatteryPolicy          *v1.CabinetPowerPolicy   `protobuf:"bytes,6,opt,name=on_battery_policy,json=onBatteryPolicy,proto3" json:"on_battery_policy,omitempty"`
+	PolicePanelOpen          bool                     `protobuf:"varint,7,opt,name=police_panel_open,json=policePanelOpen,proto3" json:"police_panel_open,omitempty"`
+	PowerSource              PowerSource              `protobuf:"varint,8,opt,name=power_source,json=powerSource,proto3,enum=openits.signal_control.v1.PowerSource" json:"power_source,omitempty"`
+	SignalOperationOnBattery SignalOperationOnBattery `protobuf:"varint,9,opt,name=signal_operation_on_battery,json=signalOperationOnBattery,proto3,enum=openits.signal_control.v1.SignalOperationOnBattery" json:"signal_operation_on_battery,omitempty"`
+	TransferCount            uint32                   `protobuf:"varint,10,opt,name=transfer_count,json=transferCount,proto3" json:"transfer_count,omitempty"`
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
+}
+
+func (x *CabinetPowerState) Reset() {
+	*x = CabinetPowerState{}
+	mi := &file_openits_signal_control_v1_state_proto_msgTypes[54]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CabinetPowerState) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CabinetPowerState) ProtoMessage() {}
+
+func (x *CabinetPowerState) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_signal_control_v1_state_proto_msgTypes[54]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CabinetPowerState.ProtoReflect.Descriptor instead.
+func (*CabinetPowerState) Descriptor() ([]byte, []int) {
+	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{54}
+}
+
+func (x *CabinetPowerState) GetBattery() *Battery {
+	if x != nil {
+		return x.Battery
+	}
+	return nil
+}
+
+func (x *CabinetPowerState) GetDoorOpen() bool {
+	if x != nil {
+		return x.DoorOpen
+	}
+	return false
+}
+
+func (x *CabinetPowerState) GetGenerator() *Generator {
+	if x != nil {
+		return x.Generator
+	}
+	return nil
+}
+
+func (x *CabinetPowerState) GetLineFrequencyHz() string {
+	if x != nil {
+		return x.LineFrequencyHz
+	}
+	return ""
+}
+
+func (x *CabinetPowerState) GetLineVoltageV() string {
+	if x != nil {
+		return x.LineVoltageV
+	}
+	return ""
+}
+
+func (x *CabinetPowerState) GetOnBatteryPolicy() *v1.CabinetPowerPolicy {
+	if x != nil {
+		return x.OnBatteryPolicy
+	}
+	return nil
+}
+
+func (x *CabinetPowerState) GetPolicePanelOpen() bool {
 	if x != nil {
 		return x.PolicePanelOpen
 	}
 	return false
 }
 
-func (x *CabinetPower) GetPowerSource() PowerSource {
+func (x *CabinetPowerState) GetPowerSource() PowerSource {
 	if x != nil {
 		return x.PowerSource
 	}
 	return PowerSource_POWER_SOURCE_ON_LINE
 }
 
-func (x *CabinetPower) GetSignalOperationOnBattery() SignalOperationOnBattery {
+func (x *CabinetPowerState) GetSignalOperationOnBattery() SignalOperationOnBattery {
 	if x != nil {
 		return x.SignalOperationOnBattery
 	}
 	return SignalOperationOnBattery_SIGNAL_OPERATION_ON_BATTERY_FULL_OPERATION
 }
 
-func (x *CabinetPower) GetTransferCount() uint32 {
+func (x *CabinetPowerState) GetTransferCount() uint32 {
 	if x != nil {
 		return x.TransferCount
 	}
@@ -5286,7 +5337,7 @@ type Battery struct {
 
 func (x *Battery) Reset() {
 	*x = Battery{}
-	mi := &file_openits_signal_control_v1_state_proto_msgTypes[53]
+	mi := &file_openits_signal_control_v1_state_proto_msgTypes[55]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5298,7 +5349,7 @@ func (x *Battery) String() string {
 func (*Battery) ProtoMessage() {}
 
 func (x *Battery) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_signal_control_v1_state_proto_msgTypes[53]
+	mi := &file_openits_signal_control_v1_state_proto_msgTypes[55]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5311,7 +5362,7 @@ func (x *Battery) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Battery.ProtoReflect.Descriptor instead.
 func (*Battery) Descriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{53}
+	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{55}
 }
 
 func (x *Battery) GetStateOfChargePct() uint32 {
@@ -5373,7 +5424,7 @@ type Generator struct {
 
 func (x *Generator) Reset() {
 	*x = Generator{}
-	mi := &file_openits_signal_control_v1_state_proto_msgTypes[54]
+	mi := &file_openits_signal_control_v1_state_proto_msgTypes[56]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5385,7 +5436,7 @@ func (x *Generator) String() string {
 func (*Generator) ProtoMessage() {}
 
 func (x *Generator) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_signal_control_v1_state_proto_msgTypes[54]
+	mi := &file_openits_signal_control_v1_state_proto_msgTypes[56]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5398,7 +5449,7 @@ func (x *Generator) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Generator.ProtoReflect.Descriptor instead.
 func (*Generator) Descriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{54}
+	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{56}
 }
 
 func (x *Generator) GetRunning() bool {
@@ -5415,66 +5466,6 @@ func (x *Generator) GetFuelLevelPct() uint32 {
 	return 0
 }
 
-type OnBatteryPolicy struct {
-	state                      protoimpl.MessageState `protogen:"open.v1"`
-	Mode                       Mode                   `protobuf:"varint,1,opt,name=mode,proto3,enum=openits.signal_control.v1.Mode" json:"mode,omitempty"`
-	TransitionAtSocPct         uint32                 `protobuf:"varint,2,opt,name=transition_at_soc_pct,json=transitionAtSocPct,proto3" json:"transition_at_soc_pct,omitempty"`
-	TransitionAtRuntimeMinutes uint32                 `protobuf:"varint,3,opt,name=transition_at_runtime_minutes,json=transitionAtRuntimeMinutes,proto3" json:"transition_at_runtime_minutes,omitempty"`
-	unknownFields              protoimpl.UnknownFields
-	sizeCache                  protoimpl.SizeCache
-}
-
-func (x *OnBatteryPolicy) Reset() {
-	*x = OnBatteryPolicy{}
-	mi := &file_openits_signal_control_v1_state_proto_msgTypes[55]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *OnBatteryPolicy) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*OnBatteryPolicy) ProtoMessage() {}
-
-func (x *OnBatteryPolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_signal_control_v1_state_proto_msgTypes[55]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use OnBatteryPolicy.ProtoReflect.Descriptor instead.
-func (*OnBatteryPolicy) Descriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{55}
-}
-
-func (x *OnBatteryPolicy) GetMode() Mode {
-	if x != nil {
-		return x.Mode
-	}
-	return Mode_MODE_FULL_OPERATION
-}
-
-func (x *OnBatteryPolicy) GetTransitionAtSocPct() uint32 {
-	if x != nil {
-		return x.TransitionAtSocPct
-	}
-	return 0
-}
-
-func (x *OnBatteryPolicy) GetTransitionAtRuntimeMinutes() uint32 {
-	if x != nil {
-		return x.TransitionAtRuntimeMinutes
-	}
-	return 0
-}
-
 type Faults struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Fault         []*Fault               `protobuf:"bytes,1,rep,name=fault,proto3" json:"fault,omitempty"`
@@ -5484,7 +5475,7 @@ type Faults struct {
 
 func (x *Faults) Reset() {
 	*x = Faults{}
-	mi := &file_openits_signal_control_v1_state_proto_msgTypes[56]
+	mi := &file_openits_signal_control_v1_state_proto_msgTypes[57]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5496,7 +5487,7 @@ func (x *Faults) String() string {
 func (*Faults) ProtoMessage() {}
 
 func (x *Faults) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_signal_control_v1_state_proto_msgTypes[56]
+	mi := &file_openits_signal_control_v1_state_proto_msgTypes[57]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5509,7 +5500,7 @@ func (x *Faults) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Faults.ProtoReflect.Descriptor instead.
 func (*Faults) Descriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{56}
+	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{57}
 }
 
 func (x *Faults) GetFault() []*Fault {
@@ -5533,7 +5524,7 @@ type Fault struct {
 
 func (x *Fault) Reset() {
 	*x = Fault{}
-	mi := &file_openits_signal_control_v1_state_proto_msgTypes[57]
+	mi := &file_openits_signal_control_v1_state_proto_msgTypes[58]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5545,7 +5536,7 @@ func (x *Fault) String() string {
 func (*Fault) ProtoMessage() {}
 
 func (x *Fault) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_signal_control_v1_state_proto_msgTypes[57]
+	mi := &file_openits_signal_control_v1_state_proto_msgTypes[58]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5558,7 +5549,7 @@ func (x *Fault) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Fault.ProtoReflect.Descriptor instead.
 func (*Fault) Descriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{57}
+	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{58}
 }
 
 func (x *Fault) GetCategory() string {
@@ -5607,7 +5598,7 @@ var File_openits_signal_control_v1_state_proto protoreflect.FileDescriptor
 
 const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\n" +
-	"%openits/signal_control/v1/state.proto\x12\x19openits.signal_control.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xe2\b\n" +
+	"%openits/signal_control/v1/state.proto\x12\x19openits.signal_control.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1copenits/types/v1/types.proto\"\xe2\b\n" +
 	"\x10SignalController\x12I\n" +
 	"\x06config\x18\x01 \x01(\v21.openits.signal_control.v1.SignalControllerConfigR\x06config\x12F\n" +
 	"\x05state\x18\x02 \x01(\v20.openits.signal_control.v1.SignalControllerStateR\x05state\x12<\n" +
@@ -5871,12 +5862,12 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\bactivate\"\xf3\x01\n" +
 	"\rScheduleEntry\x12\x1f\n" +
 	"\vschedule_id\x18\x01 \x01(\rR\n" +
-	"scheduleId\x129\n" +
-	"\x06months\x18\x02 \x03(\x0e2!.openits.signal_control.v1.MonthsR\x06months\x12G\n" +
+	"scheduleId\x12\x19\n" +
+	"\bday_plan\x18\x05 \x01(\rR\adayPlan\x12\"\n" +
+	"\rdays_of_month\x18\x04 \x03(\rR\vdaysOfMonth\x12G\n" +
 	"\fdays_of_week\x18\x03 \x03(\x0e2%.openits.signal_control.v1.DaysOfWeekR\n" +
-	"daysOfWeek\x12\"\n" +
-	"\rdays_of_month\x18\x04 \x03(\rR\vdaysOfMonth\x12\x19\n" +
-	"\bday_plan\x18\x05 \x01(\rR\adayPlan\"\xcc\x01\n" +
+	"daysOfWeek\x129\n" +
+	"\x06months\x18\x02 \x03(\x0e2!.openits.signal_control.v1.MonthsR\x06months\"\xcc\x01\n" +
 	"\x05Clock\x12=\n" +
 	"\fcurrent_time\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\vcurrentTime\x12\x1f\n" +
 	"\vtime_source\x18\x02 \x01(\tR\n" +
@@ -5952,19 +5943,24 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\n" +
 	"fault_type\x18\x01 \x01(\tR\tfaultType\x12+\n" +
 	"\x11faulting_channels\x18\x02 \x03(\rR\x10faultingChannels\x12\x18\n" +
-	"\alatched\x18\x03 \x01(\bR\alatched\"\xe9\x04\n" +
-	"\fCabinetPower\x12<\n" +
+	"\alatched\x18\x03 \x01(\bR\alatched\"\x99\x01\n" +
+	"\fCabinetPower\x12E\n" +
+	"\x06config\x18\v \x01(\v2-.openits.signal_control.v1.CabinetPowerConfigR\x06config\x12B\n" +
+	"\x05state\x18\f \x01(\v2,.openits.signal_control.v1.CabinetPowerStateR\x05state\"f\n" +
+	"\x12CabinetPowerConfig\x12P\n" +
+	"\x11on_battery_policy\x18\x01 \x01(\v2$.openits.types.v1.CabinetPowerPolicyR\x0fonBatteryPolicy\"\xe8\x04\n" +
+	"\x11CabinetPowerState\x12<\n" +
 	"\abattery\x18\x01 \x01(\v2\".openits.signal_control.v1.BatteryR\abattery\x12\x1b\n" +
 	"\tdoor_open\x18\x02 \x01(\bR\bdoorOpen\x12B\n" +
 	"\tgenerator\x18\x03 \x01(\v2$.openits.signal_control.v1.GeneratorR\tgenerator\x12*\n" +
 	"\x11line_frequency_hz\x18\x04 \x01(\tR\x0flineFrequencyHz\x12$\n" +
-	"\x0eline_voltage_v\x18\x05 \x01(\tR\flineVoltageV\x12V\n" +
-	"\x11on_battery_policy\x18\t \x01(\v2*.openits.signal_control.v1.OnBatteryPolicyR\x0fonBatteryPolicy\x12*\n" +
-	"\x11police_panel_open\x18\x06 \x01(\bR\x0fpolicePanelOpen\x12I\n" +
-	"\fpower_source\x18\a \x01(\x0e2&.openits.signal_control.v1.PowerSourceR\vpowerSource\x12r\n" +
-	"\x1bsignal_operation_on_battery\x18\n" +
-	" \x01(\x0e23.openits.signal_control.v1.SignalOperationOnBatteryR\x18signalOperationOnBattery\x12%\n" +
-	"\x0etransfer_count\x18\b \x01(\rR\rtransferCount\"\xd9\x02\n" +
+	"\x0eline_voltage_v\x18\x05 \x01(\tR\flineVoltageV\x12P\n" +
+	"\x11on_battery_policy\x18\x06 \x01(\v2$.openits.types.v1.CabinetPowerPolicyR\x0fonBatteryPolicy\x12*\n" +
+	"\x11police_panel_open\x18\a \x01(\bR\x0fpolicePanelOpen\x12I\n" +
+	"\fpower_source\x18\b \x01(\x0e2&.openits.signal_control.v1.PowerSourceR\vpowerSource\x12r\n" +
+	"\x1bsignal_operation_on_battery\x18\t \x01(\x0e23.openits.signal_control.v1.SignalOperationOnBatteryR\x18signalOperationOnBattery\x12%\n" +
+	"\x0etransfer_count\x18\n" +
+	" \x01(\rR\rtransferCount\"\xd9\x02\n" +
 	"\aBattery\x12-\n" +
 	"\x13state_of_charge_pct\x18\x01 \x01(\rR\x10stateOfChargePct\x12:\n" +
 	"\x19runtime_remaining_minutes\x18\x02 \x01(\rR\x17runtimeRemainingMinutes\x12\x1b\n" +
@@ -5976,11 +5972,7 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\tlast_test\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\blastTest\"K\n" +
 	"\tGenerator\x12\x18\n" +
 	"\arunning\x18\x01 \x01(\bR\arunning\x12$\n" +
-	"\x0efuel_level_pct\x18\x02 \x01(\rR\ffuelLevelPct\"\xbc\x01\n" +
-	"\x0fOnBatteryPolicy\x123\n" +
-	"\x04mode\x18\x01 \x01(\x0e2\x1f.openits.signal_control.v1.ModeR\x04mode\x121\n" +
-	"\x15transition_at_soc_pct\x18\x02 \x01(\rR\x12transitionAtSocPct\x12A\n" +
-	"\x1dtransition_at_runtime_minutes\x18\x03 \x01(\rR\x1atransitionAtRuntimeMinutes\"@\n" +
+	"\x0efuel_level_pct\x18\x02 \x01(\rR\ffuelLevelPct\"@\n" +
 	"\x06Faults\x126\n" +
 	"\x05fault\x18\x01 \x03(\v2 .openits.signal_control.v1.FaultR\x05fault\"\xa6\x02\n" +
 	"\x05Fault\x12\x1a\n" +
@@ -6063,7 +6055,17 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\x10SpecialOperation\x12!\n" +
 	"\x1dSPECIAL_OPERATION_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16SPECIAL_OPERATION_FREE\x10\x01\x12\x1b\n" +
-	"\x17SPECIAL_OPERATION_FLASH\x10\x02*\x86\x02\n" +
+	"\x17SPECIAL_OPERATION_FLASH\x10\x02*\xe1\x01\n" +
+	"\n" +
+	"DaysOfWeek\x12\x1c\n" +
+	"\x18DAYS_OF_WEEK_UNSPECIFIED\x10\x00\x12\x17\n" +
+	"\x13DAYS_OF_WEEK_MONDAY\x10\x01\x12\x18\n" +
+	"\x14DAYS_OF_WEEK_TUESDAY\x10\x02\x12\x1a\n" +
+	"\x16DAYS_OF_WEEK_WEDNESDAY\x10\x03\x12\x19\n" +
+	"\x15DAYS_OF_WEEK_THURSDAY\x10\x04\x12\x17\n" +
+	"\x13DAYS_OF_WEEK_FRIDAY\x10\x05\x12\x19\n" +
+	"\x15DAYS_OF_WEEK_SATURDAY\x10\x06\x12\x17\n" +
+	"\x13DAYS_OF_WEEK_SUNDAY\x10\a*\x86\x02\n" +
 	"\x06Months\x12\x16\n" +
 	"\x12MONTHS_UNSPECIFIED\x10\x00\x12\x12\n" +
 	"\x0eMONTHS_JANUARY\x10\x01\x12\x13\n" +
@@ -6079,17 +6081,7 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\x0eMONTHS_OCTOBER\x10\n" +
 	"\x12\x13\n" +
 	"\x0fMONTHS_NOVEMBER\x10\v\x12\x13\n" +
-	"\x0fMONTHS_DECEMBER\x10\f*\xe1\x01\n" +
-	"\n" +
-	"DaysOfWeek\x12\x1c\n" +
-	"\x18DAYS_OF_WEEK_UNSPECIFIED\x10\x00\x12\x17\n" +
-	"\x13DAYS_OF_WEEK_MONDAY\x10\x01\x12\x18\n" +
-	"\x14DAYS_OF_WEEK_TUESDAY\x10\x02\x12\x1a\n" +
-	"\x16DAYS_OF_WEEK_WEDNESDAY\x10\x03\x12\x19\n" +
-	"\x15DAYS_OF_WEEK_THURSDAY\x10\x04\x12\x17\n" +
-	"\x13DAYS_OF_WEEK_FRIDAY\x10\x05\x12\x19\n" +
-	"\x15DAYS_OF_WEEK_SATURDAY\x10\x06\x12\x17\n" +
-	"\x13DAYS_OF_WEEK_SUNDAY\x10\a*\x93\x01\n" +
+	"\x0fMONTHS_DECEMBER\x10\f*\x93\x01\n" +
 	"\n" +
 	"SyncStatus\x12\x1b\n" +
 	"\x17SYNC_STATUS_UNSPECIFIED\x10\x00\x12\x16\n" +
@@ -6122,11 +6114,7 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\x0fTEST_STATE_IDLE\x10\x00\x12\x1a\n" +
 	"\x16TEST_STATE_IN_PROGRESS\x10\x01\x12\x15\n" +
 	"\x11TEST_STATE_PASSED\x10\x02\x12\x15\n" +
-	"\x11TEST_STATE_FAILED\x10\x03*/\n" +
-	"\x04Mode\x12\x17\n" +
-	"\x13MODE_FULL_OPERATION\x10\x00\x12\x0e\n" +
-	"\n" +
-	"MODE_FLASH\x10\x01*s\n" +
+	"\x11TEST_STATE_FAILED\x10\x03*s\n" +
 	"\vPowerSource\x12\x18\n" +
 	"\x14POWER_SOURCE_ON_LINE\x10\x00\x12\x1b\n" +
 	"\x17POWER_SOURCE_ON_BATTERY\x10\x01\x12\x17\n" +
@@ -6155,8 +6143,8 @@ func file_openits_signal_control_v1_state_proto_rawDescGZIP() []byte {
 	return file_openits_signal_control_v1_state_proto_rawDescData
 }
 
-var file_openits_signal_control_v1_state_proto_enumTypes = make([]protoimpl.EnumInfo, 23)
-var file_openits_signal_control_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 58)
+var file_openits_signal_control_v1_state_proto_enumTypes = make([]protoimpl.EnumInfo, 22)
+var file_openits_signal_control_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 59)
 var file_openits_signal_control_v1_state_proto_goTypes = []any{
 	(PedIntervalType)(0),                          // 0: openits.signal_control.v1.PedIntervalType
 	(VehIntervalType)(0),                          // 1: openits.signal_control.v1.VehIntervalType
@@ -6170,173 +6158,176 @@ var file_openits_signal_control_v1_state_proto_goTypes = []any{
 	(SplitMode)(0),                                // 9: openits.signal_control.v1.SplitMode
 	(CycleState)(0),                               // 10: openits.signal_control.v1.CycleState
 	(SpecialOperation)(0),                         // 11: openits.signal_control.v1.SpecialOperation
-	(Months)(0),                                   // 12: openits.signal_control.v1.Months
-	(DaysOfWeek)(0),                               // 13: openits.signal_control.v1.DaysOfWeek
+	(DaysOfWeek)(0),                               // 12: openits.signal_control.v1.DaysOfWeek
+	(Months)(0),                                   // 13: openits.signal_control.v1.Months
 	(SyncStatus)(0),                               // 14: openits.signal_control.v1.SyncStatus
 	(PreemptStage)(0),                             // 15: openits.signal_control.v1.PreemptStage
 	(PriorityType)(0),                             // 16: openits.signal_control.v1.PriorityType
 	(Stage)(0),                                    // 17: openits.signal_control.v1.Stage
 	(TestState)(0),                                // 18: openits.signal_control.v1.TestState
-	(Mode)(0),                                     // 19: openits.signal_control.v1.Mode
-	(PowerSource)(0),                              // 20: openits.signal_control.v1.PowerSource
-	(SignalOperationOnBattery)(0),                 // 21: openits.signal_control.v1.SignalOperationOnBattery
-	(OpenitsSignalControlFaultSeverity)(0),        // 22: openits.signal_control.v1.OpenitsSignalControlFaultSeverity
-	(*SignalController)(nil),                      // 23: openits.signal_control.v1.SignalController
-	(*SignalControllerConfig)(nil),                // 24: openits.signal_control.v1.SignalControllerConfig
-	(*SignalControllerConfigLinearReference)(nil), // 25: openits.signal_control.v1.SignalControllerConfigLinearReference
-	(*SignalControllerState)(nil),                 // 26: openits.signal_control.v1.SignalControllerState
-	(*SignalControllerStateLinearReference)(nil),  // 27: openits.signal_control.v1.SignalControllerStateLinearReference
-	(*Startup)(nil),                               // 28: openits.signal_control.v1.Startup
-	(*Phases)(nil),                                // 29: openits.signal_control.v1.Phases
-	(*Phase)(nil),                                 // 30: openits.signal_control.v1.Phase
-	(*PhaseConfig)(nil),                           // 31: openits.signal_control.v1.PhaseConfig
-	(*Timing)(nil),                                // 32: openits.signal_control.v1.Timing
-	(*Options)(nil),                               // 33: openits.signal_control.v1.Options
-	(*VolumeDensity)(nil),                         // 34: openits.signal_control.v1.VolumeDensity
-	(*PhaseState)(nil),                            // 35: openits.signal_control.v1.PhaseState
-	(*Detectors)(nil),                             // 36: openits.signal_control.v1.Detectors
-	(*DetectorsDetector)(nil),                     // 37: openits.signal_control.v1.DetectorsDetector
-	(*DetectorsDetectorConfig)(nil),               // 38: openits.signal_control.v1.DetectorsDetectorConfig
-	(*Diagnostics)(nil),                           // 39: openits.signal_control.v1.Diagnostics
-	(*DetectorsDetectorState)(nil),                // 40: openits.signal_control.v1.DetectorsDetectorState
-	(*Measurement)(nil),                           // 41: openits.signal_control.v1.Measurement
-	(*Overlaps)(nil),                              // 42: openits.signal_control.v1.Overlaps
-	(*Overlap)(nil),                               // 43: openits.signal_control.v1.Overlap
-	(*OverlapConfig)(nil),                         // 44: openits.signal_control.v1.OverlapConfig
-	(*Fya)(nil),                                   // 45: openits.signal_control.v1.Fya
-	(*OverlapState)(nil),                          // 46: openits.signal_control.v1.OverlapState
-	(*Channels)(nil),                              // 47: openits.signal_control.v1.Channels
-	(*Channel)(nil),                               // 48: openits.signal_control.v1.Channel
-	(*ConflictMonitor)(nil),                       // 49: openits.signal_control.v1.ConflictMonitor
-	(*Permissive)(nil),                            // 50: openits.signal_control.v1.Permissive
-	(*Coordination)(nil),                          // 51: openits.signal_control.v1.Coordination
-	(*TimingPlan)(nil),                            // 52: openits.signal_control.v1.TimingPlan
-	(*Split)(nil),                                 // 53: openits.signal_control.v1.Split
-	(*CoordinationState)(nil),                     // 54: openits.signal_control.v1.CoordinationState
-	(*Sequences)(nil),                             // 55: openits.signal_control.v1.Sequences
-	(*Sequence)(nil),                              // 56: openits.signal_control.v1.Sequence
-	(*RingSequence)(nil),                          // 57: openits.signal_control.v1.RingSequence
-	(*Timebase)(nil),                              // 58: openits.signal_control.v1.Timebase
-	(*DayPlan)(nil),                               // 59: openits.signal_control.v1.DayPlan
-	(*Action)(nil),                                // 60: openits.signal_control.v1.Action
-	(*ScheduleEntry)(nil),                         // 61: openits.signal_control.v1.ScheduleEntry
-	(*Clock)(nil),                                 // 62: openits.signal_control.v1.Clock
-	(*Preemption)(nil),                            // 63: openits.signal_control.v1.Preemption
-	(*Preemptor)(nil),                             // 64: openits.signal_control.v1.Preemptor
-	(*PreemptorConfig)(nil),                       // 65: openits.signal_control.v1.PreemptorConfig
-	(*TrackClearance)(nil),                        // 66: openits.signal_control.v1.TrackClearance
-	(*PreemptorState)(nil),                        // 67: openits.signal_control.v1.PreemptorState
-	(*Priority)(nil),                              // 68: openits.signal_control.v1.Priority
-	(*Strategy)(nil),                              // 69: openits.signal_control.v1.Strategy
-	(*StrategyConfig)(nil),                        // 70: openits.signal_control.v1.StrategyConfig
-	(*PriorityState)(nil),                         // 71: openits.signal_control.v1.PriorityState
-	(*ActiveRequest)(nil),                         // 72: openits.signal_control.v1.ActiveRequest
-	(*Operation)(nil),                             // 73: openits.signal_control.v1.Operation
-	(*Mmu)(nil),                                   // 74: openits.signal_control.v1.Mmu
-	(*CabinetPower)(nil),                          // 75: openits.signal_control.v1.CabinetPower
-	(*Battery)(nil),                               // 76: openits.signal_control.v1.Battery
-	(*Generator)(nil),                             // 77: openits.signal_control.v1.Generator
-	(*OnBatteryPolicy)(nil),                       // 78: openits.signal_control.v1.OnBatteryPolicy
+	(PowerSource)(0),                              // 19: openits.signal_control.v1.PowerSource
+	(SignalOperationOnBattery)(0),                 // 20: openits.signal_control.v1.SignalOperationOnBattery
+	(OpenitsSignalControlFaultSeverity)(0),        // 21: openits.signal_control.v1.OpenitsSignalControlFaultSeverity
+	(*SignalController)(nil),                      // 22: openits.signal_control.v1.SignalController
+	(*SignalControllerConfig)(nil),                // 23: openits.signal_control.v1.SignalControllerConfig
+	(*SignalControllerConfigLinearReference)(nil), // 24: openits.signal_control.v1.SignalControllerConfigLinearReference
+	(*SignalControllerState)(nil),                 // 25: openits.signal_control.v1.SignalControllerState
+	(*SignalControllerStateLinearReference)(nil),  // 26: openits.signal_control.v1.SignalControllerStateLinearReference
+	(*Startup)(nil),                               // 27: openits.signal_control.v1.Startup
+	(*Phases)(nil),                                // 28: openits.signal_control.v1.Phases
+	(*Phase)(nil),                                 // 29: openits.signal_control.v1.Phase
+	(*PhaseConfig)(nil),                           // 30: openits.signal_control.v1.PhaseConfig
+	(*Timing)(nil),                                // 31: openits.signal_control.v1.Timing
+	(*Options)(nil),                               // 32: openits.signal_control.v1.Options
+	(*VolumeDensity)(nil),                         // 33: openits.signal_control.v1.VolumeDensity
+	(*PhaseState)(nil),                            // 34: openits.signal_control.v1.PhaseState
+	(*Detectors)(nil),                             // 35: openits.signal_control.v1.Detectors
+	(*DetectorsDetector)(nil),                     // 36: openits.signal_control.v1.DetectorsDetector
+	(*DetectorsDetectorConfig)(nil),               // 37: openits.signal_control.v1.DetectorsDetectorConfig
+	(*Diagnostics)(nil),                           // 38: openits.signal_control.v1.Diagnostics
+	(*DetectorsDetectorState)(nil),                // 39: openits.signal_control.v1.DetectorsDetectorState
+	(*Measurement)(nil),                           // 40: openits.signal_control.v1.Measurement
+	(*Overlaps)(nil),                              // 41: openits.signal_control.v1.Overlaps
+	(*Overlap)(nil),                               // 42: openits.signal_control.v1.Overlap
+	(*OverlapConfig)(nil),                         // 43: openits.signal_control.v1.OverlapConfig
+	(*Fya)(nil),                                   // 44: openits.signal_control.v1.Fya
+	(*OverlapState)(nil),                          // 45: openits.signal_control.v1.OverlapState
+	(*Channels)(nil),                              // 46: openits.signal_control.v1.Channels
+	(*Channel)(nil),                               // 47: openits.signal_control.v1.Channel
+	(*ConflictMonitor)(nil),                       // 48: openits.signal_control.v1.ConflictMonitor
+	(*Permissive)(nil),                            // 49: openits.signal_control.v1.Permissive
+	(*Coordination)(nil),                          // 50: openits.signal_control.v1.Coordination
+	(*TimingPlan)(nil),                            // 51: openits.signal_control.v1.TimingPlan
+	(*Split)(nil),                                 // 52: openits.signal_control.v1.Split
+	(*CoordinationState)(nil),                     // 53: openits.signal_control.v1.CoordinationState
+	(*Sequences)(nil),                             // 54: openits.signal_control.v1.Sequences
+	(*Sequence)(nil),                              // 55: openits.signal_control.v1.Sequence
+	(*RingSequence)(nil),                          // 56: openits.signal_control.v1.RingSequence
+	(*Timebase)(nil),                              // 57: openits.signal_control.v1.Timebase
+	(*DayPlan)(nil),                               // 58: openits.signal_control.v1.DayPlan
+	(*Action)(nil),                                // 59: openits.signal_control.v1.Action
+	(*ScheduleEntry)(nil),                         // 60: openits.signal_control.v1.ScheduleEntry
+	(*Clock)(nil),                                 // 61: openits.signal_control.v1.Clock
+	(*Preemption)(nil),                            // 62: openits.signal_control.v1.Preemption
+	(*Preemptor)(nil),                             // 63: openits.signal_control.v1.Preemptor
+	(*PreemptorConfig)(nil),                       // 64: openits.signal_control.v1.PreemptorConfig
+	(*TrackClearance)(nil),                        // 65: openits.signal_control.v1.TrackClearance
+	(*PreemptorState)(nil),                        // 66: openits.signal_control.v1.PreemptorState
+	(*Priority)(nil),                              // 67: openits.signal_control.v1.Priority
+	(*Strategy)(nil),                              // 68: openits.signal_control.v1.Strategy
+	(*StrategyConfig)(nil),                        // 69: openits.signal_control.v1.StrategyConfig
+	(*PriorityState)(nil),                         // 70: openits.signal_control.v1.PriorityState
+	(*ActiveRequest)(nil),                         // 71: openits.signal_control.v1.ActiveRequest
+	(*Operation)(nil),                             // 72: openits.signal_control.v1.Operation
+	(*Mmu)(nil),                                   // 73: openits.signal_control.v1.Mmu
+	(*CabinetPower)(nil),                          // 74: openits.signal_control.v1.CabinetPower
+	(*CabinetPowerConfig)(nil),                    // 75: openits.signal_control.v1.CabinetPowerConfig
+	(*CabinetPowerState)(nil),                     // 76: openits.signal_control.v1.CabinetPowerState
+	(*Battery)(nil),                               // 77: openits.signal_control.v1.Battery
+	(*Generator)(nil),                             // 78: openits.signal_control.v1.Generator
 	(*Faults)(nil),                                // 79: openits.signal_control.v1.Faults
 	(*Fault)(nil),                                 // 80: openits.signal_control.v1.Fault
 	(*timestamppb.Timestamp)(nil),                 // 81: google.protobuf.Timestamp
+	(*v1.CabinetPowerPolicy)(nil),                 // 82: openits.types.v1.CabinetPowerPolicy
 }
 var file_openits_signal_control_v1_state_proto_depIdxs = []int32{
-	24, // 0: openits.signal_control.v1.SignalController.config:type_name -> openits.signal_control.v1.SignalControllerConfig
-	26, // 1: openits.signal_control.v1.SignalController.state:type_name -> openits.signal_control.v1.SignalControllerState
-	28, // 2: openits.signal_control.v1.SignalController.startup:type_name -> openits.signal_control.v1.Startup
-	29, // 3: openits.signal_control.v1.SignalController.phases:type_name -> openits.signal_control.v1.Phases
-	36, // 4: openits.signal_control.v1.SignalController.detectors:type_name -> openits.signal_control.v1.Detectors
-	42, // 5: openits.signal_control.v1.SignalController.overlaps:type_name -> openits.signal_control.v1.Overlaps
-	47, // 6: openits.signal_control.v1.SignalController.channels:type_name -> openits.signal_control.v1.Channels
-	49, // 7: openits.signal_control.v1.SignalController.conflict_monitor:type_name -> openits.signal_control.v1.ConflictMonitor
-	51, // 8: openits.signal_control.v1.SignalController.coordination:type_name -> openits.signal_control.v1.Coordination
-	55, // 9: openits.signal_control.v1.SignalController.sequences:type_name -> openits.signal_control.v1.Sequences
-	58, // 10: openits.signal_control.v1.SignalController.timebase:type_name -> openits.signal_control.v1.Timebase
-	63, // 11: openits.signal_control.v1.SignalController.preemption:type_name -> openits.signal_control.v1.Preemption
-	68, // 12: openits.signal_control.v1.SignalController.priority:type_name -> openits.signal_control.v1.Priority
-	73, // 13: openits.signal_control.v1.SignalController.operation:type_name -> openits.signal_control.v1.Operation
-	75, // 14: openits.signal_control.v1.SignalController.cabinet_power:type_name -> openits.signal_control.v1.CabinetPower
+	23, // 0: openits.signal_control.v1.SignalController.config:type_name -> openits.signal_control.v1.SignalControllerConfig
+	25, // 1: openits.signal_control.v1.SignalController.state:type_name -> openits.signal_control.v1.SignalControllerState
+	27, // 2: openits.signal_control.v1.SignalController.startup:type_name -> openits.signal_control.v1.Startup
+	28, // 3: openits.signal_control.v1.SignalController.phases:type_name -> openits.signal_control.v1.Phases
+	35, // 4: openits.signal_control.v1.SignalController.detectors:type_name -> openits.signal_control.v1.Detectors
+	41, // 5: openits.signal_control.v1.SignalController.overlaps:type_name -> openits.signal_control.v1.Overlaps
+	46, // 6: openits.signal_control.v1.SignalController.channels:type_name -> openits.signal_control.v1.Channels
+	48, // 7: openits.signal_control.v1.SignalController.conflict_monitor:type_name -> openits.signal_control.v1.ConflictMonitor
+	50, // 8: openits.signal_control.v1.SignalController.coordination:type_name -> openits.signal_control.v1.Coordination
+	54, // 9: openits.signal_control.v1.SignalController.sequences:type_name -> openits.signal_control.v1.Sequences
+	57, // 10: openits.signal_control.v1.SignalController.timebase:type_name -> openits.signal_control.v1.Timebase
+	62, // 11: openits.signal_control.v1.SignalController.preemption:type_name -> openits.signal_control.v1.Preemption
+	67, // 12: openits.signal_control.v1.SignalController.priority:type_name -> openits.signal_control.v1.Priority
+	72, // 13: openits.signal_control.v1.SignalController.operation:type_name -> openits.signal_control.v1.Operation
+	74, // 14: openits.signal_control.v1.SignalController.cabinet_power:type_name -> openits.signal_control.v1.CabinetPower
 	79, // 15: openits.signal_control.v1.SignalController.faults:type_name -> openits.signal_control.v1.Faults
 	81, // 16: openits.signal_control.v1.SignalControllerConfig.install_date:type_name -> google.protobuf.Timestamp
-	25, // 17: openits.signal_control.v1.SignalControllerConfig.linear_reference:type_name -> openits.signal_control.v1.SignalControllerConfigLinearReference
+	24, // 17: openits.signal_control.v1.SignalControllerConfig.linear_reference:type_name -> openits.signal_control.v1.SignalControllerConfigLinearReference
 	81, // 18: openits.signal_control.v1.SignalControllerState.install_date:type_name -> google.protobuf.Timestamp
-	27, // 19: openits.signal_control.v1.SignalControllerState.linear_reference:type_name -> openits.signal_control.v1.SignalControllerStateLinearReference
-	30, // 20: openits.signal_control.v1.Phases.phase:type_name -> openits.signal_control.v1.Phase
-	31, // 21: openits.signal_control.v1.Phase.config:type_name -> openits.signal_control.v1.PhaseConfig
-	35, // 22: openits.signal_control.v1.Phase.state:type_name -> openits.signal_control.v1.PhaseState
-	32, // 23: openits.signal_control.v1.PhaseConfig.timing:type_name -> openits.signal_control.v1.Timing
-	33, // 24: openits.signal_control.v1.PhaseConfig.options:type_name -> openits.signal_control.v1.Options
-	34, // 25: openits.signal_control.v1.PhaseConfig.volume_density:type_name -> openits.signal_control.v1.VolumeDensity
+	26, // 19: openits.signal_control.v1.SignalControllerState.linear_reference:type_name -> openits.signal_control.v1.SignalControllerStateLinearReference
+	29, // 20: openits.signal_control.v1.Phases.phase:type_name -> openits.signal_control.v1.Phase
+	30, // 21: openits.signal_control.v1.Phase.config:type_name -> openits.signal_control.v1.PhaseConfig
+	34, // 22: openits.signal_control.v1.Phase.state:type_name -> openits.signal_control.v1.PhaseState
+	31, // 23: openits.signal_control.v1.PhaseConfig.timing:type_name -> openits.signal_control.v1.Timing
+	32, // 24: openits.signal_control.v1.PhaseConfig.options:type_name -> openits.signal_control.v1.Options
+	33, // 25: openits.signal_control.v1.PhaseConfig.volume_density:type_name -> openits.signal_control.v1.VolumeDensity
 	0,  // 26: openits.signal_control.v1.PhaseState.ped_interval:type_name -> openits.signal_control.v1.PedIntervalType
 	1,  // 27: openits.signal_control.v1.PhaseState.vehicle_interval:type_name -> openits.signal_control.v1.VehIntervalType
-	37, // 28: openits.signal_control.v1.Detectors.detector:type_name -> openits.signal_control.v1.DetectorsDetector
-	38, // 29: openits.signal_control.v1.DetectorsDetector.config:type_name -> openits.signal_control.v1.DetectorsDetectorConfig
-	40, // 30: openits.signal_control.v1.DetectorsDetector.state:type_name -> openits.signal_control.v1.DetectorsDetectorState
+	36, // 28: openits.signal_control.v1.Detectors.detector:type_name -> openits.signal_control.v1.DetectorsDetector
+	37, // 29: openits.signal_control.v1.DetectorsDetector.config:type_name -> openits.signal_control.v1.DetectorsDetectorConfig
+	39, // 30: openits.signal_control.v1.DetectorsDetector.state:type_name -> openits.signal_control.v1.DetectorsDetectorState
 	2,  // 31: openits.signal_control.v1.DetectorsDetectorConfig.mode:type_name -> openits.signal_control.v1.DetectorMode
 	3,  // 32: openits.signal_control.v1.DetectorsDetectorConfig.fail_action:type_name -> openits.signal_control.v1.DetectorFailAction
-	39, // 33: openits.signal_control.v1.DetectorsDetectorConfig.diagnostics:type_name -> openits.signal_control.v1.Diagnostics
+	38, // 33: openits.signal_control.v1.DetectorsDetectorConfig.diagnostics:type_name -> openits.signal_control.v1.Diagnostics
 	81, // 34: openits.signal_control.v1.DetectorsDetectorState.last_activation:type_name -> google.protobuf.Timestamp
-	41, // 35: openits.signal_control.v1.DetectorsDetectorState.measurement:type_name -> openits.signal_control.v1.Measurement
+	40, // 35: openits.signal_control.v1.DetectorsDetectorState.measurement:type_name -> openits.signal_control.v1.Measurement
 	81, // 36: openits.signal_control.v1.Measurement.collected_at:type_name -> google.protobuf.Timestamp
-	43, // 37: openits.signal_control.v1.Overlaps.overlap:type_name -> openits.signal_control.v1.Overlap
-	44, // 38: openits.signal_control.v1.Overlap.config:type_name -> openits.signal_control.v1.OverlapConfig
-	46, // 39: openits.signal_control.v1.Overlap.state:type_name -> openits.signal_control.v1.OverlapState
-	45, // 40: openits.signal_control.v1.OverlapConfig.fya:type_name -> openits.signal_control.v1.Fya
+	42, // 37: openits.signal_control.v1.Overlaps.overlap:type_name -> openits.signal_control.v1.Overlap
+	43, // 38: openits.signal_control.v1.Overlap.config:type_name -> openits.signal_control.v1.OverlapConfig
+	45, // 39: openits.signal_control.v1.Overlap.state:type_name -> openits.signal_control.v1.OverlapState
+	44, // 40: openits.signal_control.v1.OverlapConfig.fya:type_name -> openits.signal_control.v1.Fya
 	4,  // 41: openits.signal_control.v1.OverlapState.current_interval:type_name -> openits.signal_control.v1.OverlapIntervalType
-	48, // 42: openits.signal_control.v1.Channels.channel:type_name -> openits.signal_control.v1.Channel
+	47, // 42: openits.signal_control.v1.Channels.channel:type_name -> openits.signal_control.v1.Channel
 	5,  // 43: openits.signal_control.v1.Channel.flash_state:type_name -> openits.signal_control.v1.ChannelFlashState
-	50, // 44: openits.signal_control.v1.ConflictMonitor.permissive:type_name -> openits.signal_control.v1.Permissive
-	52, // 45: openits.signal_control.v1.Coordination.timing_plan:type_name -> openits.signal_control.v1.TimingPlan
-	54, // 46: openits.signal_control.v1.Coordination.state:type_name -> openits.signal_control.v1.CoordinationState
+	49, // 44: openits.signal_control.v1.ConflictMonitor.permissive:type_name -> openits.signal_control.v1.Permissive
+	51, // 45: openits.signal_control.v1.Coordination.timing_plan:type_name -> openits.signal_control.v1.TimingPlan
+	53, // 46: openits.signal_control.v1.Coordination.state:type_name -> openits.signal_control.v1.CoordinationState
 	6,  // 47: openits.signal_control.v1.TimingPlan.offset_reference:type_name -> openits.signal_control.v1.OffsetReference
 	7,  // 48: openits.signal_control.v1.TimingPlan.transition_mode:type_name -> openits.signal_control.v1.TransitionMode
 	8,  // 49: openits.signal_control.v1.TimingPlan.force_off_mode:type_name -> openits.signal_control.v1.ForceOffMode
-	53, // 50: openits.signal_control.v1.TimingPlan.split:type_name -> openits.signal_control.v1.Split
+	52, // 50: openits.signal_control.v1.TimingPlan.split:type_name -> openits.signal_control.v1.Split
 	9,  // 51: openits.signal_control.v1.Split.split_mode:type_name -> openits.signal_control.v1.SplitMode
 	10, // 52: openits.signal_control.v1.CoordinationState.cycle_state:type_name -> openits.signal_control.v1.CycleState
-	56, // 53: openits.signal_control.v1.Sequences.sequence:type_name -> openits.signal_control.v1.Sequence
-	57, // 54: openits.signal_control.v1.Sequence.ring_sequence:type_name -> openits.signal_control.v1.RingSequence
-	59, // 55: openits.signal_control.v1.Timebase.day_plan:type_name -> openits.signal_control.v1.DayPlan
-	61, // 56: openits.signal_control.v1.Timebase.schedule_entry:type_name -> openits.signal_control.v1.ScheduleEntry
-	62, // 57: openits.signal_control.v1.Timebase.clock:type_name -> openits.signal_control.v1.Clock
-	60, // 58: openits.signal_control.v1.DayPlan.action:type_name -> openits.signal_control.v1.Action
+	55, // 53: openits.signal_control.v1.Sequences.sequence:type_name -> openits.signal_control.v1.Sequence
+	56, // 54: openits.signal_control.v1.Sequence.ring_sequence:type_name -> openits.signal_control.v1.RingSequence
+	58, // 55: openits.signal_control.v1.Timebase.day_plan:type_name -> openits.signal_control.v1.DayPlan
+	60, // 56: openits.signal_control.v1.Timebase.schedule_entry:type_name -> openits.signal_control.v1.ScheduleEntry
+	61, // 57: openits.signal_control.v1.Timebase.clock:type_name -> openits.signal_control.v1.Clock
+	59, // 58: openits.signal_control.v1.DayPlan.action:type_name -> openits.signal_control.v1.Action
 	11, // 59: openits.signal_control.v1.Action.special_operation:type_name -> openits.signal_control.v1.SpecialOperation
-	12, // 60: openits.signal_control.v1.ScheduleEntry.months:type_name -> openits.signal_control.v1.Months
-	13, // 61: openits.signal_control.v1.ScheduleEntry.days_of_week:type_name -> openits.signal_control.v1.DaysOfWeek
+	12, // 60: openits.signal_control.v1.ScheduleEntry.days_of_week:type_name -> openits.signal_control.v1.DaysOfWeek
+	13, // 61: openits.signal_control.v1.ScheduleEntry.months:type_name -> openits.signal_control.v1.Months
 	81, // 62: openits.signal_control.v1.Clock.current_time:type_name -> google.protobuf.Timestamp
 	14, // 63: openits.signal_control.v1.Clock.sync_status:type_name -> openits.signal_control.v1.SyncStatus
-	64, // 64: openits.signal_control.v1.Preemption.preemptor:type_name -> openits.signal_control.v1.Preemptor
-	65, // 65: openits.signal_control.v1.Preemptor.config:type_name -> openits.signal_control.v1.PreemptorConfig
-	67, // 66: openits.signal_control.v1.Preemptor.state:type_name -> openits.signal_control.v1.PreemptorState
-	66, // 67: openits.signal_control.v1.PreemptorConfig.track_clearance:type_name -> openits.signal_control.v1.TrackClearance
+	63, // 64: openits.signal_control.v1.Preemption.preemptor:type_name -> openits.signal_control.v1.Preemptor
+	64, // 65: openits.signal_control.v1.Preemptor.config:type_name -> openits.signal_control.v1.PreemptorConfig
+	66, // 66: openits.signal_control.v1.Preemptor.state:type_name -> openits.signal_control.v1.PreemptorState
+	65, // 67: openits.signal_control.v1.PreemptorConfig.track_clearance:type_name -> openits.signal_control.v1.TrackClearance
 	81, // 68: openits.signal_control.v1.PreemptorState.active_since:type_name -> google.protobuf.Timestamp
 	15, // 69: openits.signal_control.v1.PreemptorState.current_stage:type_name -> openits.signal_control.v1.PreemptStage
-	69, // 70: openits.signal_control.v1.Priority.strategy:type_name -> openits.signal_control.v1.Strategy
-	71, // 71: openits.signal_control.v1.Priority.state:type_name -> openits.signal_control.v1.PriorityState
-	70, // 72: openits.signal_control.v1.Strategy.config:type_name -> openits.signal_control.v1.StrategyConfig
+	68, // 70: openits.signal_control.v1.Priority.strategy:type_name -> openits.signal_control.v1.Strategy
+	70, // 71: openits.signal_control.v1.Priority.state:type_name -> openits.signal_control.v1.PriorityState
+	69, // 72: openits.signal_control.v1.Strategy.config:type_name -> openits.signal_control.v1.StrategyConfig
 	16, // 73: openits.signal_control.v1.StrategyConfig.priority_class:type_name -> openits.signal_control.v1.PriorityType
-	72, // 74: openits.signal_control.v1.PriorityState.active_request:type_name -> openits.signal_control.v1.ActiveRequest
+	71, // 74: openits.signal_control.v1.PriorityState.active_request:type_name -> openits.signal_control.v1.ActiveRequest
 	16, // 75: openits.signal_control.v1.ActiveRequest.priority_type:type_name -> openits.signal_control.v1.PriorityType
 	17, // 76: openits.signal_control.v1.ActiveRequest.stage:type_name -> openits.signal_control.v1.Stage
-	74, // 77: openits.signal_control.v1.Operation.mmu:type_name -> openits.signal_control.v1.Mmu
+	73, // 77: openits.signal_control.v1.Operation.mmu:type_name -> openits.signal_control.v1.Mmu
 	81, // 78: openits.signal_control.v1.Operation.last_mode_change:type_name -> google.protobuf.Timestamp
-	76, // 79: openits.signal_control.v1.CabinetPower.battery:type_name -> openits.signal_control.v1.Battery
-	77, // 80: openits.signal_control.v1.CabinetPower.generator:type_name -> openits.signal_control.v1.Generator
-	78, // 81: openits.signal_control.v1.CabinetPower.on_battery_policy:type_name -> openits.signal_control.v1.OnBatteryPolicy
-	20, // 82: openits.signal_control.v1.CabinetPower.power_source:type_name -> openits.signal_control.v1.PowerSource
-	21, // 83: openits.signal_control.v1.CabinetPower.signal_operation_on_battery:type_name -> openits.signal_control.v1.SignalOperationOnBattery
-	18, // 84: openits.signal_control.v1.Battery.test_state:type_name -> openits.signal_control.v1.TestState
-	81, // 85: openits.signal_control.v1.Battery.last_test:type_name -> google.protobuf.Timestamp
-	19, // 86: openits.signal_control.v1.OnBatteryPolicy.mode:type_name -> openits.signal_control.v1.Mode
-	80, // 87: openits.signal_control.v1.Faults.fault:type_name -> openits.signal_control.v1.Fault
-	81, // 88: openits.signal_control.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	22, // 89: openits.signal_control.v1.Fault.severity:type_name -> openits.signal_control.v1.OpenitsSignalControlFaultSeverity
-	90, // [90:90] is the sub-list for method output_type
-	90, // [90:90] is the sub-list for method input_type
-	90, // [90:90] is the sub-list for extension type_name
-	90, // [90:90] is the sub-list for extension extendee
-	0,  // [0:90] is the sub-list for field type_name
+	75, // 79: openits.signal_control.v1.CabinetPower.config:type_name -> openits.signal_control.v1.CabinetPowerConfig
+	76, // 80: openits.signal_control.v1.CabinetPower.state:type_name -> openits.signal_control.v1.CabinetPowerState
+	82, // 81: openits.signal_control.v1.CabinetPowerConfig.on_battery_policy:type_name -> openits.types.v1.CabinetPowerPolicy
+	77, // 82: openits.signal_control.v1.CabinetPowerState.battery:type_name -> openits.signal_control.v1.Battery
+	78, // 83: openits.signal_control.v1.CabinetPowerState.generator:type_name -> openits.signal_control.v1.Generator
+	82, // 84: openits.signal_control.v1.CabinetPowerState.on_battery_policy:type_name -> openits.types.v1.CabinetPowerPolicy
+	19, // 85: openits.signal_control.v1.CabinetPowerState.power_source:type_name -> openits.signal_control.v1.PowerSource
+	20, // 86: openits.signal_control.v1.CabinetPowerState.signal_operation_on_battery:type_name -> openits.signal_control.v1.SignalOperationOnBattery
+	18, // 87: openits.signal_control.v1.Battery.test_state:type_name -> openits.signal_control.v1.TestState
+	81, // 88: openits.signal_control.v1.Battery.last_test:type_name -> google.protobuf.Timestamp
+	80, // 89: openits.signal_control.v1.Faults.fault:type_name -> openits.signal_control.v1.Fault
+	81, // 90: openits.signal_control.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	21, // 91: openits.signal_control.v1.Fault.severity:type_name -> openits.signal_control.v1.OpenitsSignalControlFaultSeverity
+	92, // [92:92] is the sub-list for method output_type
+	92, // [92:92] is the sub-list for method input_type
+	92, // [92:92] is the sub-list for extension type_name
+	92, // [92:92] is the sub-list for extension extendee
+	0,  // [0:92] is the sub-list for field type_name
 }
 
 func init() { file_openits_signal_control_v1_state_proto_init() }
@@ -6357,8 +6348,8 @@ func file_openits_signal_control_v1_state_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_signal_control_v1_state_proto_rawDesc), len(file_openits_signal_control_v1_state_proto_rawDesc)),
-			NumEnums:      23,
-			NumMessages:   58,
+			NumEnums:      22,
+			NumMessages:   59,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

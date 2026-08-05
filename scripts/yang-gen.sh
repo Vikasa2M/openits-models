@@ -32,6 +32,7 @@ check_yang_files() {
         "$YANG_DIR/openits-types.yang"
         "$YANG_DIR/openits-device-diagnostics.yang"
         "$YANG_DIR/openits-cabinet-power.yang"
+        "$YANG_DIR/openits-schedule.yang"
         "$YANG_DIR/openits-v2x-radio.yang"
         "$YANG_DIR/openits-v2x-messaging.yang"
         "$YANG_DIR/openits-v2x-radio-types.yang"
@@ -102,10 +103,11 @@ generate_go() {
         -generate_leaf_getters \
         -include_schema \
         -ignore_unsupported \
-        -exclude_modules=ietf-inet-types,ietf-yang-types,openits-device-diagnostics,openits-cabinet-power,openits-v2x-radio,openits-v2x-messaging,openits-scms,openits-vehicle-detection,openits-dms-events,openits-ess-events,openits-rsu-events,openits-ramp-metering-events,openits-common-comm-health-events,openits-common-fault-events,openits-common-mode-events,openits-signal-control-events,openits-traffic-sensor-events,openits-reversible-lane-events,openits-perception-events,openits-cctv-events \
+        -exclude_modules=ietf-inet-types,ietf-yang-types,openits-device-diagnostics,openits-cabinet-power,openits-schedule,openits-v2x-radio,openits-v2x-messaging,openits-scms,openits-vehicle-detection,openits-dms-events,openits-ess-events,openits-rsu-events,openits-ramp-metering-events,openits-common-comm-health-events,openits-common-fault-events,openits-common-mode-events,openits-signal-control-events,openits-traffic-sensor-events,openits-reversible-lane-events,openits-perception-events,openits-cctv-events \
         "$YANG_DIR/openits-types.yang" \
         "$YANG_DIR/openits-device-diagnostics.yang" \
         "$YANG_DIR/openits-cabinet-power.yang" \
+        "$YANG_DIR/openits-schedule.yang" \
         "$YANG_DIR/openits-v2x-radio.yang" \
         "$YANG_DIR/openits-v2x-messaging.yang" \
         "$YANG_DIR/openits-v2x-radio-types.yang" \
