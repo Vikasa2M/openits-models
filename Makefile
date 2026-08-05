@@ -13,7 +13,7 @@ FIELD_LOCK      := field-numbers.yaml
 YANG_GO_OUT := pkg/yang
 
 .PHONY: all gen check-gen yang-proto-gen proto yang yang-go validate-yang \
-	check-revisions check-naming validate-noi check-graduation \
+	check-revisions check-naming check-enum-values validate-noi check-graduation \
 	check-augment-collisions check-deviations check-events-layering proto-lint yang-lint vet fmt tidy build-tools \
 	asyncapi asyncapi-check catalog catalog-check
 
@@ -79,6 +79,11 @@ check-revisions:
 # Reject legacy ce-types / URN / subject forms.
 check-naming:
 	./scripts/check-naming.sh
+
+# Every first-party enum member must carry an explicit value statement
+# (implicit positional numbering is a silent wire-break hazard).
+check-enum-values:
+	python3 scripts/check-enum-values.py
 
 # Validate NoI YAML under schema-registry/notices/.
 validate-noi:

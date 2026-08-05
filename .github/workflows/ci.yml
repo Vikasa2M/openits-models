@@ -131,6 +131,7 @@ jobs:
           go-version-file: go.mod
       - run: make check-revisions
       - run: make check-naming
+      - run: make check-enum-values
       - run: make check-deviations
       - run: make check-augment-collisions
       - run: make check-events-layering
