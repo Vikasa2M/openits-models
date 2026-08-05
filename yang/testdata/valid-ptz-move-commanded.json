@@ -1,0 +1,15 @@
+{
+  "openits-cctv-events:ptz-move-commanded": {
+    "kind": "openits-cctv-types:cctv-ptz-move-commanded",
+    "source-device-id": "us-29-mm44-cam-01",
+    "sequence": "12",
+    "occurred-at": "2026-08-05T15:04:05Z",
+    "commanded-by": "tmc-operator-07",
+    "move-mode": "absolute",
+    "absolute": {
+      "pan-degrees": "245.5",
+      "tilt-degrees": "-8.0",
+      "zoom-percent": 55
+    }
+  }
+}

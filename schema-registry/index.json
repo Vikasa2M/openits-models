@@ -8,13 +8,15 @@
       "description": "NTCIP 1205 CCTV / PTZ camera management — the neutral field-device\nmodel: identity and mounting, PTZ position / presets / tours,\nstream/encoder status, enclosure environmental controls, and an\nactive-fault inventory. Stream/encoder status is the field-device side\n(what the camera/encoder emits), distinct from a center-side VMS.\n\nVendor analytics calibration (e.g. TrafficVision detection-zone\ncalibration) is NOT camera management and stays in the vendor augments;\nthis is the neutral device model those augments extend. Joystick-\nownership arbitration (who holds control) lands in a follow-up revision.\n\nCopyright (c) 2026. Distributed under Apache 2.0.",
       "revisions": [
         "2026-07-17",
-        "2026-07-21"
+        "2026-07-21",
+        "2026-08-05"
       ],
       "events": [
         "openits.cctv.fault-cleared.v1",
         "openits.cctv.fault-raised.v1",
         "openits.cctv.lockout-denied.v1",
         "openits.cctv.mode-changed.v1",
+        "openits.cctv.ptz-move-commanded.v1",
         "openits.cctv.ptz-preset-recalled.v1",
         "openits.cctv.tour-state-changed.v1"
       ],
@@ -27,7 +29,8 @@
           "namespace": "urn:openits:yang:cctv",
           "revisions": [
             "2026-07-17",
-            "2026-07-21"
+            "2026-07-21",
+            "2026-08-05"
           ],
           "refStd": [
             "NTCIP 1205"
@@ -38,7 +41,8 @@
           "namespace": "urn:openits:yang:cctv-events",
           "revisions": [
             "2026-07-17",
-            "2026-07-21"
+            "2026-07-21",
+            "2026-08-05"
           ],
           "refStd": [
             "NTCIP 1205"
@@ -176,7 +180,8 @@
         "2026-07-12",
         "2026-07-13",
         "2026-07-16",
-        "2026-07-21"
+        "2026-07-21",
+        "2026-08-05"
       ],
       "events": [
         "openits.ess.fault-cleared.v1",
@@ -189,6 +194,7 @@
         "NTCIP 1204",
         "NTCIP 1204 v03 (ESS)",
         "NTCIP 1204 v04",
+        "NTCIP 1204 v04 (essVisibilitySituation / essSurfaceStatus)",
         "NTCIP 1204 v04 (functional reference only; no wire compatibility)",
         "NTCIP 1204:2017 (ESS functional reference; fault classes)",
         "RFC 7950 section 11",
@@ -205,12 +211,14 @@
             "2026-07-12",
             "2026-07-13",
             "2026-07-16",
-            "2026-07-21"
+            "2026-07-21",
+            "2026-08-05"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package MC01 (Environmental Monitoring Station)",
             "NTCIP 1204",
             "NTCIP 1204 v03 (ESS)",
+            "NTCIP 1204 v04 (essVisibilitySituation / essSurfaceStatus)",
             "NTCIP 1204 v04 (functional reference only; no wire compatibility)",
             "RFC 7950 section 11 (additive YANG evolution)",
             "RFC 7950 section 11 (breaking YANG evolution: identity rename)"
@@ -1281,6 +1289,11 @@
         "openits-cctv/2026-07-21/MANIFEST.json",
         "openits-cctv/2026-07-21/README.md",
         "openits-cctv/2026-07-21/schema.yang"
+      ],
+      "2026-08-05": [
+        "openits-cctv/2026-08-05/MANIFEST.json",
+        "openits-cctv/2026-08-05/README.md",
+        "openits-cctv/2026-08-05/schema.yang"
       ]
     },
     "openits-cctv-events": {
@@ -1290,6 +1303,13 @@
         "openits-cctv-events/2026-07-21/schema.json",
         "openits-cctv-events/2026-07-21/schema.proto",
         "openits-cctv-events/2026-07-21/schema.yang"
+      ],
+      "2026-08-05": [
+        "openits-cctv-events/2026-08-05/MANIFEST.json",
+        "openits-cctv-events/2026-08-05/README.md",
+        "openits-cctv-events/2026-08-05/schema.json",
+        "openits-cctv-events/2026-08-05/schema.proto",
+        "openits-cctv-events/2026-08-05/schema.yang"
       ]
     },
     "openits-cctv-types": {
@@ -1445,6 +1465,11 @@
         "openits-ess/2026-07-21/MANIFEST.json",
         "openits-ess/2026-07-21/README.md",
         "openits-ess/2026-07-21/schema.yang"
+      ],
+      "2026-08-05": [
+        "openits-ess/2026-08-05/MANIFEST.json",
+        "openits-ess/2026-08-05/README.md",
+        "openits-ess/2026-08-05/schema.yang"
       ]
     },
     "openits-ess-events": {

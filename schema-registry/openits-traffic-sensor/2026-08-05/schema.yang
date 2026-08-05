@@ -54,7 +54,13 @@ module openits-traffic-sensor {
        - BREAKING(pre-v1): associations becomes config-true — an
          association is provisioned operator knowledge, not sensed;
          unifies placement with the CCTV mounting composition of the
-         same grouping. Paths and leaf names are unchanged.";
+         same grouping. Paths and leaf names are unchanged.
+       - queues/queue-zone/zone-id leafref loosened to require-instance
+         false: a queue reported for a just-deleted zone is a reportable
+         anomaly, not invalid data (readback-representability doctrine,
+         reversing the 2026-07-21 tightening for repo-wide consistency).
+       - Repoint the faults description at the shared
+         openits-common-fault-events notifications.";
     reference "RFC 7950.";
   }
   revision 2026-07-21 {
@@ -553,8 +559,17 @@ module openits-traffic-sensor {
         description "One entry per queue-detection zone.";
 
         leaf zone-id {
-          type leafref { path "../../../configuration/queue-zone/zone-id"; }
-          description "Configured queue-zone this entry reports on (leafref into configuration/queue-zone).";
+          type leafref {
+            path "../../../configuration/queue-zone/zone-id";
+            require-instance false;
+          }
+          description
+            "Queue-zone this entry reports on (leafref into
+             configuration/queue-zone). require-instance false: a sensor
+             reporting a queue for a just-deleted zone is a reportable
+             anomaly, not invalid data — a misbehaving device's telemetry
+             must stay representable (readback-representability
+             doctrine).";
         }
         uses openits-traffic-sensor-types:queue-zone-state;
       }
@@ -636,7 +651,8 @@ module openits-traffic-sensor {
         "ITS Roadway Equipment -> Maintenance : equipment maintenance status";
       description
         "Live fault inventory.  Each entry mirrors a
-         `traffic-sensor-fault-raised` notification and clears when
+         openits-common-fault-events:fault-raised notification
+         (discriminated by this service's fault-event-kind identities) and clears when
          the condition resolves.";
 
       list fault {

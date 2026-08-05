@@ -55,7 +55,14 @@ module openits-perception {
        - BREAKING(pre-v1): associations becomes config-true — an
          association is provisioned operator knowledge, not sensed;
          unifies placement with the CCTV mounting composition of the
-         same grouping. Paths and leaf names are unchanged.";
+         same grouping. Paths and leaf names are unchanged.
+       - zones/zone/zone-id and incidents/incident/zone-id leafrefs
+         loosened to require-instance false: telemetry against a
+         just-deleted zone is a reportable anomaly, not invalid data
+         (readback-representability doctrine, reversing the earlier
+         tightening for repo-wide consistency).
+       - Repoint the faults description at the shared
+         openits-common-fault-events notifications.";
     reference "RFC 7950.";
   }
   revision 2026-07-21 {
@@ -426,11 +433,14 @@ module openits-perception {
         leaf zone-id {
           type leafref {
             path "../../../configuration/zone/zone-id";
+            require-instance false;
           }
           description
-            "The configured zone this entry reports on (leafref, so live
-             analytics can only be reported for a zone that exists in
-             configuration).";
+            "The configured zone this entry reports on. require-instance
+             false: analytics reported for a just-deleted zone are a
+             reportable anomaly, not invalid data — a misbehaving
+             device's telemetry must stay representable
+             (readback-representability doctrine).";
         }
         leaf occupancy-count {
           type uint16;
@@ -508,8 +518,15 @@ module openits-perception {
           description "Sensor-local incident identifier; stable across detect/clear pairs.";
         }
         leaf zone-id {
-          type leafref { path "../../../configuration/zone/zone-id"; }
-          description "Configured zone the incident was detected in (leafref).";
+          type leafref {
+            path "../../../configuration/zone/zone-id";
+            require-instance false;
+          }
+          description
+            "Zone the incident was detected in (leafref into
+             configuration/zone). require-instance false: an incident
+             against a just-deleted zone stays representable
+             (readback-representability doctrine).";
         }
         leaf type {
           type identityref {
@@ -604,7 +621,8 @@ module openits-perception {
         "ITS Roadway Equipment -> Maintenance : equipment maintenance status";
       description
         "Live fault inventory.  Each entry mirrors a
-         `perception-fault-raised` notification and clears when the
+         openits-common-fault-events:fault-raised notification
+         (discriminated by this service's fault-event-kind identities) and clears when the
          condition resolves.";
 
       list fault {

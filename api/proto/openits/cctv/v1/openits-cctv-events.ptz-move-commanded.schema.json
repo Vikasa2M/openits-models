@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "absolute": {
+      "additionalProperties": false,
+      "properties": {
+        "pan-degrees": {
+          "type": "string"
+        },
+        "tilt-degrees": {
+          "type": "string"
+        },
+        "zoom-percent": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "commanded-by": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "move-mode": {
+      "enum": [
+        "absolute",
+        "idle",
+        "preset",
+        "tour",
+        "velocity"
+      ],
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "velocity": {
+      "additionalProperties": false,
+      "properties": {
+        "pan-speed": {
+          "maximum": 100,
+          "minimum": -100,
+          "type": "integer"
+        },
+        "tilt-speed": {
+          "maximum": 100,
+          "minimum": -100,
+          "type": "integer"
+        },
+        "zoom-speed": {
+          "maximum": 100,
+          "minimum": -100,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "kind",
+    "move-mode",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+}

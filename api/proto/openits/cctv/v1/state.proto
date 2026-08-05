@@ -114,17 +114,17 @@ message Capabilities {
 }
 
 message PtzConfig {
-  Absolute absolute = 1;
-  Velocity velocity = 2;
+  PtzConfigAbsolute absolute = 1;
+  PtzConfigVelocity velocity = 2;
 }
 
-message Absolute {
+message PtzConfigAbsolute {
   string pan_degrees = 1;
   string tilt_degrees = 2;
   uint32 zoom_percent = 3;
 }
 
-message Velocity {
+message PtzConfigVelocity {
   int32 pan_speed = 1;
   int32 tilt_speed = 2;
   int32 zoom_speed = 3;
@@ -135,15 +135,15 @@ message PtzState {
   string tilt_degrees = 2;
   uint32 zoom_percent = 3;
   bool moving = 4;
-  PtzMoveMode move_mode = 5;
+  OpenitsCctvPtzMoveMode move_mode = 5;
 }
 
-enum PtzMoveMode {
-  PTZ_MOVE_MODE_ABSOLUTE = 0;
-  PTZ_MOVE_MODE_VELOCITY = 1;
-  PTZ_MOVE_MODE_PRESET = 2;
-  PTZ_MOVE_MODE_TOUR = 3;
-  PTZ_MOVE_MODE_IDLE = 4;
+enum OpenitsCctvPtzMoveMode {
+  OPENITS_CCTV_PTZ_MOVE_MODE_ABSOLUTE = 0;
+  OPENITS_CCTV_PTZ_MOVE_MODE_VELOCITY = 1;
+  OPENITS_CCTV_PTZ_MOVE_MODE_PRESET = 2;
+  OPENITS_CCTV_PTZ_MOVE_MODE_TOUR = 3;
+  OPENITS_CCTV_PTZ_MOVE_MODE_IDLE = 4;
 }
 
 message Presets {

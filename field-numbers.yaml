@@ -162,6 +162,33 @@ messages:
     openits.cctv.v1.PtzConfig:
         absolute: 1
         velocity: 2
+    openits.cctv.v1.PtzConfigAbsolute:
+        pan_degrees: 1
+        tilt_degrees: 2
+        zoom_percent: 3
+    openits.cctv.v1.PtzConfigVelocity:
+        pan_speed: 1
+        tilt_speed: 2
+        zoom_speed: 3
+    openits.cctv.v1.PtzMoveCommanded:
+        absolute: 3
+        commanded_by: 1
+        kind: 99
+        move_mode: 2
+        observed_by: 5
+        occurred_at: 6
+        owner: 7
+        sequence: 8
+        source_device_id: 9
+        velocity: 4
+    openits.cctv.v1.PtzMoveCommandedAbsolute:
+        pan_degrees: 1
+        tilt_degrees: 2
+        zoom_percent: 3
+    openits.cctv.v1.PtzMoveCommandedVelocity:
+        pan_speed: 1
+        tilt_speed: 2
+        zoom_speed: 3
     openits.cctv.v1.PtzPresetRecalled:
         kind: 99
         observed_by: 5

@@ -22,6 +22,61 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type PtzMoveMode int32
+
+const (
+	PtzMoveMode_PTZ_MOVE_MODE_ABSOLUTE PtzMoveMode = 0
+	PtzMoveMode_PTZ_MOVE_MODE_VELOCITY PtzMoveMode = 1
+	PtzMoveMode_PTZ_MOVE_MODE_PRESET   PtzMoveMode = 2
+	PtzMoveMode_PTZ_MOVE_MODE_TOUR     PtzMoveMode = 3
+	PtzMoveMode_PTZ_MOVE_MODE_IDLE     PtzMoveMode = 4
+)
+
+// Enum value maps for PtzMoveMode.
+var (
+	PtzMoveMode_name = map[int32]string{
+		0: "PTZ_MOVE_MODE_ABSOLUTE",
+		1: "PTZ_MOVE_MODE_VELOCITY",
+		2: "PTZ_MOVE_MODE_PRESET",
+		3: "PTZ_MOVE_MODE_TOUR",
+		4: "PTZ_MOVE_MODE_IDLE",
+	}
+	PtzMoveMode_value = map[string]int32{
+		"PTZ_MOVE_MODE_ABSOLUTE": 0,
+		"PTZ_MOVE_MODE_VELOCITY": 1,
+		"PTZ_MOVE_MODE_PRESET":   2,
+		"PTZ_MOVE_MODE_TOUR":     3,
+		"PTZ_MOVE_MODE_IDLE":     4,
+	}
+)
+
+func (x PtzMoveMode) Enum() *PtzMoveMode {
+	p := new(PtzMoveMode)
+	*p = x
+	return p
+}
+
+func (x PtzMoveMode) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (PtzMoveMode) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_cctv_v1_events_proto_enumTypes[0].Descriptor()
+}
+
+func (PtzMoveMode) Type() protoreflect.EnumType {
+	return &file_openits_cctv_v1_events_proto_enumTypes[0]
+}
+
+func (x PtzMoveMode) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use PtzMoveMode.Descriptor instead.
+func (PtzMoveMode) EnumDescriptor() ([]byte, []int) {
+	return file_openits_cctv_v1_events_proto_rawDescGZIP(), []int{0}
+}
+
 type TourRunState int32
 
 const (
@@ -55,11 +110,11 @@ func (x TourRunState) String() string {
 }
 
 func (TourRunState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_cctv_v1_events_proto_enumTypes[0].Descriptor()
+	return file_openits_cctv_v1_events_proto_enumTypes[1].Descriptor()
 }
 
 func (TourRunState) Type() protoreflect.EnumType {
-	return &file_openits_cctv_v1_events_proto_enumTypes[0]
+	return &file_openits_cctv_v1_events_proto_enumTypes[1]
 }
 
 func (x TourRunState) Number() protoreflect.EnumNumber {
@@ -68,7 +123,7 @@ func (x TourRunState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use TourRunState.Descriptor instead.
 func (TourRunState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_cctv_v1_events_proto_rawDescGZIP(), []int{0}
+	return file_openits_cctv_v1_events_proto_rawDescGZIP(), []int{1}
 }
 
 type LockoutDenied struct {
@@ -187,6 +242,242 @@ func (x *LockoutDenied) GetSourceDeviceId() string {
 	return ""
 }
 
+type PtzMoveCommanded struct {
+	state          protoimpl.MessageState    `protogen:"open.v1"`
+	Kind           string                    `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
+	CommandedBy    string                    `protobuf:"bytes,1,opt,name=commanded_by,json=commandedBy,proto3" json:"commanded_by,omitempty"`
+	MoveMode       PtzMoveMode               `protobuf:"varint,2,opt,name=move_mode,json=moveMode,proto3,enum=openits.cctv.v1.PtzMoveMode" json:"move_mode,omitempty"`
+	Absolute       *PtzMoveCommandedAbsolute `protobuf:"bytes,3,opt,name=absolute,proto3" json:"absolute,omitempty"`
+	Velocity       *PtzMoveCommandedVelocity `protobuf:"bytes,4,opt,name=velocity,proto3" json:"velocity,omitempty"`
+	ObservedBy     string                    `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	OccurredAt     *timestamppb.Timestamp    `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
+	Owner          string                    `protobuf:"bytes,7,opt,name=owner,proto3" json:"owner,omitempty"`
+	Sequence       uint64                    `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SourceDeviceId string                    `protobuf:"bytes,9,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *PtzMoveCommanded) Reset() {
+	*x = PtzMoveCommanded{}
+	mi := &file_openits_cctv_v1_events_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PtzMoveCommanded) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PtzMoveCommanded) ProtoMessage() {}
+
+func (x *PtzMoveCommanded) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_cctv_v1_events_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PtzMoveCommanded.ProtoReflect.Descriptor instead.
+func (*PtzMoveCommanded) Descriptor() ([]byte, []int) {
+	return file_openits_cctv_v1_events_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *PtzMoveCommanded) GetKind() string {
+	if x != nil {
+		return x.Kind
+	}
+	return ""
+}
+
+func (x *PtzMoveCommanded) GetCommandedBy() string {
+	if x != nil {
+		return x.CommandedBy
+	}
+	return ""
+}
+
+func (x *PtzMoveCommanded) GetMoveMode() PtzMoveMode {
+	if x != nil {
+		return x.MoveMode
+	}
+	return PtzMoveMode_PTZ_MOVE_MODE_ABSOLUTE
+}
+
+func (x *PtzMoveCommanded) GetAbsolute() *PtzMoveCommandedAbsolute {
+	if x != nil {
+		return x.Absolute
+	}
+	return nil
+}
+
+func (x *PtzMoveCommanded) GetVelocity() *PtzMoveCommandedVelocity {
+	if x != nil {
+		return x.Velocity
+	}
+	return nil
+}
+
+func (x *PtzMoveCommanded) GetObservedBy() string {
+	if x != nil {
+		return x.ObservedBy
+	}
+	return ""
+}
+
+func (x *PtzMoveCommanded) GetOccurredAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.OccurredAt
+	}
+	return nil
+}
+
+func (x *PtzMoveCommanded) GetOwner() string {
+	if x != nil {
+		return x.Owner
+	}
+	return ""
+}
+
+func (x *PtzMoveCommanded) GetSequence() uint64 {
+	if x != nil {
+		return x.Sequence
+	}
+	return 0
+}
+
+func (x *PtzMoveCommanded) GetSourceDeviceId() string {
+	if x != nil {
+		return x.SourceDeviceId
+	}
+	return ""
+}
+
+type PtzMoveCommandedAbsolute struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PanDegrees    string                 `protobuf:"bytes,1,opt,name=pan_degrees,json=panDegrees,proto3" json:"pan_degrees,omitempty"`
+	TiltDegrees   string                 `protobuf:"bytes,2,opt,name=tilt_degrees,json=tiltDegrees,proto3" json:"tilt_degrees,omitempty"`
+	ZoomPercent   uint32                 `protobuf:"varint,3,opt,name=zoom_percent,json=zoomPercent,proto3" json:"zoom_percent,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PtzMoveCommandedAbsolute) Reset() {
+	*x = PtzMoveCommandedAbsolute{}
+	mi := &file_openits_cctv_v1_events_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PtzMoveCommandedAbsolute) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PtzMoveCommandedAbsolute) ProtoMessage() {}
+
+func (x *PtzMoveCommandedAbsolute) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_cctv_v1_events_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PtzMoveCommandedAbsolute.ProtoReflect.Descriptor instead.
+func (*PtzMoveCommandedAbsolute) Descriptor() ([]byte, []int) {
+	return file_openits_cctv_v1_events_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *PtzMoveCommandedAbsolute) GetPanDegrees() string {
+	if x != nil {
+		return x.PanDegrees
+	}
+	return ""
+}
+
+func (x *PtzMoveCommandedAbsolute) GetTiltDegrees() string {
+	if x != nil {
+		return x.TiltDegrees
+	}
+	return ""
+}
+
+func (x *PtzMoveCommandedAbsolute) GetZoomPercent() uint32 {
+	if x != nil {
+		return x.ZoomPercent
+	}
+	return 0
+}
+
+type PtzMoveCommandedVelocity struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PanSpeed      int32                  `protobuf:"varint,1,opt,name=pan_speed,json=panSpeed,proto3" json:"pan_speed,omitempty"`
+	TiltSpeed     int32                  `protobuf:"varint,2,opt,name=tilt_speed,json=tiltSpeed,proto3" json:"tilt_speed,omitempty"`
+	ZoomSpeed     int32                  `protobuf:"varint,3,opt,name=zoom_speed,json=zoomSpeed,proto3" json:"zoom_speed,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PtzMoveCommandedVelocity) Reset() {
+	*x = PtzMoveCommandedVelocity{}
+	mi := &file_openits_cctv_v1_events_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PtzMoveCommandedVelocity) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PtzMoveCommandedVelocity) ProtoMessage() {}
+
+func (x *PtzMoveCommandedVelocity) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_cctv_v1_events_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PtzMoveCommandedVelocity.ProtoReflect.Descriptor instead.
+func (*PtzMoveCommandedVelocity) Descriptor() ([]byte, []int) {
+	return file_openits_cctv_v1_events_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *PtzMoveCommandedVelocity) GetPanSpeed() int32 {
+	if x != nil {
+		return x.PanSpeed
+	}
+	return 0
+}
+
+func (x *PtzMoveCommandedVelocity) GetTiltSpeed() int32 {
+	if x != nil {
+		return x.TiltSpeed
+	}
+	return 0
+}
+
+func (x *PtzMoveCommandedVelocity) GetZoomSpeed() int32 {
+	if x != nil {
+		return x.ZoomSpeed
+	}
+	return 0
+}
+
 type PtzPresetRecalled struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
@@ -205,7 +496,7 @@ type PtzPresetRecalled struct {
 
 func (x *PtzPresetRecalled) Reset() {
 	*x = PtzPresetRecalled{}
-	mi := &file_openits_cctv_v1_events_proto_msgTypes[1]
+	mi := &file_openits_cctv_v1_events_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -217,7 +508,7 @@ func (x *PtzPresetRecalled) String() string {
 func (*PtzPresetRecalled) ProtoMessage() {}
 
 func (x *PtzPresetRecalled) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_cctv_v1_events_proto_msgTypes[1]
+	mi := &file_openits_cctv_v1_events_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -230,7 +521,7 @@ func (x *PtzPresetRecalled) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PtzPresetRecalled.ProtoReflect.Descriptor instead.
 func (*PtzPresetRecalled) Descriptor() ([]byte, []int) {
-	return file_openits_cctv_v1_events_proto_rawDescGZIP(), []int{1}
+	return file_openits_cctv_v1_events_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *PtzPresetRecalled) GetKind() string {
@@ -320,7 +611,7 @@ type TourStateChanged struct {
 
 func (x *TourStateChanged) Reset() {
 	*x = TourStateChanged{}
-	mi := &file_openits_cctv_v1_events_proto_msgTypes[2]
+	mi := &file_openits_cctv_v1_events_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -332,7 +623,7 @@ func (x *TourStateChanged) String() string {
 func (*TourStateChanged) ProtoMessage() {}
 
 func (x *TourStateChanged) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_cctv_v1_events_proto_msgTypes[2]
+	mi := &file_openits_cctv_v1_events_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -345,7 +636,7 @@ func (x *TourStateChanged) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TourStateChanged.ProtoReflect.Descriptor instead.
 func (*TourStateChanged) Descriptor() ([]byte, []int) {
-	return file_openits_cctv_v1_events_proto_rawDescGZIP(), []int{2}
+	return file_openits_cctv_v1_events_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *TourStateChanged) GetKind() string {
@@ -428,7 +719,31 @@ const file_openits_cctv_v1_events_proto_rawDesc = "" +
 	"occurredAt\x12\x14\n" +
 	"\x05owner\x18\a \x01(\tR\x05owner\x12\x1a\n" +
 	"\bsequence\x18\b \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceId\"\xdb\x02\n" +
+	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceId\"\xcc\x03\n" +
+	"\x10PtzMoveCommanded\x12\x12\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12!\n" +
+	"\fcommanded_by\x18\x01 \x01(\tR\vcommandedBy\x129\n" +
+	"\tmove_mode\x18\x02 \x01(\x0e2\x1c.openits.cctv.v1.PtzMoveModeR\bmoveMode\x12E\n" +
+	"\babsolute\x18\x03 \x01(\v2).openits.cctv.v1.PtzMoveCommandedAbsoluteR\babsolute\x12E\n" +
+	"\bvelocity\x18\x04 \x01(\v2).openits.cctv.v1.PtzMoveCommandedVelocityR\bvelocity\x12\x1f\n" +
+	"\vobserved_by\x18\x05 \x01(\tR\n" +
+	"observedBy\x12;\n" +
+	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"occurredAt\x12\x14\n" +
+	"\x05owner\x18\a \x01(\tR\x05owner\x12\x1a\n" +
+	"\bsequence\x18\b \x01(\x04R\bsequence\x12(\n" +
+	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceId\"\x81\x01\n" +
+	"\x18PtzMoveCommandedAbsolute\x12\x1f\n" +
+	"\vpan_degrees\x18\x01 \x01(\tR\n" +
+	"panDegrees\x12!\n" +
+	"\ftilt_degrees\x18\x02 \x01(\tR\vtiltDegrees\x12!\n" +
+	"\fzoom_percent\x18\x03 \x01(\rR\vzoomPercent\"u\n" +
+	"\x18PtzMoveCommandedVelocity\x12\x1b\n" +
+	"\tpan_speed\x18\x01 \x01(\x05R\bpanSpeed\x12\x1d\n" +
+	"\n" +
+	"tilt_speed\x18\x02 \x01(\x05R\ttiltSpeed\x12\x1d\n" +
+	"\n" +
+	"zoom_speed\x18\x03 \x01(\x05R\tzoomSpeed\"\xdb\x02\n" +
 	"\x11PtzPresetRecalled\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x1b\n" +
 	"\tpreset_id\x18\x01 \x01(\rR\bpresetId\x12\x1f\n" +
@@ -455,7 +770,13 @@ const file_openits_cctv_v1_events_proto_rawDesc = "" +
 	"occurredAt\x12\x14\n" +
 	"\x05owner\x18\x06 \x01(\tR\x05owner\x12\x1a\n" +
 	"\bsequence\x18\a \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceId*a\n" +
+	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceId*\x8f\x01\n" +
+	"\vPtzMoveMode\x12\x1a\n" +
+	"\x16PTZ_MOVE_MODE_ABSOLUTE\x10\x00\x12\x1a\n" +
+	"\x16PTZ_MOVE_MODE_VELOCITY\x10\x01\x12\x18\n" +
+	"\x14PTZ_MOVE_MODE_PRESET\x10\x02\x12\x16\n" +
+	"\x12PTZ_MOVE_MODE_TOUR\x10\x03\x12\x16\n" +
+	"\x12PTZ_MOVE_MODE_IDLE\x10\x04*a\n" +
 	"\fTourRunState\x12\x1a\n" +
 	"\x16TOUR_RUN_STATE_STOPPED\x10\x00\x12\x1a\n" +
 	"\x16TOUR_RUN_STATE_RUNNING\x10\x01\x12\x19\n" +
@@ -473,26 +794,34 @@ func file_openits_cctv_v1_events_proto_rawDescGZIP() []byte {
 	return file_openits_cctv_v1_events_proto_rawDescData
 }
 
-var file_openits_cctv_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_openits_cctv_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_openits_cctv_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_openits_cctv_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_openits_cctv_v1_events_proto_goTypes = []any{
-	(TourRunState)(0),             // 0: openits.cctv.v1.TourRunState
-	(*LockoutDenied)(nil),         // 1: openits.cctv.v1.LockoutDenied
-	(*PtzPresetRecalled)(nil),     // 2: openits.cctv.v1.PtzPresetRecalled
-	(*TourStateChanged)(nil),      // 3: openits.cctv.v1.TourStateChanged
-	(*timestamppb.Timestamp)(nil), // 4: google.protobuf.Timestamp
+	(PtzMoveMode)(0),                 // 0: openits.cctv.v1.PtzMoveMode
+	(TourRunState)(0),                // 1: openits.cctv.v1.TourRunState
+	(*LockoutDenied)(nil),            // 2: openits.cctv.v1.LockoutDenied
+	(*PtzMoveCommanded)(nil),         // 3: openits.cctv.v1.PtzMoveCommanded
+	(*PtzMoveCommandedAbsolute)(nil), // 4: openits.cctv.v1.PtzMoveCommandedAbsolute
+	(*PtzMoveCommandedVelocity)(nil), // 5: openits.cctv.v1.PtzMoveCommandedVelocity
+	(*PtzPresetRecalled)(nil),        // 6: openits.cctv.v1.PtzPresetRecalled
+	(*TourStateChanged)(nil),         // 7: openits.cctv.v1.TourStateChanged
+	(*timestamppb.Timestamp)(nil),    // 8: google.protobuf.Timestamp
 }
 var file_openits_cctv_v1_events_proto_depIdxs = []int32{
-	4, // 0: openits.cctv.v1.LockoutDenied.occurred_at:type_name -> google.protobuf.Timestamp
-	4, // 1: openits.cctv.v1.PtzPresetRecalled.occurred_at:type_name -> google.protobuf.Timestamp
-	0, // 2: openits.cctv.v1.TourStateChanged.previous_state:type_name -> openits.cctv.v1.TourRunState
-	0, // 3: openits.cctv.v1.TourStateChanged.current_state:type_name -> openits.cctv.v1.TourRunState
-	4, // 4: openits.cctv.v1.TourStateChanged.occurred_at:type_name -> google.protobuf.Timestamp
-	5, // [5:5] is the sub-list for method output_type
-	5, // [5:5] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	8, // 0: openits.cctv.v1.LockoutDenied.occurred_at:type_name -> google.protobuf.Timestamp
+	0, // 1: openits.cctv.v1.PtzMoveCommanded.move_mode:type_name -> openits.cctv.v1.PtzMoveMode
+	4, // 2: openits.cctv.v1.PtzMoveCommanded.absolute:type_name -> openits.cctv.v1.PtzMoveCommandedAbsolute
+	5, // 3: openits.cctv.v1.PtzMoveCommanded.velocity:type_name -> openits.cctv.v1.PtzMoveCommandedVelocity
+	8, // 4: openits.cctv.v1.PtzMoveCommanded.occurred_at:type_name -> google.protobuf.Timestamp
+	8, // 5: openits.cctv.v1.PtzPresetRecalled.occurred_at:type_name -> google.protobuf.Timestamp
+	1, // 6: openits.cctv.v1.TourStateChanged.previous_state:type_name -> openits.cctv.v1.TourRunState
+	1, // 7: openits.cctv.v1.TourStateChanged.current_state:type_name -> openits.cctv.v1.TourRunState
+	8, // 8: openits.cctv.v1.TourStateChanged.occurred_at:type_name -> google.protobuf.Timestamp
+	9, // [9:9] is the sub-list for method output_type
+	9, // [9:9] is the sub-list for method input_type
+	9, // [9:9] is the sub-list for extension type_name
+	9, // [9:9] is the sub-list for extension extendee
+	0, // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_openits_cctv_v1_events_proto_init() }
@@ -505,8 +834,8 @@ func file_openits_cctv_v1_events_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_cctv_v1_events_proto_rawDesc), len(file_openits_cctv_v1_events_proto_rawDesc)),
-			NumEnums:      1,
-			NumMessages:   3,
+			NumEnums:      2,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -51,7 +51,10 @@ module openits-dms {
        of local copies. Wire-neutral: leaf names, paths, and enum values
        are unchanged. Stamp explicit value statements on every remaining
        enumeration member (wire-neutral: values match the previous
-       positional auto-assignment), locking append-only enum discipline.";
+       positional auto-assignment), locking append-only enum discipline.
+       Document the deliberate power-loss fallback divergence from NTCIP
+       1203 dmsPowerLossMessage (this model binds the fallback to power
+       RESTORE, the operationally meaningful moment).";
     reference "NTCIP 1201 (dayPlan / dayPlanScheduleTable); RFC 7950 9.6.4.2.";
   }
   revision 2026-07-21 {
@@ -648,7 +651,15 @@ module openits-dms {
             uses message-reference;
           }
           container power-loss {
-            description "Fallback shown on power restore (NTCIP 1203 dmsPowerLossMessage).";
+            description
+              "Fallback shown on power restore. DELIBERATE DIVERGENCE from
+               NTCIP 1203: dmsPowerLossMessage there is the message
+               activated when power loss is DETECTED (a message an unpowered
+               sign face cannot actually display, with dmsResetMessage
+               covering restart); this model instead binds the fallback to
+               the operationally meaningful moment — what the sign shows
+               when power returns and before central re-asserts a message.";
+            reference "NTCIP 1203 v03 (dmsPowerLossMessage / dmsResetMessage).";
             uses message-reference;
           }
         }

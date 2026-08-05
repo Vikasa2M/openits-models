@@ -132,58 +132,58 @@ func (MountingStructure) EnumDescriptor() ([]byte, []int) {
 	return file_openits_cctv_v1_state_proto_rawDescGZIP(), []int{1}
 }
 
-type PtzMoveMode int32
+type OpenitsCctvPtzMoveMode int32
 
 const (
-	PtzMoveMode_PTZ_MOVE_MODE_ABSOLUTE PtzMoveMode = 0
-	PtzMoveMode_PTZ_MOVE_MODE_VELOCITY PtzMoveMode = 1
-	PtzMoveMode_PTZ_MOVE_MODE_PRESET   PtzMoveMode = 2
-	PtzMoveMode_PTZ_MOVE_MODE_TOUR     PtzMoveMode = 3
-	PtzMoveMode_PTZ_MOVE_MODE_IDLE     PtzMoveMode = 4
+	OpenitsCctvPtzMoveMode_OPENITS_CCTV_PTZ_MOVE_MODE_ABSOLUTE OpenitsCctvPtzMoveMode = 0
+	OpenitsCctvPtzMoveMode_OPENITS_CCTV_PTZ_MOVE_MODE_VELOCITY OpenitsCctvPtzMoveMode = 1
+	OpenitsCctvPtzMoveMode_OPENITS_CCTV_PTZ_MOVE_MODE_PRESET   OpenitsCctvPtzMoveMode = 2
+	OpenitsCctvPtzMoveMode_OPENITS_CCTV_PTZ_MOVE_MODE_TOUR     OpenitsCctvPtzMoveMode = 3
+	OpenitsCctvPtzMoveMode_OPENITS_CCTV_PTZ_MOVE_MODE_IDLE     OpenitsCctvPtzMoveMode = 4
 )
 
-// Enum value maps for PtzMoveMode.
+// Enum value maps for OpenitsCctvPtzMoveMode.
 var (
-	PtzMoveMode_name = map[int32]string{
-		0: "PTZ_MOVE_MODE_ABSOLUTE",
-		1: "PTZ_MOVE_MODE_VELOCITY",
-		2: "PTZ_MOVE_MODE_PRESET",
-		3: "PTZ_MOVE_MODE_TOUR",
-		4: "PTZ_MOVE_MODE_IDLE",
+	OpenitsCctvPtzMoveMode_name = map[int32]string{
+		0: "OPENITS_CCTV_PTZ_MOVE_MODE_ABSOLUTE",
+		1: "OPENITS_CCTV_PTZ_MOVE_MODE_VELOCITY",
+		2: "OPENITS_CCTV_PTZ_MOVE_MODE_PRESET",
+		3: "OPENITS_CCTV_PTZ_MOVE_MODE_TOUR",
+		4: "OPENITS_CCTV_PTZ_MOVE_MODE_IDLE",
 	}
-	PtzMoveMode_value = map[string]int32{
-		"PTZ_MOVE_MODE_ABSOLUTE": 0,
-		"PTZ_MOVE_MODE_VELOCITY": 1,
-		"PTZ_MOVE_MODE_PRESET":   2,
-		"PTZ_MOVE_MODE_TOUR":     3,
-		"PTZ_MOVE_MODE_IDLE":     4,
+	OpenitsCctvPtzMoveMode_value = map[string]int32{
+		"OPENITS_CCTV_PTZ_MOVE_MODE_ABSOLUTE": 0,
+		"OPENITS_CCTV_PTZ_MOVE_MODE_VELOCITY": 1,
+		"OPENITS_CCTV_PTZ_MOVE_MODE_PRESET":   2,
+		"OPENITS_CCTV_PTZ_MOVE_MODE_TOUR":     3,
+		"OPENITS_CCTV_PTZ_MOVE_MODE_IDLE":     4,
 	}
 )
 
-func (x PtzMoveMode) Enum() *PtzMoveMode {
-	p := new(PtzMoveMode)
+func (x OpenitsCctvPtzMoveMode) Enum() *OpenitsCctvPtzMoveMode {
+	p := new(OpenitsCctvPtzMoveMode)
 	*p = x
 	return p
 }
 
-func (x PtzMoveMode) String() string {
+func (x OpenitsCctvPtzMoveMode) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (PtzMoveMode) Descriptor() protoreflect.EnumDescriptor {
+func (OpenitsCctvPtzMoveMode) Descriptor() protoreflect.EnumDescriptor {
 	return file_openits_cctv_v1_state_proto_enumTypes[2].Descriptor()
 }
 
-func (PtzMoveMode) Type() protoreflect.EnumType {
+func (OpenitsCctvPtzMoveMode) Type() protoreflect.EnumType {
 	return &file_openits_cctv_v1_state_proto_enumTypes[2]
 }
 
-func (x PtzMoveMode) Number() protoreflect.EnumNumber {
+func (x OpenitsCctvPtzMoveMode) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use PtzMoveMode.Descriptor instead.
-func (PtzMoveMode) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use OpenitsCctvPtzMoveMode.Descriptor instead.
+func (OpenitsCctvPtzMoveMode) EnumDescriptor() ([]byte, []int) {
 	return file_openits_cctv_v1_state_proto_rawDescGZIP(), []int{2}
 }
 
@@ -1328,8 +1328,8 @@ func (x *Capabilities) GetPanContinuous() bool {
 
 type PtzConfig struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Absolute      *Absolute              `protobuf:"bytes,1,opt,name=absolute,proto3" json:"absolute,omitempty"`
-	Velocity      *Velocity              `protobuf:"bytes,2,opt,name=velocity,proto3" json:"velocity,omitempty"`
+	Absolute      *PtzConfigAbsolute     `protobuf:"bytes,1,opt,name=absolute,proto3" json:"absolute,omitempty"`
+	Velocity      *PtzConfigVelocity     `protobuf:"bytes,2,opt,name=velocity,proto3" json:"velocity,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1364,21 +1364,21 @@ func (*PtzConfig) Descriptor() ([]byte, []int) {
 	return file_openits_cctv_v1_state_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *PtzConfig) GetAbsolute() *Absolute {
+func (x *PtzConfig) GetAbsolute() *PtzConfigAbsolute {
 	if x != nil {
 		return x.Absolute
 	}
 	return nil
 }
 
-func (x *PtzConfig) GetVelocity() *Velocity {
+func (x *PtzConfig) GetVelocity() *PtzConfigVelocity {
 	if x != nil {
 		return x.Velocity
 	}
 	return nil
 }
 
-type Absolute struct {
+type PtzConfigAbsolute struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	PanDegrees    string                 `protobuf:"bytes,1,opt,name=pan_degrees,json=panDegrees,proto3" json:"pan_degrees,omitempty"`
 	TiltDegrees   string                 `protobuf:"bytes,2,opt,name=tilt_degrees,json=tiltDegrees,proto3" json:"tilt_degrees,omitempty"`
@@ -1387,20 +1387,20 @@ type Absolute struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Absolute) Reset() {
-	*x = Absolute{}
+func (x *PtzConfigAbsolute) Reset() {
+	*x = PtzConfigAbsolute{}
 	mi := &file_openits_cctv_v1_state_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *Absolute) String() string {
+func (x *PtzConfigAbsolute) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Absolute) ProtoMessage() {}
+func (*PtzConfigAbsolute) ProtoMessage() {}
 
-func (x *Absolute) ProtoReflect() protoreflect.Message {
+func (x *PtzConfigAbsolute) ProtoReflect() protoreflect.Message {
 	mi := &file_openits_cctv_v1_state_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1412,33 +1412,33 @@ func (x *Absolute) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Absolute.ProtoReflect.Descriptor instead.
-func (*Absolute) Descriptor() ([]byte, []int) {
+// Deprecated: Use PtzConfigAbsolute.ProtoReflect.Descriptor instead.
+func (*PtzConfigAbsolute) Descriptor() ([]byte, []int) {
 	return file_openits_cctv_v1_state_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *Absolute) GetPanDegrees() string {
+func (x *PtzConfigAbsolute) GetPanDegrees() string {
 	if x != nil {
 		return x.PanDegrees
 	}
 	return ""
 }
 
-func (x *Absolute) GetTiltDegrees() string {
+func (x *PtzConfigAbsolute) GetTiltDegrees() string {
 	if x != nil {
 		return x.TiltDegrees
 	}
 	return ""
 }
 
-func (x *Absolute) GetZoomPercent() uint32 {
+func (x *PtzConfigAbsolute) GetZoomPercent() uint32 {
 	if x != nil {
 		return x.ZoomPercent
 	}
 	return 0
 }
 
-type Velocity struct {
+type PtzConfigVelocity struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	PanSpeed      int32                  `protobuf:"varint,1,opt,name=pan_speed,json=panSpeed,proto3" json:"pan_speed,omitempty"`
 	TiltSpeed     int32                  `protobuf:"varint,2,opt,name=tilt_speed,json=tiltSpeed,proto3" json:"tilt_speed,omitempty"`
@@ -1447,20 +1447,20 @@ type Velocity struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Velocity) Reset() {
-	*x = Velocity{}
+func (x *PtzConfigVelocity) Reset() {
+	*x = PtzConfigVelocity{}
 	mi := &file_openits_cctv_v1_state_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *Velocity) String() string {
+func (x *PtzConfigVelocity) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Velocity) ProtoMessage() {}
+func (*PtzConfigVelocity) ProtoMessage() {}
 
-func (x *Velocity) ProtoReflect() protoreflect.Message {
+func (x *PtzConfigVelocity) ProtoReflect() protoreflect.Message {
 	mi := &file_openits_cctv_v1_state_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1472,26 +1472,26 @@ func (x *Velocity) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Velocity.ProtoReflect.Descriptor instead.
-func (*Velocity) Descriptor() ([]byte, []int) {
+// Deprecated: Use PtzConfigVelocity.ProtoReflect.Descriptor instead.
+func (*PtzConfigVelocity) Descriptor() ([]byte, []int) {
 	return file_openits_cctv_v1_state_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *Velocity) GetPanSpeed() int32 {
+func (x *PtzConfigVelocity) GetPanSpeed() int32 {
 	if x != nil {
 		return x.PanSpeed
 	}
 	return 0
 }
 
-func (x *Velocity) GetTiltSpeed() int32 {
+func (x *PtzConfigVelocity) GetTiltSpeed() int32 {
 	if x != nil {
 		return x.TiltSpeed
 	}
 	return 0
 }
 
-func (x *Velocity) GetZoomSpeed() int32 {
+func (x *PtzConfigVelocity) GetZoomSpeed() int32 {
 	if x != nil {
 		return x.ZoomSpeed
 	}
@@ -1504,7 +1504,7 @@ type PtzState struct {
 	TiltDegrees   string                 `protobuf:"bytes,2,opt,name=tilt_degrees,json=tiltDegrees,proto3" json:"tilt_degrees,omitempty"`
 	ZoomPercent   uint32                 `protobuf:"varint,3,opt,name=zoom_percent,json=zoomPercent,proto3" json:"zoom_percent,omitempty"`
 	Moving        bool                   `protobuf:"varint,4,opt,name=moving,proto3" json:"moving,omitempty"`
-	MoveMode      PtzMoveMode            `protobuf:"varint,5,opt,name=move_mode,json=moveMode,proto3,enum=openits.cctv.v1.PtzMoveMode" json:"move_mode,omitempty"`
+	MoveMode      OpenitsCctvPtzMoveMode `protobuf:"varint,5,opt,name=move_mode,json=moveMode,proto3,enum=openits.cctv.v1.OpenitsCctvPtzMoveMode" json:"move_mode,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1567,11 +1567,11 @@ func (x *PtzState) GetMoving() bool {
 	return false
 }
 
-func (x *PtzState) GetMoveMode() PtzMoveMode {
+func (x *PtzState) GetMoveMode() OpenitsCctvPtzMoveMode {
 	if x != nil {
 		return x.MoveMode
 	}
-	return PtzMoveMode_PTZ_MOVE_MODE_ABSOLUTE
+	return OpenitsCctvPtzMoveMode_OPENITS_CCTV_PTZ_MOVE_MODE_ABSOLUTE
 }
 
 type Presets struct {
@@ -3218,28 +3218,28 @@ const file_openits_cctv_v1_state_proto_rawDesc = "" +
 	"ptzCapable\x12\x1f\n" +
 	"\vmax_presets\x18\x02 \x01(\rR\n" +
 	"maxPresets\x12%\n" +
-	"\x0epan_continuous\x18\x03 \x01(\bR\rpanContinuous\"y\n" +
-	"\tPtzConfig\x125\n" +
-	"\babsolute\x18\x01 \x01(\v2\x19.openits.cctv.v1.AbsoluteR\babsolute\x125\n" +
-	"\bvelocity\x18\x02 \x01(\v2\x19.openits.cctv.v1.VelocityR\bvelocity\"q\n" +
-	"\bAbsolute\x12\x1f\n" +
+	"\x0epan_continuous\x18\x03 \x01(\bR\rpanContinuous\"\x8b\x01\n" +
+	"\tPtzConfig\x12>\n" +
+	"\babsolute\x18\x01 \x01(\v2\".openits.cctv.v1.PtzConfigAbsoluteR\babsolute\x12>\n" +
+	"\bvelocity\x18\x02 \x01(\v2\".openits.cctv.v1.PtzConfigVelocityR\bvelocity\"z\n" +
+	"\x11PtzConfigAbsolute\x12\x1f\n" +
 	"\vpan_degrees\x18\x01 \x01(\tR\n" +
 	"panDegrees\x12!\n" +
 	"\ftilt_degrees\x18\x02 \x01(\tR\vtiltDegrees\x12!\n" +
-	"\fzoom_percent\x18\x03 \x01(\rR\vzoomPercent\"e\n" +
-	"\bVelocity\x12\x1b\n" +
+	"\fzoom_percent\x18\x03 \x01(\rR\vzoomPercent\"n\n" +
+	"\x11PtzConfigVelocity\x12\x1b\n" +
 	"\tpan_speed\x18\x01 \x01(\x05R\bpanSpeed\x12\x1d\n" +
 	"\n" +
 	"tilt_speed\x18\x02 \x01(\x05R\ttiltSpeed\x12\x1d\n" +
 	"\n" +
-	"zoom_speed\x18\x03 \x01(\x05R\tzoomSpeed\"\xc4\x01\n" +
+	"zoom_speed\x18\x03 \x01(\x05R\tzoomSpeed\"\xcf\x01\n" +
 	"\bPtzState\x12\x1f\n" +
 	"\vpan_degrees\x18\x01 \x01(\tR\n" +
 	"panDegrees\x12!\n" +
 	"\ftilt_degrees\x18\x02 \x01(\tR\vtiltDegrees\x12!\n" +
 	"\fzoom_percent\x18\x03 \x01(\rR\vzoomPercent\x12\x16\n" +
-	"\x06moving\x18\x04 \x01(\bR\x06moving\x129\n" +
-	"\tmove_mode\x18\x05 \x01(\x0e2\x1c.openits.cctv.v1.PtzMoveModeR\bmoveMode\"\x87\x01\n" +
+	"\x06moving\x18\x04 \x01(\bR\x06moving\x12D\n" +
+	"\tmove_mode\x18\x05 \x01(\x0e2'.openits.cctv.v1.OpenitsCctvPtzMoveModeR\bmoveMode\"\x87\x01\n" +
 	"\aPresets\x12/\n" +
 	"\x06preset\x18\x01 \x03(\v2\x17.openits.cctv.v1.PresetR\x06preset\x12\x16\n" +
 	"\x06recall\x18\x02 \x01(\rR\x06recall\x123\n" +
@@ -3365,13 +3365,13 @@ const file_openits_cctv_v1_state_proto_rawDesc = "" +
 	"\x1cMOUNTING_STRUCTURE_SPAN_WIRE\x10\x02\x12 \n" +
 	"\x1cMOUNTING_STRUCTURE_STRUCTURE\x10\x03\x12\x1f\n" +
 	"\x1bMOUNTING_STRUCTURE_BUILDING\x10\x04\x12\x1c\n" +
-	"\x18MOUNTING_STRUCTURE_OTHER\x10\x05*\x8f\x01\n" +
-	"\vPtzMoveMode\x12\x1a\n" +
-	"\x16PTZ_MOVE_MODE_ABSOLUTE\x10\x00\x12\x1a\n" +
-	"\x16PTZ_MOVE_MODE_VELOCITY\x10\x01\x12\x18\n" +
-	"\x14PTZ_MOVE_MODE_PRESET\x10\x02\x12\x16\n" +
-	"\x12PTZ_MOVE_MODE_TOUR\x10\x03\x12\x16\n" +
-	"\x12PTZ_MOVE_MODE_IDLE\x10\x04*\x93\x01\n" +
+	"\x18MOUNTING_STRUCTURE_OTHER\x10\x05*\xdb\x01\n" +
+	"\x16OpenitsCctvPtzMoveMode\x12'\n" +
+	"#OPENITS_CCTV_PTZ_MOVE_MODE_ABSOLUTE\x10\x00\x12'\n" +
+	"#OPENITS_CCTV_PTZ_MOVE_MODE_VELOCITY\x10\x01\x12%\n" +
+	"!OPENITS_CCTV_PTZ_MOVE_MODE_PRESET\x10\x02\x12#\n" +
+	"\x1fOPENITS_CCTV_PTZ_MOVE_MODE_TOUR\x10\x03\x12#\n" +
+	"\x1fOPENITS_CCTV_PTZ_MOVE_MODE_IDLE\x10\x04*\x93\x01\n" +
 	"\x17OpenitsCctvTourRunState\x12'\n" +
 	"#OPENITS_CCTV_TOUR_RUN_STATE_STOPPED\x10\x00\x12'\n" +
 	"#OPENITS_CCTV_TOUR_RUN_STATE_RUNNING\x10\x01\x12&\n" +
@@ -3419,7 +3419,7 @@ var file_openits_cctv_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 39
 var file_openits_cctv_v1_state_proto_goTypes = []any{
 	(OperationalStatus)(0),              // 0: openits.cctv.v1.OperationalStatus
 	(MountingStructure)(0),              // 1: openits.cctv.v1.MountingStructure
-	(PtzMoveMode)(0),                    // 2: openits.cctv.v1.PtzMoveMode
+	(OpenitsCctvPtzMoveMode)(0),         // 2: openits.cctv.v1.OpenitsCctvPtzMoveMode
 	(OpenitsCctvTourRunState)(0),        // 3: openits.cctv.v1.OpenitsCctvTourRunState
 	(LensMode)(0),                       // 4: openits.cctv.v1.LensMode
 	(VideoCodec)(0),                     // 5: openits.cctv.v1.VideoCodec
@@ -3436,8 +3436,8 @@ var file_openits_cctv_v1_state_proto_goTypes = []any{
 	(*Ptz)(nil),                         // 16: openits.cctv.v1.Ptz
 	(*Capabilities)(nil),                // 17: openits.cctv.v1.Capabilities
 	(*PtzConfig)(nil),                   // 18: openits.cctv.v1.PtzConfig
-	(*Absolute)(nil),                    // 19: openits.cctv.v1.Absolute
-	(*Velocity)(nil),                    // 20: openits.cctv.v1.Velocity
+	(*PtzConfigAbsolute)(nil),           // 19: openits.cctv.v1.PtzConfigAbsolute
+	(*PtzConfigVelocity)(nil),           // 20: openits.cctv.v1.PtzConfigVelocity
 	(*PtzState)(nil),                    // 21: openits.cctv.v1.PtzState
 	(*Presets)(nil),                     // 22: openits.cctv.v1.Presets
 	(*Preset)(nil),                      // 23: openits.cctv.v1.Preset
@@ -3490,9 +3490,9 @@ var file_openits_cctv_v1_state_proto_depIdxs = []int32{
 	21, // 19: openits.cctv.v1.Ptz.state:type_name -> openits.cctv.v1.PtzState
 	22, // 20: openits.cctv.v1.Ptz.presets:type_name -> openits.cctv.v1.Presets
 	25, // 21: openits.cctv.v1.Ptz.tours:type_name -> openits.cctv.v1.Tours
-	19, // 22: openits.cctv.v1.PtzConfig.absolute:type_name -> openits.cctv.v1.Absolute
-	20, // 23: openits.cctv.v1.PtzConfig.velocity:type_name -> openits.cctv.v1.Velocity
-	2,  // 24: openits.cctv.v1.PtzState.move_mode:type_name -> openits.cctv.v1.PtzMoveMode
+	19, // 22: openits.cctv.v1.PtzConfig.absolute:type_name -> openits.cctv.v1.PtzConfigAbsolute
+	20, // 23: openits.cctv.v1.PtzConfig.velocity:type_name -> openits.cctv.v1.PtzConfigVelocity
+	2,  // 24: openits.cctv.v1.PtzState.move_mode:type_name -> openits.cctv.v1.OpenitsCctvPtzMoveMode
 	23, // 25: openits.cctv.v1.Presets.preset:type_name -> openits.cctv.v1.Preset
 	24, // 26: openits.cctv.v1.Presets.state:type_name -> openits.cctv.v1.PresetsState
 	26, // 27: openits.cctv.v1.Tours.tour:type_name -> openits.cctv.v1.Tour

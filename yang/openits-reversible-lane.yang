@@ -81,7 +81,10 @@ module openits-reversible-lane {
        statement on every enumeration member that lacked one.
        Wire-neutral: each stamped value equals the previous positional
        auto-assignment (RFC 7950 9.6.4.2); this locks the append-only
-       enum discipline the wire contract depends on.";
+       enum discipline the wire contract depends on. Repoint the faults
+       description at the shared openits-common-fault-events
+       notifications (the gen-1 per-service notification it cited was
+       deleted in the gen-2 consolidation).";
     reference "RFC 7950 9.6.4.2.";
   }
   revision 2026-07-21 {
@@ -604,7 +607,8 @@ module openits-reversible-lane {
         "ITS Roadway Equipment -> Maintenance : equipment maintenance status";
       description
         "Live fault inventory.  Each entry mirrors a
-         `reversible-lane-fault-raised` notification and clears when
+         openits-common-fault-events:fault-raised notification
+         (discriminated by this service's fault-event-kind identities) and clears when
          the condition resolves.";
 
       list fault {
