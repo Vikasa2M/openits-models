@@ -1,0 +1,7 @@
+{
+  "module": "openits-scms",
+  "revision": "2026-08-05",
+  "files": [
+    "schema.yang"
+  ]
+}

@@ -49,8 +49,10 @@ module openits-dms {
        and the schedule-entry calendar axes (months / days-of-week /
        days-of-month) from the new shared openits-schedule module instead
        of local copies. Wire-neutral: leaf names, paths, and enum values
-       are unchanged.";
-    reference "NTCIP 1201 (dayPlan / dayPlanScheduleTable).";
+       are unchanged. Stamp explicit value statements on every remaining
+       enumeration member (wire-neutral: values match the previous
+       positional auto-assignment), locking append-only enum discipline.";
+    reference "NTCIP 1201 (dayPlan / dayPlanScheduleTable); RFC 7950 9.6.4.2.";
   }
   revision 2026-07-21 {
     description
@@ -240,9 +242,9 @@ module openits-dms {
     }
     leaf illumination-control {
       type enumeration {
-        enum photocell { description "Automatic — the sign dims/brightens from its photocell (ambient-light) reading, up to the brightness-setpoint ceiling."; }
-        enum timer     { description "Scheduled — brightness follows a time-of-day schedule."; }
-        enum manual     { description "Fixed — brightness held at brightness-setpoint regardless of ambient light."; }
+        enum photocell { value 0; description "Automatic — the sign dims/brightens from its photocell (ambient-light) reading, up to the brightness-setpoint ceiling."; }
+        enum timer { value 1; description "Scheduled — brightness follows a time-of-day schedule."; }
+        enum manual { value 2; description "Fixed — brightness held at brightness-setpoint regardless of ambient light."; }
       }
       description
         "How the sign's brightness is governed (NTCIP 1203 dmsIllumControl).
@@ -307,8 +309,8 @@ module openits-dms {
     }
     leaf beacon {
       type enumeration {
-        enum none     { description "No beacons flash with this message."; }
-        enum flashing { description "Beacons flash while this message is displayed."; }
+        enum none { value 0; description "No beacons flash with this message."; }
+        enum flashing { value 1; description "Beacons flash while this message is displayed."; }
       }
       default "none";
       description "Per-message beacon activation (MUTCD ties beacon flashing to message meaning).";
@@ -398,19 +400,19 @@ module openits-dms {
         leaf character-width-mm  { type uint32; units "millimeters"; description "Physical character-cell width in mm; 0 on proportional fonts."; }
         leaf beacon-type {
           type enumeration {
-            enum none          { description "No beacons."; }
-            enum one-beacon    { description "Single beacon."; }
-            enum two-beacon    { description "Two beacons (typical)."; }
-            enum four-beacon   { description "Four beacons."; }
-            enum other         { description "Beacon arrangement not otherwise classified."; }
+            enum none { value 0; description "No beacons."; }
+            enum one-beacon { value 1; description "Single beacon."; }
+            enum two-beacon { value 2; description "Two beacons (typical)."; }
+            enum four-beacon { value 3; description "Four beacons."; }
+            enum other { value 4; description "Beacon arrangement not otherwise classified."; }
           }
           description "Beacon arrangement (complements beacon-capable).";
         }
         leaf color-capability {
           type enumeration {
-            enum monochrome-1bit  { description "Single colour, pixels on/off."; }
-            enum monochrome-multi { description "Single hue with multiple intensity levels."; }
-            enum color            { description "Full colour (RGB)."; }
+            enum monochrome-1bit { value 0; description "Single colour, pixels on/off."; }
+            enum monochrome-multi { value 1; description "Single hue with multiple intensity levels."; }
+            enum color { value 2; description "Full colour (RGB)."; }
           }
           description "Colour rendering capability.";
         }
@@ -566,9 +568,9 @@ module openits-dms {
         uses sign-control-config;
         leaf request-self-test {
           type enumeration {
-            enum none        { description "No test requested."; }
-            enum pixel-test  { description "Command a pixel self-test; results appear in diagnostics."; }
-            enum lamp-test   { description "Command a lamp self-test (flip-disk/hybrid signs)."; }
+            enum none { value 0; description "No test requested."; }
+            enum pixel-test { value 1; description "Command a pixel self-test; results appear in diagnostics."; }
+            enum lamp-test { value 2; description "Command a lamp self-test (flip-disk/hybrid signs)."; }
           }
           default "none";
           description
@@ -670,11 +672,11 @@ module openits-dms {
         }
         leaf beacon-state {
           type enumeration {
-            enum none     { description "No beacons on this sign / none commanded."; }
-            enum dark     { description "Beacons commanded off and dark."; }
-            enum flashing { description "Beacons flashing as commanded."; }
-            enum steady   { description "Beacons steady (non-standard / test)."; }
-            enum fault    { description "Beacons faulted (e.g. commanded flashing but dark)."; }
+            enum none { value 0; description "No beacons on this sign / none commanded."; }
+            enum dark { value 1; description "Beacons commanded off and dark."; }
+            enum flashing { value 2; description "Beacons flashing as commanded."; }
+            enum steady { value 3; description "Beacons steady (non-standard / test)."; }
+            enum fault { value 4; description "Beacons faulted (e.g. commanded flashing but dark)."; }
           }
           description
             "Actual beacon indication readback. beacon=flashing on the active

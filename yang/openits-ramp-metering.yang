@@ -50,8 +50,10 @@ module openits-ramp-metering {
        and the schedule-entry calendar axes (months / days-of-week /
        days-of-month) from the new shared openits-schedule module instead
        of local copies. Wire-neutral: leaf names, paths, and enum values
-       are unchanged.";
-    reference "NTCIP 1201 (dayPlan / dayPlanScheduleTable).";
+       are unchanged. Stamp explicit value statements on every remaining
+       enumeration member (wire-neutral: values match the previous
+       positional auto-assignment), locking append-only enum discipline.";
+    reference "NTCIP 1201 (dayPlan / dayPlanScheduleTable); RFC 7950 9.6.4.2.";
   }
   revision 2026-07-21 {
     description
@@ -277,8 +279,8 @@ module openits-ramp-metering {
     }
     leaf non-metering-display {
       type enumeration {
-        enum dark         { description "Signal head powered off."; }
-        enum rest-in-green { description "Signal head holds steady green (ramp open, not metering)."; }
+        enum dark { value 0; description "Signal head powered off."; }
+        enum rest-in-green { value 1; description "Signal head holds steady green (ramp open, not metering)."; }
       }
       default "dark";
       description
@@ -306,8 +308,8 @@ module openits-ramp-metering {
     }
     leaf bypass-operation {
       type enumeration {
-        enum free-flow { description "Bypass is unmetered (free-flow) — the common case."; }
-        enum metered   { description "Bypass is itself metered (e.g. HOV-preferential metering)."; }
+        enum free-flow { value 0; description "Bypass is unmetered (free-flow) — the common case."; }
+        enum metered { value 1; description "Bypass is itself metered (e.g. HOV-preferential metering)."; }
       }
       description
         "How an HOV/HOT bypass lane operates. Only meaningful when
@@ -520,8 +522,8 @@ module openits-ramp-metering {
         }
         leaf aws-fault-action {
           type enumeration {
-            enum suspend-metering  { description "On an AWS fault while metering, suspend metering (fail-safe): a dark warning sign must not accompany active metering."; }
-            enum continue-metering { description "On an AWS fault while metering, continue metering and raise a fault only (agency accepts the risk)."; }
+            enum suspend-metering { value 0; description "On an AWS fault while metering, suspend metering (fail-safe): a dark warning sign must not accompany active metering."; }
+            enum continue-metering { value 1; description "On an AWS fault while metering, continue metering and raise a fault only (agency accepts the risk)."; }
           }
           default "suspend-metering";
           description
@@ -803,8 +805,8 @@ module openits-ramp-metering {
         description "Intended meter-wide lane coordination.";
         leaf release-coordination {
           type enumeration {
-            enum simultaneous { description "All metered lanes release together on the same cycle."; }
-            enum alternate    { description "Metered lanes release in an alternating sequence (only one head green at a time)."; }
+            enum simultaneous { value 0; description "All metered lanes release together on the same cycle."; }
+            enum alternate { value 1; description "Metered lanes release in an alternating sequence (only one head green at a time)."; }
           }
           description "How the meter's release lanes are coordinated.";
         }
@@ -814,8 +816,8 @@ module openits-ramp-metering {
         description "Applied meter-wide lane coordination (mirror).";
         leaf release-coordination {
           type enumeration {
-            enum simultaneous { description "All metered lanes release together."; }
-            enum alternate    { description "Lanes release alternately."; }
+            enum simultaneous { value 0; description "All metered lanes release together."; }
+            enum alternate { value 1; description "Lanes release alternately."; }
           }
           description "Coordination the meter is actually applying.";
         }

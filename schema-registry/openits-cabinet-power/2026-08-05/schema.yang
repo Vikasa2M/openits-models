@@ -50,7 +50,9 @@ module openits-cabinet-power {
        every observed leaf including signal-operation-on-battery. The
        policy mode enum gains an explicit unspecified=0 member (proto3
        zero-value discipline) — free to re-base because the policy's wire
-       path is new in the same change.";
+       path is new in the same change. Stamp explicit value statements on
+       every remaining enumeration member (wire-neutral: values match the
+       previous positional auto-assignment).";
     reference "IEC 62040 (UPS); NEMA TS 2.";
   }
   revision 2026-07-21 {
@@ -116,10 +118,10 @@ module openits-cabinet-power {
 
     leaf power-source {
       type enumeration {
-        enum on-line    { description "Running on utility (line) power."; }
-        enum on-battery { description "Utility lost; running on UPS battery (discharging) — the leading comm-loss indicator."; }
-        enum bypass     { description "On maintenance / static bypass (the UPS is not protecting the load)."; }
-        enum off        { description "No power to the load."; }
+        enum on-line { value 0; description "Running on utility (line) power."; }
+        enum on-battery { value 1; description "Utility lost; running on UPS battery (discharging) — the leading comm-loss indicator."; }
+        enum bypass { value 2; description "On maintenance / static bypass (the UPS is not protecting the load)."; }
+        enum off { value 3; description "No power to the load."; }
       }
       description "Present power source.";
     }
@@ -171,10 +173,10 @@ module openits-cabinet-power {
       }
       leaf test-state {
         type enumeration {
-          enum idle        { description "No self-test in progress."; }
-          enum in-progress { description "Self-test running."; }
-          enum passed      { description "Last self-test passed."; }
-          enum failed      { description "Last self-test failed — battery replacement likely."; }
+          enum idle { value 0; description "No self-test in progress."; }
+          enum in-progress { value 1; description "Self-test running."; }
+          enum passed { value 2; description "Last self-test passed."; }
+          enum failed { value 3; description "Last self-test failed — battery replacement likely."; }
         }
         description "Battery self-test state.";
       }
@@ -209,9 +211,9 @@ module openits-cabinet-power {
 
     leaf signal-operation-on-battery {
       type enumeration {
-        enum full-operation { description "Currently maintaining full-color operation on battery."; }
-        enum flash          { description "Currently in flash because running on battery."; }
-        enum not-on-battery { description "Not on battery; policy inactive."; }
+        enum full-operation { value 0; description "Currently maintaining full-color operation on battery."; }
+        enum flash { value 1; description "Currently in flash because running on battery."; }
+        enum not-on-battery { value 2; description "Not on battery; policy inactive."; }
       }
       description "Current signal operating state with respect to battery power.";
     }

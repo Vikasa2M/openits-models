@@ -1,0 +1,7 @@
+{
+  "module": "openits-v2x-messaging-types",
+  "revision": "2026-08-05",
+  "files": [
+    "schema.yang"
+  ]
+}
