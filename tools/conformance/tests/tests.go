@@ -374,6 +374,7 @@ func All(kind string) []TestCase {
 			// channels
 			TestCase{"TestChannels_AtLeastOne", TestChannels_AtLeastOne},
 			TestCase{"TestChannels_SourceResolves", TestChannels_SourceResolves},
+			TestCase{"TestChannels_NoConflictingFlashYellow", TestChannels_NoConflictingFlashYellow},
 
 			// conflict monitor
 			TestCase{"TestConflictMonitor_AtLeastOnePermissive", TestConflictMonitor_AtLeastOnePermissive},
@@ -387,6 +388,9 @@ func All(kind string) []TestCase {
 			TestCase{"TestCoordination_BarrierAssignment", TestCoordination_BarrierAssignment},
 			TestCase{"TestCoordination_SplitsWithinCycle", TestCoordination_SplitsWithinCycle},
 			TestCase{"TestCoordination_BarrierCrossingAlignment", TestCoordination_BarrierCrossingAlignment},
+
+			// sequences
+			TestCase{"TestSequences_PhasesMatchRingMembership", TestSequences_PhasesMatchRingMembership},
 
 			// timebase
 			TestCase{"TestTimebase_ReferencesResolve", TestTimebase_ReferencesResolve},

@@ -738,9 +738,10 @@
         "MUTCD 11th ed. 4F.17",
         "MUTCD 11th ed. 4F.17/4I.06/Ch.8C",
         "MUTCD 11th ed. Ch. 8C",
+        "MUTCD 11th ed. Ch. 8C / 4F.17",
         "MUTCD 4D.26 (vehicle change intervals), 4E.06 (pedestrian intervals)",
-        "NEMA TS 2",
         "NEMA TS 2 (cabinet)",
+        "NEMA TS 2 §4",
         "NEMA TS-2 §3.5",
         "NEMA TS-2 §3.5 (concurrency)",
         "NEMA TS-2 §3.5/§4",
@@ -795,9 +796,10 @@
             "MUTCD 11th ed. 4F.17",
             "MUTCD 11th ed. 4F.17/4I.06/Ch.8C",
             "MUTCD 11th ed. Ch. 8C",
+            "MUTCD 11th ed. Ch. 8C / 4F.17",
             "MUTCD 4D.26 (vehicle change intervals), 4E.06 (pedestrian intervals)",
-            "NEMA TS 2",
             "NEMA TS 2 (cabinet)",
+            "NEMA TS 2 §4",
             "NEMA TS-2 §3.5 (concurrency)",
             "NEMA TS-2 §3.5/§4",
             "NEMA TS-2 §4 (MMU)",
@@ -845,7 +847,8 @@
             "2026-07-12",
             "2026-07-13",
             "2026-07-14",
-            "2026-07-21"
+            "2026-07-21",
+            "2026-08-05"
           ],
           "refStd": [
             "ATSPM Indiana enumeration (HR event-code vocabulary)",
@@ -1821,6 +1824,11 @@
         "openits-signal-control-mutcd/2026-07-23/MANIFEST.json",
         "openits-signal-control-mutcd/2026-07-23/README.md",
         "openits-signal-control-mutcd/2026-07-23/schema.yang"
+      ],
+      "2026-08-05": [
+        "openits-signal-control-mutcd/2026-08-05/MANIFEST.json",
+        "openits-signal-control-mutcd/2026-08-05/README.md",
+        "openits-signal-control-mutcd/2026-08-05/schema.yang"
       ]
     },
     "openits-signal-control-mutcd-strict": {
@@ -1922,6 +1930,11 @@
         "openits-signal-control-types/2026-07-21/MANIFEST.json",
         "openits-signal-control-types/2026-07-21/README.md",
         "openits-signal-control-types/2026-07-21/schema.yang"
+      ],
+      "2026-08-05": [
+        "openits-signal-control-types/2026-08-05/MANIFEST.json",
+        "openits-signal-control-types/2026-08-05/README.md",
+        "openits-signal-control-types/2026-08-05/schema.yang"
       ]
     },
     "openits-traffic-sensor": {

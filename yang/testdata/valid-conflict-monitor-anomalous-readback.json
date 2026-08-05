@@ -14,7 +14,10 @@
       ]
     },
     "conflict-monitor": {
-      "permissive": [ { "channel-a": 2, "channel-b": 1 } ]
+      "permissive": [
+        { "channel-a": 2, "channel-b": 1 },
+        { "channel-a": 1, "channel-b": 9 }
+      ]
     }
   }
 }

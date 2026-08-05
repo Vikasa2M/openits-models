@@ -1,12 +1,15 @@
 package tests
 
 // Conflict monitor: the MMU permissive matrix (NEMA TS-2 conflict
-// monitor), config-only. Each permissive names a channel pair allowed to
-// show green simultaneously; both channels must actually exist, and the
-// pair must be stored canonically (channel-a < channel-b) so each
-// compatible pair appears exactly once — the invariant the YANG `must`
-// on this list enforces at the schema level, checked again here against
-// the actual collected data.
+// monitor), a config-false readback of the physically independent MMU
+// program card. Each permissive names a channel pair allowed to show
+// green simultaneously; both channels should resolve to configured
+// channels and the pair should be stored canonically (channel-a <
+// channel-b) so each compatible pair appears exactly once. These are
+// deliberately HARNESS checks, not YANG constraints: the datastore must
+// keep a mis-programmed card representable so audit-and-compare can
+// expose it, while a conforming device must still program its card
+// canonically — which is what these tests verify against collected data.
 
 func TestConflictMonitor_AtLeastOnePermissive(t *T, obs *Observation) {
 	cm := obs.Device.GetSignalController().GetConflictMonitor()

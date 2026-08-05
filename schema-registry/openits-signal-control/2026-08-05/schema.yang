@@ -60,8 +60,30 @@ module openits-signal-control {
          thresholds) moves from config-false readback to writable intent
          under cabinet-power/config with a state mirror; power telemetry
          stays under cabinet-power/state. Policy leaves move one level
-         deeper (cabinet-power/X -> cabinet-power/{config,state}/X).";
-    reference "NTCIP 1201; IEC 62040 (UPS); NEMA TS 2.";
+         deeper (cabinet-power/X -> cabinet-power/{config,state}/X).
+       Safety/integrity wave:
+       - Preemption: when more than one preemptor is configured every
+         preemptor must state priority-order, and every railroad
+         preemptor must outrank every non-railroad preemptor (rail
+         supremacy — a train cannot yield; MUTCD Ch. 8C).
+       - conflict-monitor readback brought fully under the config-false
+         doctrine: drop the canonical-pair must (moves to the
+         conformance harness) and set the pair leafrefs
+         require-instance false, so a mis-programmed MMU card stays
+         representable for audit-and-compare.
+       - Channels: document the flash-yellow compatibility harness
+         check (no two channels may both flash yellow unless the MMU
+         permissive record lists them as compatible).
+       - FYA: the fya container now requires overlap type overlap-fya
+         and distinct protected-left / opposing-through phases.
+       - TSP strategy list key retyped as a leafref into
+         config/strategy-id (paired-list idiom; JSON wire-neutral).
+       - ring-sequence: document the ring-membership harness check.
+       - cycle-state: document the deliberate free=0 Indiana mapping
+         and its absent-vs-free wire ambiguity.";
+    reference
+      "NTCIP 1201; NTCIP 1202:2019 §5; IEC 62040 (UPS); NEMA TS 2 §4;
+       MUTCD 11th ed. Ch. 8C / 4F.17.";
   }
   revision 2026-07-21 {
     description
@@ -930,6 +952,19 @@ module openits-signal-control {
             presence "This overlap operates as a flashing-yellow-arrow (FYA) left turn.";
             description "FYA arrangement (protected/permissive left turn). Present iff the overlap is an FYA.";
             reference "NEMA TS-2-2016 (FYA channel arrangement).";
+            must "derived-from-or-self(../type, 'openits-sc-types:overlap-fya')" {
+              error-message
+                "An fya container may only be present on an overlap whose "
+              + "type is overlap-fya; no other overlap class corresponds to "
+              + "a buildable FYA channel arrangement (NEMA TS-2).";
+            }
+            must "not(protected-left-phase) or not(opposing-through-phase) "
+               + "or protected-left-phase != opposing-through-phase" {
+              error-message
+                "An FYA's protected left-turn phase and opposing through "
+              + "phase must be different phases: the flashing-yellow "
+              + "permissive runs on the OPPOSING through green.";
+            }
             leaf protected-left-phase {
               type leafref { path "../../../../../phases/phase/phase-number"; require-instance true; }
               description "Protected left-turn phase (green-arrow).";
@@ -958,7 +993,17 @@ module openits-signal-control {
     /* ----- channels (load-switch mapping) ----- */
     container channels {
       openits-types:arc-it-flow "TMC -> Roadway Signal Controller : signal control plan";
-      description "Load-switch channel table (NTCIP channelTable): the logical phase/overlap -> physical load-switch mapping. Config-only static mapping; the channel's live output mirrors its source.";
+      description
+        "Load-switch channel table (NTCIP channelTable): the logical
+         phase/overlap -> physical load-switch mapping. Config-only static
+         mapping; the channel's live output mirrors its source. Flash-color
+         compatibility (no two channels may both flash yellow unless the
+         MMU permissive record lists them as a compatible pair — MUTCD:
+         flashing yellow only to non-conflicting movements, conflicting
+         approaches flash red) is enforced in the conformance harness
+         (TestChannels_NoConflictingFlashYellow): it cross-reads the
+         config-false conflict-monitor readback, which a config `must`
+         cannot reach.";
 
       list channel {
         must "not(derived-from-or-self(movement, 'openits-sc-types:channel-pedestrian')) "
@@ -1024,23 +1069,27 @@ module openits-signal-control {
          Validate() does not evaluate `must` at all, so the invariant is
          enforced in the conformance harness
          (TestConflictMonitor_NoSameRingPermissive), where the same precedent
-         (TestCoordination_SplitsWithinCycle) already lives. */
+         (TestCoordination_SplitsWithinCycle) already lives. Canonical pair
+         ordering (channel-a < channel-b, each pair recorded once) is likewise
+         a harness check (TestConflictMonitor_PermissiveCanonicalOrder), NOT a
+         `must`: this subtree is a config-false readback of the physically
+         independent MMU card, and a non-canonically programmed card must stay
+         REPRESENTABLE so audit-and-compare can expose it — a constraint here
+         would turn the very anomaly this readback exists to surface into
+         data the datastore cannot hold. The leafrefs use require-instance
+         false for the same reason: a card referencing a channel absent from
+         intended config is exactly what the TMC needs to see. */
       list permissive {
-        must "channel-a < channel-b" {
-          error-message
-            "A permissive must be stored canonically with channel-a < "
-          + "channel-b, so each compatible channel pair appears exactly once.";
-        }
         key "channel-a channel-b";
         description "One permitted concurrent-green channel pair (record of the MMU card).";
 
         leaf channel-a {
-          type leafref { path "../../../channels/channel/channel-number"; require-instance true; }
-          description "Lower-numbered channel of the compatible pair.";
+          type leafref { path "../../../channels/channel/channel-number"; require-instance false; }
+          description "Lower-numbered channel of the compatible pair (canonical form; see harness check).";
         }
         leaf channel-b {
-          type leafref { path "../../../channels/channel/channel-number"; require-instance true; }
-          description "Higher-numbered channel of the compatible pair.";
+          type leafref { path "../../../channels/channel/channel-number"; require-instance false; }
+          description "Higher-numbered channel of the compatible pair (canonical form; see harness check).";
         }
       }
     }
@@ -1209,7 +1258,11 @@ module openits-signal-control {
              modeled here; the instantaneous HR-log markers local-zero,
              begin-pickup and master-cycle-zero are meaningless as a polled
              value and are intentionally excluded — they remain fully
-             represented in the coord-cycle-state-change notification payload.";
+             represented in the coord-cycle-state-change notification payload.
+             free deliberately sits at value 0 to preserve the Indiana
+             enumeration mapping (0 = Free); consumers of the proto binding
+             should note that an ABSENT field is therefore indistinguishable
+             from free on the wire and treat both as free/not-reported.";
           reference "Indiana coord-cycle-state; NTCIP 1202:2019 §5.";
         }
       }
@@ -1234,7 +1287,16 @@ module openits-signal-control {
 
         list ring-sequence {
           key "ring";
-          description "Ordered phase list for one ring under this sequence.";
+          description
+            "Ordered phase list for one ring under this sequence. Every
+             ordered phase must belong to this ring (phases/phase/config/ring)
+             — a controller cannot serve a phase in a ring it is not assigned
+             to. Enforced in the conformance harness
+             (TestSequences_PhasesMatchRingMembership), not as a YANG `must`:
+             the check needs deref() through each member of a leaf-list,
+             which XPath 1.0 cannot express per-node, and ygot's Validate()
+             does not evaluate `must` (same precedent as the conflict-monitor
+             same-ring check).";
           leaf ring { type ring-number; description "Ring this ordering applies to."; }
           leaf-list ordered-phases {
             type leafref { path "../../../../phases/phase/phase-number"; require-instance true; }
@@ -1351,6 +1413,23 @@ module openits-signal-control {
         "Commanded preempt table (config) + per-preemptor active readback (state).
          Supports concurrent preemptors (rail + emergency-vehicle calls are real).";
 
+      must "count(preemptor) <= 1 or not(preemptor[not(config/priority-order)])" {
+        error-message
+          "When more than one preemptor is configured, every preemptor must "
+        + "state its priority-order: concurrent-preempt arbitration is "
+        + "undefined without an explicit ordering.";
+      }
+      must "not(preemptor[derived-from-or-self(config/type, "
+         + "'openits-sc-types:preempt-railroad')]/config/priority-order >= "
+         + "preemptor[not(derived-from-or-self(config/type, "
+         + "'openits-sc-types:preempt-railroad'))]/config/priority-order)" {
+        error-message
+          "Every railroad preemptor must outrank (lower priority-order than) "
+        + "every non-railroad preemptor: a train cannot yield, so rail "
+        + "preemption is the highest-priority preemption source (MUTCD "
+        + "Ch. 8C; NTCIP 1202 preempt-number convention).";
+      }
+
       list preemptor {
         key "preemptor-id";
         description "One entry per configured preemptor.";
@@ -1445,7 +1524,10 @@ module openits-signal-control {
         key "strategy-id";
         description "One TSP strategy available to the priority request server.";
 
-        leaf strategy-id { type uint8 { range "1..255"; } description "Strategy identifier (key)."; }
+        leaf strategy-id {
+          type leafref { path "../config/strategy-id"; }
+          description "Strategy identifier (key).";
+        }
         container config {
           description "Intended TSP strategy configuration.";
           leaf strategy-id { type uint8 { range "1..255"; } description "Strategy identifier."; }

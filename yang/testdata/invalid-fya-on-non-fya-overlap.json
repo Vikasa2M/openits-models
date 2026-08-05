@@ -1,0 +1,25 @@
+{
+  "openits-signal-control:signal-controller": {
+    "config": { "id": "c1", "name": "c1" },
+    "phases": {
+      "phase": [
+        { "phase-number": 2, "config": { "phase-number": 2, "ring": 1, "barrier": 1, "timing": { "min-green": "5.0", "max-green": "45.0", "yellow-change": "3.5", "red-clear": "1.5" } } },
+        { "phase-number": 5, "config": { "phase-number": 5, "ring": 2, "barrier": 1, "timing": { "min-green": "5.0", "max-green": "20.0", "yellow-change": "3.0", "red-clear": "1.5" } } }
+      ]
+    },
+    "overlaps": {
+      "overlap": [
+        {
+          "overlap-number": 1,
+          "config": {
+            "overlap-number": 1,
+            "name": "not an FYA",
+            "type": "openits-signal-control-types:overlap-normal",
+            "included-phases": [5],
+            "fya": { "protected-left-phase": 5, "opposing-through-phase": 2 }
+          }
+        }
+      ]
+    }
+  }
+}
