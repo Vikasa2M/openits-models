@@ -42,7 +42,9 @@ states). Two hard rules:
   `tools/yang-proto-gen/emit.go`), so the rules are: NEVER change an
   existing member's value, give every new member an explicit value above
   the current maximum, and append it at the end (position is style, but
-  append keeps diffs and reviews honest).
+  append keeps diffs and reviews honest). `make check-enum-values`
+  gates this: every first-party enum member must carry an explicit
+  `value` statement.
 - **Identity additions are non-breaking**: identityref leaves render as
   proto strings, so extending an identity hierarchy never moves wire tags.
   When in doubt about future extension, prefer the identity.

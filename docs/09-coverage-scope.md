@@ -23,7 +23,8 @@ coverage report (see [05 — Standards alignment](05-standards-alignment.md)).
 | Roadside perception / AID | `openits-perception`, `-types`, `-events` | TM01 (Infrastructure-Based Traffic Surveillance) |
 | CCTV / PTZ | `openits-cctv`, `-types`, `-events` | Roadway surveillance (NTCIP 1205) |
 | RSU / V2X | `openits-rsu`, `-types`, `-events`, `openits-v2x-messaging(-types)`, `openits-v2x-radio(-types)`, `openits-scms` | Connected-vehicle / V2X infrastructure |
-| Cabinet power / UPS | `openits-cabinet-power` | Platform (composed into device profiles) |
+| Cabinet power / UPS | `openits-cabinet-power` | Platform (composed into device profiles; telemetry grouping + writable on-battery policy grouping) |
+| Time-of-day scheduling | `openits-schedule` | Platform (shared time-of-day typedef + calendar-selector grouping for NTCIP 1201-style day-plan schedulers) |
 | Common device telemetry | `openits-common-fault-events`, `openits-common-mode-events`, `openits-common-comm-health-events`, `openits-device-diagnostics` | Cross-service (fault / mode / comm-health / diagnostics) |
 | Shared foundation | `openits-types` | Cross-service types, identities, groupings |
 

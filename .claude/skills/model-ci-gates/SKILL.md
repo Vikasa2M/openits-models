@@ -13,7 +13,7 @@ Run the full gate with the targets below; `make all` covers most of it.
 | go-test | `go build ./... && go vet ./... && go test ./...` | tools + generated Go compile and pass tests |
 | check-gen | `make check-gen` | committed generated artifacts match a fresh regen |
 | buf | `buf lint` + `buf breaking --against .git#ref=<main-sha>` | proto style + no wire-breaking change vs main |
-| yang-checks | `make check-revisions check-naming check-deviations check-augment-collisions check-events-layering validate-noi check-graduation` | governance: revisions, naming, layering, deviations |
+| yang-checks | `make check-revisions check-naming check-enum-values check-deviations check-augment-collisions check-events-layering validate-noi check-graduation` | governance: revisions, naming, enum values, layering, deviations |
 | validate-yang | `make validate-yang` | every fixture in `yang/testdata/` gets its expected verdict from yanglint |
 | yang-lint | `make yang-lint` | pyang --strict structural lint |
 | conformance (×9) | `go run ./tools/conformance -driver mock -kind <kind>` | mock device satisfies the per-kind behavioral checks |
@@ -67,6 +67,13 @@ typedef/grouping into the service's `-types` module instead.
 
 **check-revisions fails.** Duplicate same-date revision statements or a
 module changed without a new revision. One revision per change set.
+
+**check-enum-values fails.** An enumeration member in first-party YANG
+(anything under `yang/` except the vendored `yang/ietf/`) lacks an
+explicit `value` statement. Implicit positional numbering is the silent
+wire-break hazard: a mid-list insert renumbers every later member and
+the generated proto follows. Add `value N` — for a NEW member, above
+the enum's current maximum; never change an existing member's value.
 
 **conformance fails.** The mock driver plus per-kind checks in
 `tools/conformance/tests/` — read the named test; if you added model

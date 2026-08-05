@@ -417,6 +417,29 @@ leaf or container `description` and name the notification or fault
 category that reports it (`fault-raised`, a specific
 `*-conflict-detected` event, etc.) instead of encoding it as a `must`.
 
+### 1b. Leafrefs in config-false trees → `require-instance false`
+
+The same readback-representability logic applies to leafref
+strictness. A leafref's implicit `require-instance true` is itself a
+validation gate: an instance whose target is absent is rejected. On a
+config-true tree that is exactly right — intent may only reference
+things that exist. On a `config false` tree it recreates the rule-1
+problem: a device reporting telemetry against a just-deleted zone,
+plan, or channel — or a physically independent card (the MMU
+permissive record) programmed with a reference intended config does
+not contain — becomes *invalid data* instead of a reportable anomaly.
+
+Therefore every leafref under a `config false` subtree states
+`require-instance false` explicitly (the default is true, so silence
+means strict). Where the referential rule is a genuine conformance
+obligation, it moves to the conformance harness — the same relocation
+rule 1 prescribes for config-false `must`s. Uniform across the family
+as of the 2026-08 remediation: coordination `active-plan`, DMS/ramp
+`active-day-plan-id`, ESS `observation-metadata/sensor-id`,
+reversible-lane `blocking-interlocks`, traffic-sensor queue zones,
+perception zones/incidents, and the signal-control conflict-monitor
+permissive pairs.
+
 ### 2. Presence requirements go on the parent, never the optional leaf
 
 RFC 7950 §7.5.3 (the `must` statement) evaluates a `must` once per
