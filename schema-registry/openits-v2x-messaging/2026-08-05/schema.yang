@@ -39,8 +39,14 @@ module openits-v2x-messaging {
        statement on every enumeration member that lacked one.
        Wire-neutral: each stamped value equals the previous positional
        auto-assignment (RFC 7950 9.6.4.2); this locks the append-only
-       enum discipline the wire contract depends on.";
-    reference "RFC 7950 9.6.4.2.";
+       enum discipline the wire contract depends on.
+       Corrections: the MAP psid example previously cited 0x8003, which
+       is the traveler-information (TIM) allocation — corrected to the
+       MAP/intersection-map service PSID 0xE0-00-00-17 (description
+       only; the leaf is a plain uint32, wire-neutral). TIM
+       duration-minutes is now bounded 0..32000 to match SAE J2735
+       MinutesDuration (values above that cannot be encoded on-air).";
+    reference "RFC 7950 9.6.4.2; IEEE 1609.12; SAE J2735.";
   }
   revision 2026-07-21 {
     description
@@ -364,7 +370,9 @@ module openits-v2x-messaging {
             type uint32;
             description
               "Provider Service Identifier this service is broadcast under
-               (IEEE 1609 PSID registry; MAP = 0x8003). Keys NTCIP 1218
+               (IEEE 1609 PSID registry; MAP/intersection-map service =
+               0xE0-00-00-17, p-encoded — NOT 0x8003, which is the
+               traveler-information/TIM allocation). Keys NTCIP 1218
                forwarding (rsuIFMTable) and IEEE 1609.3 dispatch.";
             reference "IEEE 1609.3 (PSID); NTCIP 1218.";
           }
@@ -540,14 +548,18 @@ module openits-v2x-messaging {
                    replaced by a non-negative duration).";
               }
               leaf duration-minutes {
-                type uint32;
+                type uint32 {
+                  range "0..32000";
+                }
                 units "minutes";
                 description
                   "Broadcast-window length from start-time, in minutes (SAE
-                   J2735 TravelerDataFrame duration is minute-valued). 0 = until
-                   explicitly cleared. The effective end-time is start-time +
+                   J2735 TravelerDataFrame duration is minute-valued;
+                   MinutesDuration is bounded 0..32000, so values above that
+                   cannot be encoded on the air). 0 = until explicitly
+                   cleared. The effective end-time is start-time +
                    duration-minutes.";
-                reference "SAE J2735 (TIM TravelerDataFrame duration).";
+                reference "SAE J2735 (TIM TravelerDataFrame MinutesDuration).";
               }
               leaf-list itis-code {
                 type uint16;

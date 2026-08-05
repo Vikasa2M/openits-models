@@ -36,8 +36,11 @@ module openits-scms {
        statement on every enumeration member that lacked one.
        Wire-neutral: each stamped value equals the previous positional
        auto-assignment (RFC 7950 9.6.4.2); this locks the append-only
-       enum discipline the wire contract depends on.";
-    reference "RFC 7950 9.6.4.2.";
+       enum discipline the wire contract depends on. Correct the psid
+       example list: 0x8003 is the traveler-information (TIM)
+       allocation, not MAP — MAP is 0xE0-00-00-17 (description only,
+       wire-neutral).";
+    reference "RFC 7950 9.6.4.2; IEEE 1609.12.";
   }
   revision 2026-07-21 {
     description
@@ -476,7 +479,7 @@ module openits-scms {
                 type uint32;
                 description
                   "Provider Service Identifier the cert may sign for (e.g. "
-                + "0x8002 SPaT, 0x8003 MAP, 0x20 BSM).";
+                + "0x8002 SPaT, 0x8003 TIM, 0xE0-00-00-17 MAP, 0x20 BSM).";
               }
               leaf ssp {
                 type string {

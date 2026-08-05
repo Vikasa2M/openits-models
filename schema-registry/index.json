@@ -1086,6 +1086,7 @@
         "2026-08-05"
       ],
       "refStd": [
+        "IEEE 1609.12",
         "IEEE 1609.2",
         "RFC 7950 9.6.4.2",
         "SAE J2945"
@@ -1133,6 +1134,7 @@
         "2026-08-05"
       ],
       "refStd": [
+        "IEEE 1609.12",
         "NTCIP 1211 (Signal Control and Prioritization)",
         "NTCIP 1218",
         "RFC 7950 9.6.4.2",
