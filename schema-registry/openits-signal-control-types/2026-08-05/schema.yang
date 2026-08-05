@@ -34,7 +34,8 @@ module openits-signal-control-types {
        controller-health input (it previously conflated CVM with the
        +24V supply monitor — different hardware to troubleshoot) and add
        a distinct mmu-24v identity for the +24V Monitor inputs.
-       Identity addition; non-breaking.";
+       Identity addition; non-breaking. Widen the plan-id typedef
+       description to cover its sequence-id reuse (doc-only).";
     reference "NEMA TS2-2021 section 4.";
   }
   revision 2026-07-21 {
@@ -1005,8 +1006,13 @@ module openits-signal-control-types {
   }
   typedef plan-id {
     type uint8 { range "1..255"; }
-    description "Coordination timing-plan / pattern number (1-based). Shared by the core coordination library and the plan-applied event.";
-    reference "NTCIP 1202:2019 §5 (coordTable / patternTable).";
+    description
+      "1-based library identifier in the NTCIP 1..255 index space:
+       coordination timing-plan / pattern number, and reused for other
+       same-shaped library keys (the phase-sequence library's
+       sequence-id). Shared by the core coordination + sequence
+       libraries and the plan-applied event.";
+    reference "NTCIP 1202:2019 §5 (coordTable / patternTable / sequenceTable).";
   }
   typedef overlap-number {
     type uint8 { range "1..255"; }

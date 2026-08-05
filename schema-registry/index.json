@@ -1228,7 +1228,8 @@
       "revisions": [
         "2026-07-07",
         "2026-07-13",
-        "2026-07-21"
+        "2026-07-21",
+        "2026-08-05"
       ],
       "refStd": [
         "TrafficVision TMC-3.6 realtime API (incident_type vocabulary)"
@@ -1240,7 +1241,8 @@
       "revisions": [
         "2026-07-07",
         "2026-07-13",
-        "2026-07-21"
+        "2026-07-21",
+        "2026-08-05"
       ],
       "refStd": [
         "TrafficVision TMC-3.6 realtime API (inactive_reason values)"
@@ -1270,6 +1272,11 @@
         "ledstar-dms-travel-time/2026-07-21/MANIFEST.json",
         "ledstar-dms-travel-time/2026-07-21/README.md",
         "ledstar-dms-travel-time/2026-07-21/schema.yang"
+      ],
+      "2026-08-05": [
+        "ledstar-dms-travel-time/2026-08-05/MANIFEST.json",
+        "ledstar-dms-travel-time/2026-08-05/README.md",
+        "ledstar-dms-travel-time/2026-08-05/schema.yang"
       ]
     },
     "openits-cabinet-power": {
@@ -2113,6 +2120,11 @@
         "openits-vendor-trafficvision-perception-types/2026-07-21/MANIFEST.json",
         "openits-vendor-trafficvision-perception-types/2026-07-21/README.md",
         "openits-vendor-trafficvision-perception-types/2026-07-21/schema.yang"
+      ],
+      "2026-08-05": [
+        "openits-vendor-trafficvision-perception-types/2026-08-05/MANIFEST.json",
+        "openits-vendor-trafficvision-perception-types/2026-08-05/README.md",
+        "openits-vendor-trafficvision-perception-types/2026-08-05/schema.yang"
       ]
     },
     "openits-vendor-trafficvision-traffic-sensor-types": {
@@ -2125,6 +2137,11 @@
         "openits-vendor-trafficvision-traffic-sensor-types/2026-07-21/MANIFEST.json",
         "openits-vendor-trafficvision-traffic-sensor-types/2026-07-21/README.md",
         "openits-vendor-trafficvision-traffic-sensor-types/2026-07-21/schema.yang"
+      ],
+      "2026-08-05": [
+        "openits-vendor-trafficvision-traffic-sensor-types/2026-08-05/MANIFEST.json",
+        "openits-vendor-trafficvision-traffic-sensor-types/2026-08-05/README.md",
+        "openits-vendor-trafficvision-traffic-sensor-types/2026-08-05/schema.yang"
       ]
     },
     "trafficvision-perception-incident-media": {
