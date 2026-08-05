@@ -1,0 +1,16 @@
+{
+  "openits-dms:sign": {
+    "config": {
+      "id": "dms-01",
+      "name": "I-70 WB MP 12"
+    },
+    "schedule": {
+      "day-plan": [
+        {
+          "day-plan-id": 1,
+          "name": "empty plan"
+        }
+      ]
+    }
+  }
+}

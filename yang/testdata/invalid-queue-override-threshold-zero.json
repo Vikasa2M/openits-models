@@ -1,0 +1,19 @@
+{
+  "openits-ramp-metering:ramp-meter": {
+    "config": {
+      "id": "i405-nb-western-ave"
+    },
+    "plans": {
+      "plan": [
+        {
+          "plan-id": 2,
+          "name": "am-peak",
+          "release-rate-vph": 720,
+          "headway-s": "5.0",
+          "vehicles-per-green": 1,
+          "queue-override-threshold-vehicles": 0
+        }
+      ]
+    }
+  }
+}

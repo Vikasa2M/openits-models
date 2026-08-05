@@ -1,0 +1,10 @@
+{
+  "openits-reversible-lane:reversible-lane": {
+    "config": {
+      "id": "us75-contraflow",
+      "name": "US-75 Contraflow",
+      "direction-a": "unknown",
+      "direction-b": "southbound"
+    }
+  }
+}

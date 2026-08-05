@@ -59,6 +59,7 @@ SCHEMAS=(
     yang/openits-vendor-trafficvision-perception-types.yang
     yang/augments/trafficvision-traffic-sensor-camera.yang
     yang/augments/trafficvision-perception-incident-media.yang
+    yang/augments/ledstar-dms-travel-time.yang
 )
 
 # Guard: every module that declares a notification must be in

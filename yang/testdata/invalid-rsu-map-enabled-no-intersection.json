@@ -1,0 +1,16 @@
+{
+  "openits-rsu:rsu": {
+    "config": {
+      "id": "rsu-map-no-intersection",
+      "name": "MAP enabled, no intersection"
+    },
+    "messages": {
+      "map": {
+        "config": {
+          "enabled": true,
+          "broadcast-interval": 1000
+        }
+      }
+    }
+  }
+}

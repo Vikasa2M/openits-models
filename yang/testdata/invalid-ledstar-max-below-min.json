@@ -1,0 +1,19 @@
+{
+  "openits-dms:sign": {
+    "config": {
+      "id": "dms-01",
+      "name": "I-70 WB MP 12"
+    },
+    "ledstar-dms-travel-time:travel-time": {
+      "route": [
+        {
+          "route-id": "downtown-via-i70",
+          "destination-name": "DOWNTOWN",
+          "multi-template": "DOWNTOWN {tt} MIN",
+          "min-display-minutes": 30,
+          "max-display-minutes": 10
+        }
+      ]
+    }
+  }
+}

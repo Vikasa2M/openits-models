@@ -1,0 +1,15 @@
+{
+  "openits-ramp-metering:ramp-meter": {
+    "config": {
+      "id": "i405-nb-western-ave"
+    },
+    "schedule": {
+      "day-plan": [
+        {
+          "day-plan-id": 1,
+          "name": "empty plan"
+        }
+      ]
+    }
+  }
+}
