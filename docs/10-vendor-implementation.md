@@ -244,7 +244,8 @@ is grounds to reject or dispute the claim.
   you emit needs the header fields and content-derived identity the
   model defines, so consumers can deduplicate retries: the identity is
   a SHA-256 digest over `ce-source`, `ce-type`, stable-time, and the
-  payload, folded into a ULID. See the
+  payload with the producer-assigned leaves cleared, folded into a
+  ULID stamped with that same stable-time. See the
   [deterministic `ce-id` spec](ce-id-spec.md) for the normative
   algorithm — don't reimplement it from this summary.
 - **Device identity.** What device is this, and where — the

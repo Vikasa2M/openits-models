@@ -103,8 +103,11 @@ with embedded payload), no envelope at all (subject + raw bytes).
 
 4. **Deterministic `ce-id`.** Computing the id as a ULID derived
    from a content hash of the event —
-   `SHA-256(ce-source ‖ ce-type ‖ stable-time ‖ payload)`, see
-   `docs/ce-id-spec.md` — makes retries idempotent at the
+   `SHA-256(ce-source ‖ ce-type ‖ stable-time ‖ identity-payload)`,
+   where the identity payload clears the producer-assigned leaves
+   (`sequence`, `observed-by`) and the ULID timestamp is stamped from
+   stable-time rather than `ce-time`, see `docs/ce-id-spec.md` —
+   makes retries idempotent at the
    storage layer (ClickHouse `ReplacingMergeTree(ce_id, ce_time)`
    deduplicates for free). Most CloudEvents deployments use random
    UUIDs and bolt deduplication on later; we get it as a side effect
