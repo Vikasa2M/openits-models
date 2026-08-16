@@ -271,7 +271,8 @@
         "2026-07-13",
         "2026-07-16",
         "2026-07-21",
-        "2026-08-05"
+        "2026-08-05",
+        "2026-08-15"
       ],
       "events": [
         "openits.perception.fault-cleared.v1",
@@ -288,7 +289,8 @@
         "RFC 7950 9.6.4.2",
         "RFC 7950 section 11",
         "RFC 7950 section 11 (additive YANG evolution)",
-        "RFC 7950 section 11 (breaking YANG evolution: identity rename)"
+        "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
+        "docs/08-capability-architecture.md"
       ],
       "modules": [
         {
@@ -301,14 +303,16 @@
             "2026-07-13",
             "2026-07-16",
             "2026-07-21",
-            "2026-08-05"
+            "2026-08-05",
+            "2026-08-15"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Packages TM01 (Infrastructure-Based Traffic Surveillance) and TM08 (Traffic Incident Management System)",
             "FHWA Traffic Incident Management (TIM)",
             "RFC 7950",
             "RFC 7950 section 11 (additive YANG evolution)",
-            "RFC 7950 section 11 (breaking YANG evolution: identity rename)"
+            "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
+            "docs/08-capability-architecture.md"
           ]
         },
         {
@@ -321,12 +325,14 @@
             "2026-07-12",
             "2026-07-13",
             "2026-07-16",
-            "2026-07-21"
+            "2026-07-21",
+            "2026-08-15"
           ],
           "refStd": [
             "FHWA Traffic Incident Management (TIM)",
             "RFC 7950 section 11",
-            "RFC 7950 section 11 (breaking YANG evolution: identity rename)"
+            "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
+            "docs/08-capability-architecture.md"
           ]
         },
         {
@@ -337,13 +343,15 @@
             "2026-07-13",
             "2026-07-16",
             "2026-07-21",
-            "2026-08-05"
+            "2026-08-05",
+            "2026-08-15"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Packages TM01 (Infrastructure-Based Traffic Surveillance) and TM08 (Traffic Incident Management System)",
             "FHWA Traffic Incident Management (TIM)",
             "RFC 7950 9.6.4.2",
-            "RFC 7950 section 11"
+            "RFC 7950 section 11",
+            "docs/08-capability-architecture.md"
           ]
         }
       ]
@@ -1114,7 +1122,8 @@
         "2026-07-13",
         "2026-07-14",
         "2026-07-21",
-        "2026-08-05"
+        "2026-08-05",
+        "2026-08-15"
       ],
       "refStd": [
         "ATSPM Indiana enumeration",
@@ -1126,7 +1135,8 @@
         "RFC 7950 §11 (additive YANG evolution)",
         "RFC 8407 section 4.3 (identifier naming)",
         "SAE J2735 ('j2735' case)",
-        "SAE J2735 (position datum)"
+        "SAE J2735 (position datum)",
+        "docs/08-capability-architecture.md"
       ]
     },
     {
@@ -1539,6 +1549,11 @@
         "openits-perception/2026-08-05/MANIFEST.json",
         "openits-perception/2026-08-05/README.md",
         "openits-perception/2026-08-05/schema.yang"
+      ],
+      "2026-08-15": [
+        "openits-perception/2026-08-15/MANIFEST.json",
+        "openits-perception/2026-08-15/README.md",
+        "openits-perception/2026-08-15/schema.yang"
       ]
     },
     "openits-perception-events": {
@@ -1555,6 +1570,13 @@
         "openits-perception-events/2026-07-21/schema.json",
         "openits-perception-events/2026-07-21/schema.proto",
         "openits-perception-events/2026-07-21/schema.yang"
+      ],
+      "2026-08-15": [
+        "openits-perception-events/2026-08-15/MANIFEST.json",
+        "openits-perception-events/2026-08-15/README.md",
+        "openits-perception-events/2026-08-15/schema.json",
+        "openits-perception-events/2026-08-15/schema.proto",
+        "openits-perception-events/2026-08-15/schema.yang"
       ]
     },
     "openits-perception-types": {
@@ -1572,6 +1594,11 @@
         "openits-perception-types/2026-08-05/MANIFEST.json",
         "openits-perception-types/2026-08-05/README.md",
         "openits-perception-types/2026-08-05/schema.yang"
+      ],
+      "2026-08-15": [
+        "openits-perception-types/2026-08-15/MANIFEST.json",
+        "openits-perception-types/2026-08-15/README.md",
+        "openits-perception-types/2026-08-15/schema.yang"
       ]
     },
     "openits-ramp-metering": {
@@ -2041,6 +2068,11 @@
         "openits-types/2026-08-05/MANIFEST.json",
         "openits-types/2026-08-05/README.md",
         "openits-types/2026-08-05/schema.yang"
+      ],
+      "2026-08-15": [
+        "openits-types/2026-08-15/MANIFEST.json",
+        "openits-types/2026-08-15/README.md",
+        "openits-types/2026-08-15/schema.yang"
       ]
     },
     "openits-v2x-messaging": {

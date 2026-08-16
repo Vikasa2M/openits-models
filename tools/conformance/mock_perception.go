@@ -65,7 +65,7 @@ func collectPerception() (*yangpkg.Device, error) {
 		return nil, err
 	}
 	track.Lifecycle = yangpkg.OpenitsPerception_PerceptionSensor_Objects_Track_Lifecycle_confirmed
-	track.Class = yangpkg.OpenitsPerceptionTypes_ObjectClass_object_passenger_vehicle
+	track.Class = yangpkg.OpenitsTypes_ObjectClass_object_passenger_vehicle
 	track.ClassConfidence = u8Ptr(94)
 	track.Latitude = f64Ptr(32.8560100)
 	track.Longitude = f64Ptr(-96.7279500)
@@ -101,7 +101,7 @@ func collectPerception() (*yangpkg.Device, error) {
 	incident.Type = yangpkg.OpenitsPerceptionTypes_IncidentType_incident_stopped_vehicle
 	incident.Severity = yangpkg.OpenitsPerceptionTypes_IncidentSeverity_intermediate
 	incident.TrackId = u32Ptr(1042)
-	incident.ObjectClass = yangpkg.OpenitsPerceptionTypes_ObjectClass_object_passenger_vehicle
+	incident.ObjectClass = yangpkg.OpenitsTypes_ObjectClass_object_passenger_vehicle
 	incident.SpeedKmh = f64Ptr(0.0)
 	incident.Confidence = u8Ptr(88)
 	incident.Latitude = f64Ptr(32.8560100)

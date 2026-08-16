@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package openits.perception.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/perception/v1;perceptionv1";
+
+import "google/protobuf/timestamp.proto";
+
+message ZoneIncidentCleared {
+  string kind = 99;
+  string incident_id = 1;
+  string zone_id = 2;
+  string observed_by = 4;
+  google.protobuf.Timestamp occurred_at = 5;
+  string owner = 6;
+  uint64 sequence = 7;
+  string source_device_id = 8;
+}
+
+message ZoneIncidentDetected {
+  string kind = 99;
+  string incident_id = 1;
+  string zone_id = 2;
+  string type = 3;
+  IncidentSeverity severity = 4;
+  uint32 track_id = 5;
+  uint32 track_epoch = 16;
+  string object_class = 6;
+  string speed_kmh = 9;
+  uint32 confidence = 10;
+  string latitude = 7;
+  string longitude = 8;
+  string observed_by = 11;
+  google.protobuf.Timestamp occurred_at = 12;
+  string owner = 13;
+  uint64 sequence = 14;
+  string source_device_id = 15;
+}
+
+enum IncidentSeverity {
+  INCIDENT_SEVERITY_MINOR = 0;
+  INCIDENT_SEVERITY_INTERMEDIATE = 1;
+  INCIDENT_SEVERITY_MAJOR = 2;
+}
+
+message ZoneIncidentUpdated {
+  string kind = 99;
+  string incident_id = 1;
+  string zone_id = 2;
+  IncidentSeverity severity = 3;
+  string speed_kmh = 4;
+  uint32 confidence = 5;
+  string observed_by = 6;
+  google.protobuf.Timestamp occurred_at = 7;
+  string owner = 8;
+  uint64 sequence = 9;
+  string source_device_id = 10;
+}
+
+message ZoneIntervalReport {
+  string kind = 99;
+  repeated ZoneIntervalReportZone zone = 1;
+  string observed_by = 2;
+  google.protobuf.Timestamp occurred_at = 3;
+  string owner = 4;
+  uint64 sequence = 5;
+  string source_device_id = 6;
+}
+
+message ZoneIntervalReportZone {
+  string zone_id = 1;
+  google.protobuf.Timestamp interval_start = 2;
+  uint32 interval_duration_s = 3;
+  uint32 crossed_volume = 6;
+  uint32 observed_count = 7;
+  string occupancy_percent = 8;
+  string average_speed_kmh = 4;
+  repeated ClassCount class_count = 5;
+}
+
+message ClassCount {
+  string class = 1;
+  uint32 count = 2;
+}
+

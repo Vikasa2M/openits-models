@@ -15673,7 +15673,7 @@ type OpenitsPerception_PerceptionSensor_Incidents_Incident struct {
 	IncidentId	*string	`path:"incident-id" module:"openits-perception"`
 	Latitude	*float64	`path:"latitude" module:"openits-perception"`
 	Longitude	*float64	`path:"longitude" module:"openits-perception"`
-	ObjectClass	E_OpenitsPerceptionTypes_ObjectClass	`path:"object-class" module:"openits-perception"`
+	ObjectClass	E_OpenitsTypes_ObjectClass	`path:"object-class" module:"openits-perception"`
 	Severity	E_OpenitsPerceptionTypes_IncidentSeverity	`path:"severity" module:"openits-perception"`
 	SpeedKmh	*float64	`path:"speed-kmh" module:"openits-perception"`
 	TrackEpoch	*uint32	`path:"track-epoch" module:"openits-perception"`
@@ -15792,7 +15792,7 @@ func (t *OpenitsPerception_PerceptionSensor_Incidents_Incident) GetLongitude() f
 // safely use t.GetObjectClass() to retrieve the value. In the case that the
 // caller has different actions based on whether the leaf is set or unset, it
 // should use 'if t.ObjectClass == nil' before retrieving the leaf's value.
-func (t *OpenitsPerception_PerceptionSensor_Incidents_Incident) GetObjectClass() E_OpenitsPerceptionTypes_ObjectClass {
+func (t *OpenitsPerception_PerceptionSensor_Incidents_Incident) GetObjectClass() E_OpenitsTypes_ObjectClass {
 	if t == nil || t.ObjectClass ==  0 {
 		return 0
 	}
@@ -16127,7 +16127,7 @@ func (*OpenitsPerception_PerceptionSensor_Objects) ΛBelongingModule() string {
 
 // OpenitsPerception_PerceptionSensor_Objects_Track represents the /openits-perception/perception-sensor/objects/track YANG schema element.
 type OpenitsPerception_PerceptionSensor_Objects_Track struct {
-	Class	E_OpenitsPerceptionTypes_ObjectClass	`path:"class" module:"openits-perception"`
+	Class	E_OpenitsTypes_ObjectClass	`path:"class" module:"openits-perception"`
 	ClassConfidence	*uint8	`path:"class-confidence" module:"openits-perception"`
 	Elevation	*float64	`path:"elevation" module:"openits-perception"`
 	Heading	*uint16	`path:"heading" module:"openits-perception"`
@@ -16153,7 +16153,7 @@ func (*OpenitsPerception_PerceptionSensor_Objects_Track) IsYANGGoStruct() {}
 // safely use t.GetClass() to retrieve the value. In the case that the
 // caller has different actions based on whether the leaf is set or unset, it
 // should use 'if t.Class == nil' before retrieving the leaf's value.
-func (t *OpenitsPerception_PerceptionSensor_Objects_Track) GetClass() E_OpenitsPerceptionTypes_ObjectClass {
+func (t *OpenitsPerception_PerceptionSensor_Objects_Track) GetClass() E_OpenitsTypes_ObjectClass {
 	if t == nil || t.Class ==  0 {
 		return 0
 	}
@@ -53395,50 +53395,6 @@ const (
 )
 
 
-// E_OpenitsPerceptionTypes_ObjectClass is a derived int64 type which is used to represent
-// the enumerated node OpenitsPerceptionTypes_ObjectClass. An additional value named
-// OpenitsPerceptionTypes_ObjectClass_UNSET is added to the enumeration which is used as
-// the nil value, indicating that the enumeration was not explicitly set by
-// the program importing the generated structures.
-type E_OpenitsPerceptionTypes_ObjectClass int64
-
-// IsYANGGoEnum ensures that OpenitsPerceptionTypes_ObjectClass implements the yang.GoEnum
-// interface. This ensures that OpenitsPerceptionTypes_ObjectClass can be identified as a
-// mapped type for a YANG enumeration.
-func (E_OpenitsPerceptionTypes_ObjectClass) IsYANGGoEnum() {}
-
-// ΛMap returns the value lookup map associated with  OpenitsPerceptionTypes_ObjectClass.
-func (E_OpenitsPerceptionTypes_ObjectClass) ΛMap() map[string]map[int64]ygot.EnumDefinition { return ΛEnum; }
-
-// String returns a logging-friendly string for E_OpenitsPerceptionTypes_ObjectClass.
-func (e E_OpenitsPerceptionTypes_ObjectClass) String() string {
-	return ygot.EnumLogString(e, int64(e), "E_OpenitsPerceptionTypes_ObjectClass")
-}
-
-const (
-	// OpenitsPerceptionTypes_ObjectClass_UNSET corresponds to the value UNSET of OpenitsPerceptionTypes_ObjectClass
-	OpenitsPerceptionTypes_ObjectClass_UNSET E_OpenitsPerceptionTypes_ObjectClass = 0
-	// OpenitsPerceptionTypes_ObjectClass_object_animal corresponds to the value object_animal of OpenitsPerceptionTypes_ObjectClass
-	OpenitsPerceptionTypes_ObjectClass_object_animal E_OpenitsPerceptionTypes_ObjectClass = 1
-	// OpenitsPerceptionTypes_ObjectClass_object_bicycle corresponds to the value object_bicycle of OpenitsPerceptionTypes_ObjectClass
-	OpenitsPerceptionTypes_ObjectClass_object_bicycle E_OpenitsPerceptionTypes_ObjectClass = 2
-	// OpenitsPerceptionTypes_ObjectClass_object_bus corresponds to the value object_bus of OpenitsPerceptionTypes_ObjectClass
-	OpenitsPerceptionTypes_ObjectClass_object_bus E_OpenitsPerceptionTypes_ObjectClass = 3
-	// OpenitsPerceptionTypes_ObjectClass_object_debris corresponds to the value object_debris of OpenitsPerceptionTypes_ObjectClass
-	OpenitsPerceptionTypes_ObjectClass_object_debris E_OpenitsPerceptionTypes_ObjectClass = 4
-	// OpenitsPerceptionTypes_ObjectClass_object_motorcycle corresponds to the value object_motorcycle of OpenitsPerceptionTypes_ObjectClass
-	OpenitsPerceptionTypes_ObjectClass_object_motorcycle E_OpenitsPerceptionTypes_ObjectClass = 5
-	// OpenitsPerceptionTypes_ObjectClass_object_passenger_vehicle corresponds to the value object_passenger_vehicle of OpenitsPerceptionTypes_ObjectClass
-	OpenitsPerceptionTypes_ObjectClass_object_passenger_vehicle E_OpenitsPerceptionTypes_ObjectClass = 6
-	// OpenitsPerceptionTypes_ObjectClass_object_pedestrian corresponds to the value object_pedestrian of OpenitsPerceptionTypes_ObjectClass
-	OpenitsPerceptionTypes_ObjectClass_object_pedestrian E_OpenitsPerceptionTypes_ObjectClass = 7
-	// OpenitsPerceptionTypes_ObjectClass_object_truck corresponds to the value object_truck of OpenitsPerceptionTypes_ObjectClass
-	OpenitsPerceptionTypes_ObjectClass_object_truck E_OpenitsPerceptionTypes_ObjectClass = 8
-	// OpenitsPerceptionTypes_ObjectClass_object_unknown corresponds to the value object_unknown of OpenitsPerceptionTypes_ObjectClass
-	OpenitsPerceptionTypes_ObjectClass_object_unknown E_OpenitsPerceptionTypes_ObjectClass = 9
-)
-
-
 // E_OpenitsPerceptionTypes_PerceptionFaultEventKind is a derived int64 type which is used to represent
 // the enumerated node OpenitsPerceptionTypes_PerceptionFaultEventKind. An additional value named
 // OpenitsPerceptionTypes_PerceptionFaultEventKind_UNSET is added to the enumeration which is used as
@@ -56409,6 +56365,50 @@ const (
 )
 
 
+// E_OpenitsTypes_ObjectClass is a derived int64 type which is used to represent
+// the enumerated node OpenitsTypes_ObjectClass. An additional value named
+// OpenitsTypes_ObjectClass_UNSET is added to the enumeration which is used as
+// the nil value, indicating that the enumeration was not explicitly set by
+// the program importing the generated structures.
+type E_OpenitsTypes_ObjectClass int64
+
+// IsYANGGoEnum ensures that OpenitsTypes_ObjectClass implements the yang.GoEnum
+// interface. This ensures that OpenitsTypes_ObjectClass can be identified as a
+// mapped type for a YANG enumeration.
+func (E_OpenitsTypes_ObjectClass) IsYANGGoEnum() {}
+
+// ΛMap returns the value lookup map associated with  OpenitsTypes_ObjectClass.
+func (E_OpenitsTypes_ObjectClass) ΛMap() map[string]map[int64]ygot.EnumDefinition { return ΛEnum; }
+
+// String returns a logging-friendly string for E_OpenitsTypes_ObjectClass.
+func (e E_OpenitsTypes_ObjectClass) String() string {
+	return ygot.EnumLogString(e, int64(e), "E_OpenitsTypes_ObjectClass")
+}
+
+const (
+	// OpenitsTypes_ObjectClass_UNSET corresponds to the value UNSET of OpenitsTypes_ObjectClass
+	OpenitsTypes_ObjectClass_UNSET E_OpenitsTypes_ObjectClass = 0
+	// OpenitsTypes_ObjectClass_object_animal corresponds to the value object_animal of OpenitsTypes_ObjectClass
+	OpenitsTypes_ObjectClass_object_animal E_OpenitsTypes_ObjectClass = 1
+	// OpenitsTypes_ObjectClass_object_bicycle corresponds to the value object_bicycle of OpenitsTypes_ObjectClass
+	OpenitsTypes_ObjectClass_object_bicycle E_OpenitsTypes_ObjectClass = 2
+	// OpenitsTypes_ObjectClass_object_bus corresponds to the value object_bus of OpenitsTypes_ObjectClass
+	OpenitsTypes_ObjectClass_object_bus E_OpenitsTypes_ObjectClass = 3
+	// OpenitsTypes_ObjectClass_object_debris corresponds to the value object_debris of OpenitsTypes_ObjectClass
+	OpenitsTypes_ObjectClass_object_debris E_OpenitsTypes_ObjectClass = 4
+	// OpenitsTypes_ObjectClass_object_motorcycle corresponds to the value object_motorcycle of OpenitsTypes_ObjectClass
+	OpenitsTypes_ObjectClass_object_motorcycle E_OpenitsTypes_ObjectClass = 5
+	// OpenitsTypes_ObjectClass_object_passenger_vehicle corresponds to the value object_passenger_vehicle of OpenitsTypes_ObjectClass
+	OpenitsTypes_ObjectClass_object_passenger_vehicle E_OpenitsTypes_ObjectClass = 6
+	// OpenitsTypes_ObjectClass_object_pedestrian corresponds to the value object_pedestrian of OpenitsTypes_ObjectClass
+	OpenitsTypes_ObjectClass_object_pedestrian E_OpenitsTypes_ObjectClass = 7
+	// OpenitsTypes_ObjectClass_object_truck corresponds to the value object_truck of OpenitsTypes_ObjectClass
+	OpenitsTypes_ObjectClass_object_truck E_OpenitsTypes_ObjectClass = 8
+	// OpenitsTypes_ObjectClass_object_unknown corresponds to the value object_unknown of OpenitsTypes_ObjectClass
+	OpenitsTypes_ObjectClass_object_unknown E_OpenitsTypes_ObjectClass = 9
+)
+
+
 // E_OpenitsTypes_ProcessState is a derived int64 type which is used to represent
 // the enumerated node OpenitsTypes_ProcessState. An additional value named
 // OpenitsTypes_ProcessState_UNSET is added to the enumeration which is used as
@@ -57108,17 +57108,6 @@ var ΛEnum = map[string]map[int64]ygot.EnumDefinition{
 		7: {Name: "incident-stopped-vehicle", DefiningModule: "openits-perception-types"},
 		8: {Name: "incident-wrong-way-vehicle", DefiningModule: "openits-perception-types"},
 	},
-	"E_OpenitsPerceptionTypes_ObjectClass": {
-		1: {Name: "object-animal", DefiningModule: "openits-perception-types"},
-		2: {Name: "object-bicycle", DefiningModule: "openits-perception-types"},
-		3: {Name: "object-bus", DefiningModule: "openits-perception-types"},
-		4: {Name: "object-debris", DefiningModule: "openits-perception-types"},
-		5: {Name: "object-motorcycle", DefiningModule: "openits-perception-types"},
-		6: {Name: "object-passenger-vehicle", DefiningModule: "openits-perception-types"},
-		7: {Name: "object-pedestrian", DefiningModule: "openits-perception-types"},
-		8: {Name: "object-truck", DefiningModule: "openits-perception-types"},
-		9: {Name: "object-unknown", DefiningModule: "openits-perception-types"},
-	},
 	"E_OpenitsPerceptionTypes_PerceptionFaultEventKind": {
 		1: {Name: "perception-fault-blockage", DefiningModule: "openits-perception-types"},
 		2: {Name: "perception-fault-communication", DefiningModule: "openits-perception-types"},
@@ -57668,6 +57657,17 @@ var ΛEnum = map[string]map[int64]ygot.EnumDefinition{
 		3: {Name: "minor"},
 		4: {Name: "major"},
 		5: {Name: "critical"},
+	},
+	"E_OpenitsTypes_ObjectClass": {
+		1: {Name: "object-animal", DefiningModule: "openits-types"},
+		2: {Name: "object-bicycle", DefiningModule: "openits-types"},
+		3: {Name: "object-bus", DefiningModule: "openits-types"},
+		4: {Name: "object-debris", DefiningModule: "openits-types"},
+		5: {Name: "object-motorcycle", DefiningModule: "openits-types"},
+		6: {Name: "object-passenger-vehicle", DefiningModule: "openits-types"},
+		7: {Name: "object-pedestrian", DefiningModule: "openits-types"},
+		8: {Name: "object-truck", DefiningModule: "openits-types"},
+		9: {Name: "object-unknown", DefiningModule: "openits-types"},
 	},
 	"E_OpenitsTypes_ProcessState": {
 		1: {Name: "proc-crashed", DefiningModule: "openits-types"},
@@ -64059,7 +64059,7 @@ func initΛEnumTypes(){
 		reflect.TypeOf((E_OpenitsPerceptionTypes_IncidentDisposition)(0)),
 	},
 	"/perception-sensor/incidents/incident/object-class": []reflect.Type{
-		reflect.TypeOf((E_OpenitsPerceptionTypes_ObjectClass)(0)),
+		reflect.TypeOf((E_OpenitsTypes_ObjectClass)(0)),
 	},
 	"/perception-sensor/incidents/incident/severity": []reflect.Type{
 		reflect.TypeOf((E_OpenitsPerceptionTypes_IncidentSeverity)(0)),
@@ -64068,7 +64068,7 @@ func initΛEnumTypes(){
 		reflect.TypeOf((E_OpenitsPerceptionTypes_IncidentType)(0)),
 	},
 	"/perception-sensor/objects/track/class": []reflect.Type{
-		reflect.TypeOf((E_OpenitsPerceptionTypes_ObjectClass)(0)),
+		reflect.TypeOf((E_OpenitsTypes_ObjectClass)(0)),
 	},
 	"/perception-sensor/objects/track/lifecycle": []reflect.Type{
 		reflect.TypeOf((E_OpenitsPerception_PerceptionSensor_Objects_Track_Lifecycle)(0)),

@@ -15,11 +15,11 @@
         "average-speed-kmh": "88.3",
         "class-count": [
           {
-            "class": "openits-perception-types:object-passenger-vehicle",
+            "class": "openits-types:object-passenger-vehicle",
             "count": 42
           },
           {
-            "class": "openits-perception-types:object-truck",
+            "class": "openits-types:object-truck",
             "count": 5
           }
         ]
