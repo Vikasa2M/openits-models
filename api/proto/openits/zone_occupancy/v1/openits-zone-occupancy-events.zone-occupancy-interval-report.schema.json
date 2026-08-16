@@ -31,10 +31,16 @@
       "items": {
         "additionalProperties": false,
         "properties": {
-          "average-speed-kmh": {
+          "interval-duration-s": {
+            "maximum": 3600,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "interval-start": {
+            "format": "date-time",
             "type": "string"
           },
-          "class-count": {
+          "observed-class": {
             "items": {
               "additionalProperties": false,
               "properties": {
@@ -45,25 +51,29 @@
                   "maximum": 4294967295,
                   "minimum": 0,
                   "type": "integer"
+                },
+                "mean-confidence": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "integer"
                 }
               },
               "type": "object"
             },
             "type": "array"
           },
-          "crossed-volume": {
+          "observed-count": {
             "maximum": 4294967295,
             "minimum": 0,
             "type": "integer"
           },
-          "interval-duration-s": {
-            "maximum": 3600,
-            "minimum": 1,
-            "type": "integer"
-          },
-          "interval-start": {
-            "format": "date-time",
+          "occupancy-percent": {
             "type": "string"
+          },
+          "peak-occupancy-count": {
+            "maximum": 65535,
+            "minimum": 0,
+            "type": "integer"
           },
           "zone-id": {
             "maxLength": 64,

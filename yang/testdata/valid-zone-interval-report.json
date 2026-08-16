@@ -10,8 +10,6 @@
         "interval-start": "2026-07-11T14:00:00Z",
         "interval-duration-s": 300,
         "crossed-volume": 47,
-        "observed-count": 50,
-        "occupancy-percent": "34.5",
         "average-speed-kmh": "88.3",
         "class-count": [
           {

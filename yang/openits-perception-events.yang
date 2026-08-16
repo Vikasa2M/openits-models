@@ -33,11 +33,23 @@ module openits-perception-events {
     description
       "Repoint the object-class identityref base to openits-types, which
        now owns the detected-object classification axis. No structural
-       change here — the identity moved up a layer so capabilities other
+       change there — the identity moved up a layer so capabilities other
        than perception can classify what they detect.
 
-       BREAKING (pre-1.0): the values these leaves carry change from
-       'openits-perception-types:object-*' to 'openits-types:object-*'.";
+       Also move the presence-population leaves out of
+       zone-interval-report: observed-count and occupancy-percent now
+       live in openits-zone-occupancy-events, alongside the per-class
+       breakdown and confidence they never had here. This report keeps
+       the crossed (throughput) population. The 2026-07-13 revision
+       split those two populations at leaf level because mixing them
+       silently miscounts; the split is a capability boundary, and each
+       figure now has exactly one home.
+
+       BREAKING (pre-1.0): the object-class values these leaves carry
+       change from 'openits-perception-types:object-*' to
+       'openits-types:object-*'; observed-count and occupancy-percent
+       are removed from this notification and must be read from
+       zone-occupancy-interval-report.";
     reference "docs/08-capability-architecture.md.";
   }
   revision 2026-07-21 {
@@ -295,25 +307,14 @@ module openits-perception-events {
         description
           "Throughput population: total objects that traversed (entered
            and left) the zone during the interval. This is the zone's
-           volume — distinct from observed-count below, which counts
-           presence, not throughput. Mixing the two silently double-counts
-           or under-counts, so they are separated here.";
-      }
-      leaf observed-count {
-        type uint32;
-        units "objects";
-        description
-          "Presence population: distinct objects observed anywhere in the
-           zone at some point during the interval (including those that
-           did not traverse it). NOT the throughput volume — use
-           crossed-volume for that.";
-      }
-      leaf occupancy-percent {
-        type openits-types:percentage-precise;
-        description
-          "Time occupancy: fraction of the interval the zone had at least
-           one object present. The zone-level occupancy metric (previously
-           absent).";
+           volume.
+
+           This report covers the crossed population only. The presence
+           population — what was in the zone, for how much of the
+           interval, and of what class — is reported by the
+           zone-occupancy capability's own interval report. Mixing the
+           two silently double-counts or under-counts, which is why they
+           are not merely separate leaves but separate reports.";
       }
       leaf average-speed-kmh {
         type openits-types:speed-kmh;

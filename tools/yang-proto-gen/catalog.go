@@ -44,7 +44,14 @@ type serviceInfo struct {
 
 // services is the explicit module-prefix -> service-event-kind-root -> ce-slug
 // map from the P2b-2 plan's Global Constraints. It is the authoritative list
-// of services a common notification can fan out to.
+// of services a common notification can fan out to, and the routing table
+// every notification-bearing module is resolved through.
+//
+// Capabilities appear here too once they own notifications (zone-occupancy is
+// the first). A capability is not a device service and takes no fan-out from
+// the common fault/mode events — nothing derives from its event root but its
+// own reports — but its notifications still need a slug to mint ce-types
+// under, and that slug must be stable across whichever profiles compose it.
 var services = []serviceInfo{
 	{slug: "dms", root: "dms-event-kind"},
 	{slug: "ess", root: "ess-event-kind"},
@@ -55,6 +62,7 @@ var services = []serviceInfo{
 	{slug: "ramp-metering", root: "ramp-meter-event-kind"},
 	{slug: "reversible-lane", root: "reversible-lane-event-kind"},
 	{slug: "cctv", root: "cctv-event-kind"},
+	{slug: "zone-occupancy", root: "zone-occupancy-event-kind"},
 }
 
 // BuildCatalog derives the full ce-type catalog from the openits YANG

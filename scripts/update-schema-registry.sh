@@ -61,6 +61,9 @@ MODULES=(
     openits-v2x-messaging
     openits-scms
     openits-vehicle-detection
+    openits-zone-occupancy-types
+    openits-zone-occupancy
+    openits-zone-occupancy-events
     openits-cabinet-power
     openits-schedule
     openits-nema-common

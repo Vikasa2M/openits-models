@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package openits.zone_occupancy.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/zone_occupancy/v1;zoneoccupancyv1";
+
+import "google/protobuf/timestamp.proto";
+
+message ZoneOccupancyIntervalReport {
+  string kind = 99;
+  repeated Zone zone = 1;
+  string observed_by = 2;
+  google.protobuf.Timestamp occurred_at = 3;
+  string owner = 4;
+  uint64 sequence = 5;
+  string source_device_id = 6;
+}
+
+message Zone {
+  string zone_id = 1;
+  google.protobuf.Timestamp interval_start = 2;
+  uint32 interval_duration_s = 3;
+  uint32 observed_count = 4;
+  string occupancy_percent = 5;
+  uint32 peak_occupancy_count = 6;
+  repeated ObservedClass observed_class = 7;
+}
+
+message ObservedClass {
+  string class = 1;
+  uint32 count = 2;
+  uint32 mean_confidence = 3;
+}
+

@@ -72,8 +72,6 @@ message ZoneIntervalReportZone {
   google.protobuf.Timestamp interval_start = 2;
   uint32 interval_duration_s = 3;
   uint32 crossed_volume = 6;
-  uint32 observed_count = 7;
-  string occupancy_percent = 8;
   string average_speed_kmh = 4;
   repeated ClassCount class_count = 5;
 }

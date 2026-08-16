@@ -10,6 +10,9 @@ module openits-perception {
   import openits-types {
     prefix openits-types;
   }
+  import openits-zone-occupancy {
+    prefix openits-zone-occupancy;
+  }
 
   import openits-perception-types {
     prefix openits-perception-types;
@@ -55,6 +58,14 @@ module openits-perception {
        now owns the detected-object classification axis. No structural
        change here — the identity moved up a layer so capabilities other
        than perception can classify what they detect.
+
+       Also compose the new openits-zone-occupancy capability behind a
+       'zone-occupancy' feature. A sensor watching parking or a loading
+       zone must report what is PRESENT; its object tracks and its
+       crossed-population analytics describe traffic passing through,
+       and a vehicle that arrives and stays appears in neither.
+       Composed rather than reimplemented so a bay magnetometer that
+       does no tracking serves the identical subtree.
 
        BREAKING (pre-1.0): the values these leaves carry change from
        'openits-perception-types:object-*' to 'openits-types:object-*'.";
@@ -217,6 +228,15 @@ module openits-perception {
   /* --------------------------------------------------------------
    * Main tree
    * -------------------------------------------------------------- */
+
+  feature zone-occupancy {
+    description
+      "The sensor reports region occupancy — what is present in a zone
+       and for how long — in addition to tracking objects through it.
+       Not every perception sensor is deployed where that is meaningful
+       (a mainline speed camera is not), so the openits-zone-occupancy
+       capability subtree is gated behind this feature.";
+  }
 
   container perception-sensor {
     description
@@ -648,6 +668,20 @@ module openits-perception {
           description "Fault class (blockage / pose-drift / processing / power / communication / temperature).";
         }
       }
+    }
+
+    /* ----- occupancy capability -----
+     *
+     * A perception sensor that watches parking, loading zones or transit
+     * layover reports what is PRESENT, which its object tracks and its
+     * crossed-population analytics do not describe: a vehicle that
+     * arrives and stays never traverses anything.
+     *
+     * Composed rather than reimplemented, so the same subtree is served
+     * by a bay magnetometer that does none of the tracking above.
+     */
+    uses openits-zone-occupancy:zone-occupancy {
+      if-feature zone-occupancy;
     }
   }
 }

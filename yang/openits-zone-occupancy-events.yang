@@ -1,0 +1,153 @@
+module openits-zone-occupancy-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:zone-occupancy-events";
+  prefix openits-zone-occupancy-events;
+
+  import openits-types {
+    prefix openits-types;
+  }
+  import openits-zone-occupancy-types {
+    prefix openits-zone-occupancy-types;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Event payloads for the zone-occupancy capability: the periodic
+     per-region occupancy report.
+
+     Imports only shared -types modules, per the events-layering rule —
+     an events module never depends on a capability's or service's
+     config/state schema.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.1.0";
+
+  revision 2026-08-15 {
+    description
+      "Initial revision. zone-occupancy-interval-report carries the
+       observed (presence) population per region, including the
+       per-class breakdown and confidence that nothing in the family
+       previously described.
+
+       observed-count and occupancy-percent move here from
+       openits-perception-events:zone-interval-report, which keeps the
+       crossed (throughput) half. The 2026-07-13 perception revision
+       separated those two populations at leaf level because mixing them
+       silently double-counts; this puts the split at the capability
+       boundary it was always describing, so each figure has exactly one
+       home.";
+    reference "docs/08-capability-architecture.md.";
+  }
+
+  notification zone-occupancy-interval-report {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : traffic flow";
+    description
+      "Periodic per-region occupancy report, emitted once per
+       configured reporting interval.";
+
+    leaf kind {
+      type identityref {
+        base openits-zone-occupancy-types:zone-occupancy-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier;
+         openits-zone-occupancy-types:zoc-zone-occupancy-interval-report
+         for this notification.";
+    }
+    uses openits-types:event-header;
+
+    list zone {
+      key "zone-id";
+      description "Interval occupancy for one configured region.";
+
+      leaf zone-id {
+        type openits-zone-occupancy-types:occupancy-zone-id;
+        description "The configured region this entry reports on.";
+      }
+      leaf interval-start {
+        type yang:date-and-time;
+        description "Wall-clock time the reporting interval opened.";
+      }
+      leaf interval-duration-s {
+        type uint16 {
+          range "1..3600";
+        }
+        units "seconds";
+        description "Length of the reporting interval.";
+      }
+      leaf observed-count {
+        type uint32;
+        units "objects";
+        description
+          "Presence population: distinct objects present in the region
+           at any point during the interval, including those that never
+           traversed it.
+
+           NOT a throughput volume. An object that arrived before the
+           interval opened and was still there when it closed is counted
+           here exactly once and crossed nothing.";
+      }
+      leaf occupancy-percent {
+        type openits-types:percentage-precise;
+        description
+          "Time occupancy: fraction of the interval the region had at
+           least one object present.";
+      }
+      leaf peak-occupancy-count {
+        type uint16;
+        units "objects";
+        description
+          "Highest simultaneous occupancy during the interval.
+
+           Reported alongside the mean-bearing occupancy-percent because
+           the two answer different questions and the peak is the one
+           that establishes a constraint: a region averaging half full
+           that reached capacity every evening is full, and an interval
+           mean will not say so.";
+      }
+
+      list observed-class {
+        key "class";
+        description
+          "Breakdown of the PRESENT population per object class.
+
+           Where the region classifies, the counts sum to observed-count
+           with object-unknown as the catch-all, so no observed object
+           is dropped. Where it does not classify, the list is empty and
+           the sum rule does not apply — an empty list is not a claim
+           that nothing was there.";
+
+        leaf class {
+          type identityref {
+            base openits-types:object-class;
+          }
+          description "Object class this count belongs to.";
+        }
+        leaf count {
+          type uint32;
+          units "objects";
+          description
+            "Distinct objects of this class present during the interval.";
+        }
+        leaf mean-confidence {
+          type openits-types:percentage;
+          description
+            "Mean classification confidence across the objects counted
+             here. Lets a consumer weigh or refuse a breakdown produced
+             under poor conditions rather than treating every count as
+             equally established.";
+        }
+      }
+    }
+  }
+}

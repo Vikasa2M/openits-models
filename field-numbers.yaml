@@ -862,6 +862,7 @@ messages:
         incidents: 7
         objects: 4
         state: 2
+        zone_occupancy: 11
         zones: 5
     openits.perception.v1.PerceptionSensorConfig:
         elevation: 1
@@ -881,6 +882,20 @@ messages:
         lrs_method: 4
         measure: 3
         route_designator: 1
+    openits.perception.v1.PerceptionSensorConfiguration:
+        data_interval_s: 1
+        zone: 2
+    openits.perception.v1.PerceptionSensorConfigurationZone:
+        congestion_density_threshold: 9
+        congestion_speed_threshold_kmh: 8
+        dwell_s: 5
+        function: 3
+        legal_heading: 4
+        min_confidence: 7
+        name: 2
+        persistence_s: 6
+        vertex: 10
+        zone_id: 1
     openits.perception.v1.PerceptionSensorState:
         elevation: 1
         firmware: 2
@@ -905,6 +920,17 @@ messages:
         lrs_method: 4
         measure: 3
         route_designator: 1
+    openits.perception.v1.PerceptionSensorZones:
+        zone: 1
+    openits.perception.v1.PerceptionSensorZonesZone:
+        average_speed_kmh: 4
+        occupancy_count: 2
+        presence: 3
+        zone_id: 1
+    openits.perception.v1.PresentClass:
+        class: 1
+        classification_confidence: 3
+        count: 2
     openits.perception.v1.Review:
         disposition: 2
         incident_id: 1
@@ -979,6 +1005,27 @@ messages:
         interval_start: 2
         observed_count: 7
         occupancy_percent: 8
+        zone_id: 1
+    openits.perception.v1.ZoneOccupancy:
+        configuration: 1
+        zones: 2
+    openits.perception.v1.ZoneOccupancyConfiguration:
+        zone: 1
+    openits.perception.v1.ZoneOccupancyConfigurationZone:
+        capacity: 3
+        classifies: 5
+        name: 2
+        sensing_method: 4
+        zone_id: 1
+    openits.perception.v1.ZoneOccupancyZones:
+        zone: 1
+    openits.perception.v1.ZoneOccupancyZonesZone:
+        measured_at: 6
+        occupancy_count: 3
+        occupied_since: 4
+        presence: 2
+        presence_confidence: 5
+        present_class: 7
         zone_id: 1
     openits.perception.v1.Zones:
         zone: 1
@@ -2912,3 +2959,23 @@ messages:
         message_id: 4
         ntcip_oid: 3
         plc_register: 5
+    openits.zone_occupancy.v1.ObservedClass:
+        class: 1
+        count: 2
+        mean_confidence: 3
+    openits.zone_occupancy.v1.Zone:
+        interval_duration_s: 3
+        interval_start: 2
+        observed_class: 7
+        observed_count: 4
+        occupancy_percent: 5
+        peak_occupancy_count: 6
+        zone_id: 1
+    openits.zone_occupancy.v1.ZoneOccupancyIntervalReport:
+        kind: 99
+        observed_by: 2
+        occurred_at: 3
+        owner: 4
+        sequence: 5
+        source_device_id: 6
+        zone: 1

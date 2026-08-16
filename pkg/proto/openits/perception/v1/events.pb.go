@@ -565,8 +565,6 @@ type ZoneIntervalReportZone struct {
 	IntervalStart     *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=interval_start,json=intervalStart,proto3" json:"interval_start,omitempty"`
 	IntervalDurationS uint32                 `protobuf:"varint,3,opt,name=interval_duration_s,json=intervalDurationS,proto3" json:"interval_duration_s,omitempty"`
 	CrossedVolume     uint32                 `protobuf:"varint,6,opt,name=crossed_volume,json=crossedVolume,proto3" json:"crossed_volume,omitempty"`
-	ObservedCount     uint32                 `protobuf:"varint,7,opt,name=observed_count,json=observedCount,proto3" json:"observed_count,omitempty"`
-	OccupancyPercent  string                 `protobuf:"bytes,8,opt,name=occupancy_percent,json=occupancyPercent,proto3" json:"occupancy_percent,omitempty"`
 	AverageSpeedKmh   string                 `protobuf:"bytes,4,opt,name=average_speed_kmh,json=averageSpeedKmh,proto3" json:"average_speed_kmh,omitempty"`
 	ClassCount        []*ClassCount          `protobuf:"bytes,5,rep,name=class_count,json=classCount,proto3" json:"class_count,omitempty"`
 	unknownFields     protoimpl.UnknownFields
@@ -629,20 +627,6 @@ func (x *ZoneIntervalReportZone) GetCrossedVolume() uint32 {
 		return x.CrossedVolume
 	}
 	return 0
-}
-
-func (x *ZoneIntervalReportZone) GetObservedCount() uint32 {
-	if x != nil {
-		return x.ObservedCount
-	}
-	return 0
-}
-
-func (x *ZoneIntervalReportZone) GetOccupancyPercent() string {
-	if x != nil {
-		return x.OccupancyPercent
-	}
-	return ""
 }
 
 func (x *ZoneIntervalReportZone) GetAverageSpeedKmh() string {
@@ -780,14 +764,12 @@ const file_openits_perception_v1_events_proto_rawDesc = "" +
 	"occurredAt\x12\x14\n" +
 	"\x05owner\x18\x04 \x01(\tR\x05owner\x12\x1a\n" +
 	"\bsequence\x18\x05 \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\x06 \x01(\tR\x0esourceDeviceId\"\x8f\x03\n" +
+	"\x10source_device_id\x18\x06 \x01(\tR\x0esourceDeviceId\"\xbb\x02\n" +
 	"\x16ZoneIntervalReportZone\x12\x17\n" +
 	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12A\n" +
 	"\x0einterval_start\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\rintervalStart\x12.\n" +
 	"\x13interval_duration_s\x18\x03 \x01(\rR\x11intervalDurationS\x12%\n" +
-	"\x0ecrossed_volume\x18\x06 \x01(\rR\rcrossedVolume\x12%\n" +
-	"\x0eobserved_count\x18\a \x01(\rR\robservedCount\x12+\n" +
-	"\x11occupancy_percent\x18\b \x01(\tR\x10occupancyPercent\x12*\n" +
+	"\x0ecrossed_volume\x18\x06 \x01(\rR\rcrossedVolume\x12*\n" +
 	"\x11average_speed_kmh\x18\x04 \x01(\tR\x0faverageSpeedKmh\x12B\n" +
 	"\vclass_count\x18\x05 \x03(\v2!.openits.perception.v1.ClassCountR\n" +
 	"classCount\"8\n" +

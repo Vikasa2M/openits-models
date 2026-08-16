@@ -1,0 +1,101 @@
+module openits-zone-occupancy-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:zone-occupancy-types";
+  prefix openits-zone-occupancy-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Shared types and identities for the zone-occupancy capability: the
+     zone identifier, the sensing-method axis, and the event-kind
+     identities its notifications carry.
+
+     Split from the capability core so the events module can import leaf
+     definitions without depending on the capability's config/state
+     schema, per the events-layering rule.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.1.0";
+
+  revision 2026-08-15 {
+    description
+      "Initial revision. Zone identifier, sensing-method identity axis,
+       and the zone-occupancy event-kind hierarchy.";
+    reference "docs/08-capability-architecture.md.";
+  }
+
+  typedef occupancy-zone-id {
+    type string {
+      length "1..64";
+      pattern '[a-zA-Z0-9_-]+';
+    }
+    description
+      "Device-local identifier for a region whose occupancy is reported.
+
+       Device-local and opaque: it is unique within one device and
+       carries no meaning outside it. Two devices may both call a zone
+       'A1' and mean different ground. Binding a zone to a real-world
+       space (a numbered bay, a row, a lot) is the consuming system's
+       job and happens out of band; nothing in this model parses the
+       identifier or infers structure from it.";
+  }
+
+  /* --------------------------------------------------------------
+   * Sensing method
+   *
+   * What produced the presence call. Load-bearing for interpretation
+   * rather than decoration: it tells a consumer what kind of answer to
+   * expect. An inductive loop cannot classify what is over it at any
+   * confidence, so a zone reporting no class from a loop is complete,
+   * not degraded.
+   * -------------------------------------------------------------- */
+
+  identity occupancy-sensing-method {
+    description "Base identity for how zone occupancy is sensed.";
+  }
+  identity sensing-video          { base occupancy-sensing-method; description "Camera with on-board vision analytics."; }
+  identity sensing-radar          { base occupancy-sensing-method; description "Radar."; }
+  identity sensing-lidar          { base occupancy-sensing-method; description "LiDAR or other point-cloud sensor."; }
+  identity sensing-magnetometer   { base occupancy-sensing-method; description "Magnetometer, typically in-ground per bay."; }
+  identity sensing-inductive-loop { base occupancy-sensing-method; description "Inductive loop embedded in the surface."; }
+  identity sensing-ultrasonic     { base occupancy-sensing-method; description "Ultrasonic ranging, typically overhead per bay."; }
+  identity sensing-infrared       { base occupancy-sensing-method; description "Active or passive infrared."; }
+  identity sensing-fusion {
+    base occupancy-sensing-method;
+    description
+      "Two or more methods combined into one presence call. Reported
+       when the device will not attribute the call to a single method —
+       not as a catch-all for a method absent from this list.";
+  }
+
+  /* --------------------------------------------------------------
+   * Event kinds
+   * -------------------------------------------------------------- */
+
+  identity zone-occupancy-event-kind {
+    base openits-types:device-event-kind;
+    description
+      "Root for zone-occupancy capability events. Capability dimension
+       of the event-kind taxonomy, so a consumer can filter every
+       occupancy event with
+       derived-from-or-self(zone-occupancy-event-kind) regardless of
+       which device profile emitted it.";
+  }
+
+  identity zoc-zone-occupancy-interval-report {
+    base zone-occupancy-event-kind;
+    base openits-types:report-event-kind;
+    description
+      "Periodic per-zone occupancy report. Dual-based on
+       report-event-kind so it is caught by the cross-catalog
+       periodic-report filter as well as by the capability filter.";
+  }
+}

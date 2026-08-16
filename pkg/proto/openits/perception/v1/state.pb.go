@@ -283,17 +283,18 @@ func (FaultSeverity) EnumDescriptor() ([]byte, []int) {
 }
 
 type PerceptionSensor struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Config         *PerceptionSensorConfig `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
-	State          *PerceptionSensorState  `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
-	Associations   *Associations           `protobuf:"bytes,9,opt,name=associations,proto3" json:"associations,omitempty"`
-	Configuration  *Configuration          `protobuf:"bytes,3,opt,name=configuration,proto3" json:"configuration,omitempty"`
-	Objects        *Objects                `protobuf:"bytes,4,opt,name=objects,proto3" json:"objects,omitempty"`
-	Zones          *Zones                  `protobuf:"bytes,5,opt,name=zones,proto3" json:"zones,omitempty"`
-	Diagnostics    *Diagnostics            `protobuf:"bytes,6,opt,name=diagnostics,proto3" json:"diagnostics,omitempty"`
-	Incidents      *Incidents              `protobuf:"bytes,7,opt,name=incidents,proto3" json:"incidents,omitempty"`
-	IncidentReview *IncidentReview         `protobuf:"bytes,10,opt,name=incident_review,json=incidentReview,proto3" json:"incident_review,omitempty"`
-	Faults         *Faults                 `protobuf:"bytes,8,opt,name=faults,proto3" json:"faults,omitempty"`
+	state          protoimpl.MessageState         `protogen:"open.v1"`
+	Config         *PerceptionSensorConfig        `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
+	State          *PerceptionSensorState         `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
+	Associations   *Associations                  `protobuf:"bytes,9,opt,name=associations,proto3" json:"associations,omitempty"`
+	Configuration  *PerceptionSensorConfiguration `protobuf:"bytes,3,opt,name=configuration,proto3" json:"configuration,omitempty"`
+	Objects        *Objects                       `protobuf:"bytes,4,opt,name=objects,proto3" json:"objects,omitempty"`
+	Zones          *PerceptionSensorZones         `protobuf:"bytes,5,opt,name=zones,proto3" json:"zones,omitempty"`
+	Diagnostics    *Diagnostics                   `protobuf:"bytes,6,opt,name=diagnostics,proto3" json:"diagnostics,omitempty"`
+	Incidents      *Incidents                     `protobuf:"bytes,7,opt,name=incidents,proto3" json:"incidents,omitempty"`
+	IncidentReview *IncidentReview                `protobuf:"bytes,10,opt,name=incident_review,json=incidentReview,proto3" json:"incident_review,omitempty"`
+	Faults         *Faults                        `protobuf:"bytes,8,opt,name=faults,proto3" json:"faults,omitempty"`
+	ZoneOccupancy  *ZoneOccupancy                 `protobuf:"bytes,11,opt,name=zone_occupancy,json=zoneOccupancy,proto3" json:"zone_occupancy,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -349,7 +350,7 @@ func (x *PerceptionSensor) GetAssociations() *Associations {
 	return nil
 }
 
-func (x *PerceptionSensor) GetConfiguration() *Configuration {
+func (x *PerceptionSensor) GetConfiguration() *PerceptionSensorConfiguration {
 	if x != nil {
 		return x.Configuration
 	}
@@ -363,7 +364,7 @@ func (x *PerceptionSensor) GetObjects() *Objects {
 	return nil
 }
 
-func (x *PerceptionSensor) GetZones() *Zones {
+func (x *PerceptionSensor) GetZones() *PerceptionSensorZones {
 	if x != nil {
 		return x.Zones
 	}
@@ -394,6 +395,13 @@ func (x *PerceptionSensor) GetIncidentReview() *IncidentReview {
 func (x *PerceptionSensor) GetFaults() *Faults {
 	if x != nil {
 		return x.Faults
+	}
+	return nil
+}
+
+func (x *PerceptionSensor) GetZoneOccupancy() *ZoneOccupancy {
+	if x != nil {
+		return x.ZoneOccupancy
 	}
 	return nil
 }
@@ -950,28 +958,28 @@ func (x *AssociatedDevice) GetNote() string {
 	return ""
 }
 
-type Configuration struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DataIntervalS uint32                 `protobuf:"varint,1,opt,name=data_interval_s,json=dataIntervalS,proto3" json:"data_interval_s,omitempty"`
-	Zone          []*ConfigurationZone   `protobuf:"bytes,3,rep,name=zone,proto3" json:"zone,omitempty"`
+type PerceptionSensorConfiguration struct {
+	state         protoimpl.MessageState               `protogen:"open.v1"`
+	DataIntervalS uint32                               `protobuf:"varint,1,opt,name=data_interval_s,json=dataIntervalS,proto3" json:"data_interval_s,omitempty"`
+	Zone          []*PerceptionSensorConfigurationZone `protobuf:"bytes,2,rep,name=zone,proto3" json:"zone,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Configuration) Reset() {
-	*x = Configuration{}
+func (x *PerceptionSensorConfiguration) Reset() {
+	*x = PerceptionSensorConfiguration{}
 	mi := &file_openits_perception_v1_state_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *Configuration) String() string {
+func (x *PerceptionSensorConfiguration) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Configuration) ProtoMessage() {}
+func (*PerceptionSensorConfiguration) ProtoMessage() {}
 
-func (x *Configuration) ProtoReflect() protoreflect.Message {
+func (x *PerceptionSensorConfiguration) ProtoReflect() protoreflect.Message {
 	mi := &file_openits_perception_v1_state_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -983,55 +991,55 @@ func (x *Configuration) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Configuration.ProtoReflect.Descriptor instead.
-func (*Configuration) Descriptor() ([]byte, []int) {
+// Deprecated: Use PerceptionSensorConfiguration.ProtoReflect.Descriptor instead.
+func (*PerceptionSensorConfiguration) Descriptor() ([]byte, []int) {
 	return file_openits_perception_v1_state_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *Configuration) GetDataIntervalS() uint32 {
+func (x *PerceptionSensorConfiguration) GetDataIntervalS() uint32 {
 	if x != nil {
 		return x.DataIntervalS
 	}
 	return 0
 }
 
-func (x *Configuration) GetZone() []*ConfigurationZone {
+func (x *PerceptionSensorConfiguration) GetZone() []*PerceptionSensorConfigurationZone {
 	if x != nil {
 		return x.Zone
 	}
 	return nil
 }
 
-type ConfigurationZone struct {
+type PerceptionSensorConfigurationZone struct {
 	state                       protoimpl.MessageState `protogen:"open.v1"`
 	ZoneId                      string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
 	Name                        string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Function                    ZoneFunction           `protobuf:"varint,3,opt,name=function,proto3,enum=openits.perception.v1.ZoneFunction" json:"function,omitempty"`
 	LegalHeading                uint32                 `protobuf:"varint,4,opt,name=legal_heading,json=legalHeading,proto3" json:"legal_heading,omitempty"`
-	DwellS                      uint32                 `protobuf:"varint,6,opt,name=dwell_s,json=dwellS,proto3" json:"dwell_s,omitempty"`
-	PersistenceS                uint32                 `protobuf:"varint,7,opt,name=persistence_s,json=persistenceS,proto3" json:"persistence_s,omitempty"`
-	MinConfidence               uint32                 `protobuf:"varint,8,opt,name=min_confidence,json=minConfidence,proto3" json:"min_confidence,omitempty"`
-	CongestionSpeedThresholdKmh string                 `protobuf:"bytes,9,opt,name=congestion_speed_threshold_kmh,json=congestionSpeedThresholdKmh,proto3" json:"congestion_speed_threshold_kmh,omitempty"`
-	CongestionDensityThreshold  string                 `protobuf:"bytes,10,opt,name=congestion_density_threshold,json=congestionDensityThreshold,proto3" json:"congestion_density_threshold,omitempty"`
-	Vertex                      []*Vertex              `protobuf:"bytes,5,rep,name=vertex,proto3" json:"vertex,omitempty"`
+	DwellS                      uint32                 `protobuf:"varint,5,opt,name=dwell_s,json=dwellS,proto3" json:"dwell_s,omitempty"`
+	PersistenceS                uint32                 `protobuf:"varint,6,opt,name=persistence_s,json=persistenceS,proto3" json:"persistence_s,omitempty"`
+	MinConfidence               uint32                 `protobuf:"varint,7,opt,name=min_confidence,json=minConfidence,proto3" json:"min_confidence,omitempty"`
+	CongestionSpeedThresholdKmh string                 `protobuf:"bytes,8,opt,name=congestion_speed_threshold_kmh,json=congestionSpeedThresholdKmh,proto3" json:"congestion_speed_threshold_kmh,omitempty"`
+	CongestionDensityThreshold  string                 `protobuf:"bytes,9,opt,name=congestion_density_threshold,json=congestionDensityThreshold,proto3" json:"congestion_density_threshold,omitempty"`
+	Vertex                      []*Vertex              `protobuf:"bytes,10,rep,name=vertex,proto3" json:"vertex,omitempty"`
 	unknownFields               protoimpl.UnknownFields
 	sizeCache                   protoimpl.SizeCache
 }
 
-func (x *ConfigurationZone) Reset() {
-	*x = ConfigurationZone{}
+func (x *PerceptionSensorConfigurationZone) Reset() {
+	*x = PerceptionSensorConfigurationZone{}
 	mi := &file_openits_perception_v1_state_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ConfigurationZone) String() string {
+func (x *PerceptionSensorConfigurationZone) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ConfigurationZone) ProtoMessage() {}
+func (*PerceptionSensorConfigurationZone) ProtoMessage() {}
 
-func (x *ConfigurationZone) ProtoReflect() protoreflect.Message {
+func (x *PerceptionSensorConfigurationZone) ProtoReflect() protoreflect.Message {
 	mi := &file_openits_perception_v1_state_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1043,75 +1051,75 @@ func (x *ConfigurationZone) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ConfigurationZone.ProtoReflect.Descriptor instead.
-func (*ConfigurationZone) Descriptor() ([]byte, []int) {
+// Deprecated: Use PerceptionSensorConfigurationZone.ProtoReflect.Descriptor instead.
+func (*PerceptionSensorConfigurationZone) Descriptor() ([]byte, []int) {
 	return file_openits_perception_v1_state_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *ConfigurationZone) GetZoneId() string {
+func (x *PerceptionSensorConfigurationZone) GetZoneId() string {
 	if x != nil {
 		return x.ZoneId
 	}
 	return ""
 }
 
-func (x *ConfigurationZone) GetName() string {
+func (x *PerceptionSensorConfigurationZone) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-func (x *ConfigurationZone) GetFunction() ZoneFunction {
+func (x *PerceptionSensorConfigurationZone) GetFunction() ZoneFunction {
 	if x != nil {
 		return x.Function
 	}
 	return ZoneFunction_ZONE_FUNCTION_UNSPECIFIED
 }
 
-func (x *ConfigurationZone) GetLegalHeading() uint32 {
+func (x *PerceptionSensorConfigurationZone) GetLegalHeading() uint32 {
 	if x != nil {
 		return x.LegalHeading
 	}
 	return 0
 }
 
-func (x *ConfigurationZone) GetDwellS() uint32 {
+func (x *PerceptionSensorConfigurationZone) GetDwellS() uint32 {
 	if x != nil {
 		return x.DwellS
 	}
 	return 0
 }
 
-func (x *ConfigurationZone) GetPersistenceS() uint32 {
+func (x *PerceptionSensorConfigurationZone) GetPersistenceS() uint32 {
 	if x != nil {
 		return x.PersistenceS
 	}
 	return 0
 }
 
-func (x *ConfigurationZone) GetMinConfidence() uint32 {
+func (x *PerceptionSensorConfigurationZone) GetMinConfidence() uint32 {
 	if x != nil {
 		return x.MinConfidence
 	}
 	return 0
 }
 
-func (x *ConfigurationZone) GetCongestionSpeedThresholdKmh() string {
+func (x *PerceptionSensorConfigurationZone) GetCongestionSpeedThresholdKmh() string {
 	if x != nil {
 		return x.CongestionSpeedThresholdKmh
 	}
 	return ""
 }
 
-func (x *ConfigurationZone) GetCongestionDensityThreshold() string {
+func (x *PerceptionSensorConfigurationZone) GetCongestionDensityThreshold() string {
 	if x != nil {
 		return x.CongestionDensityThreshold
 	}
 	return ""
 }
 
-func (x *ConfigurationZone) GetVertex() []*Vertex {
+func (x *PerceptionSensorConfigurationZone) GetVertex() []*Vertex {
 	if x != nil {
 		return x.Vertex
 	}
@@ -1354,27 +1362,27 @@ func (x *Track) GetLongitude() string {
 	return ""
 }
 
-type Zones struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Zone          []*ZonesZone           `protobuf:"bytes,1,rep,name=zone,proto3" json:"zone,omitempty"`
+type PerceptionSensorZones struct {
+	state         protoimpl.MessageState       `protogen:"open.v1"`
+	Zone          []*PerceptionSensorZonesZone `protobuf:"bytes,1,rep,name=zone,proto3" json:"zone,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Zones) Reset() {
-	*x = Zones{}
+func (x *PerceptionSensorZones) Reset() {
+	*x = PerceptionSensorZones{}
 	mi := &file_openits_perception_v1_state_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *Zones) String() string {
+func (x *PerceptionSensorZones) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Zones) ProtoMessage() {}
+func (*PerceptionSensorZones) ProtoMessage() {}
 
-func (x *Zones) ProtoReflect() protoreflect.Message {
+func (x *PerceptionSensorZones) ProtoReflect() protoreflect.Message {
 	mi := &file_openits_perception_v1_state_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1386,19 +1394,19 @@ func (x *Zones) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Zones.ProtoReflect.Descriptor instead.
-func (*Zones) Descriptor() ([]byte, []int) {
+// Deprecated: Use PerceptionSensorZones.ProtoReflect.Descriptor instead.
+func (*PerceptionSensorZones) Descriptor() ([]byte, []int) {
 	return file_openits_perception_v1_state_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *Zones) GetZone() []*ZonesZone {
+func (x *PerceptionSensorZones) GetZone() []*PerceptionSensorZonesZone {
 	if x != nil {
 		return x.Zone
 	}
 	return nil
 }
 
-type ZonesZone struct {
+type PerceptionSensorZonesZone struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	ZoneId          string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
 	OccupancyCount  uint32                 `protobuf:"varint,2,opt,name=occupancy_count,json=occupancyCount,proto3" json:"occupancy_count,omitempty"`
@@ -1408,20 +1416,20 @@ type ZonesZone struct {
 	sizeCache       protoimpl.SizeCache
 }
 
-func (x *ZonesZone) Reset() {
-	*x = ZonesZone{}
+func (x *PerceptionSensorZonesZone) Reset() {
+	*x = PerceptionSensorZonesZone{}
 	mi := &file_openits_perception_v1_state_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ZonesZone) String() string {
+func (x *PerceptionSensorZonesZone) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ZonesZone) ProtoMessage() {}
+func (*PerceptionSensorZonesZone) ProtoMessage() {}
 
-func (x *ZonesZone) ProtoReflect() protoreflect.Message {
+func (x *PerceptionSensorZonesZone) ProtoReflect() protoreflect.Message {
 	mi := &file_openits_perception_v1_state_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1433,33 +1441,33 @@ func (x *ZonesZone) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ZonesZone.ProtoReflect.Descriptor instead.
-func (*ZonesZone) Descriptor() ([]byte, []int) {
+// Deprecated: Use PerceptionSensorZonesZone.ProtoReflect.Descriptor instead.
+func (*PerceptionSensorZonesZone) Descriptor() ([]byte, []int) {
 	return file_openits_perception_v1_state_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *ZonesZone) GetZoneId() string {
+func (x *PerceptionSensorZonesZone) GetZoneId() string {
 	if x != nil {
 		return x.ZoneId
 	}
 	return ""
 }
 
-func (x *ZonesZone) GetOccupancyCount() uint32 {
+func (x *PerceptionSensorZonesZone) GetOccupancyCount() uint32 {
 	if x != nil {
 		return x.OccupancyCount
 	}
 	return 0
 }
 
-func (x *ZonesZone) GetPresence() bool {
+func (x *PerceptionSensorZonesZone) GetPresence() bool {
 	if x != nil {
 		return x.Presence
 	}
 	return false
 }
 
-func (x *ZonesZone) GetAverageSpeedKmh() string {
+func (x *PerceptionSensorZonesZone) GetAverageSpeedKmh() string {
 	if x != nil {
 		return x.AverageSpeedKmh
 	}
@@ -1958,23 +1966,392 @@ func (x *Fault) GetSeverity() FaultSeverity {
 	return FaultSeverity_FAULT_SEVERITY_INFO
 }
 
+type ZoneOccupancy struct {
+	state         protoimpl.MessageState      `protogen:"open.v1"`
+	Configuration *ZoneOccupancyConfiguration `protobuf:"bytes,1,opt,name=configuration,proto3" json:"configuration,omitempty"`
+	Zones         *ZoneOccupancyZones         `protobuf:"bytes,2,opt,name=zones,proto3" json:"zones,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ZoneOccupancy) Reset() {
+	*x = ZoneOccupancy{}
+	mi := &file_openits_perception_v1_state_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ZoneOccupancy) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ZoneOccupancy) ProtoMessage() {}
+
+func (x *ZoneOccupancy) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_perception_v1_state_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ZoneOccupancy.ProtoReflect.Descriptor instead.
+func (*ZoneOccupancy) Descriptor() ([]byte, []int) {
+	return file_openits_perception_v1_state_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *ZoneOccupancy) GetConfiguration() *ZoneOccupancyConfiguration {
+	if x != nil {
+		return x.Configuration
+	}
+	return nil
+}
+
+func (x *ZoneOccupancy) GetZones() *ZoneOccupancyZones {
+	if x != nil {
+		return x.Zones
+	}
+	return nil
+}
+
+type ZoneOccupancyConfiguration struct {
+	state         protoimpl.MessageState            `protogen:"open.v1"`
+	Zone          []*ZoneOccupancyConfigurationZone `protobuf:"bytes,1,rep,name=zone,proto3" json:"zone,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ZoneOccupancyConfiguration) Reset() {
+	*x = ZoneOccupancyConfiguration{}
+	mi := &file_openits_perception_v1_state_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ZoneOccupancyConfiguration) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ZoneOccupancyConfiguration) ProtoMessage() {}
+
+func (x *ZoneOccupancyConfiguration) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_perception_v1_state_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ZoneOccupancyConfiguration.ProtoReflect.Descriptor instead.
+func (*ZoneOccupancyConfiguration) Descriptor() ([]byte, []int) {
+	return file_openits_perception_v1_state_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *ZoneOccupancyConfiguration) GetZone() []*ZoneOccupancyConfigurationZone {
+	if x != nil {
+		return x.Zone
+	}
+	return nil
+}
+
+type ZoneOccupancyConfigurationZone struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ZoneId        string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Capacity      uint32                 `protobuf:"varint,3,opt,name=capacity,proto3" json:"capacity,omitempty"`
+	SensingMethod string                 `protobuf:"bytes,4,opt,name=sensing_method,json=sensingMethod,proto3" json:"sensing_method,omitempty"`
+	Classifies    bool                   `protobuf:"varint,5,opt,name=classifies,proto3" json:"classifies,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ZoneOccupancyConfigurationZone) Reset() {
+	*x = ZoneOccupancyConfigurationZone{}
+	mi := &file_openits_perception_v1_state_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ZoneOccupancyConfigurationZone) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ZoneOccupancyConfigurationZone) ProtoMessage() {}
+
+func (x *ZoneOccupancyConfigurationZone) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_perception_v1_state_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ZoneOccupancyConfigurationZone.ProtoReflect.Descriptor instead.
+func (*ZoneOccupancyConfigurationZone) Descriptor() ([]byte, []int) {
+	return file_openits_perception_v1_state_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *ZoneOccupancyConfigurationZone) GetZoneId() string {
+	if x != nil {
+		return x.ZoneId
+	}
+	return ""
+}
+
+func (x *ZoneOccupancyConfigurationZone) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ZoneOccupancyConfigurationZone) GetCapacity() uint32 {
+	if x != nil {
+		return x.Capacity
+	}
+	return 0
+}
+
+func (x *ZoneOccupancyConfigurationZone) GetSensingMethod() string {
+	if x != nil {
+		return x.SensingMethod
+	}
+	return ""
+}
+
+func (x *ZoneOccupancyConfigurationZone) GetClassifies() bool {
+	if x != nil {
+		return x.Classifies
+	}
+	return false
+}
+
+type ZoneOccupancyZones struct {
+	state         protoimpl.MessageState    `protogen:"open.v1"`
+	Zone          []*ZoneOccupancyZonesZone `protobuf:"bytes,1,rep,name=zone,proto3" json:"zone,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ZoneOccupancyZones) Reset() {
+	*x = ZoneOccupancyZones{}
+	mi := &file_openits_perception_v1_state_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ZoneOccupancyZones) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ZoneOccupancyZones) ProtoMessage() {}
+
+func (x *ZoneOccupancyZones) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_perception_v1_state_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ZoneOccupancyZones.ProtoReflect.Descriptor instead.
+func (*ZoneOccupancyZones) Descriptor() ([]byte, []int) {
+	return file_openits_perception_v1_state_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *ZoneOccupancyZones) GetZone() []*ZoneOccupancyZonesZone {
+	if x != nil {
+		return x.Zone
+	}
+	return nil
+}
+
+type ZoneOccupancyZonesZone struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	ZoneId             string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Presence           bool                   `protobuf:"varint,2,opt,name=presence,proto3" json:"presence,omitempty"`
+	OccupancyCount     uint32                 `protobuf:"varint,3,opt,name=occupancy_count,json=occupancyCount,proto3" json:"occupancy_count,omitempty"`
+	OccupiedSince      *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=occupied_since,json=occupiedSince,proto3" json:"occupied_since,omitempty"`
+	PresenceConfidence uint32                 `protobuf:"varint,5,opt,name=presence_confidence,json=presenceConfidence,proto3" json:"presence_confidence,omitempty"`
+	MeasuredAt         *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=measured_at,json=measuredAt,proto3" json:"measured_at,omitempty"`
+	PresentClass       []*PresentClass        `protobuf:"bytes,7,rep,name=present_class,json=presentClass,proto3" json:"present_class,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *ZoneOccupancyZonesZone) Reset() {
+	*x = ZoneOccupancyZonesZone{}
+	mi := &file_openits_perception_v1_state_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ZoneOccupancyZonesZone) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ZoneOccupancyZonesZone) ProtoMessage() {}
+
+func (x *ZoneOccupancyZonesZone) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_perception_v1_state_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ZoneOccupancyZonesZone.ProtoReflect.Descriptor instead.
+func (*ZoneOccupancyZonesZone) Descriptor() ([]byte, []int) {
+	return file_openits_perception_v1_state_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *ZoneOccupancyZonesZone) GetZoneId() string {
+	if x != nil {
+		return x.ZoneId
+	}
+	return ""
+}
+
+func (x *ZoneOccupancyZonesZone) GetPresence() bool {
+	if x != nil {
+		return x.Presence
+	}
+	return false
+}
+
+func (x *ZoneOccupancyZonesZone) GetOccupancyCount() uint32 {
+	if x != nil {
+		return x.OccupancyCount
+	}
+	return 0
+}
+
+func (x *ZoneOccupancyZonesZone) GetOccupiedSince() *timestamppb.Timestamp {
+	if x != nil {
+		return x.OccupiedSince
+	}
+	return nil
+}
+
+func (x *ZoneOccupancyZonesZone) GetPresenceConfidence() uint32 {
+	if x != nil {
+		return x.PresenceConfidence
+	}
+	return 0
+}
+
+func (x *ZoneOccupancyZonesZone) GetMeasuredAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.MeasuredAt
+	}
+	return nil
+}
+
+func (x *ZoneOccupancyZonesZone) GetPresentClass() []*PresentClass {
+	if x != nil {
+		return x.PresentClass
+	}
+	return nil
+}
+
+type PresentClass struct {
+	state                    protoimpl.MessageState `protogen:"open.v1"`
+	Class                    string                 `protobuf:"bytes,1,opt,name=class,proto3" json:"class,omitempty"`
+	Count                    uint32                 `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	ClassificationConfidence uint32                 `protobuf:"varint,3,opt,name=classification_confidence,json=classificationConfidence,proto3" json:"classification_confidence,omitempty"`
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
+}
+
+func (x *PresentClass) Reset() {
+	*x = PresentClass{}
+	mi := &file_openits_perception_v1_state_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PresentClass) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PresentClass) ProtoMessage() {}
+
+func (x *PresentClass) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_perception_v1_state_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PresentClass.ProtoReflect.Descriptor instead.
+func (*PresentClass) Descriptor() ([]byte, []int) {
+	return file_openits_perception_v1_state_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *PresentClass) GetClass() string {
+	if x != nil {
+		return x.Class
+	}
+	return ""
+}
+
+func (x *PresentClass) GetCount() uint32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+func (x *PresentClass) GetClassificationConfidence() uint32 {
+	if x != nil {
+		return x.ClassificationConfidence
+	}
+	return 0
+}
+
 var File_openits_perception_v1_state_proto protoreflect.FileDescriptor
 
 const file_openits_perception_v1_state_proto_rawDesc = "" +
 	"\n" +
-	"!openits/perception/v1/state.proto\x12\x15openits.perception.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xad\x05\n" +
+	"!openits/perception/v1/state.proto\x12\x15openits.perception.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x9a\x06\n" +
 	"\x10PerceptionSensor\x12E\n" +
 	"\x06config\x18\x01 \x01(\v2-.openits.perception.v1.PerceptionSensorConfigR\x06config\x12B\n" +
 	"\x05state\x18\x02 \x01(\v2,.openits.perception.v1.PerceptionSensorStateR\x05state\x12G\n" +
-	"\fassociations\x18\t \x01(\v2#.openits.perception.v1.AssociationsR\fassociations\x12J\n" +
-	"\rconfiguration\x18\x03 \x01(\v2$.openits.perception.v1.ConfigurationR\rconfiguration\x128\n" +
-	"\aobjects\x18\x04 \x01(\v2\x1e.openits.perception.v1.ObjectsR\aobjects\x122\n" +
-	"\x05zones\x18\x05 \x01(\v2\x1c.openits.perception.v1.ZonesR\x05zones\x12D\n" +
+	"\fassociations\x18\t \x01(\v2#.openits.perception.v1.AssociationsR\fassociations\x12Z\n" +
+	"\rconfiguration\x18\x03 \x01(\v24.openits.perception.v1.PerceptionSensorConfigurationR\rconfiguration\x128\n" +
+	"\aobjects\x18\x04 \x01(\v2\x1e.openits.perception.v1.ObjectsR\aobjects\x12B\n" +
+	"\x05zones\x18\x05 \x01(\v2,.openits.perception.v1.PerceptionSensorZonesR\x05zones\x12D\n" +
 	"\vdiagnostics\x18\x06 \x01(\v2\".openits.perception.v1.DiagnosticsR\vdiagnostics\x12>\n" +
 	"\tincidents\x18\a \x01(\v2 .openits.perception.v1.IncidentsR\tincidents\x12N\n" +
 	"\x0fincident_review\x18\n" +
 	" \x01(\v2%.openits.perception.v1.IncidentReviewR\x0eincidentReview\x125\n" +
-	"\x06faults\x18\b \x01(\v2\x1d.openits.perception.v1.FaultsR\x06faults\"\xd1\x03\n" +
+	"\x06faults\x18\b \x01(\v2\x1d.openits.perception.v1.FaultsR\x06faults\x12K\n" +
+	"\x0ezone_occupancy\x18\v \x01(\v2$.openits.perception.v1.ZoneOccupancyR\rzoneOccupancy\"\xd1\x03\n" +
 	"\x16PerceptionSensorConfig\x12\x1c\n" +
 	"\televation\x18\x01 \x01(\tR\televation\x12\x18\n" +
 	"\aheading\x18\x02 \x01(\rR\aheading\x12\x0e\n" +
@@ -2026,22 +2403,22 @@ const file_openits_perception_v1_state_proto_rawDesc = "" +
 	"\x10AssociatedDevice\x12\x1b\n" +
 	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x12\n" +
 	"\x04role\x18\x02 \x01(\tR\x04role\x12\x12\n" +
-	"\x04note\x18\x03 \x01(\tR\x04note\"u\n" +
-	"\rConfiguration\x12&\n" +
-	"\x0fdata_interval_s\x18\x01 \x01(\rR\rdataIntervalS\x12<\n" +
-	"\x04zone\x18\x03 \x03(\v2(.openits.perception.v1.ConfigurationZoneR\x04zone\"\xc9\x03\n" +
-	"\x11ConfigurationZone\x12\x17\n" +
+	"\x04note\x18\x03 \x01(\tR\x04note\"\x95\x01\n" +
+	"\x1dPerceptionSensorConfiguration\x12&\n" +
+	"\x0fdata_interval_s\x18\x01 \x01(\rR\rdataIntervalS\x12L\n" +
+	"\x04zone\x18\x02 \x03(\v28.openits.perception.v1.PerceptionSensorConfigurationZoneR\x04zone\"\xd9\x03\n" +
+	"!PerceptionSensorConfigurationZone\x12\x17\n" +
 	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12?\n" +
 	"\bfunction\x18\x03 \x01(\x0e2#.openits.perception.v1.ZoneFunctionR\bfunction\x12#\n" +
 	"\rlegal_heading\x18\x04 \x01(\rR\flegalHeading\x12\x17\n" +
-	"\adwell_s\x18\x06 \x01(\rR\x06dwellS\x12#\n" +
-	"\rpersistence_s\x18\a \x01(\rR\fpersistenceS\x12%\n" +
-	"\x0emin_confidence\x18\b \x01(\rR\rminConfidence\x12C\n" +
-	"\x1econgestion_speed_threshold_kmh\x18\t \x01(\tR\x1bcongestionSpeedThresholdKmh\x12@\n" +
-	"\x1ccongestion_density_threshold\x18\n" +
-	" \x01(\tR\x1acongestionDensityThreshold\x125\n" +
-	"\x06vertex\x18\x05 \x03(\v2\x1d.openits.perception.v1.VertexR\x06vertex\"e\n" +
+	"\adwell_s\x18\x05 \x01(\rR\x06dwellS\x12#\n" +
+	"\rpersistence_s\x18\x06 \x01(\rR\fpersistenceS\x12%\n" +
+	"\x0emin_confidence\x18\a \x01(\rR\rminConfidence\x12C\n" +
+	"\x1econgestion_speed_threshold_kmh\x18\b \x01(\tR\x1bcongestionSpeedThresholdKmh\x12@\n" +
+	"\x1ccongestion_density_threshold\x18\t \x01(\tR\x1acongestionDensityThreshold\x125\n" +
+	"\x06vertex\x18\n" +
+	" \x03(\v2\x1d.openits.perception.v1.VertexR\x06vertex\"e\n" +
 	"\x06Vertex\x12!\n" +
 	"\fvertex_index\x18\x01 \x01(\rR\vvertexIndex\x12\x1a\n" +
 	"\blatitude\x18\x02 \x01(\tR\blatitude\x12\x1c\n" +
@@ -2064,10 +2441,10 @@ const file_openits_perception_v1_state_proto_rawDesc = "" +
 	"\televation\x18\x06 \x01(\tR\televation\x12\x18\n" +
 	"\aheading\x18\a \x01(\rR\aheading\x12\x1a\n" +
 	"\blatitude\x18\b \x01(\tR\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\t \x01(\tR\tlongitude\"=\n" +
-	"\x05Zones\x124\n" +
-	"\x04zone\x18\x01 \x03(\v2 .openits.perception.v1.ZonesZoneR\x04zone\"\x95\x01\n" +
-	"\tZonesZone\x12\x17\n" +
+	"\tlongitude\x18\t \x01(\tR\tlongitude\"]\n" +
+	"\x15PerceptionSensorZones\x12D\n" +
+	"\x04zone\x18\x01 \x03(\v20.openits.perception.v1.PerceptionSensorZonesZoneR\x04zone\"\xa5\x01\n" +
+	"\x19PerceptionSensorZonesZone\x12\x17\n" +
 	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12'\n" +
 	"\x0foccupancy_count\x18\x02 \x01(\rR\x0eoccupancyCount\x12\x1a\n" +
 	"\bpresence\x18\x03 \x01(\bR\bpresence\x12*\n" +
@@ -2116,7 +2493,35 @@ const file_openits_perception_v1_state_proto_rawDesc = "" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x19\n" +
 	"\bfault_id\x18\x03 \x01(\tR\afaultId\x12A\n" +
 	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12@\n" +
-	"\bseverity\x18\x05 \x01(\x0e2$.openits.perception.v1.FaultSeverityR\bseverity*\xb4\x01\n" +
+	"\bseverity\x18\x05 \x01(\x0e2$.openits.perception.v1.FaultSeverityR\bseverity\"\xa9\x01\n" +
+	"\rZoneOccupancy\x12W\n" +
+	"\rconfiguration\x18\x01 \x01(\v21.openits.perception.v1.ZoneOccupancyConfigurationR\rconfiguration\x12?\n" +
+	"\x05zones\x18\x02 \x01(\v2).openits.perception.v1.ZoneOccupancyZonesR\x05zones\"g\n" +
+	"\x1aZoneOccupancyConfiguration\x12I\n" +
+	"\x04zone\x18\x01 \x03(\v25.openits.perception.v1.ZoneOccupancyConfigurationZoneR\x04zone\"\xb0\x01\n" +
+	"\x1eZoneOccupancyConfigurationZone\x12\x17\n" +
+	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
+	"\bcapacity\x18\x03 \x01(\rR\bcapacity\x12%\n" +
+	"\x0esensing_method\x18\x04 \x01(\tR\rsensingMethod\x12\x1e\n" +
+	"\n" +
+	"classifies\x18\x05 \x01(\bR\n" +
+	"classifies\"W\n" +
+	"\x12ZoneOccupancyZones\x12A\n" +
+	"\x04zone\x18\x01 \x03(\v2-.openits.perception.v1.ZoneOccupancyZonesZoneR\x04zone\"\xf1\x02\n" +
+	"\x16ZoneOccupancyZonesZone\x12\x17\n" +
+	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12\x1a\n" +
+	"\bpresence\x18\x02 \x01(\bR\bpresence\x12'\n" +
+	"\x0foccupancy_count\x18\x03 \x01(\rR\x0eoccupancyCount\x12A\n" +
+	"\x0eoccupied_since\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\roccupiedSince\x12/\n" +
+	"\x13presence_confidence\x18\x05 \x01(\rR\x12presenceConfidence\x12;\n" +
+	"\vmeasured_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"measuredAt\x12H\n" +
+	"\rpresent_class\x18\a \x03(\v2#.openits.perception.v1.PresentClassR\fpresentClass\"w\n" +
+	"\fPresentClass\x12\x14\n" +
+	"\x05class\x18\x01 \x01(\tR\x05class\x12\x14\n" +
+	"\x05count\x18\x02 \x01(\rR\x05count\x12;\n" +
+	"\x19classification_confidence\x18\x03 \x01(\rR\x18classificationConfidence*\xb4\x01\n" +
 	"\fZoneFunction\x12\x1d\n" +
 	"\x19ZONE_FUNCTION_UNSPECIFIED\x10\x00\x12\x17\n" +
 	"\x13ZONE_FUNCTION_COUNT\x10\x01\x12\x1a\n" +
@@ -2156,7 +2561,7 @@ func file_openits_perception_v1_state_proto_rawDescGZIP() []byte {
 }
 
 var file_openits_perception_v1_state_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
-var file_openits_perception_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
+var file_openits_perception_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_openits_perception_v1_state_proto_goTypes = []any{
 	(ZoneFunction)(0),                             // 0: openits.perception.v1.ZoneFunction
 	(Lifecycle)(0),                                // 1: openits.perception.v1.Lifecycle
@@ -2170,13 +2575,13 @@ var file_openits_perception_v1_state_proto_goTypes = []any{
 	(*PerceptionSensorStateLinearReference)(nil),  // 9: openits.perception.v1.PerceptionSensorStateLinearReference
 	(*Associations)(nil),                          // 10: openits.perception.v1.Associations
 	(*AssociatedDevice)(nil),                      // 11: openits.perception.v1.AssociatedDevice
-	(*Configuration)(nil),                         // 12: openits.perception.v1.Configuration
-	(*ConfigurationZone)(nil),                     // 13: openits.perception.v1.ConfigurationZone
+	(*PerceptionSensorConfiguration)(nil),         // 12: openits.perception.v1.PerceptionSensorConfiguration
+	(*PerceptionSensorConfigurationZone)(nil),     // 13: openits.perception.v1.PerceptionSensorConfigurationZone
 	(*Vertex)(nil),                                // 14: openits.perception.v1.Vertex
 	(*Objects)(nil),                               // 15: openits.perception.v1.Objects
 	(*Track)(nil),                                 // 16: openits.perception.v1.Track
-	(*Zones)(nil),                                 // 17: openits.perception.v1.Zones
-	(*ZonesZone)(nil),                             // 18: openits.perception.v1.ZonesZone
+	(*PerceptionSensorZones)(nil),                 // 17: openits.perception.v1.PerceptionSensorZones
+	(*PerceptionSensorZonesZone)(nil),             // 18: openits.perception.v1.PerceptionSensorZonesZone
 	(*Diagnostics)(nil),                           // 19: openits.perception.v1.Diagnostics
 	(*Incidents)(nil),                             // 20: openits.perception.v1.Incidents
 	(*Incident)(nil),                              // 21: openits.perception.v1.Incident
@@ -2184,45 +2589,59 @@ var file_openits_perception_v1_state_proto_goTypes = []any{
 	(*Review)(nil),                                // 23: openits.perception.v1.Review
 	(*Faults)(nil),                                // 24: openits.perception.v1.Faults
 	(*Fault)(nil),                                 // 25: openits.perception.v1.Fault
-	(*timestamppb.Timestamp)(nil),                 // 26: google.protobuf.Timestamp
+	(*ZoneOccupancy)(nil),                         // 26: openits.perception.v1.ZoneOccupancy
+	(*ZoneOccupancyConfiguration)(nil),            // 27: openits.perception.v1.ZoneOccupancyConfiguration
+	(*ZoneOccupancyConfigurationZone)(nil),        // 28: openits.perception.v1.ZoneOccupancyConfigurationZone
+	(*ZoneOccupancyZones)(nil),                    // 29: openits.perception.v1.ZoneOccupancyZones
+	(*ZoneOccupancyZonesZone)(nil),                // 30: openits.perception.v1.ZoneOccupancyZonesZone
+	(*PresentClass)(nil),                          // 31: openits.perception.v1.PresentClass
+	(*timestamppb.Timestamp)(nil),                 // 32: google.protobuf.Timestamp
 }
 var file_openits_perception_v1_state_proto_depIdxs = []int32{
 	6,  // 0: openits.perception.v1.PerceptionSensor.config:type_name -> openits.perception.v1.PerceptionSensorConfig
 	8,  // 1: openits.perception.v1.PerceptionSensor.state:type_name -> openits.perception.v1.PerceptionSensorState
 	10, // 2: openits.perception.v1.PerceptionSensor.associations:type_name -> openits.perception.v1.Associations
-	12, // 3: openits.perception.v1.PerceptionSensor.configuration:type_name -> openits.perception.v1.Configuration
+	12, // 3: openits.perception.v1.PerceptionSensor.configuration:type_name -> openits.perception.v1.PerceptionSensorConfiguration
 	15, // 4: openits.perception.v1.PerceptionSensor.objects:type_name -> openits.perception.v1.Objects
-	17, // 5: openits.perception.v1.PerceptionSensor.zones:type_name -> openits.perception.v1.Zones
+	17, // 5: openits.perception.v1.PerceptionSensor.zones:type_name -> openits.perception.v1.PerceptionSensorZones
 	19, // 6: openits.perception.v1.PerceptionSensor.diagnostics:type_name -> openits.perception.v1.Diagnostics
 	20, // 7: openits.perception.v1.PerceptionSensor.incidents:type_name -> openits.perception.v1.Incidents
 	22, // 8: openits.perception.v1.PerceptionSensor.incident_review:type_name -> openits.perception.v1.IncidentReview
 	24, // 9: openits.perception.v1.PerceptionSensor.faults:type_name -> openits.perception.v1.Faults
-	26, // 10: openits.perception.v1.PerceptionSensorConfig.install_date:type_name -> google.protobuf.Timestamp
-	7,  // 11: openits.perception.v1.PerceptionSensorConfig.linear_reference:type_name -> openits.perception.v1.PerceptionSensorConfigLinearReference
-	26, // 12: openits.perception.v1.PerceptionSensorState.install_date:type_name -> google.protobuf.Timestamp
-	9,  // 13: openits.perception.v1.PerceptionSensorState.linear_reference:type_name -> openits.perception.v1.PerceptionSensorStateLinearReference
-	11, // 14: openits.perception.v1.Associations.associated_device:type_name -> openits.perception.v1.AssociatedDevice
-	13, // 15: openits.perception.v1.Configuration.zone:type_name -> openits.perception.v1.ConfigurationZone
-	0,  // 16: openits.perception.v1.ConfigurationZone.function:type_name -> openits.perception.v1.ZoneFunction
-	14, // 17: openits.perception.v1.ConfigurationZone.vertex:type_name -> openits.perception.v1.Vertex
-	16, // 18: openits.perception.v1.Objects.track:type_name -> openits.perception.v1.Track
-	1,  // 19: openits.perception.v1.Track.lifecycle:type_name -> openits.perception.v1.Lifecycle
-	26, // 20: openits.perception.v1.Track.observed_at:type_name -> google.protobuf.Timestamp
-	18, // 21: openits.perception.v1.Zones.zone:type_name -> openits.perception.v1.ZonesZone
-	21, // 22: openits.perception.v1.Incidents.incident:type_name -> openits.perception.v1.Incident
-	2,  // 23: openits.perception.v1.Incident.severity:type_name -> openits.perception.v1.OpenitsPerceptionIncidentSeverity
-	26, // 24: openits.perception.v1.Incident.first_observed:type_name -> google.protobuf.Timestamp
-	3,  // 25: openits.perception.v1.Incident.disposition:type_name -> openits.perception.v1.IncidentDisposition
-	23, // 26: openits.perception.v1.IncidentReview.review:type_name -> openits.perception.v1.Review
-	3,  // 27: openits.perception.v1.Review.disposition:type_name -> openits.perception.v1.IncidentDisposition
-	25, // 28: openits.perception.v1.Faults.fault:type_name -> openits.perception.v1.Fault
-	26, // 29: openits.perception.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	4,  // 30: openits.perception.v1.Fault.severity:type_name -> openits.perception.v1.FaultSeverity
-	31, // [31:31] is the sub-list for method output_type
-	31, // [31:31] is the sub-list for method input_type
-	31, // [31:31] is the sub-list for extension type_name
-	31, // [31:31] is the sub-list for extension extendee
-	0,  // [0:31] is the sub-list for field type_name
+	26, // 10: openits.perception.v1.PerceptionSensor.zone_occupancy:type_name -> openits.perception.v1.ZoneOccupancy
+	32, // 11: openits.perception.v1.PerceptionSensorConfig.install_date:type_name -> google.protobuf.Timestamp
+	7,  // 12: openits.perception.v1.PerceptionSensorConfig.linear_reference:type_name -> openits.perception.v1.PerceptionSensorConfigLinearReference
+	32, // 13: openits.perception.v1.PerceptionSensorState.install_date:type_name -> google.protobuf.Timestamp
+	9,  // 14: openits.perception.v1.PerceptionSensorState.linear_reference:type_name -> openits.perception.v1.PerceptionSensorStateLinearReference
+	11, // 15: openits.perception.v1.Associations.associated_device:type_name -> openits.perception.v1.AssociatedDevice
+	13, // 16: openits.perception.v1.PerceptionSensorConfiguration.zone:type_name -> openits.perception.v1.PerceptionSensorConfigurationZone
+	0,  // 17: openits.perception.v1.PerceptionSensorConfigurationZone.function:type_name -> openits.perception.v1.ZoneFunction
+	14, // 18: openits.perception.v1.PerceptionSensorConfigurationZone.vertex:type_name -> openits.perception.v1.Vertex
+	16, // 19: openits.perception.v1.Objects.track:type_name -> openits.perception.v1.Track
+	1,  // 20: openits.perception.v1.Track.lifecycle:type_name -> openits.perception.v1.Lifecycle
+	32, // 21: openits.perception.v1.Track.observed_at:type_name -> google.protobuf.Timestamp
+	18, // 22: openits.perception.v1.PerceptionSensorZones.zone:type_name -> openits.perception.v1.PerceptionSensorZonesZone
+	21, // 23: openits.perception.v1.Incidents.incident:type_name -> openits.perception.v1.Incident
+	2,  // 24: openits.perception.v1.Incident.severity:type_name -> openits.perception.v1.OpenitsPerceptionIncidentSeverity
+	32, // 25: openits.perception.v1.Incident.first_observed:type_name -> google.protobuf.Timestamp
+	3,  // 26: openits.perception.v1.Incident.disposition:type_name -> openits.perception.v1.IncidentDisposition
+	23, // 27: openits.perception.v1.IncidentReview.review:type_name -> openits.perception.v1.Review
+	3,  // 28: openits.perception.v1.Review.disposition:type_name -> openits.perception.v1.IncidentDisposition
+	25, // 29: openits.perception.v1.Faults.fault:type_name -> openits.perception.v1.Fault
+	32, // 30: openits.perception.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	4,  // 31: openits.perception.v1.Fault.severity:type_name -> openits.perception.v1.FaultSeverity
+	27, // 32: openits.perception.v1.ZoneOccupancy.configuration:type_name -> openits.perception.v1.ZoneOccupancyConfiguration
+	29, // 33: openits.perception.v1.ZoneOccupancy.zones:type_name -> openits.perception.v1.ZoneOccupancyZones
+	28, // 34: openits.perception.v1.ZoneOccupancyConfiguration.zone:type_name -> openits.perception.v1.ZoneOccupancyConfigurationZone
+	30, // 35: openits.perception.v1.ZoneOccupancyZones.zone:type_name -> openits.perception.v1.ZoneOccupancyZonesZone
+	32, // 36: openits.perception.v1.ZoneOccupancyZonesZone.occupied_since:type_name -> google.protobuf.Timestamp
+	32, // 37: openits.perception.v1.ZoneOccupancyZonesZone.measured_at:type_name -> google.protobuf.Timestamp
+	31, // 38: openits.perception.v1.ZoneOccupancyZonesZone.present_class:type_name -> openits.perception.v1.PresentClass
+	39, // [39:39] is the sub-list for method output_type
+	39, // [39:39] is the sub-list for method input_type
+	39, // [39:39] is the sub-list for extension type_name
+	39, // [39:39] is the sub-list for extension extendee
+	0,  // [0:39] is the sub-list for field type_name
 }
 
 func init() { file_openits_perception_v1_state_proto_init() }
@@ -2236,7 +2655,7 @@ func file_openits_perception_v1_state_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_perception_v1_state_proto_rawDesc), len(file_openits_perception_v1_state_proto_rawDesc)),
 			NumEnums:      5,
-			NumMessages:   21,
+			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -1,0 +1,42 @@
+{
+  "openits-zone-occupancy-events:zone-occupancy-interval-report": {
+    "kind": "openits-zone-occupancy-types:zoc-zone-occupancy-interval-report",
+    "source-device-id": "truck-row-d-cam-03",
+    "occurred-at": "2026-07-11T15:00:00Z",
+    "sequence": "812",
+    "zone": [
+      {
+        "zone-id": "truck-row-d",
+        "interval-start": "2026-07-11T14:00:00Z",
+        "interval-duration-s": 3600,
+        "observed-count": 14,
+        "occupancy-percent": "97.5",
+        "peak-occupancy-count": 12,
+        "observed-class": [
+          {
+            "class": "openits-types:object-truck",
+            "count": 11,
+            "mean-confidence": 91
+          },
+          {
+            "class": "openits-types:object-passenger-vehicle",
+            "count": 2,
+            "mean-confidence": 84
+          },
+          {
+            "class": "openits-types:object-unknown",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "zone-id": "bay-d-04",
+        "interval-start": "2026-07-11T14:00:00Z",
+        "interval-duration-s": 3600,
+        "observed-count": 1,
+        "occupancy-percent": "100.0",
+        "peak-occupancy-count": 1
+      }
+    ]
+  }
+}
