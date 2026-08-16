@@ -10,13 +10,14 @@ message PerceptionSensor {
   PerceptionSensorConfig config = 1;
   PerceptionSensorState state = 2;
   Associations associations = 9;
-  Configuration configuration = 3;
+  PerceptionSensorConfiguration configuration = 3;
   Objects objects = 4;
-  Zones zones = 5;
+  PerceptionSensorZones zones = 5;
   Diagnostics diagnostics = 6;
   Incidents incidents = 7;
   IncidentReview incident_review = 10;
   Faults faults = 8;
+  ZoneOccupancy zone_occupancy = 11;
 }
 
 message PerceptionSensorConfig {
@@ -79,22 +80,22 @@ message AssociatedDevice {
   string note = 3;
 }
 
-message Configuration {
+message PerceptionSensorConfiguration {
   uint32 data_interval_s = 1;
-  repeated ConfigurationZone zone = 3;
+  repeated PerceptionSensorConfigurationZone zone = 2;
 }
 
-message ConfigurationZone {
+message PerceptionSensorConfigurationZone {
   string zone_id = 1;
   string name = 2;
   ZoneFunction function = 3;
   uint32 legal_heading = 4;
-  uint32 dwell_s = 6;
-  uint32 persistence_s = 7;
-  uint32 min_confidence = 8;
-  string congestion_speed_threshold_kmh = 9;
-  string congestion_density_threshold = 10;
-  repeated Vertex vertex = 5;
+  uint32 dwell_s = 5;
+  uint32 persistence_s = 6;
+  uint32 min_confidence = 7;
+  string congestion_speed_threshold_kmh = 8;
+  string congestion_density_threshold = 9;
+  repeated Vertex vertex = 10;
 }
 
 enum ZoneFunction {
@@ -137,11 +138,11 @@ enum Lifecycle {
   LIFECYCLE_COASTING = 2;
 }
 
-message Zones {
-  repeated ZonesZone zone = 1;
+message PerceptionSensorZones {
+  repeated PerceptionSensorZonesZone zone = 1;
 }
 
-message ZonesZone {
+message PerceptionSensorZonesZone {
   string zone_id = 1;
   uint32 occupancy_count = 2;
   bool presence = 3;
@@ -217,5 +218,42 @@ enum FaultSeverity {
   FAULT_SEVERITY_MINOR = 2;
   FAULT_SEVERITY_MAJOR = 3;
   FAULT_SEVERITY_CRITICAL = 4;
+}
+
+message ZoneOccupancy {
+  ZoneOccupancyConfiguration configuration = 1;
+  ZoneOccupancyZones zones = 2;
+}
+
+message ZoneOccupancyConfiguration {
+  repeated ZoneOccupancyConfigurationZone zone = 1;
+}
+
+message ZoneOccupancyConfigurationZone {
+  string zone_id = 1;
+  string name = 2;
+  uint32 capacity = 3;
+  string sensing_method = 4;
+  bool classifies = 5;
+}
+
+message ZoneOccupancyZones {
+  repeated ZoneOccupancyZonesZone zone = 1;
+}
+
+message ZoneOccupancyZonesZone {
+  string zone_id = 1;
+  bool presence = 2;
+  uint32 occupancy_count = 3;
+  google.protobuf.Timestamp occupied_since = 4;
+  uint32 presence_confidence = 5;
+  google.protobuf.Timestamp measured_at = 6;
+  repeated PresentClass present_class = 7;
+}
+
+message PresentClass {
+  string class = 1;
+  uint32 count = 2;
+  uint32 classification_confidence = 3;
 }
 

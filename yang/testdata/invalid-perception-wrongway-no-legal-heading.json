@@ -57,7 +57,7 @@
       "track": [
         {
           "track-id": 1042,
-          "class": "openits-perception-types:object-passenger-vehicle",
+          "class": "openits-types:object-passenger-vehicle",
           "class-confidence": 93,
           "latitude": "32.8560400",
           "longitude": "-96.7279200",
@@ -87,7 +87,7 @@
           "type": "openits-perception-types:incident-stopped-vehicle",
           "severity": "intermediate",
           "track-id": 1809,
-          "object-class": "openits-perception-types:object-passenger-vehicle",
+          "object-class": "openits-types:object-passenger-vehicle",
           "speed-kmh": "0.0",
           "confidence": 88,
           "latitude": "32.8560200",

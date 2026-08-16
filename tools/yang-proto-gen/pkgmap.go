@@ -47,6 +47,10 @@ var serviceRoutes = []serviceRoute{
 	{"openits-traffic-sensor", "openits.traffic_sensor.v1", "openits/traffic_sensor/v1/events.proto"},
 	{"openits-reversible-lane", "openits.reversible_lane.v1", "openits/reversible_lane/v1/events.proto"},
 	{"openits-cctv", "openits.cctv.v1", "openits/cctv/v1/events.proto"},
+	// A capability, not a device service: the route exists because the
+	// capability owns notifications, and its events belong to it rather
+	// than to whichever profile composes it.
+	{"openits-zone-occupancy", "openits.zone_occupancy.v1", "openits/zone_occupancy/v1/events.proto"},
 }
 
 // pkgFor returns the proto package and output file moduleName's

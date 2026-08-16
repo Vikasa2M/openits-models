@@ -65,7 +65,7 @@ func collectPerception() (*yangpkg.Device, error) {
 		return nil, err
 	}
 	track.Lifecycle = yangpkg.OpenitsPerception_PerceptionSensor_Objects_Track_Lifecycle_confirmed
-	track.Class = yangpkg.OpenitsPerceptionTypes_ObjectClass_object_passenger_vehicle
+	track.Class = yangpkg.OpenitsTypes_ObjectClass_object_passenger_vehicle
 	track.ClassConfidence = u8Ptr(94)
 	track.Latitude = f64Ptr(32.8560100)
 	track.Longitude = f64Ptr(-96.7279500)
@@ -101,7 +101,7 @@ func collectPerception() (*yangpkg.Device, error) {
 	incident.Type = yangpkg.OpenitsPerceptionTypes_IncidentType_incident_stopped_vehicle
 	incident.Severity = yangpkg.OpenitsPerceptionTypes_IncidentSeverity_intermediate
 	incident.TrackId = u32Ptr(1042)
-	incident.ObjectClass = yangpkg.OpenitsPerceptionTypes_ObjectClass_object_passenger_vehicle
+	incident.ObjectClass = yangpkg.OpenitsTypes_ObjectClass_object_passenger_vehicle
 	incident.SpeedKmh = f64Ptr(0.0)
 	incident.Confidence = u8Ptr(88)
 	incident.Latitude = f64Ptr(32.8560100)
@@ -138,7 +138,7 @@ func subscribePerception(ctx context.Context, out chan<- tests.EventEnvelope, wi
 				Type:        "openits-perception-types:incident-stopped-vehicle",
 				Severity:    perceptionv1.IncidentSeverity_INCIDENT_SEVERITY_INTERMEDIATE,
 				TrackId:     1042,
-				ObjectClass: "openits-perception-types:object-passenger-vehicle",
+				ObjectClass: "openits-types:object-passenger-vehicle",
 				SpeedKmh:    "0.0",
 				Confidence:  88,
 			},
@@ -156,12 +156,10 @@ func subscribePerception(ctx context.Context, out chan<- tests.EventEnvelope, wi
 						ZoneId:            "eb-travel-lanes",
 						IntervalDurationS: 300,
 						CrossedVolume:     47,
-						ObservedCount:     50,
-						OccupancyPercent:  "34.5",
 						AverageSpeedKmh:   "88.3",
 						ClassCount: []*perceptionv1.ClassCount{
-							{Class: "openits-perception-types:object-passenger-vehicle", Count: 42},
-							{Class: "openits-perception-types:object-truck", Count: 5},
+							{Class: "openits-types:object-passenger-vehicle", Count: 42},
+							{Class: "openits-types:object-truck", Count: 5},
 						},
 					},
 				},

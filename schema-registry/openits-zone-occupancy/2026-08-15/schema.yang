@@ -1,0 +1,243 @@
+module openits-zone-occupancy {
+  yang-version 1.1;
+  namespace "urn:openits:yang:zone-occupancy";
+  prefix openits-zone-occupancy;
+
+  import openits-types {
+    prefix openits-types;
+  }
+  import openits-zone-occupancy-types {
+    prefix openits-zone-occupancy-types;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Zone-occupancy capability: whether a defined region is occupied
+     right now, by how many objects, of what class, and for how long.
+
+     This is presence, not throughput, and the distinction is the reason
+     the capability exists. Throughput answers 'how many passed and how
+     fast' and belongs to openits-vehicle-detection; a vehicle that
+     arrives and parks never traverses anything and is invisible to it.
+     Occupancy answers 'what is here now' — different cardinality,
+     different time semantics, different consumers.
+
+     A device implements this capability by 'using' the 'zone-occupancy'
+     grouping, typically behind a feature since not every unit of a
+     given type senses occupancy. The capability is deliberately
+     independent of tracking: an in-ground magnetometer or an overhead
+     ultrasonic sensor implements occupancy and nothing else — no
+     tracks, no polygons, no incident detection — and must be able to
+     describe what it does without importing a perception service core
+     (docs/08-capability-architecture.md).
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.1.0";
+
+  revision 2026-08-15 {
+    description
+      "Initial revision. Per-zone occupancy configuration and live
+       state, including a class breakdown of the PRESENT population and
+       separate presence / classification confidence.
+
+       The class breakdown closes a real gap: the only per-class counts
+       in the family were scoped to a crossed (throughput) population,
+       so nothing anywhere described what class of object was sitting in
+       a region. Parking occupancy, loading-zone enforcement and transit
+       layover monitoring all need exactly that.";
+    reference "docs/08-capability-architecture.md.";
+  }
+
+  grouping zone-occupancy {
+    description
+      "Zone-occupancy configuration and live readback for a device.
+       Both halves live under one container so the state-to-config
+       leafref is relative and stays valid wherever a device profile
+       places the capability.";
+
+    container zone-occupancy {
+      description
+        "Regions this device reports occupancy for, and what is in them.";
+
+      container configuration {
+        description "Regions whose occupancy this device reports.";
+
+        list zone {
+          key "zone-id";
+          description "One region under occupancy observation.";
+
+          leaf zone-id {
+            type openits-zone-occupancy-types:occupancy-zone-id;
+            description "Device-local identifier for this region.";
+          }
+          leaf name {
+            type string;
+            description "Operator-facing description of the region.";
+          }
+          leaf capacity {
+            type uint16 {
+              range "1..max";
+            }
+            units "objects";
+            description
+              "How many objects the region holds when full, where that
+               is a defined property of the ground — a marked bay holds
+               one, a striped row holds its stall count.
+
+               Omitted where the region has no defined capacity. An open
+               apron does not have one, and a consumer MUST NOT infer a
+               capacity from the highest occupancy-count it has
+               observed: that is a record of how busy it got, not a
+               statement of how much fits.";
+          }
+          leaf sensing-method {
+            type identityref {
+              base openits-zone-occupancy-types:occupancy-sensing-method;
+            }
+            description
+              "How this region's occupancy is sensed. Tells a consumer
+               what kind of answer to expect from it.";
+          }
+          leaf classifies {
+            type boolean;
+            description
+              "Whether this region's sensor classifies what it detects.
+
+               Read together with an empty present-class list, this
+               separates two situations a consumer must not confuse: a
+               sensor that never classifies (an inductive loop — false
+               here, and the empty list is complete) from a classifier
+               that ran and found nothing to report (true here, and the
+               empty list means the region is empty). Omitted where the
+               device does not state it, which is itself distinct from
+               either.";
+          }
+        }
+      }
+
+      container zones {
+        config false;
+        openits-types:arc-it-flow
+          "ITS Roadway Equipment -> TMC : traffic flow";
+        description
+          "Live occupancy read back per configured region.
+
+           No 'must' constrains these leaves against each other —
+           deliberately. A device may report presence without a count (a
+           magnetometer knows something is there and cannot count it),
+           more objects than the capacity (a vehicle straddling two
+           bays), or a class breakdown that does not sum to the count (a
+           classifier that dropped one). Each of those is a real
+           condition worth transmitting, and a constraint that made them
+           unrepresentable would hide a misbehaving device instead of
+           surfacing it (readback-representability doctrine).";
+
+        list zone {
+          key "zone-id";
+          description "Live occupancy for one configured region.";
+
+          leaf zone-id {
+            type leafref {
+              path "../../../configuration/zone/zone-id";
+              require-instance false;
+            }
+            description
+              "The configured region this entry reports on.
+               require-instance false: occupancy reported for a
+               just-deleted region is a reportable anomaly, not invalid
+               data.";
+          }
+          leaf presence {
+            type boolean;
+            description "At least one object is currently in the region.";
+          }
+          leaf occupancy-count {
+            type uint16;
+            units "objects";
+            description
+              "Objects currently in the region. Omitted by a sensor that
+               detects presence without counting — absent, which is not
+               the same as zero.";
+          }
+          leaf occupied-since {
+            type yang:date-and-time;
+            description
+              "Wall-clock time the current unbroken occupancy began, so
+               a consumer can derive dwell without keeping its own state
+               or waiting a full reporting interval. Omitted while the
+               region is vacant, and reset when it empties.";
+          }
+          leaf presence-confidence {
+            type openits-types:percentage;
+            description
+              "Confidence that the presence call is correct — that
+               something is, or is not, in the region.
+
+               Separate from classification-confidence below, because
+               they fail independently. A magnetometer is near-certain
+               something is present and cannot classify it at all. A
+               camera at dusk may be unsure anything is there while
+               being confident about the class if it is. Collapsing the
+               two into one figure would force one of those devices to
+               report a number that is not true of it.";
+          }
+          leaf measured-at {
+            type yang:date-and-time;
+            description
+              "When this reading was taken. A consumer compares it
+               against the device's reporting cadence to decide whether
+               the reading is still current, rather than assuming
+               anything it received is fresh.";
+          }
+
+          list present-class {
+            key "class";
+            description
+              "Classification of the population PRESENT in the region.
+
+               Distinct from any crossed/throughput breakdown: these are
+               the objects here now, whether or not they ever traverse
+               the region. A vehicle that arrives and stays is counted
+               here and appears in no throughput breakdown at all —
+               which is exactly the case a parking or loading-zone
+               consumer cares about.
+
+               Where the region classifies, the counts sum to
+               occupancy-count with object-unknown as the catch-all, so
+               no present object is dropped from the breakdown. Where it
+               does not classify, the list is empty and the sum rule
+               does not apply.";
+
+            leaf class {
+              type identityref {
+                base openits-types:object-class;
+              }
+              description "Object class this count belongs to.";
+            }
+            leaf count {
+              type uint16;
+              units "objects";
+              description "Objects of this class currently in the region.";
+            }
+            leaf classification-confidence {
+              type openits-types:percentage;
+              description
+                "Confidence in this class assignment. Where the count is
+                 above one, the device's representative confidence for
+                 the group — a consumer wanting per-object confidence
+                 needs a tracking capability, not this one.";
+            }
+          }
+        }
+      }
+    }
+  }
+}

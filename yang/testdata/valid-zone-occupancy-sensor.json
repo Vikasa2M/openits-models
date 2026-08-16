@@ -1,0 +1,56 @@
+{
+  "openits-perception:perception-sensor": {
+    "zone-occupancy": {
+      "configuration": {
+        "zone": [
+          {
+            "zone-id": "truck-row-d",
+            "name": "Truck row D",
+            "capacity": 12,
+            "sensing-method": "openits-zone-occupancy-types:sensing-video",
+            "classifies": true
+          },
+          {
+            "zone-id": "bay-d-04",
+            "name": "Bay D-04",
+            "capacity": 1,
+            "sensing-method": "openits-zone-occupancy-types:sensing-magnetometer",
+            "classifies": false
+          }
+        ]
+      },
+      "zones": {
+        "zone": [
+          {
+            "zone-id": "truck-row-d",
+            "presence": true,
+            "occupancy-count": 11,
+            "occupied-since": "2026-07-11T04:12:00Z",
+            "presence-confidence": 96,
+            "measured-at": "2026-07-11T15:00:00Z",
+            "present-class": [
+              {
+                "class": "openits-types:object-truck",
+                "count": 10,
+                "classification-confidence": 92
+              },
+              {
+                "class": "openits-types:object-passenger-vehicle",
+                "count": 1,
+                "classification-confidence": 64
+              }
+            ]
+          },
+          {
+            "zone-id": "bay-d-04",
+            "presence": true,
+            "occupancy-count": 1,
+            "occupied-since": "2026-07-11T09:41:00Z",
+            "presence-confidence": 99,
+            "measured-at": "2026-07-11T15:00:00Z"
+          }
+        ]
+      }
+    }
+  }
+}

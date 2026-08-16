@@ -41,8 +41,10 @@ func TestBuildIndex_content(t *testing.T) {
 		t.Errorf("indexVersion = %q, want %q", idx.IndexVersion, indexFormatVersion)
 	}
 
-	// All nine services from the catalog service map are present, sorted by slug.
-	wantSlugs := []string{"cctv", "dms", "ess", "perception", "ramp-metering", "reversible-lane", "rsu", "signal-control", "traffic-sensor"}
+	// Every entry in the catalog service map is present, sorted by slug. The
+	// nine device services, plus zone-occupancy — a capability rather than a
+	// device, routed through the same map because it owns notifications.
+	wantSlugs := []string{"cctv", "dms", "ess", "perception", "ramp-metering", "reversible-lane", "rsu", "signal-control", "traffic-sensor", "zone-occupancy"}
 	if len(idx.Services) != len(wantSlugs) {
 		t.Fatalf("got %d services, want %d", len(idx.Services), len(wantSlugs))
 	}

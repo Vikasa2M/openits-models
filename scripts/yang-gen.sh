@@ -39,6 +39,9 @@ check_yang_files() {
         "$YANG_DIR/openits-v2x-messaging-types.yang"
         "$YANG_DIR/openits-scms.yang"
         "$YANG_DIR/openits-vehicle-detection.yang"
+        "$YANG_DIR/openits-zone-occupancy-types.yang"
+        "$YANG_DIR/openits-zone-occupancy.yang"
+        "$YANG_DIR/openits-zone-occupancy-events.yang"
         "$YANG_DIR/openits-signal-control-types.yang"
         "$YANG_DIR/openits-dms-types.yang"
         "$YANG_DIR/openits-ess-types.yang"
@@ -103,7 +106,7 @@ generate_go() {
         -generate_leaf_getters \
         -include_schema \
         -ignore_unsupported \
-        -exclude_modules=ietf-inet-types,ietf-yang-types,openits-device-diagnostics,openits-cabinet-power,openits-schedule,openits-v2x-radio,openits-v2x-messaging,openits-scms,openits-vehicle-detection,openits-dms-events,openits-ess-events,openits-rsu-events,openits-ramp-metering-events,openits-common-comm-health-events,openits-common-fault-events,openits-common-mode-events,openits-signal-control-events,openits-traffic-sensor-events,openits-reversible-lane-events,openits-perception-events,openits-cctv-events \
+        -exclude_modules=ietf-inet-types,ietf-yang-types,openits-device-diagnostics,openits-cabinet-power,openits-schedule,openits-v2x-radio,openits-v2x-messaging,openits-scms,openits-vehicle-detection,openits-zone-occupancy,openits-zone-occupancy-events,openits-dms-events,openits-ess-events,openits-rsu-events,openits-ramp-metering-events,openits-common-comm-health-events,openits-common-fault-events,openits-common-mode-events,openits-signal-control-events,openits-traffic-sensor-events,openits-reversible-lane-events,openits-perception-events,openits-cctv-events \
         "$YANG_DIR/openits-types.yang" \
         "$YANG_DIR/openits-device-diagnostics.yang" \
         "$YANG_DIR/openits-cabinet-power.yang" \
@@ -114,6 +117,9 @@ generate_go() {
         "$YANG_DIR/openits-v2x-messaging-types.yang" \
         "$YANG_DIR/openits-scms.yang" \
         "$YANG_DIR/openits-vehicle-detection.yang" \
+        "$YANG_DIR/openits-zone-occupancy-types.yang" \
+        "$YANG_DIR/openits-zone-occupancy.yang" \
+        "$YANG_DIR/openits-zone-occupancy-events.yang" \
         "$YANG_DIR/openits-signal-control-types.yang" \
         "$YANG_DIR/openits-dms-types.yang" \
         "$YANG_DIR/openits-ess-types.yang" \
