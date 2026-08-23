@@ -77,7 +77,8 @@
         "2026-07-16",
         "2026-07-21",
         "2026-07-23",
-        "2026-08-05"
+        "2026-08-05",
+        "2026-08-23"
       ],
       "events": [
         "openits.dms.fault-cleared.v1",
@@ -87,13 +88,17 @@
       ],
       "refStd": [
         "ARC-IT 9.1 Service Package TI06 (Traffic Information Dissemination)",
+        "EN 12966 (ambient illuminance reference)",
         "MUTCD",
         "MUTCD (beacons)",
         "NTCIP 1201 (dayPlan / dayPlanScheduleTable)",
         "NTCIP 1203 v03",
         "NTCIP 1203 v03 (MULTI)",
         "NTCIP 1203 v03 (dmsControlMode, dmsMessageStatus)",
+        "NTCIP 1203 v03 (dmsMessageCRC, dmsMsgSourceMode, dmsGraphicTable, dmsPowerSource, dmsIllumPhotocellLevelStatus)",
+        "NTCIP 1203 v03 (dmsValidateMessageError / dmsActivateMsgError)",
         "NTCIP 1203 v03 (functional reference only; no wire compatibility)",
+        "NTCIP 1203 v03 (shortErrorStatus, dmsMessageMemoryType, dmsMsgSourceMode)",
         "NTCIP 1203:2010 (DMS functional reference; fault classes)",
         "RFC 7950 9.6.4.2",
         "RFC 7950 section 11",
@@ -112,14 +117,17 @@
             "2026-07-14",
             "2026-07-16",
             "2026-07-21",
-            "2026-08-05"
+            "2026-08-05",
+            "2026-08-23"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TI06 (Traffic Information Dissemination)",
+            "EN 12966 (ambient illuminance reference)",
             "MUTCD",
             "MUTCD (beacons)",
             "NTCIP 1201 (dayPlan / dayPlanScheduleTable)",
             "NTCIP 1203 v03",
+            "NTCIP 1203 v03 (dmsMessageCRC, dmsMsgSourceMode, dmsGraphicTable, dmsPowerSource, dmsIllumPhotocellLevelStatus)",
             "NTCIP 1203 v03 (functional reference only; no wire compatibility)",
             "RFC 7950 9.6.4.2",
             "RFC 7950 section 11 (additive YANG evolution)",
@@ -139,10 +147,12 @@
             "2026-07-14",
             "2026-07-16",
             "2026-07-21",
-            "2026-07-23"
+            "2026-07-23",
+            "2026-08-23"
           ],
           "refStd": [
             "NTCIP 1203 v03",
+            "NTCIP 1203 v03 (dmsValidateMessageError / dmsActivateMsgError)",
             "RFC 7950 section 11",
             "RFC 7950 section 11 (breaking YANG evolution: identity rename)"
           ]
@@ -156,11 +166,13 @@
             "2026-07-14",
             "2026-07-16",
             "2026-07-21",
-            "2026-08-05"
+            "2026-08-05",
+            "2026-08-23"
           ],
           "refStd": [
             "NTCIP 1203 v03 (MULTI)",
             "NTCIP 1203 v03 (dmsControlMode, dmsMessageStatus)",
+            "NTCIP 1203 v03 (shortErrorStatus, dmsMessageMemoryType, dmsMsgSourceMode)",
             "NTCIP 1203:2010 (DMS functional reference; fault classes)",
             "RFC 7950 9.6.4.2",
             "RFC 7950 section 11"
@@ -718,7 +730,8 @@
         "2026-07-14",
         "2026-07-17",
         "2026-07-21",
-        "2026-08-05"
+        "2026-08-05",
+        "2026-08-23"
       ],
       "events": [
         "openits.signal-control.comm-health-event.v1",
@@ -757,6 +770,7 @@
         "MUTCD 11th ed. Ch. 8C / 4F.17",
         "MUTCD 4D.26 (vehicle change intervals), 4E.06 (pedestrian intervals)",
         "NEMA TS 2 (cabinet)",
+        "NEMA TS 2 (police panel)",
         "NEMA TS 2 §4",
         "NEMA TS-2 §3.5",
         "NEMA TS-2 §3.5 (concurrency)",
@@ -801,7 +815,8 @@
             "2026-07-14",
             "2026-07-17",
             "2026-07-21",
-            "2026-08-05"
+            "2026-08-05",
+            "2026-08-23"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TI01",
@@ -815,6 +830,7 @@
             "MUTCD 11th ed. Ch. 8C / 4F.17",
             "MUTCD 4D.26 (vehicle change intervals), 4E.06 (pedestrian intervals)",
             "NEMA TS 2 (cabinet)",
+            "NEMA TS 2 (police panel)",
             "NEMA TS 2 §4",
             "NEMA TS-2 §3.5 (concurrency)",
             "NEMA TS-2 §3.5/§4",
@@ -899,7 +915,8 @@
         "2026-07-15",
         "2026-07-16",
         "2026-07-21",
-        "2026-08-05"
+        "2026-08-05",
+        "2026-08-23"
       ],
       "events": [
         "openits.traffic-sensor.fault-cleared.v1",
@@ -979,7 +996,8 @@
             "2026-07-14",
             "2026-07-15",
             "2026-07-16",
-            "2026-07-21"
+            "2026-07-21",
+            "2026-08-23"
           ],
           "refStd": [
             "AASHTO data-quality",
@@ -1049,13 +1067,15 @@
       "revisions": [
         "2026-07-17",
         "2026-07-21",
-        "2026-08-05"
+        "2026-08-05",
+        "2026-08-23"
       ],
       "refStd": [
         "IEC 62040",
         "IEC 62040 (UPS)",
         "NEMA TS 2",
-        "NEMA TS 2 (cabinet)"
+        "NEMA TS 2 (cabinet)",
+        "NTCIP 1203 v03 (dmsPowerSource)"
       ]
     },
     {
@@ -1130,7 +1150,8 @@
       "name": "openits-schedule",
       "namespace": "urn:openits:yang:schedule",
       "revisions": [
-        "2026-08-05"
+        "2026-08-05",
+        "2026-08-23"
       ],
       "refStd": [
         "NTCIP 1201",
@@ -1145,7 +1166,8 @@
         "2026-07-15",
         "2026-07-16",
         "2026-07-21",
-        "2026-08-05"
+        "2026-08-05",
+        "2026-08-23"
       ],
       "refStd": [
         "IEEE 1609.12",
@@ -1195,7 +1217,8 @@
         "2026-07-16",
         "2026-07-17",
         "2026-07-21",
-        "2026-08-05"
+        "2026-08-05",
+        "2026-08-23"
       ],
       "refStd": [
         "IEEE 1609.12",
@@ -1229,7 +1252,8 @@
         "2026-07-15",
         "2026-07-16",
         "2026-07-21",
-        "2026-08-05"
+        "2026-08-05",
+        "2026-08-23"
       ],
       "refStd": [
         "FCC 47 CFR",
@@ -1259,7 +1283,8 @@
       "revisions": [
         "2026-07-13",
         "2026-07-15",
-        "2026-08-05"
+        "2026-08-05",
+        "2026-08-23"
       ],
       "refStd": [
         "IEEE 1609.2 (BSM temporary-id rotation)",
@@ -1345,6 +1370,11 @@
         "openits-cabinet-power/2026-08-05/MANIFEST.json",
         "openits-cabinet-power/2026-08-05/README.md",
         "openits-cabinet-power/2026-08-05/schema.yang"
+      ],
+      "2026-08-23": [
+        "openits-cabinet-power/2026-08-23/MANIFEST.json",
+        "openits-cabinet-power/2026-08-23/README.md",
+        "openits-cabinet-power/2026-08-23/schema.yang"
       ]
     },
     "openits-cctv": {
@@ -1464,6 +1494,11 @@
         "openits-dms/2026-08-05/MANIFEST.json",
         "openits-dms/2026-08-05/README.md",
         "openits-dms/2026-08-05/schema.yang"
+      ],
+      "2026-08-23": [
+        "openits-dms/2026-08-23/MANIFEST.json",
+        "openits-dms/2026-08-23/README.md",
+        "openits-dms/2026-08-23/schema.yang"
       ]
     },
     "openits-dms-events": {
@@ -1487,6 +1522,13 @@
         "openits-dms-events/2026-07-23/schema.json",
         "openits-dms-events/2026-07-23/schema.proto",
         "openits-dms-events/2026-07-23/schema.yang"
+      ],
+      "2026-08-23": [
+        "openits-dms-events/2026-08-23/MANIFEST.json",
+        "openits-dms-events/2026-08-23/README.md",
+        "openits-dms-events/2026-08-23/schema.json",
+        "openits-dms-events/2026-08-23/schema.proto",
+        "openits-dms-events/2026-08-23/schema.yang"
       ]
     },
     "openits-dms-mutcd": {
@@ -1511,6 +1553,11 @@
         "openits-dms-types/2026-08-05/MANIFEST.json",
         "openits-dms-types/2026-08-05/README.md",
         "openits-dms-types/2026-08-05/schema.yang"
+      ],
+      "2026-08-23": [
+        "openits-dms-types/2026-08-23/MANIFEST.json",
+        "openits-dms-types/2026-08-23/README.md",
+        "openits-dms-types/2026-08-23/schema.yang"
       ]
     },
     "openits-ess": {
@@ -1840,6 +1887,11 @@
         "openits-schedule/2026-08-05/MANIFEST.json",
         "openits-schedule/2026-08-05/README.md",
         "openits-schedule/2026-08-05/schema.yang"
+      ],
+      "2026-08-23": [
+        "openits-schedule/2026-08-23/MANIFEST.json",
+        "openits-schedule/2026-08-23/README.md",
+        "openits-schedule/2026-08-23/schema.yang"
       ]
     },
     "openits-scms": {
@@ -1852,6 +1904,11 @@
         "openits-scms/2026-08-05/MANIFEST.json",
         "openits-scms/2026-08-05/README.md",
         "openits-scms/2026-08-05/schema.yang"
+      ],
+      "2026-08-23": [
+        "openits-scms/2026-08-23/MANIFEST.json",
+        "openits-scms/2026-08-23/README.md",
+        "openits-scms/2026-08-23/schema.yang"
       ]
     },
     "openits-signal-control": {
@@ -1869,6 +1926,11 @@
         "openits-signal-control/2026-08-05/MANIFEST.json",
         "openits-signal-control/2026-08-05/README.md",
         "openits-signal-control/2026-08-05/schema.yang"
+      ],
+      "2026-08-23": [
+        "openits-signal-control/2026-08-23/MANIFEST.json",
+        "openits-signal-control/2026-08-23/README.md",
+        "openits-signal-control/2026-08-23/schema.yang"
       ]
     },
     "openits-signal-control-coordination-events": {
@@ -2092,6 +2154,11 @@
         "openits-traffic-sensor-types/2026-07-21/MANIFEST.json",
         "openits-traffic-sensor-types/2026-07-21/README.md",
         "openits-traffic-sensor-types/2026-07-21/schema.yang"
+      ],
+      "2026-08-23": [
+        "openits-traffic-sensor-types/2026-08-23/MANIFEST.json",
+        "openits-traffic-sensor-types/2026-08-23/README.md",
+        "openits-traffic-sensor-types/2026-08-23/schema.yang"
       ]
     },
     "openits-types": {
@@ -2131,6 +2198,11 @@
         "openits-v2x-messaging/2026-08-05/MANIFEST.json",
         "openits-v2x-messaging/2026-08-05/README.md",
         "openits-v2x-messaging/2026-08-05/schema.yang"
+      ],
+      "2026-08-23": [
+        "openits-v2x-messaging/2026-08-23/MANIFEST.json",
+        "openits-v2x-messaging/2026-08-23/README.md",
+        "openits-v2x-messaging/2026-08-23/schema.yang"
       ]
     },
     "openits-v2x-messaging-types": {
@@ -2155,6 +2227,11 @@
         "openits-v2x-radio/2026-08-05/MANIFEST.json",
         "openits-v2x-radio/2026-08-05/README.md",
         "openits-v2x-radio/2026-08-05/schema.yang"
+      ],
+      "2026-08-23": [
+        "openits-v2x-radio/2026-08-23/MANIFEST.json",
+        "openits-v2x-radio/2026-08-23/README.md",
+        "openits-v2x-radio/2026-08-23/schema.yang"
       ]
     },
     "openits-v2x-radio-types": {
@@ -2174,6 +2251,11 @@
         "openits-vehicle-detection/2026-08-05/MANIFEST.json",
         "openits-vehicle-detection/2026-08-05/README.md",
         "openits-vehicle-detection/2026-08-05/schema.yang"
+      ],
+      "2026-08-23": [
+        "openits-vehicle-detection/2026-08-23/MANIFEST.json",
+        "openits-vehicle-detection/2026-08-23/README.md",
+        "openits-vehicle-detection/2026-08-23/schema.yang"
       ]
     },
     "openits-vendor-econolite-signal-control-types": {

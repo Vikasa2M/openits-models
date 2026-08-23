@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"strconv"
 	"strings"
 
 	yangpkg "github.com/Vikasa2M/openits-models/pkg/yang/openits"
@@ -364,5 +365,274 @@ func TestDMSEvent_ActivationFailedShape(t *T, obs *Observation) {
 			t.Errorf("message-activation-failed ce-type %q, want %q", e.CEType, want)
 		}
 		return
+	}
+}
+
+// ----- capability / geometry coherence -----
+
+// Face geometry must be internally consistent: physical width divided by
+// pixel pitch should land on the advertised pixel width. Controllers are
+// known to report a plausible-but-wrong addressable dimension while
+// reporting physical dimensions correctly, and a central system that lays
+// out MULTI against the wrong width silently clips copy. Vacuous unless the
+// sign advertises all three.
+func TestDMSCapabilities_PitchMatchesGeometry(t *T, obs *Observation) {
+	st := obs.Device.GetSign().GetState()
+	if st == nil {
+		return
+	}
+	caps := st.GetCapabilities()
+	if caps == nil || caps.PixelPitchMm == nil || caps.SignFaceWidthMm == nil || st.SignWidthPixels == nil {
+		return
+	}
+	pitch := *caps.PixelPitchMm
+	if pitch <= 0 {
+		t.Errorf("pixel-pitch-mm is %v; must be positive", pitch)
+		return
+	}
+	implied := float64(*caps.SignFaceWidthMm) / pitch
+	advertised := float64(*st.SignWidthPixels)
+	// One full pixel of slack absorbs border/rounding conventions; anything
+	// beyond that is a reporting defect, not a rounding artifact.
+	if diff := implied - advertised; diff > 1 || diff < -1 {
+		t.Errorf("face geometry inconsistent: %d mm / %.1f mm pitch = %.1f px, but sign-width-pixels = %.0f",
+			*caps.SignFaceWidthMm, pitch, implied, advertised)
+	}
+}
+
+// ----- message / capability cross-checks -----
+
+// Every graphic a displayed message references must be in the sign's
+// advertised inventory. This is the pre-send validation the graphic
+// inventory exists for: the alternative is discovering it as a
+// graphic-not-found activation failure with the face already wrong.
+func TestDMSMessages_GraphicsReferencedExist(t *T, obs *Observation) {
+	sign := obs.Device.GetSign()
+	active := sign.GetControl().GetState().GetActive()
+	if active == nil || active.MultiString == nil {
+		return
+	}
+	caps := sign.GetState().GetCapabilities()
+	if caps == nil {
+		return
+	}
+	stored := map[uint8]bool{}
+	for n := range caps.Graphic {
+		stored[n] = true
+	}
+	for _, ref := range multiGraphicRefs(*active.MultiString) {
+		if !stored[ref] {
+			t.Errorf("active message references graphic [g%d], not in the advertised inventory", ref)
+		}
+	}
+}
+
+// multiGraphicRefs extracts the graphic numbers referenced by MULTI [gN]
+// tags. NTCIP 1203 permits positional arguments ([gN,x,y]); only the
+// leading number identifies the graphic.
+func multiGraphicRefs(multi string) []uint8 {
+	var refs []uint8
+	for i := 0; i < len(multi); i++ {
+		if multi[i] != '[' {
+			continue
+		}
+		end := strings.IndexByte(multi[i:], ']')
+		if end < 0 {
+			break
+		}
+		tag := multi[i+1 : i+end]
+		i += end
+		if len(tag) < 2 || (tag[0] != 'g' && tag[0] != 'G') {
+			continue
+		}
+		num := tag[1:]
+		if c := strings.IndexByte(num, ','); c >= 0 {
+			num = num[:c]
+		}
+		v, err := strconv.ParseUint(num, 10, 8)
+		if err != nil {
+			continue
+		}
+		refs = append(refs, uint8(v))
+	}
+	return refs
+}
+
+// ----- fallback coherence -----
+
+// The fallback booleans are a narrow projection of activation-trigger. If
+// the sign says it is displaying a fallback, the trigger must say a fallback
+// put it there — a sign reporting power-loss-active while claiming an
+// operator activation is describing two different realities, and an operator
+// cannot tell which to believe.
+func TestDMSFallback_TriggerExplainsFallbackState(t *T, obs *Observation) {
+	cs := obs.Device.GetSign().GetControl().GetState()
+	if cs == nil {
+		return
+	}
+	active := cs.GetActive()
+	if active == nil || active.ActivationTrigger == yangpkg.OpenitsTypes_ModeChangeTrigger_UNSET {
+		return
+	}
+	inFallback := (cs.PowerLossActive != nil && *cs.PowerLossActive) ||
+		(cs.CommLossActive != nil && *cs.CommLossActive)
+	trigger := active.ActivationTrigger
+	isFallbackTrigger := trigger == yangpkg.OpenitsTypes_ModeChangeTrigger_trigger_comm_loss ||
+		trigger == yangpkg.OpenitsTypes_ModeChangeTrigger_trigger_power_loss ||
+		trigger == yangpkg.OpenitsTypes_ModeChangeTrigger_trigger_power_recovery ||
+		trigger == yangpkg.OpenitsTypes_ModeChangeTrigger_trigger_end_of_duration
+	if inFallback && !isFallbackTrigger {
+		t.Errorf("comm-loss-active/power-loss-active set, but activation-trigger is %v (not a fallback cause)", trigger)
+	}
+	if !inFallback && isFallbackTrigger {
+		t.Errorf("activation-trigger is %v (a fallback cause), but neither fallback boolean is set", trigger)
+	}
+}
+
+// A fallback that names a library slot must name one that exists and is
+// valid. Stale fallback pointers are a real field condition — the library
+// row gets rewritten and the fallback keeps pointing at it — and the failure
+// only shows up at the moment the sign most needs to display something.
+type fbRef struct {
+	name string
+	mt   yangpkg.E_OpenitsDmsTypes_MessageMemoryType
+	slot *uint16
+}
+
+// checkFallbackRefs asserts every fallback naming a library slot names one
+// that exists and is valid. A blank fallback needs no slot — that is how
+// "go dark" is expressed — so it is skipped.
+func checkFallbackRefs(t *T, msgs *yangpkg.OpenitsDms_Sign_Messages, origin string, refs []fbRef) {
+	for _, r := range refs {
+		if r.slot == nil || r.mt == yangpkg.OpenitsDmsTypes_MessageMemoryType_blank {
+			continue
+		}
+		slot := msgs.GetSlot(r.mt, *r.slot)
+		if slot == nil {
+			t.Errorf("%s fallback %s points at %v slot %d, which is not in the library", origin, r.name, r.mt, *r.slot)
+			continue
+		}
+		if st := slot.GetState(); st != nil && st.Status != yangpkg.OpenitsDmsTypes_DmsMessageStatus_UNSET &&
+			st.Status != yangpkg.OpenitsDmsTypes_DmsMessageStatus_valid {
+			t.Errorf("%s fallback %s points at %v slot %d, whose status is %v (not valid)", origin, r.name, r.mt, *r.slot, st.Status)
+		}
+	}
+}
+
+// A fallback that names a library slot must name one that exists and is
+// valid. Stale fallback pointers are a real field condition — the library
+// row gets rewritten and the fallback keeps pointing at it — and the
+// failure only shows up at the moment the sign most needs to display
+// something. Checks the APPLIED policy (what will actually fire) and the
+// commanded one (what central asked for); either can dangle independently.
+func TestDMSFallback_ReferencesResolve(t *T, obs *Observation) {
+	sign := obs.Device.GetSign()
+	msgs := sign.GetMessages()
+	if msgs == nil {
+		return
+	}
+	if fb := sign.GetControl().GetState().GetFallback(); fb != nil {
+		var refs []fbRef
+		if c := fb.GetCommLoss(); c != nil {
+			refs = append(refs, fbRef{"comm-loss", c.MemoryType, c.SlotNumber})
+		}
+		if e := fb.GetEndOfDuration(); e != nil {
+			refs = append(refs, fbRef{"end-of-duration", e.MemoryType, e.SlotNumber})
+		}
+		if r := fb.GetReset(); r != nil {
+			refs = append(refs, fbRef{"reset", r.MemoryType, r.SlotNumber})
+		}
+		if pr := fb.GetPowerRecovery(); pr != nil {
+			if so := pr.GetShortOutage(); so != nil {
+				refs = append(refs, fbRef{"power-recovery/short-outage", so.MemoryType, so.SlotNumber})
+			}
+			if lo := pr.GetLongOutage(); lo != nil {
+				refs = append(refs, fbRef{"power-recovery/long-outage", lo.MemoryType, lo.SlotNumber})
+			}
+		}
+		checkFallbackRefs(t, msgs, "applied", refs)
+	}
+	if fb := sign.GetControl().GetConfig().GetFallback(); fb != nil {
+		var refs []fbRef
+		if c := fb.GetCommLoss(); c != nil {
+			refs = append(refs, fbRef{"comm-loss", c.MemoryType, c.SlotNumber})
+		}
+		if e := fb.GetEndOfDuration(); e != nil {
+			refs = append(refs, fbRef{"end-of-duration", e.MemoryType, e.SlotNumber})
+		}
+		if r := fb.GetReset(); r != nil {
+			refs = append(refs, fbRef{"reset", r.MemoryType, r.SlotNumber})
+		}
+		if pr := fb.GetPowerRecovery(); pr != nil {
+			if so := pr.GetShortOutage(); so != nil {
+				refs = append(refs, fbRef{"power-recovery/short-outage", so.MemoryType, so.SlotNumber})
+			}
+			if lo := pr.GetLongOutage(); lo != nil {
+				refs = append(refs, fbRef{"power-recovery/long-outage", lo.MemoryType, lo.SlotNumber})
+			}
+		}
+		checkFallbackRefs(t, msgs, "commanded", refs)
+	}
+}
+
+// ----- power -----
+
+// A sign that is not on utility power must report battery state of charge.
+// For an off-grid solar sign this is the leaf that answers the only question
+// that matters overnight — whether the face will still be lit — and
+// "power-source: solar" on its own does not answer it.
+func TestDMSPower_OffGridReportsCharge(t *T, obs *Observation) {
+	cp := obs.Device.GetSign().GetCabinetPower().GetState()
+	if cp == nil {
+		return
+	}
+	offGrid := cp.PowerSource == yangpkg.OpenitsCabinetPower_PowerSource_solar ||
+		cp.PowerSource == yangpkg.OpenitsCabinetPower_PowerSource_on_battery
+	if !offGrid {
+		return
+	}
+	bat := cp.GetBattery()
+	if bat == nil || bat.StateOfChargePct == nil {
+		t.Errorf("power-source is %v but battery/state-of-charge-pct is unset", cp.PowerSource)
+	}
+}
+
+// A sign governing brightness from its photocell must report the ambient
+// level that governs it. Otherwise the model asserts a control loop whose
+// input is invisible, and an operator seeing an unexpectedly dark face has
+// no way to tell a failed photocell from a correct response to darkness.
+// (docs/10-vendor-implementation.md calls this the entangled-leaf case: a
+// sign with no photocell must deviate the sensor AND the config leaf.)
+func TestDMSControl_PhotocellModeReportsAmbient(t *T, obs *Observation) {
+	sign := obs.Device.GetSign()
+	cs := sign.GetControl().GetState()
+	if cs == nil || cs.IlluminationControl != yangpkg.OpenitsDms_Sign_Control_Config_IlluminationControl_photocell {
+		return
+	}
+	env := sign.GetEnvironment()
+	if env == nil || env.AmbientLightLevel == nil {
+		t.Errorf("illumination-control is photocell but environment/ambient-light-level is unset")
+	}
+}
+
+// A library row the device holds must still match what was authored into
+// it. NTCIP carries a per-row CRC precisely because rows get rewritten
+// underneath central — locally, or by another system — and every
+// activation or fallback naming that row is then refused SILENTLY. Config
+// and state CRC divergence is the only advance warning.
+func TestDMSMessages_StoredRowMatchesAuthored(t *T, obs *Observation) {
+	msgs := obs.Device.GetSign().GetMessages()
+	if msgs == nil {
+		return
+	}
+	for _, slot := range msgs.Slot {
+		cfg, st := slot.GetConfig(), slot.GetState()
+		if cfg == nil || st == nil || cfg.Crc == nil || st.Crc == nil {
+			continue
+		}
+		if *cfg.Crc != *st.Crc {
+			t.Errorf("slot %v/%d: authored CRC %d but device holds %d — the stored row has drifted",
+				cfg.MemoryType, cfg.GetSlotNumber(), *cfg.Crc, *st.Crc)
+		}
 	}
 }

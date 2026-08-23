@@ -220,11 +220,11 @@ A few rules govern this lane:
   sheet into a machine-checkable fact.
 - **Watch for entangled leaves.** Deviating one leaf can have
   knock-on meaning for another. The worked example: `openits-dms`
-  models `ambient-light-lux` (an environment sensor) and
+  models `ambient-light-level` (an environment sensor) and
   `illumination-control` (a config leaf selecting `photocell` /
   `timer` / `manual` brightness governance) as related but distinct
   surfaces. If your sign has no photocell, deviating
-  `ambient-light-lux` alone is not enough — a consumer reading
+  `ambient-light-level` alone is not enough — a consumer reading
   `illumination-control: photocell` on a device that can never report
   ambient light has been told something false. Deviate the sensor
   *and* constrain the config leaf's usable enum values (or default it

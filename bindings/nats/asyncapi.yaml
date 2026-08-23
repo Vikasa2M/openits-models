@@ -1364,6 +1364,11 @@ components:
                             type: string
                         owner:
                             type: string
+                        phase:
+                            enum:
+                                - activate
+                                - validate
+                            type: string
                         reason:
                             type: string
                         sequence:

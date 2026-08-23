@@ -223,6 +223,7 @@ func All(kind string) []TestCase {
 			TestCase{"TestDMSCapabilities_SignTypePresent", TestDMSCapabilities_SignTypePresent},
 			TestCase{"TestDMSCapabilities_CharMatrixHasCellSize", TestDMSCapabilities_CharMatrixHasCellSize},
 			TestCase{"TestDMSControl_IlluminationControlPresent", TestDMSControl_IlluminationControlPresent},
+			TestCase{"TestDMSControl_PhotocellModeReportsAmbient", TestDMSControl_PhotocellModeReportsAmbient},
 			TestCase{"TestDMSDiagnostics_StuckPixelsWithinFailed", TestDMSDiagnostics_StuckPixelsWithinFailed},
 			TestCase{"TestDMSSchedule_DayPlanHasAction", TestDMSSchedule_DayPlanHasAction},
 
@@ -242,8 +243,18 @@ func All(kind string) []TestCase {
 			TestCase{"TestDMSDiagnostics_PixelsFailedBound", TestDMSDiagnostics_PixelsFailedBound},
 			TestCase{"TestDMSDiagnostics_LampsFailedBound", TestDMSDiagnostics_LampsFailedBound},
 
+			// capability / geometry coherence
+			TestCase{"TestDMSCapabilities_PitchMatchesGeometry", TestDMSCapabilities_PitchMatchesGeometry},
+			TestCase{"TestDMSMessages_GraphicsReferencedExist", TestDMSMessages_GraphicsReferencedExist},
+
 			// fallback
 			TestCase{"TestDMSFallback_PowerLossActivePresent", TestDMSFallback_PowerLossActivePresent},
+			TestCase{"TestDMSFallback_TriggerExplainsFallbackState", TestDMSFallback_TriggerExplainsFallbackState},
+			TestCase{"TestDMSFallback_ReferencesResolve", TestDMSFallback_ReferencesResolve},
+			TestCase{"TestDMSMessages_StoredRowMatchesAuthored", TestDMSMessages_StoredRowMatchesAuthored},
+
+			// power
+			TestCase{"TestDMSPower_OffGridReportsCharge", TestDMSPower_OffGridReportsCharge},
 
 			// events
 			TestCase{"TestDMSEvent_FaultRaisedShape", TestDMSEvent_FaultRaisedShape},

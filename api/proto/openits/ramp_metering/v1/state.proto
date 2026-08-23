@@ -200,35 +200,35 @@ message ScheduleEntry {
   uint32 schedule_id = 1;
   uint32 day_plan = 5;
   repeated uint32 days_of_month = 4;
-  repeated DaysOfWeek days_of_week = 3;
-  repeated Months months = 2;
+  repeated DayOfWeek days_of_week = 3;
+  repeated Month months = 2;
 }
 
-enum DaysOfWeek {
-  DAYS_OF_WEEK_UNSPECIFIED = 0;
-  DAYS_OF_WEEK_MONDAY = 1;
-  DAYS_OF_WEEK_TUESDAY = 2;
-  DAYS_OF_WEEK_WEDNESDAY = 3;
-  DAYS_OF_WEEK_THURSDAY = 4;
-  DAYS_OF_WEEK_FRIDAY = 5;
-  DAYS_OF_WEEK_SATURDAY = 6;
-  DAYS_OF_WEEK_SUNDAY = 7;
+enum DayOfWeek {
+  DAY_OF_WEEK_UNSPECIFIED = 0;
+  DAY_OF_WEEK_MONDAY = 1;
+  DAY_OF_WEEK_TUESDAY = 2;
+  DAY_OF_WEEK_WEDNESDAY = 3;
+  DAY_OF_WEEK_THURSDAY = 4;
+  DAY_OF_WEEK_FRIDAY = 5;
+  DAY_OF_WEEK_SATURDAY = 6;
+  DAY_OF_WEEK_SUNDAY = 7;
 }
 
-enum Months {
-  MONTHS_UNSPECIFIED = 0;
-  MONTHS_JANUARY = 1;
-  MONTHS_FEBRUARY = 2;
-  MONTHS_MARCH = 3;
-  MONTHS_APRIL = 4;
-  MONTHS_MAY = 5;
-  MONTHS_JUNE = 6;
-  MONTHS_JULY = 7;
-  MONTHS_AUGUST = 8;
-  MONTHS_SEPTEMBER = 9;
-  MONTHS_OCTOBER = 10;
-  MONTHS_NOVEMBER = 11;
-  MONTHS_DECEMBER = 12;
+enum Month {
+  MONTH_UNSPECIFIED = 0;
+  MONTH_JANUARY = 1;
+  MONTH_FEBRUARY = 2;
+  MONTH_MARCH = 3;
+  MONTH_APRIL = 4;
+  MONTH_MAY = 5;
+  MONTH_JUNE = 6;
+  MONTH_JULY = 7;
+  MONTH_AUGUST = 8;
+  MONTH_SEPTEMBER = 9;
+  MONTH_OCTOBER = 10;
+  MONTH_NOVEMBER = 11;
+  MONTH_DECEMBER = 12;
 }
 
 message ScheduleState {

@@ -141,12 +141,12 @@ func collectASC() (*yangpkg.Device, error) {
 	if err != nil {
 		return nil, err
 	}
-	se.DaysOfWeek = []yangpkg.E_OpenitsDms_Sign_Schedule_ScheduleEntry_DaysOfWeek{
-		yangpkg.OpenitsDms_Sign_Schedule_ScheduleEntry_DaysOfWeek_monday,
-		yangpkg.OpenitsDms_Sign_Schedule_ScheduleEntry_DaysOfWeek_tuesday,
-		yangpkg.OpenitsDms_Sign_Schedule_ScheduleEntry_DaysOfWeek_wednesday,
-		yangpkg.OpenitsDms_Sign_Schedule_ScheduleEntry_DaysOfWeek_thursday,
-		yangpkg.OpenitsDms_Sign_Schedule_ScheduleEntry_DaysOfWeek_friday,
+	se.DaysOfWeek = []yangpkg.E_OpenitsSchedule_DayOfWeek{
+		yangpkg.OpenitsSchedule_DayOfWeek_monday,
+		yangpkg.OpenitsSchedule_DayOfWeek_tuesday,
+		yangpkg.OpenitsSchedule_DayOfWeek_wednesday,
+		yangpkg.OpenitsSchedule_DayOfWeek_thursday,
+		yangpkg.OpenitsSchedule_DayOfWeek_friday,
 	}
 	se.DayPlan = u8Ptr(1)
 
@@ -293,7 +293,7 @@ func collectASC() (*yangpkg.Device, error) {
 	// healthy battery, so the on-battery leading indicator and the
 	// runtime-remaining dispatch discriminator are exercised.
 	cp := sc.GetOrCreateCabinetPower().GetOrCreateState()
-	cp.PowerSource = yangpkg.OpenitsSignalControl_SignalController_CabinetPower_State_PowerSource_on_line
+	cp.PowerSource = yangpkg.OpenitsCabinetPower_PowerSource_on_line
 	cp.TransferCount = u32Ptr(4)
 	cp.LineVoltageV = f64Ptr(121.4)
 	cp.LineFrequencyHz = f64Ptr(60.0)
@@ -303,7 +303,7 @@ func collectASC() (*yangpkg.Device, error) {
 	bat.VoltageV = f64Ptr(27.3)
 	bat.TemperatureC = f64Ptr(24.5)
 	bat.ChargerFault = boolPtr(false)
-	bat.TestState = yangpkg.OpenitsSignalControl_SignalController_CabinetPower_State_Battery_TestState_passed
+	bat.TestState = yangpkg.OpenitsCabinetPower_BatteryTestState_passed
 	bat.LastTest = strPtr("2026-07-15T02:00:00Z")
 	cp.DoorOpen = boolPtr(false)
 	cp.PolicePanelOpen = boolPtr(false)
@@ -422,6 +422,9 @@ func collectDMS() (*yangpkg.Device, error) {
 	caps.CharacterWidthPixels = u32Ptr(0)
 	caps.ColorCapability = yangpkg.OpenitsDms_Sign_State_Capabilities_ColorCapability_color
 	caps.MaxPages = u8Ptr(3)
+	caps.SignFaceWidthMm = u32Ptr(2880)
+	caps.SignFaceHeightMm = u32Ptr(540)
+	caps.PixelPitchMm = f64Ptr(20.0)
 	caps.BeaconCapable = boolPtr(true)
 	caps.SupportedMultiTags = []yangpkg.E_OpenitsDmsTypes_MultiTag{
 		yangpkg.OpenitsDmsTypes_MultiTag_multi_tag_new_line,
@@ -435,6 +438,16 @@ func collectDMS() (*yangpkg.Device, error) {
 	font.Name = strPtr("default-7line")
 	font.CharacterHeightPixels = u32Ptr(7)
 
+	// Stored graphics, advertised so central can reject a message that
+	// references a graphic the sign does not hold.
+	gr, err := caps.NewGraphic(1)
+	if err != nil {
+		return nil, err
+	}
+	gr.Name = strPtr("chevron-left")
+	gr.HeightPixels = u32Ptr(18)
+	gr.WidthPixels = u32Ptr(18)
+
 	// Message library (config-only): the slot activated below. The
 	// message body (MULTI text, priority, owner, CRC, beacon) lives under
 	// slot/config; slot/state carries the device-reported message-status
@@ -447,13 +460,14 @@ func collectDMS() (*yangpkg.Device, error) {
 	slotCfg := slot.GetOrCreateConfig()
 	slotCfg.MemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_changeable
 	slotCfg.SlotNumber = u16Ptr(1)
-	slotCfg.MultiString = strPtr("[jp3]CRASH AHEAD[nl]USE CAUTION")
+	slotCfg.MultiString = strPtr("[jp3][g1]CRASH AHEAD[nl]USE CAUTION")
 	slotCfg.Priority = u8Ptr(200)
 	slotCfg.Owner = strPtr("tmc-ops")
-	slotCfg.Crc = u32Ptr(2863311530)
+	slotCfg.Crc = u32Ptr(43690)
 	slotCfg.Beacon = yangpkg.OpenitsDms_Sign_Control_State_Active_Beacon_flashing
 	slotSt := slot.GetOrCreateState()
 	slotSt.Status = yangpkg.OpenitsDmsTypes_DmsMessageStatus_valid
+	slotSt.Crc = u32Ptr(43690) // device holds what was authored
 
 	// Commanded control: intent in control/config (including the
 	// active-message activation command), applied/actual in control/state
@@ -478,7 +492,13 @@ func collectDMS() (*yangpkg.Device, error) {
 	commLoss.CommLossTimeoutS = u32Ptr(300)
 	commLoss.MemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_blank
 	fallback.GetOrCreateEndOfDuration().MemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_blank
-	fallback.GetOrCreatePowerLoss().MemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_blank
+	powerRecovery := fallback.GetOrCreatePowerRecovery()
+	powerRecovery.ShortOutageThresholdS = u32Ptr(60)
+	shortOutage := powerRecovery.GetOrCreateShortOutage()
+	shortOutage.MemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_changeable
+	shortOutage.SlotNumber = u16Ptr(1)
+	powerRecovery.GetOrCreateLongOutage().MemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_blank
+	fallback.GetOrCreateReset().MemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_blank
 
 	ctrlSt := control.GetOrCreateState()
 	ctrlSt.ControlMode = yangpkg.OpenitsDmsTypes_DmsControlMode_dms_control_central
@@ -487,6 +507,21 @@ func collectDMS() (*yangpkg.Device, error) {
 	ctrlSt.IlluminationControl = yangpkg.OpenitsDms_Sign_Control_Config_IlluminationControl_photocell
 	ctrlSt.LastModeChange = strPtr("2026-04-18T14:00:00Z")
 	ctrlSt.BrightnessCurrent = u8Ptr(80)
+	// Applied fallback policy as the device reports it — mirrors the
+	// commanded policy above. Divergence here is the stale-fallback signal.
+	fbSt := ctrlSt.GetOrCreateFallback()
+	fbStComm := fbSt.GetOrCreateCommLoss()
+	fbStComm.CommLossTimeoutS = u32Ptr(300)
+	fbStComm.MemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_blank
+	fbSt.GetOrCreateEndOfDuration().MemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_blank
+	fbStPr := fbSt.GetOrCreatePowerRecovery()
+	fbStPr.ShortOutageThresholdS = u32Ptr(60)
+	fbStPrShort := fbStPr.GetOrCreateShortOutage()
+	fbStPrShort.MemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_changeable
+	fbStPrShort.SlotNumber = u16Ptr(1)
+	fbStPr.GetOrCreateLongOutage().MemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_blank
+	fbSt.GetOrCreateReset().MemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_blank
+
 	ctrlSt.CommLossActive = boolPtr(false)
 	ctrlSt.PowerLossActive = boolPtr(false)
 
@@ -495,10 +530,11 @@ func collectDMS() (*yangpkg.Device, error) {
 	active.SlotNumber = u16Ptr(1)
 	active.ActivatedAt = strPtr("2026-04-18T14:05:12Z")
 	active.Source = strPtr("tmc-ops")
-	active.MultiString = strPtr("[jp3]CRASH AHEAD[nl]USE CAUTION")
+	active.ActivationTrigger = yangpkg.OpenitsTypes_ModeChangeTrigger_trigger_operator
+	active.MultiString = strPtr("[jp3][g1]CRASH AHEAD[nl]USE CAUTION")
 	active.Priority = u8Ptr(200)
 	active.Owner = strPtr("tmc-ops")
-	active.Crc = u32Ptr(2863311530)
+	active.Crc = u32Ptr(43690)
 	active.Beacon = yangpkg.OpenitsDms_Sign_Control_State_Active_Beacon_flashing
 
 	// A higher-priority message is active; it displaced slot 4, which the
@@ -506,6 +542,19 @@ func collectDMS() (*yangpkg.Device, error) {
 	preempted := ctrlSt.GetOrCreatePreempted()
 	preempted.MemoryType = yangpkg.OpenitsDmsTypes_MessageMemoryType_changeable
 	preempted.SlotNumber = u16Ptr(4)
+
+	// Ambient light: the normalized control input every sign can report.
+	// Illuminance is left absent — this sign has no calibrated photometric
+	// sensor, and absent is the honest value.
+	env := sign.GetOrCreateEnvironment()
+	env.AmbientLightLevel = u8Ptr(62)
+
+	// Cabinet power (platform grouping): a solar sign on battery buffer.
+	signPwr := sign.GetOrCreateCabinetPower().GetOrCreateState()
+	signPwr.PowerSource = yangpkg.OpenitsCabinetPower_PowerSource_solar
+	signBat := signPwr.GetOrCreateBattery()
+	signBat.StateOfChargePct = u8Ptr(78)
+	signBat.RuntimeRemainingMinutes = u16Ptr(640)
 
 	diag := sign.GetOrCreateDiagnostics()
 	diag.PixelsTotal = u32Ptr(3888)
@@ -846,7 +895,7 @@ func collectRSU() (*yangpkg.Device, error) {
 		yangpkg.OpenitsV2XMessagingTypes_V2XMessageType_msg_rtcm,
 	}
 	dcc := chCfg.GetOrCreateDcc()
-	dcc.Policy = yangpkg.OpenitsRsu_Rsu_Channels_Channel_Config_Dcc_Policy_adaptive
+	dcc.Policy = yangpkg.OpenitsV2XRadio_DccPolicy_adaptive
 	dcc.CbrTargetPercent = u8Ptr(65)
 	chSt := c.GetOrCreateState()
 	chSt.Operational = boolPtr(true)
@@ -875,14 +924,14 @@ func collectRSU() (*yangpkg.Device, error) {
 	// sample count, penetration estimate).
 	va := diag.GetOrCreateVehicleAnalytics()
 	basis := va.GetOrCreateSampleBasis()
-	basis.WindowType = yangpkg.OpenitsRsu_Rsu_Diagnostics_VehicleAnalytics_SampleBasis_WindowType_rolling
+	basis.WindowType = yangpkg.OpenitsVehicleDetection_StatsWindowType_rolling
 	basis.StatsWindowSeconds = u32Ptr(300)
 	basis.SampleCount = u32Ptr(420)
 	basis.PenetrationEstimatePct = f64Ptr(8.0)
 	basis.ComputedAt = strPtr("2026-06-02T03:15:00Z")
 
 	counts := va.GetOrCreateCounts()
-	counts.CountBasis = yangpkg.OpenitsRsu_Rsu_Diagnostics_VehicleAnalytics_Counts_CountBasis_observation_sessions
+	counts.CountBasis = yangpkg.OpenitsVehicleDetection_CountBasis_observation_sessions
 	counts.Vehicles_1Min = u32Ptr(14)
 	counts.Vehicles_1Hr = u32Ptr(612)
 	counts.Vehicles_24Hr = u32Ptr(9840)
@@ -897,7 +946,7 @@ func collectRSU() (*yangpkg.Device, error) {
 	// emergency vehicles never wait on the PRS queue.
 	srmSsm := r.GetOrCreateMessages().GetOrCreateSrmSsm()
 	srmCfg := srmSsm.GetOrCreateConfig()
-	srmCfg.GrantAuthority = yangpkg.OpenitsRsu_Rsu_Messages_SrmSsm_Config_GrantAuthority_controller_prs
+	srmCfg.GrantAuthority = yangpkg.OpenitsV2XMessaging_GrantAuthority_controller_prs
 	srmCfg.AscDevice = strPtr("asc-i35-mm214")
 	srmCfg.EvpAutoGrant = boolPtr(true)
 
@@ -920,7 +969,7 @@ func collectRSU() (*yangpkg.Device, error) {
 	if err != nil {
 		return nil, err
 	}
-	dec.Action = yangpkg.OpenitsRsu_Rsu_Messages_SrmSsm_Decisions_Decision_Action_approve
+	dec.Action = yangpkg.OpenitsV2XMessaging_PriorityDecisionAction_approve
 	dec.Reason = strPtr("transit priority")
 
 	// TIM (Store-and-Repeat): a work-zone advisory, currently broadcasting and
@@ -951,7 +1000,7 @@ func collectRSU() (*yangpkg.Device, error) {
 	sec := r.GetOrCreateSecurity()
 	sec.GetOrCreateConfig().GetOrCreateMisbehaviorReporting().Enabled = boolPtr(true)
 	secSt := sec.GetOrCreateState()
-	secSt.EnrollmentStatus = yangpkg.OpenitsRsu_Rsu_Security_State_EnrollmentStatus_enrolled
+	secSt.EnrollmentStatus = yangpkg.OpenitsScms_EnrollmentStatus_enrolled
 	secSt.DaysToAppCertExpiry = i32Ptr(48) // app-cert expiry is the RSU-critical figure
 	secSt.AppCertRenewalActive = boolPtr(false)
 	mbr := secSt.GetOrCreateMisbehaviorReporting()
@@ -963,7 +1012,7 @@ func collectRSU() (*yangpkg.Device, error) {
 		return nil, err
 	}
 	cst := cert.GetOrCreateState()
-	cst.Type = yangpkg.OpenitsRsu_Rsu_Security_Certificates_Certificate_State_Type_application
+	cst.Type = yangpkg.OpenitsScms_CertificateType_application
 	cst.ValidFrom = strPtr("2026-01-01T00:00:00Z")
 	cst.ValidUntil = strPtr("2026-12-31T23:59:59Z")
 	for _, p := range []struct {
@@ -977,7 +1026,7 @@ func collectRSU() (*yangpkg.Device, error) {
 		perm.Ssp = strPtr(p.ssp)
 	}
 	geo := cst.GetOrCreateGeographicValidity()
-	geo.RegionType = yangpkg.OpenitsRsu_Rsu_Security_Certificates_Certificate_State_GeographicValidity_RegionType_identified
+	geo.RegionType = yangpkg.OpenitsScms_GeographicRegionType_identified
 	geo.IdentifiedRegionId = u32Ptr(840) // US
 
 	return dev, nil

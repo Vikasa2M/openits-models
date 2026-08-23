@@ -29,6 +29,39 @@ support implements every `config true` leaf as writable and emits
 every notification listed in `openits-signal-control-events`
 when the underlying condition occurs.
 
+#### Deciding core vs. augment
+
+The test is **not** "how many vendors implement it today." A leaf can
+belong in core with one implementation, and belong in an augment with
+five. Ask instead:
+
+1. **Is the concept device-class universal, even where implementations
+   differ?** Stored graphics, pixel pitch, power source, why a message is
+   on the face — every sign has these, whatever the make. → **Core.**
+2. **Is it one product's feature?** A vendor's travel-time route
+   templating, a proprietary analytics stream. → **Augment**, even if it
+   is excellent and widely licensed.
+3. **Is the concept universal but the value set service- or
+   vendor-specific?** → **Core as an identity base**, with derived
+   identities per service or vendor. This is the escape hatch that keeps
+   core from either excluding real behavior or absorbing everyone's
+   vocabulary.
+
+The dangerous case is not a leaf named `<vendor>-something` — that is
+obvious in review and nobody writes it. It is a **neutrally-named leaf
+that encodes one vendor's shape**: named generically, describing
+faithfully what exactly one product does. Reviewers should ask of any new
+core leaf: *would a second, unrelated implementation of this device class
+populate this, or would it have to leave it empty because its hardware
+does not work that way?*
+
+Note the difference between **absent-but-meaningful** and
+**meaningless**. A solar sign leaves `generator` unpopulated — the
+concept exists, that site has no generator, and optionality handles it
+correctly. A sign inheriting a `police-panel-open` leaf is different:
+there is no answer, right or absent, because signs have no police panel.
+Optionality is not a defense against wrong shape; only placement is.
+
 ### Tier 2 — Augments
 
 **Path.** `yang/augments/<contributor>-<service>-<feature>.yang`

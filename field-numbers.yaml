@@ -405,6 +405,7 @@ messages:
         start_time: 1
     openits.dms.v1.Active:
         activated_at: 3
+        activation_trigger: 10
         beacon: 11
         crc: 6
         expires_at: 4
@@ -422,6 +423,30 @@ messages:
         memory_type: 1
         owner: 6
         slot_number: 2
+    openits.dms.v1.Battery:
+        charger_fault: 5
+        last_test: 7
+        runtime_remaining_minutes: 2
+        state_of_charge_pct: 1
+        temperature_c: 4
+        test_state: 6
+        voltage_v: 3
+    openits.dms.v1.CabinetPower:
+        config: 1
+        state: 2
+    openits.dms.v1.CabinetPowerConfig:
+        on_battery_policy: 1
+    openits.dms.v1.CabinetPowerState:
+        battery: 1
+        door_open: 2
+        generator: 3
+        line_frequency_hz: 4
+        line_voltage_v: 5
+        on_battery_policy: 6
+        police_panel_open: 7
+        power_source: 8
+        signal_operation_on_battery: 9
+        transfer_count: 10
     openits.dms.v1.Capabilities:
         beacon_capable: 6
         beacon_type: 13
@@ -431,7 +456,9 @@ messages:
         character_width_pixels: 3
         color_capability: 4
         font: 8
+        graphic: 15
         max_pages: 5
+        pixel_pitch_mm: 14
         sign_face_height_mm: 9
         sign_face_width_mm: 10
         sign_type: 1
@@ -452,6 +479,31 @@ messages:
         fallback: 5
         illumination_control: 3
         request_self_test: 7
+    openits.dms.v1.ControlConfigFallback:
+        comm_loss: 1
+        end_of_duration: 2
+        power_recovery: 3
+        reset: 4
+    openits.dms.v1.ControlConfigFallbackCommLoss:
+        comm_loss_timeout_s: 1
+        memory_type: 2
+        slot_number: 3
+    openits.dms.v1.ControlConfigFallbackEndOfDuration:
+        memory_type: 1
+        slot_number: 2
+    openits.dms.v1.ControlConfigFallbackPowerRecovery:
+        long_outage: 3
+        short_outage: 2
+        short_outage_threshold_s: 1
+    openits.dms.v1.ControlConfigFallbackPowerRecoveryLongOutage:
+        memory_type: 1
+        slot_number: 2
+    openits.dms.v1.ControlConfigFallbackPowerRecoveryShortOutage:
+        memory_type: 1
+        slot_number: 2
+    openits.dms.v1.ControlConfigFallbackReset:
+        memory_type: 1
+        slot_number: 2
     openits.dms.v1.ControlState:
         active: 9
         beacon_state: 6
@@ -463,10 +515,36 @@ messages:
         default_page_off_time_s: 1
         default_page_on_time_s: 3
         display_state: 21
+        fallback: 7
         illumination_control: 4
         last_mode_change: 2
         power_loss_active: 22
         preempted: 5
+    openits.dms.v1.ControlStateFallback:
+        comm_loss: 1
+        end_of_duration: 2
+        power_recovery: 3
+        reset: 4
+    openits.dms.v1.ControlStateFallbackCommLoss:
+        comm_loss_timeout_s: 1
+        memory_type: 2
+        slot_number: 3
+    openits.dms.v1.ControlStateFallbackEndOfDuration:
+        memory_type: 1
+        slot_number: 2
+    openits.dms.v1.ControlStateFallbackPowerRecovery:
+        long_outage: 3
+        short_outage: 2
+        short_outage_threshold_s: 1
+    openits.dms.v1.ControlStateFallbackPowerRecoveryLongOutage:
+        memory_type: 1
+        slot_number: 2
+    openits.dms.v1.ControlStateFallbackPowerRecoveryShortOutage:
+        memory_type: 1
+        slot_number: 2
+    openits.dms.v1.ControlStateFallbackReset:
+        memory_type: 1
+        slot_number: 2
     openits.dms.v1.DayPlan:
         action: 3
         day_plan_id: 1
@@ -486,6 +564,8 @@ messages:
         memory_type: 1
         slot_number: 2
     openits.dms.v1.Environment:
+        ambient_illuminance_lux: 9
+        ambient_light_level: 8
         ambient_light_lux: 1
         cabinet_temperature_c: 2
         door_open: 4
@@ -504,6 +584,8 @@ messages:
         power_loss: 10
         power_loss_memory_type: 6
         power_loss_slot_number: 7
+        power_recovery: 11
+        reset: 12
     openits.dms.v1.Fault:
         category: 1
         correlates_with: 6
@@ -518,6 +600,17 @@ messages:
         character_width_pixels: 4
         font_number: 1
         name: 2
+    openits.dms.v1.Generator:
+        fuel_level_pct: 2
+        running: 1
+    openits.dms.v1.Graphic:
+        graphic_number: 1
+        height_pixels: 3
+        name: 2
+        width_pixels: 4
+    openits.dms.v1.LongOutage:
+        memory_type: 1
+        slot_number: 2
     openits.dms.v1.MessageActivationFailed:
         attempted_memory_type: 1
         attempted_slot_number: 2
@@ -527,6 +620,7 @@ messages:
         observed_by: 4
         occurred_at: 5
         owner: 6
+        phase: 11
         reason: 3
         sequence: 7
         source: 100
@@ -536,9 +630,16 @@ messages:
     openits.dms.v1.PowerLoss:
         memory_type: 1
         slot_number: 2
+    openits.dms.v1.PowerRecovery:
+        long_outage: 3
+        short_outage: 2
+        short_outage_threshold_s: 1
     openits.dms.v1.Preempted:
         memory_type: 1
         remaining_duration_s: 3
+        slot_number: 2
+    openits.dms.v1.Reset:
+        memory_type: 1
         slot_number: 2
     openits.dms.v1.Schedule:
         day_plan: 1
@@ -553,7 +654,11 @@ messages:
     openits.dms.v1.ScheduleState:
         active_day_plan_id: 1
         next_action_at: 2
+    openits.dms.v1.ShortOutage:
+        memory_type: 1
+        slot_number: 2
     openits.dms.v1.Sign:
+        cabinet_power: 9
         config: 1
         control: 4
         diagnostics: 6
@@ -622,6 +727,7 @@ messages:
         priority: 7
         slot_number: 2
     openits.dms.v1.SlotState:
+        crc: 2
         status: 1
     openits.ess.v1.Atmospheric:
         air_temperature_c: 1
@@ -2953,6 +3059,10 @@ messages:
     openits.types.v1.PlcRegister:
         register: 1
         register_value: 2
+    openits.types.v1.ScOnBatteryPolicy:
+        mode: 1
+        transition_at_runtime_minutes: 3
+        transition_at_soc_pct: 2
     openits.types.v1.WireSource:
         decoder: 1
         indiana: 2

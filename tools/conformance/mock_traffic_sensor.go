@@ -95,7 +95,7 @@ func collectTrafficSensor() (*yangpkg.Device, error) {
 	interval.GapAverageS = f64Ptr(1.9)
 	interval.Density = f64Ptr(11.5)
 	interval.FlowRateVph = u32Ptr(2520)
-	interval.DataQuality = yangpkg.OpenitsTrafficSensor_TrafficSensor_Lanes_Lane_State_Interval_DataQuality_valid
+	interval.DataQuality = yangpkg.OpenitsTrafficSensorTypes_DataQuality_valid
 	interval.UptimePercent = f64Ptr(100.0)
 
 	// Per-class breakdown that reconciles with total volume:

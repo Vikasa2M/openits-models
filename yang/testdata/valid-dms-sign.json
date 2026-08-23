@@ -58,7 +58,7 @@
             "multi-string": "[jp3]CRASH AHEAD[nl]USE CAUTION",
             "priority": 200,
             "owner": "tmc-ops",
-            "crc": 2863311530
+            "crc": 43690
           },
           "state": {
             "status": "valid"
@@ -73,7 +73,7 @@
             "multi-string": "COMM LOSS[nl]CONTACT TMC",
             "priority": 50,
             "owner": "tmc-ops",
-            "crc": 305419896
+            "crc": 4660
           },
           "state": {
             "status": "valid"
@@ -105,13 +105,18 @@
           "slot-number": 1,
           "duration-s": 1800,
           "activation-priority": 200,
-          "crc": 2863311530,
+          "crc": 43690,
           "owner": "tmc-ops"
         },
         "fallback": {
           "comm-loss": { "comm-loss-timeout-s": 300, "memory-type": "changeable", "slot-number": 2 },
           "end-of-duration": { "memory-type": "changeable", "slot-number": 3 },
-          "power-loss": { "memory-type": "changeable", "slot-number": 3 }
+          "power-recovery": {
+            "short-outage-threshold-s": 60,
+            "short-outage": { "memory-type": "changeable", "slot-number": 3 },
+            "long-outage": { "memory-type": "blank" }
+          },
+          "reset": { "memory-type": "blank" }
         },
         "illumination-control": "photocell",
         "default-page-on-time-s": "2.0",
@@ -130,10 +135,11 @@
           "activated-at": "2026-04-18T14:05:12Z",
           "expires-at": "2026-04-18T14:35:12Z",
           "source": "tmc-ops",
+          "activation-trigger": "openits-types:trigger-operator",
           "multi-string": "[jp3]CRASH AHEAD[nl]USE CAUTION",
           "priority": 200,
           "owner": "tmc-ops",
-          "crc": 2863311530,
+          "crc": 43690,
           "beacon": "none"
         },
         "comm-loss-active": false,
@@ -149,7 +155,8 @@
       }
     },
     "environment": {
-      "ambient-light-lux": 12000,
+      "ambient-light-level": 62,
+      "ambient-illuminance-lux": 12000,
       "cabinet-temperature-c": "32.5",
       "humidity-percent": 40,
       "door-open": false,

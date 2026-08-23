@@ -1,0 +1,45 @@
+{
+  "openits-dms:sign": {
+    "config": {
+      "id": "i35-mm214-nb-dms"
+    },
+    "control": {
+      "config": {
+        "control-mode": "openits-dms-types:dms-control-central",
+        "fallback": {
+          "power-recovery": {
+            "short-outage-threshold-s": 60,
+            "short-outage": {
+              "memory-type": "changeable",
+              "slot-number": 10
+            },
+            "long-outage": {
+              "memory-type": "changeable",
+              "slot-number": 11
+            }
+          },
+          "reset": {
+            "memory-type": "blank"
+          }
+        }
+      },
+      "state": {
+        "control-mode": "openits-dms-types:dms-control-central",
+        "display-state": "openits-dms-types:mode-normal",
+        "active": {
+          "memory-type": "changeable",
+          "slot-number": 10,
+          "activated-at": "2026-08-23T03:12:44Z",
+          "activation-trigger": "openits-dms-types:trigger-power-recovery",
+          "multi-string": "[jp3]REDUCE SPEED",
+          "priority": 50,
+          "owner": "sign-controller",
+          "crc": 35136,
+          "beacon": "none"
+        },
+        "comm-loss-active": false,
+        "power-loss-active": true
+      }
+    }
+  }
+}

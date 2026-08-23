@@ -45,6 +45,19 @@ that are expensive to fix after merge.
 - Device-class neutrality: no vendor-specific leaves in core modules
   (vendor surface goes through augments/extension model); leaf names and
   units follow the referenced standard (`reference` statements present).
+  The test is not vendor COUNT — a leaf can be core with one
+  implementation. Ask: would a second, unrelated implementation of this
+  device class populate this, or must it leave the leaf empty because its
+  hardware does not work that way? The dangerous case is a
+  neutrally-NAMED leaf encoding one vendor's shape, which no linter can
+  catch. See `docs/06-extension-model.md` (core vs. augment).
+- Shared groupings: anything added to a grouping composed across module
+  lines is inherited by EVERY composer, present and future, and becomes
+  breaking to remove once several have it. Check that new grouping
+  members are universal to every composer, not just to the service that
+  prompted them. A new `uses` of a shared grouping is equally a review
+  point: does the composing device actually want everything in it?
+  See `docs/reference/yang-reference-conventions.md`.
 - Reuses shared typedefs/groupings (`openits-types`, platform groupings)
   instead of redefining.
 

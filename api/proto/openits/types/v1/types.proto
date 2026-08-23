@@ -28,15 +28,15 @@ message WireSource {
   }
 }
 
-message CabinetPowerPolicy {
-  Mode mode = 1;
+message ScOnBatteryPolicy {
+  OnBatteryMode mode = 1;
   uint32 transition_at_soc_pct = 2;
   uint32 transition_at_runtime_minutes = 3;
 }
 
-enum Mode {
-  MODE_UNSPECIFIED = 0;
-  MODE_FULL_OPERATION = 1;
-  MODE_FLASH = 2;
+enum OnBatteryMode {
+  ON_BATTERY_MODE_UNSPECIFIED = 0;
+  ON_BATTERY_MODE_FULL_OPERATION = 1;
+  ON_BATTERY_MODE_FLASH = 2;
 }
 

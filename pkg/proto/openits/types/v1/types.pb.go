@@ -21,52 +21,52 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type Mode int32
+type OnBatteryMode int32
 
 const (
-	Mode_MODE_UNSPECIFIED    Mode = 0
-	Mode_MODE_FULL_OPERATION Mode = 1
-	Mode_MODE_FLASH          Mode = 2
+	OnBatteryMode_ON_BATTERY_MODE_UNSPECIFIED    OnBatteryMode = 0
+	OnBatteryMode_ON_BATTERY_MODE_FULL_OPERATION OnBatteryMode = 1
+	OnBatteryMode_ON_BATTERY_MODE_FLASH          OnBatteryMode = 2
 )
 
-// Enum value maps for Mode.
+// Enum value maps for OnBatteryMode.
 var (
-	Mode_name = map[int32]string{
-		0: "MODE_UNSPECIFIED",
-		1: "MODE_FULL_OPERATION",
-		2: "MODE_FLASH",
+	OnBatteryMode_name = map[int32]string{
+		0: "ON_BATTERY_MODE_UNSPECIFIED",
+		1: "ON_BATTERY_MODE_FULL_OPERATION",
+		2: "ON_BATTERY_MODE_FLASH",
 	}
-	Mode_value = map[string]int32{
-		"MODE_UNSPECIFIED":    0,
-		"MODE_FULL_OPERATION": 1,
-		"MODE_FLASH":          2,
+	OnBatteryMode_value = map[string]int32{
+		"ON_BATTERY_MODE_UNSPECIFIED":    0,
+		"ON_BATTERY_MODE_FULL_OPERATION": 1,
+		"ON_BATTERY_MODE_FLASH":          2,
 	}
 )
 
-func (x Mode) Enum() *Mode {
-	p := new(Mode)
+func (x OnBatteryMode) Enum() *OnBatteryMode {
+	p := new(OnBatteryMode)
 	*p = x
 	return p
 }
 
-func (x Mode) String() string {
+func (x OnBatteryMode) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (Mode) Descriptor() protoreflect.EnumDescriptor {
+func (OnBatteryMode) Descriptor() protoreflect.EnumDescriptor {
 	return file_openits_types_v1_types_proto_enumTypes[0].Descriptor()
 }
 
-func (Mode) Type() protoreflect.EnumType {
+func (OnBatteryMode) Type() protoreflect.EnumType {
 	return &file_openits_types_v1_types_proto_enumTypes[0]
 }
 
-func (x Mode) Number() protoreflect.EnumNumber {
+func (x OnBatteryMode) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use Mode.Descriptor instead.
-func (Mode) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use OnBatteryMode.Descriptor instead.
+func (OnBatteryMode) EnumDescriptor() ([]byte, []int) {
 	return file_openits_types_v1_types_proto_rawDescGZIP(), []int{0}
 }
 
@@ -192,29 +192,29 @@ func (*WireSource_MessageId) isWireSource_Tag() {}
 
 func (*WireSource_PlcRegister_) isWireSource_Tag() {}
 
-type CabinetPowerPolicy struct {
+type ScOnBatteryPolicy struct {
 	state                      protoimpl.MessageState `protogen:"open.v1"`
-	Mode                       Mode                   `protobuf:"varint,1,opt,name=mode,proto3,enum=openits.types.v1.Mode" json:"mode,omitempty"`
+	Mode                       OnBatteryMode          `protobuf:"varint,1,opt,name=mode,proto3,enum=openits.types.v1.OnBatteryMode" json:"mode,omitempty"`
 	TransitionAtSocPct         uint32                 `protobuf:"varint,2,opt,name=transition_at_soc_pct,json=transitionAtSocPct,proto3" json:"transition_at_soc_pct,omitempty"`
 	TransitionAtRuntimeMinutes uint32                 `protobuf:"varint,3,opt,name=transition_at_runtime_minutes,json=transitionAtRuntimeMinutes,proto3" json:"transition_at_runtime_minutes,omitempty"`
 	unknownFields              protoimpl.UnknownFields
 	sizeCache                  protoimpl.SizeCache
 }
 
-func (x *CabinetPowerPolicy) Reset() {
-	*x = CabinetPowerPolicy{}
+func (x *ScOnBatteryPolicy) Reset() {
+	*x = ScOnBatteryPolicy{}
 	mi := &file_openits_types_v1_types_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CabinetPowerPolicy) String() string {
+func (x *ScOnBatteryPolicy) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CabinetPowerPolicy) ProtoMessage() {}
+func (*ScOnBatteryPolicy) ProtoMessage() {}
 
-func (x *CabinetPowerPolicy) ProtoReflect() protoreflect.Message {
+func (x *ScOnBatteryPolicy) ProtoReflect() protoreflect.Message {
 	mi := &file_openits_types_v1_types_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -226,26 +226,26 @@ func (x *CabinetPowerPolicy) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CabinetPowerPolicy.ProtoReflect.Descriptor instead.
-func (*CabinetPowerPolicy) Descriptor() ([]byte, []int) {
+// Deprecated: Use ScOnBatteryPolicy.ProtoReflect.Descriptor instead.
+func (*ScOnBatteryPolicy) Descriptor() ([]byte, []int) {
 	return file_openits_types_v1_types_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *CabinetPowerPolicy) GetMode() Mode {
+func (x *ScOnBatteryPolicy) GetMode() OnBatteryMode {
 	if x != nil {
 		return x.Mode
 	}
-	return Mode_MODE_UNSPECIFIED
+	return OnBatteryMode_ON_BATTERY_MODE_UNSPECIFIED
 }
 
-func (x *CabinetPowerPolicy) GetTransitionAtSocPct() uint32 {
+func (x *ScOnBatteryPolicy) GetTransitionAtSocPct() uint32 {
 	if x != nil {
 		return x.TransitionAtSocPct
 	}
 	return 0
 }
 
-func (x *CabinetPowerPolicy) GetTransitionAtRuntimeMinutes() uint32 {
+func (x *ScOnBatteryPolicy) GetTransitionAtRuntimeMinutes() uint32 {
 	if x != nil {
 		return x.TransitionAtRuntimeMinutes
 	}
@@ -430,16 +430,15 @@ const file_openits_types_v1_types_proto_rawDesc = "" +
 	"\vPlcRegister\x12\x1a\n" +
 	"\bregister\x18\x01 \x01(\tR\bregister\x12%\n" +
 	"\x0eregister_value\x18\x02 \x01(\tR\rregisterValueB\x05\n" +
-	"\x03tag\"\xb6\x01\n" +
-	"\x12CabinetPowerPolicy\x12*\n" +
-	"\x04mode\x18\x01 \x01(\x0e2\x16.openits.types.v1.ModeR\x04mode\x121\n" +
+	"\x03tag\"\xbe\x01\n" +
+	"\x11ScOnBatteryPolicy\x123\n" +
+	"\x04mode\x18\x01 \x01(\x0e2\x1f.openits.types.v1.OnBatteryModeR\x04mode\x121\n" +
 	"\x15transition_at_soc_pct\x18\x02 \x01(\rR\x12transitionAtSocPct\x12A\n" +
-	"\x1dtransition_at_runtime_minutes\x18\x03 \x01(\rR\x1atransitionAtRuntimeMinutes*E\n" +
-	"\x04Mode\x12\x14\n" +
-	"\x10MODE_UNSPECIFIED\x10\x00\x12\x17\n" +
-	"\x13MODE_FULL_OPERATION\x10\x01\x12\x0e\n" +
-	"\n" +
-	"MODE_FLASH\x10\x02BGZEgithub.com/Vikasa2M/openits-models/pkg/proto/openits/types/v1;typesv1b\x06proto3"
+	"\x1dtransition_at_runtime_minutes\x18\x03 \x01(\rR\x1atransitionAtRuntimeMinutes*o\n" +
+	"\rOnBatteryMode\x12\x1f\n" +
+	"\x1bON_BATTERY_MODE_UNSPECIFIED\x10\x00\x12\"\n" +
+	"\x1eON_BATTERY_MODE_FULL_OPERATION\x10\x01\x12\x19\n" +
+	"\x15ON_BATTERY_MODE_FLASH\x10\x02BGZEgithub.com/Vikasa2M/openits-models/pkg/proto/openits/types/v1;typesv1b\x06proto3"
 
 var (
 	file_openits_types_v1_types_proto_rawDescOnce sync.Once
@@ -456,9 +455,9 @@ func file_openits_types_v1_types_proto_rawDescGZIP() []byte {
 var file_openits_types_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_openits_types_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_openits_types_v1_types_proto_goTypes = []any{
-	(Mode)(0),                      // 0: openits.types.v1.Mode
+	(OnBatteryMode)(0),             // 0: openits.types.v1.OnBatteryMode
 	(*WireSource)(nil),             // 1: openits.types.v1.WireSource
-	(*CabinetPowerPolicy)(nil),     // 2: openits.types.v1.CabinetPowerPolicy
+	(*ScOnBatteryPolicy)(nil),      // 2: openits.types.v1.ScOnBatteryPolicy
 	(*WireSource_Indiana)(nil),     // 3: openits.types.v1.WireSource.Indiana
 	(*WireSource_NtcipOid)(nil),    // 4: openits.types.v1.WireSource.NtcipOid
 	(*WireSource_PlcRegister)(nil), // 5: openits.types.v1.WireSource.PlcRegister
@@ -467,7 +466,7 @@ var file_openits_types_v1_types_proto_depIdxs = []int32{
 	3, // 0: openits.types.v1.WireSource.indiana:type_name -> openits.types.v1.WireSource.Indiana
 	4, // 1: openits.types.v1.WireSource.ntcip_oid:type_name -> openits.types.v1.WireSource.NtcipOid
 	5, // 2: openits.types.v1.WireSource.plc_register:type_name -> openits.types.v1.WireSource.PlcRegister
-	0, // 3: openits.types.v1.CabinetPowerPolicy.mode:type_name -> openits.types.v1.Mode
+	0, // 3: openits.types.v1.ScOnBatteryPolicy.mode:type_name -> openits.types.v1.OnBatteryMode
 	4, // [4:4] is the sub-list for method output_type
 	4, // [4:4] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name

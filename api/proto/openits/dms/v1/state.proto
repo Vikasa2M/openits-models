@@ -13,6 +13,7 @@ message Sign {
   Schedule schedule = 8;
   Control control = 4;
   Environment environment = 5;
+  CabinetPower cabinet_power = 9;
   Diagnostics diagnostics = 6;
   Faults faults = 7;
 }
@@ -81,6 +82,7 @@ message Capabilities {
   uint32 character_width_pixels = 3;
   uint32 sign_face_height_mm = 9;
   uint32 sign_face_width_mm = 10;
+  string pixel_pitch_mm = 14;
   uint32 character_height_mm = 11;
   uint32 character_width_mm = 12;
   BeaconType beacon_type = 13;
@@ -89,6 +91,7 @@ message Capabilities {
   bool beacon_capable = 6;
   repeated string supported_multi_tags = 7;
   repeated Font font = 8;
+  repeated Graphic graphic = 15;
 }
 
 enum SignType {
@@ -117,6 +120,13 @@ message Font {
   string name = 2;
   uint32 character_height_pixels = 3;
   uint32 character_width_pixels = 4;
+}
+
+message Graphic {
+  uint32 graphic_number = 1;
+  string name = 2;
+  uint32 height_pixels = 3;
+  uint32 width_pixels = 4;
 }
 
 message SignStateLinearReference {
@@ -162,6 +172,7 @@ enum Beacon {
 }
 
 message SlotState {
+  uint32 crc = 2;
   DmsMessageStatus status = 1;
 }
 
@@ -195,35 +206,35 @@ message ScheduleEntry {
   uint32 schedule_id = 1;
   uint32 day_plan = 5;
   repeated uint32 days_of_month = 4;
-  repeated DaysOfWeek days_of_week = 3;
-  repeated Months months = 2;
+  repeated DayOfWeek days_of_week = 3;
+  repeated Month months = 2;
 }
 
-enum DaysOfWeek {
-  DAYS_OF_WEEK_UNSPECIFIED = 0;
-  DAYS_OF_WEEK_MONDAY = 1;
-  DAYS_OF_WEEK_TUESDAY = 2;
-  DAYS_OF_WEEK_WEDNESDAY = 3;
-  DAYS_OF_WEEK_THURSDAY = 4;
-  DAYS_OF_WEEK_FRIDAY = 5;
-  DAYS_OF_WEEK_SATURDAY = 6;
-  DAYS_OF_WEEK_SUNDAY = 7;
+enum DayOfWeek {
+  DAY_OF_WEEK_UNSPECIFIED = 0;
+  DAY_OF_WEEK_MONDAY = 1;
+  DAY_OF_WEEK_TUESDAY = 2;
+  DAY_OF_WEEK_WEDNESDAY = 3;
+  DAY_OF_WEEK_THURSDAY = 4;
+  DAY_OF_WEEK_FRIDAY = 5;
+  DAY_OF_WEEK_SATURDAY = 6;
+  DAY_OF_WEEK_SUNDAY = 7;
 }
 
-enum Months {
-  MONTHS_UNSPECIFIED = 0;
-  MONTHS_JANUARY = 1;
-  MONTHS_FEBRUARY = 2;
-  MONTHS_MARCH = 3;
-  MONTHS_APRIL = 4;
-  MONTHS_MAY = 5;
-  MONTHS_JUNE = 6;
-  MONTHS_JULY = 7;
-  MONTHS_AUGUST = 8;
-  MONTHS_SEPTEMBER = 9;
-  MONTHS_OCTOBER = 10;
-  MONTHS_NOVEMBER = 11;
-  MONTHS_DECEMBER = 12;
+enum Month {
+  MONTH_UNSPECIFIED = 0;
+  MONTH_JANUARY = 1;
+  MONTH_FEBRUARY = 2;
+  MONTH_MARCH = 3;
+  MONTH_APRIL = 4;
+  MONTH_MAY = 5;
+  MONTH_JUNE = 6;
+  MONTH_JULY = 7;
+  MONTH_AUGUST = 8;
+  MONTH_SEPTEMBER = 9;
+  MONTH_OCTOBER = 10;
+  MONTH_NOVEMBER = 11;
+  MONTH_DECEMBER = 12;
 }
 
 message ScheduleState {
@@ -239,7 +250,7 @@ message Control {
 message ControlConfig {
   RequestSelfTest request_self_test = 7;
   ActiveMessage active_message = 4;
-  Fallback fallback = 5;
+  ControlConfigFallback fallback = 5;
   uint32 brightness_setpoint = 6;
   string control_mode = 11;
   string default_page_off_time_s = 1;
@@ -263,24 +274,41 @@ message ActiveMessage {
   uint32 slot_number = 2;
 }
 
-message Fallback {
-  CommLoss comm_loss = 8;
-  EndOfDuration end_of_duration = 9;
-  PowerLoss power_loss = 10;
+message ControlConfigFallback {
+  ControlConfigFallbackCommLoss comm_loss = 1;
+  ControlConfigFallbackEndOfDuration end_of_duration = 2;
+  ControlConfigFallbackPowerRecovery power_recovery = 3;
+  ControlConfigFallbackReset reset = 4;
 }
 
-message CommLoss {
+message ControlConfigFallbackCommLoss {
   uint32 comm_loss_timeout_s = 1;
   OpenitsDmsMessageMemoryType memory_type = 2;
   uint32 slot_number = 3;
 }
 
-message EndOfDuration {
+message ControlConfigFallbackEndOfDuration {
   OpenitsDmsMessageMemoryType memory_type = 1;
   uint32 slot_number = 2;
 }
 
-message PowerLoss {
+message ControlConfigFallbackPowerRecovery {
+  uint32 short_outage_threshold_s = 1;
+  ControlConfigFallbackPowerRecoveryShortOutage short_outage = 2;
+  ControlConfigFallbackPowerRecoveryLongOutage long_outage = 3;
+}
+
+message ControlConfigFallbackPowerRecoveryShortOutage {
+  OpenitsDmsMessageMemoryType memory_type = 1;
+  uint32 slot_number = 2;
+}
+
+message ControlConfigFallbackPowerRecoveryLongOutage {
+  OpenitsDmsMessageMemoryType memory_type = 1;
+  uint32 slot_number = 2;
+}
+
+message ControlConfigFallbackReset {
   OpenitsDmsMessageMemoryType memory_type = 1;
   uint32 slot_number = 2;
 }
@@ -298,6 +326,7 @@ message ControlState {
   uint32 brightness_current = 8;
   Active active = 9;
   Preempted preempted = 5;
+  ControlStateFallback fallback = 7;
   bool comm_loss_active = 10;
   bool power_loss_active = 22;
   uint32 brightness_setpoint = 12;
@@ -319,6 +348,7 @@ message Active {
   google.protobuf.Timestamp activated_at = 3;
   google.protobuf.Timestamp expires_at = 4;
   string source = 5;
+  string activation_trigger = 10;
   Beacon beacon = 11;
   uint32 crc = 6;
   OpenitsDmsMessageMemoryType memory_type = 1;
@@ -334,14 +364,99 @@ message Preempted {
   uint32 slot_number = 2;
 }
 
+message ControlStateFallback {
+  ControlStateFallbackCommLoss comm_loss = 1;
+  ControlStateFallbackEndOfDuration end_of_duration = 2;
+  ControlStateFallbackPowerRecovery power_recovery = 3;
+  ControlStateFallbackReset reset = 4;
+}
+
+message ControlStateFallbackCommLoss {
+  uint32 comm_loss_timeout_s = 1;
+  OpenitsDmsMessageMemoryType memory_type = 2;
+  uint32 slot_number = 3;
+}
+
+message ControlStateFallbackEndOfDuration {
+  OpenitsDmsMessageMemoryType memory_type = 1;
+  uint32 slot_number = 2;
+}
+
+message ControlStateFallbackPowerRecovery {
+  uint32 short_outage_threshold_s = 1;
+  ControlStateFallbackPowerRecoveryShortOutage short_outage = 2;
+  ControlStateFallbackPowerRecoveryLongOutage long_outage = 3;
+}
+
+message ControlStateFallbackPowerRecoveryShortOutage {
+  OpenitsDmsMessageMemoryType memory_type = 1;
+  uint32 slot_number = 2;
+}
+
+message ControlStateFallbackPowerRecoveryLongOutage {
+  OpenitsDmsMessageMemoryType memory_type = 1;
+  uint32 slot_number = 2;
+}
+
+message ControlStateFallbackReset {
+  OpenitsDmsMessageMemoryType memory_type = 1;
+  uint32 slot_number = 2;
+}
+
 message Environment {
-  uint32 ambient_light_lux = 1;
+  uint32 ambient_light_level = 8;
+  uint32 ambient_illuminance_lux = 9;
   string cabinet_temperature_c = 2;
   uint32 humidity_percent = 3;
   bool door_open = 4;
   string sign_face_temperature_c = 5;
   bool fan_active = 6;
   bool heater_active = 7;
+}
+
+message CabinetPower {
+  CabinetPowerState state = 2;
+}
+
+message CabinetPowerState {
+  Battery battery = 1;
+  bool door_open = 2;
+  Generator generator = 3;
+  string line_frequency_hz = 4;
+  string line_voltage_v = 5;
+  PowerSource power_source = 8;
+  uint32 transfer_count = 10;
+}
+
+message Battery {
+  uint32 state_of_charge_pct = 1;
+  uint32 runtime_remaining_minutes = 2;
+  string voltage_v = 3;
+  string temperature_c = 4;
+  bool charger_fault = 5;
+  BatteryTestState test_state = 6;
+  google.protobuf.Timestamp last_test = 7;
+}
+
+enum BatteryTestState {
+  BATTERY_TEST_STATE_IDLE = 0;
+  BATTERY_TEST_STATE_IN_PROGRESS = 1;
+  BATTERY_TEST_STATE_PASSED = 2;
+  BATTERY_TEST_STATE_FAILED = 3;
+}
+
+message Generator {
+  bool running = 1;
+  uint32 fuel_level_pct = 2;
+}
+
+enum PowerSource {
+  POWER_SOURCE_ON_LINE = 0;
+  POWER_SOURCE_ON_BATTERY = 1;
+  POWER_SOURCE_BYPASS = 2;
+  POWER_SOURCE_OFF = 3;
+  POWER_SOURCE_SOLAR = 4;
+  POWER_SOURCE_GENERATOR = 5;
 }
 
 message Diagnostics {

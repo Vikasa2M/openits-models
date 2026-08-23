@@ -11,7 +11,7 @@ func TestCabinetPower_SourceReported(t *T, obs *Observation) {
 	if cp == nil {
 		return
 	}
-	if cp.PowerSource == yangpkg.OpenitsSignalControl_SignalController_CabinetPower_State_PowerSource_UNSET {
+	if cp.PowerSource == yangpkg.OpenitsCabinetPower_PowerSource_UNSET {
 		t.Errorf("cabinet-power/power-source is unset")
 	}
 }
@@ -36,7 +36,7 @@ func TestCabinetPower_OnBatteryHasRuntime(t *T, obs *Observation) {
 	if cp == nil {
 		return
 	}
-	onBattery := yangpkg.OpenitsSignalControl_SignalController_CabinetPower_State_PowerSource_on_battery
+	onBattery := yangpkg.OpenitsCabinetPower_PowerSource_on_battery
 	if cp.PowerSource != onBattery {
 		return
 	}
