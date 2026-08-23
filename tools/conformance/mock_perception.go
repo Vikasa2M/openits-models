@@ -6,6 +6,7 @@ import (
 
 	commonv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/common/v1"
 	perceptionv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/perception/v1"
+	zoneoccupancyv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/zone_occupancy/v1"
 	yangpkg "github.com/Vikasa2M/openits-models/pkg/yang/openits"
 	"github.com/Vikasa2M/openits-models/tools/conformance/tests"
 )
@@ -84,6 +85,58 @@ func collectPerception() (*yangpkg.Device, error) {
 	zoneSt.Presence = boolPtr(true)
 	zoneSt.AverageSpeedKmh = f64Ptr(86.1)
 
+	// The openits-zone-occupancy capability, composed here behind the
+	// zone-occupancy feature. Modelled as the shoulder refuge rather than a
+	// travel lane on purpose: occupancy answers "what is parked here", which
+	// is precisely the population the crossed/throughput analytics above
+	// cannot see. A vehicle stopped on the shoulder never traverses anything.
+	zoc := pc.GetOrCreateZoneOccupancy()
+
+	zocCfg, err := zoc.GetOrCreateConfiguration().NewZone("eb-shoulder-refuge")
+	if err != nil {
+		return nil, err
+	}
+	zocCfg.ZoneId = strPtr("eb-shoulder-refuge")
+	zocCfg.Name = strPtr("EB shoulder refuge area")
+	zocCfg.Capacity = u16Ptr(3)
+	zocCfg.SensingMethod = yangpkg.OpenitsZoneOccupancyTypes_OccupancySensingMethod_sensing_video
+	// This sensor classifies, so an empty present-class list would mean "the
+	// region is empty" rather than "this device cannot tell you".
+	zocCfg.Classifies = boolPtr(true)
+
+	zocSt, err := zoc.GetOrCreateZones().NewZone("eb-shoulder-refuge")
+	if err != nil {
+		return nil, err
+	}
+	zocSt.ZoneId = strPtr("eb-shoulder-refuge")
+	zocSt.Presence = boolPtr(true)
+	zocSt.OccupancyCount = u16Ptr(2)
+	// Anchored to the incident's first-observed instant: the stopped vehicle
+	// above is one of the two objects present, so dwell derived from this
+	// leaf and the incident's own timeline must agree.
+	zocSt.OccupiedSince = strPtr("2026-04-19T11:58:12Z")
+	zocSt.PresenceConfidence = u8Ptr(96)
+	zocSt.MeasuredAt = strPtr("2026-04-19T12:00:58Z")
+	// Presence confidence (96) and classification confidence (91/84) differ
+	// deliberately — the capability separates them because they fail
+	// independently, and a mock that set them equal would not exercise that.
+	for _, pcCount := range []struct {
+		class yangpkg.E_OpenitsTypes_ObjectClass
+		count uint16
+		conf  uint8
+	}{
+		{yangpkg.OpenitsTypes_ObjectClass_object_passenger_vehicle, 1, 91},
+		{yangpkg.OpenitsTypes_ObjectClass_object_truck, 1, 84},
+	} {
+		entry, err := zocSt.NewPresentClass(pcCount.class)
+		if err != nil {
+			return nil, err
+		}
+		entry.Class = pcCount.class
+		entry.Count = u16Ptr(pcCount.count)
+		entry.ClassificationConfidence = u8Ptr(pcCount.conf)
+	}
+
 	diag := pc.GetOrCreateDiagnostics()
 	diag.PointsPerSecond = u32Ptr(240000)
 	diag.BlockagePercent = u8Ptr(2)
@@ -124,6 +177,17 @@ func collectPerception() (*yangpkg.Device, error) {
 func subscribePerception(ctx context.Context, out chan<- tests.EventEnvelope, window time.Duration) error {
 	base := "openits.us-tx.txdot.d07.perception.eb-travel-lanes-cam-03"
 	src := "urn:openits:perception:us-tx:txdot:d07:eb-travel-lanes-cam-03"
+	// Capability events ride the capability's own service token, not the
+	// composing device's: the generator emits the ce-type
+	// openits.zone-occupancy.zone-occupancy-interval-report.v1 (see
+	// bindings/nats/asyncapi.yaml), and the subject's {service} token must
+	// agree with it. The practical consequence is that a magnetometer and
+	// this camera publish occupancy on the same subject space, which is the
+	// point of a capability — but it also means openits.<region>.<agency>.
+	// <unit>.perception.> does NOT carry this sensor's occupancy reports.
+	zocBase := "openits.us-tx.txdot.d07.zone-occupancy.eb-travel-lanes-cam-03"
+	// ce-source still identifies the DEVICE, which is a perception sensor;
+	// the capability does not change what the emitting unit is.
 	events := []tests.EventEnvelope{
 		{
 			Subject:  base + ".zone-incident-detected",
@@ -160,6 +224,38 @@ func subscribePerception(ctx context.Context, out chan<- tests.EventEnvelope, wi
 						ClassCount: []*perceptionv1.ClassCount{
 							{Class: "openits-types:object-passenger-vehicle", Count: 42},
 							{Class: "openits-types:object-truck", Count: 5},
+						},
+					},
+				},
+			},
+		},
+		{
+			Subject:  zocBase + ".zone-occupancy-interval-report",
+			CEType:   "openits.zone-occupancy.zone-occupancy-interval-report.v1",
+			CESource: src,
+			CEID:     "01HXYR3K9T8M2NAEQF5P4R7DDD",
+			CETime:   time.Now().UTC(),
+			Data: &zoneoccupancyv1.ZoneOccupancyIntervalReport{
+				Kind: "openits-zone-occupancy-types:zoc-zone-occupancy-interval-report",
+				Zone: []*zoneoccupancyv1.Zone{
+					{
+						ZoneId:            "eb-shoulder-refuge",
+						IntervalDurationS: 300,
+						// The presence population: five distinct objects were
+						// in the refuge at some point in the interval. This is
+						// NOT a throughput volume and deliberately does not
+						// match the travel-lane crossed-volume of 47 above —
+						// a report where the two agreed would not demonstrate
+						// that they measure different things.
+						ObservedCount:      5,
+						OccupancyPercent:   "62.5",
+						PeakOccupancyCount: 3,
+						// Sums to observed-count with object-unknown as the
+						// catch-all, so no observed object is dropped.
+						ObservedClass: []*zoneoccupancyv1.ObservedClass{
+							{Class: "openits-types:object-passenger-vehicle", Count: 3, MeanConfidence: 90},
+							{Class: "openits-types:object-truck", Count: 1, MeanConfidence: 84},
+							{Class: "openits-types:object-unknown", Count: 1, MeanConfidence: 41},
 						},
 					},
 				},
