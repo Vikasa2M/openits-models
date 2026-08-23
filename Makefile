@@ -107,6 +107,12 @@ check-deviations:
 check-events-layering:
 	$(GOCMD) run ./tools/check-events-layering yang
 
+# Re-derive every ce-id test vector published in docs/ce-id-spec.md from
+# the algorithm that document specifies. The spec is normative for the wire
+# contract, so its vectors have to be arithmetic, not prose.
+check-ce-id-vectors:
+	$(GOCMD) run ./tools/check-ce-id-vectors
+
 # Protobuf lint via buf (skipped if buf absent).
 proto-lint:
 	@if command -v buf >/dev/null 2>&1; then buf lint; \
