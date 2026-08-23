@@ -207,7 +207,7 @@ Tier 1 (core) when the market signals consensus.
 
 > An augment graduates into the next minor revision of the core
 > module when **three independent implementations** — by different
-> organisations, with implementation receipts on file — ship the
+> organizations, with implementation receipts on file — ship the
 > same augment in a wire-compatible way, and the TSC passes a
 > graduation motion (operator-weighted majority).
 
@@ -257,7 +257,7 @@ may open a **graduation PR** that:
 The graduation review checklist:
 
 - [ ] Three NoIs from independent implementers (different
-      `implementer` ids, no shared parent organisation per
+      `implementer` ids, no shared parent organization per
       `schema-registry/notices/organizations.yaml`)
 - [ ] At least one NoI is `implementer_type: operator`
 - [ ] All three NoIs reference the same augment revision
@@ -378,7 +378,7 @@ the graduation rule requires at least one.
 competing controller that emits the same augment fields
 wire-compatibly (same Protobuf field numbers). They submit
 `schema-registry/notices/siemens-signal-control-vehicle-counts/econolite.yaml`.
-Now there are three NoIs from three independent organisations,
+Now there are three NoIs from three independent organizations,
 including one operator. Graduation eligible.
 
 **Phase 4 — graduation PR.** Anyone (typically the original

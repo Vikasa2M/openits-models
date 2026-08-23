@@ -111,6 +111,34 @@ Three mechanisms, each for a distinct case:
 Rule of thumb: **core mandatory → grouping; core optional →
 `if-feature`; vendor → augment.**
 
+## Events cross the service boundary
+
+A capability's notifications are defined in the capability's own
+`*-events` module, so their ce-type — and therefore the `{service}` token
+of their NATS subject — is the **capability's**, not the host device's.
+One physical sensor publishes under two tokens:
+
+```
+openits.<region>.<agency>.<unit>.perception.<id>.zone-incident-detected
+openits.<region>.<agency>.<unit>.zone-occupancy.<id>.zone-occupancy-interval-report
+```
+
+This is the correct default. A consumer that wants zone occupancy should
+not have to enumerate which device classes host it, and the identical
+capability on a traffic sensor publishes under the identical token — which
+is the whole point of modeling by function.
+
+But it has a sharp edge worth stating plainly: **a subscriber filtered to
+the host device's service silently misses the capability's events.** There
+is no error and no warning; the events simply never arrive. Consumers
+should subscribe by capability, or wildcard the `{service}` token when they
+want everything a controller emits.
+
+Zone-occupancy is the first capability to carry its own events, so this is
+the first time the rule bites. See
+[`bindings/nats/README.md`](../bindings/nats/README.md) for the subject
+grammar.
+
 ## Guardrails
 
 - **Right altitude.** A capability is a coherent function a vendor would

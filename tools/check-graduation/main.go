@@ -2,11 +2,11 @@
 // operator presence, and graduation eligibility.
 //
 // An augment is graduation-eligible when:
-//   - ≥ 3 distinct canonical organisations have filed NoIs against it
+//   - ≥ 3 distinct canonical organizations have filed NoIs against it
 //   - at least one of those NoIs is implementer_type: operator
 //   - all NoIs reference the same revision
 //
-// "Canonical organisation" collapses NoI implementer ids via
+// "Canonical organization" collapses NoI implementer ids via
 // schema-registry/notices/organizations.yaml. Two NoIs from different
 // aliases of the same parent count once.
 //

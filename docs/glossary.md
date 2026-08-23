@@ -43,7 +43,7 @@ catalog.
 **Augment** — A YANG 1.1 module that adds nodes to a core OpenITS
 module without modifying it. Vendors and agencies ship augments
 in their own namespace; augments graduate to core when three
-independent organisations adopt them.
+independent organizations adopt them.
 
 **BSM** — Basic Safety Message. SAE J2735 V2X message broadcast
 by vehicles; received by RSUs.
@@ -81,7 +81,7 @@ IEEE 1609.x.
 Information System. Roadside weather sensors. NTCIP 1204.
 
 **gNMI** — gRPC Network Management Interface. One transport for
-pushing/pulling YANG-modelled data. OpenITS uses NATS, not gNMI;
+pushing/pulling YANG-modeled data. OpenITS uses NATS, not gNMI;
 the YANG models are transport-independent, so a deployment that
 prefers gNMI (or NETCONF, RESTCONF, or plain HTTP) can map them
 onto its preferred transport without schema changes.
@@ -118,7 +118,7 @@ not a MUTCD value. OpenITS encodes all three as YANG
 
 **NATS** — Open-source messaging system. OpenITS' transport.
 
-**NETCONF** — RFC 6241 protocol for managing YANG-modelled data.
+**NETCONF** — RFC 6241 protocol for managing YANG-modeled data.
 One of several transports for YANG; gNMI and RESTCONF are others.
 OpenITS uses NATS, not NETCONF; the YANG models are
 transport-independent and can be mapped onto NETCONF without
@@ -157,7 +157,7 @@ implementation lives in the deployment/collector layer, not this repo.
 modules outside the `openits.>` subject tree, on
 `vendor.<vendor>.>`. Not under OpenITS governance.
 
-**Protobuf** — Google's binary serialisation format. OpenITS'
+**Protobuf** — Google's binary serialization format. OpenITS'
 wire payload format (CloudEvents binary mode).
 
 **PSM** — Personal Safety Message. SAE J2735 V2X message for
@@ -220,7 +220,7 @@ wireless communications: V2V, V2I, V2P. Governed by SAE J2735
 (messages) and IEEE 1609.x (protocol stack).
 
 **YANG** — RFC 7950 schema language. OpenITS' source-of-truth
-for data modelling. Modules at `yang/openits-<service>.yang`;
+for data modeling. Modules at `yang/openits-<service>.yang`;
 ygot-generated Go structs at `pkg/yang/`.
 
 **ygot** — Open-source Go code generator from YANG. OpenITS

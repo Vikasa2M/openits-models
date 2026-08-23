@@ -46,7 +46,7 @@ hand-rolled Protobuf-only. Each was rejected for a specific reason:
    validator runs them at every boundary.
 
 2. **Transport-independence.** YANG is a schema language; the
-   transport that carries YANG-modelled data is a separate
+   transport that carries YANG-modeled data is a separate
    decision. NTCIP's hard lesson — locking the data model to a
    specific transport (SNMP) — makes any data model that picks
    YANG-the-schema while leaving the transport open more
@@ -374,7 +374,7 @@ real.
 4. **Proprietary** — vendor-internal modules outside the
    `openits.>` subject tree.
 
-A graduation rule: when three independent organisations adopt
+A graduation rule: when three independent organizations adopt
 the same augment (with at least one operator), the augment
 becomes eligible to fold into core.
 
@@ -401,11 +401,11 @@ goldilocks solution: vendors ship fast in their own namespace,
 operators see a stable core, and a documented path moves
 proven content into the core when the market signals consensus.
 
-**What we'd revisit.** The "three independent organisations,
+**What we'd revisit.** The "three independent organizations,
 one of which is an operator" rule is a chosen number with
 limited evidence. If it's too restrictive (augments stagnate)
 or too permissive (low-quality content graduates), the rule is
-adjustable by TSC vote. The shape (multi-organisation, operator
+adjustable by TSC vote. The shape (multi-organization, operator
 present) is the durable part.
 
 ## JetStream for events + live state, ClickHouse for OLAP
@@ -526,7 +526,7 @@ CloudEvents catalog.
 1. **Hand-maintained drifts.** The original signal-control-only
    AsyncAPI was hand-edited and grew stale within months. New
    ce-types landed in code without spec updates. Consumers
-   reading the spec saw an outdated catalogue.
+   reading the spec saw an outdated catalog.
 
 2. **The catalog is the right source.** The ce-type registry
    knows every event the system emits; the Protobuf descriptors
