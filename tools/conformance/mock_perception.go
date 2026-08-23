@@ -86,7 +86,7 @@ func collectPerception() (*yangpkg.Device, error) {
 	zoneSt.AverageSpeedKmh = f64Ptr(86.1)
 
 	// The openits-zone-occupancy capability, composed here behind the
-	// zone-occupancy feature. Modelled as the shoulder refuge rather than a
+	// zone-occupancy feature. Modeled as the shoulder refuge rather than a
 	// travel lane on purpose: occupancy answers "what is parked here", which
 	// is precisely the population the crossed/throughput analytics above
 	// cannot see. A vehicle stopped on the shoulder never traverses anything.

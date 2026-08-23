@@ -40,6 +40,31 @@ openits.{region}.{agency}.{agency-unit}.{service}.{controller-id}.{event}
 | `{controller-id}` | Device / controller identifier, e.g. `i35-exit-214`. |
 | `{event}` | Event leaf, the notification's last name token, e.g. `fault-raised`. |
 
+### `{service}` for capability modules
+
+`{service}` is the module that **defines the notification**, not the device
+that emits it. A capability module composed into a device publishes under
+the **capability's** own token:
+
+```
+openits.us-tx.txdot.d07.perception.cam-214.zone-incident-detected
+openits.us-tx.txdot.d07.zone-occupancy.cam-214.zone-occupancy-interval-report
+```
+
+Both come from one physical sensor. A subscriber to
+`openits.us-tx.txdot.d07.perception.>` receives the first and **silently
+misses the second** — there is no error, the events simply never arrive.
+
+This follows from the ce-type being derived from the defining module, and
+it is the right default: a consumer that wants zone occupancy should not
+have to know which device classes happen to host it, and the same
+capability on a traffic sensor publishes under the same token.
+
+The consequence for consumers: **subscribe by capability, not only by
+device service.** A consumer wanting everything one controller emits
+subscribes across the `{service}` token
+(`openits.us-tx.txdot.d07.*.cam-214.>`) rather than naming one service.
+
 Each token is lowercase alphanumeric with hyphens (`^[a-z0-9][a-z0-9-]*$`).
 The `{region}`, `{agency}`, and `{agency-unit}` tokens are validated
 against the **agency registry** — they are not free-form. A consumer

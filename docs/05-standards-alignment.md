@@ -122,7 +122,7 @@ the OpenITS core.
 
 **CNCF CloudEvents 1.0** specifies the metadata envelope OpenITS
 uses. The choice is documented in
-[Design Decisions](04-design-decisions.md). All envelope behaviour
+[Design Decisions](04-design-decisions.md). All envelope behavior
 follows the CloudEvents binary-mode specification; we contribute
 no extensions beyond the standard `traceparent` extension for
 W3C Trace Context propagation.
@@ -132,8 +132,8 @@ W3C Trace Context propagation.
 **RFC 7950** (YANG 1.1) is the schema language. OpenITS' use of
 YANG is deliberately decoupled from any specific transport.
 **NETCONF** (RFC 6241) and **gNMI** are two existing transports for
-YANG-modelled data; the OpenITS transport is NATS-as-CloudEvents.
-Other deployments could carry the same YANG-modelled state over
+YANG-modeled data; the OpenITS transport is NATS-as-CloudEvents.
+Other deployments could carry the same YANG-modeled state over
 RESTCONF, plain HTTP, or transports not yet invented.
 
 The decoupling is the point. NTCIP's primary failure mode is that

@@ -38,7 +38,7 @@ events, `device-identity-config`) and add no new architecture:
   portable-location work noted below.
 - **Highway advisory radio (HAR)**.
 - **Standalone gate / barrier control** and **flood / high-water
-  warning** (beyond the reversible-lane interlocks already modelled).
+  warning** (beyond the reversible-lane interlocks already modeled).
 - **Weigh-in-motion (WIM)**.
 - **Roadway lighting** (NTCIP 1213 ELMS).
 

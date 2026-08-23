@@ -92,7 +92,7 @@ RESTCONF profile), each is a **sibling Tier 2 profile**, and a
 procurement can name the profile it requires. **Tier 1 alone is a
 meaningful, verifiable claim** for a deployment that does not use NATS —
 an agency serving RFC 7951 JSON to a partner over HTTPS, or a vendor
-bridging YANG-modelled state over gNMI, can conform to the model
+bridging YANG-modeled state over gNMI, can conform to the model
 without adopting the reference transport. Write the RFP to the tier and
 profile you actually need.
 
@@ -325,7 +325,7 @@ agency, or a hobbyist who builds an OpenITS-conformant emitter
 can run the kit and publish a report. The bar is the same. The
 TSC reviews on shape, not on commercial weight.
 
-If your organisation runs OpenITS — emitting or consuming — and
+If your organization runs OpenITS — emitting or consuming — and
 you can pass the kit, please consider filing. The empty board
 becomes a populated one, and the project's credibility grows
 from public evidence.

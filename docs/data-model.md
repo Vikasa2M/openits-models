@@ -1,7 +1,7 @@
 # The data model
 
 This document describes the OpenITS data-model layer for implementers:
-how the YANG module family is organised, how the event taxonomy works,
+how the YANG module family is organized, how the event taxonomy works,
 how wire provenance and safety constraints are carried in the schema,
 and how the schema maps onto encodings and transports. It covers what the
 events *are*; how they move (the NATS subject topology and stream
@@ -271,7 +271,7 @@ deliberately ignorant of all three:
 | Envelope | CloudEvents binary mode | CloudEvents structured mode, NETCONF notification framing |
 | Transport | NATS JetStream | gNMI subscribe, NETCONF, RESTCONF, plain HTTP webhooks, Kafka |
 
-A vendor that already ships YANG-modelled state over gNMI can be
+A vendor that already ships YANG-modeled state over gNMI can be
 bridged without touching the schema; an agency that wants a plain
 HTTPS feed for a partner can serve RFC 7951 JSON validated against
 the same schema-registry snapshot. What any binding must preserve:
