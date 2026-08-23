@@ -11,7 +11,7 @@ import (
 //
 // The capability's live container carries NO `must` constraints between its
 // leaves, and that is a deliberate modeling decision: a device may report
-// presence without a count, more objects than the capacity, or a breakdown
+// presence without a count, more objects than the region holds, or a breakdown
 // that does not sum, and the schema keeps every one of those representable so
 // that a misbehaving device is visible on the wire rather than unable to
 // speak. That decision moves the burden here. The schema says what a device
@@ -34,7 +34,7 @@ func zoneOccupancyOf(obs *Observation) *yangpkg.OpenitsPerception_PerceptionSens
 // Live occupancy must report on a region the device actually declares. The
 // leafref is require-instance false so a just-deleted region is representable
 // rather than invalid, but reporting occupancy for a region that was never
-// configured is a real defect: a consumer has no capacity, sensing-method, or
+// configured is a real defect: a consumer has no sensing-method or
 // classifies flag to interpret the reading with.
 func TestZoneOccupancy_LiveZonesAreConfigured(t *T, obs *Observation) {
 	zoc := zoneOccupancyOf(obs)
@@ -44,7 +44,7 @@ func TestZoneOccupancy_LiveZonesAreConfigured(t *T, obs *Observation) {
 	cfg := zoc.GetConfiguration()
 	for id := range zoc.GetZones().Zone {
 		if cfg == nil || cfg.GetZone(id) == nil {
-			t.Errorf("live occupancy zone %q has no configured counterpart; a consumer cannot interpret the reading without capacity/sensing-method/classifies", id)
+			t.Errorf("live occupancy zone %q has no configured counterpart; a consumer cannot interpret the reading without sensing-method/classifies", id)
 		}
 	}
 }
@@ -203,7 +203,7 @@ func TestZoneOccupancyEvent_ObservedClassReconciles(t *T, obs *Observation) {
 // Peak simultaneous occupancy cannot exceed the number of distinct objects
 // seen across the whole interval — the peak is a subset of the population, at
 // one instant. A report violating this has miscounted one of the two, and the
-// pair is precisely what a capacity-planning consumer reasons from.
+// pair is precisely what a demand-planning consumer reasons from.
 func TestZoneOccupancyEvent_PeakWithinObserved(t *T, obs *Observation) {
 	for _, e := range obs.Events {
 		if !strings.HasSuffix(e.Subject, ".zone-occupancy-interval-report") {

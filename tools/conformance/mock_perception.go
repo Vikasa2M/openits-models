@@ -98,7 +98,6 @@ func collectPerception() (*yangpkg.Device, error) {
 	}
 	zocCfg.ZoneId = strPtr("eb-shoulder-refuge")
 	zocCfg.Name = strPtr("EB shoulder refuge area")
-	zocCfg.Capacity = u16Ptr(3)
 	zocCfg.SensingMethod = yangpkg.OpenitsZoneOccupancyTypes_OccupancySensingMethod_sensing_video
 	// This sensor classifies, so an empty present-class list would mean "the
 	// region is empty" rather than "this device cannot tell you".

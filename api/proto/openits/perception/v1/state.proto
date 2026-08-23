@@ -232,7 +232,6 @@ message ZoneOccupancyConfiguration {
 message ZoneOccupancyConfigurationZone {
   string zone_id = 1;
   string name = 2;
-  uint32 capacity = 3;
   string sensing_method = 4;
   bool classifies = 5;
 }
