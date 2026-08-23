@@ -230,6 +230,8 @@ message ZoneOccupancyConfiguration {
 }
 
 message ZoneOccupancyConfigurationZone {
+  reserved 3;
+  reserved "capacity";
   string zone_id = 1;
   string name = 2;
   string sensing_method = 4;

@@ -2490,14 +2490,14 @@ const file_openits_perception_v1_state_proto_rawDesc = "" +
 	"\rconfiguration\x18\x01 \x01(\v21.openits.perception.v1.ZoneOccupancyConfigurationR\rconfiguration\x12?\n" +
 	"\x05zones\x18\x02 \x01(\v2).openits.perception.v1.ZoneOccupancyZonesR\x05zones\"g\n" +
 	"\x1aZoneOccupancyConfiguration\x12I\n" +
-	"\x04zone\x18\x01 \x03(\v25.openits.perception.v1.ZoneOccupancyConfigurationZoneR\x04zone\"\x94\x01\n" +
+	"\x04zone\x18\x01 \x03(\v25.openits.perception.v1.ZoneOccupancyConfigurationZoneR\x04zone\"\xa4\x01\n" +
 	"\x1eZoneOccupancyConfigurationZone\x12\x17\n" +
 	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12%\n" +
 	"\x0esensing_method\x18\x04 \x01(\tR\rsensingMethod\x12\x1e\n" +
 	"\n" +
 	"classifies\x18\x05 \x01(\bR\n" +
-	"classifies\"W\n" +
+	"classifiesJ\x04\b\x03\x10\x04R\bcapacity\"W\n" +
 	"\x12ZoneOccupancyZones\x12A\n" +
 	"\x04zone\x18\x01 \x03(\v2-.openits.perception.v1.ZoneOccupancyZonesZoneR\x04zone\"\xf1\x02\n" +
 	"\x16ZoneOccupancyZonesZone\x12\x17\n" +
