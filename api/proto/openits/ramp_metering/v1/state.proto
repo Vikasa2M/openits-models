@@ -260,6 +260,8 @@ message TrafficResponsiveState {
 }
 
 message Lanes {
+  reserved 2;
+  reserved "release_coordination";
   LanesConfig config = 3;
   LanesState state = 4;
   repeated Lane lane = 1;
@@ -300,6 +302,8 @@ enum BypassOperation {
 }
 
 message LaneState {
+  reserved 1;
+  reserved "green_active";
   HeadState head_state = 5;
   uint32 current_release_rate_vph = 6;
   google.protobuf.Timestamp last_release = 2;

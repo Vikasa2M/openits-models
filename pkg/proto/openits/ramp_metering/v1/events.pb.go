@@ -496,7 +496,7 @@ const file_openits_ramp_metering_v1_events_proto_rawDesc = "" +
 	"occurredAt\x12\x14\n" +
 	"\x05owner\x18\x05 \x01(\tR\x05owner\x12\x1a\n" +
 	"\bsequence\x18\x06 \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\a \x01(\tR\x0esourceDeviceId\"\x8a\x03\n" +
+	"\x10source_device_id\x18\a \x01(\tR\x0esourceDeviceId\"\x98\x03\n" +
 	"\x12ReleaseRateChanged\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12*\n" +
 	"\x11previous_rate_vph\x18\x01 \x01(\rR\x0fpreviousRateVph\x12 \n" +
@@ -511,7 +511,7 @@ const file_openits_ramp_metering_v1_events_proto_rawDesc = "" +
 	"occurredAt\x12\x14\n" +
 	"\x05owner\x18\a \x01(\tR\x05owner\x12\x1a\n" +
 	"\bsequence\x18\b \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceId*;\n" +
+	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceIdJ\x04\b\x04\x10\x05R\x06reason*;\n" +
 	"\aTrigger\x12\x19\n" +
 	"\x15TRIGGER_VEHICLE_COUNT\x10\x00\x12\x15\n" +
 	"\x11TRIGGER_OCCUPANCY\x10\x01*\xea\x01\n" +

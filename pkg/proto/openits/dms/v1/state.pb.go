@@ -4504,7 +4504,7 @@ const file_openits_dms_v1_state_proto_rawDesc = "" +
 	"\vmemory_type\x18\x01 \x01(\x0e2+.openits.dms.v1.OpenitsDmsMessageMemoryTypeR\n" +
 	"memoryType\x12\x1f\n" +
 	"\vslot_number\x18\x02 \x01(\rR\n" +
-	"slotNumber\"\xff\x05\n" +
+	"slotNumber\"\x9a\x06\n" +
 	"\fControlState\x12#\n" +
 	"\rdisplay_state\x18\x15 \x01(\tR\fdisplayState\x12>\n" +
 	"\fbeacon_state\x18\x06 \x01(\x0e2\x1b.openits.dms.v1.BeaconStateR\vbeaconState\x12D\n" +
@@ -4520,7 +4520,7 @@ const file_openits_dms_v1_state_proto_rawDesc = "" +
 	"\fcontrol_mode\x18\x17 \x01(\tR\vcontrolMode\x124\n" +
 	"\x17default_page_off_time_s\x18\x01 \x01(\tR\x13defaultPageOffTimeS\x122\n" +
 	"\x16default_page_on_time_s\x18\x03 \x01(\tR\x12defaultPageOnTimeS\x12V\n" +
-	"\x14illumination_control\x18\x04 \x01(\x0e2#.openits.dms.v1.IlluminationControlR\x13illuminationControl\"\xcf\x03\n" +
+	"\x14illumination_control\x18\x04 \x01(\x0e2#.openits.dms.v1.IlluminationControlR\x13illuminationControlJ\x04\b\v\x10\fR\x13controller_uptime_s\"\xcf\x03\n" +
 	"\x06Active\x12=\n" +
 	"\factivated_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\vactivatedAt\x129\n" +
 	"\n" +
@@ -4578,7 +4578,7 @@ const file_openits_dms_v1_state_proto_rawDesc = "" +
 	"\vmemory_type\x18\x01 \x01(\x0e2+.openits.dms.v1.OpenitsDmsMessageMemoryTypeR\n" +
 	"memoryType\x12\x1f\n" +
 	"\vslot_number\x18\x02 \x01(\rR\n" +
-	"slotNumber\"\xec\x02\n" +
+	"slotNumber\"\x85\x03\n" +
 	"\vEnvironment\x12.\n" +
 	"\x13ambient_light_level\x18\b \x01(\rR\x11ambientLightLevel\x126\n" +
 	"\x17ambient_illuminance_lux\x18\t \x01(\rR\x15ambientIlluminanceLux\x122\n" +
@@ -4588,9 +4588,9 @@ const file_openits_dms_v1_state_proto_rawDesc = "" +
 	"\x17sign_face_temperature_c\x18\x05 \x01(\tR\x14signFaceTemperatureC\x12\x1d\n" +
 	"\n" +
 	"fan_active\x18\x06 \x01(\bR\tfanActive\x12#\n" +
-	"\rheater_active\x18\a \x01(\bR\fheaterActive\"G\n" +
+	"\rheater_active\x18\a \x01(\bR\fheaterActiveJ\x04\b\x01\x10\x02R\x11ambient_light_lux\"U\n" +
 	"\fCabinetPower\x127\n" +
-	"\x05state\x18\x02 \x01(\v2!.openits.dms.v1.CabinetPowerStateR\x05state\"\xd5\x02\n" +
+	"\x05state\x18\x02 \x01(\v2!.openits.dms.v1.CabinetPowerStateR\x05stateJ\x04\b\x01\x10\x02R\x06config\"\xaa\x03\n" +
 	"\x11CabinetPowerState\x121\n" +
 	"\abattery\x18\x01 \x01(\v2\x17.openits.dms.v1.BatteryR\abattery\x12\x1b\n" +
 	"\tdoor_open\x18\x02 \x01(\bR\bdoorOpen\x127\n" +
@@ -4599,7 +4599,8 @@ const file_openits_dms_v1_state_proto_rawDesc = "" +
 	"\x0eline_voltage_v\x18\x05 \x01(\tR\flineVoltageV\x12>\n" +
 	"\fpower_source\x18\b \x01(\x0e2\x1b.openits.dms.v1.PowerSourceR\vpowerSource\x12%\n" +
 	"\x0etransfer_count\x18\n" +
-	" \x01(\rR\rtransferCount\"\xd5\x02\n" +
+	" \x01(\rR\rtransferCountJ\x04\b\x06\x10\aJ\x04\b\a\x10\bJ\x04\b\t\x10\n" +
+	"R\x11on_battery_policyR\x11police_panel_openR\x1bsignal_operation_on_battery\"\xd5\x02\n" +
 	"\aBattery\x12-\n" +
 	"\x13state_of_charge_pct\x18\x01 \x01(\rR\x10stateOfChargePct\x12:\n" +
 	"\x19runtime_remaining_minutes\x18\x02 \x01(\rR\x17runtimeRemainingMinutes\x12\x1b\n" +

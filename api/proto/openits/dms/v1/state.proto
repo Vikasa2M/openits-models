@@ -320,6 +320,8 @@ enum IlluminationControl {
 }
 
 message ControlState {
+  reserved 11;
+  reserved "controller_uptime_s";
   string display_state = 21;
   BeaconState beacon_state = 6;
   google.protobuf.Timestamp last_mode_change = 2;
@@ -404,6 +406,8 @@ message ControlStateFallbackReset {
 }
 
 message Environment {
+  reserved 1;
+  reserved "ambient_light_lux";
   uint32 ambient_light_level = 8;
   uint32 ambient_illuminance_lux = 9;
   string cabinet_temperature_c = 2;
@@ -415,10 +419,14 @@ message Environment {
 }
 
 message CabinetPower {
+  reserved 1;
+  reserved "config";
   CabinetPowerState state = 2;
 }
 
 message CabinetPowerState {
+  reserved 6, 7, 9;
+  reserved "on_battery_policy", "police_panel_open", "signal_operation_on_battery";
   Battery battery = 1;
   bool door_open = 2;
   Generator generator = 3;

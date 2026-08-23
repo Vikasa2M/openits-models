@@ -78,6 +78,8 @@ message CameraStateLinearReference {
 }
 
 message Mounting {
+  reserved 3;
+  reserved "co_located_device";
   MountingStructure structure = 1;
   string height_m = 2;
   uint32 pan_reference_offset_deg = 4;

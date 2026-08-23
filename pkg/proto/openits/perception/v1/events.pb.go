@@ -764,7 +764,7 @@ const file_openits_perception_v1_events_proto_rawDesc = "" +
 	"occurredAt\x12\x14\n" +
 	"\x05owner\x18\x04 \x01(\tR\x05owner\x12\x1a\n" +
 	"\bsequence\x18\x05 \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\x06 \x01(\tR\x0esourceDeviceId\"\xbb\x02\n" +
+	"\x10source_device_id\x18\x06 \x01(\tR\x0esourceDeviceId\"\xea\x02\n" +
 	"\x16ZoneIntervalReportZone\x12\x17\n" +
 	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12A\n" +
 	"\x0einterval_start\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\rintervalStart\x12.\n" +
@@ -772,7 +772,7 @@ const file_openits_perception_v1_events_proto_rawDesc = "" +
 	"\x0ecrossed_volume\x18\x06 \x01(\rR\rcrossedVolume\x12*\n" +
 	"\x11average_speed_kmh\x18\x04 \x01(\tR\x0faverageSpeedKmh\x12B\n" +
 	"\vclass_count\x18\x05 \x03(\v2!.openits.perception.v1.ClassCountR\n" +
-	"classCount\"8\n" +
+	"classCountJ\x04\b\a\x10\bJ\x04\b\b\x10\tR\x0eobserved_countR\x11occupancy_percent\"8\n" +
 	"\n" +
 	"ClassCount\x12\x14\n" +
 	"\x05class\x18\x01 \x01(\tR\x05class\x12\x14\n" +

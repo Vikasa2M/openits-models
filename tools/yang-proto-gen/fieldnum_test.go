@@ -117,3 +117,65 @@ func TestFieldLock_unreservedKindSourceGetNormalTags(t *testing.T) {
 		t.Errorf("unmarked `source` must not get tag 100, got %d", got2["source"])
 	}
 }
+
+// A dropped field's tag stays in the lock so it is never reused; Retired is
+// what surfaces it to the emitter so the .proto can say `reserved`. Without
+// that, the lock's guarantee is invisible to protoc, to `buf breaking`, and
+// to anyone reading the generated proto.
+func TestFieldLock_retiredSurfacesDroppedFields(t *testing.T) {
+	l := &FieldLock{Messages: map[string]map[string]int{}}
+	first := l.Assign("M", []string{"a", "b", "c"}, nil)
+
+	// Nothing dropped yet.
+	if names, tags := l.Retired("M", first); len(names) != 0 || len(tags) != 0 {
+		t.Fatalf("no fields dropped, want no retired; got names=%v tags=%v", names, tags)
+	}
+
+	// Drop "a" and "b"; keep "c".
+	live := l.Assign("M", []string{"c"}, nil)
+	names, tags := l.Retired("M", live)
+	if len(names) != 2 || names[0] != "a" || names[1] != "b" {
+		t.Errorf("retired names = %v, want [a b] ordered by tag", names)
+	}
+	if len(tags) != 2 || tags[0] != first["a"] || tags[1] != first["b"] {
+		t.Errorf("retired tags = %v, want [%d %d]", tags, first["a"], first["b"])
+	}
+}
+
+// A field that comes back reclaims its original tag rather than staying
+// retired — so reserving its NAME is safe. If it did not, reserving the name
+// on removal would permanently block a leaf from ever returning.
+func TestFieldLock_returningFieldReclaimsTagAndStopsBeingRetired(t *testing.T) {
+	l := &FieldLock{Messages: map[string]map[string]int{}}
+	first := l.Assign("M", []string{"a", "b"}, nil)
+	wantB := first["b"]
+
+	// Drop "b" — now retired.
+	live := l.Assign("M", []string{"a"}, nil)
+	if names, _ := l.Retired("M", live); len(names) != 1 || names[0] != "b" {
+		t.Fatalf("after drop, retired = %v, want [b]", names)
+	}
+
+	// Bring "b" back alongside a genuinely new field.
+	live = l.Assign("M", []string{"a", "b", "z"}, nil)
+	if live["b"] != wantB {
+		t.Errorf("returning field b got tag %d, want its original %d", live["b"], wantB)
+	}
+	if names, _ := l.Retired("M", live); len(names) != 0 {
+		t.Errorf("b returned, so nothing should be retired; got %v", names)
+	}
+	if live["z"] == wantB {
+		t.Errorf("new field z stole b's tag %d", wantB)
+	}
+}
+
+func TestEmitReserved_rendersNumbersAndNames(t *testing.T) {
+	if got := emitReserved(nil, nil); got != "" {
+		t.Errorf("no retired fields should emit nothing, got %q", got)
+	}
+	got := emitReserved([]string{"capacity", "old_name"}, []int{3, 7})
+	want := "  reserved 3, 7;\n  reserved \"capacity\", \"old_name\";\n"
+	if got != want {
+		t.Errorf("emitReserved =\n%q\nwant\n%q", got, want)
+	}
+}

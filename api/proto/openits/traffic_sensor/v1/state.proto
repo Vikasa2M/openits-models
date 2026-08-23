@@ -205,6 +205,8 @@ message QueuesQueueZone {
 }
 
 message Diagnostics {
+  reserved 5;
+  reserved "rf_signal_quality";
   uint32 signal_quality = 1;
   string internal_temperature_c = 6;
   uint64 uptime_s = 7;

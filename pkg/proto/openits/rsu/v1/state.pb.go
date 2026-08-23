@@ -8224,7 +8224,7 @@ var File_openits_rsu_v1_state_proto protoreflect.FileDescriptor
 
 const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\n" +
-	"\x1aopenits/rsu/v1/state.proto\x12\x0eopenits.rsu.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd2\x04\n" +
+	"\x1aopenits/rsu/v1/state.proto\x12\x0eopenits.rsu.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xfc\x04\n" +
 	"\x03Rsu\x121\n" +
 	"\x06config\x18\x01 \x01(\v2\x19.openits.rsu.v1.RsuConfigR\x06config\x12.\n" +
 	"\x05state\x18\x02 \x01(\v2\x18.openits.rsu.v1.RsuStateR\x05state\x127\n" +
@@ -8236,7 +8236,9 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x06faults\x18\r \x01(\v2\x16.openits.rsu.v1.FaultsR\x06faults\x124\n" +
 	"\bchannels\x18\x06 \x01(\v2\x18.openits.rsu.v1.ChannelsR\bchannels\x124\n" +
 	"\bmessages\x18\a \x01(\v2\x18.openits.rsu.v1.MessagesR\bmessages\x127\n" +
-	"\bsecurity\x18\b \x01(\v2\x1b.openits.rsu.v1.RsuSecurityR\bsecurity\"\xb0\x03\n" +
+	"\bsecurity\x18\b \x01(\v2\x1b.openits.rsu.v1.RsuSecurityR\bsecurityJ\x04\b\t\x10\n" +
+	"J\x04\b\n" +
+	"\x10\vR\x16configured_time_sourceR\x04mode\"\xb0\x03\n" +
 	"\tRsuConfig\x12\x1c\n" +
 	"\televation\x18\x01 \x01(\tR\televation\x12\x18\n" +
 	"\aheading\x18\x02 \x01(\rR\aheading\x12\x0e\n" +
@@ -8312,7 +8314,7 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x0fstored_messages\x18\x01 \x01(\rR\x0estoredMessages\x120\n" +
 	"\x14storage_used_percent\x18\x02 \x01(\rR\x12storageUsedPercent\x128\n" +
 	"\x18messages_forwarded_today\x18\x03 \x01(\x04R\x16messagesForwardedToday\x12,\n" +
-	"\x12oldest_message_age\x18\x04 \x01(\rR\x10oldestMessageAge\"\xa0\b\n" +
+	"\x12oldest_message_age\x18\x04 \x01(\rR\x10oldestMessageAge\"\xe5\b\n" +
 	"\vDiagnostics\x12+\n" +
 	"\x05radio\x18\x0f \x01(\v2\x15.openits.rsu.v1.RadioR\x05radio\x125\n" +
 	"\tspat_sync\x18\x10 \x01(\v2\x18.openits.rsu.v1.SpatSyncR\bspatSync\x127\n" +
@@ -8337,7 +8339,8 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\rrestart_count\x18\x1e \x01(\rR\frestartCount\x12P\n" +
 	"\x12temperature_sensor\x18\x19 \x03(\v2!.openits.rsu.v1.TemperatureSensorR\x11temperatureSensor\x12%\n" +
 	"\x0euptime_seconds\x18\x1f \x01(\x04R\ruptimeSeconds\x12M\n" +
-	"\x11vehicle_analytics\x18\x1a \x01(\v2 .openits.rsu.v1.VehicleAnalyticsR\x10vehicleAnalytics\"\x8b\x02\n" +
+	"\x11vehicle_analytics\x18\x1a \x01(\v2 .openits.rsu.v1.VehicleAnalyticsR\x10vehicleAnalyticsJ\x04\b\x16\x10\x17J\x04\b \x10!J\x04\b!\x10\"J\x04\b\"\x10#R\bcellularR\n" +
+	"time_validR\bholdoverR\vactive_mode\"\xa2\x02\n" +
 	"\x05Radio\x12\x19\n" +
 	"\brssi_dbm\x18\x01 \x01(\x05R\arssiDbm\x12&\n" +
 	"\x0fnoise_floor_dbm\x18\x02 \x01(\x05R\rnoiseFloorDbm\x12\x15\n" +
@@ -8347,7 +8350,7 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\voperational\x18\r \x01(\bR\voperational\x12\x1d\n" +
 	"\n" +
 	"fault_type\x18\x0e \x01(\tR\tfaultType\x12H\n" +
-	"\x12last_successful_tx\x18\x10 \x01(\v2\x1a.google.protobuf.TimestampR\x10lastSuccessfulTx\"\xf2\x03\n" +
+	"\x12last_successful_tx\x18\x10 \x01(\v2\x1a.google.protobuf.TimestampR\x10lastSuccessfulTxJ\x04\b\f\x10\rR\x0fcollision_count\"\x87\x04\n" +
 	"\bSpatSync\x12/\n" +
 	"\x14asc_poll_interval_ms\x18\x02 \x01(\rR\x11ascPollIntervalMs\x12B\n" +
 	"\x0flast_asc_update\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\rlastAscUpdate\x120\n" +
@@ -8359,7 +8362,7 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x14min_yellow_violation\x18\t \x01(\rR\x12minYellowViolation\x12,\n" +
 	"\x12max_green_exceeded\x18\n" +
 	" \x01(\rR\x10maxGreenExceeded\x12(\n" +
-	"\x10phase_gap_errors\x18\v \x01(\rR\x0ephaseGapErrors\"\x8c\x01\n" +
+	"\x10phase_gap_errors\x18\v \x01(\rR\x0ephaseGapErrorsJ\x04\b\x01\x10\x02R\rasc_connected\"\x8c\x01\n" +
 	"\tResources\x12%\n" +
 	"\x03cpu\x18\x01 \x01(\v2\x13.openits.rsu.v1.CpuR\x03cpu\x12(\n" +
 	"\x04disk\x18\x02 \x01(\v2\x14.openits.rsu.v1.DiskR\x04disk\x12.\n" +
@@ -8491,10 +8494,11 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x19\n" +
 	"\bfault_id\x18\x04 \x01(\tR\afaultId\x12A\n" +
 	"\x0efirst_observed\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x129\n" +
-	"\bseverity\x18\x06 \x01(\x0e2\x1d.openits.rsu.v1.FaultSeverityR\bseverity\"m\n" +
+	"\bseverity\x18\x06 \x01(\x0e2\x1d.openits.rsu.v1.FaultSeverityR\bseverity\"\x7f\n" +
 	"\bChannels\x12.\n" +
 	"\x13reported_radio_tech\x18\x03 \x01(\tR\x11reportedRadioTech\x121\n" +
-	"\achannel\x18\x01 \x03(\v2\x17.openits.rsu.v1.ChannelR\achannel\"\xb2\x01\n" +
+	"\achannel\x18\x01 \x03(\v2\x17.openits.rsu.v1.ChannelR\achannelJ\x04\b\x02\x10\x03R\n" +
+	"radio_type\"\xcd\x01\n" +
 	"\aChannel\x12\x1d\n" +
 	"\n" +
 	"channel_id\x18\x06 \x01(\tR\tchannelId\x12\x1d\n" +
@@ -8502,7 +8506,7 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"radio_tech\x18\a \x01(\tR\tradioTech\x125\n" +
 	"\x06config\x18\t \x01(\v2\x1d.openits.rsu.v1.ChannelConfigR\x06config\x122\n" +
 	"\x05state\x18\n" +
-	" \x01(\v2\x1c.openits.rsu.v1.ChannelStateR\x05state\"\x98\x02\n" +
+	" \x01(\v2\x1c.openits.rsu.v1.ChannelStateR\x05stateJ\x04\b\b\x10\tR\x13dsrc_channel_number\"\x98\x02\n" +
 	"\rChannelConfig\x12.\n" +
 	"\x13dsrc_channel_number\x18\a \x01(\rR\x11dsrcChannelNumber\x12\x18\n" +
 	"\aenabled\x18\x01 \x01(\bR\aenabled\x12\x12\n" +
@@ -8622,7 +8626,7 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\aMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x125\n" +
 	"\x06config\x18\x02 \x01(\v2\x1d.openits.rsu.v1.MessageConfigR\x06config\x122\n" +
-	"\x05state\x18\x03 \x01(\v2\x1c.openits.rsu.v1.MessageStateR\x05state\"\xb4\x02\n" +
+	"\x05state\x18\x03 \x01(\v2\x1c.openits.rsu.v1.MessageStateR\x05state\"\xd6\x02\n" +
 	"\rMessageConfig\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n" +
 	"\x04psid\x18\n" +
@@ -8634,7 +8638,8 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x10duration_minutes\x18\v \x01(\rR\x0fdurationMinutes\x12\x1b\n" +
 	"\titis_code\x18\t \x03(\rR\bitisCode\x12\x12\n" +
 	"\x04text\x18\a \x01(\tR\x04text\x12.\n" +
-	"\x06region\x18\b \x01(\v2\x16.openits.rsu.v1.RegionR\x06region\"\xe1\x01\n" +
+	"\x06region\x18\b \x01(\v2\x16.openits.rsu.v1.RegionR\x06regionJ\x04\b\x05\x10\x06J\x04\b\x06\x10\aR\bend_timeR\n" +
+	"itis_codes\"\xe1\x01\n" +
 	"\x06Region\x12\x16\n" +
 	"\x06radius\x18\x01 \x01(\rR\x06radius\x12\x1c\n" +
 	"\tdirection\x18\x02 \x01(\rR\tdirection\x12/\n" +
@@ -8758,7 +8763,7 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x06action\x18\x02 \x01(\x0e2&.openits.rsu.v1.PriorityDecisionActionR\x06action\x12\x16\n" +
 	"\x06reason\x18\x03 \x01(\tR\x06reason\"X\n" +
 	"\fMessageStats\x12H\n" +
-	"\x10per_message_type\x18\x01 \x03(\v2\x1e.openits.rsu.v1.PerMessageTypeR\x0eperMessageType\"\xec\x02\n" +
+	"\x10per_message_type\x18\x01 \x03(\v2\x1e.openits.rsu.v1.PerMessageTypeR\x0eperMessageType\"\x94\x03\n" +
 	"\x0ePerMessageType\x12!\n" +
 	"\fmessage_type\x18\x01 \x01(\tR\vmessageType\x12\x12\n" +
 	"\x04psid\x18\r \x01(\rR\x04psid\x12\x1f\n" +
@@ -8773,7 +8778,8 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	" \x01(\rR\n" +
 	"ratePerSec\x12'\n" +
 	"\x0fencoding_errors\x18\v \x01(\x04R\x0eencodingErrors\x12'\n" +
-	"\x0fdecoding_errors\x18\f \x01(\x04R\x0edecodingErrors\"\xa7\x01\n" +
+	"\x0fdecoding_errors\x18\f \x01(\x04R\x0edecodingErrorsJ\x04\b\x05\x10\x06J\x04\b\x06\x10\aR\n" +
+	"total_sentR\x0etotal_received\"\xa7\x01\n" +
 	"\rMessageErrors\x12A\n" +
 	"\bsecurity\x18\x01 \x01(\v2%.openits.rsu.v1.MessageErrorsSecurityR\bsecurity\x12+\n" +
 	"\x05drops\x18\x02 \x01(\v2\x15.openits.rsu.v1.DropsR\x05drops\x12&\n" +
