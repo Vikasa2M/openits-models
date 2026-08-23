@@ -187,49 +187,49 @@ func (SignalQuality) EnumDescriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{2}
 }
 
-type WindowType int32
+type StatsWindowType int32
 
 const (
-	WindowType_WINDOW_TYPE_ROLLING  WindowType = 0
-	WindowType_WINDOW_TYPE_TUMBLING WindowType = 1
+	StatsWindowType_STATS_WINDOW_TYPE_ROLLING  StatsWindowType = 0
+	StatsWindowType_STATS_WINDOW_TYPE_TUMBLING StatsWindowType = 1
 )
 
-// Enum value maps for WindowType.
+// Enum value maps for StatsWindowType.
 var (
-	WindowType_name = map[int32]string{
-		0: "WINDOW_TYPE_ROLLING",
-		1: "WINDOW_TYPE_TUMBLING",
+	StatsWindowType_name = map[int32]string{
+		0: "STATS_WINDOW_TYPE_ROLLING",
+		1: "STATS_WINDOW_TYPE_TUMBLING",
 	}
-	WindowType_value = map[string]int32{
-		"WINDOW_TYPE_ROLLING":  0,
-		"WINDOW_TYPE_TUMBLING": 1,
+	StatsWindowType_value = map[string]int32{
+		"STATS_WINDOW_TYPE_ROLLING":  0,
+		"STATS_WINDOW_TYPE_TUMBLING": 1,
 	}
 )
 
-func (x WindowType) Enum() *WindowType {
-	p := new(WindowType)
+func (x StatsWindowType) Enum() *StatsWindowType {
+	p := new(StatsWindowType)
 	*p = x
 	return p
 }
 
-func (x WindowType) String() string {
+func (x StatsWindowType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (WindowType) Descriptor() protoreflect.EnumDescriptor {
+func (StatsWindowType) Descriptor() protoreflect.EnumDescriptor {
 	return file_openits_rsu_v1_state_proto_enumTypes[3].Descriptor()
 }
 
-func (WindowType) Type() protoreflect.EnumType {
+func (StatsWindowType) Type() protoreflect.EnumType {
 	return &file_openits_rsu_v1_state_proto_enumTypes[3]
 }
 
-func (x WindowType) Number() protoreflect.EnumNumber {
+func (x StatsWindowType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use WindowType.Descriptor instead.
-func (WindowType) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use StatsWindowType.Descriptor instead.
+func (StatsWindowType) EnumDescriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{3}
 }
 
@@ -337,147 +337,147 @@ func (FaultSeverity) EnumDescriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{5}
 }
 
-type Policy int32
+type DccPolicy int32
 
 const (
-	Policy_POLICY_DISABLED Policy = 0
-	Policy_POLICY_REACTIVE Policy = 1
-	Policy_POLICY_ADAPTIVE Policy = 2
+	DccPolicy_DCC_POLICY_DISABLED DccPolicy = 0
+	DccPolicy_DCC_POLICY_REACTIVE DccPolicy = 1
+	DccPolicy_DCC_POLICY_ADAPTIVE DccPolicy = 2
 )
 
-// Enum value maps for Policy.
+// Enum value maps for DccPolicy.
 var (
-	Policy_name = map[int32]string{
-		0: "POLICY_DISABLED",
-		1: "POLICY_REACTIVE",
-		2: "POLICY_ADAPTIVE",
+	DccPolicy_name = map[int32]string{
+		0: "DCC_POLICY_DISABLED",
+		1: "DCC_POLICY_REACTIVE",
+		2: "DCC_POLICY_ADAPTIVE",
 	}
-	Policy_value = map[string]int32{
-		"POLICY_DISABLED": 0,
-		"POLICY_REACTIVE": 1,
-		"POLICY_ADAPTIVE": 2,
+	DccPolicy_value = map[string]int32{
+		"DCC_POLICY_DISABLED": 0,
+		"DCC_POLICY_REACTIVE": 1,
+		"DCC_POLICY_ADAPTIVE": 2,
 	}
 )
 
-func (x Policy) Enum() *Policy {
-	p := new(Policy)
+func (x DccPolicy) Enum() *DccPolicy {
+	p := new(DccPolicy)
 	*p = x
 	return p
 }
 
-func (x Policy) String() string {
+func (x DccPolicy) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (Policy) Descriptor() protoreflect.EnumDescriptor {
+func (DccPolicy) Descriptor() protoreflect.EnumDescriptor {
 	return file_openits_rsu_v1_state_proto_enumTypes[6].Descriptor()
 }
 
-func (Policy) Type() protoreflect.EnumType {
+func (DccPolicy) Type() protoreflect.EnumType {
 	return &file_openits_rsu_v1_state_proto_enumTypes[6]
 }
 
-func (x Policy) Number() protoreflect.EnumNumber {
+func (x DccPolicy) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use Policy.Descriptor instead.
-func (Policy) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use DccPolicy.Descriptor instead.
+func (DccPolicy) EnumDescriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{6}
 }
 
-type SourceMode int32
+type BroadcastSourceMode int32
 
 const (
-	SourceMode_SOURCE_MODE_RSU_GENERATED            SourceMode = 0
-	SourceMode_SOURCE_MODE_IMMEDIATE_FORWARD_INGEST SourceMode = 1
+	BroadcastSourceMode_BROADCAST_SOURCE_MODE_RSU_GENERATED            BroadcastSourceMode = 0
+	BroadcastSourceMode_BROADCAST_SOURCE_MODE_IMMEDIATE_FORWARD_INGEST BroadcastSourceMode = 1
 )
 
-// Enum value maps for SourceMode.
+// Enum value maps for BroadcastSourceMode.
 var (
-	SourceMode_name = map[int32]string{
-		0: "SOURCE_MODE_RSU_GENERATED",
-		1: "SOURCE_MODE_IMMEDIATE_FORWARD_INGEST",
+	BroadcastSourceMode_name = map[int32]string{
+		0: "BROADCAST_SOURCE_MODE_RSU_GENERATED",
+		1: "BROADCAST_SOURCE_MODE_IMMEDIATE_FORWARD_INGEST",
 	}
-	SourceMode_value = map[string]int32{
-		"SOURCE_MODE_RSU_GENERATED":            0,
-		"SOURCE_MODE_IMMEDIATE_FORWARD_INGEST": 1,
+	BroadcastSourceMode_value = map[string]int32{
+		"BROADCAST_SOURCE_MODE_RSU_GENERATED":            0,
+		"BROADCAST_SOURCE_MODE_IMMEDIATE_FORWARD_INGEST": 1,
 	}
 )
 
-func (x SourceMode) Enum() *SourceMode {
-	p := new(SourceMode)
+func (x BroadcastSourceMode) Enum() *BroadcastSourceMode {
+	p := new(BroadcastSourceMode)
 	*p = x
 	return p
 }
 
-func (x SourceMode) String() string {
+func (x BroadcastSourceMode) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (SourceMode) Descriptor() protoreflect.EnumDescriptor {
+func (BroadcastSourceMode) Descriptor() protoreflect.EnumDescriptor {
 	return file_openits_rsu_v1_state_proto_enumTypes[7].Descriptor()
 }
 
-func (SourceMode) Type() protoreflect.EnumType {
+func (BroadcastSourceMode) Type() protoreflect.EnumType {
 	return &file_openits_rsu_v1_state_proto_enumTypes[7]
 }
 
-func (x SourceMode) Number() protoreflect.EnumNumber {
+func (x BroadcastSourceMode) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use SourceMode.Descriptor instead.
-func (SourceMode) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use BroadcastSourceMode.Descriptor instead.
+func (BroadcastSourceMode) EnumDescriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{7}
 }
 
-type Transport int32
+type IngestTransport int32
 
 const (
-	Transport_TRANSPORT_UDP  Transport = 0
-	Transport_TRANSPORT_TCP  Transport = 1
-	Transport_TRANSPORT_MQTT Transport = 2
+	IngestTransport_INGEST_TRANSPORT_UDP  IngestTransport = 0
+	IngestTransport_INGEST_TRANSPORT_TCP  IngestTransport = 1
+	IngestTransport_INGEST_TRANSPORT_MQTT IngestTransport = 2
 )
 
-// Enum value maps for Transport.
+// Enum value maps for IngestTransport.
 var (
-	Transport_name = map[int32]string{
-		0: "TRANSPORT_UDP",
-		1: "TRANSPORT_TCP",
-		2: "TRANSPORT_MQTT",
+	IngestTransport_name = map[int32]string{
+		0: "INGEST_TRANSPORT_UDP",
+		1: "INGEST_TRANSPORT_TCP",
+		2: "INGEST_TRANSPORT_MQTT",
 	}
-	Transport_value = map[string]int32{
-		"TRANSPORT_UDP":  0,
-		"TRANSPORT_TCP":  1,
-		"TRANSPORT_MQTT": 2,
+	IngestTransport_value = map[string]int32{
+		"INGEST_TRANSPORT_UDP":  0,
+		"INGEST_TRANSPORT_TCP":  1,
+		"INGEST_TRANSPORT_MQTT": 2,
 	}
 )
 
-func (x Transport) Enum() *Transport {
-	p := new(Transport)
+func (x IngestTransport) Enum() *IngestTransport {
+	p := new(IngestTransport)
 	*p = x
 	return p
 }
 
-func (x Transport) String() string {
+func (x IngestTransport) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (Transport) Descriptor() protoreflect.EnumDescriptor {
+func (IngestTransport) Descriptor() protoreflect.EnumDescriptor {
 	return file_openits_rsu_v1_state_proto_enumTypes[8].Descriptor()
 }
 
-func (Transport) Type() protoreflect.EnumType {
+func (IngestTransport) Type() protoreflect.EnumType {
 	return &file_openits_rsu_v1_state_proto_enumTypes[8]
 }
 
-func (x Transport) Number() protoreflect.EnumNumber {
+func (x IngestTransport) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use Transport.Descriptor instead.
-func (Transport) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use IngestTransport.Descriptor instead.
+func (IngestTransport) EnumDescriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{8}
 }
 
@@ -741,49 +741,49 @@ func (OpenitsRsuDecisionAuthority) EnumDescriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{13}
 }
 
-type Action int32
+type PriorityDecisionAction int32
 
 const (
-	Action_ACTION_APPROVE Action = 0
-	Action_ACTION_DENY    Action = 1
+	PriorityDecisionAction_PRIORITY_DECISION_ACTION_APPROVE PriorityDecisionAction = 0
+	PriorityDecisionAction_PRIORITY_DECISION_ACTION_DENY    PriorityDecisionAction = 1
 )
 
-// Enum value maps for Action.
+// Enum value maps for PriorityDecisionAction.
 var (
-	Action_name = map[int32]string{
-		0: "ACTION_APPROVE",
-		1: "ACTION_DENY",
+	PriorityDecisionAction_name = map[int32]string{
+		0: "PRIORITY_DECISION_ACTION_APPROVE",
+		1: "PRIORITY_DECISION_ACTION_DENY",
 	}
-	Action_value = map[string]int32{
-		"ACTION_APPROVE": 0,
-		"ACTION_DENY":    1,
+	PriorityDecisionAction_value = map[string]int32{
+		"PRIORITY_DECISION_ACTION_APPROVE": 0,
+		"PRIORITY_DECISION_ACTION_DENY":    1,
 	}
 )
 
-func (x Action) Enum() *Action {
-	p := new(Action)
+func (x PriorityDecisionAction) Enum() *PriorityDecisionAction {
+	p := new(PriorityDecisionAction)
 	*p = x
 	return p
 }
 
-func (x Action) String() string {
+func (x PriorityDecisionAction) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (Action) Descriptor() protoreflect.EnumDescriptor {
+func (PriorityDecisionAction) Descriptor() protoreflect.EnumDescriptor {
 	return file_openits_rsu_v1_state_proto_enumTypes[14].Descriptor()
 }
 
-func (Action) Type() protoreflect.EnumType {
+func (PriorityDecisionAction) Type() protoreflect.EnumType {
 	return &file_openits_rsu_v1_state_proto_enumTypes[14]
 }
 
-func (x Action) Number() protoreflect.EnumNumber {
+func (x PriorityDecisionAction) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use Action.Descriptor instead.
-func (Action) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use PriorityDecisionAction.Descriptor instead.
+func (PriorityDecisionAction) EnumDescriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{14}
 }
 
@@ -845,110 +845,110 @@ func (EnrollmentStatus) EnumDescriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{15}
 }
 
-type Type int32
+type CertificateType int32
 
 const (
-	Type_TYPE_ENROLLMENT     Type = 0
-	Type_TYPE_PSEUDONYM      Type = 1
-	Type_TYPE_APPLICATION    Type = 2
-	Type_TYPE_IDENTIFICATION Type = 3
+	CertificateType_CERTIFICATE_TYPE_ENROLLMENT     CertificateType = 0
+	CertificateType_CERTIFICATE_TYPE_PSEUDONYM      CertificateType = 1
+	CertificateType_CERTIFICATE_TYPE_APPLICATION    CertificateType = 2
+	CertificateType_CERTIFICATE_TYPE_IDENTIFICATION CertificateType = 3
 )
 
-// Enum value maps for Type.
+// Enum value maps for CertificateType.
 var (
-	Type_name = map[int32]string{
-		0: "TYPE_ENROLLMENT",
-		1: "TYPE_PSEUDONYM",
-		2: "TYPE_APPLICATION",
-		3: "TYPE_IDENTIFICATION",
+	CertificateType_name = map[int32]string{
+		0: "CERTIFICATE_TYPE_ENROLLMENT",
+		1: "CERTIFICATE_TYPE_PSEUDONYM",
+		2: "CERTIFICATE_TYPE_APPLICATION",
+		3: "CERTIFICATE_TYPE_IDENTIFICATION",
 	}
-	Type_value = map[string]int32{
-		"TYPE_ENROLLMENT":     0,
-		"TYPE_PSEUDONYM":      1,
-		"TYPE_APPLICATION":    2,
-		"TYPE_IDENTIFICATION": 3,
+	CertificateType_value = map[string]int32{
+		"CERTIFICATE_TYPE_ENROLLMENT":     0,
+		"CERTIFICATE_TYPE_PSEUDONYM":      1,
+		"CERTIFICATE_TYPE_APPLICATION":    2,
+		"CERTIFICATE_TYPE_IDENTIFICATION": 3,
 	}
 )
 
-func (x Type) Enum() *Type {
-	p := new(Type)
+func (x CertificateType) Enum() *CertificateType {
+	p := new(CertificateType)
 	*p = x
 	return p
 }
 
-func (x Type) String() string {
+func (x CertificateType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (Type) Descriptor() protoreflect.EnumDescriptor {
+func (CertificateType) Descriptor() protoreflect.EnumDescriptor {
 	return file_openits_rsu_v1_state_proto_enumTypes[16].Descriptor()
 }
 
-func (Type) Type() protoreflect.EnumType {
+func (CertificateType) Type() protoreflect.EnumType {
 	return &file_openits_rsu_v1_state_proto_enumTypes[16]
 }
 
-func (x Type) Number() protoreflect.EnumNumber {
+func (x CertificateType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use Type.Descriptor instead.
-func (Type) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use CertificateType.Descriptor instead.
+func (CertificateType) EnumDescriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{16}
 }
 
-type RegionType int32
+type GeographicRegionType int32
 
 const (
-	RegionType_REGION_TYPE_NONE        RegionType = 0
-	RegionType_REGION_TYPE_CIRCULAR    RegionType = 1
-	RegionType_REGION_TYPE_RECTANGULAR RegionType = 2
-	RegionType_REGION_TYPE_POLYGONAL   RegionType = 3
-	RegionType_REGION_TYPE_IDENTIFIED  RegionType = 4
+	GeographicRegionType_GEOGRAPHIC_REGION_TYPE_NONE        GeographicRegionType = 0
+	GeographicRegionType_GEOGRAPHIC_REGION_TYPE_CIRCULAR    GeographicRegionType = 1
+	GeographicRegionType_GEOGRAPHIC_REGION_TYPE_RECTANGULAR GeographicRegionType = 2
+	GeographicRegionType_GEOGRAPHIC_REGION_TYPE_POLYGONAL   GeographicRegionType = 3
+	GeographicRegionType_GEOGRAPHIC_REGION_TYPE_IDENTIFIED  GeographicRegionType = 4
 )
 
-// Enum value maps for RegionType.
+// Enum value maps for GeographicRegionType.
 var (
-	RegionType_name = map[int32]string{
-		0: "REGION_TYPE_NONE",
-		1: "REGION_TYPE_CIRCULAR",
-		2: "REGION_TYPE_RECTANGULAR",
-		3: "REGION_TYPE_POLYGONAL",
-		4: "REGION_TYPE_IDENTIFIED",
+	GeographicRegionType_name = map[int32]string{
+		0: "GEOGRAPHIC_REGION_TYPE_NONE",
+		1: "GEOGRAPHIC_REGION_TYPE_CIRCULAR",
+		2: "GEOGRAPHIC_REGION_TYPE_RECTANGULAR",
+		3: "GEOGRAPHIC_REGION_TYPE_POLYGONAL",
+		4: "GEOGRAPHIC_REGION_TYPE_IDENTIFIED",
 	}
-	RegionType_value = map[string]int32{
-		"REGION_TYPE_NONE":        0,
-		"REGION_TYPE_CIRCULAR":    1,
-		"REGION_TYPE_RECTANGULAR": 2,
-		"REGION_TYPE_POLYGONAL":   3,
-		"REGION_TYPE_IDENTIFIED":  4,
+	GeographicRegionType_value = map[string]int32{
+		"GEOGRAPHIC_REGION_TYPE_NONE":        0,
+		"GEOGRAPHIC_REGION_TYPE_CIRCULAR":    1,
+		"GEOGRAPHIC_REGION_TYPE_RECTANGULAR": 2,
+		"GEOGRAPHIC_REGION_TYPE_POLYGONAL":   3,
+		"GEOGRAPHIC_REGION_TYPE_IDENTIFIED":  4,
 	}
 )
 
-func (x RegionType) Enum() *RegionType {
-	p := new(RegionType)
+func (x GeographicRegionType) Enum() *GeographicRegionType {
+	p := new(GeographicRegionType)
 	*p = x
 	return p
 }
 
-func (x RegionType) String() string {
+func (x GeographicRegionType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (RegionType) Descriptor() protoreflect.EnumDescriptor {
+func (GeographicRegionType) Descriptor() protoreflect.EnumDescriptor {
 	return file_openits_rsu_v1_state_proto_enumTypes[17].Descriptor()
 }
 
-func (RegionType) Type() protoreflect.EnumType {
+func (GeographicRegionType) Type() protoreflect.EnumType {
 	return &file_openits_rsu_v1_state_proto_enumTypes[17]
 }
 
-func (x RegionType) Number() protoreflect.EnumNumber {
+func (x GeographicRegionType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use RegionType.Descriptor instead.
-func (RegionType) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use GeographicRegionType.Descriptor instead.
+func (GeographicRegionType) EnumDescriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{17}
 }
 
@@ -3306,7 +3306,7 @@ func (x *VehicleAnalytics) GetApproach() []*Approach {
 
 type SampleBasis struct {
 	state                  protoimpl.MessageState `protogen:"open.v1"`
-	WindowType             WindowType             `protobuf:"varint,1,opt,name=window_type,json=windowType,proto3,enum=openits.rsu.v1.WindowType" json:"window_type,omitempty"`
+	WindowType             StatsWindowType        `protobuf:"varint,1,opt,name=window_type,json=windowType,proto3,enum=openits.rsu.v1.StatsWindowType" json:"window_type,omitempty"`
 	StatsWindowSeconds     uint32                 `protobuf:"varint,2,opt,name=stats_window_seconds,json=statsWindowSeconds,proto3" json:"stats_window_seconds,omitempty"`
 	SampleCount            uint32                 `protobuf:"varint,3,opt,name=sample_count,json=sampleCount,proto3" json:"sample_count,omitempty"`
 	PenetrationEstimatePct string                 `protobuf:"bytes,4,opt,name=penetration_estimate_pct,json=penetrationEstimatePct,proto3" json:"penetration_estimate_pct,omitempty"`
@@ -3345,11 +3345,11 @@ func (*SampleBasis) Descriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{28}
 }
 
-func (x *SampleBasis) GetWindowType() WindowType {
+func (x *SampleBasis) GetWindowType() StatsWindowType {
 	if x != nil {
 		return x.WindowType
 	}
-	return WindowType_WINDOW_TYPE_ROLLING
+	return StatsWindowType_STATS_WINDOW_TYPE_ROLLING
 }
 
 func (x *SampleBasis) GetStatsWindowSeconds() uint32 {
@@ -4154,7 +4154,7 @@ func (x *ChannelConfig) GetDcc() *Dcc {
 
 type Dcc struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
-	Policy           Policy                 `protobuf:"varint,1,opt,name=policy,proto3,enum=openits.rsu.v1.Policy" json:"policy,omitempty"`
+	Policy           DccPolicy              `protobuf:"varint,1,opt,name=policy,proto3,enum=openits.rsu.v1.DccPolicy" json:"policy,omitempty"`
 	CbrTargetPercent uint32                 `protobuf:"varint,2,opt,name=cbr_target_percent,json=cbrTargetPercent,proto3" json:"cbr_target_percent,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
@@ -4190,11 +4190,11 @@ func (*Dcc) Descriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{40}
 }
 
-func (x *Dcc) GetPolicy() Policy {
+func (x *Dcc) GetPolicy() DccPolicy {
 	if x != nil {
 		return x.Policy
 	}
-	return Policy_POLICY_DISABLED
+	return DccPolicy_DCC_POLICY_DISABLED
 }
 
 func (x *Dcc) GetCbrTargetPercent() uint32 {
@@ -4526,7 +4526,7 @@ type SpatConfig struct {
 	BroadcastInterval       uint32                    `protobuf:"varint,2,opt,name=broadcast_interval,json=broadcastInterval,proto3" json:"broadcast_interval,omitempty"`
 	MaxDataAgeMs            uint32                    `protobuf:"varint,6,opt,name=max_data_age_ms,json=maxDataAgeMs,proto3" json:"max_data_age_ms,omitempty"`
 	SourceAsc               string                    `protobuf:"bytes,3,opt,name=source_asc,json=sourceAsc,proto3" json:"source_asc,omitempty"`
-	SourceMode              SourceMode                `protobuf:"varint,4,opt,name=source_mode,json=sourceMode,proto3,enum=openits.rsu.v1.SourceMode" json:"source_mode,omitempty"`
+	SourceMode              BroadcastSourceMode       `protobuf:"varint,4,opt,name=source_mode,json=sourceMode,proto3,enum=openits.rsu.v1.BroadcastSourceMode" json:"source_mode,omitempty"`
 	Ingest                  *SpatConfigIngest         `protobuf:"bytes,8,opt,name=ingest,proto3" json:"ingest,omitempty"`
 	Intersection            []*SpatConfigIntersection `protobuf:"bytes,7,rep,name=intersection,proto3" json:"intersection,omitempty"`
 	IncludeTimingPrediction bool                      `protobuf:"varint,5,opt,name=include_timing_prediction,json=includeTimingPrediction,proto3" json:"include_timing_prediction,omitempty"`
@@ -4593,11 +4593,11 @@ func (x *SpatConfig) GetSourceAsc() string {
 	return ""
 }
 
-func (x *SpatConfig) GetSourceMode() SourceMode {
+func (x *SpatConfig) GetSourceMode() BroadcastSourceMode {
 	if x != nil {
 		return x.SourceMode
 	}
-	return SourceMode_SOURCE_MODE_RSU_GENERATED
+	return BroadcastSourceMode_BROADCAST_SOURCE_MODE_RSU_GENERATED
 }
 
 func (x *SpatConfig) GetIngest() *SpatConfigIngest {
@@ -4630,7 +4630,7 @@ func (x *SpatConfig) GetPsid() uint32 {
 
 type SpatConfigIngest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Transport     Transport              `protobuf:"varint,1,opt,name=transport,proto3,enum=openits.rsu.v1.Transport" json:"transport,omitempty"`
+	Transport     IngestTransport        `protobuf:"varint,1,opt,name=transport,proto3,enum=openits.rsu.v1.IngestTransport" json:"transport,omitempty"`
 	Address       string                 `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
 	Port          uint32                 `protobuf:"varint,3,opt,name=port,proto3" json:"port,omitempty"`
 	Psid          uint32                 `protobuf:"varint,4,opt,name=psid,proto3" json:"psid,omitempty"`
@@ -4668,11 +4668,11 @@ func (*SpatConfigIngest) Descriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{45}
 }
 
-func (x *SpatConfigIngest) GetTransport() Transport {
+func (x *SpatConfigIngest) GetTransport() IngestTransport {
 	if x != nil {
 		return x.Transport
 	}
-	return Transport_TRANSPORT_UDP
+	return IngestTransport_INGEST_TRANSPORT_UDP
 }
 
 func (x *SpatConfigIngest) GetAddress() string {
@@ -4883,7 +4883,7 @@ type MapConfig struct {
 	Intersection      []*MapConfigIntersection `protobuf:"bytes,4,rep,name=intersection,proto3" json:"intersection,omitempty"`
 	GeometryVersion   uint32                   `protobuf:"varint,3,opt,name=geometry_version,json=geometryVersion,proto3" json:"geometry_version,omitempty"`
 	Psid              uint32                   `protobuf:"varint,5,opt,name=psid,proto3" json:"psid,omitempty"`
-	SourceMode        SourceMode               `protobuf:"varint,6,opt,name=source_mode,json=sourceMode,proto3,enum=openits.rsu.v1.SourceMode" json:"source_mode,omitempty"`
+	SourceMode        BroadcastSourceMode      `protobuf:"varint,6,opt,name=source_mode,json=sourceMode,proto3,enum=openits.rsu.v1.BroadcastSourceMode" json:"source_mode,omitempty"`
 	Ingest            *MapConfigIngest         `protobuf:"bytes,7,opt,name=ingest,proto3" json:"ingest,omitempty"`
 	MaxDataAgeMs      uint32                   `protobuf:"varint,8,opt,name=max_data_age_ms,json=maxDataAgeMs,proto3" json:"max_data_age_ms,omitempty"`
 	unknownFields     protoimpl.UnknownFields
@@ -4955,11 +4955,11 @@ func (x *MapConfig) GetPsid() uint32 {
 	return 0
 }
 
-func (x *MapConfig) GetSourceMode() SourceMode {
+func (x *MapConfig) GetSourceMode() BroadcastSourceMode {
 	if x != nil {
 		return x.SourceMode
 	}
-	return SourceMode_SOURCE_MODE_RSU_GENERATED
+	return BroadcastSourceMode_BROADCAST_SOURCE_MODE_RSU_GENERATED
 }
 
 func (x *MapConfig) GetIngest() *MapConfigIngest {
@@ -5030,7 +5030,7 @@ func (x *MapConfigIntersection) GetRegion() uint32 {
 
 type MapConfigIngest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Transport     Transport              `protobuf:"varint,1,opt,name=transport,proto3,enum=openits.rsu.v1.Transport" json:"transport,omitempty"`
+	Transport     IngestTransport        `protobuf:"varint,1,opt,name=transport,proto3,enum=openits.rsu.v1.IngestTransport" json:"transport,omitempty"`
 	Address       string                 `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
 	Port          uint32                 `protobuf:"varint,3,opt,name=port,proto3" json:"port,omitempty"`
 	Psid          uint32                 `protobuf:"varint,4,opt,name=psid,proto3" json:"psid,omitempty"`
@@ -5068,11 +5068,11 @@ func (*MapConfigIngest) Descriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{51}
 }
 
-func (x *MapConfigIngest) GetTransport() Transport {
+func (x *MapConfigIngest) GetTransport() IngestTransport {
 	if x != nil {
 		return x.Transport
 	}
-	return Transport_TRANSPORT_UDP
+	return IngestTransport_INGEST_TRANSPORT_UDP
 }
 
 func (x *MapConfigIngest) GetAddress() string {
@@ -6947,7 +6947,7 @@ func (x *Decisions) GetDecision() []*Decision {
 type Decision struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	RequestId     string                 `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
-	Action        Action                 `protobuf:"varint,2,opt,name=action,proto3,enum=openits.rsu.v1.Action" json:"action,omitempty"`
+	Action        PriorityDecisionAction `protobuf:"varint,2,opt,name=action,proto3,enum=openits.rsu.v1.PriorityDecisionAction" json:"action,omitempty"`
 	Reason        string                 `protobuf:"bytes,3,opt,name=reason,proto3" json:"reason,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -6990,11 +6990,11 @@ func (x *Decision) GetRequestId() string {
 	return ""
 }
 
-func (x *Decision) GetAction() Action {
+func (x *Decision) GetAction() PriorityDecisionAction {
 	if x != nil {
 		return x.Action
 	}
-	return Action_ACTION_APPROVE
+	return PriorityDecisionAction_PRIORITY_DECISION_ACTION_APPROVE
 }
 
 func (x *Decision) GetReason() string {
@@ -7958,7 +7958,7 @@ func (x *Certificate) GetState() *CertificateState {
 
 type CertificateState struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
-	Type               Type                   `protobuf:"varint,1,opt,name=type,proto3,enum=openits.rsu.v1.Type" json:"type,omitempty"`
+	Type               CertificateType        `protobuf:"varint,1,opt,name=type,proto3,enum=openits.rsu.v1.CertificateType" json:"type,omitempty"`
 	Status             string                 `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
 	ValidFrom          *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=valid_from,json=validFrom,proto3" json:"valid_from,omitempty"`
 	ValidUntil         *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=valid_until,json=validUntil,proto3" json:"valid_until,omitempty"`
@@ -7999,11 +7999,11 @@ func (*CertificateState) Descriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{91}
 }
 
-func (x *CertificateState) GetType() Type {
+func (x *CertificateState) GetType() CertificateType {
 	if x != nil {
 		return x.Type
 	}
-	return Type_TYPE_ENROLLMENT
+	return CertificateType_CERTIFICATE_TYPE_ENROLLMENT
 }
 
 func (x *CertificateState) GetStatus() string {
@@ -8102,7 +8102,7 @@ func (x *Permissions) GetSsp() string {
 
 type GeographicValidity struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
-	RegionType         RegionType             `protobuf:"varint,1,opt,name=region_type,json=regionType,proto3,enum=openits.rsu.v1.RegionType" json:"region_type,omitempty"`
+	RegionType         GeographicRegionType   `protobuf:"varint,1,opt,name=region_type,json=regionType,proto3,enum=openits.rsu.v1.GeographicRegionType" json:"region_type,omitempty"`
 	IdentifiedRegionId uint32                 `protobuf:"varint,2,opt,name=identified_region_id,json=identifiedRegionId,proto3" json:"identified_region_id,omitempty"`
 	CircularRegion     *CircularRegion        `protobuf:"bytes,3,opt,name=circular_region,json=circularRegion,proto3" json:"circular_region,omitempty"`
 	unknownFields      protoimpl.UnknownFields
@@ -8139,11 +8139,11 @@ func (*GeographicValidity) Descriptor() ([]byte, []int) {
 	return file_openits_rsu_v1_state_proto_rawDescGZIP(), []int{93}
 }
 
-func (x *GeographicValidity) GetRegionType() RegionType {
+func (x *GeographicValidity) GetRegionType() GeographicRegionType {
 	if x != nil {
 		return x.RegionType
 	}
-	return RegionType_REGION_TYPE_NONE
+	return GeographicRegionType_GEOGRAPHIC_REGION_TYPE_NONE
 }
 
 func (x *GeographicValidity) GetIdentifiedRegionId() uint32 {
@@ -8435,9 +8435,9 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x06counts\x18\x01 \x01(\v2\x16.openits.rsu.v1.CountsR\x06counts\x12A\n" +
 	"\rspeed_metrics\x18\x02 \x01(\v2\x1c.openits.rsu.v1.SpeedMetricsR\fspeedMetrics\x12]\n" +
 	"\x17vehicle_class_breakdown\x18\x03 \x01(\v2%.openits.rsu.v1.VehicleClassBreakdownR\x15vehicleClassBreakdown\x124\n" +
-	"\bapproach\x18\x04 \x03(\v2\x18.openits.rsu.v1.ApproachR\bapproach\"\x96\x02\n" +
-	"\vSampleBasis\x12;\n" +
-	"\vwindow_type\x18\x01 \x01(\x0e2\x1a.openits.rsu.v1.WindowTypeR\n" +
+	"\bapproach\x18\x04 \x03(\v2\x18.openits.rsu.v1.ApproachR\bapproach\"\x9b\x02\n" +
+	"\vSampleBasis\x12@\n" +
+	"\vwindow_type\x18\x01 \x01(\x0e2\x1f.openits.rsu.v1.StatsWindowTypeR\n" +
 	"windowType\x120\n" +
 	"\x14stats_window_seconds\x18\x02 \x01(\rR\x12statsWindowSeconds\x12!\n" +
 	"\fsample_count\x18\x03 \x01(\rR\vsampleCount\x128\n" +
@@ -8511,9 +8511,9 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x10antenna_gain_dbi\x18\b \x01(\tR\x0eantennaGainDbi\x12#\n" +
 	"\rmessage_types\x18\x04 \x03(\tR\fmessageTypes\x12\x18\n" +
 	"\aprimary\x18\x05 \x01(\bR\aprimary\x12%\n" +
-	"\x03dcc\x18\x06 \x01(\v2\x13.openits.rsu.v1.DccR\x03dcc\"c\n" +
-	"\x03Dcc\x12.\n" +
-	"\x06policy\x18\x01 \x01(\x0e2\x16.openits.rsu.v1.PolicyR\x06policy\x12,\n" +
+	"\x03dcc\x18\x06 \x01(\v2\x13.openits.rsu.v1.DccR\x03dcc\"f\n" +
+	"\x03Dcc\x121\n" +
+	"\x06policy\x18\x01 \x01(\x0e2\x19.openits.rsu.v1.DccPolicyR\x06policy\x12,\n" +
 	"\x12cbr_target_percent\x18\x02 \x01(\rR\x10cbrTargetPercent\"\x8a\x04\n" +
 	"\fChannelState\x12 \n" +
 	"\voperational\x18\x01 \x01(\bR\voperational\x12\x1d\n" +
@@ -8550,22 +8550,22 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x0emessage_errors\x18\t \x01(\v2\x1d.openits.rsu.v1.MessageErrorsR\rmessageErrors\"k\n" +
 	"\x04Spat\x122\n" +
 	"\x06config\x18\x01 \x01(\v2\x1a.openits.rsu.v1.SpatConfigR\x06config\x12/\n" +
-	"\x05state\x18\x02 \x01(\v2\x19.openits.rsu.v1.SpatStateR\x05state\"\xae\x03\n" +
+	"\x05state\x18\x02 \x01(\v2\x19.openits.rsu.v1.SpatStateR\x05state\"\xb7\x03\n" +
 	"\n" +
 	"SpatConfig\x12\x18\n" +
 	"\aenabled\x18\x01 \x01(\bR\aenabled\x12-\n" +
 	"\x12broadcast_interval\x18\x02 \x01(\rR\x11broadcastInterval\x12%\n" +
 	"\x0fmax_data_age_ms\x18\x06 \x01(\rR\fmaxDataAgeMs\x12\x1d\n" +
 	"\n" +
-	"source_asc\x18\x03 \x01(\tR\tsourceAsc\x12;\n" +
-	"\vsource_mode\x18\x04 \x01(\x0e2\x1a.openits.rsu.v1.SourceModeR\n" +
+	"source_asc\x18\x03 \x01(\tR\tsourceAsc\x12D\n" +
+	"\vsource_mode\x18\x04 \x01(\x0e2#.openits.rsu.v1.BroadcastSourceModeR\n" +
 	"sourceMode\x128\n" +
 	"\x06ingest\x18\b \x01(\v2 .openits.rsu.v1.SpatConfigIngestR\x06ingest\x12J\n" +
 	"\fintersection\x18\a \x03(\v2&.openits.rsu.v1.SpatConfigIntersectionR\fintersection\x12:\n" +
 	"\x19include_timing_prediction\x18\x05 \x01(\bR\x17includeTimingPrediction\x12\x12\n" +
-	"\x04psid\x18\t \x01(\rR\x04psid\"\x8d\x01\n" +
-	"\x10SpatConfigIngest\x127\n" +
-	"\ttransport\x18\x01 \x01(\x0e2\x19.openits.rsu.v1.TransportR\ttransport\x12\x18\n" +
+	"\x04psid\x18\t \x01(\rR\x04psid\"\x93\x01\n" +
+	"\x10SpatConfigIngest\x12=\n" +
+	"\ttransport\x18\x01 \x01(\x0e2\x1f.openits.rsu.v1.IngestTransportR\ttransport\x12\x18\n" +
 	"\aaddress\x18\x02 \x01(\tR\aaddress\x12\x12\n" +
 	"\x04port\x18\x03 \x01(\rR\x04port\x12\x12\n" +
 	"\x04psid\x18\x04 \x01(\rR\x04psid\"@\n" +
@@ -8580,22 +8580,22 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\fhalted_stale\x18\x05 \x01(\bR\vhaltedStale\"h\n" +
 	"\x03Map\x121\n" +
 	"\x06config\x18\x01 \x01(\v2\x19.openits.rsu.v1.MapConfigR\x06config\x12.\n" +
-	"\x05state\x18\x02 \x01(\v2\x18.openits.rsu.v1.MapStateR\x05state\"\xfb\x02\n" +
+	"\x05state\x18\x02 \x01(\v2\x18.openits.rsu.v1.MapStateR\x05state\"\x84\x03\n" +
 	"\tMapConfig\x12\x18\n" +
 	"\aenabled\x18\x01 \x01(\bR\aenabled\x12-\n" +
 	"\x12broadcast_interval\x18\x02 \x01(\rR\x11broadcastInterval\x12I\n" +
 	"\fintersection\x18\x04 \x03(\v2%.openits.rsu.v1.MapConfigIntersectionR\fintersection\x12)\n" +
 	"\x10geometry_version\x18\x03 \x01(\rR\x0fgeometryVersion\x12\x12\n" +
-	"\x04psid\x18\x05 \x01(\rR\x04psid\x12;\n" +
-	"\vsource_mode\x18\x06 \x01(\x0e2\x1a.openits.rsu.v1.SourceModeR\n" +
+	"\x04psid\x18\x05 \x01(\rR\x04psid\x12D\n" +
+	"\vsource_mode\x18\x06 \x01(\x0e2#.openits.rsu.v1.BroadcastSourceModeR\n" +
 	"sourceMode\x127\n" +
 	"\x06ingest\x18\a \x01(\v2\x1f.openits.rsu.v1.MapConfigIngestR\x06ingest\x12%\n" +
 	"\x0fmax_data_age_ms\x18\b \x01(\rR\fmaxDataAgeMs\"?\n" +
 	"\x15MapConfigIntersection\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x16\n" +
-	"\x06region\x18\x02 \x01(\rR\x06region\"\x8c\x01\n" +
-	"\x0fMapConfigIngest\x127\n" +
-	"\ttransport\x18\x01 \x01(\x0e2\x19.openits.rsu.v1.TransportR\ttransport\x12\x18\n" +
+	"\x06region\x18\x02 \x01(\rR\x06region\"\x92\x01\n" +
+	"\x0fMapConfigIngest\x12=\n" +
+	"\ttransport\x18\x01 \x01(\x0e2\x1f.openits.rsu.v1.IngestTransportR\ttransport\x12\x18\n" +
 	"\aaddress\x18\x02 \x01(\tR\aaddress\x12\x12\n" +
 	"\x04port\x18\x03 \x01(\rR\x04port\x12\x12\n" +
 	"\x04psid\x18\x04 \x01(\rR\x04psid\"\xe7\x01\n" +
@@ -8751,11 +8751,11 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	" \x01(\x0e2+.openits.rsu.v1.OpenitsRsuDecisionAuthorityR\x11decisionAuthority\x12#\n" +
 	"\rdenial_reason\x18\v \x01(\tR\fdenialReason\"A\n" +
 	"\tDecisions\x124\n" +
-	"\bdecision\x18\x01 \x03(\v2\x18.openits.rsu.v1.DecisionR\bdecision\"q\n" +
+	"\bdecision\x18\x01 \x03(\v2\x18.openits.rsu.v1.DecisionR\bdecision\"\x81\x01\n" +
 	"\bDecision\x12\x1d\n" +
 	"\n" +
-	"request_id\x18\x01 \x01(\tR\trequestId\x12.\n" +
-	"\x06action\x18\x02 \x01(\x0e2\x16.openits.rsu.v1.ActionR\x06action\x12\x16\n" +
+	"request_id\x18\x01 \x01(\tR\trequestId\x12>\n" +
+	"\x06action\x18\x02 \x01(\x0e2&.openits.rsu.v1.PriorityDecisionActionR\x06action\x12\x16\n" +
 	"\x06reason\x18\x03 \x01(\tR\x06reason\"X\n" +
 	"\fMessageStats\x12H\n" +
 	"\x10per_message_type\x18\x01 \x03(\v2\x1e.openits.rsu.v1.PerMessageTypeR\x0eperMessageType\"\xec\x02\n" +
@@ -8844,9 +8844,9 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\vcertificate\x18\x01 \x03(\v2\x1b.openits.rsu.v1.CertificateR\vcertificate\"U\n" +
 	"\vCertificate\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x126\n" +
-	"\x05state\x18\x02 \x01(\v2 .openits.rsu.v1.CertificateStateR\x05state\"\x8c\x03\n" +
-	"\x10CertificateState\x12(\n" +
-	"\x04type\x18\x01 \x01(\x0e2\x14.openits.rsu.v1.TypeR\x04type\x12\x16\n" +
+	"\x05state\x18\x02 \x01(\v2 .openits.rsu.v1.CertificateStateR\x05state\"\x97\x03\n" +
+	"\x10CertificateState\x123\n" +
+	"\x04type\x18\x01 \x01(\x0e2\x1f.openits.rsu.v1.CertificateTypeR\x04type\x12\x16\n" +
 	"\x06status\x18\x02 \x01(\tR\x06status\x129\n" +
 	"\n" +
 	"valid_from\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tvalidFrom\x12;\n" +
@@ -8857,9 +8857,9 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x13geographic_validity\x18\a \x01(\v2\".openits.rsu.v1.GeographicValidityR\x12geographicValidity\"3\n" +
 	"\vPermissions\x12\x12\n" +
 	"\x04psid\x18\x01 \x01(\rR\x04psid\x12\x10\n" +
-	"\x03ssp\x18\x02 \x01(\tR\x03ssp\"\xcc\x01\n" +
-	"\x12GeographicValidity\x12;\n" +
-	"\vregion_type\x18\x01 \x01(\x0e2\x1a.openits.rsu.v1.RegionTypeR\n" +
+	"\x03ssp\x18\x02 \x01(\tR\x03ssp\"\xd6\x01\n" +
+	"\x12GeographicValidity\x12E\n" +
+	"\vregion_type\x18\x01 \x01(\x0e2$.openits.rsu.v1.GeographicRegionTypeR\n" +
 	"regionType\x120\n" +
 	"\x14identified_region_id\x18\x02 \x01(\rR\x12identifiedRegionId\x12G\n" +
 	"\x0fcircular_region\x18\x03 \x01(\v2\x1e.openits.rsu.v1.CircularRegionR\x0ecircularRegion\"e\n" +
@@ -8885,11 +8885,10 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x13SIGNAL_QUALITY_GOOD\x10\x01\x12\x17\n" +
 	"\x13SIGNAL_QUALITY_FAIR\x10\x02\x12\x17\n" +
 	"\x13SIGNAL_QUALITY_POOR\x10\x03\x12\x17\n" +
-	"\x13SIGNAL_QUALITY_NONE\x10\x04*?\n" +
-	"\n" +
-	"WindowType\x12\x17\n" +
-	"\x13WINDOW_TYPE_ROLLING\x10\x00\x12\x18\n" +
-	"\x14WINDOW_TYPE_TUMBLING\x10\x01*u\n" +
+	"\x13SIGNAL_QUALITY_NONE\x10\x04*P\n" +
+	"\x0fStatsWindowType\x12\x1d\n" +
+	"\x19STATS_WINDOW_TYPE_ROLLING\x10\x00\x12\x1e\n" +
+	"\x1aSTATS_WINDOW_TYPE_TUMBLING\x10\x01*u\n" +
 	"\n" +
 	"CountBasis\x12#\n" +
 	"\x1fCOUNT_BASIS_UNIQUE_DEDUPLICATED\x10\x00\x12$\n" +
@@ -8900,19 +8899,18 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\x16FAULT_SEVERITY_WARNING\x10\x01\x12\x18\n" +
 	"\x14FAULT_SEVERITY_MINOR\x10\x02\x12\x18\n" +
 	"\x14FAULT_SEVERITY_MAJOR\x10\x03\x12\x1b\n" +
-	"\x17FAULT_SEVERITY_CRITICAL\x10\x04*G\n" +
-	"\x06Policy\x12\x13\n" +
-	"\x0fPOLICY_DISABLED\x10\x00\x12\x13\n" +
-	"\x0fPOLICY_REACTIVE\x10\x01\x12\x13\n" +
-	"\x0fPOLICY_ADAPTIVE\x10\x02*U\n" +
-	"\n" +
-	"SourceMode\x12\x1d\n" +
-	"\x19SOURCE_MODE_RSU_GENERATED\x10\x00\x12(\n" +
-	"$SOURCE_MODE_IMMEDIATE_FORWARD_INGEST\x10\x01*E\n" +
-	"\tTransport\x12\x11\n" +
-	"\rTRANSPORT_UDP\x10\x00\x12\x11\n" +
-	"\rTRANSPORT_TCP\x10\x01\x12\x12\n" +
-	"\x0eTRANSPORT_MQTT\x10\x02*`\n" +
+	"\x17FAULT_SEVERITY_CRITICAL\x10\x04*V\n" +
+	"\tDccPolicy\x12\x17\n" +
+	"\x13DCC_POLICY_DISABLED\x10\x00\x12\x17\n" +
+	"\x13DCC_POLICY_REACTIVE\x10\x01\x12\x17\n" +
+	"\x13DCC_POLICY_ADAPTIVE\x10\x02*r\n" +
+	"\x13BroadcastSourceMode\x12'\n" +
+	"#BROADCAST_SOURCE_MODE_RSU_GENERATED\x10\x00\x122\n" +
+	".BROADCAST_SOURCE_MODE_IMMEDIATE_FORWARD_INGEST\x10\x01*`\n" +
+	"\x0fIngestTransport\x12\x18\n" +
+	"\x14INGEST_TRANSPORT_UDP\x10\x00\x12\x18\n" +
+	"\x14INGEST_TRANSPORT_TCP\x10\x01\x12\x19\n" +
+	"\x15INGEST_TRANSPORT_MQTT\x10\x02*`\n" +
 	"\x0fForwardProtocol\x12\x18\n" +
 	"\x14FORWARD_PROTOCOL_UDP\x10\x00\x12\x18\n" +
 	"\x14FORWARD_PROTOCOL_TCP\x10\x01\x12\x19\n" +
@@ -8937,29 +8935,28 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"-OPENITS_RSU_DECISION_AUTHORITY_CONTROLLER_PRS\x10\x01\x12,\n" +
 	"(OPENITS_RSU_DECISION_AUTHORITY_RSU_LOCAL\x10\x02\x12+\n" +
 	"'OPENITS_RSU_DECISION_AUTHORITY_OPERATOR\x10\x03\x12+\n" +
-	"'OPENITS_RSU_DECISION_AUTHORITY_EVP_AUTO\x10\x04*-\n" +
-	"\x06Action\x12\x12\n" +
-	"\x0eACTION_APPROVE\x10\x00\x12\x0f\n" +
-	"\vACTION_DENY\x10\x01*\xd2\x01\n" +
+	"'OPENITS_RSU_DECISION_AUTHORITY_EVP_AUTO\x10\x04*a\n" +
+	"\x16PriorityDecisionAction\x12$\n" +
+	" PRIORITY_DECISION_ACTION_APPROVE\x10\x00\x12!\n" +
+	"\x1dPRIORITY_DECISION_ACTION_DENY\x10\x01*\xd2\x01\n" +
 	"\x10EnrollmentStatus\x12\"\n" +
 	"\x1eENROLLMENT_STATUS_NOT_ENROLLED\x10\x00\x12\x1f\n" +
 	"\x1bENROLLMENT_STATUS_ENROLLING\x10\x01\x12\x1e\n" +
 	"\x1aENROLLMENT_STATUS_ENROLLED\x10\x02\x12\x1b\n" +
 	"\x17ENROLLMENT_STATUS_ERROR\x10\x03\x12\x1d\n" +
 	"\x19ENROLLMENT_STATUS_EXPIRED\x10\x04\x12\x1d\n" +
-	"\x19ENROLLMENT_STATUS_REVOKED\x10\x05*^\n" +
-	"\x04Type\x12\x13\n" +
-	"\x0fTYPE_ENROLLMENT\x10\x00\x12\x12\n" +
-	"\x0eTYPE_PSEUDONYM\x10\x01\x12\x14\n" +
-	"\x10TYPE_APPLICATION\x10\x02\x12\x17\n" +
-	"\x13TYPE_IDENTIFICATION\x10\x03*\x90\x01\n" +
-	"\n" +
-	"RegionType\x12\x14\n" +
-	"\x10REGION_TYPE_NONE\x10\x00\x12\x18\n" +
-	"\x14REGION_TYPE_CIRCULAR\x10\x01\x12\x1b\n" +
-	"\x17REGION_TYPE_RECTANGULAR\x10\x02\x12\x19\n" +
-	"\x15REGION_TYPE_POLYGONAL\x10\x03\x12\x1a\n" +
-	"\x16REGION_TYPE_IDENTIFIED\x10\x04BCZAgithub.com/Vikasa2M/openits-models/pkg/proto/openits/rsu/v1;rsuv1b\x06proto3"
+	"\x19ENROLLMENT_STATUS_REVOKED\x10\x05*\x99\x01\n" +
+	"\x0fCertificateType\x12\x1f\n" +
+	"\x1bCERTIFICATE_TYPE_ENROLLMENT\x10\x00\x12\x1e\n" +
+	"\x1aCERTIFICATE_TYPE_PSEUDONYM\x10\x01\x12 \n" +
+	"\x1cCERTIFICATE_TYPE_APPLICATION\x10\x02\x12#\n" +
+	"\x1fCERTIFICATE_TYPE_IDENTIFICATION\x10\x03*\xd1\x01\n" +
+	"\x14GeographicRegionType\x12\x1f\n" +
+	"\x1bGEOGRAPHIC_REGION_TYPE_NONE\x10\x00\x12#\n" +
+	"\x1fGEOGRAPHIC_REGION_TYPE_CIRCULAR\x10\x01\x12&\n" +
+	"\"GEOGRAPHIC_REGION_TYPE_RECTANGULAR\x10\x02\x12$\n" +
+	" GEOGRAPHIC_REGION_TYPE_POLYGONAL\x10\x03\x12%\n" +
+	"!GEOGRAPHIC_REGION_TYPE_IDENTIFIED\x10\x04BCZAgithub.com/Vikasa2M/openits-models/pkg/proto/openits/rsu/v1;rsuv1b\x06proto3"
 
 var (
 	file_openits_rsu_v1_state_proto_rawDescOnce sync.Once
@@ -8976,110 +8973,110 @@ func file_openits_rsu_v1_state_proto_rawDescGZIP() []byte {
 var file_openits_rsu_v1_state_proto_enumTypes = make([]protoimpl.EnumInfo, 18)
 var file_openits_rsu_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 95)
 var file_openits_rsu_v1_state_proto_goTypes = []any{
-	(TimeSource)(0),                  // 0: openits.rsu.v1.TimeSource
-	(OpenitsRsuGpsFixStatus)(0),      // 1: openits.rsu.v1.OpenitsRsuGpsFixStatus
-	(SignalQuality)(0),               // 2: openits.rsu.v1.SignalQuality
-	(WindowType)(0),                  // 3: openits.rsu.v1.WindowType
-	(CountBasis)(0),                  // 4: openits.rsu.v1.CountBasis
-	(FaultSeverity)(0),               // 5: openits.rsu.v1.FaultSeverity
-	(Policy)(0),                      // 6: openits.rsu.v1.Policy
-	(SourceMode)(0),                  // 7: openits.rsu.v1.SourceMode
-	(Transport)(0),                   // 8: openits.rsu.v1.Transport
-	(ForwardProtocol)(0),             // 9: openits.rsu.v1.ForwardProtocol
-	(ForwardFormat)(0),               // 10: openits.rsu.v1.ForwardFormat
-	(GrantAuthority)(0),              // 11: openits.rsu.v1.GrantAuthority
-	(OpenitsRsuSrmRequestStatus)(0),  // 12: openits.rsu.v1.OpenitsRsuSrmRequestStatus
-	(OpenitsRsuDecisionAuthority)(0), // 13: openits.rsu.v1.OpenitsRsuDecisionAuthority
-	(Action)(0),                      // 14: openits.rsu.v1.Action
-	(EnrollmentStatus)(0),            // 15: openits.rsu.v1.EnrollmentStatus
-	(Type)(0),                        // 16: openits.rsu.v1.Type
-	(RegionType)(0),                  // 17: openits.rsu.v1.RegionType
-	(*Rsu)(nil),                      // 18: openits.rsu.v1.Rsu
-	(*RsuConfig)(nil),                // 19: openits.rsu.v1.RsuConfig
-	(*RsuConfigLinearReference)(nil), // 20: openits.rsu.v1.RsuConfigLinearReference
-	(*RsuState)(nil),                 // 21: openits.rsu.v1.RsuState
-	(*RsuStateLinearReference)(nil),  // 22: openits.rsu.v1.RsuStateLinearReference
-	(*Operating)(nil),                // 23: openits.rsu.v1.Operating
-	(*OperatingConfig)(nil),          // 24: openits.rsu.v1.OperatingConfig
-	(*OperatingState)(nil),           // 25: openits.rsu.v1.OperatingState
-	(*Gnss)(nil),                     // 26: openits.rsu.v1.Gnss
-	(*SurveyedPosition)(nil),         // 27: openits.rsu.v1.SurveyedPosition
-	(*StoreForward)(nil),             // 28: openits.rsu.v1.StoreForward
-	(*StoreForwardConfig)(nil),       // 29: openits.rsu.v1.StoreForwardConfig
-	(*StoreForwardState)(nil),        // 30: openits.rsu.v1.StoreForwardState
-	(*Diagnostics)(nil),              // 31: openits.rsu.v1.Diagnostics
-	(*Radio)(nil),                    // 32: openits.rsu.v1.Radio
-	(*SpatSync)(nil),                 // 33: openits.rsu.v1.SpatSync
-	(*Resources)(nil),                // 34: openits.rsu.v1.Resources
-	(*Cpu)(nil),                      // 35: openits.rsu.v1.Cpu
-	(*Disk)(nil),                     // 36: openits.rsu.v1.Disk
-	(*Memory)(nil),                   // 37: openits.rsu.v1.Memory
-	(*BackhaulCellular)(nil),         // 38: openits.rsu.v1.BackhaulCellular
-	(*Logs)(nil),                     // 39: openits.rsu.v1.Logs
-	(*Errors)(nil),                   // 40: openits.rsu.v1.Errors
-	(*Warnings)(nil),                 // 41: openits.rsu.v1.Warnings
-	(*Critical)(nil),                 // 42: openits.rsu.v1.Critical
-	(*Process)(nil),                  // 43: openits.rsu.v1.Process
-	(*TemperatureSensor)(nil),        // 44: openits.rsu.v1.TemperatureSensor
-	(*VehicleAnalytics)(nil),         // 45: openits.rsu.v1.VehicleAnalytics
-	(*SampleBasis)(nil),              // 46: openits.rsu.v1.SampleBasis
-	(*Counts)(nil),                   // 47: openits.rsu.v1.Counts
-	(*SpeedMetrics)(nil),             // 48: openits.rsu.v1.SpeedMetrics
-	(*VehicleClassBreakdown)(nil),    // 49: openits.rsu.v1.VehicleClassBreakdown
-	(*Approach)(nil),                 // 50: openits.rsu.v1.Approach
-	(*System)(nil),                   // 51: openits.rsu.v1.System
-	(*CommLink)(nil),                 // 52: openits.rsu.v1.CommLink
-	(*Faults)(nil),                   // 53: openits.rsu.v1.Faults
-	(*Fault)(nil),                    // 54: openits.rsu.v1.Fault
-	(*Channels)(nil),                 // 55: openits.rsu.v1.Channels
-	(*Channel)(nil),                  // 56: openits.rsu.v1.Channel
-	(*ChannelConfig)(nil),            // 57: openits.rsu.v1.ChannelConfig
-	(*Dcc)(nil),                      // 58: openits.rsu.v1.Dcc
-	(*ChannelState)(nil),             // 59: openits.rsu.v1.ChannelState
-	(*Messages)(nil),                 // 60: openits.rsu.v1.Messages
-	(*Spat)(nil),                     // 61: openits.rsu.v1.Spat
-	(*SpatConfig)(nil),               // 62: openits.rsu.v1.SpatConfig
-	(*SpatConfigIngest)(nil),         // 63: openits.rsu.v1.SpatConfigIngest
-	(*SpatConfigIntersection)(nil),   // 64: openits.rsu.v1.SpatConfigIntersection
-	(*SpatState)(nil),                // 65: openits.rsu.v1.SpatState
-	(*Map)(nil),                      // 66: openits.rsu.v1.Map
-	(*MapConfig)(nil),                // 67: openits.rsu.v1.MapConfig
-	(*MapConfigIntersection)(nil),    // 68: openits.rsu.v1.MapConfigIntersection
-	(*MapConfigIngest)(nil),          // 69: openits.rsu.v1.MapConfigIngest
-	(*MapState)(nil),                 // 70: openits.rsu.v1.MapState
-	(*MapStateIntersection)(nil),     // 71: openits.rsu.v1.MapStateIntersection
-	(*Tim)(nil),                      // 72: openits.rsu.v1.Tim
-	(*TimConfig)(nil),                // 73: openits.rsu.v1.TimConfig
-	(*Active)(nil),                   // 74: openits.rsu.v1.Active
-	(*Message)(nil),                  // 75: openits.rsu.v1.Message
-	(*MessageConfig)(nil),            // 76: openits.rsu.v1.MessageConfig
-	(*Region)(nil),                   // 77: openits.rsu.v1.Region
-	(*MessageState)(nil),             // 78: openits.rsu.v1.MessageState
-	(*Bsm)(nil),                      // 79: openits.rsu.v1.Bsm
-	(*BsmConfig)(nil),                // 80: openits.rsu.v1.BsmConfig
-	(*BsmState)(nil),                 // 81: openits.rsu.v1.BsmState
-	(*Psm)(nil),                      // 82: openits.rsu.v1.Psm
-	(*PsmConfig)(nil),                // 83: openits.rsu.v1.PsmConfig
-	(*PsmState)(nil),                 // 84: openits.rsu.v1.PsmState
-	(*BroadcastConfig)(nil),          // 85: openits.rsu.v1.BroadcastConfig
-	(*BroadcastState)(nil),           // 86: openits.rsu.v1.BroadcastState
-	(*Rtcm)(nil),                     // 87: openits.rsu.v1.Rtcm
-	(*RtcmConfig)(nil),               // 88: openits.rsu.v1.RtcmConfig
-	(*RtcmState)(nil),                // 89: openits.rsu.v1.RtcmState
-	(*SrmSsm)(nil),                   // 90: openits.rsu.v1.SrmSsm
-	(*SrmSsmConfig)(nil),             // 91: openits.rsu.v1.SrmSsmConfig
-	(*SrmSsmState)(nil),              // 92: openits.rsu.v1.SrmSsmState
-	(*ActiveRequests)(nil),           // 93: openits.rsu.v1.ActiveRequests
-	(*Request)(nil),                  // 94: openits.rsu.v1.Request
-	(*Decisions)(nil),                // 95: openits.rsu.v1.Decisions
-	(*Decision)(nil),                 // 96: openits.rsu.v1.Decision
-	(*MessageStats)(nil),             // 97: openits.rsu.v1.MessageStats
-	(*PerMessageType)(nil),           // 98: openits.rsu.v1.PerMessageType
-	(*MessageErrors)(nil),            // 99: openits.rsu.v1.MessageErrors
-	(*MessageErrorsSecurity)(nil),    // 100: openits.rsu.v1.MessageErrorsSecurity
-	(*Drops)(nil),                    // 101: openits.rsu.v1.Drops
-	(*RsuSecurity)(nil),              // 102: openits.rsu.v1.RsuSecurity
-	(*RsuSecurityConfig)(nil),        // 103: openits.rsu.v1.RsuSecurityConfig
+	(TimeSource)(0),                               // 0: openits.rsu.v1.TimeSource
+	(OpenitsRsuGpsFixStatus)(0),                   // 1: openits.rsu.v1.OpenitsRsuGpsFixStatus
+	(SignalQuality)(0),                            // 2: openits.rsu.v1.SignalQuality
+	(StatsWindowType)(0),                          // 3: openits.rsu.v1.StatsWindowType
+	(CountBasis)(0),                               // 4: openits.rsu.v1.CountBasis
+	(FaultSeverity)(0),                            // 5: openits.rsu.v1.FaultSeverity
+	(DccPolicy)(0),                                // 6: openits.rsu.v1.DccPolicy
+	(BroadcastSourceMode)(0),                      // 7: openits.rsu.v1.BroadcastSourceMode
+	(IngestTransport)(0),                          // 8: openits.rsu.v1.IngestTransport
+	(ForwardProtocol)(0),                          // 9: openits.rsu.v1.ForwardProtocol
+	(ForwardFormat)(0),                            // 10: openits.rsu.v1.ForwardFormat
+	(GrantAuthority)(0),                           // 11: openits.rsu.v1.GrantAuthority
+	(OpenitsRsuSrmRequestStatus)(0),               // 12: openits.rsu.v1.OpenitsRsuSrmRequestStatus
+	(OpenitsRsuDecisionAuthority)(0),              // 13: openits.rsu.v1.OpenitsRsuDecisionAuthority
+	(PriorityDecisionAction)(0),                   // 14: openits.rsu.v1.PriorityDecisionAction
+	(EnrollmentStatus)(0),                         // 15: openits.rsu.v1.EnrollmentStatus
+	(CertificateType)(0),                          // 16: openits.rsu.v1.CertificateType
+	(GeographicRegionType)(0),                     // 17: openits.rsu.v1.GeographicRegionType
+	(*Rsu)(nil),                                   // 18: openits.rsu.v1.Rsu
+	(*RsuConfig)(nil),                             // 19: openits.rsu.v1.RsuConfig
+	(*RsuConfigLinearReference)(nil),              // 20: openits.rsu.v1.RsuConfigLinearReference
+	(*RsuState)(nil),                              // 21: openits.rsu.v1.RsuState
+	(*RsuStateLinearReference)(nil),               // 22: openits.rsu.v1.RsuStateLinearReference
+	(*Operating)(nil),                             // 23: openits.rsu.v1.Operating
+	(*OperatingConfig)(nil),                       // 24: openits.rsu.v1.OperatingConfig
+	(*OperatingState)(nil),                        // 25: openits.rsu.v1.OperatingState
+	(*Gnss)(nil),                                  // 26: openits.rsu.v1.Gnss
+	(*SurveyedPosition)(nil),                      // 27: openits.rsu.v1.SurveyedPosition
+	(*StoreForward)(nil),                          // 28: openits.rsu.v1.StoreForward
+	(*StoreForwardConfig)(nil),                    // 29: openits.rsu.v1.StoreForwardConfig
+	(*StoreForwardState)(nil),                     // 30: openits.rsu.v1.StoreForwardState
+	(*Diagnostics)(nil),                           // 31: openits.rsu.v1.Diagnostics
+	(*Radio)(nil),                                 // 32: openits.rsu.v1.Radio
+	(*SpatSync)(nil),                              // 33: openits.rsu.v1.SpatSync
+	(*Resources)(nil),                             // 34: openits.rsu.v1.Resources
+	(*Cpu)(nil),                                   // 35: openits.rsu.v1.Cpu
+	(*Disk)(nil),                                  // 36: openits.rsu.v1.Disk
+	(*Memory)(nil),                                // 37: openits.rsu.v1.Memory
+	(*BackhaulCellular)(nil),                      // 38: openits.rsu.v1.BackhaulCellular
+	(*Logs)(nil),                                  // 39: openits.rsu.v1.Logs
+	(*Errors)(nil),                                // 40: openits.rsu.v1.Errors
+	(*Warnings)(nil),                              // 41: openits.rsu.v1.Warnings
+	(*Critical)(nil),                              // 42: openits.rsu.v1.Critical
+	(*Process)(nil),                               // 43: openits.rsu.v1.Process
+	(*TemperatureSensor)(nil),                     // 44: openits.rsu.v1.TemperatureSensor
+	(*VehicleAnalytics)(nil),                      // 45: openits.rsu.v1.VehicleAnalytics
+	(*SampleBasis)(nil),                           // 46: openits.rsu.v1.SampleBasis
+	(*Counts)(nil),                                // 47: openits.rsu.v1.Counts
+	(*SpeedMetrics)(nil),                          // 48: openits.rsu.v1.SpeedMetrics
+	(*VehicleClassBreakdown)(nil),                 // 49: openits.rsu.v1.VehicleClassBreakdown
+	(*Approach)(nil),                              // 50: openits.rsu.v1.Approach
+	(*System)(nil),                                // 51: openits.rsu.v1.System
+	(*CommLink)(nil),                              // 52: openits.rsu.v1.CommLink
+	(*Faults)(nil),                                // 53: openits.rsu.v1.Faults
+	(*Fault)(nil),                                 // 54: openits.rsu.v1.Fault
+	(*Channels)(nil),                              // 55: openits.rsu.v1.Channels
+	(*Channel)(nil),                               // 56: openits.rsu.v1.Channel
+	(*ChannelConfig)(nil),                         // 57: openits.rsu.v1.ChannelConfig
+	(*Dcc)(nil),                                   // 58: openits.rsu.v1.Dcc
+	(*ChannelState)(nil),                          // 59: openits.rsu.v1.ChannelState
+	(*Messages)(nil),                              // 60: openits.rsu.v1.Messages
+	(*Spat)(nil),                                  // 61: openits.rsu.v1.Spat
+	(*SpatConfig)(nil),                            // 62: openits.rsu.v1.SpatConfig
+	(*SpatConfigIngest)(nil),                      // 63: openits.rsu.v1.SpatConfigIngest
+	(*SpatConfigIntersection)(nil),                // 64: openits.rsu.v1.SpatConfigIntersection
+	(*SpatState)(nil),                             // 65: openits.rsu.v1.SpatState
+	(*Map)(nil),                                   // 66: openits.rsu.v1.Map
+	(*MapConfig)(nil),                             // 67: openits.rsu.v1.MapConfig
+	(*MapConfigIntersection)(nil),                 // 68: openits.rsu.v1.MapConfigIntersection
+	(*MapConfigIngest)(nil),                       // 69: openits.rsu.v1.MapConfigIngest
+	(*MapState)(nil),                              // 70: openits.rsu.v1.MapState
+	(*MapStateIntersection)(nil),                  // 71: openits.rsu.v1.MapStateIntersection
+	(*Tim)(nil),                                   // 72: openits.rsu.v1.Tim
+	(*TimConfig)(nil),                             // 73: openits.rsu.v1.TimConfig
+	(*Active)(nil),                                // 74: openits.rsu.v1.Active
+	(*Message)(nil),                               // 75: openits.rsu.v1.Message
+	(*MessageConfig)(nil),                         // 76: openits.rsu.v1.MessageConfig
+	(*Region)(nil),                                // 77: openits.rsu.v1.Region
+	(*MessageState)(nil),                          // 78: openits.rsu.v1.MessageState
+	(*Bsm)(nil),                                   // 79: openits.rsu.v1.Bsm
+	(*BsmConfig)(nil),                             // 80: openits.rsu.v1.BsmConfig
+	(*BsmState)(nil),                              // 81: openits.rsu.v1.BsmState
+	(*Psm)(nil),                                   // 82: openits.rsu.v1.Psm
+	(*PsmConfig)(nil),                             // 83: openits.rsu.v1.PsmConfig
+	(*PsmState)(nil),                              // 84: openits.rsu.v1.PsmState
+	(*BroadcastConfig)(nil),                       // 85: openits.rsu.v1.BroadcastConfig
+	(*BroadcastState)(nil),                        // 86: openits.rsu.v1.BroadcastState
+	(*Rtcm)(nil),                                  // 87: openits.rsu.v1.Rtcm
+	(*RtcmConfig)(nil),                            // 88: openits.rsu.v1.RtcmConfig
+	(*RtcmState)(nil),                             // 89: openits.rsu.v1.RtcmState
+	(*SrmSsm)(nil),                                // 90: openits.rsu.v1.SrmSsm
+	(*SrmSsmConfig)(nil),                          // 91: openits.rsu.v1.SrmSsmConfig
+	(*SrmSsmState)(nil),                           // 92: openits.rsu.v1.SrmSsmState
+	(*ActiveRequests)(nil),                        // 93: openits.rsu.v1.ActiveRequests
+	(*Request)(nil),                               // 94: openits.rsu.v1.Request
+	(*Decisions)(nil),                             // 95: openits.rsu.v1.Decisions
+	(*Decision)(nil),                              // 96: openits.rsu.v1.Decision
+	(*MessageStats)(nil),                          // 97: openits.rsu.v1.MessageStats
+	(*PerMessageType)(nil),                        // 98: openits.rsu.v1.PerMessageType
+	(*MessageErrors)(nil),                         // 99: openits.rsu.v1.MessageErrors
+	(*MessageErrorsSecurity)(nil),                 // 100: openits.rsu.v1.MessageErrorsSecurity
+	(*Drops)(nil),                                 // 101: openits.rsu.v1.Drops
+	(*RsuSecurity)(nil),                           // 102: openits.rsu.v1.RsuSecurity
+	(*RsuSecurityConfig)(nil),                     // 103: openits.rsu.v1.RsuSecurityConfig
 	(*RsuSecurityConfigMisbehaviorReporting)(nil), // 104: openits.rsu.v1.RsuSecurityConfigMisbehaviorReporting
 	(*RsuSecurityState)(nil),                      // 105: openits.rsu.v1.RsuSecurityState
 	(*RsuSecurityStateMisbehaviorReporting)(nil),  // 106: openits.rsu.v1.RsuSecurityStateMisbehaviorReporting
@@ -9140,7 +9137,7 @@ var file_openits_rsu_v1_state_proto_depIdxs = []int32{
 	48,  // 45: openits.rsu.v1.VehicleAnalytics.speed_metrics:type_name -> openits.rsu.v1.SpeedMetrics
 	49,  // 46: openits.rsu.v1.VehicleAnalytics.vehicle_class_breakdown:type_name -> openits.rsu.v1.VehicleClassBreakdown
 	50,  // 47: openits.rsu.v1.VehicleAnalytics.approach:type_name -> openits.rsu.v1.Approach
-	3,   // 48: openits.rsu.v1.SampleBasis.window_type:type_name -> openits.rsu.v1.WindowType
+	3,   // 48: openits.rsu.v1.SampleBasis.window_type:type_name -> openits.rsu.v1.StatsWindowType
 	113, // 49: openits.rsu.v1.SampleBasis.computed_at:type_name -> google.protobuf.Timestamp
 	4,   // 50: openits.rsu.v1.Counts.count_basis:type_name -> openits.rsu.v1.CountBasis
 	52,  // 51: openits.rsu.v1.System.comm_link:type_name -> openits.rsu.v1.CommLink
@@ -9152,7 +9149,7 @@ var file_openits_rsu_v1_state_proto_depIdxs = []int32{
 	57,  // 57: openits.rsu.v1.Channel.config:type_name -> openits.rsu.v1.ChannelConfig
 	59,  // 58: openits.rsu.v1.Channel.state:type_name -> openits.rsu.v1.ChannelState
 	58,  // 59: openits.rsu.v1.ChannelConfig.dcc:type_name -> openits.rsu.v1.Dcc
-	6,   // 60: openits.rsu.v1.Dcc.policy:type_name -> openits.rsu.v1.Policy
+	6,   // 60: openits.rsu.v1.Dcc.policy:type_name -> openits.rsu.v1.DccPolicy
 	61,  // 61: openits.rsu.v1.Messages.spat:type_name -> openits.rsu.v1.Spat
 	66,  // 62: openits.rsu.v1.Messages.map:type_name -> openits.rsu.v1.Map
 	72,  // 63: openits.rsu.v1.Messages.tim:type_name -> openits.rsu.v1.Tim
@@ -9164,17 +9161,17 @@ var file_openits_rsu_v1_state_proto_depIdxs = []int32{
 	99,  // 69: openits.rsu.v1.Messages.message_errors:type_name -> openits.rsu.v1.MessageErrors
 	62,  // 70: openits.rsu.v1.Spat.config:type_name -> openits.rsu.v1.SpatConfig
 	65,  // 71: openits.rsu.v1.Spat.state:type_name -> openits.rsu.v1.SpatState
-	7,   // 72: openits.rsu.v1.SpatConfig.source_mode:type_name -> openits.rsu.v1.SourceMode
+	7,   // 72: openits.rsu.v1.SpatConfig.source_mode:type_name -> openits.rsu.v1.BroadcastSourceMode
 	63,  // 73: openits.rsu.v1.SpatConfig.ingest:type_name -> openits.rsu.v1.SpatConfigIngest
 	64,  // 74: openits.rsu.v1.SpatConfig.intersection:type_name -> openits.rsu.v1.SpatConfigIntersection
-	8,   // 75: openits.rsu.v1.SpatConfigIngest.transport:type_name -> openits.rsu.v1.Transport
+	8,   // 75: openits.rsu.v1.SpatConfigIngest.transport:type_name -> openits.rsu.v1.IngestTransport
 	113, // 76: openits.rsu.v1.SpatState.last_broadcast:type_name -> google.protobuf.Timestamp
 	67,  // 77: openits.rsu.v1.Map.config:type_name -> openits.rsu.v1.MapConfig
 	70,  // 78: openits.rsu.v1.Map.state:type_name -> openits.rsu.v1.MapState
 	68,  // 79: openits.rsu.v1.MapConfig.intersection:type_name -> openits.rsu.v1.MapConfigIntersection
-	7,   // 80: openits.rsu.v1.MapConfig.source_mode:type_name -> openits.rsu.v1.SourceMode
+	7,   // 80: openits.rsu.v1.MapConfig.source_mode:type_name -> openits.rsu.v1.BroadcastSourceMode
 	69,  // 81: openits.rsu.v1.MapConfig.ingest:type_name -> openits.rsu.v1.MapConfigIngest
-	8,   // 82: openits.rsu.v1.MapConfigIngest.transport:type_name -> openits.rsu.v1.Transport
+	8,   // 82: openits.rsu.v1.MapConfigIngest.transport:type_name -> openits.rsu.v1.IngestTransport
 	71,  // 83: openits.rsu.v1.MapState.intersection:type_name -> openits.rsu.v1.MapStateIntersection
 	73,  // 84: openits.rsu.v1.Tim.config:type_name -> openits.rsu.v1.TimConfig
 	74,  // 85: openits.rsu.v1.Tim.active:type_name -> openits.rsu.v1.Active
@@ -9208,7 +9205,7 @@ var file_openits_rsu_v1_state_proto_depIdxs = []int32{
 	12,  // 113: openits.rsu.v1.Request.status:type_name -> openits.rsu.v1.OpenitsRsuSrmRequestStatus
 	13,  // 114: openits.rsu.v1.Request.decision_authority:type_name -> openits.rsu.v1.OpenitsRsuDecisionAuthority
 	96,  // 115: openits.rsu.v1.Decisions.decision:type_name -> openits.rsu.v1.Decision
-	14,  // 116: openits.rsu.v1.Decision.action:type_name -> openits.rsu.v1.Action
+	14,  // 116: openits.rsu.v1.Decision.action:type_name -> openits.rsu.v1.PriorityDecisionAction
 	98,  // 117: openits.rsu.v1.MessageStats.per_message_type:type_name -> openits.rsu.v1.PerMessageType
 	100, // 118: openits.rsu.v1.MessageErrors.security:type_name -> openits.rsu.v1.MessageErrorsSecurity
 	101, // 119: openits.rsu.v1.MessageErrors.drops:type_name -> openits.rsu.v1.Drops
@@ -9227,12 +9224,12 @@ var file_openits_rsu_v1_state_proto_depIdxs = []int32{
 	113, // 132: openits.rsu.v1.RsuSecurityStateMisbehaviorReporting.last_report_sent:type_name -> google.protobuf.Timestamp
 	108, // 133: openits.rsu.v1.Certificates.certificate:type_name -> openits.rsu.v1.Certificate
 	109, // 134: openits.rsu.v1.Certificate.state:type_name -> openits.rsu.v1.CertificateState
-	16,  // 135: openits.rsu.v1.CertificateState.type:type_name -> openits.rsu.v1.Type
+	16,  // 135: openits.rsu.v1.CertificateState.type:type_name -> openits.rsu.v1.CertificateType
 	113, // 136: openits.rsu.v1.CertificateState.valid_from:type_name -> google.protobuf.Timestamp
 	113, // 137: openits.rsu.v1.CertificateState.valid_until:type_name -> google.protobuf.Timestamp
 	110, // 138: openits.rsu.v1.CertificateState.permissions:type_name -> openits.rsu.v1.Permissions
 	111, // 139: openits.rsu.v1.CertificateState.geographic_validity:type_name -> openits.rsu.v1.GeographicValidity
-	17,  // 140: openits.rsu.v1.GeographicValidity.region_type:type_name -> openits.rsu.v1.RegionType
+	17,  // 140: openits.rsu.v1.GeographicValidity.region_type:type_name -> openits.rsu.v1.GeographicRegionType
 	112, // 141: openits.rsu.v1.GeographicValidity.circular_region:type_name -> openits.rsu.v1.CircularRegion
 	142, // [142:142] is the sub-list for method output_type
 	142, // [142:142] is the sub-list for method input_type

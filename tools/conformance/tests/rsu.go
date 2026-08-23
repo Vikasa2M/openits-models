@@ -183,7 +183,7 @@ func TestRSUCerts_AppCertHasPermissions(t *T, obs *Observation) {
 	if r == nil || r.GetSecurity() == nil || r.GetSecurity().GetCertificates() == nil {
 		return
 	}
-	app := yangpkg.OpenitsRsu_Rsu_Security_Certificates_Certificate_State_Type_application
+	app := yangpkg.OpenitsScms_CertificateType_application
 	for id, c := range r.GetSecurity().GetCertificates().Certificate {
 		st := c.GetState()
 		if st == nil || st.Type != app {
@@ -329,7 +329,7 @@ func TestRSUDecisions_SrmDecisionRoundTrips(t *T, obs *Observation) {
 		t.Errorf("srm-ssm/decisions/decision[request-id=srm-000482] not found")
 		return
 	}
-	if want := yangpkg.OpenitsRsu_Rsu_Messages_SrmSsm_Decisions_Decision_Action_approve; d.Action != want {
+	if want := yangpkg.OpenitsV2XMessaging_PriorityDecisionAction_approve; d.Action != want {
 		t.Errorf("decision srm-000482 action = %v, want %v", d.Action, want)
 	}
 	if got, want := d.GetReason(), "transit priority"; got != want {
@@ -379,7 +379,7 @@ func TestRSUAnalytics_CountBasisPresent(t *T, obs *Observation) {
 		return
 	}
 	counts := r.GetDiagnostics().GetVehicleAnalytics().GetCounts()
-	if counts == nil || counts.CountBasis == yangpkg.OpenitsRsu_Rsu_Diagnostics_VehicleAnalytics_Counts_CountBasis_UNSET {
+	if counts == nil || counts.CountBasis == yangpkg.OpenitsVehicleDetection_CountBasis_UNSET {
 		t.Errorf("diagnostics/vehicle-analytics/counts/count-basis is unset")
 	}
 }

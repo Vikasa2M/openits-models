@@ -13,7 +13,7 @@ FIELD_LOCK      := field-numbers.yaml
 YANG_GO_OUT := pkg/yang
 
 .PHONY: all gen check-gen yang-proto-gen proto yang yang-go validate-yang \
-	check-revisions check-naming check-enum-values validate-noi check-graduation \
+	check-revisions check-naming check-enum-values check-inline-enums validate-noi check-graduation \
 	check-augment-collisions check-deviations check-events-layering proto-lint yang-lint vet fmt tidy build-tools \
 	asyncapi asyncapi-check catalog catalog-check
 
@@ -84,6 +84,13 @@ check-naming:
 # (implicit positional numbering is a silent wire-break hazard).
 check-enum-values:
 	python3 scripts/check-enum-values.py
+
+# No grouping composed across module lines may carry an inline enumeration:
+# ygot names such a type after a USE-SITE path, so adding a second composer
+# silently renames it out from under the first (wire-neutral, but it breaks
+# Go consumers of an unrelated module).
+check-inline-enums:
+	python3 scripts/check-inline-enums.py
 
 # Validate NoI YAML under schema-registry/notices/.
 validate-noi:

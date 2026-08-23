@@ -221,146 +221,146 @@ func (LampStatus) EnumDescriptor() ([]byte, []int) {
 	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{3}
 }
 
-type DaysOfWeek int32
+type DayOfWeek int32
 
 const (
-	DaysOfWeek_DAYS_OF_WEEK_UNSPECIFIED DaysOfWeek = 0
-	DaysOfWeek_DAYS_OF_WEEK_MONDAY      DaysOfWeek = 1
-	DaysOfWeek_DAYS_OF_WEEK_TUESDAY     DaysOfWeek = 2
-	DaysOfWeek_DAYS_OF_WEEK_WEDNESDAY   DaysOfWeek = 3
-	DaysOfWeek_DAYS_OF_WEEK_THURSDAY    DaysOfWeek = 4
-	DaysOfWeek_DAYS_OF_WEEK_FRIDAY      DaysOfWeek = 5
-	DaysOfWeek_DAYS_OF_WEEK_SATURDAY    DaysOfWeek = 6
-	DaysOfWeek_DAYS_OF_WEEK_SUNDAY      DaysOfWeek = 7
+	DayOfWeek_DAY_OF_WEEK_UNSPECIFIED DayOfWeek = 0
+	DayOfWeek_DAY_OF_WEEK_MONDAY      DayOfWeek = 1
+	DayOfWeek_DAY_OF_WEEK_TUESDAY     DayOfWeek = 2
+	DayOfWeek_DAY_OF_WEEK_WEDNESDAY   DayOfWeek = 3
+	DayOfWeek_DAY_OF_WEEK_THURSDAY    DayOfWeek = 4
+	DayOfWeek_DAY_OF_WEEK_FRIDAY      DayOfWeek = 5
+	DayOfWeek_DAY_OF_WEEK_SATURDAY    DayOfWeek = 6
+	DayOfWeek_DAY_OF_WEEK_SUNDAY      DayOfWeek = 7
 )
 
-// Enum value maps for DaysOfWeek.
+// Enum value maps for DayOfWeek.
 var (
-	DaysOfWeek_name = map[int32]string{
-		0: "DAYS_OF_WEEK_UNSPECIFIED",
-		1: "DAYS_OF_WEEK_MONDAY",
-		2: "DAYS_OF_WEEK_TUESDAY",
-		3: "DAYS_OF_WEEK_WEDNESDAY",
-		4: "DAYS_OF_WEEK_THURSDAY",
-		5: "DAYS_OF_WEEK_FRIDAY",
-		6: "DAYS_OF_WEEK_SATURDAY",
-		7: "DAYS_OF_WEEK_SUNDAY",
+	DayOfWeek_name = map[int32]string{
+		0: "DAY_OF_WEEK_UNSPECIFIED",
+		1: "DAY_OF_WEEK_MONDAY",
+		2: "DAY_OF_WEEK_TUESDAY",
+		3: "DAY_OF_WEEK_WEDNESDAY",
+		4: "DAY_OF_WEEK_THURSDAY",
+		5: "DAY_OF_WEEK_FRIDAY",
+		6: "DAY_OF_WEEK_SATURDAY",
+		7: "DAY_OF_WEEK_SUNDAY",
 	}
-	DaysOfWeek_value = map[string]int32{
-		"DAYS_OF_WEEK_UNSPECIFIED": 0,
-		"DAYS_OF_WEEK_MONDAY":      1,
-		"DAYS_OF_WEEK_TUESDAY":     2,
-		"DAYS_OF_WEEK_WEDNESDAY":   3,
-		"DAYS_OF_WEEK_THURSDAY":    4,
-		"DAYS_OF_WEEK_FRIDAY":      5,
-		"DAYS_OF_WEEK_SATURDAY":    6,
-		"DAYS_OF_WEEK_SUNDAY":      7,
+	DayOfWeek_value = map[string]int32{
+		"DAY_OF_WEEK_UNSPECIFIED": 0,
+		"DAY_OF_WEEK_MONDAY":      1,
+		"DAY_OF_WEEK_TUESDAY":     2,
+		"DAY_OF_WEEK_WEDNESDAY":   3,
+		"DAY_OF_WEEK_THURSDAY":    4,
+		"DAY_OF_WEEK_FRIDAY":      5,
+		"DAY_OF_WEEK_SATURDAY":    6,
+		"DAY_OF_WEEK_SUNDAY":      7,
 	}
 )
 
-func (x DaysOfWeek) Enum() *DaysOfWeek {
-	p := new(DaysOfWeek)
+func (x DayOfWeek) Enum() *DayOfWeek {
+	p := new(DayOfWeek)
 	*p = x
 	return p
 }
 
-func (x DaysOfWeek) String() string {
+func (x DayOfWeek) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (DaysOfWeek) Descriptor() protoreflect.EnumDescriptor {
+func (DayOfWeek) Descriptor() protoreflect.EnumDescriptor {
 	return file_openits_ramp_metering_v1_state_proto_enumTypes[4].Descriptor()
 }
 
-func (DaysOfWeek) Type() protoreflect.EnumType {
+func (DayOfWeek) Type() protoreflect.EnumType {
 	return &file_openits_ramp_metering_v1_state_proto_enumTypes[4]
 }
 
-func (x DaysOfWeek) Number() protoreflect.EnumNumber {
+func (x DayOfWeek) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use DaysOfWeek.Descriptor instead.
-func (DaysOfWeek) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use DayOfWeek.Descriptor instead.
+func (DayOfWeek) EnumDescriptor() ([]byte, []int) {
 	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{4}
 }
 
-type Months int32
+type Month int32
 
 const (
-	Months_MONTHS_UNSPECIFIED Months = 0
-	Months_MONTHS_JANUARY     Months = 1
-	Months_MONTHS_FEBRUARY    Months = 2
-	Months_MONTHS_MARCH       Months = 3
-	Months_MONTHS_APRIL       Months = 4
-	Months_MONTHS_MAY         Months = 5
-	Months_MONTHS_JUNE        Months = 6
-	Months_MONTHS_JULY        Months = 7
-	Months_MONTHS_AUGUST      Months = 8
-	Months_MONTHS_SEPTEMBER   Months = 9
-	Months_MONTHS_OCTOBER     Months = 10
-	Months_MONTHS_NOVEMBER    Months = 11
-	Months_MONTHS_DECEMBER    Months = 12
+	Month_MONTH_UNSPECIFIED Month = 0
+	Month_MONTH_JANUARY     Month = 1
+	Month_MONTH_FEBRUARY    Month = 2
+	Month_MONTH_MARCH       Month = 3
+	Month_MONTH_APRIL       Month = 4
+	Month_MONTH_MAY         Month = 5
+	Month_MONTH_JUNE        Month = 6
+	Month_MONTH_JULY        Month = 7
+	Month_MONTH_AUGUST      Month = 8
+	Month_MONTH_SEPTEMBER   Month = 9
+	Month_MONTH_OCTOBER     Month = 10
+	Month_MONTH_NOVEMBER    Month = 11
+	Month_MONTH_DECEMBER    Month = 12
 )
 
-// Enum value maps for Months.
+// Enum value maps for Month.
 var (
-	Months_name = map[int32]string{
-		0:  "MONTHS_UNSPECIFIED",
-		1:  "MONTHS_JANUARY",
-		2:  "MONTHS_FEBRUARY",
-		3:  "MONTHS_MARCH",
-		4:  "MONTHS_APRIL",
-		5:  "MONTHS_MAY",
-		6:  "MONTHS_JUNE",
-		7:  "MONTHS_JULY",
-		8:  "MONTHS_AUGUST",
-		9:  "MONTHS_SEPTEMBER",
-		10: "MONTHS_OCTOBER",
-		11: "MONTHS_NOVEMBER",
-		12: "MONTHS_DECEMBER",
+	Month_name = map[int32]string{
+		0:  "MONTH_UNSPECIFIED",
+		1:  "MONTH_JANUARY",
+		2:  "MONTH_FEBRUARY",
+		3:  "MONTH_MARCH",
+		4:  "MONTH_APRIL",
+		5:  "MONTH_MAY",
+		6:  "MONTH_JUNE",
+		7:  "MONTH_JULY",
+		8:  "MONTH_AUGUST",
+		9:  "MONTH_SEPTEMBER",
+		10: "MONTH_OCTOBER",
+		11: "MONTH_NOVEMBER",
+		12: "MONTH_DECEMBER",
 	}
-	Months_value = map[string]int32{
-		"MONTHS_UNSPECIFIED": 0,
-		"MONTHS_JANUARY":     1,
-		"MONTHS_FEBRUARY":    2,
-		"MONTHS_MARCH":       3,
-		"MONTHS_APRIL":       4,
-		"MONTHS_MAY":         5,
-		"MONTHS_JUNE":        6,
-		"MONTHS_JULY":        7,
-		"MONTHS_AUGUST":      8,
-		"MONTHS_SEPTEMBER":   9,
-		"MONTHS_OCTOBER":     10,
-		"MONTHS_NOVEMBER":    11,
-		"MONTHS_DECEMBER":    12,
+	Month_value = map[string]int32{
+		"MONTH_UNSPECIFIED": 0,
+		"MONTH_JANUARY":     1,
+		"MONTH_FEBRUARY":    2,
+		"MONTH_MARCH":       3,
+		"MONTH_APRIL":       4,
+		"MONTH_MAY":         5,
+		"MONTH_JUNE":        6,
+		"MONTH_JULY":        7,
+		"MONTH_AUGUST":      8,
+		"MONTH_SEPTEMBER":   9,
+		"MONTH_OCTOBER":     10,
+		"MONTH_NOVEMBER":    11,
+		"MONTH_DECEMBER":    12,
 	}
 )
 
-func (x Months) Enum() *Months {
-	p := new(Months)
+func (x Month) Enum() *Month {
+	p := new(Month)
 	*p = x
 	return p
 }
 
-func (x Months) String() string {
+func (x Month) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (Months) Descriptor() protoreflect.EnumDescriptor {
+func (Month) Descriptor() protoreflect.EnumDescriptor {
 	return file_openits_ramp_metering_v1_state_proto_enumTypes[5].Descriptor()
 }
 
-func (Months) Type() protoreflect.EnumType {
+func (Month) Type() protoreflect.EnumType {
 	return &file_openits_ramp_metering_v1_state_proto_enumTypes[5]
 }
 
-func (x Months) Number() protoreflect.EnumNumber {
+func (x Month) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use Months.Descriptor instead.
-func (Months) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use Month.Descriptor instead.
+func (Month) EnumDescriptor() ([]byte, []int) {
 	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{5}
 }
 
@@ -2189,8 +2189,8 @@ type ScheduleEntry struct {
 	ScheduleId    uint32                 `protobuf:"varint,1,opt,name=schedule_id,json=scheduleId,proto3" json:"schedule_id,omitempty"`
 	DayPlan       uint32                 `protobuf:"varint,5,opt,name=day_plan,json=dayPlan,proto3" json:"day_plan,omitempty"`
 	DaysOfMonth   []uint32               `protobuf:"varint,4,rep,packed,name=days_of_month,json=daysOfMonth,proto3" json:"days_of_month,omitempty"`
-	DaysOfWeek    []DaysOfWeek           `protobuf:"varint,3,rep,packed,name=days_of_week,json=daysOfWeek,proto3,enum=openits.ramp_metering.v1.DaysOfWeek" json:"days_of_week,omitempty"`
-	Months        []Months               `protobuf:"varint,2,rep,packed,name=months,proto3,enum=openits.ramp_metering.v1.Months" json:"months,omitempty"`
+	DaysOfWeek    []DayOfWeek            `protobuf:"varint,3,rep,packed,name=days_of_week,json=daysOfWeek,proto3,enum=openits.ramp_metering.v1.DayOfWeek" json:"days_of_week,omitempty"`
+	Months        []Month                `protobuf:"varint,2,rep,packed,name=months,proto3,enum=openits.ramp_metering.v1.Month" json:"months,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2246,14 +2246,14 @@ func (x *ScheduleEntry) GetDaysOfMonth() []uint32 {
 	return nil
 }
 
-func (x *ScheduleEntry) GetDaysOfWeek() []DaysOfWeek {
+func (x *ScheduleEntry) GetDaysOfWeek() []DayOfWeek {
 	if x != nil {
 		return x.DaysOfWeek
 	}
 	return nil
 }
 
-func (x *ScheduleEntry) GetMonths() []Months {
+func (x *ScheduleEntry) GetMonths() []Month {
 	if x != nil {
 		return x.Months
 	}
@@ -3733,15 +3733,15 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\x06Action\x12\x1d\n" +
 	"\n" +
 	"start_time\x18\x01 \x01(\tR\tstartTime\x12\x17\n" +
-	"\aplan_id\x18\x02 \x01(\rR\x06planId\"\xf1\x01\n" +
+	"\aplan_id\x18\x02 \x01(\rR\x06planId\"\xef\x01\n" +
 	"\rScheduleEntry\x12\x1f\n" +
 	"\vschedule_id\x18\x01 \x01(\rR\n" +
 	"scheduleId\x12\x19\n" +
 	"\bday_plan\x18\x05 \x01(\rR\adayPlan\x12\"\n" +
-	"\rdays_of_month\x18\x04 \x03(\rR\vdaysOfMonth\x12F\n" +
-	"\fdays_of_week\x18\x03 \x03(\x0e2$.openits.ramp_metering.v1.DaysOfWeekR\n" +
-	"daysOfWeek\x128\n" +
-	"\x06months\x18\x02 \x03(\x0e2 .openits.ramp_metering.v1.MonthsR\x06months\"~\n" +
+	"\rdays_of_month\x18\x04 \x03(\rR\vdaysOfMonth\x12E\n" +
+	"\fdays_of_week\x18\x03 \x03(\x0e2#.openits.ramp_metering.v1.DayOfWeekR\n" +
+	"daysOfWeek\x127\n" +
+	"\x06months\x18\x02 \x03(\x0e2\x1f.openits.ramp_metering.v1.MonthR\x06months\"~\n" +
 	"\rScheduleState\x12+\n" +
 	"\x12active_day_plan_id\x18\x01 \x01(\rR\x0factiveDayPlanId\x12@\n" +
 	"\x0enext_action_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\fnextActionAt\"\xa6\x01\n" +
@@ -3866,33 +3866,33 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\x10LAMP_STATUS_DARK\x10\x00\x12\x18\n" +
 	"\x14LAMP_STATUS_FLASHING\x10\x01\x12\x16\n" +
 	"\x12LAMP_STATUS_STEADY\x10\x02\x12\x15\n" +
-	"\x11LAMP_STATUS_FAULT\x10\x03*\xe1\x01\n" +
+	"\x11LAMP_STATUS_FAULT\x10\x03*\xd8\x01\n" +
+	"\tDayOfWeek\x12\x1b\n" +
+	"\x17DAY_OF_WEEK_UNSPECIFIED\x10\x00\x12\x16\n" +
+	"\x12DAY_OF_WEEK_MONDAY\x10\x01\x12\x17\n" +
+	"\x13DAY_OF_WEEK_TUESDAY\x10\x02\x12\x19\n" +
+	"\x15DAY_OF_WEEK_WEDNESDAY\x10\x03\x12\x18\n" +
+	"\x14DAY_OF_WEEK_THURSDAY\x10\x04\x12\x16\n" +
+	"\x12DAY_OF_WEEK_FRIDAY\x10\x05\x12\x18\n" +
+	"\x14DAY_OF_WEEK_SATURDAY\x10\x06\x12\x16\n" +
+	"\x12DAY_OF_WEEK_SUNDAY\x10\a*\xf8\x01\n" +
+	"\x05Month\x12\x15\n" +
+	"\x11MONTH_UNSPECIFIED\x10\x00\x12\x11\n" +
+	"\rMONTH_JANUARY\x10\x01\x12\x12\n" +
+	"\x0eMONTH_FEBRUARY\x10\x02\x12\x0f\n" +
+	"\vMONTH_MARCH\x10\x03\x12\x0f\n" +
+	"\vMONTH_APRIL\x10\x04\x12\r\n" +
+	"\tMONTH_MAY\x10\x05\x12\x0e\n" +
 	"\n" +
-	"DaysOfWeek\x12\x1c\n" +
-	"\x18DAYS_OF_WEEK_UNSPECIFIED\x10\x00\x12\x17\n" +
-	"\x13DAYS_OF_WEEK_MONDAY\x10\x01\x12\x18\n" +
-	"\x14DAYS_OF_WEEK_TUESDAY\x10\x02\x12\x1a\n" +
-	"\x16DAYS_OF_WEEK_WEDNESDAY\x10\x03\x12\x19\n" +
-	"\x15DAYS_OF_WEEK_THURSDAY\x10\x04\x12\x17\n" +
-	"\x13DAYS_OF_WEEK_FRIDAY\x10\x05\x12\x19\n" +
-	"\x15DAYS_OF_WEEK_SATURDAY\x10\x06\x12\x17\n" +
-	"\x13DAYS_OF_WEEK_SUNDAY\x10\a*\x86\x02\n" +
-	"\x06Months\x12\x16\n" +
-	"\x12MONTHS_UNSPECIFIED\x10\x00\x12\x12\n" +
-	"\x0eMONTHS_JANUARY\x10\x01\x12\x13\n" +
-	"\x0fMONTHS_FEBRUARY\x10\x02\x12\x10\n" +
-	"\fMONTHS_MARCH\x10\x03\x12\x10\n" +
-	"\fMONTHS_APRIL\x10\x04\x12\x0e\n" +
+	"MONTH_JUNE\x10\x06\x12\x0e\n" +
 	"\n" +
-	"MONTHS_MAY\x10\x05\x12\x0f\n" +
-	"\vMONTHS_JUNE\x10\x06\x12\x0f\n" +
-	"\vMONTHS_JULY\x10\a\x12\x11\n" +
-	"\rMONTHS_AUGUST\x10\b\x12\x14\n" +
-	"\x10MONTHS_SEPTEMBER\x10\t\x12\x12\n" +
-	"\x0eMONTHS_OCTOBER\x10\n" +
-	"\x12\x13\n" +
-	"\x0fMONTHS_NOVEMBER\x10\v\x12\x13\n" +
-	"\x0fMONTHS_DECEMBER\x10\f*`\n" +
+	"MONTH_JULY\x10\a\x12\x10\n" +
+	"\fMONTH_AUGUST\x10\b\x12\x13\n" +
+	"\x0fMONTH_SEPTEMBER\x10\t\x12\x11\n" +
+	"\rMONTH_OCTOBER\x10\n" +
+	"\x12\x12\n" +
+	"\x0eMONTH_NOVEMBER\x10\v\x12\x12\n" +
+	"\x0eMONTH_DECEMBER\x10\f*`\n" +
 	"\x13ReleaseCoordination\x12%\n" +
 	"!RELEASE_COORDINATION_SIMULTANEOUS\x10\x00\x12\"\n" +
 	"\x1eRELEASE_COORDINATION_ALTERNATE\x10\x01*O\n" +
@@ -3938,8 +3938,8 @@ var file_openits_ramp_metering_v1_state_proto_goTypes = []any{
 	(SequencePhase)(0),                      // 1: openits.ramp_metering.v1.SequencePhase
 	(AwsFaultAction)(0),                     // 2: openits.ramp_metering.v1.AwsFaultAction
 	(LampStatus)(0),                         // 3: openits.ramp_metering.v1.LampStatus
-	(DaysOfWeek)(0),                         // 4: openits.ramp_metering.v1.DaysOfWeek
-	(Months)(0),                             // 5: openits.ramp_metering.v1.Months
+	(DayOfWeek)(0),                          // 4: openits.ramp_metering.v1.DayOfWeek
+	(Month)(0),                              // 5: openits.ramp_metering.v1.Month
 	(ReleaseCoordination)(0),                // 6: openits.ramp_metering.v1.ReleaseCoordination
 	(BypassOperation)(0),                    // 7: openits.ramp_metering.v1.BypassOperation
 	(HeadState)(0),                          // 8: openits.ramp_metering.v1.HeadState
@@ -4024,8 +4024,8 @@ var file_openits_ramp_metering_v1_state_proto_depIdxs = []int32{
 	31, // 31: openits.ramp_metering.v1.Schedule.schedule_entry:type_name -> openits.ramp_metering.v1.ScheduleEntry
 	32, // 32: openits.ramp_metering.v1.Schedule.state:type_name -> openits.ramp_metering.v1.ScheduleState
 	30, // 33: openits.ramp_metering.v1.DayPlan.action:type_name -> openits.ramp_metering.v1.Action
-	4,  // 34: openits.ramp_metering.v1.ScheduleEntry.days_of_week:type_name -> openits.ramp_metering.v1.DaysOfWeek
-	5,  // 35: openits.ramp_metering.v1.ScheduleEntry.months:type_name -> openits.ramp_metering.v1.Months
+	4,  // 34: openits.ramp_metering.v1.ScheduleEntry.days_of_week:type_name -> openits.ramp_metering.v1.DayOfWeek
+	5,  // 35: openits.ramp_metering.v1.ScheduleEntry.months:type_name -> openits.ramp_metering.v1.Month
 	53, // 36: openits.ramp_metering.v1.ScheduleState.next_action_at:type_name -> google.protobuf.Timestamp
 	34, // 37: openits.ramp_metering.v1.TrafficResponsive.config:type_name -> openits.ramp_metering.v1.TrafficResponsiveConfig
 	36, // 38: openits.ramp_metering.v1.TrafficResponsive.state:type_name -> openits.ramp_metering.v1.TrafficResponsiveState

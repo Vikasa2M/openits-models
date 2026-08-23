@@ -686,146 +686,146 @@ func (SpecialOperation) EnumDescriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{11}
 }
 
-type DaysOfWeek int32
+type DayOfWeek int32
 
 const (
-	DaysOfWeek_DAYS_OF_WEEK_UNSPECIFIED DaysOfWeek = 0
-	DaysOfWeek_DAYS_OF_WEEK_MONDAY      DaysOfWeek = 1
-	DaysOfWeek_DAYS_OF_WEEK_TUESDAY     DaysOfWeek = 2
-	DaysOfWeek_DAYS_OF_WEEK_WEDNESDAY   DaysOfWeek = 3
-	DaysOfWeek_DAYS_OF_WEEK_THURSDAY    DaysOfWeek = 4
-	DaysOfWeek_DAYS_OF_WEEK_FRIDAY      DaysOfWeek = 5
-	DaysOfWeek_DAYS_OF_WEEK_SATURDAY    DaysOfWeek = 6
-	DaysOfWeek_DAYS_OF_WEEK_SUNDAY      DaysOfWeek = 7
+	DayOfWeek_DAY_OF_WEEK_UNSPECIFIED DayOfWeek = 0
+	DayOfWeek_DAY_OF_WEEK_MONDAY      DayOfWeek = 1
+	DayOfWeek_DAY_OF_WEEK_TUESDAY     DayOfWeek = 2
+	DayOfWeek_DAY_OF_WEEK_WEDNESDAY   DayOfWeek = 3
+	DayOfWeek_DAY_OF_WEEK_THURSDAY    DayOfWeek = 4
+	DayOfWeek_DAY_OF_WEEK_FRIDAY      DayOfWeek = 5
+	DayOfWeek_DAY_OF_WEEK_SATURDAY    DayOfWeek = 6
+	DayOfWeek_DAY_OF_WEEK_SUNDAY      DayOfWeek = 7
 )
 
-// Enum value maps for DaysOfWeek.
+// Enum value maps for DayOfWeek.
 var (
-	DaysOfWeek_name = map[int32]string{
-		0: "DAYS_OF_WEEK_UNSPECIFIED",
-		1: "DAYS_OF_WEEK_MONDAY",
-		2: "DAYS_OF_WEEK_TUESDAY",
-		3: "DAYS_OF_WEEK_WEDNESDAY",
-		4: "DAYS_OF_WEEK_THURSDAY",
-		5: "DAYS_OF_WEEK_FRIDAY",
-		6: "DAYS_OF_WEEK_SATURDAY",
-		7: "DAYS_OF_WEEK_SUNDAY",
+	DayOfWeek_name = map[int32]string{
+		0: "DAY_OF_WEEK_UNSPECIFIED",
+		1: "DAY_OF_WEEK_MONDAY",
+		2: "DAY_OF_WEEK_TUESDAY",
+		3: "DAY_OF_WEEK_WEDNESDAY",
+		4: "DAY_OF_WEEK_THURSDAY",
+		5: "DAY_OF_WEEK_FRIDAY",
+		6: "DAY_OF_WEEK_SATURDAY",
+		7: "DAY_OF_WEEK_SUNDAY",
 	}
-	DaysOfWeek_value = map[string]int32{
-		"DAYS_OF_WEEK_UNSPECIFIED": 0,
-		"DAYS_OF_WEEK_MONDAY":      1,
-		"DAYS_OF_WEEK_TUESDAY":     2,
-		"DAYS_OF_WEEK_WEDNESDAY":   3,
-		"DAYS_OF_WEEK_THURSDAY":    4,
-		"DAYS_OF_WEEK_FRIDAY":      5,
-		"DAYS_OF_WEEK_SATURDAY":    6,
-		"DAYS_OF_WEEK_SUNDAY":      7,
+	DayOfWeek_value = map[string]int32{
+		"DAY_OF_WEEK_UNSPECIFIED": 0,
+		"DAY_OF_WEEK_MONDAY":      1,
+		"DAY_OF_WEEK_TUESDAY":     2,
+		"DAY_OF_WEEK_WEDNESDAY":   3,
+		"DAY_OF_WEEK_THURSDAY":    4,
+		"DAY_OF_WEEK_FRIDAY":      5,
+		"DAY_OF_WEEK_SATURDAY":    6,
+		"DAY_OF_WEEK_SUNDAY":      7,
 	}
 )
 
-func (x DaysOfWeek) Enum() *DaysOfWeek {
-	p := new(DaysOfWeek)
+func (x DayOfWeek) Enum() *DayOfWeek {
+	p := new(DayOfWeek)
 	*p = x
 	return p
 }
 
-func (x DaysOfWeek) String() string {
+func (x DayOfWeek) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (DaysOfWeek) Descriptor() protoreflect.EnumDescriptor {
+func (DayOfWeek) Descriptor() protoreflect.EnumDescriptor {
 	return file_openits_signal_control_v1_state_proto_enumTypes[12].Descriptor()
 }
 
-func (DaysOfWeek) Type() protoreflect.EnumType {
+func (DayOfWeek) Type() protoreflect.EnumType {
 	return &file_openits_signal_control_v1_state_proto_enumTypes[12]
 }
 
-func (x DaysOfWeek) Number() protoreflect.EnumNumber {
+func (x DayOfWeek) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use DaysOfWeek.Descriptor instead.
-func (DaysOfWeek) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use DayOfWeek.Descriptor instead.
+func (DayOfWeek) EnumDescriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{12}
 }
 
-type Months int32
+type Month int32
 
 const (
-	Months_MONTHS_UNSPECIFIED Months = 0
-	Months_MONTHS_JANUARY     Months = 1
-	Months_MONTHS_FEBRUARY    Months = 2
-	Months_MONTHS_MARCH       Months = 3
-	Months_MONTHS_APRIL       Months = 4
-	Months_MONTHS_MAY         Months = 5
-	Months_MONTHS_JUNE        Months = 6
-	Months_MONTHS_JULY        Months = 7
-	Months_MONTHS_AUGUST      Months = 8
-	Months_MONTHS_SEPTEMBER   Months = 9
-	Months_MONTHS_OCTOBER     Months = 10
-	Months_MONTHS_NOVEMBER    Months = 11
-	Months_MONTHS_DECEMBER    Months = 12
+	Month_MONTH_UNSPECIFIED Month = 0
+	Month_MONTH_JANUARY     Month = 1
+	Month_MONTH_FEBRUARY    Month = 2
+	Month_MONTH_MARCH       Month = 3
+	Month_MONTH_APRIL       Month = 4
+	Month_MONTH_MAY         Month = 5
+	Month_MONTH_JUNE        Month = 6
+	Month_MONTH_JULY        Month = 7
+	Month_MONTH_AUGUST      Month = 8
+	Month_MONTH_SEPTEMBER   Month = 9
+	Month_MONTH_OCTOBER     Month = 10
+	Month_MONTH_NOVEMBER    Month = 11
+	Month_MONTH_DECEMBER    Month = 12
 )
 
-// Enum value maps for Months.
+// Enum value maps for Month.
 var (
-	Months_name = map[int32]string{
-		0:  "MONTHS_UNSPECIFIED",
-		1:  "MONTHS_JANUARY",
-		2:  "MONTHS_FEBRUARY",
-		3:  "MONTHS_MARCH",
-		4:  "MONTHS_APRIL",
-		5:  "MONTHS_MAY",
-		6:  "MONTHS_JUNE",
-		7:  "MONTHS_JULY",
-		8:  "MONTHS_AUGUST",
-		9:  "MONTHS_SEPTEMBER",
-		10: "MONTHS_OCTOBER",
-		11: "MONTHS_NOVEMBER",
-		12: "MONTHS_DECEMBER",
+	Month_name = map[int32]string{
+		0:  "MONTH_UNSPECIFIED",
+		1:  "MONTH_JANUARY",
+		2:  "MONTH_FEBRUARY",
+		3:  "MONTH_MARCH",
+		4:  "MONTH_APRIL",
+		5:  "MONTH_MAY",
+		6:  "MONTH_JUNE",
+		7:  "MONTH_JULY",
+		8:  "MONTH_AUGUST",
+		9:  "MONTH_SEPTEMBER",
+		10: "MONTH_OCTOBER",
+		11: "MONTH_NOVEMBER",
+		12: "MONTH_DECEMBER",
 	}
-	Months_value = map[string]int32{
-		"MONTHS_UNSPECIFIED": 0,
-		"MONTHS_JANUARY":     1,
-		"MONTHS_FEBRUARY":    2,
-		"MONTHS_MARCH":       3,
-		"MONTHS_APRIL":       4,
-		"MONTHS_MAY":         5,
-		"MONTHS_JUNE":        6,
-		"MONTHS_JULY":        7,
-		"MONTHS_AUGUST":      8,
-		"MONTHS_SEPTEMBER":   9,
-		"MONTHS_OCTOBER":     10,
-		"MONTHS_NOVEMBER":    11,
-		"MONTHS_DECEMBER":    12,
+	Month_value = map[string]int32{
+		"MONTH_UNSPECIFIED": 0,
+		"MONTH_JANUARY":     1,
+		"MONTH_FEBRUARY":    2,
+		"MONTH_MARCH":       3,
+		"MONTH_APRIL":       4,
+		"MONTH_MAY":         5,
+		"MONTH_JUNE":        6,
+		"MONTH_JULY":        7,
+		"MONTH_AUGUST":      8,
+		"MONTH_SEPTEMBER":   9,
+		"MONTH_OCTOBER":     10,
+		"MONTH_NOVEMBER":    11,
+		"MONTH_DECEMBER":    12,
 	}
 )
 
-func (x Months) Enum() *Months {
-	p := new(Months)
+func (x Month) Enum() *Month {
+	p := new(Month)
 	*p = x
 	return p
 }
 
-func (x Months) String() string {
+func (x Month) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (Months) Descriptor() protoreflect.EnumDescriptor {
+func (Month) Descriptor() protoreflect.EnumDescriptor {
 	return file_openits_signal_control_v1_state_proto_enumTypes[13].Descriptor()
 }
 
-func (Months) Type() protoreflect.EnumType {
+func (Month) Type() protoreflect.EnumType {
 	return &file_openits_signal_control_v1_state_proto_enumTypes[13]
 }
 
-func (x Months) Number() protoreflect.EnumNumber {
+func (x Month) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use Months.Descriptor instead.
-func (Months) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use Month.Descriptor instead.
+func (Month) EnumDescriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{13}
 }
 
@@ -1058,110 +1058,6 @@ func (Stage) EnumDescriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{17}
 }
 
-type TestState int32
-
-const (
-	TestState_TEST_STATE_IDLE        TestState = 0
-	TestState_TEST_STATE_IN_PROGRESS TestState = 1
-	TestState_TEST_STATE_PASSED      TestState = 2
-	TestState_TEST_STATE_FAILED      TestState = 3
-)
-
-// Enum value maps for TestState.
-var (
-	TestState_name = map[int32]string{
-		0: "TEST_STATE_IDLE",
-		1: "TEST_STATE_IN_PROGRESS",
-		2: "TEST_STATE_PASSED",
-		3: "TEST_STATE_FAILED",
-	}
-	TestState_value = map[string]int32{
-		"TEST_STATE_IDLE":        0,
-		"TEST_STATE_IN_PROGRESS": 1,
-		"TEST_STATE_PASSED":      2,
-		"TEST_STATE_FAILED":      3,
-	}
-)
-
-func (x TestState) Enum() *TestState {
-	p := new(TestState)
-	*p = x
-	return p
-}
-
-func (x TestState) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (TestState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[18].Descriptor()
-}
-
-func (TestState) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[18]
-}
-
-func (x TestState) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use TestState.Descriptor instead.
-func (TestState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{18}
-}
-
-type PowerSource int32
-
-const (
-	PowerSource_POWER_SOURCE_ON_LINE    PowerSource = 0
-	PowerSource_POWER_SOURCE_ON_BATTERY PowerSource = 1
-	PowerSource_POWER_SOURCE_BYPASS     PowerSource = 2
-	PowerSource_POWER_SOURCE_OFF        PowerSource = 3
-)
-
-// Enum value maps for PowerSource.
-var (
-	PowerSource_name = map[int32]string{
-		0: "POWER_SOURCE_ON_LINE",
-		1: "POWER_SOURCE_ON_BATTERY",
-		2: "POWER_SOURCE_BYPASS",
-		3: "POWER_SOURCE_OFF",
-	}
-	PowerSource_value = map[string]int32{
-		"POWER_SOURCE_ON_LINE":    0,
-		"POWER_SOURCE_ON_BATTERY": 1,
-		"POWER_SOURCE_BYPASS":     2,
-		"POWER_SOURCE_OFF":        3,
-	}
-)
-
-func (x PowerSource) Enum() *PowerSource {
-	p := new(PowerSource)
-	*p = x
-	return p
-}
-
-func (x PowerSource) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (PowerSource) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[19].Descriptor()
-}
-
-func (PowerSource) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[19]
-}
-
-func (x PowerSource) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use PowerSource.Descriptor instead.
-func (PowerSource) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{19}
-}
-
 type SignalOperationOnBattery int32
 
 const (
@@ -1195,11 +1091,11 @@ func (x SignalOperationOnBattery) String() string {
 }
 
 func (SignalOperationOnBattery) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[20].Descriptor()
+	return file_openits_signal_control_v1_state_proto_enumTypes[18].Descriptor()
 }
 
 func (SignalOperationOnBattery) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[20]
+	return &file_openits_signal_control_v1_state_proto_enumTypes[18]
 }
 
 func (x SignalOperationOnBattery) Number() protoreflect.EnumNumber {
@@ -1208,6 +1104,116 @@ func (x SignalOperationOnBattery) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SignalOperationOnBattery.Descriptor instead.
 func (SignalOperationOnBattery) EnumDescriptor() ([]byte, []int) {
+	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{18}
+}
+
+type BatteryTestState int32
+
+const (
+	BatteryTestState_BATTERY_TEST_STATE_IDLE        BatteryTestState = 0
+	BatteryTestState_BATTERY_TEST_STATE_IN_PROGRESS BatteryTestState = 1
+	BatteryTestState_BATTERY_TEST_STATE_PASSED      BatteryTestState = 2
+	BatteryTestState_BATTERY_TEST_STATE_FAILED      BatteryTestState = 3
+)
+
+// Enum value maps for BatteryTestState.
+var (
+	BatteryTestState_name = map[int32]string{
+		0: "BATTERY_TEST_STATE_IDLE",
+		1: "BATTERY_TEST_STATE_IN_PROGRESS",
+		2: "BATTERY_TEST_STATE_PASSED",
+		3: "BATTERY_TEST_STATE_FAILED",
+	}
+	BatteryTestState_value = map[string]int32{
+		"BATTERY_TEST_STATE_IDLE":        0,
+		"BATTERY_TEST_STATE_IN_PROGRESS": 1,
+		"BATTERY_TEST_STATE_PASSED":      2,
+		"BATTERY_TEST_STATE_FAILED":      3,
+	}
+)
+
+func (x BatteryTestState) Enum() *BatteryTestState {
+	p := new(BatteryTestState)
+	*p = x
+	return p
+}
+
+func (x BatteryTestState) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (BatteryTestState) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_signal_control_v1_state_proto_enumTypes[19].Descriptor()
+}
+
+func (BatteryTestState) Type() protoreflect.EnumType {
+	return &file_openits_signal_control_v1_state_proto_enumTypes[19]
+}
+
+func (x BatteryTestState) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use BatteryTestState.Descriptor instead.
+func (BatteryTestState) EnumDescriptor() ([]byte, []int) {
+	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{19}
+}
+
+type PowerSource int32
+
+const (
+	PowerSource_POWER_SOURCE_ON_LINE    PowerSource = 0
+	PowerSource_POWER_SOURCE_ON_BATTERY PowerSource = 1
+	PowerSource_POWER_SOURCE_BYPASS     PowerSource = 2
+	PowerSource_POWER_SOURCE_OFF        PowerSource = 3
+	PowerSource_POWER_SOURCE_SOLAR      PowerSource = 4
+	PowerSource_POWER_SOURCE_GENERATOR  PowerSource = 5
+)
+
+// Enum value maps for PowerSource.
+var (
+	PowerSource_name = map[int32]string{
+		0: "POWER_SOURCE_ON_LINE",
+		1: "POWER_SOURCE_ON_BATTERY",
+		2: "POWER_SOURCE_BYPASS",
+		3: "POWER_SOURCE_OFF",
+		4: "POWER_SOURCE_SOLAR",
+		5: "POWER_SOURCE_GENERATOR",
+	}
+	PowerSource_value = map[string]int32{
+		"POWER_SOURCE_ON_LINE":    0,
+		"POWER_SOURCE_ON_BATTERY": 1,
+		"POWER_SOURCE_BYPASS":     2,
+		"POWER_SOURCE_OFF":        3,
+		"POWER_SOURCE_SOLAR":      4,
+		"POWER_SOURCE_GENERATOR":  5,
+	}
+)
+
+func (x PowerSource) Enum() *PowerSource {
+	p := new(PowerSource)
+	*p = x
+	return p
+}
+
+func (x PowerSource) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (PowerSource) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_signal_control_v1_state_proto_enumTypes[20].Descriptor()
+}
+
+func (PowerSource) Type() protoreflect.EnumType {
+	return &file_openits_signal_control_v1_state_proto_enumTypes[20]
+}
+
+func (x PowerSource) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use PowerSource.Descriptor instead.
+func (PowerSource) EnumDescriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{20}
 }
 
@@ -4163,8 +4169,8 @@ type ScheduleEntry struct {
 	ScheduleId    uint32                 `protobuf:"varint,1,opt,name=schedule_id,json=scheduleId,proto3" json:"schedule_id,omitempty"`
 	DayPlan       uint32                 `protobuf:"varint,5,opt,name=day_plan,json=dayPlan,proto3" json:"day_plan,omitempty"`
 	DaysOfMonth   []uint32               `protobuf:"varint,4,rep,packed,name=days_of_month,json=daysOfMonth,proto3" json:"days_of_month,omitempty"`
-	DaysOfWeek    []DaysOfWeek           `protobuf:"varint,3,rep,packed,name=days_of_week,json=daysOfWeek,proto3,enum=openits.signal_control.v1.DaysOfWeek" json:"days_of_week,omitempty"`
-	Months        []Months               `protobuf:"varint,2,rep,packed,name=months,proto3,enum=openits.signal_control.v1.Months" json:"months,omitempty"`
+	DaysOfWeek    []DayOfWeek            `protobuf:"varint,3,rep,packed,name=days_of_week,json=daysOfWeek,proto3,enum=openits.signal_control.v1.DayOfWeek" json:"days_of_week,omitempty"`
+	Months        []Month                `protobuf:"varint,2,rep,packed,name=months,proto3,enum=openits.signal_control.v1.Month" json:"months,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4220,14 +4226,14 @@ func (x *ScheduleEntry) GetDaysOfMonth() []uint32 {
 	return nil
 }
 
-func (x *ScheduleEntry) GetDaysOfWeek() []DaysOfWeek {
+func (x *ScheduleEntry) GetDaysOfWeek() []DayOfWeek {
 	if x != nil {
 		return x.DaysOfWeek
 	}
 	return nil
 }
 
-func (x *ScheduleEntry) GetMonths() []Months {
+func (x *ScheduleEntry) GetMonths() []Month {
 	if x != nil {
 		return x.Months
 	}
@@ -5164,7 +5170,7 @@ func (x *CabinetPower) GetState() *CabinetPowerState {
 
 type CabinetPowerConfig struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	OnBatteryPolicy *v1.CabinetPowerPolicy `protobuf:"bytes,1,opt,name=on_battery_policy,json=onBatteryPolicy,proto3" json:"on_battery_policy,omitempty"`
+	OnBatteryPolicy *v1.ScOnBatteryPolicy  `protobuf:"bytes,1,opt,name=on_battery_policy,json=onBatteryPolicy,proto3" json:"on_battery_policy,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -5199,7 +5205,7 @@ func (*CabinetPowerConfig) Descriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{53}
 }
 
-func (x *CabinetPowerConfig) GetOnBatteryPolicy() *v1.CabinetPowerPolicy {
+func (x *CabinetPowerConfig) GetOnBatteryPolicy() *v1.ScOnBatteryPolicy {
 	if x != nil {
 		return x.OnBatteryPolicy
 	}
@@ -5208,15 +5214,15 @@ func (x *CabinetPowerConfig) GetOnBatteryPolicy() *v1.CabinetPowerPolicy {
 
 type CabinetPowerState struct {
 	state                    protoimpl.MessageState   `protogen:"open.v1"`
+	PolicePanelOpen          bool                     `protobuf:"varint,7,opt,name=police_panel_open,json=policePanelOpen,proto3" json:"police_panel_open,omitempty"`
+	SignalOperationOnBattery SignalOperationOnBattery `protobuf:"varint,9,opt,name=signal_operation_on_battery,json=signalOperationOnBattery,proto3,enum=openits.signal_control.v1.SignalOperationOnBattery" json:"signal_operation_on_battery,omitempty"`
 	Battery                  *Battery                 `protobuf:"bytes,1,opt,name=battery,proto3" json:"battery,omitempty"`
 	DoorOpen                 bool                     `protobuf:"varint,2,opt,name=door_open,json=doorOpen,proto3" json:"door_open,omitempty"`
 	Generator                *Generator               `protobuf:"bytes,3,opt,name=generator,proto3" json:"generator,omitempty"`
 	LineFrequencyHz          string                   `protobuf:"bytes,4,opt,name=line_frequency_hz,json=lineFrequencyHz,proto3" json:"line_frequency_hz,omitempty"`
 	LineVoltageV             string                   `protobuf:"bytes,5,opt,name=line_voltage_v,json=lineVoltageV,proto3" json:"line_voltage_v,omitempty"`
-	OnBatteryPolicy          *v1.CabinetPowerPolicy   `protobuf:"bytes,6,opt,name=on_battery_policy,json=onBatteryPolicy,proto3" json:"on_battery_policy,omitempty"`
-	PolicePanelOpen          bool                     `protobuf:"varint,7,opt,name=police_panel_open,json=policePanelOpen,proto3" json:"police_panel_open,omitempty"`
+	OnBatteryPolicy          *v1.ScOnBatteryPolicy    `protobuf:"bytes,6,opt,name=on_battery_policy,json=onBatteryPolicy,proto3" json:"on_battery_policy,omitempty"`
 	PowerSource              PowerSource              `protobuf:"varint,8,opt,name=power_source,json=powerSource,proto3,enum=openits.signal_control.v1.PowerSource" json:"power_source,omitempty"`
-	SignalOperationOnBattery SignalOperationOnBattery `protobuf:"varint,9,opt,name=signal_operation_on_battery,json=signalOperationOnBattery,proto3,enum=openits.signal_control.v1.SignalOperationOnBattery" json:"signal_operation_on_battery,omitempty"`
 	TransferCount            uint32                   `protobuf:"varint,10,opt,name=transfer_count,json=transferCount,proto3" json:"transfer_count,omitempty"`
 	unknownFields            protoimpl.UnknownFields
 	sizeCache                protoimpl.SizeCache
@@ -5250,6 +5256,20 @@ func (x *CabinetPowerState) ProtoReflect() protoreflect.Message {
 // Deprecated: Use CabinetPowerState.ProtoReflect.Descriptor instead.
 func (*CabinetPowerState) Descriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{54}
+}
+
+func (x *CabinetPowerState) GetPolicePanelOpen() bool {
+	if x != nil {
+		return x.PolicePanelOpen
+	}
+	return false
+}
+
+func (x *CabinetPowerState) GetSignalOperationOnBattery() SignalOperationOnBattery {
+	if x != nil {
+		return x.SignalOperationOnBattery
+	}
+	return SignalOperationOnBattery_SIGNAL_OPERATION_ON_BATTERY_FULL_OPERATION
 }
 
 func (x *CabinetPowerState) GetBattery() *Battery {
@@ -5287,18 +5307,11 @@ func (x *CabinetPowerState) GetLineVoltageV() string {
 	return ""
 }
 
-func (x *CabinetPowerState) GetOnBatteryPolicy() *v1.CabinetPowerPolicy {
+func (x *CabinetPowerState) GetOnBatteryPolicy() *v1.ScOnBatteryPolicy {
 	if x != nil {
 		return x.OnBatteryPolicy
 	}
 	return nil
-}
-
-func (x *CabinetPowerState) GetPolicePanelOpen() bool {
-	if x != nil {
-		return x.PolicePanelOpen
-	}
-	return false
 }
 
 func (x *CabinetPowerState) GetPowerSource() PowerSource {
@@ -5306,13 +5319,6 @@ func (x *CabinetPowerState) GetPowerSource() PowerSource {
 		return x.PowerSource
 	}
 	return PowerSource_POWER_SOURCE_ON_LINE
-}
-
-func (x *CabinetPowerState) GetSignalOperationOnBattery() SignalOperationOnBattery {
-	if x != nil {
-		return x.SignalOperationOnBattery
-	}
-	return SignalOperationOnBattery_SIGNAL_OPERATION_ON_BATTERY_FULL_OPERATION
 }
 
 func (x *CabinetPowerState) GetTransferCount() uint32 {
@@ -5329,7 +5335,7 @@ type Battery struct {
 	VoltageV                string                 `protobuf:"bytes,3,opt,name=voltage_v,json=voltageV,proto3" json:"voltage_v,omitempty"`
 	TemperatureC            string                 `protobuf:"bytes,4,opt,name=temperature_c,json=temperatureC,proto3" json:"temperature_c,omitempty"`
 	ChargerFault            bool                   `protobuf:"varint,5,opt,name=charger_fault,json=chargerFault,proto3" json:"charger_fault,omitempty"`
-	TestState               TestState              `protobuf:"varint,6,opt,name=test_state,json=testState,proto3,enum=openits.signal_control.v1.TestState" json:"test_state,omitempty"`
+	TestState               BatteryTestState       `protobuf:"varint,6,opt,name=test_state,json=testState,proto3,enum=openits.signal_control.v1.BatteryTestState" json:"test_state,omitempty"`
 	LastTest                *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=last_test,json=lastTest,proto3" json:"last_test,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
@@ -5400,11 +5406,11 @@ func (x *Battery) GetChargerFault() bool {
 	return false
 }
 
-func (x *Battery) GetTestState() TestState {
+func (x *Battery) GetTestState() BatteryTestState {
 	if x != nil {
 		return x.TestState
 	}
-	return TestState_TEST_STATE_IDLE
+	return BatteryTestState_BATTERY_TEST_STATE_IDLE
 }
 
 func (x *Battery) GetLastTest() *timestamppb.Timestamp {
@@ -5859,15 +5865,15 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"timingPlan\x12Z\n" +
 	"\x11special_operation\x18\x03 \x01(\x0e2+.openits.signal_control.v1.SpecialOperationH\x00R\x10specialOperationB\n" +
 	"\n" +
-	"\bactivate\"\xf3\x01\n" +
+	"\bactivate\"\xf1\x01\n" +
 	"\rScheduleEntry\x12\x1f\n" +
 	"\vschedule_id\x18\x01 \x01(\rR\n" +
 	"scheduleId\x12\x19\n" +
 	"\bday_plan\x18\x05 \x01(\rR\adayPlan\x12\"\n" +
-	"\rdays_of_month\x18\x04 \x03(\rR\vdaysOfMonth\x12G\n" +
-	"\fdays_of_week\x18\x03 \x03(\x0e2%.openits.signal_control.v1.DaysOfWeekR\n" +
-	"daysOfWeek\x129\n" +
-	"\x06months\x18\x02 \x03(\x0e2!.openits.signal_control.v1.MonthsR\x06months\"\xcc\x01\n" +
+	"\rdays_of_month\x18\x04 \x03(\rR\vdaysOfMonth\x12F\n" +
+	"\fdays_of_week\x18\x03 \x03(\x0e2$.openits.signal_control.v1.DayOfWeekR\n" +
+	"daysOfWeek\x128\n" +
+	"\x06months\x18\x02 \x03(\x0e2 .openits.signal_control.v1.MonthR\x06months\"\xcc\x01\n" +
 	"\x05Clock\x12=\n" +
 	"\fcurrent_time\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\vcurrentTime\x12\x1f\n" +
 	"\vtime_source\x18\x02 \x01(\tR\n" +
@@ -5946,29 +5952,29 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\alatched\x18\x03 \x01(\bR\alatched\"\x99\x01\n" +
 	"\fCabinetPower\x12E\n" +
 	"\x06config\x18\v \x01(\v2-.openits.signal_control.v1.CabinetPowerConfigR\x06config\x12B\n" +
-	"\x05state\x18\f \x01(\v2,.openits.signal_control.v1.CabinetPowerStateR\x05state\"f\n" +
-	"\x12CabinetPowerConfig\x12P\n" +
-	"\x11on_battery_policy\x18\x01 \x01(\v2$.openits.types.v1.CabinetPowerPolicyR\x0fonBatteryPolicy\"\xe8\x04\n" +
-	"\x11CabinetPowerState\x12<\n" +
+	"\x05state\x18\f \x01(\v2,.openits.signal_control.v1.CabinetPowerStateR\x05state\"e\n" +
+	"\x12CabinetPowerConfig\x12O\n" +
+	"\x11on_battery_policy\x18\x01 \x01(\v2#.openits.types.v1.ScOnBatteryPolicyR\x0fonBatteryPolicy\"\xe7\x04\n" +
+	"\x11CabinetPowerState\x12*\n" +
+	"\x11police_panel_open\x18\a \x01(\bR\x0fpolicePanelOpen\x12r\n" +
+	"\x1bsignal_operation_on_battery\x18\t \x01(\x0e23.openits.signal_control.v1.SignalOperationOnBatteryR\x18signalOperationOnBattery\x12<\n" +
 	"\abattery\x18\x01 \x01(\v2\".openits.signal_control.v1.BatteryR\abattery\x12\x1b\n" +
 	"\tdoor_open\x18\x02 \x01(\bR\bdoorOpen\x12B\n" +
 	"\tgenerator\x18\x03 \x01(\v2$.openits.signal_control.v1.GeneratorR\tgenerator\x12*\n" +
 	"\x11line_frequency_hz\x18\x04 \x01(\tR\x0flineFrequencyHz\x12$\n" +
-	"\x0eline_voltage_v\x18\x05 \x01(\tR\flineVoltageV\x12P\n" +
-	"\x11on_battery_policy\x18\x06 \x01(\v2$.openits.types.v1.CabinetPowerPolicyR\x0fonBatteryPolicy\x12*\n" +
-	"\x11police_panel_open\x18\a \x01(\bR\x0fpolicePanelOpen\x12I\n" +
-	"\fpower_source\x18\b \x01(\x0e2&.openits.signal_control.v1.PowerSourceR\vpowerSource\x12r\n" +
-	"\x1bsignal_operation_on_battery\x18\t \x01(\x0e23.openits.signal_control.v1.SignalOperationOnBatteryR\x18signalOperationOnBattery\x12%\n" +
+	"\x0eline_voltage_v\x18\x05 \x01(\tR\flineVoltageV\x12O\n" +
+	"\x11on_battery_policy\x18\x06 \x01(\v2#.openits.types.v1.ScOnBatteryPolicyR\x0fonBatteryPolicy\x12I\n" +
+	"\fpower_source\x18\b \x01(\x0e2&.openits.signal_control.v1.PowerSourceR\vpowerSource\x12%\n" +
 	"\x0etransfer_count\x18\n" +
-	" \x01(\rR\rtransferCount\"\xd9\x02\n" +
+	" \x01(\rR\rtransferCount\"\xe0\x02\n" +
 	"\aBattery\x12-\n" +
 	"\x13state_of_charge_pct\x18\x01 \x01(\rR\x10stateOfChargePct\x12:\n" +
 	"\x19runtime_remaining_minutes\x18\x02 \x01(\rR\x17runtimeRemainingMinutes\x12\x1b\n" +
 	"\tvoltage_v\x18\x03 \x01(\tR\bvoltageV\x12#\n" +
 	"\rtemperature_c\x18\x04 \x01(\tR\ftemperatureC\x12#\n" +
-	"\rcharger_fault\x18\x05 \x01(\bR\fchargerFault\x12C\n" +
+	"\rcharger_fault\x18\x05 \x01(\bR\fchargerFault\x12J\n" +
 	"\n" +
-	"test_state\x18\x06 \x01(\x0e2$.openits.signal_control.v1.TestStateR\ttestState\x127\n" +
+	"test_state\x18\x06 \x01(\x0e2+.openits.signal_control.v1.BatteryTestStateR\ttestState\x127\n" +
 	"\tlast_test\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\blastTest\"K\n" +
 	"\tGenerator\x12\x18\n" +
 	"\arunning\x18\x01 \x01(\bR\arunning\x12$\n" +
@@ -6055,33 +6061,33 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\x10SpecialOperation\x12!\n" +
 	"\x1dSPECIAL_OPERATION_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16SPECIAL_OPERATION_FREE\x10\x01\x12\x1b\n" +
-	"\x17SPECIAL_OPERATION_FLASH\x10\x02*\xe1\x01\n" +
+	"\x17SPECIAL_OPERATION_FLASH\x10\x02*\xd8\x01\n" +
+	"\tDayOfWeek\x12\x1b\n" +
+	"\x17DAY_OF_WEEK_UNSPECIFIED\x10\x00\x12\x16\n" +
+	"\x12DAY_OF_WEEK_MONDAY\x10\x01\x12\x17\n" +
+	"\x13DAY_OF_WEEK_TUESDAY\x10\x02\x12\x19\n" +
+	"\x15DAY_OF_WEEK_WEDNESDAY\x10\x03\x12\x18\n" +
+	"\x14DAY_OF_WEEK_THURSDAY\x10\x04\x12\x16\n" +
+	"\x12DAY_OF_WEEK_FRIDAY\x10\x05\x12\x18\n" +
+	"\x14DAY_OF_WEEK_SATURDAY\x10\x06\x12\x16\n" +
+	"\x12DAY_OF_WEEK_SUNDAY\x10\a*\xf8\x01\n" +
+	"\x05Month\x12\x15\n" +
+	"\x11MONTH_UNSPECIFIED\x10\x00\x12\x11\n" +
+	"\rMONTH_JANUARY\x10\x01\x12\x12\n" +
+	"\x0eMONTH_FEBRUARY\x10\x02\x12\x0f\n" +
+	"\vMONTH_MARCH\x10\x03\x12\x0f\n" +
+	"\vMONTH_APRIL\x10\x04\x12\r\n" +
+	"\tMONTH_MAY\x10\x05\x12\x0e\n" +
 	"\n" +
-	"DaysOfWeek\x12\x1c\n" +
-	"\x18DAYS_OF_WEEK_UNSPECIFIED\x10\x00\x12\x17\n" +
-	"\x13DAYS_OF_WEEK_MONDAY\x10\x01\x12\x18\n" +
-	"\x14DAYS_OF_WEEK_TUESDAY\x10\x02\x12\x1a\n" +
-	"\x16DAYS_OF_WEEK_WEDNESDAY\x10\x03\x12\x19\n" +
-	"\x15DAYS_OF_WEEK_THURSDAY\x10\x04\x12\x17\n" +
-	"\x13DAYS_OF_WEEK_FRIDAY\x10\x05\x12\x19\n" +
-	"\x15DAYS_OF_WEEK_SATURDAY\x10\x06\x12\x17\n" +
-	"\x13DAYS_OF_WEEK_SUNDAY\x10\a*\x86\x02\n" +
-	"\x06Months\x12\x16\n" +
-	"\x12MONTHS_UNSPECIFIED\x10\x00\x12\x12\n" +
-	"\x0eMONTHS_JANUARY\x10\x01\x12\x13\n" +
-	"\x0fMONTHS_FEBRUARY\x10\x02\x12\x10\n" +
-	"\fMONTHS_MARCH\x10\x03\x12\x10\n" +
-	"\fMONTHS_APRIL\x10\x04\x12\x0e\n" +
+	"MONTH_JUNE\x10\x06\x12\x0e\n" +
 	"\n" +
-	"MONTHS_MAY\x10\x05\x12\x0f\n" +
-	"\vMONTHS_JUNE\x10\x06\x12\x0f\n" +
-	"\vMONTHS_JULY\x10\a\x12\x11\n" +
-	"\rMONTHS_AUGUST\x10\b\x12\x14\n" +
-	"\x10MONTHS_SEPTEMBER\x10\t\x12\x12\n" +
-	"\x0eMONTHS_OCTOBER\x10\n" +
-	"\x12\x13\n" +
-	"\x0fMONTHS_NOVEMBER\x10\v\x12\x13\n" +
-	"\x0fMONTHS_DECEMBER\x10\f*\x93\x01\n" +
+	"MONTH_JULY\x10\a\x12\x10\n" +
+	"\fMONTH_AUGUST\x10\b\x12\x13\n" +
+	"\x0fMONTH_SEPTEMBER\x10\t\x12\x11\n" +
+	"\rMONTH_OCTOBER\x10\n" +
+	"\x12\x12\n" +
+	"\x0eMONTH_NOVEMBER\x10\v\x12\x12\n" +
+	"\x0eMONTH_DECEMBER\x10\f*\x93\x01\n" +
 	"\n" +
 	"SyncStatus\x12\x1b\n" +
 	"\x17SYNC_STATUS_UNSPECIFIED\x10\x00\x12\x16\n" +
@@ -6109,21 +6115,23 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\rSTAGE_GRANTED\x10\x02\x12\x10\n" +
 	"\fSTAGE_ACTIVE\x10\x03\x12\x13\n" +
 	"\x0fSTAGE_COMPLETED\x10\x04\x12\x10\n" +
-	"\fSTAGE_DENIED\x10\x05*j\n" +
-	"\tTestState\x12\x13\n" +
-	"\x0fTEST_STATE_IDLE\x10\x00\x12\x1a\n" +
-	"\x16TEST_STATE_IN_PROGRESS\x10\x01\x12\x15\n" +
-	"\x11TEST_STATE_PASSED\x10\x02\x12\x15\n" +
-	"\x11TEST_STATE_FAILED\x10\x03*s\n" +
+	"\fSTAGE_DENIED\x10\x05*\xa1\x01\n" +
+	"\x18SignalOperationOnBattery\x12.\n" +
+	"*SIGNAL_OPERATION_ON_BATTERY_FULL_OPERATION\x10\x00\x12%\n" +
+	"!SIGNAL_OPERATION_ON_BATTERY_FLASH\x10\x01\x12.\n" +
+	"*SIGNAL_OPERATION_ON_BATTERY_NOT_ON_BATTERY\x10\x02*\x91\x01\n" +
+	"\x10BatteryTestState\x12\x1b\n" +
+	"\x17BATTERY_TEST_STATE_IDLE\x10\x00\x12\"\n" +
+	"\x1eBATTERY_TEST_STATE_IN_PROGRESS\x10\x01\x12\x1d\n" +
+	"\x19BATTERY_TEST_STATE_PASSED\x10\x02\x12\x1d\n" +
+	"\x19BATTERY_TEST_STATE_FAILED\x10\x03*\xa7\x01\n" +
 	"\vPowerSource\x12\x18\n" +
 	"\x14POWER_SOURCE_ON_LINE\x10\x00\x12\x1b\n" +
 	"\x17POWER_SOURCE_ON_BATTERY\x10\x01\x12\x17\n" +
 	"\x13POWER_SOURCE_BYPASS\x10\x02\x12\x14\n" +
-	"\x10POWER_SOURCE_OFF\x10\x03*\xa1\x01\n" +
-	"\x18SignalOperationOnBattery\x12.\n" +
-	"*SIGNAL_OPERATION_ON_BATTERY_FULL_OPERATION\x10\x00\x12%\n" +
-	"!SIGNAL_OPERATION_ON_BATTERY_FLASH\x10\x01\x12.\n" +
-	"*SIGNAL_OPERATION_ON_BATTERY_NOT_ON_BATTERY\x10\x02*\x9c\x02\n" +
+	"\x10POWER_SOURCE_OFF\x10\x03\x12\x16\n" +
+	"\x12POWER_SOURCE_SOLAR\x10\x04\x12\x1a\n" +
+	"\x16POWER_SOURCE_GENERATOR\x10\x05*\x9c\x02\n" +
 	"!OpenitsSignalControlFaultSeverity\x12.\n" +
 	"*OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_INFO\x10\x00\x121\n" +
 	"-OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_WARNING\x10\x01\x12/\n" +
@@ -6158,15 +6166,15 @@ var file_openits_signal_control_v1_state_proto_goTypes = []any{
 	(SplitMode)(0),                                // 9: openits.signal_control.v1.SplitMode
 	(CycleState)(0),                               // 10: openits.signal_control.v1.CycleState
 	(SpecialOperation)(0),                         // 11: openits.signal_control.v1.SpecialOperation
-	(DaysOfWeek)(0),                               // 12: openits.signal_control.v1.DaysOfWeek
-	(Months)(0),                                   // 13: openits.signal_control.v1.Months
+	(DayOfWeek)(0),                                // 12: openits.signal_control.v1.DayOfWeek
+	(Month)(0),                                    // 13: openits.signal_control.v1.Month
 	(SyncStatus)(0),                               // 14: openits.signal_control.v1.SyncStatus
 	(PreemptStage)(0),                             // 15: openits.signal_control.v1.PreemptStage
 	(PriorityType)(0),                             // 16: openits.signal_control.v1.PriorityType
 	(Stage)(0),                                    // 17: openits.signal_control.v1.Stage
-	(TestState)(0),                                // 18: openits.signal_control.v1.TestState
-	(PowerSource)(0),                              // 19: openits.signal_control.v1.PowerSource
-	(SignalOperationOnBattery)(0),                 // 20: openits.signal_control.v1.SignalOperationOnBattery
+	(SignalOperationOnBattery)(0),                 // 18: openits.signal_control.v1.SignalOperationOnBattery
+	(BatteryTestState)(0),                         // 19: openits.signal_control.v1.BatteryTestState
+	(PowerSource)(0),                              // 20: openits.signal_control.v1.PowerSource
 	(OpenitsSignalControlFaultSeverity)(0),        // 21: openits.signal_control.v1.OpenitsSignalControlFaultSeverity
 	(*SignalController)(nil),                      // 22: openits.signal_control.v1.SignalController
 	(*SignalControllerConfig)(nil),                // 23: openits.signal_control.v1.SignalControllerConfig
@@ -6228,7 +6236,7 @@ var file_openits_signal_control_v1_state_proto_goTypes = []any{
 	(*Faults)(nil),                                // 79: openits.signal_control.v1.Faults
 	(*Fault)(nil),                                 // 80: openits.signal_control.v1.Fault
 	(*timestamppb.Timestamp)(nil),                 // 81: google.protobuf.Timestamp
-	(*v1.CabinetPowerPolicy)(nil),                 // 82: openits.types.v1.CabinetPowerPolicy
+	(*v1.ScOnBatteryPolicy)(nil),                  // 82: openits.types.v1.ScOnBatteryPolicy
 }
 var file_openits_signal_control_v1_state_proto_depIdxs = []int32{
 	23, // 0: openits.signal_control.v1.SignalController.config:type_name -> openits.signal_control.v1.SignalControllerConfig
@@ -6291,8 +6299,8 @@ var file_openits_signal_control_v1_state_proto_depIdxs = []int32{
 	61, // 57: openits.signal_control.v1.Timebase.clock:type_name -> openits.signal_control.v1.Clock
 	59, // 58: openits.signal_control.v1.DayPlan.action:type_name -> openits.signal_control.v1.Action
 	11, // 59: openits.signal_control.v1.Action.special_operation:type_name -> openits.signal_control.v1.SpecialOperation
-	12, // 60: openits.signal_control.v1.ScheduleEntry.days_of_week:type_name -> openits.signal_control.v1.DaysOfWeek
-	13, // 61: openits.signal_control.v1.ScheduleEntry.months:type_name -> openits.signal_control.v1.Months
+	12, // 60: openits.signal_control.v1.ScheduleEntry.days_of_week:type_name -> openits.signal_control.v1.DayOfWeek
+	13, // 61: openits.signal_control.v1.ScheduleEntry.months:type_name -> openits.signal_control.v1.Month
 	81, // 62: openits.signal_control.v1.Clock.current_time:type_name -> google.protobuf.Timestamp
 	14, // 63: openits.signal_control.v1.Clock.sync_status:type_name -> openits.signal_control.v1.SyncStatus
 	63, // 64: openits.signal_control.v1.Preemption.preemptor:type_name -> openits.signal_control.v1.Preemptor
@@ -6312,13 +6320,13 @@ var file_openits_signal_control_v1_state_proto_depIdxs = []int32{
 	81, // 78: openits.signal_control.v1.Operation.last_mode_change:type_name -> google.protobuf.Timestamp
 	75, // 79: openits.signal_control.v1.CabinetPower.config:type_name -> openits.signal_control.v1.CabinetPowerConfig
 	76, // 80: openits.signal_control.v1.CabinetPower.state:type_name -> openits.signal_control.v1.CabinetPowerState
-	82, // 81: openits.signal_control.v1.CabinetPowerConfig.on_battery_policy:type_name -> openits.types.v1.CabinetPowerPolicy
-	77, // 82: openits.signal_control.v1.CabinetPowerState.battery:type_name -> openits.signal_control.v1.Battery
-	78, // 83: openits.signal_control.v1.CabinetPowerState.generator:type_name -> openits.signal_control.v1.Generator
-	82, // 84: openits.signal_control.v1.CabinetPowerState.on_battery_policy:type_name -> openits.types.v1.CabinetPowerPolicy
-	19, // 85: openits.signal_control.v1.CabinetPowerState.power_source:type_name -> openits.signal_control.v1.PowerSource
-	20, // 86: openits.signal_control.v1.CabinetPowerState.signal_operation_on_battery:type_name -> openits.signal_control.v1.SignalOperationOnBattery
-	18, // 87: openits.signal_control.v1.Battery.test_state:type_name -> openits.signal_control.v1.TestState
+	82, // 81: openits.signal_control.v1.CabinetPowerConfig.on_battery_policy:type_name -> openits.types.v1.ScOnBatteryPolicy
+	18, // 82: openits.signal_control.v1.CabinetPowerState.signal_operation_on_battery:type_name -> openits.signal_control.v1.SignalOperationOnBattery
+	77, // 83: openits.signal_control.v1.CabinetPowerState.battery:type_name -> openits.signal_control.v1.Battery
+	78, // 84: openits.signal_control.v1.CabinetPowerState.generator:type_name -> openits.signal_control.v1.Generator
+	82, // 85: openits.signal_control.v1.CabinetPowerState.on_battery_policy:type_name -> openits.types.v1.ScOnBatteryPolicy
+	20, // 86: openits.signal_control.v1.CabinetPowerState.power_source:type_name -> openits.signal_control.v1.PowerSource
+	19, // 87: openits.signal_control.v1.Battery.test_state:type_name -> openits.signal_control.v1.BatteryTestState
 	81, // 88: openits.signal_control.v1.Battery.last_test:type_name -> google.protobuf.Timestamp
 	80, // 89: openits.signal_control.v1.Faults.fault:type_name -> openits.signal_control.v1.Fault
 	81, // 90: openits.signal_control.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp

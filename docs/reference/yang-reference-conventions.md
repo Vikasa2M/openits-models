@@ -12,6 +12,8 @@ Authoring doctrine — the load-bearing rules for writing a module:
 
 - [Constraint placement (`must`) doctrine](#constraint-placement-must-doctrine)
 - [Identity vs. enum: which axis gets which](#identity-vs-enum-which-axis-gets-which)
+  (incl. [never inline an enumeration inside a composable grouping](#never-inline-an-enumeration-inside-a-composable-grouping))
+- [Shared groupings carry only what is universal to every composer](#shared-groupings-carry-only-what-is-universal-to-every-composer)
 - [counter64 vs uint64](#counter64-vs-uint64)
 - [Module placement: the ≥3-service rule](#module-placement-the-3-service-rule)
 - [Config/state idiom](#configstate-idiom)
@@ -504,6 +506,98 @@ A classification axis is either a YANG `identity` hierarchy or a closed
 
 When in doubt, ask whether a conforming vendor could ship a valid new member
 tomorrow. If yes, it is an identity.
+
+### Never inline an enumeration inside a composable grouping
+
+Once an enum is the right answer, one more rule applies to *where you write
+it*: an `enumeration` used inside a `grouping` that more than one module
+composes MUST be hoisted into a named `typedef` in the grouping's own
+module.
+
+ygot names the Go type generated for an **inline** enumeration after a
+**use-site path**, not after where the grouping is defined. So the type
+belongs to whichever composing module happens to sort first, and adding a
+second composer silently renames it out from under the first:
+
+```
+# openits-cabinet-power had three inline enums; only signal-control composed it.
+OpenitsSignalControl_SignalController_CabinetPower_State_PowerSource
+
+# composing the SAME grouping into openits-dms renamed it — "OpenitsDms" sorts first
+OpenitsDms_Sign_CabinetPower_State_PowerSource
+```
+
+Nothing in the YANG being composed changed, and the failure surfaces as an
+unrelated module's Go build breaking. Protobuf is unaffected (the proto
+backend emits a per-package enum), so the wire is safe — but every Go
+consumer of the first composer breaks.
+
+A named typedef makes the generated name module-scoped and composer-
+independent:
+
+```
+OpenitsCabinetPower_PowerSource     # stable no matter who composes it
+```
+
+Rule of thumb: **the moment a grouping is intended for reuse, its enums are
+typedefs.** Platform-layer groupings (`openits-cabinet-power`,
+`openits-device-diagnostics`) are reuse by definition, so this is
+unconditional there. The same reasoning is why moving an enumeration typedef
+between modules is source-breaking for Go consumers though wire-neutral.
+
+`make check-inline-enums` gates this. It reports two severities, both
+failing:
+
+- **ACTIVE** — the grouping already has 2+ composers, so consumers of all but
+  one hold a type named after somebody else's tree.
+- **LATENT** — exactly one composer, and it is not the defining module.
+  Stable today; the next composer renames it — and that change is precisely
+  the one that will not notice.
+
+A grouping defined and used only inside its own module is service-local: its
+generated name cannot be raced, so the gate allows it.
+
+## Shared groupings carry only what is universal to every composer
+
+A grouping composed across module lines is a contract with **every future
+composer**, not just today's. So:
+
+> **A shared grouping may contain only what is universal to every device
+> that composes it.**
+
+Service-specific content placed in a shared grouping is inherited by every
+composer, and the cost compounds: once N services have composed it,
+removing it is breaking for all N. The pressure is always to leave it —
+which is why it has to be caught at the point it is written.
+
+The worked example. `openits-cabinet-power` was authored when
+`openits-signal-control` was its only consumer, so signal-shaped content
+settled into it: a `police-panel-open` leaf (a NEMA signal-cabinet
+feature), a `signal-operation-on-battery` readback, and an entire
+on-battery **policy** grouping whose every leaf describes a transition to
+*flash*. Composing that module into `openits-dms` inherited all of it — so
+a sign advertised a police panel it does not have, and a **writable**
+config surface offering to drop it to flash. Nothing was wrong in
+`openits-dms`; the defect was upstream, and the composition only revealed
+it.
+
+**Absent-but-meaningful vs. meaningless.** A solar sign leaving
+`generator` unpopulated is correct: the concept exists, the hardware does
+not, and YANG optionality expresses that precisely. `police-panel-open` on
+a sign is not absent data — it is a question with no answer. Optionality
+handles the first and is no defense at all against the second.
+
+**When the concept is universal but the values are not**, do not split the
+grouping — make the value an identity base and let each service derive.
+"Reduced operation while on battery" is universal (a signal flashes, a
+sign could dim or blank, a camera could stop PTZ); only `flash` is
+signal-specific. A shared `on-battery-operation` base with per-service
+derived identities keeps one grouping and one axis. Promote to that shape
+when a second consumer actually appears — not before.
+
+**Fix these when the composer count is smallest.** Every additional
+composer raises the cost of removal, and the first composition is the
+moment the problem becomes visible.
 
 ## counter64 vs uint64
 

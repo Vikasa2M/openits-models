@@ -142,6 +142,52 @@ func (ErrorType) EnumDescriptor() ([]byte, []int) {
 	return file_openits_dms_v1_events_proto_rawDescGZIP(), []int{1}
 }
 
+type Phase int32
+
+const (
+	Phase_PHASE_ACTIVATE Phase = 0
+	Phase_PHASE_VALIDATE Phase = 1
+)
+
+// Enum value maps for Phase.
+var (
+	Phase_name = map[int32]string{
+		0: "PHASE_ACTIVATE",
+		1: "PHASE_VALIDATE",
+	}
+	Phase_value = map[string]int32{
+		"PHASE_ACTIVATE": 0,
+		"PHASE_VALIDATE": 1,
+	}
+)
+
+func (x Phase) Enum() *Phase {
+	p := new(Phase)
+	*p = x
+	return p
+}
+
+func (x Phase) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Phase) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_dms_v1_events_proto_enumTypes[2].Descriptor()
+}
+
+func (Phase) Type() protoreflect.EnumType {
+	return &file_openits_dms_v1_events_proto_enumTypes[2]
+}
+
+func (x Phase) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Phase.Descriptor instead.
+func (Phase) EnumDescriptor() ([]byte, []int) {
+	return file_openits_dms_v1_events_proto_rawDescGZIP(), []int{2}
+}
+
 type MessageActivationFailed struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	Kind                string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
@@ -150,6 +196,7 @@ type MessageActivationFailed struct {
 	Reason              string                 `protobuf:"bytes,3,opt,name=reason,proto3" json:"reason,omitempty"`
 	ErrorType           ErrorType              `protobuf:"varint,9,opt,name=error_type,json=errorType,proto3,enum=openits.dms.v1.ErrorType" json:"error_type,omitempty"`
 	ErrorPosition       uint32                 `protobuf:"varint,10,opt,name=error_position,json=errorPosition,proto3" json:"error_position,omitempty"`
+	Phase               Phase                  `protobuf:"varint,11,opt,name=phase,proto3,enum=openits.dms.v1.Phase" json:"phase,omitempty"`
 	ObservedBy          string                 `protobuf:"bytes,4,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
 	OccurredAt          *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner               string                 `protobuf:"bytes,6,opt,name=owner,proto3" json:"owner,omitempty"`
@@ -232,6 +279,13 @@ func (x *MessageActivationFailed) GetErrorPosition() uint32 {
 	return 0
 }
 
+func (x *MessageActivationFailed) GetPhase() Phase {
+	if x != nil {
+		return x.Phase
+	}
+	return Phase_PHASE_ACTIVATE
+}
+
 func (x *MessageActivationFailed) GetObservedBy() string {
 	if x != nil {
 		return x.ObservedBy
@@ -278,7 +332,7 @@ var File_openits_dms_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_dms_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"\x1bopenits/dms/v1/events.proto\x12\x0eopenits.dms.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1copenits/types/v1/types.proto\"\xa1\x04\n" +
+	"\x1bopenits/dms/v1/events.proto\x12\x0eopenits.dms.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1copenits/types/v1/types.proto\"\xce\x04\n" +
 	"\x17MessageActivationFailed\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12U\n" +
 	"\x15attempted_memory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeR\x13attemptedMemoryType\x122\n" +
@@ -287,7 +341,8 @@ const file_openits_dms_v1_events_proto_rawDesc = "" +
 	"\n" +
 	"error_type\x18\t \x01(\x0e2\x19.openits.dms.v1.ErrorTypeR\terrorType\x12%\n" +
 	"\x0eerror_position\x18\n" +
-	" \x01(\rR\rerrorPosition\x12\x1f\n" +
+	" \x01(\rR\rerrorPosition\x12+\n" +
+	"\x05phase\x18\v \x01(\x0e2\x15.openits.dms.v1.PhaseR\x05phase\x12\x1f\n" +
 	"\vobserved_by\x18\x04 \x01(\tR\n" +
 	"observedBy\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
@@ -310,7 +365,10 @@ const file_openits_dms_v1_events_proto_rawDesc = "" +
 	"\x1cERROR_TYPE_GRAPHIC_NOT_FOUND\x10\x03\x12\x17\n" +
 	"\x13ERROR_TYPE_TOO_LONG\x10\x04\x12\x17\n" +
 	"\x13ERROR_TYPE_HARDWARE\x10\x05\x12\x14\n" +
-	"\x10ERROR_TYPE_OTHER\x10\x06BCZAgithub.com/Vikasa2M/openits-models/pkg/proto/openits/dms/v1;dmsv1b\x06proto3"
+	"\x10ERROR_TYPE_OTHER\x10\x06*/\n" +
+	"\x05Phase\x12\x12\n" +
+	"\x0ePHASE_ACTIVATE\x10\x00\x12\x12\n" +
+	"\x0ePHASE_VALIDATE\x10\x01BCZAgithub.com/Vikasa2M/openits-models/pkg/proto/openits/dms/v1;dmsv1b\x06proto3"
 
 var (
 	file_openits_dms_v1_events_proto_rawDescOnce sync.Once
@@ -324,25 +382,27 @@ func file_openits_dms_v1_events_proto_rawDescGZIP() []byte {
 	return file_openits_dms_v1_events_proto_rawDescData
 }
 
-var file_openits_dms_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_openits_dms_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
 var file_openits_dms_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_openits_dms_v1_events_proto_goTypes = []any{
 	(MessageMemoryType)(0),          // 0: openits.dms.v1.MessageMemoryType
 	(ErrorType)(0),                  // 1: openits.dms.v1.ErrorType
-	(*MessageActivationFailed)(nil), // 2: openits.dms.v1.MessageActivationFailed
-	(*timestamppb.Timestamp)(nil),   // 3: google.protobuf.Timestamp
-	(*v1.WireSource)(nil),           // 4: openits.types.v1.WireSource
+	(Phase)(0),                      // 2: openits.dms.v1.Phase
+	(*MessageActivationFailed)(nil), // 3: openits.dms.v1.MessageActivationFailed
+	(*timestamppb.Timestamp)(nil),   // 4: google.protobuf.Timestamp
+	(*v1.WireSource)(nil),           // 5: openits.types.v1.WireSource
 }
 var file_openits_dms_v1_events_proto_depIdxs = []int32{
 	0, // 0: openits.dms.v1.MessageActivationFailed.attempted_memory_type:type_name -> openits.dms.v1.MessageMemoryType
 	1, // 1: openits.dms.v1.MessageActivationFailed.error_type:type_name -> openits.dms.v1.ErrorType
-	3, // 2: openits.dms.v1.MessageActivationFailed.occurred_at:type_name -> google.protobuf.Timestamp
-	4, // 3: openits.dms.v1.MessageActivationFailed.source:type_name -> openits.types.v1.WireSource
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	2, // 2: openits.dms.v1.MessageActivationFailed.phase:type_name -> openits.dms.v1.Phase
+	4, // 3: openits.dms.v1.MessageActivationFailed.occurred_at:type_name -> google.protobuf.Timestamp
+	5, // 4: openits.dms.v1.MessageActivationFailed.source:type_name -> openits.types.v1.WireSource
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_openits_dms_v1_events_proto_init() }
@@ -355,7 +415,7 @@ func file_openits_dms_v1_events_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_dms_v1_events_proto_rawDesc), len(file_openits_dms_v1_events_proto_rawDesc)),
-			NumEnums:      2,
+			NumEnums:      3,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,

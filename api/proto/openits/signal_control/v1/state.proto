@@ -409,35 +409,35 @@ message ScheduleEntry {
   uint32 schedule_id = 1;
   uint32 day_plan = 5;
   repeated uint32 days_of_month = 4;
-  repeated DaysOfWeek days_of_week = 3;
-  repeated Months months = 2;
+  repeated DayOfWeek days_of_week = 3;
+  repeated Month months = 2;
 }
 
-enum DaysOfWeek {
-  DAYS_OF_WEEK_UNSPECIFIED = 0;
-  DAYS_OF_WEEK_MONDAY = 1;
-  DAYS_OF_WEEK_TUESDAY = 2;
-  DAYS_OF_WEEK_WEDNESDAY = 3;
-  DAYS_OF_WEEK_THURSDAY = 4;
-  DAYS_OF_WEEK_FRIDAY = 5;
-  DAYS_OF_WEEK_SATURDAY = 6;
-  DAYS_OF_WEEK_SUNDAY = 7;
+enum DayOfWeek {
+  DAY_OF_WEEK_UNSPECIFIED = 0;
+  DAY_OF_WEEK_MONDAY = 1;
+  DAY_OF_WEEK_TUESDAY = 2;
+  DAY_OF_WEEK_WEDNESDAY = 3;
+  DAY_OF_WEEK_THURSDAY = 4;
+  DAY_OF_WEEK_FRIDAY = 5;
+  DAY_OF_WEEK_SATURDAY = 6;
+  DAY_OF_WEEK_SUNDAY = 7;
 }
 
-enum Months {
-  MONTHS_UNSPECIFIED = 0;
-  MONTHS_JANUARY = 1;
-  MONTHS_FEBRUARY = 2;
-  MONTHS_MARCH = 3;
-  MONTHS_APRIL = 4;
-  MONTHS_MAY = 5;
-  MONTHS_JUNE = 6;
-  MONTHS_JULY = 7;
-  MONTHS_AUGUST = 8;
-  MONTHS_SEPTEMBER = 9;
-  MONTHS_OCTOBER = 10;
-  MONTHS_NOVEMBER = 11;
-  MONTHS_DECEMBER = 12;
+enum Month {
+  MONTH_UNSPECIFIED = 0;
+  MONTH_JANUARY = 1;
+  MONTH_FEBRUARY = 2;
+  MONTH_MARCH = 3;
+  MONTH_APRIL = 4;
+  MONTH_MAY = 5;
+  MONTH_JUNE = 6;
+  MONTH_JULY = 7;
+  MONTH_AUGUST = 8;
+  MONTH_SEPTEMBER = 9;
+  MONTH_OCTOBER = 10;
+  MONTH_NOVEMBER = 11;
+  MONTH_DECEMBER = 12;
 }
 
 message Clock {
@@ -571,20 +571,26 @@ message CabinetPower {
 }
 
 message CabinetPowerConfig {
-  openits.types.v1.CabinetPowerPolicy on_battery_policy = 1;
+  openits.types.v1.ScOnBatteryPolicy on_battery_policy = 1;
 }
 
 message CabinetPowerState {
+  bool police_panel_open = 7;
+  SignalOperationOnBattery signal_operation_on_battery = 9;
   Battery battery = 1;
   bool door_open = 2;
   Generator generator = 3;
   string line_frequency_hz = 4;
   string line_voltage_v = 5;
-  openits.types.v1.CabinetPowerPolicy on_battery_policy = 6;
-  bool police_panel_open = 7;
+  openits.types.v1.ScOnBatteryPolicy on_battery_policy = 6;
   PowerSource power_source = 8;
-  SignalOperationOnBattery signal_operation_on_battery = 9;
   uint32 transfer_count = 10;
+}
+
+enum SignalOperationOnBattery {
+  SIGNAL_OPERATION_ON_BATTERY_FULL_OPERATION = 0;
+  SIGNAL_OPERATION_ON_BATTERY_FLASH = 1;
+  SIGNAL_OPERATION_ON_BATTERY_NOT_ON_BATTERY = 2;
 }
 
 message Battery {
@@ -593,15 +599,15 @@ message Battery {
   string voltage_v = 3;
   string temperature_c = 4;
   bool charger_fault = 5;
-  TestState test_state = 6;
+  BatteryTestState test_state = 6;
   google.protobuf.Timestamp last_test = 7;
 }
 
-enum TestState {
-  TEST_STATE_IDLE = 0;
-  TEST_STATE_IN_PROGRESS = 1;
-  TEST_STATE_PASSED = 2;
-  TEST_STATE_FAILED = 3;
+enum BatteryTestState {
+  BATTERY_TEST_STATE_IDLE = 0;
+  BATTERY_TEST_STATE_IN_PROGRESS = 1;
+  BATTERY_TEST_STATE_PASSED = 2;
+  BATTERY_TEST_STATE_FAILED = 3;
 }
 
 message Generator {
@@ -614,12 +620,8 @@ enum PowerSource {
   POWER_SOURCE_ON_BATTERY = 1;
   POWER_SOURCE_BYPASS = 2;
   POWER_SOURCE_OFF = 3;
-}
-
-enum SignalOperationOnBattery {
-  SIGNAL_OPERATION_ON_BATTERY_FULL_OPERATION = 0;
-  SIGNAL_OPERATION_ON_BATTERY_FLASH = 1;
-  SIGNAL_OPERATION_ON_BATTERY_NOT_ON_BATTERY = 2;
+  POWER_SOURCE_SOLAR = 4;
+  POWER_SOURCE_GENERATOR = 5;
 }
 
 message Faults {

@@ -65,7 +65,7 @@ func TestTrafficSensorInterval_DataQualityPresent(t *T, obs *Observation) {
 	}
 	for _, lane := range lanes.Lane {
 		iv := lane.GetState().GetInterval()
-		if iv == nil || iv.DataQuality == yangpkg.OpenitsTrafficSensor_TrafficSensor_Lanes_Lane_State_Interval_DataQuality_UNSET {
+		if iv == nil || iv.DataQuality == yangpkg.OpenitsTrafficSensorTypes_DataQuality_UNSET {
 			t.Errorf("lane %v state/interval/data-quality is unset", lane.GetLaneId())
 		}
 	}

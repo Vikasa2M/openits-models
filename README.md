@@ -38,6 +38,9 @@ See:
   deviations, and graduation.
 - [`docs/08-capability-architecture.md`](docs/08-capability-architecture.md) —
   model by function; thin device profiles compose capability modules.
+- [`docs/reference/dms-ntcip-1203-fidelity.md`](docs/reference/dms-ntcip-1203-fidelity.md) —
+  worked example of how a service model is audited against its source
+  standard: deliberate improvements vs. fidelity defects vs. coverage gaps.
 - [`docs/07-conformance.md`](docs/07-conformance.md),
   [`docs/glossary.md`](docs/glossary.md),
   [`docs/reference/yang-reference-conventions.md`](docs/reference/yang-reference-conventions.md).

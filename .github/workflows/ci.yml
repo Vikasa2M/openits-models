@@ -132,6 +132,7 @@ jobs:
       - run: make check-revisions
       - run: make check-naming
       - run: make check-enum-values
+      - run: make check-inline-enums
       - run: make check-deviations
       - run: make check-augment-collisions
       - run: make check-events-layering

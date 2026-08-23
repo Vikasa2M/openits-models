@@ -283,16 +283,16 @@ message VehicleAnalytics {
 }
 
 message SampleBasis {
-  WindowType window_type = 1;
+  StatsWindowType window_type = 1;
   uint32 stats_window_seconds = 2;
   uint32 sample_count = 3;
   string penetration_estimate_pct = 4;
   google.protobuf.Timestamp computed_at = 5;
 }
 
-enum WindowType {
-  WINDOW_TYPE_ROLLING = 0;
-  WINDOW_TYPE_TUMBLING = 1;
+enum StatsWindowType {
+  STATS_WINDOW_TYPE_ROLLING = 0;
+  STATS_WINDOW_TYPE_TUMBLING = 1;
 }
 
 message Counts {
@@ -390,14 +390,14 @@ message ChannelConfig {
 }
 
 message Dcc {
-  Policy policy = 1;
+  DccPolicy policy = 1;
   uint32 cbr_target_percent = 2;
 }
 
-enum Policy {
-  POLICY_DISABLED = 0;
-  POLICY_REACTIVE = 1;
-  POLICY_ADAPTIVE = 2;
+enum DccPolicy {
+  DCC_POLICY_DISABLED = 0;
+  DCC_POLICY_REACTIVE = 1;
+  DCC_POLICY_ADAPTIVE = 2;
 }
 
 message ChannelState {
@@ -440,29 +440,29 @@ message SpatConfig {
   uint32 broadcast_interval = 2;
   uint32 max_data_age_ms = 6;
   string source_asc = 3;
-  SourceMode source_mode = 4;
+  BroadcastSourceMode source_mode = 4;
   SpatConfigIngest ingest = 8;
   repeated SpatConfigIntersection intersection = 7;
   bool include_timing_prediction = 5;
   uint32 psid = 9;
 }
 
-enum SourceMode {
-  SOURCE_MODE_RSU_GENERATED = 0;
-  SOURCE_MODE_IMMEDIATE_FORWARD_INGEST = 1;
+enum BroadcastSourceMode {
+  BROADCAST_SOURCE_MODE_RSU_GENERATED = 0;
+  BROADCAST_SOURCE_MODE_IMMEDIATE_FORWARD_INGEST = 1;
 }
 
 message SpatConfigIngest {
-  Transport transport = 1;
+  IngestTransport transport = 1;
   string address = 2;
   uint32 port = 3;
   uint32 psid = 4;
 }
 
-enum Transport {
-  TRANSPORT_UDP = 0;
-  TRANSPORT_TCP = 1;
-  TRANSPORT_MQTT = 2;
+enum IngestTransport {
+  INGEST_TRANSPORT_UDP = 0;
+  INGEST_TRANSPORT_TCP = 1;
+  INGEST_TRANSPORT_MQTT = 2;
 }
 
 message SpatConfigIntersection {
@@ -489,7 +489,7 @@ message MapConfig {
   repeated MapConfigIntersection intersection = 4;
   uint32 geometry_version = 3;
   uint32 psid = 5;
-  SourceMode source_mode = 6;
+  BroadcastSourceMode source_mode = 6;
   MapConfigIngest ingest = 7;
   uint32 max_data_age_ms = 8;
 }
@@ -500,7 +500,7 @@ message MapConfigIntersection {
 }
 
 message MapConfigIngest {
-  Transport transport = 1;
+  IngestTransport transport = 1;
   string address = 2;
   uint32 port = 3;
   uint32 psid = 4;
@@ -735,13 +735,13 @@ message Decisions {
 
 message Decision {
   string request_id = 1;
-  Action action = 2;
+  PriorityDecisionAction action = 2;
   string reason = 3;
 }
 
-enum Action {
-  ACTION_APPROVE = 0;
-  ACTION_DENY = 1;
+enum PriorityDecisionAction {
+  PRIORITY_DECISION_ACTION_APPROVE = 0;
+  PRIORITY_DECISION_ACTION_DENY = 1;
 }
 
 message MessageStats {
@@ -855,7 +855,7 @@ message Certificate {
 }
 
 message CertificateState {
-  Type type = 1;
+  CertificateType type = 1;
   string status = 2;
   google.protobuf.Timestamp valid_from = 3;
   google.protobuf.Timestamp valid_until = 4;
@@ -864,11 +864,11 @@ message CertificateState {
   GeographicValidity geographic_validity = 7;
 }
 
-enum Type {
-  TYPE_ENROLLMENT = 0;
-  TYPE_PSEUDONYM = 1;
-  TYPE_APPLICATION = 2;
-  TYPE_IDENTIFICATION = 3;
+enum CertificateType {
+  CERTIFICATE_TYPE_ENROLLMENT = 0;
+  CERTIFICATE_TYPE_PSEUDONYM = 1;
+  CERTIFICATE_TYPE_APPLICATION = 2;
+  CERTIFICATE_TYPE_IDENTIFICATION = 3;
 }
 
 message Permissions {
@@ -877,17 +877,17 @@ message Permissions {
 }
 
 message GeographicValidity {
-  RegionType region_type = 1;
+  GeographicRegionType region_type = 1;
   uint32 identified_region_id = 2;
   CircularRegion circular_region = 3;
 }
 
-enum RegionType {
-  REGION_TYPE_NONE = 0;
-  REGION_TYPE_CIRCULAR = 1;
-  REGION_TYPE_RECTANGULAR = 2;
-  REGION_TYPE_POLYGONAL = 3;
-  REGION_TYPE_IDENTIFIED = 4;
+enum GeographicRegionType {
+  GEOGRAPHIC_REGION_TYPE_NONE = 0;
+  GEOGRAPHIC_REGION_TYPE_CIRCULAR = 1;
+  GEOGRAPHIC_REGION_TYPE_RECTANGULAR = 2;
+  GEOGRAPHIC_REGION_TYPE_POLYGONAL = 3;
+  GEOGRAPHIC_REGION_TYPE_IDENTIFIED = 4;
 }
 
 message CircularRegion {
