@@ -135,6 +135,7 @@ jobs:
       - run: make check-deviations
       - run: make check-augment-collisions
       - run: make check-events-layering
+      - run: make check-ce-id-vectors
       - run: make validate-noi
       - run: make check-graduation
 

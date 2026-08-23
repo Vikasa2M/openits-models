@@ -88,6 +88,16 @@ An implementation that sources the ULID timestamp from `ce-time` produces
 `01KY4VE0F08F697N951X9F30AS` here — identical randomness, different timestamp
 prefix. That is the failure this vector exists to catch.
 
+## Keeping the vectors honest
+
+`make check-ce-id-vectors` re-derives every vector above — and the
+counter-example — straight from this document, and CI runs it. The tables are
+therefore arithmetic, not prose: changing the algorithm fails the gate until
+the vectors are regenerated, and editing a vector by hand fails it too.
+
+That checker is a gate, not a reference implementation. It exists so the
+published numbers cannot drift; it is not an API to depend on.
+
 ## Non-goals
 
 The transport, envelope framing, and the concrete implementation are the
