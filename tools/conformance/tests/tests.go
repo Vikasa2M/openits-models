@@ -334,6 +334,19 @@ func All(kind string) []TestCase {
 			TestCase{"TestPerceptionEvent_IncidentDetectedShape", TestPerceptionEvent_IncidentDetectedShape},
 			TestCase{"TestPerceptionEvent_IntervalCrossedReconciles", TestPerceptionEvent_IntervalCrossedReconciles},
 			TestCase{"TestPerceptionEvent_FaultRaisedShape", TestPerceptionEvent_FaultRaisedShape},
+
+			// openits-zone-occupancy capability, composed behind the
+			// zone-occupancy feature. Every check no-ops when the subtree is
+			// absent, so a sensor that does not implement the feature is not
+			// failed for it.
+			TestCase{"TestZoneOccupancy_LiveZonesAreConfigured", TestZoneOccupancy_LiveZonesAreConfigured},
+			TestCase{"TestZoneOccupancy_ClassifiesGatesBreakdown", TestZoneOccupancy_ClassifiesGatesBreakdown},
+			TestCase{"TestZoneOccupancy_PresentClassSumsToCount", TestZoneOccupancy_PresentClassSumsToCount},
+			TestCase{"TestZoneOccupancy_OccupiedSinceOnlyWhenPresent", TestZoneOccupancy_OccupiedSinceOnlyWhenPresent},
+			TestCase{"TestZoneOccupancy_MeasuredAtPresent", TestZoneOccupancy_MeasuredAtPresent},
+			TestCase{"TestZoneOccupancyEvent_IntervalReportShape", TestZoneOccupancyEvent_IntervalReportShape},
+			TestCase{"TestZoneOccupancyEvent_ObservedClassReconciles", TestZoneOccupancyEvent_ObservedClassReconciles},
+			TestCase{"TestZoneOccupancyEvent_PeakWithinObserved", TestZoneOccupancyEvent_PeakWithinObserved},
 		)
 	case "cctv":
 		return append(common,
