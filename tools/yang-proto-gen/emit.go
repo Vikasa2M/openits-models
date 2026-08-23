@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/openconfig/goyang/pkg/yang"
@@ -397,7 +398,8 @@ func EmitMessage(e *yang.Entry, msgName string, lock *FieldLock, shared map[stri
 		}
 		names = append(names, fieldName(c.Name))
 	}
-	tags := lock.Assign(lockKey(out.LockPrefix, msgName), names, reservedFieldTags(children, shared))
+	msgKey := lockKey(out.LockPrefix, msgName)
+	tags := lock.Assign(msgKey, names, reservedFieldTags(children, shared))
 
 	var nested strings.Builder       // sibling messages (lists, containers)
 	var nestedInside strings.Builder // messages nested inside this one (multi-node choice cases)
@@ -482,8 +484,34 @@ func EmitMessage(e *yang.Entry, msgName string, lock *FieldLock, shared map[stri
 	if nestedInside.Len() > 0 {
 		inner += indentBlock(nestedInside.String(), 2)
 	}
+	// Retired tags come first, so a reader sees what this message must never
+	// reuse before reading what it currently defines.
+	inner = emitReserved(lock.Retired(msgKey, tags)) + inner
 	fmt.Fprintf(&out.Body, "message %s {\n%s}\n\n", msgName, inner)
 	out.Body.WriteString(nested.String())
+}
+
+// emitReserved renders protobuf `reserved` statements for fields the lock
+// has tombstoned. Reusing a retired tag is the classic silent wire break —
+// an old consumer decodes the new field into the old one's slot — and
+// reusing a retired NAME breaks protobuf-JSON the same way. The lock already
+// guarantees the generator will not hand the tag out again; `reserved` puts
+// the same guarantee in the .proto, where consumers, protoc and `buf
+// breaking` can all see it.
+func emitReserved(names []string, tags []int) string {
+	if len(tags) == 0 {
+		return ""
+	}
+	nums := make([]string, len(tags))
+	for i, t := range tags {
+		nums[i] = strconv.Itoa(t)
+	}
+	quoted := make([]string, len(names))
+	for i, n := range names {
+		quoted[i] = strconv.Quote(n)
+	}
+	return fmt.Sprintf("  reserved %s;\n  reserved %s;\n",
+		strings.Join(nums, ", "), strings.Join(quoted, ", "))
 }
 
 // emitAction emits the request/response messages for YANG action a into

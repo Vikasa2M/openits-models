@@ -37,6 +37,8 @@ message QueueOverrideCleared {
 }
 
 message ReleaseRateChanged {
+  reserved 4;
+  reserved "reason";
   string kind = 99;
   uint32 previous_rate_vph = 1;
   uint32 new_rate_vph = 2;

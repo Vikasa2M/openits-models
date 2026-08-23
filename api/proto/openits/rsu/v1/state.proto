@@ -7,6 +7,8 @@ option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/rsu/v1
 import "google/protobuf/timestamp.proto";
 
 message Rsu {
+  reserved 9, 10;
+  reserved "configured_time_source", "mode";
   RsuConfig config = 1;
   RsuState state = 2;
   Operating operating = 12;
@@ -123,6 +125,8 @@ message StoreForwardState {
 }
 
 message Diagnostics {
+  reserved 22, 32, 33, 34;
+  reserved "cellular", "time_valid", "holdover", "active_mode";
   Radio radio = 15;
   SpatSync spat_sync = 16;
   Resources resources = 17;
@@ -146,6 +150,8 @@ message Diagnostics {
 }
 
 message Radio {
+  reserved 12;
+  reserved "collision_count";
   int32 rssi_dbm = 1;
   int32 noise_floor_dbm = 2;
   int32 snr_db = 3;
@@ -156,6 +162,8 @@ message Radio {
 }
 
 message SpatSync {
+  reserved 1;
+  reserved "asc_connected";
   uint32 asc_poll_interval_ms = 2;
   google.protobuf.Timestamp last_asc_update = 3;
   uint32 phase_mismatch_count = 4;
@@ -367,11 +375,15 @@ enum FaultSeverity {
 }
 
 message Channels {
+  reserved 2;
+  reserved "radio_type";
   string reported_radio_tech = 3;
   repeated Channel channel = 1;
 }
 
 message Channel {
+  reserved 8;
+  reserved "dsrc_channel_number";
   string channel_id = 6;
   string radio_tech = 7;
   ChannelConfig config = 9;
@@ -541,6 +553,8 @@ message Message {
 }
 
 message MessageConfig {
+  reserved 5, 6;
+  reserved "end_time", "itis_codes";
   string name = 1;
   uint32 psid = 10;
   bool enabled = 2;
@@ -749,6 +763,8 @@ message MessageStats {
 }
 
 message PerMessageType {
+  reserved 5, 6;
+  reserved "total_sent", "total_received";
   string message_type = 1;
   uint32 psid = 13;
   uint32 queue_depth = 2;

@@ -2342,13 +2342,13 @@ const file_openits_traffic_sensor_v1_state_proto_rawDesc = "" +
 	"\x0equeue_length_m\x18\x04 \x01(\rR\fqueueLengthM\x12;\n" +
 	"\vqueue_start\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"queueStart\x12\x1a\n" +
-	"\bqueueing\x18\x06 \x01(\bR\bqueueing\"\x91\x02\n" +
+	"\bqueueing\x18\x06 \x01(\bR\bqueueing\"\xaa\x02\n" +
 	"\vDiagnostics\x12%\n" +
 	"\x0esignal_quality\x18\x01 \x01(\rR\rsignalQuality\x124\n" +
 	"\x16internal_temperature_c\x18\x06 \x01(\tR\x14internalTemperatureC\x12\x19\n" +
 	"\buptime_s\x18\a \x01(\x04R\auptimeS\x12@\n" +
 	"\x0elast_self_test\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\flastSelfTest\x12H\n" +
-	"\vcalibration\x18\x02 \x01(\v2&.openits.traffic_sensor.v1.CalibrationR\vcalibration\"\x8d\x01\n" +
+	"\vcalibration\x18\x02 \x01(\v2&.openits.traffic_sensor.v1.CalibrationR\vcalibrationJ\x04\b\x05\x10\x06R\x11rf_signal_quality\"\x8d\x01\n" +
 	"\vCalibration\x12C\n" +
 	"\x0flast_calibrated\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\x0elastCalibrated\x129\n" +
 	"\x06status\x18\x02 \x01(\x0e2!.openits.traffic_sensor.v1.StatusR\x06status\"@\n" +

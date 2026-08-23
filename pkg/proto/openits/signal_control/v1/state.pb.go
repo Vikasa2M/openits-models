@@ -5771,11 +5771,12 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\x19collection_period_seconds\x18\x04 \x01(\rR\x17collectionPeriodSeconds\x12=\n" +
 	"\fcollected_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\vcollectedAt\"H\n" +
 	"\bOverlaps\x12<\n" +
-	"\aoverlap\x18\x01 \x03(\v2\".openits.signal_control.v1.OverlapR\aoverlap\"\xb1\x01\n" +
+	"\aoverlap\x18\x01 \x03(\v2\".openits.signal_control.v1.OverlapR\aoverlap\"\xc3\x01\n" +
 	"\aOverlap\x12%\n" +
 	"\x0eoverlap_number\x18\x04 \x01(\rR\roverlapNumber\x12@\n" +
 	"\x06config\x18\x02 \x01(\v2(.openits.signal_control.v1.OverlapConfigR\x06config\x12=\n" +
-	"\x05state\x18\x03 \x01(\v2'.openits.signal_control.v1.OverlapStateR\x05state\"\xe0\x02\n" +
+	"\x05state\x18\x03 \x01(\v2'.openits.signal_control.v1.OverlapStateR\x05stateJ\x04\b\x01\x10\x02R\n" +
+	"overlap_id\"\xf2\x02\n" +
 	"\rOverlapConfig\x12%\n" +
 	"\x0eoverlap_number\x18\t \x01(\rR\roverlapNumber\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
@@ -5786,7 +5787,8 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\x0etrailing_green\x18\x05 \x01(\tR\rtrailingGreen\x12'\n" +
 	"\x0ftrailing_yellow\x18\x06 \x01(\tR\x0etrailingYellow\x12,\n" +
 	"\x12trailing_red_clear\x18\a \x01(\tR\x10trailingRedClear\x120\n" +
-	"\x03fya\x18\b \x01(\v2\x1e.openits.signal_control.v1.FyaR\x03fya\"m\n" +
+	"\x03fya\x18\b \x01(\v2\x1e.openits.signal_control.v1.FyaR\x03fyaJ\x04\b\x01\x10\x02R\n" +
+	"overlap_id\"m\n" +
 	"\x03Fya\x120\n" +
 	"\x14protected_left_phase\x18\x01 \x01(\rR\x12protectedLeftPhase\x124\n" +
 	"\x16opposing_through_phase\x18\x02 \x01(\rR\x14opposingThroughPhase\"\x81\x01\n" +
@@ -5949,10 +5951,12 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\n" +
 	"fault_type\x18\x01 \x01(\tR\tfaultType\x12+\n" +
 	"\x11faulting_channels\x18\x02 \x03(\rR\x10faultingChannels\x12\x18\n" +
-	"\alatched\x18\x03 \x01(\bR\alatched\"\x99\x01\n" +
+	"\alatched\x18\x03 \x01(\bR\alatched\"\xf8\x02\n" +
 	"\fCabinetPower\x12E\n" +
 	"\x06config\x18\v \x01(\v2-.openits.signal_control.v1.CabinetPowerConfigR\x06config\x12B\n" +
-	"\x05state\x18\f \x01(\v2,.openits.signal_control.v1.CabinetPowerStateR\x05state\"e\n" +
+	"\x05state\x18\f \x01(\v2,.openits.signal_control.v1.CabinetPowerStateR\x05stateJ\x04\b\x01\x10\x02J\x04\b\x02\x10\x03J\x04\b\x03\x10\x04J\x04\b\x04\x10\x05J\x04\b\x05\x10\x06J\x04\b\x06\x10\aJ\x04\b\a\x10\bJ\x04\b\b\x10\tJ\x04\b\t\x10\n" +
+	"J\x04\b\n" +
+	"\x10\vR\abatteryR\tdoor_openR\tgeneratorR\x11line_frequency_hzR\x0eline_voltage_vR\x11police_panel_openR\fpower_sourceR\x0etransfer_countR\x11on_battery_policyR\x1bsignal_operation_on_battery\"e\n" +
 	"\x12CabinetPowerConfig\x12O\n" +
 	"\x11on_battery_policy\x18\x01 \x01(\v2#.openits.types.v1.ScOnBatteryPolicyR\x0fonBatteryPolicy\"\xe7\x04\n" +
 	"\x11CabinetPowerState\x12*\n" +

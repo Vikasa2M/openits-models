@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"sort"
 
 	"gopkg.in/yaml.v3"
 )
@@ -81,6 +82,35 @@ func (l *FieldLock) Assign(message string, fields []string, reserved map[string]
 		out[f] = m[f]
 	}
 	return out
+}
+
+// Retired reports the fields the lock still holds for message that the model
+// no longer defines, given the live field->tag map Assign just returned.
+// Their tags are tombstoned — the lock never deletes an entry — and protobuf
+// requires the numbers AND names be marked `reserved` so a later field cannot
+// silently inherit a retired tag and be misread by an old consumer. Results
+// are ordered by tag so emitted output is deterministic.
+func (l *FieldLock) Retired(message string, live map[string]int) (names []string, tags []int) {
+	m := l.Messages[message]
+	if m == nil {
+		return nil, nil
+	}
+	type retired struct {
+		name string
+		tag  int
+	}
+	var rs []retired
+	for name, tag := range m {
+		if _, stillLive := live[name]; !stillLive {
+			rs = append(rs, retired{name, tag})
+		}
+	}
+	sort.Slice(rs, func(i, j int) bool { return rs[i].tag < rs[j].tag })
+	for _, r := range rs {
+		names = append(names, r.name)
+		tags = append(tags, r.tag)
+	}
+	return names, tags
 }
 
 func (l *FieldLock) Save(path string) error {

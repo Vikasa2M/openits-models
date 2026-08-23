@@ -225,12 +225,16 @@ message Overlaps {
 }
 
 message Overlap {
+  reserved 1;
+  reserved "overlap_id";
   uint32 overlap_number = 4;
   OverlapConfig config = 2;
   OverlapState state = 3;
 }
 
 message OverlapConfig {
+  reserved 1;
+  reserved "overlap_id";
   uint32 overlap_number = 9;
   string name = 2;
   string type = 3;
@@ -566,6 +570,8 @@ message Mmu {
 }
 
 message CabinetPower {
+  reserved 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
+  reserved "battery", "door_open", "generator", "line_frequency_hz", "line_voltage_v", "police_panel_open", "power_source", "transfer_count", "on_battery_policy", "signal_operation_on_battery";
   CabinetPowerConfig config = 11;
   CabinetPowerState state = 12;
 }

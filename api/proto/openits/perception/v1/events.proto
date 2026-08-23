@@ -68,6 +68,8 @@ message ZoneIntervalReport {
 }
 
 message ZoneIntervalReportZone {
+  reserved 7, 8;
+  reserved "observed_count", "occupancy_percent";
   string zone_id = 1;
   google.protobuf.Timestamp interval_start = 2;
   uint32 interval_duration_s = 3;

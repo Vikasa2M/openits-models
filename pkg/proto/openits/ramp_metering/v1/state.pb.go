@@ -3761,11 +3761,11 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"maxFlowVph\x12\x17\n" +
 	"\aplan_id\x18\x06 \x01(\rR\x06planId\">\n" +
 	"\x16TrafficResponsiveState\x12$\n" +
-	"\x0eactive_band_id\x18\x01 \x01(\rR\factiveBandId\"\xb6\x01\n" +
+	"\x0eactive_band_id\x18\x01 \x01(\rR\factiveBandId\"\xd2\x01\n" +
 	"\x05Lanes\x12=\n" +
 	"\x06config\x18\x03 \x01(\v2%.openits.ramp_metering.v1.LanesConfigR\x06config\x12:\n" +
 	"\x05state\x18\x04 \x01(\v2$.openits.ramp_metering.v1.LanesStateR\x05state\x122\n" +
-	"\x04lane\x18\x01 \x03(\v2\x1e.openits.ramp_metering.v1.LaneR\x04lane\"o\n" +
+	"\x04lane\x18\x01 \x03(\v2\x1e.openits.ramp_metering.v1.LaneR\x04laneJ\x04\b\x02\x10\x03R\x14release_coordination\"o\n" +
 	"\vLanesConfig\x12`\n" +
 	"\x14release_coordination\x18\x01 \x01(\x0e2-.openits.ramp_metering.v1.ReleaseCoordinationR\x13releaseCoordination\"n\n" +
 	"\n" +
@@ -3783,7 +3783,7 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\alane_id\x18\x02 \x01(\tR\x06laneId\x12/\n" +
 	"\x14max_release_rate_vph\x18\x03 \x01(\rR\x11maxReleaseRateVph\x12/\n" +
 	"\x14min_release_rate_vph\x18\x04 \x01(\rR\x11minReleaseRateVph\x12,\n" +
-	"\x12vehicles_per_green\x18\x05 \x01(\rR\x10vehiclesPerGreen\"\xde\x03\n" +
+	"\x12vehicles_per_green\x18\x05 \x01(\rR\x10vehiclesPerGreen\"\xf2\x03\n" +
 	"\tLaneState\x12B\n" +
 	"\n" +
 	"head_state\x18\x05 \x01(\x0e2#.openits.ramp_metering.v1.HeadStateR\theadState\x127\n" +
@@ -3795,7 +3795,7 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\alane_id\x18\x04 \x01(\tR\x06laneId\x12/\n" +
 	"\x14max_release_rate_vph\x18\a \x01(\rR\x11maxReleaseRateVph\x12/\n" +
 	"\x14min_release_rate_vph\x18\b \x01(\rR\x11minReleaseRateVph\x12,\n" +
-	"\x12vehicles_per_green\x18\t \x01(\rR\x10vehiclesPerGreen\"\xb8\x01\n" +
+	"\x12vehicles_per_green\x18\t \x01(\rR\x10vehiclesPerGreenJ\x04\b\x01\x10\x02R\fgreen_active\"\xb8\x01\n" +
 	"\fLaneDetector\x12\x1f\n" +
 	"\vdetector_id\x18\x01 \x01(\tR\n" +
 	"detectorId\x12D\n" +

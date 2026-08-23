@@ -3197,12 +3197,12 @@ const file_openits_cctv_v1_state_proto_rawDesc = "" +
 	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
 	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
 	"\n" +
-	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"\xf0\x01\n" +
+	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"\x89\x02\n" +
 	"\bMounting\x12@\n" +
 	"\tstructure\x18\x01 \x01(\x0e2\".openits.cctv.v1.MountingStructureR\tstructure\x12\x19\n" +
 	"\bheight_m\x18\x02 \x01(\tR\aheightM\x127\n" +
 	"\x18pan_reference_offset_deg\x18\x04 \x01(\rR\x15panReferenceOffsetDeg\x12N\n" +
-	"\x11associated_device\x18\x05 \x03(\v2!.openits.cctv.v1.AssociatedDeviceR\x10associatedDevice\"W\n" +
+	"\x11associated_device\x18\x05 \x03(\v2!.openits.cctv.v1.AssociatedDeviceR\x10associatedDeviceJ\x04\b\x03\x10\x04R\x11co_located_device\"W\n" +
 	"\x10AssociatedDevice\x12\x1b\n" +
 	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x12\n" +
 	"\x04role\x18\x02 \x01(\tR\x04role\x12\x12\n" +
