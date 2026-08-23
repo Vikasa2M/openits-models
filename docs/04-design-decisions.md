@@ -73,6 +73,78 @@ the source-of-truth location would. Transport choices stay
 independent of this — they're a separable decision from the
 schema language.
 
+## The model carries what is needed to interpret its data
+
+**What we chose.** A leaf earns its place if a consumer needs it to
+interpret what the device reports. The model carries observations,
+the device properties that qualify them, and the configuration a device
+acts on. It does not carry values derived from those, and it does not
+carry the operator's inventory.
+
+The blunt form — "no business logic in the model" — is nearly right and
+fails on the interesting cases, so state it as the interpretation test
+instead.
+
+**Worked example: occupancy.** Three leaves, three verdicts.
+
+- `occupancy-count` — an observation. In.
+- `sensing-method` — a device property that tells a consumer what kind of
+  answer to expect from the reading. In. The blunt "no business logic"
+  rule would not obviously save this one; the interpretation test does.
+- `capacity` — out, and it was removed after shipping. The device does
+  not sense it, is not told it by anything it can verify, and never acts
+  on it: `occupancy-count` is reported identically whether capacity says
+  8 or 800. Central writes it, the device stores it, central reads it
+  back. That is the operator's inventory parked in the device tree, and
+  the operator already holds it, having provisioned the region.
+
+**The case that shows the rule is not "operator-provisioned means out."**
+`name` sits beside `capacity` in the same container, is equally
+operator-assigned, and is equally unsensed by the device — and it stays.
+The difference is what kind of thing each one is:
+
+- `name` is a **rendering of the identifier**. `zone-id: 3` and
+  `name: "North Row"` are one fact said twice, once for machines and once
+  for people. A name cannot be wrong in a way that propagates: at worst it
+  is mislabeled, and that is self-evident to whoever reads it.
+- `capacity` was an **independent claim about the world**, and a false one
+  silently produced a wrong availability number that looked exactly like a
+  right one.
+
+There is a sharper way to see it against test 3. `zone-id` is explicitly
+device-local, so a reading from an unfamiliar sensor is unattributable
+without the provisioning system — `name` is the only in-band tie to
+physical ground. **`name` tells a consumer WHICH region the reading is
+about; `capacity` told it how to compute something ABOUT the reading.** The
+first is interpretation. The second is arithmetic.
+
+The same reasoning keeps the `name` leaves already carried on devices,
+day-plans, fonts and graphics.
+
+**The tests, in order of how often they settle it:**
+
+1. **Does the device act on it?** A config leaf the device stores and
+   never uses is not device configuration.
+2. **Is it derived from other modeled leaves?** Then modeling it creates
+   redundant state that can disagree with its own inputs, and a consumer
+   has no way to know which to believe. Availability
+   (`capacity - occupancy-count`), utilization rates, and level-of-service
+   grades are all consumer computations.
+3. **Would a consumer misread the data without it?** If yes it belongs,
+   even when the device did not sense it — this is why geographic
+   location and road-reference are on every device.
+
+**What this rules in that looks like logic.** Thresholds a device
+*enforces* are configuration, not business logic: a comm-loss timeout the
+sign counts down and acts on belongs in the model, while "alert me at 80%
+full" does not, because nothing in the field acts on it.
+
+**Consequence.** Events stay narrow — a device publishes what it observed,
+not what that means. Consumers computing products (availability, traveler
+information, performance measures) hold their own inventory and their own
+rules, and two consumers may reach different answers from the same
+observation without either being wrong.
+
 ## CloudEvents as the envelope
 
 **What we chose.** Every NATS message is a CloudEvents 1.0

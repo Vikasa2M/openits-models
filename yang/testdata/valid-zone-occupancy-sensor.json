@@ -6,14 +6,12 @@
           {
             "zone-id": "truck-row-d",
             "name": "Truck row D",
-            "capacity": 12,
             "sensing-method": "openits-zone-occupancy-types:sensing-video",
             "classifies": true
           },
           {
             "zone-id": "bay-d-04",
             "name": "Bay D-04",
-            "capacity": 1,
             "sensing-method": "openits-zone-occupancy-types:sensing-magnetometer",
             "classifies": false
           }

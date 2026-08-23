@@ -2066,7 +2066,6 @@ type ZoneOccupancyConfigurationZone struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ZoneId        string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Capacity      uint32                 `protobuf:"varint,3,opt,name=capacity,proto3" json:"capacity,omitempty"`
 	SensingMethod string                 `protobuf:"bytes,4,opt,name=sensing_method,json=sensingMethod,proto3" json:"sensing_method,omitempty"`
 	Classifies    bool                   `protobuf:"varint,5,opt,name=classifies,proto3" json:"classifies,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -2115,13 +2114,6 @@ func (x *ZoneOccupancyConfigurationZone) GetName() string {
 		return x.Name
 	}
 	return ""
-}
-
-func (x *ZoneOccupancyConfigurationZone) GetCapacity() uint32 {
-	if x != nil {
-		return x.Capacity
-	}
-	return 0
 }
 
 func (x *ZoneOccupancyConfigurationZone) GetSensingMethod() string {
@@ -2498,15 +2490,14 @@ const file_openits_perception_v1_state_proto_rawDesc = "" +
 	"\rconfiguration\x18\x01 \x01(\v21.openits.perception.v1.ZoneOccupancyConfigurationR\rconfiguration\x12?\n" +
 	"\x05zones\x18\x02 \x01(\v2).openits.perception.v1.ZoneOccupancyZonesR\x05zones\"g\n" +
 	"\x1aZoneOccupancyConfiguration\x12I\n" +
-	"\x04zone\x18\x01 \x03(\v25.openits.perception.v1.ZoneOccupancyConfigurationZoneR\x04zone\"\xb0\x01\n" +
+	"\x04zone\x18\x01 \x03(\v25.openits.perception.v1.ZoneOccupancyConfigurationZoneR\x04zone\"\xa4\x01\n" +
 	"\x1eZoneOccupancyConfigurationZone\x12\x17\n" +
 	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
-	"\bcapacity\x18\x03 \x01(\rR\bcapacity\x12%\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12%\n" +
 	"\x0esensing_method\x18\x04 \x01(\tR\rsensingMethod\x12\x1e\n" +
 	"\n" +
 	"classifies\x18\x05 \x01(\bR\n" +
-	"classifies\"W\n" +
+	"classifiesJ\x04\b\x03\x10\x04R\bcapacity\"W\n" +
 	"\x12ZoneOccupancyZones\x12A\n" +
 	"\x04zone\x18\x01 \x03(\v2-.openits.perception.v1.ZoneOccupancyZonesZoneR\x04zone\"\xf1\x02\n" +
 	"\x16ZoneOccupancyZonesZone\x12\x17\n" +
