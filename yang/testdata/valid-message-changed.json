@@ -1,0 +1,15 @@
+{
+  "openits-dms-events:message-changed": {
+    "kind": "openits-dms-types:dms-message-changed",
+    "source-device-id": "us40-dms-014",
+    "occurred-at": "2026-08-27T14:11:52Z",
+    "sequence": "12",
+    "memory-type": "changeable",
+    "slot-number": 3,
+    "multi-string": "[jl3]ROAD WORK[nl]5 MILES AHEAD",
+    "crc": 41290,
+    "activation-trigger": "openits-types:trigger-operator",
+    "prior-memory-type": "blank",
+    "prior-multi-string": ""
+  }
+}

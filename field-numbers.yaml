@@ -625,6 +625,22 @@ messages:
         sequence: 7
         source: 100
         source_device_id: 8
+    openits.dms.v1.MessageChanged:
+        activation_trigger: 5
+        crc: 4
+        kind: 99
+        memory_type: 1
+        multi_string: 3
+        observed_by: 9
+        occurred_at: 10
+        owner: 11
+        prior_memory_type: 6
+        prior_multi_string: 8
+        prior_slot_number: 7
+        sequence: 12
+        slot_number: 2
+        source: 100
+        source_device_id: 13
     openits.dms.v1.Messages:
         slot: 1
     openits.dms.v1.PowerLoss:
@@ -713,6 +729,23 @@ messages:
         lrs_method: 4
         measure: 3
         route_designator: 1
+    openits.dms.v1.SignStatusReport:
+        ambient_illuminance_lux: 4
+        ambient_light_level: 3
+        brightness_current: 2
+        cabinet_temperature_c: 5
+        display_state: 1
+        door_open: 8
+        fan_active: 9
+        heater_active: 10
+        humidity_percent: 7
+        kind: 99
+        observed_by: 11
+        occurred_at: 12
+        owner: 13
+        sequence: 14
+        sign_face_temperature_c: 6
+        source_device_id: 15
     openits.dms.v1.Slot:
         config: 7
         memory_type: 1

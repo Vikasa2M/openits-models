@@ -66,12 +66,24 @@ channels:
             openits.dms.message-activation-failed.v1:
                 $ref: '#/components/messages/openits.dms.message-activation-failed.v1'
         title: dms — message-activation-failed
+    openits.dms.message-changed.v1:
+        address: openits.dms.message-changed.v1
+        messages:
+            openits.dms.message-changed.v1:
+                $ref: '#/components/messages/openits.dms.message-changed.v1'
+        title: dms — message-changed
     openits.dms.mode-changed.v1:
         address: openits.dms.mode-changed.v1
         messages:
             openits.dms.mode-changed.v1:
                 $ref: '#/components/messages/openits.dms.mode-changed.v1'
         title: dms — mode-changed
+    openits.dms.sign-status-report.v1:
+        address: openits.dms.sign-status-report.v1
+        messages:
+            openits.dms.sign-status-report.v1:
+                $ref: '#/components/messages/openits.dms.sign-status-report.v1'
+        title: dms — sign-status-report
     openits.ess.fault-cleared.v1:
         address: openits.ess.fault-cleared.v1
         messages:
@@ -1389,6 +1401,133 @@ components:
                 schemaFormat: application/schema+json;version=draft-2020-12
             summary: dms.message-activation-failed
             title: openits.dms.message-activation-failed.v1
+        openits.dms.message-changed.v1:
+            contentType: application/protobuf
+            headers:
+                properties:
+                    ce-datacontenttype:
+                        const: application/protobuf
+                        type: string
+                    ce-id:
+                        description: Event identifier, unique within the source.
+                        type: string
+                    ce-source:
+                        description: CloudEvents source URI identifying the emitting device or service instance.
+                        type: string
+                    ce-specversion:
+                        const: "1.0"
+                        type: string
+                    ce-time:
+                        format: date-time
+                        type: string
+                    ce-type:
+                        const: openits.dms.message-changed.v1
+                        type: string
+                    traceparent:
+                        description: W3C Trace Context. Optional; recommended.
+                        type: string
+                type: object
+            name: openits.dms.message-changed.v1
+            payload:
+                schema:
+                    $defs:
+                        WireSource:
+                            additionalProperties: false
+                            properties:
+                                decoder:
+                                    type: string
+                                indiana-code:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                indiana-param:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                message-id:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                oid:
+                                    type: string
+                                oid-value:
+                                    type: string
+                                register:
+                                    type: string
+                                register-value:
+                                    type: string
+                            required:
+                                - decoder
+                            type: object
+                    $schema: https://json-schema.org/draft/2020-12/schema
+                    additionalProperties: false
+                    properties:
+                        activation-trigger:
+                            type: string
+                        crc:
+                            maximum: 4294967295
+                            minimum: 0
+                            type: integer
+                        kind:
+                            type: string
+                        memory-type:
+                            enum:
+                                - blank
+                                - changeable
+                                - permanent
+                                - schedule
+                                - volatile
+                            type: string
+                        multi-string:
+                            maxLength: 65535
+                            type: string
+                        observed-by:
+                            maxLength: 64
+                            minLength: 1
+                            pattern: ^([a-zA-Z0-9_-]+)$
+                            type: string
+                        occurred-at:
+                            format: date-time
+                            type: string
+                        owner:
+                            type: string
+                        prior-memory-type:
+                            enum:
+                                - blank
+                                - changeable
+                                - permanent
+                                - schedule
+                                - volatile
+                            type: string
+                        prior-multi-string:
+                            maxLength: 65535
+                            type: string
+                        prior-slot-number:
+                            maximum: 65535
+                            minimum: 1
+                            type: integer
+                        sequence:
+                            type: string
+                        slot-number:
+                            maximum: 65535
+                            minimum: 1
+                            type: integer
+                        source:
+                            $ref: '#/$defs/WireSource'
+                        source-device-id:
+                            maxLength: 64
+                            minLength: 1
+                            pattern: ^([a-zA-Z0-9_-]+)$
+                            type: string
+                    required:
+                        - kind
+                        - occurred-at
+                        - sequence
+                        - source-device-id
+                    type: object
+                schemaFormat: application/schema+json;version=draft-2020-12
+            summary: dms.message-changed
+            title: openits.dms.message-changed.v1
         openits.dms.mode-changed.v1:
             contentType: application/protobuf
             headers:
@@ -1491,6 +1630,94 @@ components:
                 schemaFormat: application/schema+json;version=draft-2020-12
             summary: dms.mode-changed
             title: openits.dms.mode-changed.v1
+        openits.dms.sign-status-report.v1:
+            contentType: application/protobuf
+            headers:
+                properties:
+                    ce-datacontenttype:
+                        const: application/protobuf
+                        type: string
+                    ce-id:
+                        description: Event identifier, unique within the source.
+                        type: string
+                    ce-source:
+                        description: CloudEvents source URI identifying the emitting device or service instance.
+                        type: string
+                    ce-specversion:
+                        const: "1.0"
+                        type: string
+                    ce-time:
+                        format: date-time
+                        type: string
+                    ce-type:
+                        const: openits.dms.sign-status-report.v1
+                        type: string
+                    traceparent:
+                        description: W3C Trace Context. Optional; recommended.
+                        type: string
+                type: object
+            name: openits.dms.sign-status-report.v1
+            payload:
+                schema:
+                    $schema: https://json-schema.org/draft/2020-12/schema
+                    additionalProperties: false
+                    properties:
+                        ambient-illuminance-lux:
+                            maximum: 4294967295
+                            minimum: 0
+                            type: integer
+                        ambient-light-level:
+                            maximum: 100
+                            minimum: 0
+                            type: integer
+                        brightness-current:
+                            maximum: 100
+                            minimum: 0
+                            type: integer
+                        cabinet-temperature-c:
+                            type: string
+                        display-state:
+                            type: string
+                        door-open:
+                            type: boolean
+                        fan-active:
+                            type: boolean
+                        heater-active:
+                            type: boolean
+                        humidity-percent:
+                            maximum: 100
+                            minimum: 0
+                            type: integer
+                        kind:
+                            type: string
+                        observed-by:
+                            maxLength: 64
+                            minLength: 1
+                            pattern: ^([a-zA-Z0-9_-]+)$
+                            type: string
+                        occurred-at:
+                            format: date-time
+                            type: string
+                        owner:
+                            type: string
+                        sequence:
+                            type: string
+                        sign-face-temperature-c:
+                            type: string
+                        source-device-id:
+                            maxLength: 64
+                            minLength: 1
+                            pattern: ^([a-zA-Z0-9_-]+)$
+                            type: string
+                    required:
+                        - kind
+                        - occurred-at
+                        - sequence
+                        - source-device-id
+                    type: object
+                schemaFormat: application/schema+json;version=draft-2020-12
+            summary: dms.sign-status-report
+            title: openits.dms.sign-status-report.v1
         openits.ess.fault-cleared.v1:
             contentType: application/protobuf
             headers:
@@ -7443,6 +7670,13 @@ operations:
         messages:
             - $ref: '#/channels/openits.dms.message-activation-failed.v1/messages/openits.dms.message-activation-failed.v1'
         summary: Consume openits.dms.message-activation-failed.v1
+    consume_openits.dms.message-changed.v1:
+        action: receive
+        channel:
+            $ref: '#/channels/openits.dms.message-changed.v1'
+        messages:
+            - $ref: '#/channels/openits.dms.message-changed.v1/messages/openits.dms.message-changed.v1'
+        summary: Consume openits.dms.message-changed.v1
     consume_openits.dms.mode-changed.v1:
         action: receive
         channel:
@@ -7450,6 +7684,13 @@ operations:
         messages:
             - $ref: '#/channels/openits.dms.mode-changed.v1/messages/openits.dms.mode-changed.v1'
         summary: Consume openits.dms.mode-changed.v1
+    consume_openits.dms.sign-status-report.v1:
+        action: receive
+        channel:
+            $ref: '#/channels/openits.dms.sign-status-report.v1'
+        messages:
+            - $ref: '#/channels/openits.dms.sign-status-report.v1/messages/openits.dms.sign-status-report.v1'
+        summary: Consume openits.dms.sign-status-report.v1
     consume_openits.ess.fault-cleared.v1:
         action: receive
         channel:
@@ -7947,6 +8188,13 @@ operations:
         messages:
             - $ref: '#/channels/openits.dms.message-activation-failed.v1/messages/openits.dms.message-activation-failed.v1'
         summary: Publish openits.dms.message-activation-failed.v1
+    publish_openits.dms.message-changed.v1:
+        action: send
+        channel:
+            $ref: '#/channels/openits.dms.message-changed.v1'
+        messages:
+            - $ref: '#/channels/openits.dms.message-changed.v1/messages/openits.dms.message-changed.v1'
+        summary: Publish openits.dms.message-changed.v1
     publish_openits.dms.mode-changed.v1:
         action: send
         channel:
@@ -7954,6 +8202,13 @@ operations:
         messages:
             - $ref: '#/channels/openits.dms.mode-changed.v1/messages/openits.dms.mode-changed.v1'
         summary: Publish openits.dms.mode-changed.v1
+    publish_openits.dms.sign-status-report.v1:
+        action: send
+        channel:
+            $ref: '#/channels/openits.dms.sign-status-report.v1'
+        messages:
+            - $ref: '#/channels/openits.dms.sign-status-report.v1/messages/openits.dms.sign-status-report.v1'
+        summary: Publish openits.dms.sign-status-report.v1
     publish_openits.ess.fault-cleared.v1:
         action: send
         channel:
