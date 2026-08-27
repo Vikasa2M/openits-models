@@ -78,13 +78,16 @@
         "2026-07-21",
         "2026-07-23",
         "2026-08-05",
-        "2026-08-23"
+        "2026-08-23",
+        "2026-08-27"
       ],
       "events": [
         "openits.dms.fault-cleared.v1",
         "openits.dms.fault-raised.v1",
         "openits.dms.message-activation-failed.v1",
-        "openits.dms.mode-changed.v1"
+        "openits.dms.message-changed.v1",
+        "openits.dms.mode-changed.v1",
+        "openits.dms.sign-status-report.v1"
       ],
       "refStd": [
         "ARC-IT 9.1 Service Package TI06 (Traffic Information Dissemination)",
@@ -148,7 +151,8 @@
             "2026-07-16",
             "2026-07-21",
             "2026-07-23",
-            "2026-08-23"
+            "2026-08-23",
+            "2026-08-27"
           ],
           "refStd": [
             "NTCIP 1203 v03",
@@ -167,7 +171,8 @@
             "2026-07-16",
             "2026-07-21",
             "2026-08-05",
-            "2026-08-23"
+            "2026-08-23",
+            "2026-08-27"
           ],
           "refStd": [
             "NTCIP 1203 v03 (MULTI)",
@@ -1533,6 +1538,13 @@
         "openits-dms-events/2026-08-23/schema.json",
         "openits-dms-events/2026-08-23/schema.proto",
         "openits-dms-events/2026-08-23/schema.yang"
+      ],
+      "2026-08-27": [
+        "openits-dms-events/2026-08-27/MANIFEST.json",
+        "openits-dms-events/2026-08-27/README.md",
+        "openits-dms-events/2026-08-27/schema.json",
+        "openits-dms-events/2026-08-27/schema.proto",
+        "openits-dms-events/2026-08-27/schema.yang"
       ]
     },
     "openits-dms-mutcd": {
@@ -1562,6 +1574,11 @@
         "openits-dms-types/2026-08-23/MANIFEST.json",
         "openits-dms-types/2026-08-23/README.md",
         "openits-dms-types/2026-08-23/schema.yang"
+      ],
+      "2026-08-27": [
+        "openits-dms-types/2026-08-27/MANIFEST.json",
+        "openits-dms-types/2026-08-27/README.md",
+        "openits-dms-types/2026-08-27/schema.yang"
       ]
     },
     "openits-ess": {

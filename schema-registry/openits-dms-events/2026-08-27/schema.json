@@ -1,0 +1,330 @@
+{
+  "message-activation-failed": {
+  "$defs": {
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "message-id": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        },
+        "oid-value": {
+          "type": "string"
+        },
+        "register": {
+          "type": "string"
+        },
+        "register-value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "attempted-memory-type": {
+      "enum": [
+        "blank",
+        "changeable",
+        "permanent",
+        "schedule",
+        "volatile"
+      ],
+      "type": "string"
+    },
+    "attempted-slot-number": {
+      "maximum": 65535,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "error-position": {
+      "maximum": 65535,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "error-type": {
+      "enum": [
+        "font-not-found",
+        "graphic-not-found",
+        "hardware",
+        "other",
+        "syntax",
+        "too-long",
+        "unsupported-tag"
+      ],
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "phase": {
+      "enum": [
+        "activate",
+        "validate"
+      ],
+      "type": "string"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+},
+  "message-changed": {
+  "$defs": {
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "message-id": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        },
+        "oid-value": {
+          "type": "string"
+        },
+        "register": {
+          "type": "string"
+        },
+        "register-value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "activation-trigger": {
+      "type": "string"
+    },
+    "crc": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "memory-type": {
+      "enum": [
+        "blank",
+        "changeable",
+        "permanent",
+        "schedule",
+        "volatile"
+      ],
+      "type": "string"
+    },
+    "multi-string": {
+      "maxLength": 65535,
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "prior-memory-type": {
+      "enum": [
+        "blank",
+        "changeable",
+        "permanent",
+        "schedule",
+        "volatile"
+      ],
+      "type": "string"
+    },
+    "prior-multi-string": {
+      "maxLength": 65535,
+      "type": "string"
+    },
+    "prior-slot-number": {
+      "maximum": 65535,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "slot-number": {
+      "maximum": 65535,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+},
+  "sign-status-report": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "ambient-illuminance-lux": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "ambient-light-level": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "brightness-current": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "cabinet-temperature-c": {
+      "type": "string"
+    },
+    "display-state": {
+      "type": "string"
+    },
+    "door-open": {
+      "type": "boolean"
+    },
+    "fan-active": {
+      "type": "boolean"
+    },
+    "heater-active": {
+      "type": "boolean"
+    },
+    "humidity-percent": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "sign-face-temperature-c": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+}
+}

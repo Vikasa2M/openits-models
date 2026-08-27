@@ -1,0 +1,17 @@
+{
+  "openits-dms-events:sign-status-report": {
+    "kind": "openits-dms-types:dms-sign-status-report",
+    "source-device-id": "us40-dms-014",
+    "occurred-at": "2026-08-27T14:15:00Z",
+    "sequence": "13",
+    "display-state": "openits-dms-types:mode-normal",
+    "brightness-current": 62,
+    "ambient-light-level": 71,
+    "cabinet-temperature-c": "41.5",
+    "sign-face-temperature-c": "47.0",
+    "humidity-percent": 38,
+    "door-open": false,
+    "fan-active": true,
+    "heater-active": false
+  }
+}
