@@ -1,0 +1,120 @@
+module openits-work-zone-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:work-zone-types";
+  prefix openits-work-zone-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Identities and scalars for work zones: lane closures, roadworks,
+     and other planned disruptions to the traveled way.
+
+     A work zone is not a device. It has no configuration to push and no
+     state to poll -- it is an external fact about the roadway, reported
+     by whatever upstream system tracks it, and this family therefore
+     has no core config/state module and no conformance kind. See the
+     events module header for the full rationale.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.1.0";
+
+  revision 2026-09-02 {
+    description
+      "Initial revision. Work-zone identifier, the event-kind identity
+       axis, and the lane-impact and roadway-direction vocabularies.";
+  }
+
+  typedef work-zone-id {
+    type string {
+      length "1..128";
+    }
+    description
+      "The upstream feed's identifier for a work zone. Opaque here and
+       never parsed: its structure is the reporting system's business,
+       and a consumer that decomposes it has coupled itself to one
+       feed's conventions.";
+  }
+
+  identity work-zone-event-kind {
+    base openits-types:device-event-kind;
+    description
+      "Base identity for work-zone event classifiers. Derives from
+       device-event-kind -- not because a work zone is a device, but
+       because wz-activated/wz-updated/wz-cleared are events, and the
+       event taxonomy is rooted there regardless of what emits the
+       event. This lets a consumer filter every work-zone event
+       fleet-wide with derived-from-or-self(kind,
+       'openits-types:device-event-kind'), alongside every other
+       service's events.";
+  }
+  identity wz-activated {
+    base work-zone-event-kind;
+    description "The zone is now in effect.";
+  }
+  identity wz-updated {
+    base work-zone-event-kind;
+    description
+      "A zone already in effect changed -- geometry, window, impact, or
+       any other reported field.";
+  }
+  identity wz-cleared {
+    base work-zone-event-kind;
+    description
+      "The zone is no longer in effect. The event still carries the
+       zone's geometry and window, so a consumer can close its record
+       without a prior lookup.";
+  }
+
+  identity lane-impact {
+    description
+      "Base identity for what a work zone does to the traveled way.
+       An identity rather than an enumeration so a deployment can add a
+       local impact class without a model revision.";
+  }
+  identity wz-all-lanes-closed {
+    base lane-impact;
+    description "Every through lane in the affected direction is closed.";
+  }
+  identity wz-some-lanes-closed {
+    base lane-impact;
+    description "One or more through lanes are closed; at least one remains open.";
+  }
+  identity wz-shoulder-closed {
+    base lane-impact;
+    description "Only the shoulder is closed; all through lanes remain open.";
+  }
+  identity wz-alternating-one-way {
+    base lane-impact;
+    description
+      "A single lane carries both directions alternately, typically
+       flagger- or temporary-signal-controlled.";
+  }
+
+  identity roadway-direction {
+    description "Base identity for the direction of travel a work zone affects.";
+  }
+  identity wz-direction-forward {
+    base roadway-direction;
+    description "The direction of increasing linear reference along the roadway.";
+  }
+  identity wz-direction-reverse {
+    base roadway-direction;
+    description "The direction of decreasing linear reference along the roadway.";
+  }
+  identity wz-direction-both {
+    base roadway-direction;
+    description
+      "Both directions are affected. This is a value real feeds publish,
+       not a modeling convenience -- a model that cannot express it
+       pushes the ambiguity into the translator, which has no better
+       information than the feed did.";
+  }
+}

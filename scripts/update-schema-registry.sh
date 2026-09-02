@@ -64,6 +64,7 @@ MODULES=(
     openits-zone-occupancy-types
     openits-zone-occupancy
     openits-zone-occupancy-events
+    openits-work-zone-types
     openits-cabinet-power
     openits-schedule
     openits-nema-common

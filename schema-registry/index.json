@@ -1333,6 +1333,14 @@
       "refStd": [
         "TrafficVision TMC-3.6 realtime API (inactive_reason values)"
       ]
+    },
+    {
+      "name": "openits-work-zone-types",
+      "namespace": "urn:openits:yang:work-zone-types",
+      "revisions": [
+        "2026-09-02"
+      ],
+      "refStd": []
     }
   ],
   "registry": {
@@ -2312,6 +2320,13 @@
         "openits-vendor-trafficvision-traffic-sensor-types/2026-08-05/MANIFEST.json",
         "openits-vendor-trafficvision-traffic-sensor-types/2026-08-05/README.md",
         "openits-vendor-trafficvision-traffic-sensor-types/2026-08-05/schema.yang"
+      ]
+    },
+    "openits-work-zone-types": {
+      "2026-09-02": [
+        "openits-work-zone-types/2026-09-02/MANIFEST.json",
+        "openits-work-zone-types/2026-09-02/README.md",
+        "openits-work-zone-types/2026-09-02/schema.yang"
       ]
     },
     "openits-zone-occupancy": {

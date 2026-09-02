@@ -42,6 +42,7 @@ check_yang_files() {
         "$YANG_DIR/openits-zone-occupancy-types.yang"
         "$YANG_DIR/openits-zone-occupancy.yang"
         "$YANG_DIR/openits-zone-occupancy-events.yang"
+        "$YANG_DIR/openits-work-zone-types.yang"
         "$YANG_DIR/openits-signal-control-types.yang"
         "$YANG_DIR/openits-dms-types.yang"
         "$YANG_DIR/openits-ess-types.yang"
@@ -120,6 +121,7 @@ generate_go() {
         "$YANG_DIR/openits-zone-occupancy-types.yang" \
         "$YANG_DIR/openits-zone-occupancy.yang" \
         "$YANG_DIR/openits-zone-occupancy-events.yang" \
+        "$YANG_DIR/openits-work-zone-types.yang" \
         "$YANG_DIR/openits-signal-control-types.yang" \
         "$YANG_DIR/openits-dms-types.yang" \
         "$YANG_DIR/openits-ess-types.yang" \
