@@ -40,6 +40,14 @@ type ceCandidate struct {
 type serviceInfo struct {
 	slug string
 	root string
+	// coreless is true only for a service with no core (config/state)
+	// module by design — a work zone is an external fact about the
+	// roadway, not a field device, so there is nothing to configure or
+	// poll and "openits-work-zone" does not exist and never will. It
+	// gates BuildIndex's core-module fallback (see index.go): every other
+	// service is still required to have a core module, so the taxonomy
+	// regression that fallback guards against can still fire.
+	coreless bool
 }
 
 // services is the explicit module-prefix -> service-event-kind-root -> ce-slug
@@ -63,7 +71,9 @@ var services = []serviceInfo{
 	{slug: "reversible-lane", root: "reversible-lane-event-kind"},
 	{slug: "cctv", root: "cctv-event-kind"},
 	{slug: "zone-occupancy", root: "zone-occupancy-event-kind"},
-	{slug: "work-zone", root: "work-zone-event-kind"},
+	// coreless: a work zone has no device and therefore no core module by
+	// design — see serviceInfo.coreless.
+	{slug: "work-zone", root: "work-zone-event-kind", coreless: true},
 }
 
 // BuildCatalog derives the full ce-type catalog from the openits YANG

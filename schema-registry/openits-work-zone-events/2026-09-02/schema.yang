@@ -55,7 +55,16 @@ module openits-work-zone-events {
        One notification rather than three because the three differ only
        in 'kind': every leaf below means the same thing in each case,
        and a cleared zone still carries its geometry and window so a
-       consumer can close its record without a prior lookup.";
+       consumer can close its record without a prior lookup.
+
+       This family has no device, so 'uses event-header' binds to the
+       feed instead: source-device-id is the stable identifier of the
+       feed or collector reporting the zone, since there is no field
+       device to name. occurred-at is when the change took effect
+       upstream, or was published by the feed -- not when the
+       translator observed it. sequence is the translator's own
+       per-feed monotonic counter. observed-by, when present, is the
+       collector, when it differs from the feed.";
 
     leaf kind {
       type identityref {
@@ -97,7 +106,13 @@ module openits-work-zone-events {
         description
           "A work zone must carry at least one geometry point. A single
            point is a valid degenerate extent; zero points is not a
-           location.";
+           location.
+
+           This floor is a YANG-layer constraint only -- it is not
+           projected into the generated JSON Schema, where 'point'
+           renders as a bare array with no minItems. A consumer
+           validating a payload against ce-dataschema must enforce the
+           minimum itself.";
       }
     }
 

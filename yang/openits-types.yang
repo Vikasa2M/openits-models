@@ -671,6 +671,7 @@ module openits-types {
        one payload is a trap.";
     list point {
       key "point-index";
+      description "One point along the path, in ascending point-index order.";
       leaf point-index {
         type uint16;
         description

@@ -24,21 +24,18 @@ module openits-work-zone-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.2.0";
+  openits-types:openits-version "0.1.0";
 
   revision 2026-09-02 {
     description
       "Initial revision. Work-zone identifier, the event-kind identity
-       axis, and the lane-impact and roadway-direction vocabularies.
-
-       Add wz-comm-health-event-kind, a placeholder sub-base dual-based
-       on openits-types:comm-health-event-kind and work-zone-event-kind.
-       A work-zone feed reports its communication health through the
+       axis, the lane-impact and roadway-direction vocabularies, and
+       wz-comm-health-event-kind -- a placeholder sub-base dual-based on
+       openits-types:comm-health-event-kind and work-zone-event-kind. A
+       work-zone feed reports its communication health through the
        shared openits-common-comm-health-events notifications rather
        than a work-zone-specific event; the dual base is what fans those
-       notifications out to the work-zone service token. Same-day
-       pre-publication amend, not a second revision (unpublished; see
-       the repo's same-date-revision convention).";
+       notifications out to the work-zone service token.";
   }
 
   typedef work-zone-id {
@@ -49,7 +46,13 @@ module openits-work-zone-types {
       "The upstream feed's identifier for a work zone. Opaque here and
        never parsed: its structure is the reporting system's business,
        and a consumer that decomposes it has coupled itself to one
-       feed's conventions.";
+       feed's conventions.
+
+       Longer, and with no charset pattern, unlike this repo's other id
+       typedefs (typically 1..64 with pattern '[a-zA-Z0-9_-]+'): real
+       feed ids concatenate agency/district/year/segment components that
+       would truncate at 64, and commonly contain '.', ':', or '/',
+       which a charset pattern would reject.";
   }
 
   identity work-zone-event-kind {
