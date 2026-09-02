@@ -24,12 +24,21 @@ module openits-work-zone-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.1.0";
+  openits-types:openits-version "0.2.0";
 
   revision 2026-09-02 {
     description
       "Initial revision. Work-zone identifier, the event-kind identity
-       axis, and the lane-impact and roadway-direction vocabularies.";
+       axis, and the lane-impact and roadway-direction vocabularies.
+
+       Add wz-comm-health-event-kind, a placeholder sub-base dual-based
+       on openits-types:comm-health-event-kind and work-zone-event-kind.
+       A work-zone feed reports its communication health through the
+       shared openits-common-comm-health-events notifications rather
+       than a work-zone-specific event; the dual base is what fans those
+       notifications out to the work-zone service token. Same-day
+       pre-publication amend, not a second revision (unpublished; see
+       the repo's same-date-revision convention).";
   }
 
   typedef work-zone-id {
@@ -71,6 +80,23 @@ module openits-work-zone-types {
       "The zone is no longer in effect. The event still carries the
        zone's geometry and window, so a consumer can close its record
        without a prior lookup.";
+  }
+
+  identity wz-comm-health-event-kind {
+    base openits-types:comm-health-event-kind;
+    base work-zone-event-kind;
+    description
+      "Work-zone feed communication-health events. A work-zone feed is a
+       data source rather than a field device, but its communication
+       health -- poll outcomes, loss windows, time drift -- is the same
+       shape every other service reports, so it reports through
+       openits-common-comm-health-events rather than a work-zone-specific
+       event of its own.
+
+       The dual base is what routes it: the cross-service base makes the
+       common notifications applicable, and the work-zone base is what
+       fans them out to the work-zone service token. Placeholder
+       sub-base; leaf identities land in a future revision.";
   }
 
   identity lane-impact {
