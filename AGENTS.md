@@ -39,9 +39,15 @@ markdown. Read the matching one BEFORE starting:
 
 ## Quick commands
 
-- Full local gate: `make all` (mirrors CI); individual gates:
+- Full local gate: `make ci` (mirrors CI — all seven jobs, including
+  `go test ./...`, buf, and conformance); individual gates:
   `make check-gen validate-yang yang-lint check-revisions check-naming`
-- Conformance: `go run ./tools/conformance -driver mock -kind <kind>`
+- `make all` only regenerates artifacts (`all: gen`). It runs no checks —
+  do not mistake a green `make all` for a passing gate.
+- Run `make ci` on a COMMITTED tree: `check-gen` diffs the whole worktree,
+  so uncommitted edits fail it as if a gate had failed.
+- Conformance: `make conformance` for every kind, or one at a time with
+  `go run ./tools/conformance -driver mock -kind <kind>`
   (kinds: asc, rsu, dms, ess, ramp-metering, traffic-sensor,
   reversible-lane, perception, cctv)
 - Scaffold a new service: `go run ./tools/openits-new-service -h`

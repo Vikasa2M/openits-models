@@ -12,15 +12,61 @@ FIELD_LOCK      := field-numbers.yaml
 # YANG output directories
 YANG_GO_OUT := pkg/yang
 
-.PHONY: all gen check-gen yang-proto-gen proto yang yang-go validate-yang \
+.PHONY: all ci gen check-gen yang-proto-gen proto yang yang-go validate-yang \
 	check-revisions check-naming check-enum-values check-inline-enums validate-noi check-graduation \
-	check-augment-collisions check-deviations check-events-layering proto-lint yang-lint vet fmt tidy build-tools \
+	check-augment-collisions check-deviations check-events-layering proto-lint proto-breaking yang-lint \
+	vet test conformance fmt tidy build-tools \
 	asyncapi asyncapi-check catalog catalog-check
 
 # Regenerate every generated model artifact from source: YANG -> proto
 # (tools/yang-proto-gen), proto -> Go (protoc), YANG -> Go (ygot).
+#
+# NOTE: `all` regenerates and gates nothing. For the full local gate, use
+# `make ci`.
 all: gen
 gen: yang-proto-gen proto yang-go asyncapi catalog
+
+# The full local gate: every check CI runs, in one command.
+#
+# CI runs these as separate jobs so they parallelize and report
+# independently, which means this list and the job list in
+# .github/workflows/ci.yml are two copies of one fact. Add a gate to both,
+# or a check that runs in CI will pass silently here.
+#
+# That is not hypothetical — it already cost a round trip. The first version
+# of this target covered only the four YANG-shaped jobs, so a branch that
+# added a service to tools/yang-proto-gen broke `go test ./...` and still
+# came back green from every local gate; CI caught it. Hence the mapping
+# below: each of CI's seven jobs, and what covers it here.
+#
+#   ci.yml job        covered by
+#   ----------------  ------------------------------------------------
+#   go-test           build-tools, vet, test
+#   check-gen         check-gen
+#   buf               proto-lint, proto-breaking
+#   yang-checks       check-revisions ... check-graduation
+#   validate-yang     validate-yang
+#   yang-lint         yang-lint
+#   conformance       conformance
+#
+# check-gen comes first: it regenerates and fails on drift, so every gate
+# after it reads artifacts that match the YANG rather than whatever was
+# last committed. conformance comes last because it is the slowest.
+#
+# Run this on a COMMITTED tree. check-gen's drift test is
+# `git diff --exit-code` over the whole worktree, not just generated
+# paths, so uncommitted source edits fail it too — which reads as a gate
+# failure when it is only unstaged work.
+#
+# The buf targets announce and skip when buf is not installed, rather than
+# failing. That is a visible line in the output, not a silent pass, but it
+# does mean a green `make ci` on a machine without buf has not run them.
+ci: check-gen build-tools vet test \
+	validate-yang yang-lint check-revisions check-naming \
+	check-enum-values check-inline-enums check-deviations \
+	check-augment-collisions check-events-layering check-ce-id-vectors \
+	validate-noi check-graduation \
+	proto-lint proto-breaking conformance
 
 # Fail if regenerating drifts from what's committed — the freshness gate.
 check-gen: gen
@@ -125,6 +171,15 @@ proto-lint:
 	@if command -v buf >/dev/null 2>&1; then buf lint; \
 	else echo "buf not installed; skipping proto-lint"; fi
 
+# Protobuf breaking-change check against main, the second half of CI's `buf`
+# job. CI resolves main to a concrete SHA and fetches it; locally the main
+# branch in this repo is the comparison point, so the answer is only as
+# current as your last fetch. A no-op when run on main itself.
+proto-breaking:
+	@if command -v buf >/dev/null 2>&1; then \
+		buf breaking --against '.git#branch=main'; \
+	else echo "buf not installed; skipping proto-breaking"; fi
+
 # pyang YANG lint (skipped if pyang absent).
 yang-lint:
 	@if command -v pyang >/dev/null 2>&1; then \
@@ -132,9 +187,28 @@ yang-lint:
 			yang/*.yang yang/augments/*.yang yang/deviations/*.yang; \
 	else echo "pyang not installed; skipping yang-lint"; fi
 
+# Conformance harness against the built-in mock device. CI runs one matrix
+# job per kind; locally they run in sequence. This list must match the
+# matrix in .github/workflows/ci.yml.
+CONFORMANCE_KINDS := asc rsu dms ess ramp-metering traffic-sensor \
+	reversible-lane perception cctv
+
+conformance:
+	@set -e; for kind in $(CONFORMANCE_KINDS); do \
+		echo "== conformance: $$kind"; \
+		$(GOCMD) run ./tools/conformance -driver mock -kind "$$kind"; \
+	done
+
 # --- Go housekeeping ---------------------------------------------------------
 vet:
 	$(GOCMD) vet ./...
+
+# Unit tests for every tool and generated package — CI's `go-test` job runs
+# this alongside build-tools and vet. The tools under tools/ carry real
+# assertions about the model (the service catalog is pinned in one of them),
+# so this is a model gate, not just Go housekeeping.
+test:
+	$(GOCMD) test ./...
 fmt:
 	$(GOFMT) -s -w .
 tidy:
