@@ -1,0 +1,9 @@
+{
+  "module": "openits-work-zone-events",
+  "revision": "2026-09-02",
+  "files": [
+    "schema.yang",
+    "schema.proto",
+    "schema.json"
+  ]
+}

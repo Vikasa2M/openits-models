@@ -63,6 +63,7 @@ var services = []serviceInfo{
 	{slug: "reversible-lane", root: "reversible-lane-event-kind"},
 	{slug: "cctv", root: "cctv-event-kind"},
 	{slug: "zone-occupancy", root: "zone-occupancy-event-kind"},
+	{slug: "work-zone", root: "work-zone-event-kind"},
 }
 
 // BuildCatalog derives the full ce-type catalog from the openits YANG

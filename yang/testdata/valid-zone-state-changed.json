@@ -1,0 +1,19 @@
+{
+  "openits-work-zone-events:zone-state-changed": {
+    "kind": "openits-work-zone-types:wz-activated",
+    "source-device-id": "wz-feed-tx-district-14",
+    "sequence": "1",
+    "occurred-at": "2026-09-02T13:00:00Z",
+    "zone-id": "TX-14-2026-0912",
+    "point": [
+      { "point-index": 0, "latitude": "30.2672", "longitude": "-97.7431" },
+      { "point-index": 1, "latitude": "30.2701", "longitude": "-97.7440" }
+    ],
+    "window-start": "2026-09-03T06:00:00Z",
+    "window-end": "2026-09-17T18:00:00Z",
+    "direction": "openits-work-zone-types:wz-direction-both",
+    "lane-impact": "openits-work-zone-types:wz-some-lanes-closed",
+    "temporary-signal": true,
+    "notice": "Northbound right lane closed for bridge joint replacement."
+  }
+}

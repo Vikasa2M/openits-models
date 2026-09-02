@@ -29,10 +29,41 @@ implies it). This intentionally mirrors YANG's actual semantics for
 notification instances, without inheriting the container/mandatory
 interaction quirk `-t nc-notif` applies to.
 
-`must` is not covered here (no notification in this schema family
-currently declares a `must`; every existing `must` lives on config/state
-trees already validated via -t data). If one is ever added, this
-script will need extending.
+A `min-elements` floor on a top-level list/leaf-list is also covered,
+added when openits-work-zone-events became the first notification in
+this schema family to declare one (every existing min-elements before
+it lived on config/state trees already validated via -t data, so this
+needed extending exactly as this docstring anticipated). It's
+recognized two ways: declared directly on a list/leaf-list, or (the
+case this schema family actually uses) added via
+`refine "<name>" { min-elements N; ... }` on a `uses` statement, the
+mechanism a notification uses to put a cardinality floor on a list it
+splices in from a grouping it doesn't own (e.g.
+openits-types:geo-path's `point`). This is not a `must` at all --
+tools/yang-proto-gen (goyang) rejects `must` as a direct child of
+`notification` even though YANG 1.1 permits it, so a notification-level
+list-cardinality floor has to be expressed as min-elements instead of
+`must "count(x) >= N"` in the first place; see
+openits-work-zone-events.yang's `point` refine for the full rationale.
+
+(An earlier revision of this script also evaluated one `must` shape --
+a same-notification leaf-to-sibling date-and-time ordering comparison
+-- for openits-work-zone-events.yang's window-end leaf. That `must` was
+removed from the module (it rejected some conforming data outright: two
+date-and-time values at different fractional-second precision compare
+as wildly different magnitudes once digit-stripped and treated as
+plain integers, so a later, valid window-end could still fail), and the
+evaluator was removed along with it -- no notification in the corpus
+declares a `must` any more, so keeping a must-evaluator here would be
+dead code. If a future notification needs one, the extension point is
+the same shape `_top_level_min_elements` uses: collect the constraint
+via a walk mirroring `mandatory_leaves`'s uses-crossing, evaluate it in
+Python against the fixture's parsed instance, don't try to reproduce
+XPath's number-coercion semantics for anything but genuinely numeric
+comparisons.)
+
+Extend the min-elements handling above if a future notification needs
+a floor this doesn't already cover.
 
 Usage:
     check-notif-mandatory.py --schemas S1.yang S2.yang ... \
@@ -104,12 +135,23 @@ def strip_and_split(text):
                     i += 1
                 i += 1  # closing quote
                 arg_parts.append("".join(buf))
-                save = i
                 i = skip_ws_comments(i)
                 if i < n and text[i] == "+":
                     i = skip_ws_comments(i + 1)
                     continue
-                i = save
+                # Not a string-concatenation continuation, so the
+                # argument is done and the loop is about to exit for
+                # good (break, below) -- leave `i` at its
+                # already-whitespace-skipped position so the `{`/`;`
+                # check right after this loop sees the subbody opener
+                # even when it's separated from the closing quote by
+                # whitespace (e.g. `refine "point" { ... }`, a common
+                # YANG style). Previously this reset `i` to right after
+                # the closing quote, which made that check silently
+                # fail to find a subbody whenever there was
+                # intervening whitespace -- the subbody's statements
+                # then got parsed as this one's siblings instead of
+                # its children.
                 break
             else:
                 wstart = i
@@ -390,6 +432,71 @@ class Schema:
             return sorted(reasons)
         return []
 
+    def _top_level_min_elements(self, module, body, visited=None):
+        """Collect min-elements floors reachable at a notification's own
+        top level: {child-name: floor}. Two sources: a min-elements
+        substatement declared directly on a top-level list/leaf-list,
+        and a `refine "<name>" { min-elements N; ... }` substatement on
+        a `uses` statement -- the mechanism a notification uses to put a
+        cardinality floor on a list it splices in from a grouping it
+        doesn't own (e.g. openits-types:geo-path's `point`; see
+        openits-work-zone-events.yang). Also crosses plain `uses` at the
+        same depth to inherit any min-elements already native to the
+        grouping's own list/leaf-list (a local refine, if present, wins
+        over an inherited value). Never descends into container/list/
+        choice/case, for the same optionality-boundary reason
+        mandatory_leaves() doesn't."""
+        if visited is None:
+            visited = frozenset()
+        out = {}
+        for kw, arg, sub in strip_and_split(body):
+            k = bare(kw)
+            if k in ("list", "leaf-list") and sub is not None:
+                for ik, iarg, _isub in strip_and_split(sub):
+                    if bare(ik) == "min-elements" and iarg and iarg.isdigit():
+                        out[arg] = int(iarg)
+            elif k == "uses":
+                target = self.resolve(module, arg)
+                inherited = {}
+                if target and target in self.groupings and target not in visited:
+                    inherited = self._top_level_min_elements(
+                        target[0], self.groupings[target], visited | {target}
+                    )
+                refined = {}
+                if sub is not None:
+                    for ik, iarg, isub in strip_and_split(sub):
+                        if bare(ik) == "refine" and iarg and isub is not None:
+                            child = iarg.split("/")[0]
+                            for rk, rarg, _rsub in strip_and_split(isub):
+                                if bare(rk) == "min-elements" and rarg and rarg.isdigit():
+                                    refined[child] = int(rarg)
+                for child, floor in inherited.items():
+                    out.setdefault(child, floor)
+                out.update(refined)
+        return out
+
+    def notification_min_elements_violations(self, notif_name, instance):
+        """List of reason strings for min-elements floors (see
+        _top_level_min_elements) the instance violates. yanglint's
+        pinned build does not enforce min-elements on a notification
+        instance under -t notif any more than must/mandatory --
+        confirmed empirically alongside those two."""
+        if not isinstance(instance, dict):
+            return []
+        for (module, name), body in self.notifications.items():
+            if name != notif_name:
+                continue
+            present = {k.split(":")[-1]: v for k, v in instance.items()}
+            floors = self._top_level_min_elements(module, body)
+            reasons = []
+            for child, floor in floors.items():
+                val = present.get(child)
+                count = len(val) if isinstance(val, list) else (0 if val is None else 1)
+                if count < floor:
+                    reasons.append(f"{child}(min-elements={floor},got={count})")
+            return sorted(reasons)
+        return []
+
 
 def main(argv):
     if "--" not in argv:
@@ -424,8 +531,10 @@ def main(argv):
             # fixture) -- out of scope for this check.
             print(f"OK {fpath}")
             continue
-        problems = list(missing) + schema.notification_when_violations(
-            notif_name, instance
+        problems = (
+            list(missing)
+            + schema.notification_when_violations(notif_name, instance)
+            + schema.notification_min_elements_violations(notif_name, instance)
         )
         if problems:
             print(f"MISSING {fpath} {','.join(problems)}")

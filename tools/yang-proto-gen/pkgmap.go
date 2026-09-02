@@ -51,6 +51,10 @@ var serviceRoutes = []serviceRoute{
 	// capability owns notifications, and its events belong to it rather
 	// than to whichever profile composes it.
 	{"openits-zone-occupancy", "openits.zone_occupancy.v1", "openits/zone_occupancy/v1/events.proto"},
+	// Events-only, and not a device service: a work zone is an external
+	// fact about the roadway, so the family has no config/state module.
+	// The route exists because the family owns a notification.
+	{"openits-work-zone", "openits.work_zone.v1", "openits/work_zone/v1/events.proto"},
 }
 
 // pkgFor returns the proto package and output file moduleName's

@@ -3069,6 +3069,25 @@ messages:
         message_id: 4
         ntcip_oid: 3
         plc_register: 5
+    openits.work_zone.v1.Point:
+        latitude: 2
+        longitude: 3
+        point_index: 1
+    openits.work_zone.v1.ZoneStateChanged:
+        direction: 4
+        kind: 99
+        lane_impact: 5
+        notice: 7
+        observed_by: 8
+        occurred_at: 9
+        owner: 10
+        point: 11
+        sequence: 12
+        source_device_id: 13
+        temporary_signal: 6
+        window_end: 3
+        window_start: 2
+        zone_id: 1
     openits.zone_occupancy.v1.ObservedClass:
         class: 1
         count: 2

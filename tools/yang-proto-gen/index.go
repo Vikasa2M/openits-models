@@ -75,8 +75,11 @@ type Index struct {
 // the service-level Revisions/RefStd fields are a deduped, sorted ROLLUP
 // (union) across those modules, offered as a convenience for consumers that
 // want a coarse "what dates has anything in this service moved" view without
-// walking the sub-list. Namespace/Description come from the service's CORE
-// module (openits-<slug>), the module a consumer means by "the dms model".
+// walking the sub-list. Namespace/Description normally come from the
+// service's CORE module (openits-<slug>), the module a consumer means by
+// "the dms model" — falling back to the service's -types then -events
+// module for a service with no core module by design; see the fallback
+// in BuildIndex.
 type ServiceIndex struct {
 	Slug        string `json:"slug"`
 	Namespace   string `json:"namespace"`
@@ -137,12 +140,26 @@ func BuildIndex(mods []*yang.Entry, cat []CeType, registryDir string) (*Index, e
 
 	services := make([]ServiceIndex, 0, len(servicesList()))
 	for _, slug := range servicesList() {
+		// Namespace/Description normally come from the service's core
+		// config/state module (openits-<slug>) — see ServiceIndex's
+		// doc comment. Some services, though, are events-only
+		// capabilities with deliberately NO core module: a work zone is
+		// not a device (nothing to configure, nothing to poll — see
+		// openits-work-zone-events.yang's header), so
+		// "openits-work-zone" does not exist and never will. For those,
+		// fall back to the service's own -types module (the closest
+		// thing it has to "the model") and then its -events module, in
+		// that order, before treating absence as the taxonomy
+		// regression it is for every other service.
 		core, ok := byName["openits-"+slug]
 		if !ok {
-			// A service in the catalog's service map with no core module is
-			// a taxonomy regression — fail loudly rather than emit a
-			// service descriptor with an empty namespace/description.
-			return nil, fmt.Errorf("build index: service %q has no core module openits-%s in the loaded corpus", slug, slug)
+			core, ok = byName["openits-"+slug+"-types"]
+		}
+		if !ok {
+			core, ok = byName["openits-"+slug+"-events"]
+		}
+		if !ok {
+			return nil, fmt.Errorf("build index: service %q has no core, -types, or -events module in the loaded corpus", slug)
 		}
 
 		modEntries := byService[slug]

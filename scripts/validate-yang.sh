@@ -28,6 +28,7 @@ SCHEMAS=(
     yang/openits-zone-occupancy.yang
     yang/openits-zone-occupancy-events.yang
     yang/openits-work-zone-types.yang
+    yang/openits-work-zone-events.yang
     yang/openits-common-fault-events.yang
     yang/openits-common-comm-health-events.yang
     yang/openits-common-mode-events.yang

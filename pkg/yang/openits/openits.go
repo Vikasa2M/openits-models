@@ -20,6 +20,7 @@ using the following YANG input files:
 	- yang/openits-zone-occupancy.yang
 	- yang/openits-zone-occupancy-events.yang
 	- yang/openits-work-zone-types.yang
+	- yang/openits-work-zone-events.yang
 	- yang/openits-signal-control-types.yang
 	- yang/openits-dms-types.yang
 	- yang/openits-ess-types.yang
