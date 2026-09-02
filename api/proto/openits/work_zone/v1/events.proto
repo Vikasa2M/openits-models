@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package openits.work_zone.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/work_zone/v1;workzonev1";
+
+import "google/protobuf/timestamp.proto";
+
+message ZoneStateChanged {
+  string kind = 99;
+  string zone_id = 1;
+  google.protobuf.Timestamp window_start = 2;
+  google.protobuf.Timestamp window_end = 3;
+  string direction = 4;
+  string lane_impact = 5;
+  bool temporary_signal = 6;
+  string notice = 7;
+  string observed_by = 8;
+  google.protobuf.Timestamp occurred_at = 9;
+  string owner = 10;
+  repeated Point point = 11;
+  uint64 sequence = 12;
+  string source_device_id = 13;
+}
+
+message Point {
+  uint32 point_index = 1;
+  string latitude = 2;
+  string longitude = 3;
+}
+

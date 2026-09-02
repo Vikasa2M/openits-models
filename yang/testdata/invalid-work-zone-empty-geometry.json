@@ -1,0 +1,11 @@
+{
+  "openits-work-zone-events:zone-state-changed": {
+    "kind": "openits-work-zone-types:wz-activated",
+    "source-device-id": "wz-feed-tx-district-14",
+    "sequence": "4",
+    "occurred-at": "2026-09-02T13:15:00Z",
+    "zone-id": "TX-14-2026-0914",
+    "point": [],
+    "window-start": "2026-09-03T06:00:00Z"
+  }
+}

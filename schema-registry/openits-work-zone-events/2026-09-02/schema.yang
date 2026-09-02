@@ -1,0 +1,179 @@
+module openits-work-zone-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:work-zone-events";
+  prefix openits-work-zone-events;
+
+  import openits-types {
+    prefix openits-types;
+  }
+  import openits-work-zone-types {
+    prefix openits-work-zone-types;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Event payloads for work zones: lane closures, roadworks, and other
+     planned disruptions to the traveled way.
+
+     Imports only shared -types modules, per the events-layering rule --
+     an events module never depends on a capability's or service's
+     config/state schema.
+
+     THIS FAMILY IS EVENTS-ONLY BY DESIGN. There is no
+     'openits-work-zone.yang' core module, no conformance kind, and no
+     mock driver, and none of those are oversights. A work zone is not a
+     device: there is nothing to configure, nothing to poll, and no
+     vendor implementation to conform. It is an external fact about the
+     roadway, reported by whatever upstream system tracks it. The
+     precedent is the common-* event modules, which are likewise
+     events-only. Do not 'complete' this family by adding a device
+     profile.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.1.0";
+
+  revision 2026-09-02 {
+    description
+      "Initial revision. One notification, zone-state-changed, carrying
+       activation, update, and clearing through the 'kind' identity.";
+  }
+
+  notification zone-state-changed {
+    openits-types:arc-it-flow
+      "Maintenance and Construction Management -> TMC : work zone information";
+    description
+      "A work zone became active, changed, or ended.
+
+       One notification rather than three because the three differ only
+       in 'kind': every leaf below means the same thing in each case,
+       and a cleared zone still carries its geometry and window so a
+       consumer can close its record without a prior lookup.
+
+       This family has no device, so 'uses event-header' binds to the
+       feed instead: source-device-id is the stable identifier of the
+       feed or collector reporting the zone, since there is no field
+       device to name. occurred-at is when the change took effect
+       upstream, or was published by the feed -- not when the
+       translator observed it. sequence is the translator's own
+       per-feed monotonic counter. observed-by, when present, is the
+       collector, when it differs from the feed.";
+
+    leaf kind {
+      type identityref {
+        base openits-work-zone-types:work-zone-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier: openits-work-zone-types:wz-activated,
+         wz-updated, or wz-cleared.";
+    }
+    uses openits-types:event-header;
+
+    leaf zone-id {
+      type openits-work-zone-types:work-zone-id;
+      mandatory true;
+      description
+        "The upstream feed's identifier for this zone. Opaque here and
+         never parsed -- its structure is the reporting system's
+         business.";
+    }
+
+    // A work zone must carry at least one geometry point (a single
+    // point is a valid degenerate extent; zero points is not a
+    // location), expressed here as `min-elements 1` rather than a
+    // notification-level `must "count(point) >= 1"`. Two reasons:
+    // tools/yang-proto-gen (goyang) rejects `must` as a direct child of
+    // `notification` -- "unknown notification field: must" -- even
+    // though YANG 1.1 permits it (RFC 7950 §7.16.3); confirmed against
+    // this repo's pinned generator. And min-elements is the more
+    // faithful native constraint for "at least N instances of a list"
+    // in the first place -- a must reimplementing cardinality via
+    // count() is the workaround, not the idiom. yanglint's pinned build
+    // does not enforce min-elements on a notification instance under
+    // `-t notif` any more than it enforces must/mandatory there (see
+    // scripts/check-notif-mandatory.py, extended to check this too).
+    uses openits-types:geo-path {
+      refine "point" {
+        min-elements 1;
+        description
+          "A work zone must carry at least one geometry point. A single
+           point is a valid degenerate extent; zero points is not a
+           location.
+
+           This floor is a YANG-layer constraint only -- it is not
+           projected into the generated JSON Schema, where 'point'
+           renders as a bare array with no minItems. A consumer
+           validating a payload against ce-dataschema must enforce the
+           minimum itself.";
+      }
+    }
+
+    leaf window-start {
+      type yang:date-and-time;
+      mandatory true;
+      description "When the closure takes, or took, effect.";
+    }
+    leaf window-end {
+      type yang:date-and-time;
+      description
+        "When the closure ends. Absent means open-ended, which feeds
+         publish for long-running projects.
+
+         MAY be in the past. An already-expired zone is valid, not
+         erroneous: a translator that receives one has no honest
+         alternative to forwarding it, and a consumer needs the record
+         to close its own.
+
+         When present, MUST be at or after window-start. This is a
+         semantic contract the schema itself cannot express as a
+         `must`: XPath 1.0's relational operators numeric-coerce both
+         operands whenever neither is already numeric, and a
+         date-and-time string is not numeric, so any '. >= ../sibling'
+         comparison between two date-and-time leaves evaluates to NaN
+         and is always false -- exactly the reason the 2026-07-21
+         revision of openits-v2x-messaging.yang removed the identical
+         construct from the TIM broadcast window. A consumer must
+         enforce this ordering itself.";
+    }
+
+    leaf direction {
+      type identityref {
+        base openits-work-zone-types:roadway-direction;
+      }
+      description
+        "Direction of travel affected. wz-direction-both is a real
+         published value, not a modeling convenience.";
+    }
+    leaf lane-impact {
+      type identityref {
+        base openits-work-zone-types:lane-impact;
+      }
+      description "What the closure does to the traveled way.";
+    }
+    leaf temporary-signal {
+      type boolean;
+      default "false";
+      description
+        "A temporary signal is operating within the zone.
+
+         Carried as its own leaf rather than left to 'notice' because a
+         temporary signal changes how a signal-performance measure over
+         the affected approach must be read. A consumer cannot find that
+         reliably in free text.";
+    }
+    leaf notice {
+      type string;
+      description
+        "Free-text description as published upstream. Human-facing only
+         -- nothing derives behavior from it.";
+    }
+  }
+}

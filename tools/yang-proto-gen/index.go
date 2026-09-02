@@ -75,8 +75,12 @@ type Index struct {
 // the service-level Revisions/RefStd fields are a deduped, sorted ROLLUP
 // (union) across those modules, offered as a convenience for consumers that
 // want a coarse "what dates has anything in this service moved" view without
-// walking the sub-list. Namespace/Description come from the service's CORE
-// module (openits-<slug>), the module a consumer means by "the dms model".
+// walking the sub-list. Namespace/Description normally come from the
+// service's CORE module (openits-<slug>), the module a consumer means by
+// "the dms model" — falling back to the service's -types then -events
+// module ONLY for a service the catalog's service map marks coreless (no
+// core module by design). A service NOT marked coreless still errors out of
+// BuildIndex if it has no core module: see the fallback in BuildIndex.
 type ServiceIndex struct {
 	Slug        string `json:"slug"`
 	Namespace   string `json:"namespace"`
@@ -137,12 +141,30 @@ func BuildIndex(mods []*yang.Entry, cat []CeType, registryDir string) (*Index, e
 
 	services := make([]ServiceIndex, 0, len(servicesList()))
 	for _, slug := range servicesList() {
+		// Namespace/Description normally come from the service's core
+		// config/state module (openits-<slug>) — see ServiceIndex's doc
+		// comment. A service the catalog's service map marks coreless is
+		// an events-only family with deliberately NO core module: a work
+		// zone is not a device (nothing to configure, nothing to poll —
+		// see openits-work-zone-events.yang's header), so
+		// "openits-work-zone" does not exist and never will. Only for a
+		// coreless service does absence of the core module fall back to
+		// its own -types module (the closest thing it has to "the
+		// model") and then its -events module, in that order. A service
+		// NOT marked coreless has no such fallback: since every entry in
+		// the map owns notifications, it always has an -events module, so
+		// falling back for it would let a genuinely missing core module
+		// — the taxonomy regression this check exists to catch — pass
+		// silently.
 		core, ok := byName["openits-"+slug]
+		if !ok && serviceIsCoreless(slug) {
+			core, ok = byName["openits-"+slug+"-types"]
+			if !ok {
+				core, ok = byName["openits-"+slug+"-events"]
+			}
+		}
 		if !ok {
-			// A service in the catalog's service map with no core module is
-			// a taxonomy regression — fail loudly rather than emit a
-			// service descriptor with an empty namespace/description.
-			return nil, fmt.Errorf("build index: service %q has no core module openits-%s in the loaded corpus", slug, slug)
+			return nil, fmt.Errorf("build index: service %q has no core module in the loaded corpus (and is not marked coreless, so no -types/-events fallback applies)", slug)
 		}
 
 		modEntries := byService[slug]
@@ -217,6 +239,19 @@ func moduleServiceSlug(moduleName string) (string, bool) {
 		}
 	}
 	return best, best != ""
+}
+
+// serviceIsCoreless reports whether slug's entry in the catalog's
+// authoritative service map is marked coreless (no core module by design;
+// see serviceInfo.coreless). Only BuildIndex's core-module fallback consults
+// this — every other consumer of the service map treats all slugs alike.
+func serviceIsCoreless(slug string) bool {
+	for _, svc := range services {
+		if svc.slug == slug {
+			return svc.coreless
+		}
+	}
+	return false
 }
 
 // servicesList returns the service slugs, sorted, from the catalog's

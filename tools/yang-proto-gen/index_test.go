@@ -27,8 +27,8 @@ func buildRealIndex(t *testing.T) *Index {
 }
 
 // TestBuildIndex_content asserts the neutral self-index carries the real
-// service/module/registry facts a consumer relies on: all nine services with
-// their core-module identity, a known service's ce-types and normative
+// service/module/registry facts a consumer relies on: all eleven services
+// with their core-module identity, a known service's ce-types and normative
 // references, the foundation module list, and the registry snapshot map — with
 // the index never indexing itself.
 func TestBuildIndex_content(t *testing.T) {
@@ -42,9 +42,10 @@ func TestBuildIndex_content(t *testing.T) {
 	}
 
 	// Every entry in the catalog service map is present, sorted by slug. The
-	// nine device services, plus zone-occupancy — a capability rather than a
-	// device, routed through the same map because it owns notifications.
-	wantSlugs := []string{"cctv", "dms", "ess", "perception", "ramp-metering", "reversible-lane", "rsu", "signal-control", "traffic-sensor", "zone-occupancy"}
+	// nine device services, plus zone-occupancy and work-zone — a capability
+	// and an external-fact family respectively, neither a device, both
+	// routed through the same map because each owns notifications.
+	wantSlugs := []string{"cctv", "dms", "ess", "perception", "ramp-metering", "reversible-lane", "rsu", "signal-control", "traffic-sensor", "work-zone", "zone-occupancy"}
 	if len(idx.Services) != len(wantSlugs) {
 		t.Fatalf("got %d services, want %d", len(idx.Services), len(wantSlugs))
 	}

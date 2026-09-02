@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "direction": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "lane-impact": {
+      "type": "string"
+    },
+    "notice": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "point": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "latitude": {
+            "type": "string"
+          },
+          "longitude": {
+            "type": "string"
+          },
+          "point-index": {
+            "maximum": 65535,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "temporary-signal": {
+      "type": "boolean"
+    },
+    "window-end": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "window-start": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "zone-id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id",
+    "window-start",
+    "zone-id"
+  ],
+  "type": "object"
+}

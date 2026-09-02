@@ -64,6 +64,8 @@ MODULES=(
     openits-zone-occupancy-types
     openits-zone-occupancy
     openits-zone-occupancy-events
+    openits-work-zone-types
+    openits-work-zone-events
     openits-cabinet-power
     openits-schedule
     openits-nema-common
@@ -133,6 +135,7 @@ PROTO_ROUTE_PREFIXES=(
     "openits-traffic-sensor"
     "openits-reversible-lane"
     "openits-cctv"
+    "openits-work-zone"
 )
 # Paths are relative to api/proto/openits/. The generator emits nested
 # per-service dirs (api/proto/openits/<service>/v1/events.proto), so each
@@ -149,6 +152,7 @@ PROTO_ROUTE_FILES=(
     "traffic_sensor/v1/events.proto"
     "reversible_lane/v1/events.proto"
     "cctv/v1/events.proto"
+    "work_zone/v1/events.proto"
 )
 
 # declares_notification returns success if the given YANG file declares

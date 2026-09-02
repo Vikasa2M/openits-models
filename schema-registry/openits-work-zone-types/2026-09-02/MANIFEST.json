@@ -1,0 +1,7 @@
+{
+  "module": "openits-work-zone-types",
+  "revision": "2026-09-02",
+  "files": [
+    "schema.yang"
+  ]
+}
