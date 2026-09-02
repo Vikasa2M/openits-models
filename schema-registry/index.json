@@ -1195,7 +1195,8 @@
         "2026-07-14",
         "2026-07-21",
         "2026-08-05",
-        "2026-08-15"
+        "2026-08-15",
+        "2026-09-02"
       ],
       "refStd": [
         "ATSPM Indiana enumeration",
@@ -2190,6 +2191,11 @@
         "openits-types/2026-08-15/MANIFEST.json",
         "openits-types/2026-08-15/README.md",
         "openits-types/2026-08-15/schema.yang"
+      ],
+      "2026-09-02": [
+        "openits-types/2026-09-02/MANIFEST.json",
+        "openits-types/2026-09-02/README.md",
+        "openits-types/2026-09-02/schema.yang"
       ]
     },
     "openits-v2x-messaging": {
