@@ -7,6 +7,24 @@ for the Go module. See [`docs/versioning.md`](docs/versioning.md) for how the
 Go module version, per-module YANG revision dates, and protobuf wire
 compatibility relate.
 
+## [0.5.0](https://github.com/Vikasa2M/openits-models/compare/v0.4.0...v0.5.0) (2026-09-05)
+
+
+### Features
+
+* **types:** add the geo-path grouping ([dade446](https://github.com/Vikasa2M/openits-models/commit/dade4466ba2cb0225fdec08514f26b8459bf12c6))
+* **work-zone:** add the work-zone types module ([3596d58](https://github.com/Vikasa2M/openits-models/commit/3596d58a0b4075eb0efb20051f2575bdc814c0cf))
+* **work-zone:** add the zone-state-changed notification ([bbf510a](https://github.com/Vikasa2M/openits-models/commit/bbf510a916d26c775de123c3dd557c628384d394))
+* **work-zone:** report feed health through the common comm-health events ([b7f73a0](https://github.com/Vikasa2M/openits-models/commit/b7f73a0ceb11c0839b6e738c2242a8ae4f23c307))
+* **zone-occupancy:** add the zone-occupancy-changed notification ([#26](https://github.com/Vikasa2M/openits-models/issues/26)) ([08d35cd](https://github.com/Vikasa2M/openits-models/commit/08d35cd0329076dd096f99aa2f9ae1c926f462c9))
+
+
+### Bug Fixes
+
+* **deps:** bump google.golang.org/grpc from 1.82.1 to 1.83.1 ([#25](https://github.com/Vikasa2M/openits-models/issues/25)) ([ea197bd](https://github.com/Vikasa2M/openits-models/commit/ea197bde9a3bb05a410392284d1eef73fb5808ca))
+* **deps:** bump google.golang.org/protobuf in the go-dependencies group ([#24](https://github.com/Vikasa2M/openits-models/issues/24)) ([bd9d6b6](https://github.com/Vikasa2M/openits-models/commit/bd9d6b6660991b587f89e450ed43df767b90fe53))
+* **work-zone:** apply final whole-branch review fixes ([6341d9d](https://github.com/Vikasa2M/openits-models/commit/6341d9da8f85962d0089d9633a2e42fe4bd233ce))
+
 ## [0.4.0](https://github.com/Vikasa2M/openits-models/compare/v0.3.0...v0.4.0) (2026-08-27)
 
 
