@@ -347,6 +347,11 @@ func All(kind string) []TestCase {
 			TestCase{"TestZoneOccupancyEvent_IntervalReportShape", TestZoneOccupancyEvent_IntervalReportShape},
 			TestCase{"TestZoneOccupancyEvent_ObservedClassReconciles", TestZoneOccupancyEvent_ObservedClassReconciles},
 			TestCase{"TestZoneOccupancyEvent_PeakWithinObserved", TestZoneOccupancyEvent_PeakWithinObserved},
+			TestCase{"TestZoneOccupancyEvent_ChangedShape", TestZoneOccupancyEvent_ChangedShape},
+			TestCase{"TestZoneOccupancyEvent_ChangedKindAgreesWithPayload", TestZoneOccupancyEvent_ChangedKindAgreesWithPayload},
+			TestCase{"TestZoneOccupancyEvent_ChangedZoneIsConfigured", TestZoneOccupancyEvent_ChangedZoneIsConfigured},
+			TestCase{"TestZoneOccupancyEvent_ChangedPresentClassSumsToCount", TestZoneOccupancyEvent_ChangedPresentClassSumsToCount},
+			TestCase{"TestZoneOccupancyEvent_ChangedMirrorsLiveState", TestZoneOccupancyEvent_ChangedMirrorsLiveState},
 		)
 	case "cctv":
 		return append(common,

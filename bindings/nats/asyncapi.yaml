@@ -456,6 +456,12 @@ channels:
             openits.work-zone.zone-state-changed.v1:
                 $ref: '#/components/messages/openits.work-zone.zone-state-changed.v1'
         title: work-zone — zone-state-changed
+    openits.zone-occupancy.zone-occupancy-changed.v1:
+        address: openits.zone-occupancy.zone-occupancy-changed.v1
+        messages:
+            openits.zone-occupancy.zone-occupancy-changed.v1:
+                $ref: '#/components/messages/openits.zone-occupancy.zone-occupancy-changed.v1'
+        title: zone-occupancy — zone-occupancy-changed
     openits.zone-occupancy.zone-occupancy-interval-report.v1:
         address: openits.zone-occupancy.zone-occupancy-interval-report.v1
         messages:
@@ -7697,6 +7703,101 @@ components:
                 schemaFormat: application/schema+json;version=draft-2020-12
             summary: work-zone.zone-state-changed
             title: openits.work-zone.zone-state-changed.v1
+        openits.zone-occupancy.zone-occupancy-changed.v1:
+            contentType: application/protobuf
+            headers:
+                properties:
+                    ce-datacontenttype:
+                        const: application/protobuf
+                        type: string
+                    ce-id:
+                        description: Event identifier, unique within the source.
+                        type: string
+                    ce-source:
+                        description: CloudEvents source URI identifying the emitting device or service instance.
+                        type: string
+                    ce-specversion:
+                        const: "1.0"
+                        type: string
+                    ce-time:
+                        format: date-time
+                        type: string
+                    ce-type:
+                        const: openits.zone-occupancy.zone-occupancy-changed.v1
+                        type: string
+                    traceparent:
+                        description: W3C Trace Context. Optional; recommended.
+                        type: string
+                type: object
+            name: openits.zone-occupancy.zone-occupancy-changed.v1
+            payload:
+                schema:
+                    $schema: https://json-schema.org/draft/2020-12/schema
+                    additionalProperties: false
+                    properties:
+                        kind:
+                            type: string
+                        observed-by:
+                            maxLength: 64
+                            minLength: 1
+                            pattern: ^([a-zA-Z0-9_-]+)$
+                            type: string
+                        occupancy-count:
+                            maximum: 65535
+                            minimum: 0
+                            type: integer
+                        occupied-since:
+                            format: date-time
+                            type: string
+                        occurred-at:
+                            format: date-time
+                            type: string
+                        owner:
+                            type: string
+                        presence:
+                            type: boolean
+                        presence-confidence:
+                            maximum: 100
+                            minimum: 0
+                            type: integer
+                        present-class:
+                            items:
+                                additionalProperties: false
+                                properties:
+                                    class:
+                                        type: string
+                                    classification-confidence:
+                                        maximum: 100
+                                        minimum: 0
+                                        type: integer
+                                    count:
+                                        maximum: 65535
+                                        minimum: 0
+                                        type: integer
+                                type: object
+                            type: array
+                        sequence:
+                            type: string
+                        source-device-id:
+                            maxLength: 64
+                            minLength: 1
+                            pattern: ^([a-zA-Z0-9_-]+)$
+                            type: string
+                        zone-id:
+                            maxLength: 64
+                            minLength: 1
+                            pattern: ^([a-zA-Z0-9_-]+)$
+                            type: string
+                    required:
+                        - kind
+                        - occurred-at
+                        - sequence
+                        - source-device-id
+                        - zone-id
+                    type: object
+                schemaFormat: application/schema+json;version=draft-2020-12
+            summary: zone-occupancy.zone-occupancy-changed
+            title: openits.zone-occupancy.zone-occupancy-changed.v1
         openits.zone-occupancy.zone-occupancy-interval-report.v1:
             contentType: application/protobuf
             headers:
@@ -8346,6 +8447,13 @@ operations:
         messages:
             - $ref: '#/channels/openits.work-zone.zone-state-changed.v1/messages/openits.work-zone.zone-state-changed.v1'
         summary: Consume openits.work-zone.zone-state-changed.v1
+    consume_openits.zone-occupancy.zone-occupancy-changed.v1:
+        action: receive
+        channel:
+            $ref: '#/channels/openits.zone-occupancy.zone-occupancy-changed.v1'
+        messages:
+            - $ref: '#/channels/openits.zone-occupancy.zone-occupancy-changed.v1/messages/openits.zone-occupancy.zone-occupancy-changed.v1'
+        summary: Consume openits.zone-occupancy.zone-occupancy-changed.v1
     consume_openits.zone-occupancy.zone-occupancy-interval-report.v1:
         action: receive
         channel:
@@ -8878,6 +8986,13 @@ operations:
         messages:
             - $ref: '#/channels/openits.work-zone.zone-state-changed.v1/messages/openits.work-zone.zone-state-changed.v1'
         summary: Publish openits.work-zone.zone-state-changed.v1
+    publish_openits.zone-occupancy.zone-occupancy-changed.v1:
+        action: send
+        channel:
+            $ref: '#/channels/openits.zone-occupancy.zone-occupancy-changed.v1'
+        messages:
+            - $ref: '#/channels/openits.zone-occupancy.zone-occupancy-changed.v1/messages/openits.zone-occupancy.zone-occupancy-changed.v1'
+        summary: Publish openits.zone-occupancy.zone-occupancy-changed.v1
     publish_openits.zone-occupancy.zone-occupancy-interval-report.v1:
         action: send
         channel:

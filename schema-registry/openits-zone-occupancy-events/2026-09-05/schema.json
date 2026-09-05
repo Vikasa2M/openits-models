@@ -1,0 +1,183 @@
+{
+  "zone-occupancy-changed": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occupancy-count": {
+      "maximum": 65535,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "occupied-since": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "presence": {
+      "type": "boolean"
+    },
+    "presence-confidence": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "present-class": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "class": {
+            "type": "string"
+          },
+          "classification-confidence": {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "count": {
+            "maximum": 65535,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "zone-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id",
+    "zone-id"
+  ],
+  "type": "object"
+},
+  "zone-occupancy-interval-report": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "zone": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "interval-duration-s": {
+            "maximum": 3600,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "interval-start": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "observed-class": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "class": {
+                  "type": "string"
+                },
+                "count": {
+                  "maximum": 4294967295,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "mean-confidence": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "observed-count": {
+            "maximum": 4294967295,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "occupancy-percent": {
+            "type": "string"
+          },
+          "peak-occupancy-count": {
+            "maximum": 65535,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "zone-id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^([a-zA-Z0-9_-]+)$",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "source-device-id"
+  ],
+  "type": "object"
+}
+}

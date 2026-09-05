@@ -3125,6 +3125,10 @@ messages:
         class: 1
         count: 2
         mean_confidence: 3
+    openits.zone_occupancy.v1.PresentClass:
+        class: 1
+        classification_confidence: 3
+        count: 2
     openits.zone_occupancy.v1.Zone:
         interval_duration_s: 3
         interval_start: 2
@@ -3132,6 +3136,19 @@ messages:
         observed_count: 4
         occupancy_percent: 5
         peak_occupancy_count: 6
+        zone_id: 1
+    openits.zone_occupancy.v1.ZoneOccupancyChanged:
+        kind: 99
+        observed_by: 2
+        occupancy_count: 3
+        occupied_since: 4
+        occurred_at: 5
+        owner: 6
+        presence: 7
+        presence_confidence: 8
+        present_class: 9
+        sequence: 10
+        source_device_id: 11
         zone_id: 1
     openits.zone_occupancy.v1.ZoneOccupancyIntervalReport:
         kind: 99

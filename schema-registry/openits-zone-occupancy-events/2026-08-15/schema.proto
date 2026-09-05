@@ -6,27 +6,6 @@ option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/zone_o
 
 import "google/protobuf/timestamp.proto";
 
-message ZoneOccupancyChanged {
-  string kind = 99;
-  string zone_id = 1;
-  string observed_by = 2;
-  uint32 occupancy_count = 3;
-  google.protobuf.Timestamp occupied_since = 4;
-  google.protobuf.Timestamp occurred_at = 5;
-  string owner = 6;
-  bool presence = 7;
-  uint32 presence_confidence = 8;
-  repeated PresentClass present_class = 9;
-  uint64 sequence = 10;
-  string source_device_id = 11;
-}
-
-message PresentClass {
-  string class = 1;
-  uint32 count = 2;
-  uint32 classification_confidence = 3;
-}
-
 message ZoneOccupancyIntervalReport {
   string kind = 99;
   repeated Zone zone = 1;

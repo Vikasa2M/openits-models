@@ -1,0 +1,7 @@
+{
+  "module": "openits-zone-occupancy-types",
+  "revision": "2026-09-05",
+  "files": [
+    "schema.yang"
+  ]
+}

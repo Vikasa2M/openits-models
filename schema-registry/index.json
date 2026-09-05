@@ -1055,14 +1055,18 @@
       "description": "Zone-occupancy capability: whether a defined region is occupied\nright now, by how many objects, of what class, and for how long.\n\nThis is presence, not throughput, and the distinction is the reason\nthe capability exists. Throughput answers 'how many passed and how\nfast' and belongs to openits-vehicle-detection; a vehicle that\narrives and parks never traverses anything and is invisible to it.\nOccupancy answers 'what is here now' — different cardinality,\ndifferent time semantics, different consumers.\n\nA device implements this capability by 'using' the 'zone-occupancy'\ngrouping, typically behind a feature since not every unit of a\ngiven type senses occupancy. The capability is deliberately\nindependent of tracking: an in-ground magnetometer or an overhead\nultrasonic sensor implements occupancy and nothing else — no\ntracks, no polygons, no incident detection — and must be able to\ndescribe what it does without importing a perception service core\n(docs/08-capability-architecture.md).\n\nCopyright (c) 2026. Distributed under Apache 2.0.",
       "revisions": [
         "2026-08-15",
-        "2026-08-23"
+        "2026-08-23",
+        "2026-09-05"
       ],
       "events": [
+        "openits.zone-occupancy.zone-occupancy-changed.v1",
         "openits.zone-occupancy.zone-occupancy-interval-report.v1"
       ],
       "refStd": [
         "RFC 7950 section 11",
-        "docs/08-capability-architecture.md"
+        "docs/04-design-decisions.md",
+        "docs/08-capability-architecture.md",
+        "docs/reference/yang-reference-conventions.md"
       ],
       "modules": [
         {
@@ -1070,31 +1074,38 @@
           "namespace": "urn:openits:yang:zone-occupancy",
           "revisions": [
             "2026-08-15",
-            "2026-08-23"
+            "2026-08-23",
+            "2026-09-05"
           ],
           "refStd": [
             "RFC 7950 section 11",
-            "docs/08-capability-architecture.md"
+            "docs/08-capability-architecture.md",
+            "docs/reference/yang-reference-conventions.md"
           ]
         },
         {
           "name": "openits-zone-occupancy-events",
           "namespace": "urn:openits:yang:zone-occupancy-events",
           "revisions": [
-            "2026-08-15"
+            "2026-08-15",
+            "2026-09-05"
           ],
           "refStd": [
-            "docs/08-capability-architecture.md"
+            "docs/04-design-decisions.md",
+            "docs/08-capability-architecture.md",
+            "docs/reference/yang-reference-conventions.md"
           ]
         },
         {
           "name": "openits-zone-occupancy-types",
           "namespace": "urn:openits:yang:zone-occupancy-types",
           "revisions": [
-            "2026-08-15"
+            "2026-08-15",
+            "2026-09-05"
           ],
           "refStd": [
-            "docs/08-capability-architecture.md"
+            "docs/08-capability-architecture.md",
+            "docs/reference/yang-reference-conventions.md"
           ]
         }
       ]
@@ -2396,11 +2407,27 @@
         "openits-zone-occupancy/2026-08-23/MANIFEST.json",
         "openits-zone-occupancy/2026-08-23/README.md",
         "openits-zone-occupancy/2026-08-23/schema.yang"
+      ],
+      "2026-09-05": [
+        "openits-zone-occupancy/2026-09-05/MANIFEST.json",
+        "openits-zone-occupancy/2026-09-05/README.md",
+        "openits-zone-occupancy/2026-09-05/schema.yang"
       ]
     },
     "openits-zone-occupancy-events": {
       "2026-08-15": [
+        "openits-zone-occupancy-events/2026-08-15/MANIFEST.json",
+        "openits-zone-occupancy-events/2026-08-15/README.md",
+        "openits-zone-occupancy-events/2026-08-15/schema.json",
+        "openits-zone-occupancy-events/2026-08-15/schema.proto",
         "openits-zone-occupancy-events/2026-08-15/schema.yang"
+      ],
+      "2026-09-05": [
+        "openits-zone-occupancy-events/2026-09-05/MANIFEST.json",
+        "openits-zone-occupancy-events/2026-09-05/README.md",
+        "openits-zone-occupancy-events/2026-09-05/schema.json",
+        "openits-zone-occupancy-events/2026-09-05/schema.proto",
+        "openits-zone-occupancy-events/2026-09-05/schema.yang"
       ]
     },
     "openits-zone-occupancy-types": {
@@ -2408,6 +2435,11 @@
         "openits-zone-occupancy-types/2026-08-15/MANIFEST.json",
         "openits-zone-occupancy-types/2026-08-15/README.md",
         "openits-zone-occupancy-types/2026-08-15/schema.yang"
+      ],
+      "2026-09-05": [
+        "openits-zone-occupancy-types/2026-09-05/MANIFEST.json",
+        "openits-zone-occupancy-types/2026-09-05/README.md",
+        "openits-zone-occupancy-types/2026-09-05/schema.yang"
       ]
     },
     "trafficvision-perception-incident-media": {

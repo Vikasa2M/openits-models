@@ -2,6 +2,7 @@ package tests
 
 import (
 	"strings"
+	"time"
 
 	zoneoccupancyv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/zone_occupancy/v1"
 	yangpkg "github.com/Vikasa2M/openits-models/pkg/yang/openits"
@@ -222,5 +223,171 @@ func TestZoneOccupancyEvent_PeakWithinObserved(t *T, obs *Observation) {
 			}
 		}
 		return
+	}
+}
+
+// ----- change event -----
+
+// The three transition identities zone-occupancy-changed may carry. The
+// notification's `kind` is constrained to the zoc-occupancy-change-event-kind
+// sub-base, so this set IS the schema's definition of what counts as a change;
+// conformance restates it because proto carries identityrefs as strings and
+// the schema's base restriction is not checked by the transport.
+const (
+	kindZoneOccupied         = "openits-zone-occupancy-types:zoc-zone-occupied"
+	kindZoneVacated          = "openits-zone-occupancy-types:zoc-zone-vacated"
+	kindZoneOccupancyUpdated = "openits-zone-occupancy-types:zoc-zone-occupancy-updated"
+)
+
+// zoneOccupancyChangedEvents returns every zone-occupancy-changed event in the
+// observation, decoded, recording a finding for any that carries the wrong
+// payload type. Absence is not a finding: the event fires on transition, and a
+// region that did not change during the window legitimately emits nothing.
+// (The interval report is different — it is periodic, so a window longer than
+// its interval must contain one.)
+func zoneOccupancyChangedEvents(t *T, obs *Observation) []*zoneoccupancyv1.ZoneOccupancyChanged {
+	var out []*zoneoccupancyv1.ZoneOccupancyChanged
+	for _, e := range obs.Events {
+		if !strings.HasSuffix(e.Subject, ".zone-occupancy-changed") {
+			continue
+		}
+		want := "openits.zone-occupancy.zone-occupancy-changed.v1"
+		if e.CEType != want {
+			t.Errorf("zone-occupancy-changed ce-type %q, want %q", e.CEType, want)
+		}
+		ev, ok := e.Data.(*zoneoccupancyv1.ZoneOccupancyChanged)
+		if !ok {
+			t.Errorf("zone-occupancy-changed Data is %T, want *zoneoccupancyv1.ZoneOccupancyChanged", e.Data)
+			continue
+		}
+		out = append(out, ev)
+	}
+	return out
+}
+
+// Every change event names a transition, a region, and when. kind must be one
+// of the three transition identities — not the interval report's kind, which
+// derives from the same capability root but not from the change sub-base —
+// and the event-header leaves the schema marks mandatory must be populated.
+func TestZoneOccupancyEvent_ChangedShape(t *T, obs *Observation) {
+	for _, ev := range zoneOccupancyChangedEvents(t, obs) {
+		switch ev.GetKind() {
+		case kindZoneOccupied, kindZoneVacated, kindZoneOccupancyUpdated:
+		default:
+			t.Errorf("zone-occupancy-changed kind %q is not a zoc-occupancy-change-event-kind transition (occupied / vacated / updated)", ev.GetKind())
+		}
+		if ev.GetZoneId() == "" {
+			t.Errorf("zone-occupancy-changed has no zone-id; a change event that does not name its region cannot be applied to a twin")
+		}
+		if ev.GetSourceDeviceId() == "" {
+			t.Errorf("zone-occupancy-changed zone %q has no source-device-id (mandatory in event-header)", ev.GetZoneId())
+		}
+		if ev.GetOccurredAt() == nil {
+			t.Errorf("zone-occupancy-changed zone %q has no occurred-at (mandatory in event-header)", ev.GetZoneId())
+		}
+	}
+}
+
+// The kind and the payload must tell the same story. An occupied or updated
+// transition reports presence; a vacated one reports absence, has no
+// occupied-since (it resets when the region empties) and an empty present-class
+// list, exactly as the live state reads for a vacant region.
+func TestZoneOccupancyEvent_ChangedKindAgreesWithPayload(t *T, obs *Observation) {
+	for _, ev := range zoneOccupancyChangedEvents(t, obs) {
+		switch ev.GetKind() {
+		case kindZoneOccupied, kindZoneOccupancyUpdated:
+			if !ev.GetPresence() {
+				t.Errorf("zone %q: kind %s but presence is false; the transition names an occupied region", ev.GetZoneId(), ev.GetKind())
+			}
+		case kindZoneVacated:
+			if ev.GetPresence() {
+				t.Errorf("zone %q: kind zoc-zone-vacated but presence is true", ev.GetZoneId())
+			}
+			if ev.GetOccupiedSince() != nil {
+				t.Errorf("zone %q: kind zoc-zone-vacated but occupied-since %q is still carried; it must be cleared when the region empties", ev.GetZoneId(), ev.GetOccupiedSince().AsTime().Format(time.RFC3339))
+			}
+			if len(ev.GetPresentClass()) > 0 {
+				t.Errorf("zone %q: kind zoc-zone-vacated but %d present-class entries are carried; nothing is present in a vacated region", ev.GetZoneId(), len(ev.GetPresentClass()))
+			}
+		}
+	}
+}
+
+// A change event must report on a region the device actually declares — the
+// same rule TestZoneOccupancy_LiveZonesAreConfigured applies to the state tree,
+// for the same reason: without the configured sensing-method and classifies
+// flag a consumer cannot interpret the payload.
+func TestZoneOccupancyEvent_ChangedZoneIsConfigured(t *T, obs *Observation) {
+	zoc := zoneOccupancyOf(obs)
+	if zoc == nil || zoc.GetConfiguration() == nil {
+		return // no configuration exposed; nothing to check against
+	}
+	for _, ev := range zoneOccupancyChangedEvents(t, obs) {
+		if zoc.GetConfiguration().GetZone(ev.GetZoneId()) == nil {
+			t.Errorf("zone-occupancy-changed names zone %q, which the device does not configure; a consumer cannot interpret the reading without sensing-method/classifies", ev.GetZoneId())
+		}
+	}
+}
+
+// The change event carries the same breakdown as the live state and inherits
+// its sum rule: where classes are reported, they account for every present
+// object, with object-unknown as the catch-all.
+func TestZoneOccupancyEvent_ChangedPresentClassSumsToCount(t *T, obs *Observation) {
+	for _, ev := range zoneOccupancyChangedEvents(t, obs) {
+		if len(ev.GetPresentClass()) == 0 {
+			continue // non-classifying region, or nothing present
+		}
+		var sum uint32
+		for _, pc := range ev.GetPresentClass() {
+			sum += pc.GetCount()
+		}
+		if sum != ev.GetOccupancyCount() {
+			t.Errorf("zone %q: sum(present-class count)=%d != occupancy-count %d in zone-occupancy-changed; the breakdown must account for every present object",
+				ev.GetZoneId(), sum, ev.GetOccupancyCount())
+		}
+	}
+}
+
+// The live container is the digital-twin rollup of the change stream, so the
+// two must agree: for each region, the latest change event observed and the
+// live reading taken at or after it must report the same presence and count.
+// A mismatch means the device changed state without emitting the transition,
+// which is precisely the defect a consumer maintaining a twin cannot detect
+// on its own.
+//
+// Guarded on measured-at >= occurred-at so a transition that happened after
+// the state snapshot was read is not a false finding; those events are simply
+// newer than the twin and skipped.
+func TestZoneOccupancyEvent_ChangedMirrorsLiveState(t *T, obs *Observation) {
+	zoc := zoneOccupancyOf(obs)
+	if zoc == nil || zoc.GetZones() == nil {
+		return
+	}
+	latest := map[string]*zoneoccupancyv1.ZoneOccupancyChanged{}
+	for _, ev := range zoneOccupancyChangedEvents(t, obs) {
+		if ev.GetOccurredAt() == nil {
+			continue // shape finding, reported elsewhere
+		}
+		if cur, ok := latest[ev.GetZoneId()]; !ok || ev.GetOccurredAt().AsTime().After(cur.GetOccurredAt().AsTime()) {
+			latest[ev.GetZoneId()] = ev
+		}
+	}
+	for id, ev := range latest {
+		live := zoc.GetZones().GetZone(id)
+		if live == nil || live.MeasuredAt == nil {
+			continue
+		}
+		measured, err := time.Parse(time.RFC3339Nano, live.GetMeasuredAt())
+		if err != nil || measured.Before(ev.GetOccurredAt().AsTime()) {
+			continue // unparseable, or the event is newer than the reading
+		}
+		if live.Presence != nil && live.GetPresence() != ev.GetPresence() {
+			t.Errorf("zone %q: live presence=%t but the latest zone-occupancy-changed (%s) says presence=%t; the state container is the rollup of the change stream and must agree with it",
+				id, live.GetPresence(), ev.GetKind(), ev.GetPresence())
+		}
+		if live.OccupancyCount != nil && uint32(live.GetOccupancyCount()) != ev.GetOccupancyCount() {
+			t.Errorf("zone %q: live occupancy-count=%d but the latest zone-occupancy-changed (%s) says %d; a count change is a transition and must have been emitted",
+				id, live.GetOccupancyCount(), ev.GetKind(), ev.GetOccupancyCount())
+		}
 	}
 }

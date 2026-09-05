@@ -9,6 +9,7 @@ import (
 	zoneoccupancyv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/zone_occupancy/v1"
 	yangpkg "github.com/Vikasa2M/openits-models/pkg/yang/openits"
 	"github.com/Vikasa2M/openits-models/tools/conformance/tests"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 // collectPerception builds a fully-populated, spec-compliant perception-sensor
@@ -257,6 +258,37 @@ func subscribePerception(ctx context.Context, out chan<- tests.EventEnvelope, wi
 							{Class: "openits-types:object-unknown", Count: 1, MeanConfidence: 41},
 						},
 					},
+				},
+			},
+		},
+		{
+			// The live half of the occupancy pair: one region per event, emitted
+			// on transition. This one is an update — the refuge stayed occupied
+			// while its population changed — and its payload mirrors the live
+			// zones/zone entry in collectPerception leaf for leaf, which is the
+			// point: the state container is the digital-twin rollup of this
+			// stream, so a consumer that applied this event holds exactly what
+			// a poller would read. occurred-at equals that entry's measured-at
+			// because the mock's state snapshot IS the reading that detected
+			// the transition.
+			Subject:  zocBase + ".zone-occupancy-changed",
+			CEType:   "openits.zone-occupancy.zone-occupancy-changed.v1",
+			CESource: src,
+			CEID:     "01HXYR3K9T8M2NAEQF5P4R7EEE",
+			CETime:   time.Now().UTC(),
+			Data: &zoneoccupancyv1.ZoneOccupancyChanged{
+				Kind:               "openits-zone-occupancy-types:zoc-zone-occupancy-updated",
+				SourceDeviceId:     "eb-travel-lanes-cam-03",
+				OccurredAt:         timestamppb.New(time.Date(2026, 4, 19, 12, 0, 58, 0, time.UTC)),
+				Sequence:           4471,
+				ZoneId:             "eb-shoulder-refuge",
+				Presence:           true,
+				OccupancyCount:     2,
+				OccupiedSince:      timestamppb.New(time.Date(2026, 4, 19, 11, 58, 12, 0, time.UTC)),
+				PresenceConfidence: 96,
+				PresentClass: []*zoneoccupancyv1.PresentClass{
+					{Class: "openits-types:object-passenger-vehicle", Count: 1, ClassificationConfidence: 91},
+					{Class: "openits-types:object-truck", Count: 1, ClassificationConfidence: 84},
 				},
 			},
 		},

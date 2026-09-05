@@ -135,6 +135,7 @@ PROTO_ROUTE_PREFIXES=(
     "openits-traffic-sensor"
     "openits-reversible-lane"
     "openits-cctv"
+    "openits-zone-occupancy"
     "openits-work-zone"
 )
 # Paths are relative to api/proto/openits/. The generator emits nested
@@ -152,6 +153,7 @@ PROTO_ROUTE_FILES=(
     "traffic_sensor/v1/events.proto"
     "reversible_lane/v1/events.proto"
     "cctv/v1/events.proto"
+    "zone_occupancy/v1/events.proto"
     "work_zone/v1/events.proto"
 )
 
