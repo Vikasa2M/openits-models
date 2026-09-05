@@ -1,0 +1,9 @@
+{
+  "module": "openits-zone-occupancy-events",
+  "revision": "2026-08-15",
+  "files": [
+    "schema.yang",
+    "schema.proto",
+    "schema.json"
+  ]
+}

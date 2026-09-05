@@ -1,0 +1,12 @@
+{
+  "openits-zone-occupancy-events:zone-occupancy-changed": {
+    "kind": "openits-zone-occupancy-types:zoc-zone-vacated",
+    "source-device-id": "truck-row-d-cam-03",
+    "occurred-at": "2026-07-11T16:40:05Z",
+    "sequence": "814",
+    "zone-id": "bay-d-04",
+    "presence": false,
+    "occupancy-count": 0,
+    "presence-confidence": 99
+  }
+}

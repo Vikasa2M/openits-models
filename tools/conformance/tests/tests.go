@@ -26,8 +26,14 @@ type EventEnvelope struct {
 // Observation is the shared state every test function reads.
 type Observation struct {
 	Device *yangpkg.Device
-	Events []EventEnvelope
-	Window time.Duration
+	// DeviceAfter is a second state read taken after the observation
+	// window closed, or nil if the driver could not provide one. Checks
+	// that judge the state tree against the events that should have
+	// produced it use this snapshot: every event in Events postdates
+	// Device, so against Device alone such a check could compare nothing.
+	DeviceAfter *yangpkg.Device
+	Events      []EventEnvelope
+	Window      time.Duration
 }
 
 // Result records the outcome of one check.
@@ -347,6 +353,11 @@ func All(kind string) []TestCase {
 			TestCase{"TestZoneOccupancyEvent_IntervalReportShape", TestZoneOccupancyEvent_IntervalReportShape},
 			TestCase{"TestZoneOccupancyEvent_ObservedClassReconciles", TestZoneOccupancyEvent_ObservedClassReconciles},
 			TestCase{"TestZoneOccupancyEvent_PeakWithinObserved", TestZoneOccupancyEvent_PeakWithinObserved},
+			TestCase{"TestZoneOccupancyEvent_ChangedShape", TestZoneOccupancyEvent_ChangedShape},
+			TestCase{"TestZoneOccupancyEvent_ChangedKindAgreesWithPayload", TestZoneOccupancyEvent_ChangedKindAgreesWithPayload},
+			TestCase{"TestZoneOccupancyEvent_ChangedZoneIsConfigured", TestZoneOccupancyEvent_ChangedZoneIsConfigured},
+			TestCase{"TestZoneOccupancyEvent_ChangedPresentClassSumsToCount", TestZoneOccupancyEvent_ChangedPresentClassSumsToCount},
+			TestCase{"TestZoneOccupancyEvent_ChangedMirrorsLiveState", TestZoneOccupancyEvent_ChangedMirrorsLiveState},
 		)
 	case "cctv":
 		return append(common,

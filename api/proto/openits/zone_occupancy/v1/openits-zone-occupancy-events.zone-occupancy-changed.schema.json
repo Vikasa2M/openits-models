@@ -2,22 +2,22 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
-    "direction": {
-      "type": "string"
-    },
     "kind": {
-      "type": "string"
-    },
-    "lane-impact": {
-      "type": "string"
-    },
-    "notice": {
       "type": "string"
     },
     "observed-by": {
       "maxLength": 64,
       "minLength": 1,
       "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occupancy-count": {
+      "maximum": 65535,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "occupied-since": {
+      "format": "date-time",
       "type": "string"
     },
     "occurred-at": {
@@ -27,17 +27,27 @@
     "owner": {
       "type": "string"
     },
-    "point": {
+    "presence": {
+      "type": "boolean"
+    },
+    "presence-confidence": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "present-class": {
       "items": {
         "additionalProperties": false,
         "properties": {
-          "latitude": {
+          "class": {
             "type": "string"
           },
-          "longitude": {
-            "type": "string"
+          "classification-confidence": {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "integer"
           },
-          "point-index": {
+          "count": {
             "maximum": 65535,
             "minimum": 0,
             "type": "integer"
@@ -45,7 +55,6 @@
         },
         "type": "object"
       },
-      "minItems": 1,
       "type": "array"
     },
     "sequence": {
@@ -57,29 +66,19 @@
       "pattern": "^([a-zA-Z0-9_-]+)$",
       "type": "string"
     },
-    "temporary-signal": {
-      "type": "boolean"
-    },
-    "window-end": {
-      "format": "date-time",
-      "type": "string"
-    },
-    "window-start": {
-      "format": "date-time",
-      "type": "string"
-    },
     "zone-id": {
-      "maxLength": 128,
+      "maxLength": 64,
       "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
       "type": "string"
     }
   },
   "required": [
     "kind",
     "occurred-at",
+    "presence",
     "sequence",
     "source-device-id",
-    "window-start",
     "zone-id"
   ],
   "type": "object"

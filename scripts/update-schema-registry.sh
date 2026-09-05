@@ -22,10 +22,20 @@
 # recreated: the backfill never touches schema.yang/schema.proto/
 # README.md, so the revision's actual pinned contract is unchanged.
 #
+# Completing a snapshot that was left partial (schema.yang only — the
+# result of a module's proto route being missing from the table below
+# at the time it was snapshotted): do NOT copy the current tree's proto
+# into it, because the current proto may declare messages that revision
+# never had. Add the missing route first. Then check out the commit that
+# carried that revision in a worktree, delete the partial directory
+# there, run this script in that worktree, and copy the resulting
+# directory back. Its schema.yang must come back byte-identical, which
+# check-revisions confirms.
+#
 # Every snapshot always carries schema.yang. A module that declares at
 # least one live `notification` statement also carries schema.proto —
 # a copy of the generated proto file its notifications land in under
-# api/proto/openits/v1/ (tools/yang-proto-gen packs notifications by
+# api/proto/openits/<service>/v1/ (tools/yang-proto-gen packs notifications by
 # service, e.g. every openits-common-* module's events land in
 # common_events.proto; see tools/yang-proto-gen/pkgmap.go's
 # serviceRoutes, mirrored below). Modules with no notification
@@ -135,6 +145,7 @@ PROTO_ROUTE_PREFIXES=(
     "openits-traffic-sensor"
     "openits-reversible-lane"
     "openits-cctv"
+    "openits-zone-occupancy"
     "openits-work-zone"
 )
 # Paths are relative to api/proto/openits/. The generator emits nested
@@ -152,6 +163,7 @@ PROTO_ROUTE_FILES=(
     "traffic_sensor/v1/events.proto"
     "reversible_lane/v1/events.proto"
     "cctv/v1/events.proto"
+    "zone_occupancy/v1/events.proto"
     "work_zone/v1/events.proto"
 )
 
@@ -295,17 +307,21 @@ for m in "${MODULES[@]}"; do
         echo "Skip  ${m}@${rev} (already present; revisions are immutable)"
         continue
     fi
-    mkdir -p "${dest}"
-
-    cp "${src_yang}" "${dest}/schema.yang"
-
-    # .proto (+ .json) companions — only for modules that declare
-    # notifications of their own. The generated proto lives under
-    # api/proto/openits/v1/, packed per service (see
-    # PROTO_ROUTE_PREFIXES/PROTO_ROUTE_FILES above), not per module —
-    # this is the successor to the deleted api/proto/yang/** tree,
-    # which had no 1:1 per-module mapping to the new generator's
-    # output.
+    # Resolve the .proto companion BEFORE creating anything on disk. A
+    # notification-bearing module whose route is missing from
+    # PROTO_ROUTE_PREFIXES must fail here, not after schema.yang has been
+    # written: a schema.yang-only directory passes check-revisions (which
+    # diffs schema.yang alone) and is then treated as an existing,
+    # immutable snapshot by the branch above, so it would never be
+    # completed. That is exactly how openits-zone-occupancy-events'
+    # 2026-08-15 snapshot was left partial.
+    #
+    # The generated proto lives under api/proto/openits/<service>/v1/,
+    # packed per service (see PROTO_ROUTE_PREFIXES/PROTO_ROUTE_FILES
+    # above), not per module — this is the successor to the deleted
+    # api/proto/yang/** tree, which had no 1:1 per-module mapping to the
+    # new generator's output.
+    src_proto=""
     if declares_notification "${src_yang}"; then
         proto_file="$(proto_file_for_module "${m}")" || {
             echo "Error: ${m} declares notifications but matches no proto route in PROTO_ROUTE_PREFIXES (see tools/yang-proto-gen/pkgmap.go)" >&2
@@ -316,6 +332,13 @@ for m in "${MODULES[@]}"; do
             echo "Error: ${m} declares notifications but ${src_proto} is missing; run 'make yang-proto-gen' first" >&2
             exit 1
         fi
+    fi
+
+    mkdir -p "${dest}"
+
+    cp "${src_yang}" "${dest}/schema.yang"
+
+    if [[ -n "${src_proto}" ]]; then
         cp "${src_proto}" "${dest}/schema.proto"
 
         write_schema_json "${m}" "${dest}"

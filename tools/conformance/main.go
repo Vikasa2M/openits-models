@@ -57,10 +57,23 @@ func main() {
 		fmt.Fprintf(os.Stderr, "subscribe: %v\n", err)
 	}
 
+	// A second state read after the window closes, so checks that judge the
+	// state tree against the events that should have produced it (the
+	// digital-twin rollup) have a snapshot that postdates those events. The
+	// first read stays as Device: it is the device before anything was
+	// observed to happen. A failed second read is not fatal; those checks
+	// fall back to the first snapshot and say so in their comments.
+	after, err := d.Collect(ctx)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "collect (after window): %v; twin checks fall back to the pre-window snapshot\n", err)
+		after = nil
+	}
+
 	obs := &tests.Observation{
-		Device: collected,
-		Events: events,
-		Window: *window,
+		Device:      collected,
+		DeviceAfter: after,
+		Events:      events,
+		Window:      *window,
 	}
 
 	pass, fail := 0, 0

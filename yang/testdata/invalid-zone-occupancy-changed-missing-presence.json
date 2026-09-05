@@ -1,0 +1,13 @@
+{
+  "openits-zone-occupancy-events:zone-occupancy-changed": {
+    "kind": "openits-zone-occupancy-types:zoc-zone-occupancy-updated",
+    "source-device-id": "truck-row-d-cam-03",
+    "occurred-at": "2026-07-11T15:02:40Z",
+    "sequence": "813",
+    "zone-id": "truck-row-d",
+    "occupancy-count": 3,
+    "present-class": [
+      { "class": "openits-types:object-truck", "count": 3, "classification-confidence": 90 }
+    ]
+  }
+}

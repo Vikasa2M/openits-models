@@ -14,6 +14,7 @@ Authoring doctrine — the load-bearing rules for writing a module:
 - [Identity vs. enum: which axis gets which](#identity-vs-enum-which-axis-gets-which)
   (incl. [never inline an enumeration inside a composable grouping](#never-inline-an-enumeration-inside-a-composable-grouping))
 - [Shared groupings carry only what is universal to every composer](#shared-groupings-carry-only-what-is-universal-to-every-composer)
+- [A live-state container and its change notification share one grouping](#a-live-state-container-and-its-change-notification-share-one-grouping)
 - [counter64 vs uint64](#counter64-vs-uint64)
 - [Module placement: the ≥3-service rule](#module-placement-the-3-service-rule)
 - [Config/state idiom](#configstate-idiom)
@@ -598,6 +599,61 @@ when a second consumer actually appears — not before.
 **Fix these when the composer count is smallest.** Every additional
 composer raises the cost of removal, and the first composition is the
 moment the problem becomes visible.
+
+## A live-state container and its change notification share one grouping
+
+When a `config false` container has consumers on the event fabric, the
+module family declares a change notification for it, and the container's
+list entry and the notification both `uses` one grouping that holds the
+observation. Two instances make this the rule: `queue-zone-state`
+(`openits-traffic-sensor-types`, composed by `queues/queue-zone` and
+`queue-state-changed`) and `zone-occupancy-state`
+(`openits-zone-occupancy-types`, composed by `zones/zone` and
+`zone-occupancy-changed`). The decision behind it — change notifications
+rather than a datastore subscription — is recorded in
+[Design decisions](../04-design-decisions.md#live-state-reaches-the-fabric-as-change-notifications).
+
+- **The grouping holds the observation only** — not the key and not the
+  timestamp. The state list declares its key as a leafref into
+  `configuration` and carries the reading's own timestamp
+  (`measured-at`); the notification declares the key as the plain id
+  typedef and takes its time from `event-header`'s `occurred-at`. Those
+  are the two things that legitimately differ between a stored reading
+  and a reported transition, and putting either in the grouping would
+  make one user carry a redundant copy that can disagree with the other.
+- **The grouping lives in the family's `-types` module**, because an
+  events module may import only `-types` modules
+  (`check-events-layering`). Hoisting it out of the core is wire-neutral
+  for the state tree: ygot names Go structs by tree path, the proto
+  emitter inlines flat groupings at each use site, and the field-number
+  lock keys on message and field name — none of which the move changes.
+  Expect a declaration-order reshuffle in any state proto that carries
+  the list, though: the emitter name-sorts grouping-expanded leaves after
+  directly declared ones, so field order in the `.proto` and in protojson
+  output moves while every tag stays locked.
+- **No `must` in the grouping.** The readback-representability doctrine
+  applies to both users. State the rule once, in the grouping
+  description, and have the container and the notification point at it.
+- **Each side names the other.** The container description says each
+  entry mirrors the notification and is the digital-twin rollup of that
+  stream; the notification description says its payload mirrors the
+  container leaf for leaf.
+- **The notification's `kind` is constrained to a transition sub-base**
+  (`zoc-occupancy-change-event-kind`, not the capability root) whose
+  derived identities define what counts as a change. A delta that maps to
+  no identity is not an event. Define those identities in the `-types`
+  module beside the grouping, and let an invalid fixture prove the
+  restriction: the periodic report's kind must be rejected on the change
+  notification.
+  Traffic-sensor predates this part of the rule and keeps its single
+  root-based `ts-queue-state-changed` kind: rebasing an identity changes
+  the string every producer emits, which is wire-breaking. New change
+  notifications follow the zone-occupancy shape.
+- **Conformance closes the loop.** The harness asserts that the latest
+  change event per region and a live reading taken at or after it agree
+  (`TestZoneOccupancyEvent_ChangedMirrorsLiveState`). A device that
+  changed state without emitting the transition is the one defect a
+  twin-maintaining consumer cannot detect on its own.
 
 ## counter64 vs uint64
 

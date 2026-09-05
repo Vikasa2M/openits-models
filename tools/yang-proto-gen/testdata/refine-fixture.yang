@@ -1,0 +1,28 @@
+module refine-fixture {
+  yang-version 1.1;
+  namespace "urn:test:refine-fixture";
+  prefix rf;
+
+  // A shared observation grouping whose members are optional where it is
+  // defined, plus one mandatory leaf, so a using notification can be seen
+  // tightening one leaf, loosening another, and putting a floor on the list.
+  grouping observation {
+    leaf presence { type boolean; }
+    leaf count { type uint16; }
+    leaf source { type string; mandatory true; }
+    list point {
+      key "seq";
+      leaf seq { type uint16; }
+      leaf lat { type string; }
+    }
+  }
+
+  notification changed {
+    leaf zone-id { type string; mandatory true; }
+    uses observation {
+      refine "presence" { mandatory true; }
+      refine "source" { mandatory false; }
+      refine "point" { min-elements 1; }
+    }
+  }
+}

@@ -2177,11 +2177,11 @@ func (x *ZoneOccupancyZones) GetZone() []*ZoneOccupancyZonesZone {
 type ZoneOccupancyZonesZone struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	ZoneId             string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Presence           bool                   `protobuf:"varint,2,opt,name=presence,proto3" json:"presence,omitempty"`
+	MeasuredAt         *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=measured_at,json=measuredAt,proto3" json:"measured_at,omitempty"`
 	OccupancyCount     uint32                 `protobuf:"varint,3,opt,name=occupancy_count,json=occupancyCount,proto3" json:"occupancy_count,omitempty"`
 	OccupiedSince      *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=occupied_since,json=occupiedSince,proto3" json:"occupied_since,omitempty"`
+	Presence           bool                   `protobuf:"varint,2,opt,name=presence,proto3" json:"presence,omitempty"`
 	PresenceConfidence uint32                 `protobuf:"varint,5,opt,name=presence_confidence,json=presenceConfidence,proto3" json:"presence_confidence,omitempty"`
-	MeasuredAt         *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=measured_at,json=measuredAt,proto3" json:"measured_at,omitempty"`
 	PresentClass       []*PresentClass        `protobuf:"bytes,7,rep,name=present_class,json=presentClass,proto3" json:"present_class,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
@@ -2224,11 +2224,11 @@ func (x *ZoneOccupancyZonesZone) GetZoneId() string {
 	return ""
 }
 
-func (x *ZoneOccupancyZonesZone) GetPresence() bool {
+func (x *ZoneOccupancyZonesZone) GetMeasuredAt() *timestamppb.Timestamp {
 	if x != nil {
-		return x.Presence
+		return x.MeasuredAt
 	}
-	return false
+	return nil
 }
 
 func (x *ZoneOccupancyZonesZone) GetOccupancyCount() uint32 {
@@ -2245,18 +2245,18 @@ func (x *ZoneOccupancyZonesZone) GetOccupiedSince() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *ZoneOccupancyZonesZone) GetPresence() bool {
+	if x != nil {
+		return x.Presence
+	}
+	return false
+}
+
 func (x *ZoneOccupancyZonesZone) GetPresenceConfidence() uint32 {
 	if x != nil {
 		return x.PresenceConfidence
 	}
 	return 0
-}
-
-func (x *ZoneOccupancyZonesZone) GetMeasuredAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.MeasuredAt
-	}
-	return nil
 }
 
 func (x *ZoneOccupancyZonesZone) GetPresentClass() []*PresentClass {
@@ -2501,13 +2501,13 @@ const file_openits_perception_v1_state_proto_rawDesc = "" +
 	"\x12ZoneOccupancyZones\x12A\n" +
 	"\x04zone\x18\x01 \x03(\v2-.openits.perception.v1.ZoneOccupancyZonesZoneR\x04zone\"\xf1\x02\n" +
 	"\x16ZoneOccupancyZonesZone\x12\x17\n" +
-	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12\x1a\n" +
-	"\bpresence\x18\x02 \x01(\bR\bpresence\x12'\n" +
-	"\x0foccupancy_count\x18\x03 \x01(\rR\x0eoccupancyCount\x12A\n" +
-	"\x0eoccupied_since\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\roccupiedSince\x12/\n" +
-	"\x13presence_confidence\x18\x05 \x01(\rR\x12presenceConfidence\x12;\n" +
+	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12;\n" +
 	"\vmeasured_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"measuredAt\x12H\n" +
+	"measuredAt\x12'\n" +
+	"\x0foccupancy_count\x18\x03 \x01(\rR\x0eoccupancyCount\x12A\n" +
+	"\x0eoccupied_since\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\roccupiedSince\x12\x1a\n" +
+	"\bpresence\x18\x02 \x01(\bR\bpresence\x12/\n" +
+	"\x13presence_confidence\x18\x05 \x01(\rR\x12presenceConfidence\x12H\n" +
 	"\rpresent_class\x18\a \x03(\v2#.openits.perception.v1.PresentClassR\fpresentClass\"w\n" +
 	"\fPresentClass\x12\x14\n" +
 	"\x05class\x18\x01 \x01(\tR\x05class\x12\x14\n" +
@@ -2625,8 +2625,8 @@ var file_openits_perception_v1_state_proto_depIdxs = []int32{
 	29, // 33: openits.perception.v1.ZoneOccupancy.zones:type_name -> openits.perception.v1.ZoneOccupancyZones
 	28, // 34: openits.perception.v1.ZoneOccupancyConfiguration.zone:type_name -> openits.perception.v1.ZoneOccupancyConfigurationZone
 	30, // 35: openits.perception.v1.ZoneOccupancyZones.zone:type_name -> openits.perception.v1.ZoneOccupancyZonesZone
-	32, // 36: openits.perception.v1.ZoneOccupancyZonesZone.occupied_since:type_name -> google.protobuf.Timestamp
-	32, // 37: openits.perception.v1.ZoneOccupancyZonesZone.measured_at:type_name -> google.protobuf.Timestamp
+	32, // 36: openits.perception.v1.ZoneOccupancyZonesZone.measured_at:type_name -> google.protobuf.Timestamp
+	32, // 37: openits.perception.v1.ZoneOccupancyZonesZone.occupied_since:type_name -> google.protobuf.Timestamp
 	31, // 38: openits.perception.v1.ZoneOccupancyZonesZone.present_class:type_name -> openits.perception.v1.PresentClass
 	39, // [39:39] is the sub-list for method output_type
 	39, // [39:39] is the sub-list for method input_type

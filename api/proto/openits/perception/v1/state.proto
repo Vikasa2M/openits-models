@@ -244,11 +244,11 @@ message ZoneOccupancyZones {
 
 message ZoneOccupancyZonesZone {
   string zone_id = 1;
-  bool presence = 2;
+  google.protobuf.Timestamp measured_at = 6;
   uint32 occupancy_count = 3;
   google.protobuf.Timestamp occupied_since = 4;
+  bool presence = 2;
   uint32 presence_confidence = 5;
-  google.protobuf.Timestamp measured_at = 6;
   repeated PresentClass present_class = 7;
 }
 

@@ -800,6 +800,74 @@ variants without reintroducing the no-op revision-bump churn the old
 lockstep constants caused, we'd reconsider emitting a richer
 `ce-dataschema` value instead of the plain defining-module URL.
 
+## Live state reaches the fabric as change notifications
+
+**What we chose.** When a `config false` container has consumers on the
+event fabric, the family declares a change notification for it, and both
+compose one shared grouping so they carry the same leaves. The container
+is documented as the digital-twin rollup of that stream. Traffic-sensor
+did this first (`queues/queue-zone` and `queue-state-changed` over
+`queue-zone-state`); zone-occupancy is the second (`zones/zone` and
+`zone-occupancy-changed` over `zone-occupancy-state`). The mechanics are
+in [the conventions reference](reference/yang-reference-conventions.md#a-live-state-container-and-its-change-notification-share-one-grouping).
+
+**What we considered.**
+
+- **YANG-Push (RFC 8641) on the container.** In a NETCONF/RESTCONF or
+  gNMI deployment this is the standard answer to "stream this state" and
+  needs no new model: a `config false` container is already a valid
+  on-change subscription target. It is also how OpenConfig, which
+  declares no notifications at all, delivers live state. It presumes a
+  datastore and a subscription negotiation; the reference binding is
+  pub/sub CloudEvents over NATS and has neither.
+- **Leave the transport to each implementer.** The data is modeled and
+  the ARC-IT flow is tagged; each platform could define its own event
+  for it. Rejected: every implementer invents an incompatible binding
+  for the most frequent message in the domain, which is the failure a
+  standard exists to prevent.
+- **A periodic readback notification.** Not wrong in general
+  (`sign-status-report` is one), but the periodic half already existed
+  here — the interval report, classified under `report-event-kind` — and
+  what was missing was the transition. Naming the gap after a reading
+  would also have standardized the fact that today's collector polls,
+  which is a property of one acquisition path, not of the phenomenon.
+
+**Why change notifications.** The models are telemetry-first, and
+[the data model](data-model.md#config-and-state) already says state
+deltas are carried by events rather than by tree duplication; this is
+that rule applied to a live container. Two things make it hold up:
+
+1. **The shared grouping makes the two bindings isomorphic.** An
+   on-change push of the container and the change notification carry
+   identical leaves, so a gNMI bridge and a NATS publisher produce the
+   same information from the same schema. YANG-Push is not rejected; it
+   is the same contract under a different binding.
+2. **The kind identities define the trigger.** A change notification
+   whose `kind` is constrained to a sub-base of transition identities
+   states exactly which deltas are events; anything that maps to no
+   identity (confidence jitter, a timestamp tick) does not emit. That is
+   what makes the stream acquisition-neutral: a polling collector and a
+   native publisher both emit transitions and neither emits samples, so
+   a consumer sees one stream across the migration from one to the
+   other.
+   The traffic-sensor queue pair predates this refinement and keeps a
+   single root-based kind; new change notifications follow the
+   zone-occupancy shape.
+
+Each user declares its own key and timestamp outside the grouping — the
+state list a leafref and the reading's `measured-at`, the notification a
+plain identifier and the header's `occurred-at`. Carrying both timestamps
+in the event would be redundant state that can disagree with itself, the
+same objection that removed zone capacity.
+
+**What we'd revisit.** If a datastore transport (gNMI, RESTCONF) becomes
+a second reference binding, the conformance harness should assert the
+isomorphism directly: subscribe on-change, consume the notification
+stream, diff. And if capabilities accumulate many live containers, a
+generator-derived change notification per container would replace the
+hand-written pair — the grouping discipline is what would make that
+derivation mechanical.
+
 ---
 
 The decisions in this document are the load-bearing ones. Smaller
