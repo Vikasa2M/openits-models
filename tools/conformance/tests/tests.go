@@ -26,8 +26,14 @@ type EventEnvelope struct {
 // Observation is the shared state every test function reads.
 type Observation struct {
 	Device *yangpkg.Device
-	Events []EventEnvelope
-	Window time.Duration
+	// DeviceAfter is a second state read taken after the observation
+	// window closed, or nil if the driver could not provide one. Checks
+	// that judge the state tree against the events that should have
+	// produced it use this snapshot: every event in Events postdates
+	// Device, so against Device alone such a check could compare nothing.
+	DeviceAfter *yangpkg.Device
+	Events      []EventEnvelope
+	Window      time.Duration
 }
 
 // Result records the outcome of one check.

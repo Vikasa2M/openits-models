@@ -187,3 +187,46 @@ func TestEmitJSONSchema_choiceOptionalProperties(t *testing.T) {
 		t.Errorf("no leaf in the fixture is mandatory, so no top-level required should be present, got: %v", schema["required"])
 	}
 }
+
+// TestEmitJSONSchema_refines: goyang merges a grouping's children into the
+// using entry but leaves each `refine` on the UsesStmt, so the emitter
+// applies mandatory and min-elements refines itself (applyRefines). Locks
+// three behaviors on one notification: a refined `mandatory true` joins
+// required, a refined `mandatory false` removes an inherited mandatory, and
+// a refined `min-elements` becomes minItems on the list's array schema.
+func TestEmitJSONSchema_refines(t *testing.T) {
+	ms := yang.NewModules()
+	if err := ms.Read(filepath.Join("testdata", "refine-fixture.yang")); err != nil {
+		t.Fatalf("read: %v", err)
+	}
+	if errs := ms.Process(); len(errs) > 0 {
+		t.Fatalf("process: %v", errs)
+	}
+	mod, errs := ms.GetModule("refine-fixture")
+	if len(errs) > 0 {
+		t.Fatalf("getmodule: %v", errs)
+	}
+	var notif *yang.Entry
+	for _, c := range sortedChildren(mod) {
+		if c.Kind == yang.NotificationEntry {
+			notif = c
+		}
+	}
+	if notif == nil {
+		t.Fatalf("no notification found in refine-fixture")
+	}
+
+	schema := EmitJSONSchema(notif, nil)
+	req, _ := schema["required"].([]string)
+	if got, want := strings.Join(req, ","), "presence,zone-id"; got != want {
+		t.Errorf("required = %q, want %q (refined mandatory true must join, refined mandatory false must leave)", got, want)
+	}
+	props := schema["properties"].(map[string]any)
+	point, _ := props["point"].(map[string]any)
+	if point["minItems"] != 1 {
+		t.Errorf("point.minItems = %v, want 1 (refined min-elements)", point["minItems"])
+	}
+	if _, has := props["count"].(map[string]any)["minItems"]; has {
+		t.Errorf("count gained minItems; refines must apply only to their named target")
+	}
+}

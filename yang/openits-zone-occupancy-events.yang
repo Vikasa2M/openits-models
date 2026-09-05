@@ -38,7 +38,9 @@ module openits-zone-occupancy-events {
        became vacant, or stayed occupied while its population changed),
        one region per event, and composes the shared
        openits-zone-occupancy-types:zone-occupancy-state grouping so it
-       mirrors zone-occupancy/zones/zone leaf for leaf. Additive.";
+       mirrors zone-occupancy/zones/zone leaf for leaf; presence is
+       refined mandatory here, since every transition kind is defined
+       in terms of it. Additive.";
     reference
       "docs/04-design-decisions.md;
        docs/reference/yang-reference-conventions.md.";
@@ -234,6 +236,18 @@ module openits-zone-occupancy-events {
          and a consumer resolves it against the device's configuration
          (or its own inventory) out of band.";
     }
-    uses openits-zone-occupancy-types:zone-occupancy-state;
+    uses openits-zone-occupancy-types:zone-occupancy-state {
+      refine "presence" {
+        mandatory true;
+        description
+          "At least one object is currently in the region. Mandatory on
+           this notification, though optional in the live state the same
+           grouping describes, because every transition kind is defined
+           in terms of it: occupied and updated assert true, vacated
+           asserts false. A change event that omits it has no meaning,
+           and a binding without presence tracking (proto3) would read
+           the omission as false.";
+      }
+    }
   }
 }

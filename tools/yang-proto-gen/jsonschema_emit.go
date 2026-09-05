@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/json"
 	"sort"
+	"strconv"
+	"strings"
 
 	"github.com/openconfig/goyang/pkg/yang"
 )
@@ -49,6 +51,7 @@ func jsonSchemaObject(e *yang.Entry, shared map[string]string, defs map[string]a
 	var required []string
 
 	walkChildren(sortedChildren(e), shared, defs, emitted, properties, &required, false)
+	applyRefines(e, properties, &required)
 
 	schema := map[string]any{
 		"type":                 "object",
@@ -60,6 +63,85 @@ func jsonSchemaObject(e *yang.Entry, shared map[string]string, defs map[string]a
 		schema["required"] = required
 	}
 	return schema
+}
+
+// applyRefines applies the `refine` substatements of e's own `uses`
+// statements to the object schema walkChildren built. goyang merges a
+// grouping's children into e.Dir but leaves each `refine` on the UsesStmt
+// without touching the merged child entries (entry.go applies mandatory /
+// min-elements only when they are declared directly on a node or carried by a
+// `deviate`), so a notification that tightens a shared grouping's member —
+// zone-occupancy-changed's `refine presence { mandatory true; }`, work-zone's
+// `refine point { min-elements 1; }` — would otherwise publish a JSON schema
+// looser than its YANG. Only refines that target a direct child (no '/' in
+// the path) apply at this level; a deeper target sits below an optionality
+// boundary this object does not own, exactly the rule walkChildren follows.
+func applyRefines(e *yang.Entry, properties map[string]any, required *[]string) {
+	for _, u := range usesOf(e) {
+		if u == nil {
+			continue
+		}
+		for _, r := range u.Refine {
+			if r == nil || strings.Contains(r.Name, "/") {
+				continue
+			}
+			prop, ok := properties[r.Name].(map[string]any)
+			if !ok {
+				continue
+			}
+			if r.Mandatory != nil {
+				*required = without(*required, r.Name)
+				if r.Mandatory.Name == "true" {
+					*required = append(*required, r.Name)
+				}
+			}
+			if r.MinElements != nil && prop["type"] == "array" {
+				if n, err := strconv.Atoi(r.MinElements.Name); err == nil && n > 0 {
+					prop["minItems"] = n
+				}
+			}
+		}
+	}
+}
+
+// usesOf returns the `uses` statements declared directly on e's own YANG
+// node. Entry.Uses would carry the same list, but goyang populates it only
+// under ParseOptions.StoreUses, which this generator (and any caller building
+// its own yang.Modules) does not set; the AST node behind the entry always
+// has them. Every node kind that can carry `uses` and that this emitter
+// builds an object schema for is covered; a kind not listed simply has no
+// refines to apply.
+func usesOf(e *yang.Entry) []*yang.Uses {
+	switch n := e.Node.(type) {
+	case *yang.Notification:
+		return n.Uses
+	case *yang.Container:
+		return n.Uses
+	case *yang.List:
+		return n.Uses
+	case *yang.Case:
+		return n.Uses
+	case *yang.Grouping:
+		return n.Uses
+	case *yang.Augment:
+		return n.Uses
+	case *yang.Input:
+		return n.Uses
+	case *yang.Output:
+		return n.Uses
+	}
+	return nil
+}
+
+// without returns ss with every occurrence of s removed.
+func without(ss []string, s string) []string {
+	out := ss[:0:0]
+	for _, v := range ss {
+		if v != s {
+			out = append(out, v)
+		}
+	}
+	return out
 }
 
 // walkChildren walks children (an entry's direct sortedChildren, or a choice

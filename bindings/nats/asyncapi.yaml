@@ -7672,6 +7672,7 @@ components:
                                         minimum: 0
                                         type: integer
                                 type: object
+                            minItems: 1
                             type: array
                         sequence:
                             type: string
@@ -7791,6 +7792,7 @@ components:
                     required:
                         - kind
                         - occurred-at
+                        - presence
                         - sequence
                         - source-device-id
                         - zone-id

@@ -850,6 +850,9 @@ that rule applied to a live container. Two things make it hold up:
    native publisher both emit transitions and neither emits samples, so
    a consumer sees one stream across the migration from one to the
    other.
+   The traffic-sensor queue pair predates this refinement and keeps a
+   single root-based kind; new change notifications follow the
+   zone-occupancy shape.
 
 Each user declares its own key and timestamp outside the grouping — the
 state list a leafref and the reading's `measured-at`, the notification a

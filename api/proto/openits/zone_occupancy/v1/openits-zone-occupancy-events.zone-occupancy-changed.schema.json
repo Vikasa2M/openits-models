@@ -76,6 +76,7 @@
   "required": [
     "kind",
     "occurred-at",
+    "presence",
     "sequence",
     "source-device-id",
     "zone-id"

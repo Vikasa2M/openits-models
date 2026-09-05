@@ -627,6 +627,10 @@ rather than a datastore subscription — is recorded in
   for the state tree: ygot names Go structs by tree path, the proto
   emitter inlines flat groupings at each use site, and the field-number
   lock keys on message and field name — none of which the move changes.
+  Expect a declaration-order reshuffle in any state proto that carries
+  the list, though: the emitter name-sorts grouping-expanded leaves after
+  directly declared ones, so field order in the `.proto` and in protojson
+  output moves while every tag stays locked.
 - **No `must` in the grouping.** The readback-representability doctrine
   applies to both users. State the rule once, in the grouping
   description, and have the container and the notification point at it.
@@ -641,6 +645,10 @@ rather than a datastore subscription — is recorded in
   module beside the grouping, and let an invalid fixture prove the
   restriction: the periodic report's kind must be rejected on the change
   notification.
+  Traffic-sensor predates this part of the rule and keeps its single
+  root-based `ts-queue-state-changed` kind: rebasing an identity changes
+  the string every producer emits, which is wire-breaking. New change
+  notifications follow the zone-occupancy shape.
 - **Conformance closes the loop.** The harness asserts that the latest
   change event per region and a live reading taken at or after it agree
   (`TestZoneOccupancyEvent_ChangedMirrorsLiveState`). A device that

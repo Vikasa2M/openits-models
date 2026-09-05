@@ -62,6 +62,15 @@ Python against the fixture's parsed instance, don't try to reproduce
 XPath's number-coercion semantics for anything but genuinely numeric
 comparisons.)
 
+A `refine "<leaf>" { mandatory true; }` on a `uses` is honored too,
+added when openits-zone-occupancy-events refined `presence` mandatory on
+zone-occupancy-changed while leaving it optional in the shared grouping
+the live state also composes. The refine's target is read at the
+notification's own depth, exactly like the min-elements refine below
+(a path with '/' in it points below an optionality boundary and is
+ignored), and `mandatory false` on a refine removes an inherited
+mandatory.
+
 Extend the min-elements handling above if a future notification needs
 a floor this doesn't already cover.
 
@@ -266,6 +275,25 @@ class Schema:
             return (target, name)
         return (from_module, ref)
 
+    @staticmethod
+    def _refined_mandatory(uses_sub):
+        """{child: bool} for every `refine "<child>" { mandatory true|false; }`
+        directly on a uses statement whose target is a top-level child of
+        the grouping (no '/' in the refine path)."""
+        out = {}
+        if uses_sub is None:
+            return out
+        for ik, iarg, isub in strip_and_split(uses_sub):
+            if bare(ik) != "refine" or not iarg or isub is None:
+                continue
+            child = iarg.strip('"\'')
+            if "/" in child:
+                continue
+            for rk, rarg, _rsub in strip_and_split(isub):
+                if bare(rk) == "mandatory" and rarg in ("true", "false"):
+                    out[child] = rarg == "true"
+        return out
+
     def mandatory_leaves(self, module, body, visited=None):
         if visited is None:
             visited = frozenset()
@@ -280,11 +308,15 @@ class Schema:
                     result.add(arg)
             elif k == "uses":
                 target = self.resolve(module, arg)
+                inherited = set()
                 if target and target in self.groupings and target not in visited:
                     gbody = self.groupings[target]
-                    result |= self.mandatory_leaves(
+                    inherited = self.mandatory_leaves(
                         target[0], gbody, visited | {target}
                     )
+                for child, mand in self._refined_mandatory(sub).items():
+                    (inherited.add if mand else inherited.discard)(child)
+                result |= inherited
             # container / list / choice / case / anydata / anyxml / leaf-list:
             # each introduces its own optionality boundary (or, for
             # leaf-list, cannot itself be `mandatory`) -- deliberately not
@@ -333,11 +365,18 @@ class Schema:
                         missing.append(arg)
             elif k == "uses":
                 target = self.resolve(module, arg)
+                sub_missing = []
                 if target and target in self.groupings and target not in visited:
-                    missing += self.missing_mandatory(
+                    sub_missing = self.missing_mandatory(
                         target[0], self.groupings[target], instance,
                         visited | {target}
                     )
+                refined = self._refined_mandatory(sub)
+                sub_missing = [m for m in sub_missing if refined.get(m, True)]
+                for child, mand in refined.items():
+                    if mand and child not in present and child not in sub_missing:
+                        sub_missing.append(child)
+                missing += sub_missing
             elif k == "container" and sub is not None and arg in present:
                 for m in self.missing_mandatory(module, sub, present[arg], visited):
                     missing.append(f"{arg}/{m}")
