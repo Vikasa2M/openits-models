@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package openits.reversible_lane.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/reversible_lane/v1;reversiblelanev1";
+
+enum LaneFlowState {
+  LANE_FLOW_STATE_UNKNOWN = 0;
+  LANE_FLOW_STATE_CLOSED = 1;
+  LANE_FLOW_STATE_OPEN = 2;
+  LANE_FLOW_STATE_IN_TRANSITION = 3;
+}
+
+enum LcsIndication {
+  LCS_INDICATION_UNKNOWN = 0;
+  LCS_INDICATION_DARK = 1;
+  LCS_INDICATION_RED_X = 2;
+  LCS_INDICATION_YELLOW_X = 3;
+  LCS_INDICATION_FLASHING_YELLOW_X = 4;
+  LCS_INDICATION_GREEN_ARROW = 5;
+}
+
+enum TargetState {
+  TARGET_STATE_UNSPECIFIED = 0;
+  TARGET_STATE_CLOSED = 1;
+  TARGET_STATE_OPEN = 2;
+}
+
+enum Phase {
+  PHASE_REQUESTED = 0;
+  PHASE_CLEARANCE = 1;
+  PHASE_SWEEP_VERIFY = 2;
+  PHASE_GATE_MOVEMENT = 3;
+  PHASE_LCS_REVERSE = 4;
+  PHASE_COMPLETE = 5;
+}
+
+enum GateState {
+  GATE_STATE_UNKNOWN = 0;
+  GATE_STATE_OPEN = 1;
+  GATE_STATE_CLOSED = 2;
+  GATE_STATE_MOVING = 3;
+  GATE_STATE_FAULT = 4;
+  GATE_STATE_LOCKED = 5;
+  GATE_STATE_MANUAL_RELEASE = 6;
+}
+
+enum EvaluationPoint {
+  EVALUATION_POINT_CHANGEOVER_START = 0;
+  EVALUATION_POINT_DIRECTION_OPEN = 1;
+}
+
+enum FaultSeverity {
+  FAULT_SEVERITY_INFO = 0;
+  FAULT_SEVERITY_WARNING = 1;
+  FAULT_SEVERITY_MINOR = 2;
+  FAULT_SEVERITY_MAJOR = 3;
+  FAULT_SEVERITY_CRITICAL = 4;
+}
+

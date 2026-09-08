@@ -1,7 +1,7 @@
 message WidgetEvent {
-  string name = 1;
-  Severity severity = 2;
-  Mode mode = 3;
+  optional string name = 1;
+  optional Severity severity = 2;
+  optional Mode mode = 3;
 }
 
 enum Severity {

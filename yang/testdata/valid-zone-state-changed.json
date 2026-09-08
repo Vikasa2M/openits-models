@@ -11,7 +11,7 @@
     ],
     "window-start": "2026-09-03T06:00:00Z",
     "window-end": "2026-09-17T18:00:00Z",
-    "direction": "openits-work-zone-types:wz-direction-both",
+    "direction": "openits-types:direction-both",
     "lane-impact": "openits-work-zone-types:wz-some-lanes-closed",
     "temporary-signal": true,
     "notice": "Northbound right lane closed for bridge joint replacement."

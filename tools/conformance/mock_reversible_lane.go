@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"google.golang.org/protobuf/proto"
 	"time"
 
 	commonv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/common/v1"
@@ -31,8 +32,8 @@ func collectReversibleLane() (*yangpkg.Device, error) {
 	cfg.Name = strPtr("I-395 NOVA Reversible Lanes")
 	cfg.Latitude = f64Ptr(38.8462)
 	cfg.Longitude = f64Ptr(-77.0575)
-	cfg.DirectionA = yangpkg.OpenitsReversibleLaneTypes_TravelDirection_northbound
-	cfg.DirectionB = yangpkg.OpenitsReversibleLaneTypes_TravelDirection_southbound
+	cfg.DirectionA = yangpkg.OpenitsTypes_CarriagewayDirection_direction_northbound
+	cfg.DirectionB = yangpkg.OpenitsTypes_CarriagewayDirection_direction_southbound
 
 	st := rl.GetOrCreateState()
 	st.Id = strPtr("i395-nova-reversible")
@@ -51,11 +52,11 @@ func collectReversibleLane() (*yangpkg.Device, error) {
 	control := rl.GetOrCreateControl()
 	ctrlCfg := control.GetOrCreateConfig()
 	ctrlCfg.TargetState = yangpkg.OpenitsReversibleLane_ReversibleLane_Control_Config_TargetState_open
-	ctrlCfg.TargetDirection = yangpkg.OpenitsReversibleLaneTypes_TravelDirection_northbound
+	ctrlCfg.TargetDirection = yangpkg.OpenitsTypes_CarriagewayDirection_direction_northbound
 
 	ctrlSt := control.GetOrCreateState()
 	ctrlSt.CurrentState = yangpkg.OpenitsReversibleLaneTypes_LaneFlowState_open
-	ctrlSt.OpenDirection = yangpkg.OpenitsReversibleLaneTypes_TravelDirection_northbound
+	ctrlSt.OpenDirection = yangpkg.OpenitsTypes_CarriagewayDirection_direction_northbound
 	ctrlSt.ChangeoverPermitted = boolPtr(true)
 	// blocking-interlocks intentionally left empty: consistent with
 	// changeover-permitted=true.
@@ -120,10 +121,10 @@ func subscribeReversibleLane(ctx context.Context, out chan<- tests.EventEnvelope
 			CETime:   time.Now().UTC(),
 			Data: &reversiblelanev1.LaneStateChanged{
 				Kind:          "openits-reversible-lane-types:rl-lane-state-changed",
-				PreviousState: reversiblelanev1.LaneFlowState_LANE_FLOW_STATE_CLOSED,
-				NewState:      reversiblelanev1.LaneFlowState_LANE_FLOW_STATE_OPEN,
-				NewDirection:  reversiblelanev1.TravelDirection_TRAVEL_DIRECTION_NORTHBOUND,
-				InitiatedBy:   "tmc-ops",
+				PreviousState: reversiblelanev1.LaneFlowState_LANE_FLOW_STATE_CLOSED.Enum(),
+				NewState:      reversiblelanev1.LaneFlowState_LANE_FLOW_STATE_OPEN.Enum(),
+				NewDirection:  proto.String("openits-types:direction-northbound"),
+				InitiatedBy:   proto.String("tmc-ops"),
 			},
 		},
 		{
@@ -134,10 +135,10 @@ func subscribeReversibleLane(ctx context.Context, out chan<- tests.EventEnvelope
 			CETime:   time.Now().UTC(),
 			Data: &reversiblelanev1.TransitionTimeout{
 				Kind:          "openits-reversible-lane-types:rl-transition-timeout",
-				FromDirection: reversiblelanev1.TravelDirection_TRAVEL_DIRECTION_SOUTHBOUND,
-				ToDirection:   reversiblelanev1.TravelDirection_TRAVEL_DIRECTION_NORTHBOUND,
-				TimeoutS:      900,
-				SequenceStep:  "sweep-verify",
+				FromDirection: proto.String("openits-types:direction-southbound"),
+				ToDirection:   proto.String("openits-types:direction-northbound"),
+				TimeoutS:      proto.Uint32(900),
+				SequenceStep:  proto.String("sweep-verify"),
 			},
 		},
 		{
@@ -148,9 +149,9 @@ func subscribeReversibleLane(ctx context.Context, out chan<- tests.EventEnvelope
 			CETime:   time.Now().UTC(),
 			Data: &reversiblelanev1.LcsConflictDetected{
 				Kind:          "openits-reversible-lane-types:rl-lcs-conflict-detected",
-				SegmentId:     "seg-1",
-				LcsDirectionA: reversiblelanev1.LcsIndication_LCS_INDICATION_GREEN_ARROW,
-				LcsDirectionB: reversiblelanev1.LcsIndication_LCS_INDICATION_GREEN_ARROW,
+				SegmentId:     proto.String("seg-1"),
+				LcsDirectionA: reversiblelanev1.LcsIndication_LCS_INDICATION_GREEN_ARROW.Enum(),
+				LcsDirectionB: reversiblelanev1.LcsIndication_LCS_INDICATION_GREEN_ARROW.Enum(),
 			},
 		},
 		{

@@ -3,8 +3,8 @@
     "config": {
       "id": "us75-contraflow",
       "name": "US-75 Contraflow",
-      "direction-a": "northbound",
-      "direction-b": "southbound"
+      "direction-a": "openits-types:direction-northbound",
+      "direction-b": "openits-types:direction-southbound"
     },
     "control": {
       "config": {

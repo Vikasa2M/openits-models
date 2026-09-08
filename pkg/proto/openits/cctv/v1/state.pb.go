@@ -22,474 +22,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type OperationalStatus int32
-
-const (
-	OperationalStatus_OPERATIONAL_STATUS_ONLINE   OperationalStatus = 0
-	OperationalStatus_OPERATIONAL_STATUS_DEGRADED OperationalStatus = 1
-	OperationalStatus_OPERATIONAL_STATUS_OFFLINE  OperationalStatus = 2
-	OperationalStatus_OPERATIONAL_STATUS_UNKNOWN  OperationalStatus = 3
-)
-
-// Enum value maps for OperationalStatus.
-var (
-	OperationalStatus_name = map[int32]string{
-		0: "OPERATIONAL_STATUS_ONLINE",
-		1: "OPERATIONAL_STATUS_DEGRADED",
-		2: "OPERATIONAL_STATUS_OFFLINE",
-		3: "OPERATIONAL_STATUS_UNKNOWN",
-	}
-	OperationalStatus_value = map[string]int32{
-		"OPERATIONAL_STATUS_ONLINE":   0,
-		"OPERATIONAL_STATUS_DEGRADED": 1,
-		"OPERATIONAL_STATUS_OFFLINE":  2,
-		"OPERATIONAL_STATUS_UNKNOWN":  3,
-	}
-)
-
-func (x OperationalStatus) Enum() *OperationalStatus {
-	p := new(OperationalStatus)
-	*p = x
-	return p
-}
-
-func (x OperationalStatus) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (OperationalStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_cctv_v1_state_proto_enumTypes[0].Descriptor()
-}
-
-func (OperationalStatus) Type() protoreflect.EnumType {
-	return &file_openits_cctv_v1_state_proto_enumTypes[0]
-}
-
-func (x OperationalStatus) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use OperationalStatus.Descriptor instead.
-func (OperationalStatus) EnumDescriptor() ([]byte, []int) {
-	return file_openits_cctv_v1_state_proto_rawDescGZIP(), []int{0}
-}
-
-type MountingStructure int32
-
-const (
-	MountingStructure_MOUNTING_STRUCTURE_POLE      MountingStructure = 0
-	MountingStructure_MOUNTING_STRUCTURE_MAST_ARM  MountingStructure = 1
-	MountingStructure_MOUNTING_STRUCTURE_SPAN_WIRE MountingStructure = 2
-	MountingStructure_MOUNTING_STRUCTURE_STRUCTURE MountingStructure = 3
-	MountingStructure_MOUNTING_STRUCTURE_BUILDING  MountingStructure = 4
-	MountingStructure_MOUNTING_STRUCTURE_OTHER     MountingStructure = 5
-)
-
-// Enum value maps for MountingStructure.
-var (
-	MountingStructure_name = map[int32]string{
-		0: "MOUNTING_STRUCTURE_POLE",
-		1: "MOUNTING_STRUCTURE_MAST_ARM",
-		2: "MOUNTING_STRUCTURE_SPAN_WIRE",
-		3: "MOUNTING_STRUCTURE_STRUCTURE",
-		4: "MOUNTING_STRUCTURE_BUILDING",
-		5: "MOUNTING_STRUCTURE_OTHER",
-	}
-	MountingStructure_value = map[string]int32{
-		"MOUNTING_STRUCTURE_POLE":      0,
-		"MOUNTING_STRUCTURE_MAST_ARM":  1,
-		"MOUNTING_STRUCTURE_SPAN_WIRE": 2,
-		"MOUNTING_STRUCTURE_STRUCTURE": 3,
-		"MOUNTING_STRUCTURE_BUILDING":  4,
-		"MOUNTING_STRUCTURE_OTHER":     5,
-	}
-)
-
-func (x MountingStructure) Enum() *MountingStructure {
-	p := new(MountingStructure)
-	*p = x
-	return p
-}
-
-func (x MountingStructure) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (MountingStructure) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_cctv_v1_state_proto_enumTypes[1].Descriptor()
-}
-
-func (MountingStructure) Type() protoreflect.EnumType {
-	return &file_openits_cctv_v1_state_proto_enumTypes[1]
-}
-
-func (x MountingStructure) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use MountingStructure.Descriptor instead.
-func (MountingStructure) EnumDescriptor() ([]byte, []int) {
-	return file_openits_cctv_v1_state_proto_rawDescGZIP(), []int{1}
-}
-
-type OpenitsCctvPtzMoveMode int32
-
-const (
-	OpenitsCctvPtzMoveMode_OPENITS_CCTV_PTZ_MOVE_MODE_ABSOLUTE OpenitsCctvPtzMoveMode = 0
-	OpenitsCctvPtzMoveMode_OPENITS_CCTV_PTZ_MOVE_MODE_VELOCITY OpenitsCctvPtzMoveMode = 1
-	OpenitsCctvPtzMoveMode_OPENITS_CCTV_PTZ_MOVE_MODE_PRESET   OpenitsCctvPtzMoveMode = 2
-	OpenitsCctvPtzMoveMode_OPENITS_CCTV_PTZ_MOVE_MODE_TOUR     OpenitsCctvPtzMoveMode = 3
-	OpenitsCctvPtzMoveMode_OPENITS_CCTV_PTZ_MOVE_MODE_IDLE     OpenitsCctvPtzMoveMode = 4
-)
-
-// Enum value maps for OpenitsCctvPtzMoveMode.
-var (
-	OpenitsCctvPtzMoveMode_name = map[int32]string{
-		0: "OPENITS_CCTV_PTZ_MOVE_MODE_ABSOLUTE",
-		1: "OPENITS_CCTV_PTZ_MOVE_MODE_VELOCITY",
-		2: "OPENITS_CCTV_PTZ_MOVE_MODE_PRESET",
-		3: "OPENITS_CCTV_PTZ_MOVE_MODE_TOUR",
-		4: "OPENITS_CCTV_PTZ_MOVE_MODE_IDLE",
-	}
-	OpenitsCctvPtzMoveMode_value = map[string]int32{
-		"OPENITS_CCTV_PTZ_MOVE_MODE_ABSOLUTE": 0,
-		"OPENITS_CCTV_PTZ_MOVE_MODE_VELOCITY": 1,
-		"OPENITS_CCTV_PTZ_MOVE_MODE_PRESET":   2,
-		"OPENITS_CCTV_PTZ_MOVE_MODE_TOUR":     3,
-		"OPENITS_CCTV_PTZ_MOVE_MODE_IDLE":     4,
-	}
-)
-
-func (x OpenitsCctvPtzMoveMode) Enum() *OpenitsCctvPtzMoveMode {
-	p := new(OpenitsCctvPtzMoveMode)
-	*p = x
-	return p
-}
-
-func (x OpenitsCctvPtzMoveMode) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (OpenitsCctvPtzMoveMode) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_cctv_v1_state_proto_enumTypes[2].Descriptor()
-}
-
-func (OpenitsCctvPtzMoveMode) Type() protoreflect.EnumType {
-	return &file_openits_cctv_v1_state_proto_enumTypes[2]
-}
-
-func (x OpenitsCctvPtzMoveMode) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use OpenitsCctvPtzMoveMode.Descriptor instead.
-func (OpenitsCctvPtzMoveMode) EnumDescriptor() ([]byte, []int) {
-	return file_openits_cctv_v1_state_proto_rawDescGZIP(), []int{2}
-}
-
-type OpenitsCctvTourRunState int32
-
-const (
-	OpenitsCctvTourRunState_OPENITS_CCTV_TOUR_RUN_STATE_STOPPED OpenitsCctvTourRunState = 0
-	OpenitsCctvTourRunState_OPENITS_CCTV_TOUR_RUN_STATE_RUNNING OpenitsCctvTourRunState = 1
-	OpenitsCctvTourRunState_OPENITS_CCTV_TOUR_RUN_STATE_PAUSED  OpenitsCctvTourRunState = 2
-)
-
-// Enum value maps for OpenitsCctvTourRunState.
-var (
-	OpenitsCctvTourRunState_name = map[int32]string{
-		0: "OPENITS_CCTV_TOUR_RUN_STATE_STOPPED",
-		1: "OPENITS_CCTV_TOUR_RUN_STATE_RUNNING",
-		2: "OPENITS_CCTV_TOUR_RUN_STATE_PAUSED",
-	}
-	OpenitsCctvTourRunState_value = map[string]int32{
-		"OPENITS_CCTV_TOUR_RUN_STATE_STOPPED": 0,
-		"OPENITS_CCTV_TOUR_RUN_STATE_RUNNING": 1,
-		"OPENITS_CCTV_TOUR_RUN_STATE_PAUSED":  2,
-	}
-)
-
-func (x OpenitsCctvTourRunState) Enum() *OpenitsCctvTourRunState {
-	p := new(OpenitsCctvTourRunState)
-	*p = x
-	return p
-}
-
-func (x OpenitsCctvTourRunState) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (OpenitsCctvTourRunState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_cctv_v1_state_proto_enumTypes[3].Descriptor()
-}
-
-func (OpenitsCctvTourRunState) Type() protoreflect.EnumType {
-	return &file_openits_cctv_v1_state_proto_enumTypes[3]
-}
-
-func (x OpenitsCctvTourRunState) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use OpenitsCctvTourRunState.Descriptor instead.
-func (OpenitsCctvTourRunState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_cctv_v1_state_proto_rawDescGZIP(), []int{3}
-}
-
-type LensMode int32
-
-const (
-	LensMode_LENS_MODE_AUTO   LensMode = 0
-	LensMode_LENS_MODE_MANUAL LensMode = 1
-)
-
-// Enum value maps for LensMode.
-var (
-	LensMode_name = map[int32]string{
-		0: "LENS_MODE_AUTO",
-		1: "LENS_MODE_MANUAL",
-	}
-	LensMode_value = map[string]int32{
-		"LENS_MODE_AUTO":   0,
-		"LENS_MODE_MANUAL": 1,
-	}
-)
-
-func (x LensMode) Enum() *LensMode {
-	p := new(LensMode)
-	*p = x
-	return p
-}
-
-func (x LensMode) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (LensMode) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_cctv_v1_state_proto_enumTypes[4].Descriptor()
-}
-
-func (LensMode) Type() protoreflect.EnumType {
-	return &file_openits_cctv_v1_state_proto_enumTypes[4]
-}
-
-func (x LensMode) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use LensMode.Descriptor instead.
-func (LensMode) EnumDescriptor() ([]byte, []int) {
-	return file_openits_cctv_v1_state_proto_rawDescGZIP(), []int{4}
-}
-
-type VideoCodec int32
-
-const (
-	VideoCodec_VIDEO_CODEC_H264  VideoCodec = 0
-	VideoCodec_VIDEO_CODEC_H265  VideoCodec = 1
-	VideoCodec_VIDEO_CODEC_MJPEG VideoCodec = 2
-	VideoCodec_VIDEO_CODEC_MPEG4 VideoCodec = 3
-	VideoCodec_VIDEO_CODEC_OTHER VideoCodec = 4
-)
-
-// Enum value maps for VideoCodec.
-var (
-	VideoCodec_name = map[int32]string{
-		0: "VIDEO_CODEC_H264",
-		1: "VIDEO_CODEC_H265",
-		2: "VIDEO_CODEC_MJPEG",
-		3: "VIDEO_CODEC_MPEG4",
-		4: "VIDEO_CODEC_OTHER",
-	}
-	VideoCodec_value = map[string]int32{
-		"VIDEO_CODEC_H264":  0,
-		"VIDEO_CODEC_H265":  1,
-		"VIDEO_CODEC_MJPEG": 2,
-		"VIDEO_CODEC_MPEG4": 3,
-		"VIDEO_CODEC_OTHER": 4,
-	}
-)
-
-func (x VideoCodec) Enum() *VideoCodec {
-	p := new(VideoCodec)
-	*p = x
-	return p
-}
-
-func (x VideoCodec) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (VideoCodec) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_cctv_v1_state_proto_enumTypes[5].Descriptor()
-}
-
-func (VideoCodec) Type() protoreflect.EnumType {
-	return &file_openits_cctv_v1_state_proto_enumTypes[5]
-}
-
-func (x VideoCodec) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use VideoCodec.Descriptor instead.
-func (VideoCodec) EnumDescriptor() ([]byte, []int) {
-	return file_openits_cctv_v1_state_proto_rawDescGZIP(), []int{5}
-}
-
-type StreamHealth int32
-
-const (
-	StreamHealth_STREAM_HEALTH_OK       StreamHealth = 0
-	StreamHealth_STREAM_HEALTH_DEGRADED StreamHealth = 1
-	StreamHealth_STREAM_HEALTH_DOWN     StreamHealth = 2
-)
-
-// Enum value maps for StreamHealth.
-var (
-	StreamHealth_name = map[int32]string{
-		0: "STREAM_HEALTH_OK",
-		1: "STREAM_HEALTH_DEGRADED",
-		2: "STREAM_HEALTH_DOWN",
-	}
-	StreamHealth_value = map[string]int32{
-		"STREAM_HEALTH_OK":       0,
-		"STREAM_HEALTH_DEGRADED": 1,
-		"STREAM_HEALTH_DOWN":     2,
-	}
-)
-
-func (x StreamHealth) Enum() *StreamHealth {
-	p := new(StreamHealth)
-	*p = x
-	return p
-}
-
-func (x StreamHealth) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (StreamHealth) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_cctv_v1_state_proto_enumTypes[6].Descriptor()
-}
-
-func (StreamHealth) Type() protoreflect.EnumType {
-	return &file_openits_cctv_v1_state_proto_enumTypes[6]
-}
-
-func (x StreamHealth) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use StreamHealth.Descriptor instead.
-func (StreamHealth) EnumDescriptor() ([]byte, []int) {
-	return file_openits_cctv_v1_state_proto_rawDescGZIP(), []int{6}
-}
-
-type HeaterMode int32
-
-const (
-	HeaterMode_HEATER_MODE_OFF  HeaterMode = 0
-	HeaterMode_HEATER_MODE_ON   HeaterMode = 1
-	HeaterMode_HEATER_MODE_AUTO HeaterMode = 2
-)
-
-// Enum value maps for HeaterMode.
-var (
-	HeaterMode_name = map[int32]string{
-		0: "HEATER_MODE_OFF",
-		1: "HEATER_MODE_ON",
-		2: "HEATER_MODE_AUTO",
-	}
-	HeaterMode_value = map[string]int32{
-		"HEATER_MODE_OFF":  0,
-		"HEATER_MODE_ON":   1,
-		"HEATER_MODE_AUTO": 2,
-	}
-)
-
-func (x HeaterMode) Enum() *HeaterMode {
-	p := new(HeaterMode)
-	*p = x
-	return p
-}
-
-func (x HeaterMode) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (HeaterMode) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_cctv_v1_state_proto_enumTypes[7].Descriptor()
-}
-
-func (HeaterMode) Type() protoreflect.EnumType {
-	return &file_openits_cctv_v1_state_proto_enumTypes[7]
-}
-
-func (x HeaterMode) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use HeaterMode.Descriptor instead.
-func (HeaterMode) EnumDescriptor() ([]byte, []int) {
-	return file_openits_cctv_v1_state_proto_rawDescGZIP(), []int{7}
-}
-
-type FaultSeverity int32
-
-const (
-	FaultSeverity_FAULT_SEVERITY_INFO     FaultSeverity = 0
-	FaultSeverity_FAULT_SEVERITY_WARNING  FaultSeverity = 1
-	FaultSeverity_FAULT_SEVERITY_MINOR    FaultSeverity = 2
-	FaultSeverity_FAULT_SEVERITY_MAJOR    FaultSeverity = 3
-	FaultSeverity_FAULT_SEVERITY_CRITICAL FaultSeverity = 4
-)
-
-// Enum value maps for FaultSeverity.
-var (
-	FaultSeverity_name = map[int32]string{
-		0: "FAULT_SEVERITY_INFO",
-		1: "FAULT_SEVERITY_WARNING",
-		2: "FAULT_SEVERITY_MINOR",
-		3: "FAULT_SEVERITY_MAJOR",
-		4: "FAULT_SEVERITY_CRITICAL",
-	}
-	FaultSeverity_value = map[string]int32{
-		"FAULT_SEVERITY_INFO":     0,
-		"FAULT_SEVERITY_WARNING":  1,
-		"FAULT_SEVERITY_MINOR":    2,
-		"FAULT_SEVERITY_MAJOR":    3,
-		"FAULT_SEVERITY_CRITICAL": 4,
-	}
-)
-
-func (x FaultSeverity) Enum() *FaultSeverity {
-	p := new(FaultSeverity)
-	*p = x
-	return p
-}
-
-func (x FaultSeverity) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (FaultSeverity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_cctv_v1_state_proto_enumTypes[8].Descriptor()
-}
-
-func (FaultSeverity) Type() protoreflect.EnumType {
-	return &file_openits_cctv_v1_state_proto_enumTypes[8]
-}
-
-func (x FaultSeverity) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use FaultSeverity.Descriptor instead.
-func (FaultSeverity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_cctv_v1_state_proto_rawDescGZIP(), []int{8}
-}
-
 type Camera struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Config        *CameraConfig          `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
@@ -608,18 +140,18 @@ func (x *Camera) GetControl() *Control {
 
 type CameraConfig struct {
 	state           protoimpl.MessageState       `protogen:"open.v1"`
-	Elevation       string                       `protobuf:"bytes,1,opt,name=elevation,proto3" json:"elevation,omitempty"`
-	Heading         uint32                       `protobuf:"varint,2,opt,name=heading,proto3" json:"heading,omitempty"`
-	Id              string                       `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	Elevation       *string                      `protobuf:"bytes,1,opt,name=elevation,proto3,oneof" json:"elevation,omitempty"`
+	Heading         *uint32                      `protobuf:"varint,2,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
+	Id              *string                      `protobuf:"bytes,3,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate     *timestamppb.Timestamp       `protobuf:"bytes,8,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
-	Latitude        string                       `protobuf:"bytes,4,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	Latitude        *string                      `protobuf:"bytes,4,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference *CameraConfigLinearReference `protobuf:"bytes,9,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
-	Longitude       string                       `protobuf:"bytes,5,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	MaintainedBy    string                       `protobuf:"bytes,10,opt,name=maintained_by,json=maintainedBy,proto3" json:"maintained_by,omitempty"`
-	Name            string                       `protobuf:"bytes,6,opt,name=name,proto3" json:"name,omitempty"`
-	Owner           string                       `protobuf:"bytes,11,opt,name=owner,proto3" json:"owner,omitempty"`
-	RoadReference   string                       `protobuf:"bytes,7,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
-	SiteId          string                       `protobuf:"bytes,12,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
+	Longitude       *string                      `protobuf:"bytes,5,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
+	MaintainedBy    *string                      `protobuf:"bytes,10,opt,name=maintained_by,json=maintainedBy,proto3,oneof" json:"maintained_by,omitempty"`
+	Name            *string                      `protobuf:"bytes,6,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Owner           *string                      `protobuf:"bytes,11,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	RoadReference   *string                      `protobuf:"bytes,7,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
+	SiteId          *string                      `protobuf:"bytes,12,opt,name=site_id,json=siteId,proto3,oneof" json:"site_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -655,22 +187,22 @@ func (*CameraConfig) Descriptor() ([]byte, []int) {
 }
 
 func (x *CameraConfig) GetElevation() string {
-	if x != nil {
-		return x.Elevation
+	if x != nil && x.Elevation != nil {
+		return *x.Elevation
 	}
 	return ""
 }
 
 func (x *CameraConfig) GetHeading() uint32 {
-	if x != nil {
-		return x.Heading
+	if x != nil && x.Heading != nil {
+		return *x.Heading
 	}
 	return 0
 }
 
 func (x *CameraConfig) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
@@ -683,8 +215,8 @@ func (x *CameraConfig) GetInstallDate() *timestamppb.Timestamp {
 }
 
 func (x *CameraConfig) GetLatitude() string {
-	if x != nil {
-		return x.Latitude
+	if x != nil && x.Latitude != nil {
+		return *x.Latitude
 	}
 	return ""
 }
@@ -697,53 +229,53 @@ func (x *CameraConfig) GetLinearReference() *CameraConfigLinearReference {
 }
 
 func (x *CameraConfig) GetLongitude() string {
-	if x != nil {
-		return x.Longitude
+	if x != nil && x.Longitude != nil {
+		return *x.Longitude
 	}
 	return ""
 }
 
 func (x *CameraConfig) GetMaintainedBy() string {
-	if x != nil {
-		return x.MaintainedBy
+	if x != nil && x.MaintainedBy != nil {
+		return *x.MaintainedBy
 	}
 	return ""
 }
 
 func (x *CameraConfig) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *CameraConfig) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
 
 func (x *CameraConfig) GetRoadReference() string {
-	if x != nil {
-		return x.RoadReference
+	if x != nil && x.RoadReference != nil {
+		return *x.RoadReference
 	}
 	return ""
 }
 
 func (x *CameraConfig) GetSiteId() string {
-	if x != nil {
-		return x.SiteId
+	if x != nil && x.SiteId != nil {
+		return *x.SiteId
 	}
 	return ""
 }
 
 type CameraConfigLinearReference struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	RouteDesignator string                 `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3" json:"route_designator,omitempty"`
-	Direction       string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"`
-	Measure         string                 `protobuf:"bytes,3,opt,name=measure,proto3" json:"measure,omitempty"`
-	LrsMethod       string                 `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3" json:"lrs_method,omitempty"`
+	RouteDesignator *string                `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3,oneof" json:"route_designator,omitempty"`
+	Direction       *string                `protobuf:"bytes,2,opt,name=direction,proto3,oneof" json:"direction,omitempty"`
+	Measure         *string                `protobuf:"bytes,3,opt,name=measure,proto3,oneof" json:"measure,omitempty"`
+	LrsMethod       *string                `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3,oneof" json:"lrs_method,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -779,54 +311,54 @@ func (*CameraConfigLinearReference) Descriptor() ([]byte, []int) {
 }
 
 func (x *CameraConfigLinearReference) GetRouteDesignator() string {
-	if x != nil {
-		return x.RouteDesignator
+	if x != nil && x.RouteDesignator != nil {
+		return *x.RouteDesignator
 	}
 	return ""
 }
 
 func (x *CameraConfigLinearReference) GetDirection() string {
-	if x != nil {
-		return x.Direction
+	if x != nil && x.Direction != nil {
+		return *x.Direction
 	}
 	return ""
 }
 
 func (x *CameraConfigLinearReference) GetMeasure() string {
-	if x != nil {
-		return x.Measure
+	if x != nil && x.Measure != nil {
+		return *x.Measure
 	}
 	return ""
 }
 
 func (x *CameraConfigLinearReference) GetLrsMethod() string {
-	if x != nil {
-		return x.LrsMethod
+	if x != nil && x.LrsMethod != nil {
+		return *x.LrsMethod
 	}
 	return ""
 }
 
 type CameraState struct {
 	state             protoimpl.MessageState      `protogen:"open.v1"`
-	OperationalStatus OperationalStatus           `protobuf:"varint,14,opt,name=operational_status,json=operationalStatus,proto3,enum=openits.cctv.v1.OperationalStatus" json:"operational_status,omitempty"`
-	Elevation         string                      `protobuf:"bytes,1,opt,name=elevation,proto3" json:"elevation,omitempty"`
-	Firmware          string                      `protobuf:"bytes,2,opt,name=firmware,proto3" json:"firmware,omitempty"`
-	FirmwareBuild     string                      `protobuf:"bytes,3,opt,name=firmware_build,json=firmwareBuild,proto3" json:"firmware_build,omitempty"`
-	HardwareVersion   string                      `protobuf:"bytes,4,opt,name=hardware_version,json=hardwareVersion,proto3" json:"hardware_version,omitempty"`
-	Heading           uint32                      `protobuf:"varint,5,opt,name=heading,proto3" json:"heading,omitempty"`
-	Id                string                      `protobuf:"bytes,6,opt,name=id,proto3" json:"id,omitempty"`
+	OperationalStatus *OperationalStatus          `protobuf:"varint,14,opt,name=operational_status,json=operationalStatus,proto3,enum=openits.cctv.v1.OperationalStatus,oneof" json:"operational_status,omitempty"`
+	Elevation         *string                     `protobuf:"bytes,1,opt,name=elevation,proto3,oneof" json:"elevation,omitempty"`
+	Firmware          *string                     `protobuf:"bytes,2,opt,name=firmware,proto3,oneof" json:"firmware,omitempty"`
+	FirmwareBuild     *string                     `protobuf:"bytes,3,opt,name=firmware_build,json=firmwareBuild,proto3,oneof" json:"firmware_build,omitempty"`
+	HardwareVersion   *string                     `protobuf:"bytes,4,opt,name=hardware_version,json=hardwareVersion,proto3,oneof" json:"hardware_version,omitempty"`
+	Heading           *uint32                     `protobuf:"varint,5,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
+	Id                *string                     `protobuf:"bytes,6,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate       *timestamppb.Timestamp      `protobuf:"bytes,15,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
-	Latitude          string                      `protobuf:"bytes,7,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	Latitude          *string                     `protobuf:"bytes,7,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference   *CameraStateLinearReference `protobuf:"bytes,16,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
-	Longitude         string                      `protobuf:"bytes,8,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	MaintainedBy      string                      `protobuf:"bytes,17,opt,name=maintained_by,json=maintainedBy,proto3" json:"maintained_by,omitempty"`
-	Make              string                      `protobuf:"bytes,9,opt,name=make,proto3" json:"make,omitempty"`
-	Model             string                      `protobuf:"bytes,10,opt,name=model,proto3" json:"model,omitempty"`
-	Name              string                      `protobuf:"bytes,11,opt,name=name,proto3" json:"name,omitempty"`
-	Owner             string                      `protobuf:"bytes,18,opt,name=owner,proto3" json:"owner,omitempty"`
-	RoadReference     string                      `protobuf:"bytes,12,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
-	Serial            string                      `protobuf:"bytes,13,opt,name=serial,proto3" json:"serial,omitempty"`
-	SiteId            string                      `protobuf:"bytes,19,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
+	Longitude         *string                     `protobuf:"bytes,8,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
+	MaintainedBy      *string                     `protobuf:"bytes,17,opt,name=maintained_by,json=maintainedBy,proto3,oneof" json:"maintained_by,omitempty"`
+	Make              *string                     `protobuf:"bytes,9,opt,name=make,proto3,oneof" json:"make,omitempty"`
+	Model             *string                     `protobuf:"bytes,10,opt,name=model,proto3,oneof" json:"model,omitempty"`
+	Name              *string                     `protobuf:"bytes,11,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Owner             *string                     `protobuf:"bytes,18,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	RoadReference     *string                     `protobuf:"bytes,12,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
+	Serial            *string                     `protobuf:"bytes,13,opt,name=serial,proto3,oneof" json:"serial,omitempty"`
+	SiteId            *string                     `protobuf:"bytes,19,opt,name=site_id,json=siteId,proto3,oneof" json:"site_id,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -862,50 +394,50 @@ func (*CameraState) Descriptor() ([]byte, []int) {
 }
 
 func (x *CameraState) GetOperationalStatus() OperationalStatus {
-	if x != nil {
-		return x.OperationalStatus
+	if x != nil && x.OperationalStatus != nil {
+		return *x.OperationalStatus
 	}
 	return OperationalStatus_OPERATIONAL_STATUS_ONLINE
 }
 
 func (x *CameraState) GetElevation() string {
-	if x != nil {
-		return x.Elevation
+	if x != nil && x.Elevation != nil {
+		return *x.Elevation
 	}
 	return ""
 }
 
 func (x *CameraState) GetFirmware() string {
-	if x != nil {
-		return x.Firmware
+	if x != nil && x.Firmware != nil {
+		return *x.Firmware
 	}
 	return ""
 }
 
 func (x *CameraState) GetFirmwareBuild() string {
-	if x != nil {
-		return x.FirmwareBuild
+	if x != nil && x.FirmwareBuild != nil {
+		return *x.FirmwareBuild
 	}
 	return ""
 }
 
 func (x *CameraState) GetHardwareVersion() string {
-	if x != nil {
-		return x.HardwareVersion
+	if x != nil && x.HardwareVersion != nil {
+		return *x.HardwareVersion
 	}
 	return ""
 }
 
 func (x *CameraState) GetHeading() uint32 {
-	if x != nil {
-		return x.Heading
+	if x != nil && x.Heading != nil {
+		return *x.Heading
 	}
 	return 0
 }
 
 func (x *CameraState) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
@@ -918,8 +450,8 @@ func (x *CameraState) GetInstallDate() *timestamppb.Timestamp {
 }
 
 func (x *CameraState) GetLatitude() string {
-	if x != nil {
-		return x.Latitude
+	if x != nil && x.Latitude != nil {
+		return *x.Latitude
 	}
 	return ""
 }
@@ -932,74 +464,74 @@ func (x *CameraState) GetLinearReference() *CameraStateLinearReference {
 }
 
 func (x *CameraState) GetLongitude() string {
-	if x != nil {
-		return x.Longitude
+	if x != nil && x.Longitude != nil {
+		return *x.Longitude
 	}
 	return ""
 }
 
 func (x *CameraState) GetMaintainedBy() string {
-	if x != nil {
-		return x.MaintainedBy
+	if x != nil && x.MaintainedBy != nil {
+		return *x.MaintainedBy
 	}
 	return ""
 }
 
 func (x *CameraState) GetMake() string {
-	if x != nil {
-		return x.Make
+	if x != nil && x.Make != nil {
+		return *x.Make
 	}
 	return ""
 }
 
 func (x *CameraState) GetModel() string {
-	if x != nil {
-		return x.Model
+	if x != nil && x.Model != nil {
+		return *x.Model
 	}
 	return ""
 }
 
 func (x *CameraState) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *CameraState) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
 
 func (x *CameraState) GetRoadReference() string {
-	if x != nil {
-		return x.RoadReference
+	if x != nil && x.RoadReference != nil {
+		return *x.RoadReference
 	}
 	return ""
 }
 
 func (x *CameraState) GetSerial() string {
-	if x != nil {
-		return x.Serial
+	if x != nil && x.Serial != nil {
+		return *x.Serial
 	}
 	return ""
 }
 
 func (x *CameraState) GetSiteId() string {
-	if x != nil {
-		return x.SiteId
+	if x != nil && x.SiteId != nil {
+		return *x.SiteId
 	}
 	return ""
 }
 
 type CameraStateLinearReference struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	RouteDesignator string                 `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3" json:"route_designator,omitempty"`
-	Direction       string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"`
-	Measure         string                 `protobuf:"bytes,3,opt,name=measure,proto3" json:"measure,omitempty"`
-	LrsMethod       string                 `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3" json:"lrs_method,omitempty"`
+	RouteDesignator *string                `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3,oneof" json:"route_designator,omitempty"`
+	Direction       *string                `protobuf:"bytes,2,opt,name=direction,proto3,oneof" json:"direction,omitempty"`
+	Measure         *string                `protobuf:"bytes,3,opt,name=measure,proto3,oneof" json:"measure,omitempty"`
+	LrsMethod       *string                `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3,oneof" json:"lrs_method,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1035,38 +567,38 @@ func (*CameraStateLinearReference) Descriptor() ([]byte, []int) {
 }
 
 func (x *CameraStateLinearReference) GetRouteDesignator() string {
-	if x != nil {
-		return x.RouteDesignator
+	if x != nil && x.RouteDesignator != nil {
+		return *x.RouteDesignator
 	}
 	return ""
 }
 
 func (x *CameraStateLinearReference) GetDirection() string {
-	if x != nil {
-		return x.Direction
+	if x != nil && x.Direction != nil {
+		return *x.Direction
 	}
 	return ""
 }
 
 func (x *CameraStateLinearReference) GetMeasure() string {
-	if x != nil {
-		return x.Measure
+	if x != nil && x.Measure != nil {
+		return *x.Measure
 	}
 	return ""
 }
 
 func (x *CameraStateLinearReference) GetLrsMethod() string {
-	if x != nil {
-		return x.LrsMethod
+	if x != nil && x.LrsMethod != nil {
+		return *x.LrsMethod
 	}
 	return ""
 }
 
 type Mounting struct {
 	state                 protoimpl.MessageState `protogen:"open.v1"`
-	Structure             MountingStructure      `protobuf:"varint,1,opt,name=structure,proto3,enum=openits.cctv.v1.MountingStructure" json:"structure,omitempty"`
-	HeightM               string                 `protobuf:"bytes,2,opt,name=height_m,json=heightM,proto3" json:"height_m,omitempty"`
-	PanReferenceOffsetDeg uint32                 `protobuf:"varint,4,opt,name=pan_reference_offset_deg,json=panReferenceOffsetDeg,proto3" json:"pan_reference_offset_deg,omitempty"`
+	Structure             *MountingStructure     `protobuf:"varint,1,opt,name=structure,proto3,enum=openits.cctv.v1.MountingStructure,oneof" json:"structure,omitempty"`
+	HeightM               *string                `protobuf:"bytes,2,opt,name=height_m,json=heightM,proto3,oneof" json:"height_m,omitempty"`
+	PanReferenceOffsetDeg *uint32                `protobuf:"varint,4,opt,name=pan_reference_offset_deg,json=panReferenceOffsetDeg,proto3,oneof" json:"pan_reference_offset_deg,omitempty"`
 	AssociatedDevice      []*AssociatedDevice    `protobuf:"bytes,5,rep,name=associated_device,json=associatedDevice,proto3" json:"associated_device,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
@@ -1103,22 +635,22 @@ func (*Mounting) Descriptor() ([]byte, []int) {
 }
 
 func (x *Mounting) GetStructure() MountingStructure {
-	if x != nil {
-		return x.Structure
+	if x != nil && x.Structure != nil {
+		return *x.Structure
 	}
 	return MountingStructure_MOUNTING_STRUCTURE_POLE
 }
 
 func (x *Mounting) GetHeightM() string {
-	if x != nil {
-		return x.HeightM
+	if x != nil && x.HeightM != nil {
+		return *x.HeightM
 	}
 	return ""
 }
 
 func (x *Mounting) GetPanReferenceOffsetDeg() uint32 {
-	if x != nil {
-		return x.PanReferenceOffsetDeg
+	if x != nil && x.PanReferenceOffsetDeg != nil {
+		return *x.PanReferenceOffsetDeg
 	}
 	return 0
 }
@@ -1132,9 +664,9 @@ func (x *Mounting) GetAssociatedDevice() []*AssociatedDevice {
 
 type AssociatedDevice struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Role          string                 `protobuf:"bytes,2,opt,name=role,proto3" json:"role,omitempty"`
-	Note          string                 `protobuf:"bytes,3,opt,name=note,proto3" json:"note,omitempty"`
+	DeviceId      *string                `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3,oneof" json:"device_id,omitempty"`
+	Role          *string                `protobuf:"bytes,2,opt,name=role,proto3,oneof" json:"role,omitempty"`
+	Note          *string                `protobuf:"bytes,3,opt,name=note,proto3,oneof" json:"note,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1170,22 +702,22 @@ func (*AssociatedDevice) Descriptor() ([]byte, []int) {
 }
 
 func (x *AssociatedDevice) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
+	if x != nil && x.DeviceId != nil {
+		return *x.DeviceId
 	}
 	return ""
 }
 
 func (x *AssociatedDevice) GetRole() string {
-	if x != nil {
-		return x.Role
+	if x != nil && x.Role != nil {
+		return *x.Role
 	}
 	return ""
 }
 
 func (x *AssociatedDevice) GetNote() string {
-	if x != nil {
-		return x.Note
+	if x != nil && x.Note != nil {
+		return *x.Note
 	}
 	return ""
 }
@@ -1268,9 +800,9 @@ func (x *Ptz) GetTours() *Tours {
 
 type Capabilities struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PtzCapable    bool                   `protobuf:"varint,1,opt,name=ptz_capable,json=ptzCapable,proto3" json:"ptz_capable,omitempty"`
-	MaxPresets    uint32                 `protobuf:"varint,2,opt,name=max_presets,json=maxPresets,proto3" json:"max_presets,omitempty"`
-	PanContinuous bool                   `protobuf:"varint,3,opt,name=pan_continuous,json=panContinuous,proto3" json:"pan_continuous,omitempty"`
+	PtzCapable    *bool                  `protobuf:"varint,1,opt,name=ptz_capable,json=ptzCapable,proto3,oneof" json:"ptz_capable,omitempty"`
+	MaxPresets    *uint32                `protobuf:"varint,2,opt,name=max_presets,json=maxPresets,proto3,oneof" json:"max_presets,omitempty"`
+	PanContinuous *bool                  `protobuf:"varint,3,opt,name=pan_continuous,json=panContinuous,proto3,oneof" json:"pan_continuous,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1306,22 +838,22 @@ func (*Capabilities) Descriptor() ([]byte, []int) {
 }
 
 func (x *Capabilities) GetPtzCapable() bool {
-	if x != nil {
-		return x.PtzCapable
+	if x != nil && x.PtzCapable != nil {
+		return *x.PtzCapable
 	}
 	return false
 }
 
 func (x *Capabilities) GetMaxPresets() uint32 {
-	if x != nil {
-		return x.MaxPresets
+	if x != nil && x.MaxPresets != nil {
+		return *x.MaxPresets
 	}
 	return 0
 }
 
 func (x *Capabilities) GetPanContinuous() bool {
-	if x != nil {
-		return x.PanContinuous
+	if x != nil && x.PanContinuous != nil {
+		return *x.PanContinuous
 	}
 	return false
 }
@@ -1380,9 +912,9 @@ func (x *PtzConfig) GetVelocity() *PtzConfigVelocity {
 
 type PtzConfigAbsolute struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PanDegrees    string                 `protobuf:"bytes,1,opt,name=pan_degrees,json=panDegrees,proto3" json:"pan_degrees,omitempty"`
-	TiltDegrees   string                 `protobuf:"bytes,2,opt,name=tilt_degrees,json=tiltDegrees,proto3" json:"tilt_degrees,omitempty"`
-	ZoomPercent   uint32                 `protobuf:"varint,3,opt,name=zoom_percent,json=zoomPercent,proto3" json:"zoom_percent,omitempty"`
+	PanDegrees    *string                `protobuf:"bytes,1,opt,name=pan_degrees,json=panDegrees,proto3,oneof" json:"pan_degrees,omitempty"`
+	TiltDegrees   *string                `protobuf:"bytes,2,opt,name=tilt_degrees,json=tiltDegrees,proto3,oneof" json:"tilt_degrees,omitempty"`
+	ZoomPercent   *uint32                `protobuf:"varint,3,opt,name=zoom_percent,json=zoomPercent,proto3,oneof" json:"zoom_percent,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1418,31 +950,31 @@ func (*PtzConfigAbsolute) Descriptor() ([]byte, []int) {
 }
 
 func (x *PtzConfigAbsolute) GetPanDegrees() string {
-	if x != nil {
-		return x.PanDegrees
+	if x != nil && x.PanDegrees != nil {
+		return *x.PanDegrees
 	}
 	return ""
 }
 
 func (x *PtzConfigAbsolute) GetTiltDegrees() string {
-	if x != nil {
-		return x.TiltDegrees
+	if x != nil && x.TiltDegrees != nil {
+		return *x.TiltDegrees
 	}
 	return ""
 }
 
 func (x *PtzConfigAbsolute) GetZoomPercent() uint32 {
-	if x != nil {
-		return x.ZoomPercent
+	if x != nil && x.ZoomPercent != nil {
+		return *x.ZoomPercent
 	}
 	return 0
 }
 
 type PtzConfigVelocity struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PanSpeed      int32                  `protobuf:"varint,1,opt,name=pan_speed,json=panSpeed,proto3" json:"pan_speed,omitempty"`
-	TiltSpeed     int32                  `protobuf:"varint,2,opt,name=tilt_speed,json=tiltSpeed,proto3" json:"tilt_speed,omitempty"`
-	ZoomSpeed     int32                  `protobuf:"varint,3,opt,name=zoom_speed,json=zoomSpeed,proto3" json:"zoom_speed,omitempty"`
+	PanSpeed      *int32                 `protobuf:"varint,1,opt,name=pan_speed,json=panSpeed,proto3,oneof" json:"pan_speed,omitempty"`
+	TiltSpeed     *int32                 `protobuf:"varint,2,opt,name=tilt_speed,json=tiltSpeed,proto3,oneof" json:"tilt_speed,omitempty"`
+	ZoomSpeed     *int32                 `protobuf:"varint,3,opt,name=zoom_speed,json=zoomSpeed,proto3,oneof" json:"zoom_speed,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1478,33 +1010,33 @@ func (*PtzConfigVelocity) Descriptor() ([]byte, []int) {
 }
 
 func (x *PtzConfigVelocity) GetPanSpeed() int32 {
-	if x != nil {
-		return x.PanSpeed
+	if x != nil && x.PanSpeed != nil {
+		return *x.PanSpeed
 	}
 	return 0
 }
 
 func (x *PtzConfigVelocity) GetTiltSpeed() int32 {
-	if x != nil {
-		return x.TiltSpeed
+	if x != nil && x.TiltSpeed != nil {
+		return *x.TiltSpeed
 	}
 	return 0
 }
 
 func (x *PtzConfigVelocity) GetZoomSpeed() int32 {
-	if x != nil {
-		return x.ZoomSpeed
+	if x != nil && x.ZoomSpeed != nil {
+		return *x.ZoomSpeed
 	}
 	return 0
 }
 
 type PtzState struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PanDegrees    string                 `protobuf:"bytes,1,opt,name=pan_degrees,json=panDegrees,proto3" json:"pan_degrees,omitempty"`
-	TiltDegrees   string                 `protobuf:"bytes,2,opt,name=tilt_degrees,json=tiltDegrees,proto3" json:"tilt_degrees,omitempty"`
-	ZoomPercent   uint32                 `protobuf:"varint,3,opt,name=zoom_percent,json=zoomPercent,proto3" json:"zoom_percent,omitempty"`
-	Moving        bool                   `protobuf:"varint,4,opt,name=moving,proto3" json:"moving,omitempty"`
-	MoveMode      OpenitsCctvPtzMoveMode `protobuf:"varint,5,opt,name=move_mode,json=moveMode,proto3,enum=openits.cctv.v1.OpenitsCctvPtzMoveMode" json:"move_mode,omitempty"`
+	PanDegrees    *string                `protobuf:"bytes,1,opt,name=pan_degrees,json=panDegrees,proto3,oneof" json:"pan_degrees,omitempty"`
+	TiltDegrees   *string                `protobuf:"bytes,2,opt,name=tilt_degrees,json=tiltDegrees,proto3,oneof" json:"tilt_degrees,omitempty"`
+	ZoomPercent   *uint32                `protobuf:"varint,3,opt,name=zoom_percent,json=zoomPercent,proto3,oneof" json:"zoom_percent,omitempty"`
+	Moving        *bool                  `protobuf:"varint,4,opt,name=moving,proto3,oneof" json:"moving,omitempty"`
+	MoveMode      *PtzMoveMode           `protobuf:"varint,5,opt,name=move_mode,json=moveMode,proto3,enum=openits.cctv.v1.PtzMoveMode,oneof" json:"move_mode,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1540,44 +1072,44 @@ func (*PtzState) Descriptor() ([]byte, []int) {
 }
 
 func (x *PtzState) GetPanDegrees() string {
-	if x != nil {
-		return x.PanDegrees
+	if x != nil && x.PanDegrees != nil {
+		return *x.PanDegrees
 	}
 	return ""
 }
 
 func (x *PtzState) GetTiltDegrees() string {
-	if x != nil {
-		return x.TiltDegrees
+	if x != nil && x.TiltDegrees != nil {
+		return *x.TiltDegrees
 	}
 	return ""
 }
 
 func (x *PtzState) GetZoomPercent() uint32 {
-	if x != nil {
-		return x.ZoomPercent
+	if x != nil && x.ZoomPercent != nil {
+		return *x.ZoomPercent
 	}
 	return 0
 }
 
 func (x *PtzState) GetMoving() bool {
-	if x != nil {
-		return x.Moving
+	if x != nil && x.Moving != nil {
+		return *x.Moving
 	}
 	return false
 }
 
-func (x *PtzState) GetMoveMode() OpenitsCctvPtzMoveMode {
-	if x != nil {
-		return x.MoveMode
+func (x *PtzState) GetMoveMode() PtzMoveMode {
+	if x != nil && x.MoveMode != nil {
+		return *x.MoveMode
 	}
-	return OpenitsCctvPtzMoveMode_OPENITS_CCTV_PTZ_MOVE_MODE_ABSOLUTE
+	return PtzMoveMode_PTZ_MOVE_MODE_ABSOLUTE
 }
 
 type Presets struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Preset        []*Preset              `protobuf:"bytes,1,rep,name=preset,proto3" json:"preset,omitempty"`
-	Recall        uint32                 `protobuf:"varint,2,opt,name=recall,proto3" json:"recall,omitempty"`
+	Recall        *uint32                `protobuf:"varint,2,opt,name=recall,proto3,oneof" json:"recall,omitempty"`
 	State         *PresetsState          `protobuf:"bytes,3,opt,name=state,proto3" json:"state,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1621,8 +1153,8 @@ func (x *Presets) GetPreset() []*Preset {
 }
 
 func (x *Presets) GetRecall() uint32 {
-	if x != nil {
-		return x.Recall
+	if x != nil && x.Recall != nil {
+		return *x.Recall
 	}
 	return 0
 }
@@ -1636,11 +1168,11 @@ func (x *Presets) GetState() *PresetsState {
 
 type Preset struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PresetId      uint32                 `protobuf:"varint,1,opt,name=preset_id,json=presetId,proto3" json:"preset_id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	PanDegrees    string                 `protobuf:"bytes,3,opt,name=pan_degrees,json=panDegrees,proto3" json:"pan_degrees,omitempty"`
-	TiltDegrees   string                 `protobuf:"bytes,4,opt,name=tilt_degrees,json=tiltDegrees,proto3" json:"tilt_degrees,omitempty"`
-	ZoomPercent   uint32                 `protobuf:"varint,5,opt,name=zoom_percent,json=zoomPercent,proto3" json:"zoom_percent,omitempty"`
+	PresetId      *uint32                `protobuf:"varint,1,opt,name=preset_id,json=presetId,proto3,oneof" json:"preset_id,omitempty"`
+	Name          *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	PanDegrees    *string                `protobuf:"bytes,3,opt,name=pan_degrees,json=panDegrees,proto3,oneof" json:"pan_degrees,omitempty"`
+	TiltDegrees   *string                `protobuf:"bytes,4,opt,name=tilt_degrees,json=tiltDegrees,proto3,oneof" json:"tilt_degrees,omitempty"`
+	ZoomPercent   *uint32                `protobuf:"varint,5,opt,name=zoom_percent,json=zoomPercent,proto3,oneof" json:"zoom_percent,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1676,43 +1208,43 @@ func (*Preset) Descriptor() ([]byte, []int) {
 }
 
 func (x *Preset) GetPresetId() uint32 {
-	if x != nil {
-		return x.PresetId
+	if x != nil && x.PresetId != nil {
+		return *x.PresetId
 	}
 	return 0
 }
 
 func (x *Preset) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *Preset) GetPanDegrees() string {
-	if x != nil {
-		return x.PanDegrees
+	if x != nil && x.PanDegrees != nil {
+		return *x.PanDegrees
 	}
 	return ""
 }
 
 func (x *Preset) GetTiltDegrees() string {
-	if x != nil {
-		return x.TiltDegrees
+	if x != nil && x.TiltDegrees != nil {
+		return *x.TiltDegrees
 	}
 	return ""
 }
 
 func (x *Preset) GetZoomPercent() uint32 {
-	if x != nil {
-		return x.ZoomPercent
+	if x != nil && x.ZoomPercent != nil {
+		return *x.ZoomPercent
 	}
 	return 0
 }
 
 type PresetsState struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ActivePreset  uint32                 `protobuf:"varint,1,opt,name=active_preset,json=activePreset,proto3" json:"active_preset,omitempty"`
+	ActivePreset  *uint32                `protobuf:"varint,1,opt,name=active_preset,json=activePreset,proto3,oneof" json:"active_preset,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1748,8 +1280,8 @@ func (*PresetsState) Descriptor() ([]byte, []int) {
 }
 
 func (x *PresetsState) GetActivePreset() uint32 {
-	if x != nil {
-		return x.ActivePreset
+	if x != nil && x.ActivePreset != nil {
+		return *x.ActivePreset
 	}
 	return 0
 }
@@ -1757,7 +1289,7 @@ func (x *PresetsState) GetActivePreset() uint32 {
 type Tours struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Tour          []*Tour                `protobuf:"bytes,1,rep,name=tour,proto3" json:"tour,omitempty"`
-	Run           uint32                 `protobuf:"varint,2,opt,name=run,proto3" json:"run,omitempty"`
+	Run           *uint32                `protobuf:"varint,2,opt,name=run,proto3,oneof" json:"run,omitempty"`
 	State         *ToursState            `protobuf:"bytes,3,opt,name=state,proto3" json:"state,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1801,8 +1333,8 @@ func (x *Tours) GetTour() []*Tour {
 }
 
 func (x *Tours) GetRun() uint32 {
-	if x != nil {
-		return x.Run
+	if x != nil && x.Run != nil {
+		return *x.Run
 	}
 	return 0
 }
@@ -1816,8 +1348,8 @@ func (x *Tours) GetState() *ToursState {
 
 type Tour struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	TourId        uint32                 `protobuf:"varint,1,opt,name=tour_id,json=tourId,proto3" json:"tour_id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	TourId        *uint32                `protobuf:"varint,1,opt,name=tour_id,json=tourId,proto3,oneof" json:"tour_id,omitempty"`
+	Name          *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	Stop          []*Stop                `protobuf:"bytes,3,rep,name=stop,proto3" json:"stop,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1854,15 +1386,15 @@ func (*Tour) Descriptor() ([]byte, []int) {
 }
 
 func (x *Tour) GetTourId() uint32 {
-	if x != nil {
-		return x.TourId
+	if x != nil && x.TourId != nil {
+		return *x.TourId
 	}
 	return 0
 }
 
 func (x *Tour) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -1876,9 +1408,9 @@ func (x *Tour) GetStop() []*Stop {
 
 type Stop struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Sequence      uint32                 `protobuf:"varint,1,opt,name=sequence,proto3" json:"sequence,omitempty"`
-	PresetId      uint32                 `protobuf:"varint,2,opt,name=preset_id,json=presetId,proto3" json:"preset_id,omitempty"`
-	DwellSeconds  uint32                 `protobuf:"varint,3,opt,name=dwell_seconds,json=dwellSeconds,proto3" json:"dwell_seconds,omitempty"`
+	Sequence      *uint32                `protobuf:"varint,1,opt,name=sequence,proto3,oneof" json:"sequence,omitempty"`
+	PresetId      *uint32                `protobuf:"varint,2,opt,name=preset_id,json=presetId,proto3,oneof" json:"preset_id,omitempty"`
+	DwellSeconds  *uint32                `protobuf:"varint,3,opt,name=dwell_seconds,json=dwellSeconds,proto3,oneof" json:"dwell_seconds,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1914,31 +1446,31 @@ func (*Stop) Descriptor() ([]byte, []int) {
 }
 
 func (x *Stop) GetSequence() uint32 {
-	if x != nil {
-		return x.Sequence
+	if x != nil && x.Sequence != nil {
+		return *x.Sequence
 	}
 	return 0
 }
 
 func (x *Stop) GetPresetId() uint32 {
-	if x != nil {
-		return x.PresetId
+	if x != nil && x.PresetId != nil {
+		return *x.PresetId
 	}
 	return 0
 }
 
 func (x *Stop) GetDwellSeconds() uint32 {
-	if x != nil {
-		return x.DwellSeconds
+	if x != nil && x.DwellSeconds != nil {
+		return *x.DwellSeconds
 	}
 	return 0
 }
 
 type ToursState struct {
-	state         protoimpl.MessageState  `protogen:"open.v1"`
-	ActiveTour    uint32                  `protobuf:"varint,1,opt,name=active_tour,json=activeTour,proto3" json:"active_tour,omitempty"`
-	RunState      OpenitsCctvTourRunState `protobuf:"varint,2,opt,name=run_state,json=runState,proto3,enum=openits.cctv.v1.OpenitsCctvTourRunState" json:"run_state,omitempty"`
-	CurrentStop   uint32                  `protobuf:"varint,3,opt,name=current_stop,json=currentStop,proto3" json:"current_stop,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ActiveTour    *uint32                `protobuf:"varint,1,opt,name=active_tour,json=activeTour,proto3,oneof" json:"active_tour,omitempty"`
+	RunState      *TourRunState          `protobuf:"varint,2,opt,name=run_state,json=runState,proto3,enum=openits.cctv.v1.TourRunState,oneof" json:"run_state,omitempty"`
+	CurrentStop   *uint32                `protobuf:"varint,3,opt,name=current_stop,json=currentStop,proto3,oneof" json:"current_stop,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1974,22 +1506,22 @@ func (*ToursState) Descriptor() ([]byte, []int) {
 }
 
 func (x *ToursState) GetActiveTour() uint32 {
-	if x != nil {
-		return x.ActiveTour
+	if x != nil && x.ActiveTour != nil {
+		return *x.ActiveTour
 	}
 	return 0
 }
 
-func (x *ToursState) GetRunState() OpenitsCctvTourRunState {
-	if x != nil {
-		return x.RunState
+func (x *ToursState) GetRunState() TourRunState {
+	if x != nil && x.RunState != nil {
+		return *x.RunState
 	}
-	return OpenitsCctvTourRunState_OPENITS_CCTV_TOUR_RUN_STATE_STOPPED
+	return TourRunState_TOUR_RUN_STATE_STOPPED
 }
 
 func (x *ToursState) GetCurrentStop() uint32 {
-	if x != nil {
-		return x.CurrentStop
+	if x != nil && x.CurrentStop != nil {
+		return *x.CurrentStop
 	}
 	return 0
 }
@@ -2048,10 +1580,10 @@ func (x *Lens) GetState() *LensState {
 
 type LensConfig struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	FocusMode     LensMode               `protobuf:"varint,1,opt,name=focus_mode,json=focusMode,proto3,enum=openits.cctv.v1.LensMode" json:"focus_mode,omitempty"`
-	FocusPosition uint32                 `protobuf:"varint,2,opt,name=focus_position,json=focusPosition,proto3" json:"focus_position,omitempty"`
-	IrisMode      LensMode               `protobuf:"varint,3,opt,name=iris_mode,json=irisMode,proto3,enum=openits.cctv.v1.LensMode" json:"iris_mode,omitempty"`
-	IrisPosition  uint32                 `protobuf:"varint,4,opt,name=iris_position,json=irisPosition,proto3" json:"iris_position,omitempty"`
+	FocusMode     *LensMode              `protobuf:"varint,1,opt,name=focus_mode,json=focusMode,proto3,enum=openits.cctv.v1.LensMode,oneof" json:"focus_mode,omitempty"`
+	FocusPosition *uint32                `protobuf:"varint,2,opt,name=focus_position,json=focusPosition,proto3,oneof" json:"focus_position,omitempty"`
+	IrisMode      *LensMode              `protobuf:"varint,3,opt,name=iris_mode,json=irisMode,proto3,enum=openits.cctv.v1.LensMode,oneof" json:"iris_mode,omitempty"`
+	IrisPosition  *uint32                `protobuf:"varint,4,opt,name=iris_position,json=irisPosition,proto3,oneof" json:"iris_position,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2087,39 +1619,39 @@ func (*LensConfig) Descriptor() ([]byte, []int) {
 }
 
 func (x *LensConfig) GetFocusMode() LensMode {
-	if x != nil {
-		return x.FocusMode
+	if x != nil && x.FocusMode != nil {
+		return *x.FocusMode
 	}
 	return LensMode_LENS_MODE_AUTO
 }
 
 func (x *LensConfig) GetFocusPosition() uint32 {
-	if x != nil {
-		return x.FocusPosition
+	if x != nil && x.FocusPosition != nil {
+		return *x.FocusPosition
 	}
 	return 0
 }
 
 func (x *LensConfig) GetIrisMode() LensMode {
-	if x != nil {
-		return x.IrisMode
+	if x != nil && x.IrisMode != nil {
+		return *x.IrisMode
 	}
 	return LensMode_LENS_MODE_AUTO
 }
 
 func (x *LensConfig) GetIrisPosition() uint32 {
-	if x != nil {
-		return x.IrisPosition
+	if x != nil && x.IrisPosition != nil {
+		return *x.IrisPosition
 	}
 	return 0
 }
 
 type LensState struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	FocusMode     LensMode               `protobuf:"varint,1,opt,name=focus_mode,json=focusMode,proto3,enum=openits.cctv.v1.LensMode" json:"focus_mode,omitempty"`
-	FocusPosition uint32                 `protobuf:"varint,2,opt,name=focus_position,json=focusPosition,proto3" json:"focus_position,omitempty"`
-	IrisMode      LensMode               `protobuf:"varint,3,opt,name=iris_mode,json=irisMode,proto3,enum=openits.cctv.v1.LensMode" json:"iris_mode,omitempty"`
-	IrisPosition  uint32                 `protobuf:"varint,4,opt,name=iris_position,json=irisPosition,proto3" json:"iris_position,omitempty"`
+	FocusMode     *LensMode              `protobuf:"varint,1,opt,name=focus_mode,json=focusMode,proto3,enum=openits.cctv.v1.LensMode,oneof" json:"focus_mode,omitempty"`
+	FocusPosition *uint32                `protobuf:"varint,2,opt,name=focus_position,json=focusPosition,proto3,oneof" json:"focus_position,omitempty"`
+	IrisMode      *LensMode              `protobuf:"varint,3,opt,name=iris_mode,json=irisMode,proto3,enum=openits.cctv.v1.LensMode,oneof" json:"iris_mode,omitempty"`
+	IrisPosition  *uint32                `protobuf:"varint,4,opt,name=iris_position,json=irisPosition,proto3,oneof" json:"iris_position,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2155,29 +1687,29 @@ func (*LensState) Descriptor() ([]byte, []int) {
 }
 
 func (x *LensState) GetFocusMode() LensMode {
-	if x != nil {
-		return x.FocusMode
+	if x != nil && x.FocusMode != nil {
+		return *x.FocusMode
 	}
 	return LensMode_LENS_MODE_AUTO
 }
 
 func (x *LensState) GetFocusPosition() uint32 {
-	if x != nil {
-		return x.FocusPosition
+	if x != nil && x.FocusPosition != nil {
+		return *x.FocusPosition
 	}
 	return 0
 }
 
 func (x *LensState) GetIrisMode() LensMode {
-	if x != nil {
-		return x.IrisMode
+	if x != nil && x.IrisMode != nil {
+		return *x.IrisMode
 	}
 	return LensMode_LENS_MODE_AUTO
 }
 
 func (x *LensState) GetIrisPosition() uint32 {
-	if x != nil {
-		return x.IrisPosition
+	if x != nil && x.IrisPosition != nil {
+		return *x.IrisPosition
 	}
 	return 0
 }
@@ -2228,9 +1760,9 @@ func (x *PrivacyMasks) GetMask() []*Mask {
 
 type Mask struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	MaskId        uint32                 `protobuf:"varint,1,opt,name=mask_id,json=maskId,proto3" json:"mask_id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Enabled       bool                   `protobuf:"varint,3,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	MaskId        *uint32                `protobuf:"varint,1,opt,name=mask_id,json=maskId,proto3,oneof" json:"mask_id,omitempty"`
+	Name          *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Enabled       *bool                  `protobuf:"varint,3,opt,name=enabled,proto3,oneof" json:"enabled,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2266,22 +1798,22 @@ func (*Mask) Descriptor() ([]byte, []int) {
 }
 
 func (x *Mask) GetMaskId() uint32 {
-	if x != nil {
-		return x.MaskId
+	if x != nil && x.MaskId != nil {
+		return *x.MaskId
 	}
 	return 0
 }
 
 func (x *Mask) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *Mask) GetEnabled() bool {
-	if x != nil {
-		return x.Enabled
+	if x != nil && x.Enabled != nil {
+		return *x.Enabled
 	}
 	return false
 }
@@ -2332,7 +1864,7 @@ func (x *Streams) GetStream() []*Stream {
 
 type Stream struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	StreamId      uint32                 `protobuf:"varint,1,opt,name=stream_id,json=streamId,proto3" json:"stream_id,omitempty"`
+	StreamId      *uint32                `protobuf:"varint,1,opt,name=stream_id,json=streamId,proto3,oneof" json:"stream_id,omitempty"`
 	Config        *StreamConfig          `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
 	State         *StreamState           `protobuf:"bytes,3,opt,name=state,proto3" json:"state,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -2370,8 +1902,8 @@ func (*Stream) Descriptor() ([]byte, []int) {
 }
 
 func (x *Stream) GetStreamId() uint32 {
-	if x != nil {
-		return x.StreamId
+	if x != nil && x.StreamId != nil {
+		return *x.StreamId
 	}
 	return 0
 }
@@ -2392,8 +1924,8 @@ func (x *Stream) GetState() *StreamState {
 
 type StreamConfig struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
-	Codec             VideoCodec             `protobuf:"varint,1,opt,name=codec,proto3,enum=openits.cctv.v1.VideoCodec" json:"codec,omitempty"`
-	TargetBitrateKbps uint32                 `protobuf:"varint,2,opt,name=target_bitrate_kbps,json=targetBitrateKbps,proto3" json:"target_bitrate_kbps,omitempty"`
+	Codec             *VideoCodec            `protobuf:"varint,1,opt,name=codec,proto3,enum=openits.cctv.v1.VideoCodec,oneof" json:"codec,omitempty"`
+	TargetBitrateKbps *uint32                `protobuf:"varint,2,opt,name=target_bitrate_kbps,json=targetBitrateKbps,proto3,oneof" json:"target_bitrate_kbps,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -2429,28 +1961,28 @@ func (*StreamConfig) Descriptor() ([]byte, []int) {
 }
 
 func (x *StreamConfig) GetCodec() VideoCodec {
-	if x != nil {
-		return x.Codec
+	if x != nil && x.Codec != nil {
+		return *x.Codec
 	}
 	return VideoCodec_VIDEO_CODEC_H264
 }
 
 func (x *StreamConfig) GetTargetBitrateKbps() uint32 {
-	if x != nil {
-		return x.TargetBitrateKbps
+	if x != nil && x.TargetBitrateKbps != nil {
+		return *x.TargetBitrateKbps
 	}
 	return 0
 }
 
 type StreamState struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	WidthPx       uint32                 `protobuf:"varint,1,opt,name=width_px,json=widthPx,proto3" json:"width_px,omitempty"`
-	HeightPx      uint32                 `protobuf:"varint,2,opt,name=height_px,json=heightPx,proto3" json:"height_px,omitempty"`
-	Codec         VideoCodec             `protobuf:"varint,3,opt,name=codec,proto3,enum=openits.cctv.v1.VideoCodec" json:"codec,omitempty"`
-	BitrateKbps   uint32                 `protobuf:"varint,4,opt,name=bitrate_kbps,json=bitrateKbps,proto3" json:"bitrate_kbps,omitempty"`
-	FrameRate     string                 `protobuf:"bytes,5,opt,name=frame_rate,json=frameRate,proto3" json:"frame_rate,omitempty"`
-	Health        StreamHealth           `protobuf:"varint,6,opt,name=health,proto3,enum=openits.cctv.v1.StreamHealth" json:"health,omitempty"`
-	Uri           string                 `protobuf:"bytes,7,opt,name=uri,proto3" json:"uri,omitempty"`
+	WidthPx       *uint32                `protobuf:"varint,1,opt,name=width_px,json=widthPx,proto3,oneof" json:"width_px,omitempty"`
+	HeightPx      *uint32                `protobuf:"varint,2,opt,name=height_px,json=heightPx,proto3,oneof" json:"height_px,omitempty"`
+	Codec         *VideoCodec            `protobuf:"varint,3,opt,name=codec,proto3,enum=openits.cctv.v1.VideoCodec,oneof" json:"codec,omitempty"`
+	BitrateKbps   *uint32                `protobuf:"varint,4,opt,name=bitrate_kbps,json=bitrateKbps,proto3,oneof" json:"bitrate_kbps,omitempty"`
+	FrameRate     *string                `protobuf:"bytes,5,opt,name=frame_rate,json=frameRate,proto3,oneof" json:"frame_rate,omitempty"`
+	Health        *StreamHealth          `protobuf:"varint,6,opt,name=health,proto3,enum=openits.cctv.v1.StreamHealth,oneof" json:"health,omitempty"`
+	Uri           *string                `protobuf:"bytes,7,opt,name=uri,proto3,oneof" json:"uri,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2486,50 +2018,50 @@ func (*StreamState) Descriptor() ([]byte, []int) {
 }
 
 func (x *StreamState) GetWidthPx() uint32 {
-	if x != nil {
-		return x.WidthPx
+	if x != nil && x.WidthPx != nil {
+		return *x.WidthPx
 	}
 	return 0
 }
 
 func (x *StreamState) GetHeightPx() uint32 {
-	if x != nil {
-		return x.HeightPx
+	if x != nil && x.HeightPx != nil {
+		return *x.HeightPx
 	}
 	return 0
 }
 
 func (x *StreamState) GetCodec() VideoCodec {
-	if x != nil {
-		return x.Codec
+	if x != nil && x.Codec != nil {
+		return *x.Codec
 	}
 	return VideoCodec_VIDEO_CODEC_H264
 }
 
 func (x *StreamState) GetBitrateKbps() uint32 {
-	if x != nil {
-		return x.BitrateKbps
+	if x != nil && x.BitrateKbps != nil {
+		return *x.BitrateKbps
 	}
 	return 0
 }
 
 func (x *StreamState) GetFrameRate() string {
-	if x != nil {
-		return x.FrameRate
+	if x != nil && x.FrameRate != nil {
+		return *x.FrameRate
 	}
 	return ""
 }
 
 func (x *StreamState) GetHealth() StreamHealth {
-	if x != nil {
-		return x.Health
+	if x != nil && x.Health != nil {
+		return *x.Health
 	}
 	return StreamHealth_STREAM_HEALTH_OK
 }
 
 func (x *StreamState) GetUri() string {
-	if x != nil {
-		return x.Uri
+	if x != nil && x.Uri != nil {
+		return *x.Uri
 	}
 	return ""
 }
@@ -2588,10 +2120,10 @@ func (x *Environment) GetState() *EnvironmentState {
 
 type EnvironmentConfig struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
-	Wiper                bool                   `protobuf:"varint,1,opt,name=wiper,proto3" json:"wiper,omitempty"`
-	Washer               bool                   `protobuf:"varint,2,opt,name=washer,proto3" json:"washer,omitempty"`
-	WasherSprayDurationS uint32                 `protobuf:"varint,4,opt,name=washer_spray_duration_s,json=washerSprayDurationS,proto3" json:"washer_spray_duration_s,omitempty"`
-	HeaterMode           HeaterMode             `protobuf:"varint,3,opt,name=heater_mode,json=heaterMode,proto3,enum=openits.cctv.v1.HeaterMode" json:"heater_mode,omitempty"`
+	Wiper                *bool                  `protobuf:"varint,1,opt,name=wiper,proto3,oneof" json:"wiper,omitempty"`
+	Washer               *bool                  `protobuf:"varint,2,opt,name=washer,proto3,oneof" json:"washer,omitempty"`
+	WasherSprayDurationS *uint32                `protobuf:"varint,4,opt,name=washer_spray_duration_s,json=washerSprayDurationS,proto3,oneof" json:"washer_spray_duration_s,omitempty"`
+	HeaterMode           *HeaterMode            `protobuf:"varint,3,opt,name=heater_mode,json=heaterMode,proto3,enum=openits.cctv.v1.HeaterMode,oneof" json:"heater_mode,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -2627,39 +2159,39 @@ func (*EnvironmentConfig) Descriptor() ([]byte, []int) {
 }
 
 func (x *EnvironmentConfig) GetWiper() bool {
-	if x != nil {
-		return x.Wiper
+	if x != nil && x.Wiper != nil {
+		return *x.Wiper
 	}
 	return false
 }
 
 func (x *EnvironmentConfig) GetWasher() bool {
-	if x != nil {
-		return x.Washer
+	if x != nil && x.Washer != nil {
+		return *x.Washer
 	}
 	return false
 }
 
 func (x *EnvironmentConfig) GetWasherSprayDurationS() uint32 {
-	if x != nil {
-		return x.WasherSprayDurationS
+	if x != nil && x.WasherSprayDurationS != nil {
+		return *x.WasherSprayDurationS
 	}
 	return 0
 }
 
 func (x *EnvironmentConfig) GetHeaterMode() HeaterMode {
-	if x != nil {
-		return x.HeaterMode
+	if x != nil && x.HeaterMode != nil {
+		return *x.HeaterMode
 	}
 	return HeaterMode_HEATER_MODE_OFF
 }
 
 type EnvironmentState struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	EnclosureTempC string                 `protobuf:"bytes,1,opt,name=enclosure_temp_c,json=enclosureTempC,proto3" json:"enclosure_temp_c,omitempty"`
-	WiperActive    bool                   `protobuf:"varint,2,opt,name=wiper_active,json=wiperActive,proto3" json:"wiper_active,omitempty"`
-	HeaterActive   bool                   `protobuf:"varint,3,opt,name=heater_active,json=heaterActive,proto3" json:"heater_active,omitempty"`
-	BlowerActive   bool                   `protobuf:"varint,4,opt,name=blower_active,json=blowerActive,proto3" json:"blower_active,omitempty"`
+	EnclosureTempC *string                `protobuf:"bytes,1,opt,name=enclosure_temp_c,json=enclosureTempC,proto3,oneof" json:"enclosure_temp_c,omitempty"`
+	WiperActive    *bool                  `protobuf:"varint,2,opt,name=wiper_active,json=wiperActive,proto3,oneof" json:"wiper_active,omitempty"`
+	HeaterActive   *bool                  `protobuf:"varint,3,opt,name=heater_active,json=heaterActive,proto3,oneof" json:"heater_active,omitempty"`
+	BlowerActive   *bool                  `protobuf:"varint,4,opt,name=blower_active,json=blowerActive,proto3,oneof" json:"blower_active,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -2695,29 +2227,29 @@ func (*EnvironmentState) Descriptor() ([]byte, []int) {
 }
 
 func (x *EnvironmentState) GetEnclosureTempC() string {
-	if x != nil {
-		return x.EnclosureTempC
+	if x != nil && x.EnclosureTempC != nil {
+		return *x.EnclosureTempC
 	}
 	return ""
 }
 
 func (x *EnvironmentState) GetWiperActive() bool {
-	if x != nil {
-		return x.WiperActive
+	if x != nil && x.WiperActive != nil {
+		return *x.WiperActive
 	}
 	return false
 }
 
 func (x *EnvironmentState) GetHeaterActive() bool {
-	if x != nil {
-		return x.HeaterActive
+	if x != nil && x.HeaterActive != nil {
+		return *x.HeaterActive
 	}
 	return false
 }
 
 func (x *EnvironmentState) GetBlowerActive() bool {
-	if x != nil {
-		return x.BlowerActive
+	if x != nil && x.BlowerActive != nil {
+		return *x.BlowerActive
 	}
 	return false
 }
@@ -2768,12 +2300,12 @@ func (x *Faults) GetFault() []*Fault {
 
 type Fault struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Category       string                 `protobuf:"bytes,1,opt,name=category,proto3" json:"category,omitempty"`
-	CorrelatesWith string                 `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3" json:"correlates_with,omitempty"`
-	Description    string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	FaultId        string                 `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3" json:"fault_id,omitempty"`
+	Category       *string                `protobuf:"bytes,1,opt,name=category,proto3,oneof" json:"category,omitempty"`
+	CorrelatesWith *string                `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3,oneof" json:"correlates_with,omitempty"`
+	Description    *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	FaultId        *string                `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3,oneof" json:"fault_id,omitempty"`
 	FirstObserved  *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=first_observed,json=firstObserved,proto3" json:"first_observed,omitempty"`
-	Severity       FaultSeverity          `protobuf:"varint,5,opt,name=severity,proto3,enum=openits.cctv.v1.FaultSeverity" json:"severity,omitempty"`
+	Severity       *FaultSeverity         `protobuf:"varint,5,opt,name=severity,proto3,enum=openits.cctv.v1.FaultSeverity,oneof" json:"severity,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -2809,29 +2341,29 @@ func (*Fault) Descriptor() ([]byte, []int) {
 }
 
 func (x *Fault) GetCategory() string {
-	if x != nil {
-		return x.Category
+	if x != nil && x.Category != nil {
+		return *x.Category
 	}
 	return ""
 }
 
 func (x *Fault) GetCorrelatesWith() string {
-	if x != nil {
-		return x.CorrelatesWith
+	if x != nil && x.CorrelatesWith != nil {
+		return *x.CorrelatesWith
 	}
 	return ""
 }
 
 func (x *Fault) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
 
 func (x *Fault) GetFaultId() string {
-	if x != nil {
-		return x.FaultId
+	if x != nil && x.FaultId != nil {
+		return *x.FaultId
 	}
 	return ""
 }
@@ -2844,8 +2376,8 @@ func (x *Fault) GetFirstObserved() *timestamppb.Timestamp {
 }
 
 func (x *Fault) GetSeverity() FaultSeverity {
-	if x != nil {
-		return x.Severity
+	if x != nil && x.Severity != nil {
+		return *x.Severity
 	}
 	return FaultSeverity_FAULT_SEVERITY_INFO
 }
@@ -2904,7 +2436,7 @@ func (x *Control) GetState() *ControlState {
 
 type ControlConfig struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ControlMode   string                 `protobuf:"bytes,1,opt,name=control_mode,json=controlMode,proto3" json:"control_mode,omitempty"`
+	ControlMode   *string                `protobuf:"bytes,1,opt,name=control_mode,json=controlMode,proto3,oneof" json:"control_mode,omitempty"`
 	Holder        *ControlConfigHolder   `protobuf:"bytes,2,opt,name=holder,proto3" json:"holder,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -2941,8 +2473,8 @@ func (*ControlConfig) Descriptor() ([]byte, []int) {
 }
 
 func (x *ControlConfig) GetControlMode() string {
-	if x != nil {
-		return x.ControlMode
+	if x != nil && x.ControlMode != nil {
+		return *x.ControlMode
 	}
 	return ""
 }
@@ -2957,8 +2489,8 @@ func (x *ControlConfig) GetHolder() *ControlConfigHolder {
 type ControlConfigHolder struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	RequestedBy     string                 `protobuf:"bytes,1,opt,name=requested_by,json=requestedBy,proto3" json:"requested_by,omitempty"`
-	Priority        uint32                 `protobuf:"varint,2,opt,name=priority,proto3" json:"priority,omitempty"`
-	LockoutTimeoutS uint32                 `protobuf:"varint,3,opt,name=lockout_timeout_s,json=lockoutTimeoutS,proto3" json:"lockout_timeout_s,omitempty"`
+	Priority        *uint32                `protobuf:"varint,2,opt,name=priority,proto3,oneof" json:"priority,omitempty"`
+	LockoutTimeoutS *uint32                `protobuf:"varint,3,opt,name=lockout_timeout_s,json=lockoutTimeoutS,proto3,oneof" json:"lockout_timeout_s,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -3001,22 +2533,22 @@ func (x *ControlConfigHolder) GetRequestedBy() string {
 }
 
 func (x *ControlConfigHolder) GetPriority() uint32 {
-	if x != nil {
-		return x.Priority
+	if x != nil && x.Priority != nil {
+		return *x.Priority
 	}
 	return 0
 }
 
 func (x *ControlConfigHolder) GetLockoutTimeoutS() uint32 {
-	if x != nil {
-		return x.LockoutTimeoutS
+	if x != nil && x.LockoutTimeoutS != nil {
+		return *x.LockoutTimeoutS
 	}
 	return 0
 }
 
 type ControlState struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ControlMode   string                 `protobuf:"bytes,1,opt,name=control_mode,json=controlMode,proto3" json:"control_mode,omitempty"`
+	ControlMode   *string                `protobuf:"bytes,1,opt,name=control_mode,json=controlMode,proto3,oneof" json:"control_mode,omitempty"`
 	Holder        *ControlStateHolder    `protobuf:"bytes,2,opt,name=holder,proto3" json:"holder,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -3053,8 +2585,8 @@ func (*ControlState) Descriptor() ([]byte, []int) {
 }
 
 func (x *ControlState) GetControlMode() string {
-	if x != nil {
-		return x.ControlMode
+	if x != nil && x.ControlMode != nil {
+		return *x.ControlMode
 	}
 	return ""
 }
@@ -3068,8 +2600,8 @@ func (x *ControlState) GetHolder() *ControlStateHolder {
 
 type ControlStateHolder struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	CurrentHolder string                 `protobuf:"bytes,1,opt,name=current_holder,json=currentHolder,proto3" json:"current_holder,omitempty"`
-	HeldPriority  uint32                 `protobuf:"varint,2,opt,name=held_priority,json=heldPriority,proto3" json:"held_priority,omitempty"`
+	CurrentHolder *string                `protobuf:"bytes,1,opt,name=current_holder,json=currentHolder,proto3,oneof" json:"current_holder,omitempty"`
+	HeldPriority  *uint32                `protobuf:"varint,2,opt,name=held_priority,json=heldPriority,proto3,oneof" json:"held_priority,omitempty"`
 	HeldSince     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=held_since,json=heldSince,proto3" json:"held_since,omitempty"`
 	ExpiresAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -3107,15 +2639,15 @@ func (*ControlStateHolder) Descriptor() ([]byte, []int) {
 }
 
 func (x *ControlStateHolder) GetCurrentHolder() string {
-	if x != nil {
-		return x.CurrentHolder
+	if x != nil && x.CurrentHolder != nil {
+		return *x.CurrentHolder
 	}
 	return ""
 }
 
 func (x *ControlStateHolder) GetHeldPriority() uint32 {
-	if x != nil {
-		return x.HeldPriority
+	if x != nil && x.HeldPriority != nil {
+		return *x.HeldPriority
 	}
 	return 0
 }
@@ -3138,7 +2670,7 @@ var File_openits_cctv_v1_state_proto protoreflect.FileDescriptor
 
 const file_openits_cctv_v1_state_proto_rawDesc = "" +
 	"\n" +
-	"\x1bopenits/cctv/v1/state.proto\x12\x0fopenits.cctv.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x9a\x04\n" +
+	"\x1bopenits/cctv/v1/state.proto\x12\x0fopenits.cctv.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bopenits/cctv/v1/types.proto\"\x9a\x04\n" +
 	"\x06Camera\x125\n" +
 	"\x06config\x18\x01 \x01(\v2\x1d.openits.cctv.v1.CameraConfigR\x06config\x122\n" +
 	"\x05state\x18\x02 \x01(\v2\x1c.openits.cctv.v1.CameraStateR\x05state\x125\n" +
@@ -3150,257 +2682,348 @@ const file_openits_cctv_v1_state_proto_rawDesc = "" +
 	"\astreams\x18\x05 \x01(\v2\x18.openits.cctv.v1.StreamsR\astreams\x12>\n" +
 	"\venvironment\x18\x06 \x01(\v2\x1c.openits.cctv.v1.EnvironmentR\venvironment\x12/\n" +
 	"\x06faults\x18\a \x01(\v2\x17.openits.cctv.v1.FaultsR\x06faults\x122\n" +
-	"\acontrol\x18\b \x01(\v2\x18.openits.cctv.v1.ControlR\acontrol\"\xb7\x03\n" +
-	"\fCameraConfig\x12\x1c\n" +
-	"\televation\x18\x01 \x01(\tR\televation\x12\x18\n" +
-	"\aheading\x18\x02 \x01(\rR\aheading\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\x12=\n" +
-	"\finstall_date\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1a\n" +
-	"\blatitude\x18\x04 \x01(\tR\blatitude\x12W\n" +
-	"\x10linear_reference\x18\t \x01(\v2,.openits.cctv.v1.CameraConfigLinearReferenceR\x0flinearReference\x12\x1c\n" +
-	"\tlongitude\x18\x05 \x01(\tR\tlongitude\x12#\n" +
+	"\acontrol\x18\b \x01(\v2\x18.openits.cctv.v1.ControlR\acontrol\"\xe9\x04\n" +
+	"\fCameraConfig\x12!\n" +
+	"\televation\x18\x01 \x01(\tH\x00R\televation\x88\x01\x01\x12\x1d\n" +
+	"\aheading\x18\x02 \x01(\rH\x01R\aheading\x88\x01\x01\x12\x13\n" +
+	"\x02id\x18\x03 \x01(\tH\x02R\x02id\x88\x01\x01\x12=\n" +
+	"\finstall_date\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	"\blatitude\x18\x04 \x01(\tH\x03R\blatitude\x88\x01\x01\x12W\n" +
+	"\x10linear_reference\x18\t \x01(\v2,.openits.cctv.v1.CameraConfigLinearReferenceR\x0flinearReference\x12!\n" +
+	"\tlongitude\x18\x05 \x01(\tH\x04R\tlongitude\x88\x01\x01\x12(\n" +
 	"\rmaintained_by\x18\n" +
-	" \x01(\tR\fmaintainedBy\x12\x12\n" +
-	"\x04name\x18\x06 \x01(\tR\x04name\x12\x14\n" +
-	"\x05owner\x18\v \x01(\tR\x05owner\x12%\n" +
-	"\x0eroad_reference\x18\a \x01(\tR\rroadReference\x12\x17\n" +
-	"\asite_id\x18\f \x01(\tR\x06siteId\"\x9f\x01\n" +
-	"\x1bCameraConfigLinearReference\x12)\n" +
-	"\x10route_designator\x18\x01 \x01(\tR\x0frouteDesignator\x12\x1c\n" +
-	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
-	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
+	" \x01(\tH\x05R\fmaintainedBy\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x06 \x01(\tH\x06R\x04name\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\v \x01(\tH\aR\x05owner\x88\x01\x01\x12*\n" +
+	"\x0eroad_reference\x18\a \x01(\tH\bR\rroadReference\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\f \x01(\tH\tR\x06siteId\x88\x01\x01B\f\n" +
 	"\n" +
-	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"\xb8\x05\n" +
-	"\vCameraState\x12Q\n" +
-	"\x12operational_status\x18\x0e \x01(\x0e2\".openits.cctv.v1.OperationalStatusR\x11operationalStatus\x12\x1c\n" +
-	"\televation\x18\x01 \x01(\tR\televation\x12\x1a\n" +
-	"\bfirmware\x18\x02 \x01(\tR\bfirmware\x12%\n" +
-	"\x0efirmware_build\x18\x03 \x01(\tR\rfirmwareBuild\x12)\n" +
-	"\x10hardware_version\x18\x04 \x01(\tR\x0fhardwareVersion\x12\x18\n" +
-	"\aheading\x18\x05 \x01(\rR\aheading\x12\x0e\n" +
-	"\x02id\x18\x06 \x01(\tR\x02id\x12=\n" +
-	"\finstall_date\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1a\n" +
-	"\blatitude\x18\a \x01(\tR\blatitude\x12V\n" +
-	"\x10linear_reference\x18\x10 \x01(\v2+.openits.cctv.v1.CameraStateLinearReferenceR\x0flinearReference\x12\x1c\n" +
-	"\tlongitude\x18\b \x01(\tR\tlongitude\x12#\n" +
-	"\rmaintained_by\x18\x11 \x01(\tR\fmaintainedBy\x12\x12\n" +
-	"\x04make\x18\t \x01(\tR\x04make\x12\x14\n" +
+	"_elevationB\n" +
+	"\n" +
+	"\b_headingB\x05\n" +
+	"\x03_idB\v\n" +
+	"\t_latitudeB\f\n" +
+	"\n" +
+	"_longitudeB\x10\n" +
+	"\x0e_maintained_byB\a\n" +
+	"\x05_nameB\b\n" +
+	"\x06_ownerB\x11\n" +
+	"\x0f_road_referenceB\n" +
+	"\n" +
+	"\b_site_id\"\xf1\x01\n" +
+	"\x1bCameraConfigLinearReference\x12.\n" +
+	"\x10route_designator\x18\x01 \x01(\tH\x00R\x0frouteDesignator\x88\x01\x01\x12!\n" +
+	"\tdirection\x18\x02 \x01(\tH\x01R\tdirection\x88\x01\x01\x12\x1d\n" +
+	"\ameasure\x18\x03 \x01(\tH\x02R\ameasure\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"lrs_method\x18\x04 \x01(\tH\x03R\tlrsMethod\x88\x01\x01B\x13\n" +
+	"\x11_route_designatorB\f\n" +
+	"\n" +
+	"_directionB\n" +
+	"\n" +
+	"\b_measureB\r\n" +
+	"\v_lrs_method\"\xf7\a\n" +
+	"\vCameraState\x12V\n" +
+	"\x12operational_status\x18\x0e \x01(\x0e2\".openits.cctv.v1.OperationalStatusH\x00R\x11operationalStatus\x88\x01\x01\x12!\n" +
+	"\televation\x18\x01 \x01(\tH\x01R\televation\x88\x01\x01\x12\x1f\n" +
+	"\bfirmware\x18\x02 \x01(\tH\x02R\bfirmware\x88\x01\x01\x12*\n" +
+	"\x0efirmware_build\x18\x03 \x01(\tH\x03R\rfirmwareBuild\x88\x01\x01\x12.\n" +
+	"\x10hardware_version\x18\x04 \x01(\tH\x04R\x0fhardwareVersion\x88\x01\x01\x12\x1d\n" +
+	"\aheading\x18\x05 \x01(\rH\x05R\aheading\x88\x01\x01\x12\x13\n" +
+	"\x02id\x18\x06 \x01(\tH\x06R\x02id\x88\x01\x01\x12=\n" +
+	"\finstall_date\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	"\blatitude\x18\a \x01(\tH\aR\blatitude\x88\x01\x01\x12V\n" +
+	"\x10linear_reference\x18\x10 \x01(\v2+.openits.cctv.v1.CameraStateLinearReferenceR\x0flinearReference\x12!\n" +
+	"\tlongitude\x18\b \x01(\tH\bR\tlongitude\x88\x01\x01\x12(\n" +
+	"\rmaintained_by\x18\x11 \x01(\tH\tR\fmaintainedBy\x88\x01\x01\x12\x17\n" +
+	"\x04make\x18\t \x01(\tH\n" +
+	"R\x04make\x88\x01\x01\x12\x19\n" +
 	"\x05model\x18\n" +
-	" \x01(\tR\x05model\x12\x12\n" +
-	"\x04name\x18\v \x01(\tR\x04name\x12\x14\n" +
-	"\x05owner\x18\x12 \x01(\tR\x05owner\x12%\n" +
-	"\x0eroad_reference\x18\f \x01(\tR\rroadReference\x12\x16\n" +
-	"\x06serial\x18\r \x01(\tR\x06serial\x12\x17\n" +
-	"\asite_id\x18\x13 \x01(\tR\x06siteId\"\x9e\x01\n" +
-	"\x1aCameraStateLinearReference\x12)\n" +
-	"\x10route_designator\x18\x01 \x01(\tR\x0frouteDesignator\x12\x1c\n" +
-	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
-	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
+	" \x01(\tH\vR\x05model\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\v \x01(\tH\fR\x04name\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\x12 \x01(\tH\rR\x05owner\x88\x01\x01\x12*\n" +
+	"\x0eroad_reference\x18\f \x01(\tH\x0eR\rroadReference\x88\x01\x01\x12\x1b\n" +
+	"\x06serial\x18\r \x01(\tH\x0fR\x06serial\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\x13 \x01(\tH\x10R\x06siteId\x88\x01\x01B\x15\n" +
+	"\x13_operational_statusB\f\n" +
 	"\n" +
-	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"\x89\x02\n" +
-	"\bMounting\x12@\n" +
-	"\tstructure\x18\x01 \x01(\x0e2\".openits.cctv.v1.MountingStructureR\tstructure\x12\x19\n" +
-	"\bheight_m\x18\x02 \x01(\tR\aheightM\x127\n" +
-	"\x18pan_reference_offset_deg\x18\x04 \x01(\rR\x15panReferenceOffsetDeg\x12N\n" +
-	"\x11associated_device\x18\x05 \x03(\v2!.openits.cctv.v1.AssociatedDeviceR\x10associatedDeviceJ\x04\b\x03\x10\x04R\x11co_located_device\"W\n" +
-	"\x10AssociatedDevice\x12\x1b\n" +
-	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x12\n" +
-	"\x04role\x18\x02 \x01(\tR\x04role\x12\x12\n" +
-	"\x04note\x18\x03 \x01(\tR\x04note\"\x8f\x02\n" +
+	"_elevationB\v\n" +
+	"\t_firmwareB\x11\n" +
+	"\x0f_firmware_buildB\x13\n" +
+	"\x11_hardware_versionB\n" +
+	"\n" +
+	"\b_headingB\x05\n" +
+	"\x03_idB\v\n" +
+	"\t_latitudeB\f\n" +
+	"\n" +
+	"_longitudeB\x10\n" +
+	"\x0e_maintained_byB\a\n" +
+	"\x05_makeB\b\n" +
+	"\x06_modelB\a\n" +
+	"\x05_nameB\b\n" +
+	"\x06_ownerB\x11\n" +
+	"\x0f_road_referenceB\t\n" +
+	"\a_serialB\n" +
+	"\n" +
+	"\b_site_id\"\xf0\x01\n" +
+	"\x1aCameraStateLinearReference\x12.\n" +
+	"\x10route_designator\x18\x01 \x01(\tH\x00R\x0frouteDesignator\x88\x01\x01\x12!\n" +
+	"\tdirection\x18\x02 \x01(\tH\x01R\tdirection\x88\x01\x01\x12\x1d\n" +
+	"\ameasure\x18\x03 \x01(\tH\x02R\ameasure\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"lrs_method\x18\x04 \x01(\tH\x03R\tlrsMethod\x88\x01\x01B\x13\n" +
+	"\x11_route_designatorB\f\n" +
+	"\n" +
+	"_directionB\n" +
+	"\n" +
+	"\b_measureB\r\n" +
+	"\v_lrs_method\"\xd0\x02\n" +
+	"\bMounting\x12E\n" +
+	"\tstructure\x18\x01 \x01(\x0e2\".openits.cctv.v1.MountingStructureH\x00R\tstructure\x88\x01\x01\x12\x1e\n" +
+	"\bheight_m\x18\x02 \x01(\tH\x01R\aheightM\x88\x01\x01\x12<\n" +
+	"\x18pan_reference_offset_deg\x18\x04 \x01(\rH\x02R\x15panReferenceOffsetDeg\x88\x01\x01\x12N\n" +
+	"\x11associated_device\x18\x05 \x03(\v2!.openits.cctv.v1.AssociatedDeviceR\x10associatedDeviceB\f\n" +
+	"\n" +
+	"_structureB\v\n" +
+	"\t_height_mB\x1b\n" +
+	"\x19_pan_reference_offset_degJ\x04\b\x03\x10\x04R\x11co_located_device\"\x86\x01\n" +
+	"\x10AssociatedDevice\x12 \n" +
+	"\tdevice_id\x18\x01 \x01(\tH\x00R\bdeviceId\x88\x01\x01\x12\x17\n" +
+	"\x04role\x18\x02 \x01(\tH\x01R\x04role\x88\x01\x01\x12\x17\n" +
+	"\x04note\x18\x03 \x01(\tH\x02R\x04note\x88\x01\x01B\f\n" +
+	"\n" +
+	"_device_idB\a\n" +
+	"\x05_roleB\a\n" +
+	"\x05_note\"\x8f\x02\n" +
 	"\x03Ptz\x12A\n" +
 	"\fcapabilities\x18\x01 \x01(\v2\x1d.openits.cctv.v1.CapabilitiesR\fcapabilities\x122\n" +
 	"\x06config\x18\x05 \x01(\v2\x1a.openits.cctv.v1.PtzConfigR\x06config\x12/\n" +
 	"\x05state\x18\x02 \x01(\v2\x19.openits.cctv.v1.PtzStateR\x05state\x122\n" +
 	"\apresets\x18\x03 \x01(\v2\x18.openits.cctv.v1.PresetsR\apresets\x12,\n" +
-	"\x05tours\x18\x04 \x01(\v2\x16.openits.cctv.v1.ToursR\x05tours\"w\n" +
-	"\fCapabilities\x12\x1f\n" +
-	"\vptz_capable\x18\x01 \x01(\bR\n" +
-	"ptzCapable\x12\x1f\n" +
-	"\vmax_presets\x18\x02 \x01(\rR\n" +
-	"maxPresets\x12%\n" +
-	"\x0epan_continuous\x18\x03 \x01(\bR\rpanContinuous\"\x8b\x01\n" +
+	"\x05tours\x18\x04 \x01(\v2\x16.openits.cctv.v1.ToursR\x05tours\"\xb9\x01\n" +
+	"\fCapabilities\x12$\n" +
+	"\vptz_capable\x18\x01 \x01(\bH\x00R\n" +
+	"ptzCapable\x88\x01\x01\x12$\n" +
+	"\vmax_presets\x18\x02 \x01(\rH\x01R\n" +
+	"maxPresets\x88\x01\x01\x12*\n" +
+	"\x0epan_continuous\x18\x03 \x01(\bH\x02R\rpanContinuous\x88\x01\x01B\x0e\n" +
+	"\f_ptz_capableB\x0e\n" +
+	"\f_max_presetsB\x11\n" +
+	"\x0f_pan_continuous\"\x8b\x01\n" +
 	"\tPtzConfig\x12>\n" +
 	"\babsolute\x18\x01 \x01(\v2\".openits.cctv.v1.PtzConfigAbsoluteR\babsolute\x12>\n" +
-	"\bvelocity\x18\x02 \x01(\v2\".openits.cctv.v1.PtzConfigVelocityR\bvelocity\"z\n" +
-	"\x11PtzConfigAbsolute\x12\x1f\n" +
-	"\vpan_degrees\x18\x01 \x01(\tR\n" +
-	"panDegrees\x12!\n" +
-	"\ftilt_degrees\x18\x02 \x01(\tR\vtiltDegrees\x12!\n" +
-	"\fzoom_percent\x18\x03 \x01(\rR\vzoomPercent\"n\n" +
-	"\x11PtzConfigVelocity\x12\x1b\n" +
-	"\tpan_speed\x18\x01 \x01(\x05R\bpanSpeed\x12\x1d\n" +
+	"\bvelocity\x18\x02 \x01(\v2\".openits.cctv.v1.PtzConfigVelocityR\bvelocity\"\xbb\x01\n" +
+	"\x11PtzConfigAbsolute\x12$\n" +
+	"\vpan_degrees\x18\x01 \x01(\tH\x00R\n" +
+	"panDegrees\x88\x01\x01\x12&\n" +
+	"\ftilt_degrees\x18\x02 \x01(\tH\x01R\vtiltDegrees\x88\x01\x01\x12&\n" +
+	"\fzoom_percent\x18\x03 \x01(\rH\x02R\vzoomPercent\x88\x01\x01B\x0e\n" +
+	"\f_pan_degreesB\x0f\n" +
+	"\r_tilt_degreesB\x0f\n" +
+	"\r_zoom_percent\"\xa9\x01\n" +
+	"\x11PtzConfigVelocity\x12 \n" +
+	"\tpan_speed\x18\x01 \x01(\x05H\x00R\bpanSpeed\x88\x01\x01\x12\"\n" +
 	"\n" +
-	"tilt_speed\x18\x02 \x01(\x05R\ttiltSpeed\x12\x1d\n" +
+	"tilt_speed\x18\x02 \x01(\x05H\x01R\ttiltSpeed\x88\x01\x01\x12\"\n" +
 	"\n" +
-	"zoom_speed\x18\x03 \x01(\x05R\tzoomSpeed\"\xcf\x01\n" +
-	"\bPtzState\x12\x1f\n" +
-	"\vpan_degrees\x18\x01 \x01(\tR\n" +
-	"panDegrees\x12!\n" +
-	"\ftilt_degrees\x18\x02 \x01(\tR\vtiltDegrees\x12!\n" +
-	"\fzoom_percent\x18\x03 \x01(\rR\vzoomPercent\x12\x16\n" +
-	"\x06moving\x18\x04 \x01(\bR\x06moving\x12D\n" +
-	"\tmove_mode\x18\x05 \x01(\x0e2'.openits.cctv.v1.OpenitsCctvPtzMoveModeR\bmoveMode\"\x87\x01\n" +
+	"zoom_speed\x18\x03 \x01(\x05H\x02R\tzoomSpeed\x88\x01\x01B\f\n" +
+	"\n" +
+	"_pan_speedB\r\n" +
+	"\v_tilt_speedB\r\n" +
+	"\v_zoom_speed\"\xa8\x02\n" +
+	"\bPtzState\x12$\n" +
+	"\vpan_degrees\x18\x01 \x01(\tH\x00R\n" +
+	"panDegrees\x88\x01\x01\x12&\n" +
+	"\ftilt_degrees\x18\x02 \x01(\tH\x01R\vtiltDegrees\x88\x01\x01\x12&\n" +
+	"\fzoom_percent\x18\x03 \x01(\rH\x02R\vzoomPercent\x88\x01\x01\x12\x1b\n" +
+	"\x06moving\x18\x04 \x01(\bH\x03R\x06moving\x88\x01\x01\x12>\n" +
+	"\tmove_mode\x18\x05 \x01(\x0e2\x1c.openits.cctv.v1.PtzMoveModeH\x04R\bmoveMode\x88\x01\x01B\x0e\n" +
+	"\f_pan_degreesB\x0f\n" +
+	"\r_tilt_degreesB\x0f\n" +
+	"\r_zoom_percentB\t\n" +
+	"\a_movingB\f\n" +
+	"\n" +
+	"_move_mode\"\x97\x01\n" +
 	"\aPresets\x12/\n" +
-	"\x06preset\x18\x01 \x03(\v2\x17.openits.cctv.v1.PresetR\x06preset\x12\x16\n" +
-	"\x06recall\x18\x02 \x01(\rR\x06recall\x123\n" +
-	"\x05state\x18\x03 \x01(\v2\x1d.openits.cctv.v1.PresetsStateR\x05state\"\xa0\x01\n" +
-	"\x06Preset\x12\x1b\n" +
-	"\tpreset_id\x18\x01 \x01(\rR\bpresetId\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1f\n" +
-	"\vpan_degrees\x18\x03 \x01(\tR\n" +
-	"panDegrees\x12!\n" +
-	"\ftilt_degrees\x18\x04 \x01(\tR\vtiltDegrees\x12!\n" +
-	"\fzoom_percent\x18\x05 \x01(\rR\vzoomPercent\"3\n" +
-	"\fPresetsState\x12#\n" +
-	"\ractive_preset\x18\x01 \x01(\rR\factivePreset\"w\n" +
-	"\x05Tours\x12)\n" +
-	"\x04tour\x18\x01 \x03(\v2\x15.openits.cctv.v1.TourR\x04tour\x12\x10\n" +
-	"\x03run\x18\x02 \x01(\rR\x03run\x121\n" +
-	"\x05state\x18\x03 \x01(\v2\x1b.openits.cctv.v1.ToursStateR\x05state\"^\n" +
-	"\x04Tour\x12\x17\n" +
-	"\atour_id\x18\x01 \x01(\rR\x06tourId\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12)\n" +
-	"\x04stop\x18\x03 \x03(\v2\x15.openits.cctv.v1.StopR\x04stop\"d\n" +
-	"\x04Stop\x12\x1a\n" +
-	"\bsequence\x18\x01 \x01(\rR\bsequence\x12\x1b\n" +
-	"\tpreset_id\x18\x02 \x01(\rR\bpresetId\x12#\n" +
-	"\rdwell_seconds\x18\x03 \x01(\rR\fdwellSeconds\"\x97\x01\n" +
+	"\x06preset\x18\x01 \x03(\v2\x17.openits.cctv.v1.PresetR\x06preset\x12\x1b\n" +
+	"\x06recall\x18\x02 \x01(\rH\x00R\x06recall\x88\x01\x01\x123\n" +
+	"\x05state\x18\x03 \x01(\v2\x1d.openits.cctv.v1.PresetsStateR\x05stateB\t\n" +
+	"\a_recall\"\x82\x02\n" +
+	"\x06Preset\x12 \n" +
+	"\tpreset_id\x18\x01 \x01(\rH\x00R\bpresetId\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12$\n" +
+	"\vpan_degrees\x18\x03 \x01(\tH\x02R\n" +
+	"panDegrees\x88\x01\x01\x12&\n" +
+	"\ftilt_degrees\x18\x04 \x01(\tH\x03R\vtiltDegrees\x88\x01\x01\x12&\n" +
+	"\fzoom_percent\x18\x05 \x01(\rH\x04R\vzoomPercent\x88\x01\x01B\f\n" +
 	"\n" +
-	"ToursState\x12\x1f\n" +
-	"\vactive_tour\x18\x01 \x01(\rR\n" +
-	"activeTour\x12E\n" +
-	"\trun_state\x18\x02 \x01(\x0e2(.openits.cctv.v1.OpenitsCctvTourRunStateR\brunState\x12!\n" +
-	"\fcurrent_stop\x18\x03 \x01(\rR\vcurrentStop\"m\n" +
+	"_preset_idB\a\n" +
+	"\x05_nameB\x0e\n" +
+	"\f_pan_degreesB\x0f\n" +
+	"\r_tilt_degreesB\x0f\n" +
+	"\r_zoom_percent\"J\n" +
+	"\fPresetsState\x12(\n" +
+	"\ractive_preset\x18\x01 \x01(\rH\x00R\factivePreset\x88\x01\x01B\x10\n" +
+	"\x0e_active_preset\"\x84\x01\n" +
+	"\x05Tours\x12)\n" +
+	"\x04tour\x18\x01 \x03(\v2\x15.openits.cctv.v1.TourR\x04tour\x12\x15\n" +
+	"\x03run\x18\x02 \x01(\rH\x00R\x03run\x88\x01\x01\x121\n" +
+	"\x05state\x18\x03 \x01(\v2\x1b.openits.cctv.v1.ToursStateR\x05stateB\x06\n" +
+	"\x04_run\"}\n" +
+	"\x04Tour\x12\x1c\n" +
+	"\atour_id\x18\x01 \x01(\rH\x00R\x06tourId\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12)\n" +
+	"\x04stop\x18\x03 \x03(\v2\x15.openits.cctv.v1.StopR\x04stopB\n" +
+	"\n" +
+	"\b_tour_idB\a\n" +
+	"\x05_name\"\xa0\x01\n" +
+	"\x04Stop\x12\x1f\n" +
+	"\bsequence\x18\x01 \x01(\rH\x00R\bsequence\x88\x01\x01\x12 \n" +
+	"\tpreset_id\x18\x02 \x01(\rH\x01R\bpresetId\x88\x01\x01\x12(\n" +
+	"\rdwell_seconds\x18\x03 \x01(\rH\x02R\fdwellSeconds\x88\x01\x01B\v\n" +
+	"\t_sequenceB\f\n" +
+	"\n" +
+	"_preset_idB\x10\n" +
+	"\x0e_dwell_seconds\"\xca\x01\n" +
+	"\n" +
+	"ToursState\x12$\n" +
+	"\vactive_tour\x18\x01 \x01(\rH\x00R\n" +
+	"activeTour\x88\x01\x01\x12?\n" +
+	"\trun_state\x18\x02 \x01(\x0e2\x1d.openits.cctv.v1.TourRunStateH\x01R\brunState\x88\x01\x01\x12&\n" +
+	"\fcurrent_stop\x18\x03 \x01(\rH\x02R\vcurrentStop\x88\x01\x01B\x0e\n" +
+	"\f_active_tourB\f\n" +
+	"\n" +
+	"_run_stateB\x0f\n" +
+	"\r_current_stop\"m\n" +
 	"\x04Lens\x123\n" +
 	"\x06config\x18\x01 \x01(\v2\x1b.openits.cctv.v1.LensConfigR\x06config\x120\n" +
-	"\x05state\x18\x02 \x01(\v2\x1a.openits.cctv.v1.LensStateR\x05state\"\xca\x01\n" +
+	"\x05state\x18\x02 \x01(\v2\x1a.openits.cctv.v1.LensStateR\x05state\"\xa0\x02\n" +
 	"\n" +
-	"LensConfig\x128\n" +
+	"LensConfig\x12=\n" +
 	"\n" +
-	"focus_mode\x18\x01 \x01(\x0e2\x19.openits.cctv.v1.LensModeR\tfocusMode\x12%\n" +
-	"\x0efocus_position\x18\x02 \x01(\rR\rfocusPosition\x126\n" +
-	"\tiris_mode\x18\x03 \x01(\x0e2\x19.openits.cctv.v1.LensModeR\birisMode\x12#\n" +
-	"\riris_position\x18\x04 \x01(\rR\firisPosition\"\xc9\x01\n" +
-	"\tLensState\x128\n" +
+	"focus_mode\x18\x01 \x01(\x0e2\x19.openits.cctv.v1.LensModeH\x00R\tfocusMode\x88\x01\x01\x12*\n" +
+	"\x0efocus_position\x18\x02 \x01(\rH\x01R\rfocusPosition\x88\x01\x01\x12;\n" +
+	"\tiris_mode\x18\x03 \x01(\x0e2\x19.openits.cctv.v1.LensModeH\x02R\birisMode\x88\x01\x01\x12(\n" +
+	"\riris_position\x18\x04 \x01(\rH\x03R\firisPosition\x88\x01\x01B\r\n" +
+	"\v_focus_modeB\x11\n" +
+	"\x0f_focus_positionB\f\n" +
 	"\n" +
-	"focus_mode\x18\x01 \x01(\x0e2\x19.openits.cctv.v1.LensModeR\tfocusMode\x12%\n" +
-	"\x0efocus_position\x18\x02 \x01(\rR\rfocusPosition\x126\n" +
-	"\tiris_mode\x18\x03 \x01(\x0e2\x19.openits.cctv.v1.LensModeR\birisMode\x12#\n" +
-	"\riris_position\x18\x04 \x01(\rR\firisPosition\"9\n" +
+	"_iris_modeB\x10\n" +
+	"\x0e_iris_position\"\x9f\x02\n" +
+	"\tLensState\x12=\n" +
+	"\n" +
+	"focus_mode\x18\x01 \x01(\x0e2\x19.openits.cctv.v1.LensModeH\x00R\tfocusMode\x88\x01\x01\x12*\n" +
+	"\x0efocus_position\x18\x02 \x01(\rH\x01R\rfocusPosition\x88\x01\x01\x12;\n" +
+	"\tiris_mode\x18\x03 \x01(\x0e2\x19.openits.cctv.v1.LensModeH\x02R\birisMode\x88\x01\x01\x12(\n" +
+	"\riris_position\x18\x04 \x01(\rH\x03R\firisPosition\x88\x01\x01B\r\n" +
+	"\v_focus_modeB\x11\n" +
+	"\x0f_focus_positionB\f\n" +
+	"\n" +
+	"_iris_modeB\x10\n" +
+	"\x0e_iris_position\"9\n" +
 	"\fPrivacyMasks\x12)\n" +
-	"\x04mask\x18\x01 \x03(\v2\x15.openits.cctv.v1.MaskR\x04mask\"M\n" +
-	"\x04Mask\x12\x17\n" +
-	"\amask_id\x18\x01 \x01(\rR\x06maskId\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x18\n" +
-	"\aenabled\x18\x03 \x01(\bR\aenabled\":\n" +
-	"\aStreams\x12/\n" +
-	"\x06stream\x18\x01 \x03(\v2\x17.openits.cctv.v1.StreamR\x06stream\"\x90\x01\n" +
-	"\x06Stream\x12\x1b\n" +
-	"\tstream_id\x18\x01 \x01(\rR\bstreamId\x125\n" +
-	"\x06config\x18\x02 \x01(\v2\x1d.openits.cctv.v1.StreamConfigR\x06config\x122\n" +
-	"\x05state\x18\x03 \x01(\v2\x1c.openits.cctv.v1.StreamStateR\x05state\"q\n" +
-	"\fStreamConfig\x121\n" +
-	"\x05codec\x18\x01 \x01(\x0e2\x1b.openits.cctv.v1.VideoCodecR\x05codec\x12.\n" +
-	"\x13target_bitrate_kbps\x18\x02 \x01(\rR\x11targetBitrateKbps\"\x83\x02\n" +
-	"\vStreamState\x12\x19\n" +
-	"\bwidth_px\x18\x01 \x01(\rR\awidthPx\x12\x1b\n" +
-	"\theight_px\x18\x02 \x01(\rR\bheightPx\x121\n" +
-	"\x05codec\x18\x03 \x01(\x0e2\x1b.openits.cctv.v1.VideoCodecR\x05codec\x12!\n" +
-	"\fbitrate_kbps\x18\x04 \x01(\rR\vbitrateKbps\x12\x1d\n" +
+	"\x04mask\x18\x01 \x03(\v2\x15.openits.cctv.v1.MaskR\x04mask\"}\n" +
+	"\x04Mask\x12\x1c\n" +
+	"\amask_id\x18\x01 \x01(\rH\x00R\x06maskId\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x1d\n" +
+	"\aenabled\x18\x03 \x01(\bH\x02R\aenabled\x88\x01\x01B\n" +
 	"\n" +
-	"frame_rate\x18\x05 \x01(\tR\tframeRate\x125\n" +
-	"\x06health\x18\x06 \x01(\x0e2\x1d.openits.cctv.v1.StreamHealthR\x06health\x12\x10\n" +
-	"\x03uri\x18\a \x01(\tR\x03uri\"\x82\x01\n" +
+	"\b_mask_idB\a\n" +
+	"\x05_nameB\n" +
+	"\n" +
+	"\b_enabled\":\n" +
+	"\aStreams\x12/\n" +
+	"\x06stream\x18\x01 \x03(\v2\x17.openits.cctv.v1.StreamR\x06stream\"\xa3\x01\n" +
+	"\x06Stream\x12 \n" +
+	"\tstream_id\x18\x01 \x01(\rH\x00R\bstreamId\x88\x01\x01\x125\n" +
+	"\x06config\x18\x02 \x01(\v2\x1d.openits.cctv.v1.StreamConfigR\x06config\x122\n" +
+	"\x05state\x18\x03 \x01(\v2\x1c.openits.cctv.v1.StreamStateR\x05stateB\f\n" +
+	"\n" +
+	"_stream_id\"\x9d\x01\n" +
+	"\fStreamConfig\x126\n" +
+	"\x05codec\x18\x01 \x01(\x0e2\x1b.openits.cctv.v1.VideoCodecH\x00R\x05codec\x88\x01\x01\x123\n" +
+	"\x13target_bitrate_kbps\x18\x02 \x01(\rH\x01R\x11targetBitrateKbps\x88\x01\x01B\b\n" +
+	"\x06_codecB\x16\n" +
+	"\x14_target_bitrate_kbps\"\xfe\x02\n" +
+	"\vStreamState\x12\x1e\n" +
+	"\bwidth_px\x18\x01 \x01(\rH\x00R\awidthPx\x88\x01\x01\x12 \n" +
+	"\theight_px\x18\x02 \x01(\rH\x01R\bheightPx\x88\x01\x01\x126\n" +
+	"\x05codec\x18\x03 \x01(\x0e2\x1b.openits.cctv.v1.VideoCodecH\x02R\x05codec\x88\x01\x01\x12&\n" +
+	"\fbitrate_kbps\x18\x04 \x01(\rH\x03R\vbitrateKbps\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"frame_rate\x18\x05 \x01(\tH\x04R\tframeRate\x88\x01\x01\x12:\n" +
+	"\x06health\x18\x06 \x01(\x0e2\x1d.openits.cctv.v1.StreamHealthH\x05R\x06health\x88\x01\x01\x12\x15\n" +
+	"\x03uri\x18\a \x01(\tH\x06R\x03uri\x88\x01\x01B\v\n" +
+	"\t_width_pxB\f\n" +
+	"\n" +
+	"_height_pxB\b\n" +
+	"\x06_codecB\x0f\n" +
+	"\r_bitrate_kbpsB\r\n" +
+	"\v_frame_rateB\t\n" +
+	"\a_healthB\x06\n" +
+	"\x04_uri\"\x82\x01\n" +
 	"\vEnvironment\x12:\n" +
 	"\x06config\x18\x01 \x01(\v2\".openits.cctv.v1.EnvironmentConfigR\x06config\x127\n" +
-	"\x05state\x18\x02 \x01(\v2!.openits.cctv.v1.EnvironmentStateR\x05state\"\xb6\x01\n" +
-	"\x11EnvironmentConfig\x12\x14\n" +
-	"\x05wiper\x18\x01 \x01(\bR\x05wiper\x12\x16\n" +
-	"\x06washer\x18\x02 \x01(\bR\x06washer\x125\n" +
-	"\x17washer_spray_duration_s\x18\x04 \x01(\rR\x14washerSprayDurationS\x12<\n" +
-	"\vheater_mode\x18\x03 \x01(\x0e2\x1b.openits.cctv.v1.HeaterModeR\n" +
-	"heaterMode\"\xa9\x01\n" +
-	"\x10EnvironmentState\x12(\n" +
-	"\x10enclosure_temp_c\x18\x01 \x01(\tR\x0eenclosureTempC\x12!\n" +
-	"\fwiper_active\x18\x02 \x01(\bR\vwiperActive\x12#\n" +
-	"\rheater_active\x18\x03 \x01(\bR\fheaterActive\x12#\n" +
-	"\rblower_active\x18\x04 \x01(\bR\fblowerActive\"6\n" +
+	"\x05state\x18\x02 \x01(\v2!.openits.cctv.v1.EnvironmentStateR\x05state\"\x8b\x02\n" +
+	"\x11EnvironmentConfig\x12\x19\n" +
+	"\x05wiper\x18\x01 \x01(\bH\x00R\x05wiper\x88\x01\x01\x12\x1b\n" +
+	"\x06washer\x18\x02 \x01(\bH\x01R\x06washer\x88\x01\x01\x12:\n" +
+	"\x17washer_spray_duration_s\x18\x04 \x01(\rH\x02R\x14washerSprayDurationS\x88\x01\x01\x12A\n" +
+	"\vheater_mode\x18\x03 \x01(\x0e2\x1b.openits.cctv.v1.HeaterModeH\x03R\n" +
+	"heaterMode\x88\x01\x01B\b\n" +
+	"\x06_wiperB\t\n" +
+	"\a_washerB\x1a\n" +
+	"\x18_washer_spray_duration_sB\x0e\n" +
+	"\f_heater_mode\"\x87\x02\n" +
+	"\x10EnvironmentState\x12-\n" +
+	"\x10enclosure_temp_c\x18\x01 \x01(\tH\x00R\x0eenclosureTempC\x88\x01\x01\x12&\n" +
+	"\fwiper_active\x18\x02 \x01(\bH\x01R\vwiperActive\x88\x01\x01\x12(\n" +
+	"\rheater_active\x18\x03 \x01(\bH\x02R\fheaterActive\x88\x01\x01\x12(\n" +
+	"\rblower_active\x18\x04 \x01(\bH\x03R\fblowerActive\x88\x01\x01B\x13\n" +
+	"\x11_enclosure_temp_cB\x0f\n" +
+	"\r_wiper_activeB\x10\n" +
+	"\x0e_heater_activeB\x10\n" +
+	"\x0e_blower_active\"6\n" +
 	"\x06Faults\x12,\n" +
-	"\x05fault\x18\x01 \x03(\v2\x16.openits.cctv.v1.FaultR\x05fault\"\x88\x02\n" +
-	"\x05Fault\x12\x1a\n" +
-	"\bcategory\x18\x01 \x01(\tR\bcategory\x12'\n" +
-	"\x0fcorrelates_with\x18\x06 \x01(\tR\x0ecorrelatesWith\x12 \n" +
-	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x19\n" +
-	"\bfault_id\x18\x03 \x01(\tR\afaultId\x12A\n" +
-	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12:\n" +
-	"\bseverity\x18\x05 \x01(\x0e2\x1e.openits.cctv.v1.FaultSeverityR\bseverity\"v\n" +
+	"\x05fault\x18\x01 \x03(\v2\x16.openits.cctv.v1.FaultR\x05fault\"\xec\x02\n" +
+	"\x05Fault\x12\x1f\n" +
+	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12,\n" +
+	"\x0fcorrelates_with\x18\x06 \x01(\tH\x01R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x02R\vdescription\x88\x01\x01\x12\x1e\n" +
+	"\bfault_id\x18\x03 \x01(\tH\x03R\afaultId\x88\x01\x01\x12A\n" +
+	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12?\n" +
+	"\bseverity\x18\x05 \x01(\x0e2\x1e.openits.cctv.v1.FaultSeverityH\x04R\bseverity\x88\x01\x01B\v\n" +
+	"\t_categoryB\x12\n" +
+	"\x10_correlates_withB\x0e\n" +
+	"\f_descriptionB\v\n" +
+	"\t_fault_idB\v\n" +
+	"\t_severity\"v\n" +
 	"\aControl\x126\n" +
 	"\x06config\x18\x01 \x01(\v2\x1e.openits.cctv.v1.ControlConfigR\x06config\x123\n" +
-	"\x05state\x18\x02 \x01(\v2\x1d.openits.cctv.v1.ControlStateR\x05state\"p\n" +
-	"\rControlConfig\x12!\n" +
-	"\fcontrol_mode\x18\x01 \x01(\tR\vcontrolMode\x12<\n" +
-	"\x06holder\x18\x02 \x01(\v2$.openits.cctv.v1.ControlConfigHolderR\x06holder\"\x80\x01\n" +
+	"\x05state\x18\x02 \x01(\v2\x1d.openits.cctv.v1.ControlStateR\x05state\"\x86\x01\n" +
+	"\rControlConfig\x12&\n" +
+	"\fcontrol_mode\x18\x01 \x01(\tH\x00R\vcontrolMode\x88\x01\x01\x12<\n" +
+	"\x06holder\x18\x02 \x01(\v2$.openits.cctv.v1.ControlConfigHolderR\x06holderB\x0f\n" +
+	"\r_control_mode\"\xad\x01\n" +
 	"\x13ControlConfigHolder\x12!\n" +
-	"\frequested_by\x18\x01 \x01(\tR\vrequestedBy\x12\x1a\n" +
-	"\bpriority\x18\x02 \x01(\rR\bpriority\x12*\n" +
-	"\x11lockout_timeout_s\x18\x03 \x01(\rR\x0flockoutTimeoutS\"n\n" +
-	"\fControlState\x12!\n" +
-	"\fcontrol_mode\x18\x01 \x01(\tR\vcontrolMode\x12;\n" +
-	"\x06holder\x18\x02 \x01(\v2#.openits.cctv.v1.ControlStateHolderR\x06holder\"\xd6\x01\n" +
-	"\x12ControlStateHolder\x12%\n" +
-	"\x0ecurrent_holder\x18\x01 \x01(\tR\rcurrentHolder\x12#\n" +
-	"\rheld_priority\x18\x02 \x01(\rR\fheldPriority\x129\n" +
+	"\frequested_by\x18\x01 \x01(\tR\vrequestedBy\x12\x1f\n" +
+	"\bpriority\x18\x02 \x01(\rH\x00R\bpriority\x88\x01\x01\x12/\n" +
+	"\x11lockout_timeout_s\x18\x03 \x01(\rH\x01R\x0flockoutTimeoutS\x88\x01\x01B\v\n" +
+	"\t_priorityB\x14\n" +
+	"\x12_lockout_timeout_s\"\x84\x01\n" +
+	"\fControlState\x12&\n" +
+	"\fcontrol_mode\x18\x01 \x01(\tH\x00R\vcontrolMode\x88\x01\x01\x12;\n" +
+	"\x06holder\x18\x02 \x01(\v2#.openits.cctv.v1.ControlStateHolderR\x06holderB\x0f\n" +
+	"\r_control_mode\"\x85\x02\n" +
+	"\x12ControlStateHolder\x12*\n" +
+	"\x0ecurrent_holder\x18\x01 \x01(\tH\x00R\rcurrentHolder\x88\x01\x01\x12(\n" +
+	"\rheld_priority\x18\x02 \x01(\rH\x01R\fheldPriority\x88\x01\x01\x129\n" +
 	"\n" +
 	"held_since\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\theldSince\x129\n" +
 	"\n" +
-	"expires_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt*\x93\x01\n" +
-	"\x11OperationalStatus\x12\x1d\n" +
-	"\x19OPERATIONAL_STATUS_ONLINE\x10\x00\x12\x1f\n" +
-	"\x1bOPERATIONAL_STATUS_DEGRADED\x10\x01\x12\x1e\n" +
-	"\x1aOPERATIONAL_STATUS_OFFLINE\x10\x02\x12\x1e\n" +
-	"\x1aOPERATIONAL_STATUS_UNKNOWN\x10\x03*\xd4\x01\n" +
-	"\x11MountingStructure\x12\x1b\n" +
-	"\x17MOUNTING_STRUCTURE_POLE\x10\x00\x12\x1f\n" +
-	"\x1bMOUNTING_STRUCTURE_MAST_ARM\x10\x01\x12 \n" +
-	"\x1cMOUNTING_STRUCTURE_SPAN_WIRE\x10\x02\x12 \n" +
-	"\x1cMOUNTING_STRUCTURE_STRUCTURE\x10\x03\x12\x1f\n" +
-	"\x1bMOUNTING_STRUCTURE_BUILDING\x10\x04\x12\x1c\n" +
-	"\x18MOUNTING_STRUCTURE_OTHER\x10\x05*\xdb\x01\n" +
-	"\x16OpenitsCctvPtzMoveMode\x12'\n" +
-	"#OPENITS_CCTV_PTZ_MOVE_MODE_ABSOLUTE\x10\x00\x12'\n" +
-	"#OPENITS_CCTV_PTZ_MOVE_MODE_VELOCITY\x10\x01\x12%\n" +
-	"!OPENITS_CCTV_PTZ_MOVE_MODE_PRESET\x10\x02\x12#\n" +
-	"\x1fOPENITS_CCTV_PTZ_MOVE_MODE_TOUR\x10\x03\x12#\n" +
-	"\x1fOPENITS_CCTV_PTZ_MOVE_MODE_IDLE\x10\x04*\x93\x01\n" +
-	"\x17OpenitsCctvTourRunState\x12'\n" +
-	"#OPENITS_CCTV_TOUR_RUN_STATE_STOPPED\x10\x00\x12'\n" +
-	"#OPENITS_CCTV_TOUR_RUN_STATE_RUNNING\x10\x01\x12&\n" +
-	"\"OPENITS_CCTV_TOUR_RUN_STATE_PAUSED\x10\x02*4\n" +
-	"\bLensMode\x12\x12\n" +
-	"\x0eLENS_MODE_AUTO\x10\x00\x12\x14\n" +
-	"\x10LENS_MODE_MANUAL\x10\x01*}\n" +
-	"\n" +
-	"VideoCodec\x12\x14\n" +
-	"\x10VIDEO_CODEC_H264\x10\x00\x12\x14\n" +
-	"\x10VIDEO_CODEC_H265\x10\x01\x12\x15\n" +
-	"\x11VIDEO_CODEC_MJPEG\x10\x02\x12\x15\n" +
-	"\x11VIDEO_CODEC_MPEG4\x10\x03\x12\x15\n" +
-	"\x11VIDEO_CODEC_OTHER\x10\x04*X\n" +
-	"\fStreamHealth\x12\x14\n" +
-	"\x10STREAM_HEALTH_OK\x10\x00\x12\x1a\n" +
-	"\x16STREAM_HEALTH_DEGRADED\x10\x01\x12\x16\n" +
-	"\x12STREAM_HEALTH_DOWN\x10\x02*K\n" +
-	"\n" +
-	"HeaterMode\x12\x13\n" +
-	"\x0fHEATER_MODE_OFF\x10\x00\x12\x12\n" +
-	"\x0eHEATER_MODE_ON\x10\x01\x12\x14\n" +
-	"\x10HEATER_MODE_AUTO\x10\x02*\x95\x01\n" +
-	"\rFaultSeverity\x12\x17\n" +
-	"\x13FAULT_SEVERITY_INFO\x10\x00\x12\x1a\n" +
-	"\x16FAULT_SEVERITY_WARNING\x10\x01\x12\x18\n" +
-	"\x14FAULT_SEVERITY_MINOR\x10\x02\x12\x18\n" +
-	"\x14FAULT_SEVERITY_MAJOR\x10\x03\x12\x1b\n" +
-	"\x17FAULT_SEVERITY_CRITICAL\x10\x04BEZCgithub.com/Vikasa2M/openits-models/pkg/proto/openits/cctv/v1;cctvv1b\x06proto3"
+	"expires_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAtB\x11\n" +
+	"\x0f_current_holderB\x10\n" +
+	"\x0e_held_priorityBEZCgithub.com/Vikasa2M/openits-models/pkg/proto/openits/cctv/v1;cctvv1b\x06proto3"
 
 var (
 	file_openits_cctv_v1_state_proto_rawDescOnce sync.Once
@@ -3414,116 +3037,115 @@ func file_openits_cctv_v1_state_proto_rawDescGZIP() []byte {
 	return file_openits_cctv_v1_state_proto_rawDescData
 }
 
-var file_openits_cctv_v1_state_proto_enumTypes = make([]protoimpl.EnumInfo, 9)
 var file_openits_cctv_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 39)
 var file_openits_cctv_v1_state_proto_goTypes = []any{
-	(OperationalStatus)(0),              // 0: openits.cctv.v1.OperationalStatus
-	(MountingStructure)(0),              // 1: openits.cctv.v1.MountingStructure
-	(OpenitsCctvPtzMoveMode)(0),         // 2: openits.cctv.v1.OpenitsCctvPtzMoveMode
-	(OpenitsCctvTourRunState)(0),        // 3: openits.cctv.v1.OpenitsCctvTourRunState
-	(LensMode)(0),                       // 4: openits.cctv.v1.LensMode
-	(VideoCodec)(0),                     // 5: openits.cctv.v1.VideoCodec
-	(StreamHealth)(0),                   // 6: openits.cctv.v1.StreamHealth
-	(HeaterMode)(0),                     // 7: openits.cctv.v1.HeaterMode
-	(FaultSeverity)(0),                  // 8: openits.cctv.v1.FaultSeverity
-	(*Camera)(nil),                      // 9: openits.cctv.v1.Camera
-	(*CameraConfig)(nil),                // 10: openits.cctv.v1.CameraConfig
-	(*CameraConfigLinearReference)(nil), // 11: openits.cctv.v1.CameraConfigLinearReference
-	(*CameraState)(nil),                 // 12: openits.cctv.v1.CameraState
-	(*CameraStateLinearReference)(nil),  // 13: openits.cctv.v1.CameraStateLinearReference
-	(*Mounting)(nil),                    // 14: openits.cctv.v1.Mounting
-	(*AssociatedDevice)(nil),            // 15: openits.cctv.v1.AssociatedDevice
-	(*Ptz)(nil),                         // 16: openits.cctv.v1.Ptz
-	(*Capabilities)(nil),                // 17: openits.cctv.v1.Capabilities
-	(*PtzConfig)(nil),                   // 18: openits.cctv.v1.PtzConfig
-	(*PtzConfigAbsolute)(nil),           // 19: openits.cctv.v1.PtzConfigAbsolute
-	(*PtzConfigVelocity)(nil),           // 20: openits.cctv.v1.PtzConfigVelocity
-	(*PtzState)(nil),                    // 21: openits.cctv.v1.PtzState
-	(*Presets)(nil),                     // 22: openits.cctv.v1.Presets
-	(*Preset)(nil),                      // 23: openits.cctv.v1.Preset
-	(*PresetsState)(nil),                // 24: openits.cctv.v1.PresetsState
-	(*Tours)(nil),                       // 25: openits.cctv.v1.Tours
-	(*Tour)(nil),                        // 26: openits.cctv.v1.Tour
-	(*Stop)(nil),                        // 27: openits.cctv.v1.Stop
-	(*ToursState)(nil),                  // 28: openits.cctv.v1.ToursState
-	(*Lens)(nil),                        // 29: openits.cctv.v1.Lens
-	(*LensConfig)(nil),                  // 30: openits.cctv.v1.LensConfig
-	(*LensState)(nil),                   // 31: openits.cctv.v1.LensState
-	(*PrivacyMasks)(nil),                // 32: openits.cctv.v1.PrivacyMasks
-	(*Mask)(nil),                        // 33: openits.cctv.v1.Mask
-	(*Streams)(nil),                     // 34: openits.cctv.v1.Streams
-	(*Stream)(nil),                      // 35: openits.cctv.v1.Stream
-	(*StreamConfig)(nil),                // 36: openits.cctv.v1.StreamConfig
-	(*StreamState)(nil),                 // 37: openits.cctv.v1.StreamState
-	(*Environment)(nil),                 // 38: openits.cctv.v1.Environment
-	(*EnvironmentConfig)(nil),           // 39: openits.cctv.v1.EnvironmentConfig
-	(*EnvironmentState)(nil),            // 40: openits.cctv.v1.EnvironmentState
-	(*Faults)(nil),                      // 41: openits.cctv.v1.Faults
-	(*Fault)(nil),                       // 42: openits.cctv.v1.Fault
-	(*Control)(nil),                     // 43: openits.cctv.v1.Control
-	(*ControlConfig)(nil),               // 44: openits.cctv.v1.ControlConfig
-	(*ControlConfigHolder)(nil),         // 45: openits.cctv.v1.ControlConfigHolder
-	(*ControlState)(nil),                // 46: openits.cctv.v1.ControlState
-	(*ControlStateHolder)(nil),          // 47: openits.cctv.v1.ControlStateHolder
-	(*timestamppb.Timestamp)(nil),       // 48: google.protobuf.Timestamp
+	(*Camera)(nil),                      // 0: openits.cctv.v1.Camera
+	(*CameraConfig)(nil),                // 1: openits.cctv.v1.CameraConfig
+	(*CameraConfigLinearReference)(nil), // 2: openits.cctv.v1.CameraConfigLinearReference
+	(*CameraState)(nil),                 // 3: openits.cctv.v1.CameraState
+	(*CameraStateLinearReference)(nil),  // 4: openits.cctv.v1.CameraStateLinearReference
+	(*Mounting)(nil),                    // 5: openits.cctv.v1.Mounting
+	(*AssociatedDevice)(nil),            // 6: openits.cctv.v1.AssociatedDevice
+	(*Ptz)(nil),                         // 7: openits.cctv.v1.Ptz
+	(*Capabilities)(nil),                // 8: openits.cctv.v1.Capabilities
+	(*PtzConfig)(nil),                   // 9: openits.cctv.v1.PtzConfig
+	(*PtzConfigAbsolute)(nil),           // 10: openits.cctv.v1.PtzConfigAbsolute
+	(*PtzConfigVelocity)(nil),           // 11: openits.cctv.v1.PtzConfigVelocity
+	(*PtzState)(nil),                    // 12: openits.cctv.v1.PtzState
+	(*Presets)(nil),                     // 13: openits.cctv.v1.Presets
+	(*Preset)(nil),                      // 14: openits.cctv.v1.Preset
+	(*PresetsState)(nil),                // 15: openits.cctv.v1.PresetsState
+	(*Tours)(nil),                       // 16: openits.cctv.v1.Tours
+	(*Tour)(nil),                        // 17: openits.cctv.v1.Tour
+	(*Stop)(nil),                        // 18: openits.cctv.v1.Stop
+	(*ToursState)(nil),                  // 19: openits.cctv.v1.ToursState
+	(*Lens)(nil),                        // 20: openits.cctv.v1.Lens
+	(*LensConfig)(nil),                  // 21: openits.cctv.v1.LensConfig
+	(*LensState)(nil),                   // 22: openits.cctv.v1.LensState
+	(*PrivacyMasks)(nil),                // 23: openits.cctv.v1.PrivacyMasks
+	(*Mask)(nil),                        // 24: openits.cctv.v1.Mask
+	(*Streams)(nil),                     // 25: openits.cctv.v1.Streams
+	(*Stream)(nil),                      // 26: openits.cctv.v1.Stream
+	(*StreamConfig)(nil),                // 27: openits.cctv.v1.StreamConfig
+	(*StreamState)(nil),                 // 28: openits.cctv.v1.StreamState
+	(*Environment)(nil),                 // 29: openits.cctv.v1.Environment
+	(*EnvironmentConfig)(nil),           // 30: openits.cctv.v1.EnvironmentConfig
+	(*EnvironmentState)(nil),            // 31: openits.cctv.v1.EnvironmentState
+	(*Faults)(nil),                      // 32: openits.cctv.v1.Faults
+	(*Fault)(nil),                       // 33: openits.cctv.v1.Fault
+	(*Control)(nil),                     // 34: openits.cctv.v1.Control
+	(*ControlConfig)(nil),               // 35: openits.cctv.v1.ControlConfig
+	(*ControlConfigHolder)(nil),         // 36: openits.cctv.v1.ControlConfigHolder
+	(*ControlState)(nil),                // 37: openits.cctv.v1.ControlState
+	(*ControlStateHolder)(nil),          // 38: openits.cctv.v1.ControlStateHolder
+	(*timestamppb.Timestamp)(nil),       // 39: google.protobuf.Timestamp
+	(OperationalStatus)(0),              // 40: openits.cctv.v1.OperationalStatus
+	(MountingStructure)(0),              // 41: openits.cctv.v1.MountingStructure
+	(PtzMoveMode)(0),                    // 42: openits.cctv.v1.PtzMoveMode
+	(TourRunState)(0),                   // 43: openits.cctv.v1.TourRunState
+	(LensMode)(0),                       // 44: openits.cctv.v1.LensMode
+	(VideoCodec)(0),                     // 45: openits.cctv.v1.VideoCodec
+	(StreamHealth)(0),                   // 46: openits.cctv.v1.StreamHealth
+	(HeaterMode)(0),                     // 47: openits.cctv.v1.HeaterMode
+	(FaultSeverity)(0),                  // 48: openits.cctv.v1.FaultSeverity
 }
 var file_openits_cctv_v1_state_proto_depIdxs = []int32{
-	10, // 0: openits.cctv.v1.Camera.config:type_name -> openits.cctv.v1.CameraConfig
-	12, // 1: openits.cctv.v1.Camera.state:type_name -> openits.cctv.v1.CameraState
-	14, // 2: openits.cctv.v1.Camera.mounting:type_name -> openits.cctv.v1.Mounting
-	16, // 3: openits.cctv.v1.Camera.ptz:type_name -> openits.cctv.v1.Ptz
-	29, // 4: openits.cctv.v1.Camera.lens:type_name -> openits.cctv.v1.Lens
-	32, // 5: openits.cctv.v1.Camera.privacy_masks:type_name -> openits.cctv.v1.PrivacyMasks
-	34, // 6: openits.cctv.v1.Camera.streams:type_name -> openits.cctv.v1.Streams
-	38, // 7: openits.cctv.v1.Camera.environment:type_name -> openits.cctv.v1.Environment
-	41, // 8: openits.cctv.v1.Camera.faults:type_name -> openits.cctv.v1.Faults
-	43, // 9: openits.cctv.v1.Camera.control:type_name -> openits.cctv.v1.Control
-	48, // 10: openits.cctv.v1.CameraConfig.install_date:type_name -> google.protobuf.Timestamp
-	11, // 11: openits.cctv.v1.CameraConfig.linear_reference:type_name -> openits.cctv.v1.CameraConfigLinearReference
-	0,  // 12: openits.cctv.v1.CameraState.operational_status:type_name -> openits.cctv.v1.OperationalStatus
-	48, // 13: openits.cctv.v1.CameraState.install_date:type_name -> google.protobuf.Timestamp
-	13, // 14: openits.cctv.v1.CameraState.linear_reference:type_name -> openits.cctv.v1.CameraStateLinearReference
-	1,  // 15: openits.cctv.v1.Mounting.structure:type_name -> openits.cctv.v1.MountingStructure
-	15, // 16: openits.cctv.v1.Mounting.associated_device:type_name -> openits.cctv.v1.AssociatedDevice
-	17, // 17: openits.cctv.v1.Ptz.capabilities:type_name -> openits.cctv.v1.Capabilities
-	18, // 18: openits.cctv.v1.Ptz.config:type_name -> openits.cctv.v1.PtzConfig
-	21, // 19: openits.cctv.v1.Ptz.state:type_name -> openits.cctv.v1.PtzState
-	22, // 20: openits.cctv.v1.Ptz.presets:type_name -> openits.cctv.v1.Presets
-	25, // 21: openits.cctv.v1.Ptz.tours:type_name -> openits.cctv.v1.Tours
-	19, // 22: openits.cctv.v1.PtzConfig.absolute:type_name -> openits.cctv.v1.PtzConfigAbsolute
-	20, // 23: openits.cctv.v1.PtzConfig.velocity:type_name -> openits.cctv.v1.PtzConfigVelocity
-	2,  // 24: openits.cctv.v1.PtzState.move_mode:type_name -> openits.cctv.v1.OpenitsCctvPtzMoveMode
-	23, // 25: openits.cctv.v1.Presets.preset:type_name -> openits.cctv.v1.Preset
-	24, // 26: openits.cctv.v1.Presets.state:type_name -> openits.cctv.v1.PresetsState
-	26, // 27: openits.cctv.v1.Tours.tour:type_name -> openits.cctv.v1.Tour
-	28, // 28: openits.cctv.v1.Tours.state:type_name -> openits.cctv.v1.ToursState
-	27, // 29: openits.cctv.v1.Tour.stop:type_name -> openits.cctv.v1.Stop
-	3,  // 30: openits.cctv.v1.ToursState.run_state:type_name -> openits.cctv.v1.OpenitsCctvTourRunState
-	30, // 31: openits.cctv.v1.Lens.config:type_name -> openits.cctv.v1.LensConfig
-	31, // 32: openits.cctv.v1.Lens.state:type_name -> openits.cctv.v1.LensState
-	4,  // 33: openits.cctv.v1.LensConfig.focus_mode:type_name -> openits.cctv.v1.LensMode
-	4,  // 34: openits.cctv.v1.LensConfig.iris_mode:type_name -> openits.cctv.v1.LensMode
-	4,  // 35: openits.cctv.v1.LensState.focus_mode:type_name -> openits.cctv.v1.LensMode
-	4,  // 36: openits.cctv.v1.LensState.iris_mode:type_name -> openits.cctv.v1.LensMode
-	33, // 37: openits.cctv.v1.PrivacyMasks.mask:type_name -> openits.cctv.v1.Mask
-	35, // 38: openits.cctv.v1.Streams.stream:type_name -> openits.cctv.v1.Stream
-	36, // 39: openits.cctv.v1.Stream.config:type_name -> openits.cctv.v1.StreamConfig
-	37, // 40: openits.cctv.v1.Stream.state:type_name -> openits.cctv.v1.StreamState
-	5,  // 41: openits.cctv.v1.StreamConfig.codec:type_name -> openits.cctv.v1.VideoCodec
-	5,  // 42: openits.cctv.v1.StreamState.codec:type_name -> openits.cctv.v1.VideoCodec
-	6,  // 43: openits.cctv.v1.StreamState.health:type_name -> openits.cctv.v1.StreamHealth
-	39, // 44: openits.cctv.v1.Environment.config:type_name -> openits.cctv.v1.EnvironmentConfig
-	40, // 45: openits.cctv.v1.Environment.state:type_name -> openits.cctv.v1.EnvironmentState
-	7,  // 46: openits.cctv.v1.EnvironmentConfig.heater_mode:type_name -> openits.cctv.v1.HeaterMode
-	42, // 47: openits.cctv.v1.Faults.fault:type_name -> openits.cctv.v1.Fault
-	48, // 48: openits.cctv.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	8,  // 49: openits.cctv.v1.Fault.severity:type_name -> openits.cctv.v1.FaultSeverity
-	44, // 50: openits.cctv.v1.Control.config:type_name -> openits.cctv.v1.ControlConfig
-	46, // 51: openits.cctv.v1.Control.state:type_name -> openits.cctv.v1.ControlState
-	45, // 52: openits.cctv.v1.ControlConfig.holder:type_name -> openits.cctv.v1.ControlConfigHolder
-	47, // 53: openits.cctv.v1.ControlState.holder:type_name -> openits.cctv.v1.ControlStateHolder
-	48, // 54: openits.cctv.v1.ControlStateHolder.held_since:type_name -> google.protobuf.Timestamp
-	48, // 55: openits.cctv.v1.ControlStateHolder.expires_at:type_name -> google.protobuf.Timestamp
+	1,  // 0: openits.cctv.v1.Camera.config:type_name -> openits.cctv.v1.CameraConfig
+	3,  // 1: openits.cctv.v1.Camera.state:type_name -> openits.cctv.v1.CameraState
+	5,  // 2: openits.cctv.v1.Camera.mounting:type_name -> openits.cctv.v1.Mounting
+	7,  // 3: openits.cctv.v1.Camera.ptz:type_name -> openits.cctv.v1.Ptz
+	20, // 4: openits.cctv.v1.Camera.lens:type_name -> openits.cctv.v1.Lens
+	23, // 5: openits.cctv.v1.Camera.privacy_masks:type_name -> openits.cctv.v1.PrivacyMasks
+	25, // 6: openits.cctv.v1.Camera.streams:type_name -> openits.cctv.v1.Streams
+	29, // 7: openits.cctv.v1.Camera.environment:type_name -> openits.cctv.v1.Environment
+	32, // 8: openits.cctv.v1.Camera.faults:type_name -> openits.cctv.v1.Faults
+	34, // 9: openits.cctv.v1.Camera.control:type_name -> openits.cctv.v1.Control
+	39, // 10: openits.cctv.v1.CameraConfig.install_date:type_name -> google.protobuf.Timestamp
+	2,  // 11: openits.cctv.v1.CameraConfig.linear_reference:type_name -> openits.cctv.v1.CameraConfigLinearReference
+	40, // 12: openits.cctv.v1.CameraState.operational_status:type_name -> openits.cctv.v1.OperationalStatus
+	39, // 13: openits.cctv.v1.CameraState.install_date:type_name -> google.protobuf.Timestamp
+	4,  // 14: openits.cctv.v1.CameraState.linear_reference:type_name -> openits.cctv.v1.CameraStateLinearReference
+	41, // 15: openits.cctv.v1.Mounting.structure:type_name -> openits.cctv.v1.MountingStructure
+	6,  // 16: openits.cctv.v1.Mounting.associated_device:type_name -> openits.cctv.v1.AssociatedDevice
+	8,  // 17: openits.cctv.v1.Ptz.capabilities:type_name -> openits.cctv.v1.Capabilities
+	9,  // 18: openits.cctv.v1.Ptz.config:type_name -> openits.cctv.v1.PtzConfig
+	12, // 19: openits.cctv.v1.Ptz.state:type_name -> openits.cctv.v1.PtzState
+	13, // 20: openits.cctv.v1.Ptz.presets:type_name -> openits.cctv.v1.Presets
+	16, // 21: openits.cctv.v1.Ptz.tours:type_name -> openits.cctv.v1.Tours
+	10, // 22: openits.cctv.v1.PtzConfig.absolute:type_name -> openits.cctv.v1.PtzConfigAbsolute
+	11, // 23: openits.cctv.v1.PtzConfig.velocity:type_name -> openits.cctv.v1.PtzConfigVelocity
+	42, // 24: openits.cctv.v1.PtzState.move_mode:type_name -> openits.cctv.v1.PtzMoveMode
+	14, // 25: openits.cctv.v1.Presets.preset:type_name -> openits.cctv.v1.Preset
+	15, // 26: openits.cctv.v1.Presets.state:type_name -> openits.cctv.v1.PresetsState
+	17, // 27: openits.cctv.v1.Tours.tour:type_name -> openits.cctv.v1.Tour
+	19, // 28: openits.cctv.v1.Tours.state:type_name -> openits.cctv.v1.ToursState
+	18, // 29: openits.cctv.v1.Tour.stop:type_name -> openits.cctv.v1.Stop
+	43, // 30: openits.cctv.v1.ToursState.run_state:type_name -> openits.cctv.v1.TourRunState
+	21, // 31: openits.cctv.v1.Lens.config:type_name -> openits.cctv.v1.LensConfig
+	22, // 32: openits.cctv.v1.Lens.state:type_name -> openits.cctv.v1.LensState
+	44, // 33: openits.cctv.v1.LensConfig.focus_mode:type_name -> openits.cctv.v1.LensMode
+	44, // 34: openits.cctv.v1.LensConfig.iris_mode:type_name -> openits.cctv.v1.LensMode
+	44, // 35: openits.cctv.v1.LensState.focus_mode:type_name -> openits.cctv.v1.LensMode
+	44, // 36: openits.cctv.v1.LensState.iris_mode:type_name -> openits.cctv.v1.LensMode
+	24, // 37: openits.cctv.v1.PrivacyMasks.mask:type_name -> openits.cctv.v1.Mask
+	26, // 38: openits.cctv.v1.Streams.stream:type_name -> openits.cctv.v1.Stream
+	27, // 39: openits.cctv.v1.Stream.config:type_name -> openits.cctv.v1.StreamConfig
+	28, // 40: openits.cctv.v1.Stream.state:type_name -> openits.cctv.v1.StreamState
+	45, // 41: openits.cctv.v1.StreamConfig.codec:type_name -> openits.cctv.v1.VideoCodec
+	45, // 42: openits.cctv.v1.StreamState.codec:type_name -> openits.cctv.v1.VideoCodec
+	46, // 43: openits.cctv.v1.StreamState.health:type_name -> openits.cctv.v1.StreamHealth
+	30, // 44: openits.cctv.v1.Environment.config:type_name -> openits.cctv.v1.EnvironmentConfig
+	31, // 45: openits.cctv.v1.Environment.state:type_name -> openits.cctv.v1.EnvironmentState
+	47, // 46: openits.cctv.v1.EnvironmentConfig.heater_mode:type_name -> openits.cctv.v1.HeaterMode
+	33, // 47: openits.cctv.v1.Faults.fault:type_name -> openits.cctv.v1.Fault
+	39, // 48: openits.cctv.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	48, // 49: openits.cctv.v1.Fault.severity:type_name -> openits.cctv.v1.FaultSeverity
+	35, // 50: openits.cctv.v1.Control.config:type_name -> openits.cctv.v1.ControlConfig
+	37, // 51: openits.cctv.v1.Control.state:type_name -> openits.cctv.v1.ControlState
+	36, // 52: openits.cctv.v1.ControlConfig.holder:type_name -> openits.cctv.v1.ControlConfigHolder
+	38, // 53: openits.cctv.v1.ControlState.holder:type_name -> openits.cctv.v1.ControlStateHolder
+	39, // 54: openits.cctv.v1.ControlStateHolder.held_since:type_name -> google.protobuf.Timestamp
+	39, // 55: openits.cctv.v1.ControlStateHolder.expires_at:type_name -> google.protobuf.Timestamp
 	56, // [56:56] is the sub-list for method output_type
 	56, // [56:56] is the sub-list for method input_type
 	56, // [56:56] is the sub-list for extension type_name
@@ -3536,19 +3158,49 @@ func file_openits_cctv_v1_state_proto_init() {
 	if File_openits_cctv_v1_state_proto != nil {
 		return
 	}
+	file_openits_cctv_v1_types_proto_init()
+	file_openits_cctv_v1_state_proto_msgTypes[1].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[2].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[3].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[4].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[5].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[6].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[8].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[10].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[11].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[12].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[13].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[14].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[15].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[16].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[17].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[18].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[19].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[21].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[22].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[24].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[26].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[27].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[28].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[30].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[31].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[33].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[35].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[36].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[37].OneofWrappers = []any{}
+	file_openits_cctv_v1_state_proto_msgTypes[38].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_cctv_v1_state_proto_rawDesc), len(file_openits_cctv_v1_state_proto_rawDesc)),
-			NumEnums:      9,
+			NumEnums:      0,
 			NumMessages:   39,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_openits_cctv_v1_state_proto_goTypes,
 		DependencyIndexes: file_openits_cctv_v1_state_proto_depIdxs,
-		EnumInfos:         file_openits_cctv_v1_state_proto_enumTypes,
 		MessageInfos:      file_openits_cctv_v1_state_proto_msgTypes,
 	}.Build()
 	File_openits_cctv_v1_state_proto = out.File

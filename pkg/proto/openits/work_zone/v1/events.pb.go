@@ -23,23 +23,28 @@ const (
 )
 
 type ZoneStateChanged struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	Kind            string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	ZoneId          string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	WindowStart     *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=window_start,json=windowStart,proto3" json:"window_start,omitempty"`
-	WindowEnd       *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=window_end,json=windowEnd,proto3" json:"window_end,omitempty"`
-	Direction       string                 `protobuf:"bytes,4,opt,name=direction,proto3" json:"direction,omitempty"`
-	LaneImpact      string                 `protobuf:"bytes,5,opt,name=lane_impact,json=laneImpact,proto3" json:"lane_impact,omitempty"`
-	TemporarySignal bool                   `protobuf:"varint,6,opt,name=temporary_signal,json=temporarySignal,proto3" json:"temporary_signal,omitempty"`
-	Notice          string                 `protobuf:"bytes,7,opt,name=notice,proto3" json:"notice,omitempty"`
-	ObservedBy      string                 `protobuf:"bytes,8,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
-	OccurredAt      *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner           string                 `protobuf:"bytes,10,opt,name=owner,proto3" json:"owner,omitempty"`
-	Point           []*Point               `protobuf:"bytes,11,rep,name=point,proto3" json:"point,omitempty"`
-	Sequence        uint64                 `protobuf:"varint,12,opt,name=sequence,proto3" json:"sequence,omitempty"`
-	SourceDeviceId  string                 `protobuf:"bytes,13,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Kind                 string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
+	ZoneId               string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	WindowStart          *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=window_start,json=windowStart,proto3" json:"window_start,omitempty"`
+	WindowEnd            *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=window_end,json=windowEnd,proto3" json:"window_end,omitempty"`
+	Direction            *string                `protobuf:"bytes,4,opt,name=direction,proto3,oneof" json:"direction,omitempty"`
+	LaneImpact           *string                `protobuf:"bytes,5,opt,name=lane_impact,json=laneImpact,proto3,oneof" json:"lane_impact,omitempty"`
+	TemporarySignal      *bool                  `protobuf:"varint,6,opt,name=temporary_signal,json=temporarySignal,proto3,oneof" json:"temporary_signal,omitempty"`
+	WorkZoneType         *string                `protobuf:"bytes,14,opt,name=work_zone_type,json=workZoneType,proto3,oneof" json:"work_zone_type,omitempty"`
+	WorkerPresence       *WorkerPresence        `protobuf:"bytes,15,opt,name=worker_presence,json=workerPresence,proto3" json:"worker_presence,omitempty"`
+	ReducedSpeedLimitKmh *string                `protobuf:"bytes,16,opt,name=reduced_speed_limit_kmh,json=reducedSpeedLimitKmh,proto3,oneof" json:"reduced_speed_limit_kmh,omitempty"`
+	StartVerified        *bool                  `protobuf:"varint,17,opt,name=start_verified,json=startVerified,proto3,oneof" json:"start_verified,omitempty"`
+	EndVerified          *bool                  `protobuf:"varint,18,opt,name=end_verified,json=endVerified,proto3,oneof" json:"end_verified,omitempty"`
+	Notice               *string                `protobuf:"bytes,7,opt,name=notice,proto3,oneof" json:"notice,omitempty"`
+	ObservedBy           *string                `protobuf:"bytes,8,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
+	OccurredAt           *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
+	Owner                *string                `protobuf:"bytes,10,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	Point                []*Point               `protobuf:"bytes,11,rep,name=point,proto3" json:"point,omitempty"`
+	Sequence             uint64                 `protobuf:"varint,12,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SourceDeviceId       string                 `protobuf:"bytes,13,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *ZoneStateChanged) Reset() {
@@ -101,36 +106,71 @@ func (x *ZoneStateChanged) GetWindowEnd() *timestamppb.Timestamp {
 }
 
 func (x *ZoneStateChanged) GetDirection() string {
-	if x != nil {
-		return x.Direction
+	if x != nil && x.Direction != nil {
+		return *x.Direction
 	}
 	return ""
 }
 
 func (x *ZoneStateChanged) GetLaneImpact() string {
-	if x != nil {
-		return x.LaneImpact
+	if x != nil && x.LaneImpact != nil {
+		return *x.LaneImpact
 	}
 	return ""
 }
 
 func (x *ZoneStateChanged) GetTemporarySignal() bool {
+	if x != nil && x.TemporarySignal != nil {
+		return *x.TemporarySignal
+	}
+	return false
+}
+
+func (x *ZoneStateChanged) GetWorkZoneType() string {
+	if x != nil && x.WorkZoneType != nil {
+		return *x.WorkZoneType
+	}
+	return ""
+}
+
+func (x *ZoneStateChanged) GetWorkerPresence() *WorkerPresence {
 	if x != nil {
-		return x.TemporarySignal
+		return x.WorkerPresence
+	}
+	return nil
+}
+
+func (x *ZoneStateChanged) GetReducedSpeedLimitKmh() string {
+	if x != nil && x.ReducedSpeedLimitKmh != nil {
+		return *x.ReducedSpeedLimitKmh
+	}
+	return ""
+}
+
+func (x *ZoneStateChanged) GetStartVerified() bool {
+	if x != nil && x.StartVerified != nil {
+		return *x.StartVerified
+	}
+	return false
+}
+
+func (x *ZoneStateChanged) GetEndVerified() bool {
+	if x != nil && x.EndVerified != nil {
+		return *x.EndVerified
 	}
 	return false
 }
 
 func (x *ZoneStateChanged) GetNotice() string {
-	if x != nil {
-		return x.Notice
+	if x != nil && x.Notice != nil {
+		return *x.Notice
 	}
 	return ""
 }
 
 func (x *ZoneStateChanged) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -143,8 +183,8 @@ func (x *ZoneStateChanged) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *ZoneStateChanged) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -170,18 +210,78 @@ func (x *ZoneStateChanged) GetSourceDeviceId() string {
 	return ""
 }
 
+type WorkerPresence struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	WorkersPresent  bool                   `protobuf:"varint,1,opt,name=workers_present,json=workersPresent,proto3" json:"workers_present,omitempty"`
+	Method          *string                `protobuf:"bytes,2,opt,name=method,proto3,oneof" json:"method,omitempty"`
+	LastConfirmedAt *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=last_confirmed_at,json=lastConfirmedAt,proto3" json:"last_confirmed_at,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *WorkerPresence) Reset() {
+	*x = WorkerPresence{}
+	mi := &file_openits_work_zone_v1_events_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WorkerPresence) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WorkerPresence) ProtoMessage() {}
+
+func (x *WorkerPresence) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_work_zone_v1_events_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WorkerPresence.ProtoReflect.Descriptor instead.
+func (*WorkerPresence) Descriptor() ([]byte, []int) {
+	return file_openits_work_zone_v1_events_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *WorkerPresence) GetWorkersPresent() bool {
+	if x != nil {
+		return x.WorkersPresent
+	}
+	return false
+}
+
+func (x *WorkerPresence) GetMethod() string {
+	if x != nil && x.Method != nil {
+		return *x.Method
+	}
+	return ""
+}
+
+func (x *WorkerPresence) GetLastConfirmedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastConfirmedAt
+	}
+	return nil
+}
+
 type Point struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PointIndex    uint32                 `protobuf:"varint,1,opt,name=point_index,json=pointIndex,proto3" json:"point_index,omitempty"`
-	Latitude      string                 `protobuf:"bytes,2,opt,name=latitude,proto3" json:"latitude,omitempty"`
-	Longitude     string                 `protobuf:"bytes,3,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	PointIndex    *uint32                `protobuf:"varint,1,opt,name=point_index,json=pointIndex,proto3,oneof" json:"point_index,omitempty"`
+	Latitude      *string                `protobuf:"bytes,2,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
+	Longitude     *string                `protobuf:"bytes,3,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Point) Reset() {
 	*x = Point{}
-	mi := &file_openits_work_zone_v1_events_proto_msgTypes[1]
+	mi := &file_openits_work_zone_v1_events_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -193,7 +293,7 @@ func (x *Point) String() string {
 func (*Point) ProtoMessage() {}
 
 func (x *Point) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_work_zone_v1_events_proto_msgTypes[1]
+	mi := &file_openits_work_zone_v1_events_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -206,26 +306,26 @@ func (x *Point) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Point.ProtoReflect.Descriptor instead.
 func (*Point) Descriptor() ([]byte, []int) {
-	return file_openits_work_zone_v1_events_proto_rawDescGZIP(), []int{1}
+	return file_openits_work_zone_v1_events_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *Point) GetPointIndex() uint32 {
-	if x != nil {
-		return x.PointIndex
+	if x != nil && x.PointIndex != nil {
+		return *x.PointIndex
 	}
 	return 0
 }
 
 func (x *Point) GetLatitude() string {
-	if x != nil {
-		return x.Latitude
+	if x != nil && x.Latitude != nil {
+		return *x.Latitude
 	}
 	return ""
 }
 
 func (x *Point) GetLongitude() string {
-	if x != nil {
-		return x.Longitude
+	if x != nil && x.Longitude != nil {
+		return *x.Longitude
 	}
 	return ""
 }
@@ -234,32 +334,57 @@ var File_openits_work_zone_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_work_zone_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"!openits/work_zone/v1/events.proto\x12\x14openits.work_zone.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa8\x04\n" +
+	"!openits/work_zone/v1/events.proto\x12\x14openits.work_zone.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xfb\a\n" +
 	"\x10ZoneStateChanged\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x17\n" +
 	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12=\n" +
 	"\fwindow_start\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\vwindowStart\x129\n" +
 	"\n" +
-	"window_end\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\twindowEnd\x12\x1c\n" +
-	"\tdirection\x18\x04 \x01(\tR\tdirection\x12\x1f\n" +
-	"\vlane_impact\x18\x05 \x01(\tR\n" +
-	"laneImpact\x12)\n" +
-	"\x10temporary_signal\x18\x06 \x01(\bR\x0ftemporarySignal\x12\x16\n" +
-	"\x06notice\x18\a \x01(\tR\x06notice\x12\x1f\n" +
-	"\vobserved_by\x18\b \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"window_end\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\twindowEnd\x12!\n" +
+	"\tdirection\x18\x04 \x01(\tH\x00R\tdirection\x88\x01\x01\x12$\n" +
+	"\vlane_impact\x18\x05 \x01(\tH\x01R\n" +
+	"laneImpact\x88\x01\x01\x12.\n" +
+	"\x10temporary_signal\x18\x06 \x01(\bH\x02R\x0ftemporarySignal\x88\x01\x01\x12)\n" +
+	"\x0ework_zone_type\x18\x0e \x01(\tH\x03R\fworkZoneType\x88\x01\x01\x12M\n" +
+	"\x0fworker_presence\x18\x0f \x01(\v2$.openits.work_zone.v1.WorkerPresenceR\x0eworkerPresence\x12:\n" +
+	"\x17reduced_speed_limit_kmh\x18\x10 \x01(\tH\x04R\x14reducedSpeedLimitKmh\x88\x01\x01\x12*\n" +
+	"\x0estart_verified\x18\x11 \x01(\bH\x05R\rstartVerified\x88\x01\x01\x12&\n" +
+	"\fend_verified\x18\x12 \x01(\bH\x06R\vendVerified\x88\x01\x01\x12\x1b\n" +
+	"\x06notice\x18\a \x01(\tH\aR\x06notice\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\b \x01(\tH\bR\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
+	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\n" +
-	" \x01(\tR\x05owner\x121\n" +
+	" \x01(\tH\tR\x05owner\x88\x01\x01\x121\n" +
 	"\x05point\x18\v \x03(\v2\x1b.openits.work_zone.v1.PointR\x05point\x12\x1a\n" +
 	"\bsequence\x18\f \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\r \x01(\tR\x0esourceDeviceId\"b\n" +
-	"\x05Point\x12\x1f\n" +
-	"\vpoint_index\x18\x01 \x01(\rR\n" +
-	"pointIndex\x12\x1a\n" +
-	"\blatitude\x18\x02 \x01(\tR\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\x03 \x01(\tR\tlongitudeBNZLgithub.com/Vikasa2M/openits-models/pkg/proto/openits/work_zone/v1;workzonev1b\x06proto3"
+	"\x10source_device_id\x18\r \x01(\tR\x0esourceDeviceIdB\f\n" +
+	"\n" +
+	"_directionB\x0e\n" +
+	"\f_lane_impactB\x13\n" +
+	"\x11_temporary_signalB\x11\n" +
+	"\x0f_work_zone_typeB\x1a\n" +
+	"\x18_reduced_speed_limit_kmhB\x11\n" +
+	"\x0f_start_verifiedB\x0f\n" +
+	"\r_end_verifiedB\t\n" +
+	"\a_noticeB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xa9\x01\n" +
+	"\x0eWorkerPresence\x12'\n" +
+	"\x0fworkers_present\x18\x01 \x01(\bR\x0eworkersPresent\x12\x1b\n" +
+	"\x06method\x18\x02 \x01(\tH\x00R\x06method\x88\x01\x01\x12F\n" +
+	"\x11last_confirmed_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\x0flastConfirmedAtB\t\n" +
+	"\a_method\"\x9c\x01\n" +
+	"\x05Point\x12$\n" +
+	"\vpoint_index\x18\x01 \x01(\rH\x00R\n" +
+	"pointIndex\x88\x01\x01\x12\x1f\n" +
+	"\blatitude\x18\x02 \x01(\tH\x01R\blatitude\x88\x01\x01\x12!\n" +
+	"\tlongitude\x18\x03 \x01(\tH\x02R\tlongitude\x88\x01\x01B\x0e\n" +
+	"\f_point_indexB\v\n" +
+	"\t_latitudeB\f\n" +
+	"\n" +
+	"_longitudeBNZLgithub.com/Vikasa2M/openits-models/pkg/proto/openits/work_zone/v1;workzonev1b\x06proto3"
 
 var (
 	file_openits_work_zone_v1_events_proto_rawDescOnce sync.Once
@@ -273,22 +398,25 @@ func file_openits_work_zone_v1_events_proto_rawDescGZIP() []byte {
 	return file_openits_work_zone_v1_events_proto_rawDescData
 }
 
-var file_openits_work_zone_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_openits_work_zone_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_openits_work_zone_v1_events_proto_goTypes = []any{
 	(*ZoneStateChanged)(nil),      // 0: openits.work_zone.v1.ZoneStateChanged
-	(*Point)(nil),                 // 1: openits.work_zone.v1.Point
-	(*timestamppb.Timestamp)(nil), // 2: google.protobuf.Timestamp
+	(*WorkerPresence)(nil),        // 1: openits.work_zone.v1.WorkerPresence
+	(*Point)(nil),                 // 2: openits.work_zone.v1.Point
+	(*timestamppb.Timestamp)(nil), // 3: google.protobuf.Timestamp
 }
 var file_openits_work_zone_v1_events_proto_depIdxs = []int32{
-	2, // 0: openits.work_zone.v1.ZoneStateChanged.window_start:type_name -> google.protobuf.Timestamp
-	2, // 1: openits.work_zone.v1.ZoneStateChanged.window_end:type_name -> google.protobuf.Timestamp
-	2, // 2: openits.work_zone.v1.ZoneStateChanged.occurred_at:type_name -> google.protobuf.Timestamp
-	1, // 3: openits.work_zone.v1.ZoneStateChanged.point:type_name -> openits.work_zone.v1.Point
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	3, // 0: openits.work_zone.v1.ZoneStateChanged.window_start:type_name -> google.protobuf.Timestamp
+	3, // 1: openits.work_zone.v1.ZoneStateChanged.window_end:type_name -> google.protobuf.Timestamp
+	1, // 2: openits.work_zone.v1.ZoneStateChanged.worker_presence:type_name -> openits.work_zone.v1.WorkerPresence
+	3, // 3: openits.work_zone.v1.ZoneStateChanged.occurred_at:type_name -> google.protobuf.Timestamp
+	2, // 4: openits.work_zone.v1.ZoneStateChanged.point:type_name -> openits.work_zone.v1.Point
+	3, // 5: openits.work_zone.v1.WorkerPresence.last_confirmed_at:type_name -> google.protobuf.Timestamp
+	6, // [6:6] is the sub-list for method output_type
+	6, // [6:6] is the sub-list for method input_type
+	6, // [6:6] is the sub-list for extension type_name
+	6, // [6:6] is the sub-list for extension extendee
+	0, // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_openits_work_zone_v1_events_proto_init() }
@@ -296,13 +424,16 @@ func file_openits_work_zone_v1_events_proto_init() {
 	if File_openits_work_zone_v1_events_proto != nil {
 		return
 	}
+	file_openits_work_zone_v1_events_proto_msgTypes[0].OneofWrappers = []any{}
+	file_openits_work_zone_v1_events_proto_msgTypes[1].OneofWrappers = []any{}
+	file_openits_work_zone_v1_events_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_work_zone_v1_events_proto_rawDesc), len(file_openits_work_zone_v1_events_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

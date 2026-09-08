@@ -21,7 +21,7 @@ func TestNestedListCollisionIsQualified(t *testing.T) {
 		break
 	}
 	lock := &FieldLock{Messages: map[string]map[string]int{}}
-	pf := &ProtoFile{ClaimedNames: map[string]bool{}}
+	pf := &ProtoFile{ClaimedEnums: newEnumRegistry()}
 	pf.Collisions = collisionSet(mod.Dir["device"])
 	EmitMessage(mod.Dir["device"], "Device", lock, nil, pf)
 	got := pf.Body.String()

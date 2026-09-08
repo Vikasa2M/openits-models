@@ -2,7 +2,7 @@
   "openits-rsu:rsu": {
     "config": { "id": "rsu-diamond-01", "name": "Diamond interchange multi-intersection RSU" },
     "operating": {
-      "config": { "configured-time-source": "gnss-pps" }
+      "config": { "configured-time-source": "openits-types:time-source-gnss-pps" }
     },
     "security": {
       "config": { "security-enabled": true }

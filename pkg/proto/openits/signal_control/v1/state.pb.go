@@ -23,1255 +23,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type PedIntervalType int32
-
-const (
-	PedIntervalType_PED_INTERVAL_TYPE_UNSPECIFIED PedIntervalType = 0
-	PedIntervalType_PED_INTERVAL_TYPE_WALK        PedIntervalType = 1
-	PedIntervalType_PED_INTERVAL_TYPE_PED_CLEAR   PedIntervalType = 2
-	PedIntervalType_PED_INTERVAL_TYPE_DONT_WALK   PedIntervalType = 3
-	PedIntervalType_PED_INTERVAL_TYPE_DARK        PedIntervalType = 4
-	PedIntervalType_PED_INTERVAL_TYPE_NONE        PedIntervalType = 5
-)
-
-// Enum value maps for PedIntervalType.
-var (
-	PedIntervalType_name = map[int32]string{
-		0: "PED_INTERVAL_TYPE_UNSPECIFIED",
-		1: "PED_INTERVAL_TYPE_WALK",
-		2: "PED_INTERVAL_TYPE_PED_CLEAR",
-		3: "PED_INTERVAL_TYPE_DONT_WALK",
-		4: "PED_INTERVAL_TYPE_DARK",
-		5: "PED_INTERVAL_TYPE_NONE",
-	}
-	PedIntervalType_value = map[string]int32{
-		"PED_INTERVAL_TYPE_UNSPECIFIED": 0,
-		"PED_INTERVAL_TYPE_WALK":        1,
-		"PED_INTERVAL_TYPE_PED_CLEAR":   2,
-		"PED_INTERVAL_TYPE_DONT_WALK":   3,
-		"PED_INTERVAL_TYPE_DARK":        4,
-		"PED_INTERVAL_TYPE_NONE":        5,
-	}
-)
-
-func (x PedIntervalType) Enum() *PedIntervalType {
-	p := new(PedIntervalType)
-	*p = x
-	return p
-}
-
-func (x PedIntervalType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (PedIntervalType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[0].Descriptor()
-}
-
-func (PedIntervalType) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[0]
-}
-
-func (x PedIntervalType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use PedIntervalType.Descriptor instead.
-func (PedIntervalType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{0}
-}
-
-type VehIntervalType int32
-
-const (
-	VehIntervalType_VEH_INTERVAL_TYPE_UNSPECIFIED   VehIntervalType = 0
-	VehIntervalType_VEH_INTERVAL_TYPE_GREEN         VehIntervalType = 1
-	VehIntervalType_VEH_INTERVAL_TYPE_YELLOW_CHANGE VehIntervalType = 2
-	VehIntervalType_VEH_INTERVAL_TYPE_RED_CLEAR     VehIntervalType = 3
-	VehIntervalType_VEH_INTERVAL_TYPE_RED           VehIntervalType = 4
-	VehIntervalType_VEH_INTERVAL_TYPE_DARK          VehIntervalType = 5
-)
-
-// Enum value maps for VehIntervalType.
-var (
-	VehIntervalType_name = map[int32]string{
-		0: "VEH_INTERVAL_TYPE_UNSPECIFIED",
-		1: "VEH_INTERVAL_TYPE_GREEN",
-		2: "VEH_INTERVAL_TYPE_YELLOW_CHANGE",
-		3: "VEH_INTERVAL_TYPE_RED_CLEAR",
-		4: "VEH_INTERVAL_TYPE_RED",
-		5: "VEH_INTERVAL_TYPE_DARK",
-	}
-	VehIntervalType_value = map[string]int32{
-		"VEH_INTERVAL_TYPE_UNSPECIFIED":   0,
-		"VEH_INTERVAL_TYPE_GREEN":         1,
-		"VEH_INTERVAL_TYPE_YELLOW_CHANGE": 2,
-		"VEH_INTERVAL_TYPE_RED_CLEAR":     3,
-		"VEH_INTERVAL_TYPE_RED":           4,
-		"VEH_INTERVAL_TYPE_DARK":          5,
-	}
-)
-
-func (x VehIntervalType) Enum() *VehIntervalType {
-	p := new(VehIntervalType)
-	*p = x
-	return p
-}
-
-func (x VehIntervalType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (VehIntervalType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[1].Descriptor()
-}
-
-func (VehIntervalType) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[1]
-}
-
-func (x VehIntervalType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use VehIntervalType.Descriptor instead.
-func (VehIntervalType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{1}
-}
-
-type DetectorMode int32
-
-const (
-	DetectorMode_DETECTOR_MODE_UNSPECIFIED DetectorMode = 0
-	DetectorMode_DETECTOR_MODE_PRESENCE    DetectorMode = 1
-	DetectorMode_DETECTOR_MODE_PULSE       DetectorMode = 2
-)
-
-// Enum value maps for DetectorMode.
-var (
-	DetectorMode_name = map[int32]string{
-		0: "DETECTOR_MODE_UNSPECIFIED",
-		1: "DETECTOR_MODE_PRESENCE",
-		2: "DETECTOR_MODE_PULSE",
-	}
-	DetectorMode_value = map[string]int32{
-		"DETECTOR_MODE_UNSPECIFIED": 0,
-		"DETECTOR_MODE_PRESENCE":    1,
-		"DETECTOR_MODE_PULSE":       2,
-	}
-)
-
-func (x DetectorMode) Enum() *DetectorMode {
-	p := new(DetectorMode)
-	*p = x
-	return p
-}
-
-func (x DetectorMode) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (DetectorMode) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[2].Descriptor()
-}
-
-func (DetectorMode) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[2]
-}
-
-func (x DetectorMode) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use DetectorMode.Descriptor instead.
-func (DetectorMode) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{2}
-}
-
-type DetectorFailAction int32
-
-const (
-	DetectorFailAction_DETECTOR_FAIL_ACTION_UNSPECIFIED  DetectorFailAction = 0
-	DetectorFailAction_DETECTOR_FAIL_ACTION_NONE         DetectorFailAction = 1
-	DetectorFailAction_DETECTOR_FAIL_ACTION_MIN_RECALL   DetectorFailAction = 2
-	DetectorFailAction_DETECTOR_FAIL_ACTION_MAX_RECALL   DetectorFailAction = 3
-	DetectorFailAction_DETECTOR_FAIL_ACTION_MAX_PRESENCE DetectorFailAction = 4
-)
-
-// Enum value maps for DetectorFailAction.
-var (
-	DetectorFailAction_name = map[int32]string{
-		0: "DETECTOR_FAIL_ACTION_UNSPECIFIED",
-		1: "DETECTOR_FAIL_ACTION_NONE",
-		2: "DETECTOR_FAIL_ACTION_MIN_RECALL",
-		3: "DETECTOR_FAIL_ACTION_MAX_RECALL",
-		4: "DETECTOR_FAIL_ACTION_MAX_PRESENCE",
-	}
-	DetectorFailAction_value = map[string]int32{
-		"DETECTOR_FAIL_ACTION_UNSPECIFIED":  0,
-		"DETECTOR_FAIL_ACTION_NONE":         1,
-		"DETECTOR_FAIL_ACTION_MIN_RECALL":   2,
-		"DETECTOR_FAIL_ACTION_MAX_RECALL":   3,
-		"DETECTOR_FAIL_ACTION_MAX_PRESENCE": 4,
-	}
-)
-
-func (x DetectorFailAction) Enum() *DetectorFailAction {
-	p := new(DetectorFailAction)
-	*p = x
-	return p
-}
-
-func (x DetectorFailAction) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (DetectorFailAction) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[3].Descriptor()
-}
-
-func (DetectorFailAction) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[3]
-}
-
-func (x DetectorFailAction) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use DetectorFailAction.Descriptor instead.
-func (DetectorFailAction) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{3}
-}
-
-type OverlapIntervalType int32
-
-const (
-	OverlapIntervalType_OVERLAP_INTERVAL_TYPE_UNSPECIFIED           OverlapIntervalType = 0
-	OverlapIntervalType_OVERLAP_INTERVAL_TYPE_GREEN                 OverlapIntervalType = 1
-	OverlapIntervalType_OVERLAP_INTERVAL_TYPE_TRAILING_GREEN        OverlapIntervalType = 2
-	OverlapIntervalType_OVERLAP_INTERVAL_TYPE_YELLOW                OverlapIntervalType = 3
-	OverlapIntervalType_OVERLAP_INTERVAL_TYPE_RED_CLEARANCE         OverlapIntervalType = 4
-	OverlapIntervalType_OVERLAP_INTERVAL_TYPE_OFF                   OverlapIntervalType = 5
-	OverlapIntervalType_OVERLAP_INTERVAL_TYPE_DARK                  OverlapIntervalType = 6
-	OverlapIntervalType_OVERLAP_INTERVAL_TYPE_FLASHING_YELLOW_ARROW OverlapIntervalType = 7
-)
-
-// Enum value maps for OverlapIntervalType.
-var (
-	OverlapIntervalType_name = map[int32]string{
-		0: "OVERLAP_INTERVAL_TYPE_UNSPECIFIED",
-		1: "OVERLAP_INTERVAL_TYPE_GREEN",
-		2: "OVERLAP_INTERVAL_TYPE_TRAILING_GREEN",
-		3: "OVERLAP_INTERVAL_TYPE_YELLOW",
-		4: "OVERLAP_INTERVAL_TYPE_RED_CLEARANCE",
-		5: "OVERLAP_INTERVAL_TYPE_OFF",
-		6: "OVERLAP_INTERVAL_TYPE_DARK",
-		7: "OVERLAP_INTERVAL_TYPE_FLASHING_YELLOW_ARROW",
-	}
-	OverlapIntervalType_value = map[string]int32{
-		"OVERLAP_INTERVAL_TYPE_UNSPECIFIED":           0,
-		"OVERLAP_INTERVAL_TYPE_GREEN":                 1,
-		"OVERLAP_INTERVAL_TYPE_TRAILING_GREEN":        2,
-		"OVERLAP_INTERVAL_TYPE_YELLOW":                3,
-		"OVERLAP_INTERVAL_TYPE_RED_CLEARANCE":         4,
-		"OVERLAP_INTERVAL_TYPE_OFF":                   5,
-		"OVERLAP_INTERVAL_TYPE_DARK":                  6,
-		"OVERLAP_INTERVAL_TYPE_FLASHING_YELLOW_ARROW": 7,
-	}
-)
-
-func (x OverlapIntervalType) Enum() *OverlapIntervalType {
-	p := new(OverlapIntervalType)
-	*p = x
-	return p
-}
-
-func (x OverlapIntervalType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (OverlapIntervalType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[4].Descriptor()
-}
-
-func (OverlapIntervalType) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[4]
-}
-
-func (x OverlapIntervalType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use OverlapIntervalType.Descriptor instead.
-func (OverlapIntervalType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{4}
-}
-
-type ChannelFlashState int32
-
-const (
-	ChannelFlashState_CHANNEL_FLASH_STATE_UNSPECIFIED ChannelFlashState = 0
-	ChannelFlashState_CHANNEL_FLASH_STATE_RED         ChannelFlashState = 1
-	ChannelFlashState_CHANNEL_FLASH_STATE_YELLOW      ChannelFlashState = 2
-	ChannelFlashState_CHANNEL_FLASH_STATE_NONE        ChannelFlashState = 3
-)
-
-// Enum value maps for ChannelFlashState.
-var (
-	ChannelFlashState_name = map[int32]string{
-		0: "CHANNEL_FLASH_STATE_UNSPECIFIED",
-		1: "CHANNEL_FLASH_STATE_RED",
-		2: "CHANNEL_FLASH_STATE_YELLOW",
-		3: "CHANNEL_FLASH_STATE_NONE",
-	}
-	ChannelFlashState_value = map[string]int32{
-		"CHANNEL_FLASH_STATE_UNSPECIFIED": 0,
-		"CHANNEL_FLASH_STATE_RED":         1,
-		"CHANNEL_FLASH_STATE_YELLOW":      2,
-		"CHANNEL_FLASH_STATE_NONE":        3,
-	}
-)
-
-func (x ChannelFlashState) Enum() *ChannelFlashState {
-	p := new(ChannelFlashState)
-	*p = x
-	return p
-}
-
-func (x ChannelFlashState) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (ChannelFlashState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[5].Descriptor()
-}
-
-func (ChannelFlashState) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[5]
-}
-
-func (x ChannelFlashState) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use ChannelFlashState.Descriptor instead.
-func (ChannelFlashState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{5}
-}
-
-type OffsetReference int32
-
-const (
-	OffsetReference_OFFSET_REFERENCE_UNSPECIFIED     OffsetReference = 0
-	OffsetReference_OFFSET_REFERENCE_BEGIN_OF_GREEN  OffsetReference = 1
-	OffsetReference_OFFSET_REFERENCE_BEGIN_OF_YELLOW OffsetReference = 2
-	OffsetReference_OFFSET_REFERENCE_END_OF_GREEN    OffsetReference = 3
-)
-
-// Enum value maps for OffsetReference.
-var (
-	OffsetReference_name = map[int32]string{
-		0: "OFFSET_REFERENCE_UNSPECIFIED",
-		1: "OFFSET_REFERENCE_BEGIN_OF_GREEN",
-		2: "OFFSET_REFERENCE_BEGIN_OF_YELLOW",
-		3: "OFFSET_REFERENCE_END_OF_GREEN",
-	}
-	OffsetReference_value = map[string]int32{
-		"OFFSET_REFERENCE_UNSPECIFIED":     0,
-		"OFFSET_REFERENCE_BEGIN_OF_GREEN":  1,
-		"OFFSET_REFERENCE_BEGIN_OF_YELLOW": 2,
-		"OFFSET_REFERENCE_END_OF_GREEN":    3,
-	}
-)
-
-func (x OffsetReference) Enum() *OffsetReference {
-	p := new(OffsetReference)
-	*p = x
-	return p
-}
-
-func (x OffsetReference) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (OffsetReference) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[6].Descriptor()
-}
-
-func (OffsetReference) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[6]
-}
-
-func (x OffsetReference) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use OffsetReference.Descriptor instead.
-func (OffsetReference) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{6}
-}
-
-type TransitionMode int32
-
-const (
-	TransitionMode_TRANSITION_MODE_UNSPECIFIED   TransitionMode = 0
-	TransitionMode_TRANSITION_MODE_DWELL         TransitionMode = 1
-	TransitionMode_TRANSITION_MODE_SHORTWAY      TransitionMode = 2
-	TransitionMode_TRANSITION_MODE_ADD_ONLY      TransitionMode = 3
-	TransitionMode_TRANSITION_MODE_SUBTRACT_ONLY TransitionMode = 4
-)
-
-// Enum value maps for TransitionMode.
-var (
-	TransitionMode_name = map[int32]string{
-		0: "TRANSITION_MODE_UNSPECIFIED",
-		1: "TRANSITION_MODE_DWELL",
-		2: "TRANSITION_MODE_SHORTWAY",
-		3: "TRANSITION_MODE_ADD_ONLY",
-		4: "TRANSITION_MODE_SUBTRACT_ONLY",
-	}
-	TransitionMode_value = map[string]int32{
-		"TRANSITION_MODE_UNSPECIFIED":   0,
-		"TRANSITION_MODE_DWELL":         1,
-		"TRANSITION_MODE_SHORTWAY":      2,
-		"TRANSITION_MODE_ADD_ONLY":      3,
-		"TRANSITION_MODE_SUBTRACT_ONLY": 4,
-	}
-)
-
-func (x TransitionMode) Enum() *TransitionMode {
-	p := new(TransitionMode)
-	*p = x
-	return p
-}
-
-func (x TransitionMode) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (TransitionMode) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[7].Descriptor()
-}
-
-func (TransitionMode) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[7]
-}
-
-func (x TransitionMode) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use TransitionMode.Descriptor instead.
-func (TransitionMode) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{7}
-}
-
-type ForceOffMode int32
-
-const (
-	ForceOffMode_FORCE_OFF_MODE_UNSPECIFIED ForceOffMode = 0
-	ForceOffMode_FORCE_OFF_MODE_FIXED       ForceOffMode = 1
-	ForceOffMode_FORCE_OFF_MODE_FLOATING    ForceOffMode = 2
-)
-
-// Enum value maps for ForceOffMode.
-var (
-	ForceOffMode_name = map[int32]string{
-		0: "FORCE_OFF_MODE_UNSPECIFIED",
-		1: "FORCE_OFF_MODE_FIXED",
-		2: "FORCE_OFF_MODE_FLOATING",
-	}
-	ForceOffMode_value = map[string]int32{
-		"FORCE_OFF_MODE_UNSPECIFIED": 0,
-		"FORCE_OFF_MODE_FIXED":       1,
-		"FORCE_OFF_MODE_FLOATING":    2,
-	}
-)
-
-func (x ForceOffMode) Enum() *ForceOffMode {
-	p := new(ForceOffMode)
-	*p = x
-	return p
-}
-
-func (x ForceOffMode) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (ForceOffMode) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[8].Descriptor()
-}
-
-func (ForceOffMode) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[8]
-}
-
-func (x ForceOffMode) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use ForceOffMode.Descriptor instead.
-func (ForceOffMode) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{8}
-}
-
-type SplitMode int32
-
-const (
-	SplitMode_SPLIT_MODE_UNSPECIFIED          SplitMode = 0
-	SplitMode_SPLIT_MODE_OTHER                SplitMode = 1
-	SplitMode_SPLIT_MODE_MINIMUM_RECALL       SplitMode = 2
-	SplitMode_SPLIT_MODE_MAXIMUM_RECALL       SplitMode = 3
-	SplitMode_SPLIT_MODE_PED_RECALL           SplitMode = 4
-	SplitMode_SPLIT_MODE_COORDINATED_FIXED    SplitMode = 5
-	SplitMode_SPLIT_MODE_COORDINATED_FLOATING SplitMode = 6
-	SplitMode_SPLIT_MODE_PHASE_OMIT           SplitMode = 7
-	SplitMode_SPLIT_MODE_NONE                 SplitMode = 8
-)
-
-// Enum value maps for SplitMode.
-var (
-	SplitMode_name = map[int32]string{
-		0: "SPLIT_MODE_UNSPECIFIED",
-		1: "SPLIT_MODE_OTHER",
-		2: "SPLIT_MODE_MINIMUM_RECALL",
-		3: "SPLIT_MODE_MAXIMUM_RECALL",
-		4: "SPLIT_MODE_PED_RECALL",
-		5: "SPLIT_MODE_COORDINATED_FIXED",
-		6: "SPLIT_MODE_COORDINATED_FLOATING",
-		7: "SPLIT_MODE_PHASE_OMIT",
-		8: "SPLIT_MODE_NONE",
-	}
-	SplitMode_value = map[string]int32{
-		"SPLIT_MODE_UNSPECIFIED":          0,
-		"SPLIT_MODE_OTHER":                1,
-		"SPLIT_MODE_MINIMUM_RECALL":       2,
-		"SPLIT_MODE_MAXIMUM_RECALL":       3,
-		"SPLIT_MODE_PED_RECALL":           4,
-		"SPLIT_MODE_COORDINATED_FIXED":    5,
-		"SPLIT_MODE_COORDINATED_FLOATING": 6,
-		"SPLIT_MODE_PHASE_OMIT":           7,
-		"SPLIT_MODE_NONE":                 8,
-	}
-)
-
-func (x SplitMode) Enum() *SplitMode {
-	p := new(SplitMode)
-	*p = x
-	return p
-}
-
-func (x SplitMode) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (SplitMode) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[9].Descriptor()
-}
-
-func (SplitMode) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[9]
-}
-
-func (x SplitMode) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use SplitMode.Descriptor instead.
-func (SplitMode) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{9}
-}
-
-type CycleState int32
-
-const (
-	CycleState_CYCLE_STATE_FREE                CycleState = 0
-	CycleState_CYCLE_STATE_IN_STEP             CycleState = 1
-	CycleState_CYCLE_STATE_TRANSITION_ADD      CycleState = 2
-	CycleState_CYCLE_STATE_TRANSITION_SUBTRACT CycleState = 3
-	CycleState_CYCLE_STATE_TRANSITION_DWELL    CycleState = 4
-)
-
-// Enum value maps for CycleState.
-var (
-	CycleState_name = map[int32]string{
-		0: "CYCLE_STATE_FREE",
-		1: "CYCLE_STATE_IN_STEP",
-		2: "CYCLE_STATE_TRANSITION_ADD",
-		3: "CYCLE_STATE_TRANSITION_SUBTRACT",
-		4: "CYCLE_STATE_TRANSITION_DWELL",
-	}
-	CycleState_value = map[string]int32{
-		"CYCLE_STATE_FREE":                0,
-		"CYCLE_STATE_IN_STEP":             1,
-		"CYCLE_STATE_TRANSITION_ADD":      2,
-		"CYCLE_STATE_TRANSITION_SUBTRACT": 3,
-		"CYCLE_STATE_TRANSITION_DWELL":    4,
-	}
-)
-
-func (x CycleState) Enum() *CycleState {
-	p := new(CycleState)
-	*p = x
-	return p
-}
-
-func (x CycleState) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (CycleState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[10].Descriptor()
-}
-
-func (CycleState) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[10]
-}
-
-func (x CycleState) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use CycleState.Descriptor instead.
-func (CycleState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{10}
-}
-
-type SpecialOperation int32
-
-const (
-	SpecialOperation_SPECIAL_OPERATION_UNSPECIFIED SpecialOperation = 0
-	SpecialOperation_SPECIAL_OPERATION_FREE        SpecialOperation = 1
-	SpecialOperation_SPECIAL_OPERATION_FLASH       SpecialOperation = 2
-)
-
-// Enum value maps for SpecialOperation.
-var (
-	SpecialOperation_name = map[int32]string{
-		0: "SPECIAL_OPERATION_UNSPECIFIED",
-		1: "SPECIAL_OPERATION_FREE",
-		2: "SPECIAL_OPERATION_FLASH",
-	}
-	SpecialOperation_value = map[string]int32{
-		"SPECIAL_OPERATION_UNSPECIFIED": 0,
-		"SPECIAL_OPERATION_FREE":        1,
-		"SPECIAL_OPERATION_FLASH":       2,
-	}
-)
-
-func (x SpecialOperation) Enum() *SpecialOperation {
-	p := new(SpecialOperation)
-	*p = x
-	return p
-}
-
-func (x SpecialOperation) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (SpecialOperation) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[11].Descriptor()
-}
-
-func (SpecialOperation) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[11]
-}
-
-func (x SpecialOperation) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use SpecialOperation.Descriptor instead.
-func (SpecialOperation) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{11}
-}
-
-type DayOfWeek int32
-
-const (
-	DayOfWeek_DAY_OF_WEEK_UNSPECIFIED DayOfWeek = 0
-	DayOfWeek_DAY_OF_WEEK_MONDAY      DayOfWeek = 1
-	DayOfWeek_DAY_OF_WEEK_TUESDAY     DayOfWeek = 2
-	DayOfWeek_DAY_OF_WEEK_WEDNESDAY   DayOfWeek = 3
-	DayOfWeek_DAY_OF_WEEK_THURSDAY    DayOfWeek = 4
-	DayOfWeek_DAY_OF_WEEK_FRIDAY      DayOfWeek = 5
-	DayOfWeek_DAY_OF_WEEK_SATURDAY    DayOfWeek = 6
-	DayOfWeek_DAY_OF_WEEK_SUNDAY      DayOfWeek = 7
-)
-
-// Enum value maps for DayOfWeek.
-var (
-	DayOfWeek_name = map[int32]string{
-		0: "DAY_OF_WEEK_UNSPECIFIED",
-		1: "DAY_OF_WEEK_MONDAY",
-		2: "DAY_OF_WEEK_TUESDAY",
-		3: "DAY_OF_WEEK_WEDNESDAY",
-		4: "DAY_OF_WEEK_THURSDAY",
-		5: "DAY_OF_WEEK_FRIDAY",
-		6: "DAY_OF_WEEK_SATURDAY",
-		7: "DAY_OF_WEEK_SUNDAY",
-	}
-	DayOfWeek_value = map[string]int32{
-		"DAY_OF_WEEK_UNSPECIFIED": 0,
-		"DAY_OF_WEEK_MONDAY":      1,
-		"DAY_OF_WEEK_TUESDAY":     2,
-		"DAY_OF_WEEK_WEDNESDAY":   3,
-		"DAY_OF_WEEK_THURSDAY":    4,
-		"DAY_OF_WEEK_FRIDAY":      5,
-		"DAY_OF_WEEK_SATURDAY":    6,
-		"DAY_OF_WEEK_SUNDAY":      7,
-	}
-)
-
-func (x DayOfWeek) Enum() *DayOfWeek {
-	p := new(DayOfWeek)
-	*p = x
-	return p
-}
-
-func (x DayOfWeek) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (DayOfWeek) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[12].Descriptor()
-}
-
-func (DayOfWeek) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[12]
-}
-
-func (x DayOfWeek) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use DayOfWeek.Descriptor instead.
-func (DayOfWeek) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{12}
-}
-
-type Month int32
-
-const (
-	Month_MONTH_UNSPECIFIED Month = 0
-	Month_MONTH_JANUARY     Month = 1
-	Month_MONTH_FEBRUARY    Month = 2
-	Month_MONTH_MARCH       Month = 3
-	Month_MONTH_APRIL       Month = 4
-	Month_MONTH_MAY         Month = 5
-	Month_MONTH_JUNE        Month = 6
-	Month_MONTH_JULY        Month = 7
-	Month_MONTH_AUGUST      Month = 8
-	Month_MONTH_SEPTEMBER   Month = 9
-	Month_MONTH_OCTOBER     Month = 10
-	Month_MONTH_NOVEMBER    Month = 11
-	Month_MONTH_DECEMBER    Month = 12
-)
-
-// Enum value maps for Month.
-var (
-	Month_name = map[int32]string{
-		0:  "MONTH_UNSPECIFIED",
-		1:  "MONTH_JANUARY",
-		2:  "MONTH_FEBRUARY",
-		3:  "MONTH_MARCH",
-		4:  "MONTH_APRIL",
-		5:  "MONTH_MAY",
-		6:  "MONTH_JUNE",
-		7:  "MONTH_JULY",
-		8:  "MONTH_AUGUST",
-		9:  "MONTH_SEPTEMBER",
-		10: "MONTH_OCTOBER",
-		11: "MONTH_NOVEMBER",
-		12: "MONTH_DECEMBER",
-	}
-	Month_value = map[string]int32{
-		"MONTH_UNSPECIFIED": 0,
-		"MONTH_JANUARY":     1,
-		"MONTH_FEBRUARY":    2,
-		"MONTH_MARCH":       3,
-		"MONTH_APRIL":       4,
-		"MONTH_MAY":         5,
-		"MONTH_JUNE":        6,
-		"MONTH_JULY":        7,
-		"MONTH_AUGUST":      8,
-		"MONTH_SEPTEMBER":   9,
-		"MONTH_OCTOBER":     10,
-		"MONTH_NOVEMBER":    11,
-		"MONTH_DECEMBER":    12,
-	}
-)
-
-func (x Month) Enum() *Month {
-	p := new(Month)
-	*p = x
-	return p
-}
-
-func (x Month) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Month) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[13].Descriptor()
-}
-
-func (Month) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[13]
-}
-
-func (x Month) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Month.Descriptor instead.
-func (Month) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{13}
-}
-
-type SyncStatus int32
-
-const (
-	SyncStatus_SYNC_STATUS_UNSPECIFIED  SyncStatus = 0
-	SyncStatus_SYNC_STATUS_SYNCED       SyncStatus = 1
-	SyncStatus_SYNC_STATUS_HOLDOVER     SyncStatus = 2
-	SyncStatus_SYNC_STATUS_UNSYNCED     SyncStatus = 3
-	SyncStatus_SYNC_STATUS_FREE_RUNNING SyncStatus = 4
-)
-
-// Enum value maps for SyncStatus.
-var (
-	SyncStatus_name = map[int32]string{
-		0: "SYNC_STATUS_UNSPECIFIED",
-		1: "SYNC_STATUS_SYNCED",
-		2: "SYNC_STATUS_HOLDOVER",
-		3: "SYNC_STATUS_UNSYNCED",
-		4: "SYNC_STATUS_FREE_RUNNING",
-	}
-	SyncStatus_value = map[string]int32{
-		"SYNC_STATUS_UNSPECIFIED":  0,
-		"SYNC_STATUS_SYNCED":       1,
-		"SYNC_STATUS_HOLDOVER":     2,
-		"SYNC_STATUS_UNSYNCED":     3,
-		"SYNC_STATUS_FREE_RUNNING": 4,
-	}
-)
-
-func (x SyncStatus) Enum() *SyncStatus {
-	p := new(SyncStatus)
-	*p = x
-	return p
-}
-
-func (x SyncStatus) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (SyncStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[14].Descriptor()
-}
-
-func (SyncStatus) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[14]
-}
-
-func (x SyncStatus) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use SyncStatus.Descriptor instead.
-func (SyncStatus) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{14}
-}
-
-type PreemptStage int32
-
-const (
-	PreemptStage_PREEMPT_STAGE_UNSPECIFIED     PreemptStage = 0
-	PreemptStage_PREEMPT_STAGE_NONE            PreemptStage = 1
-	PreemptStage_PREEMPT_STAGE_DELAY           PreemptStage = 2
-	PreemptStage_PREEMPT_STAGE_ENTRY           PreemptStage = 3
-	PreemptStage_PREEMPT_STAGE_TRACK_CLEARANCE PreemptStage = 4
-	PreemptStage_PREEMPT_STAGE_DWELL           PreemptStage = 5
-	PreemptStage_PREEMPT_STAGE_EXIT            PreemptStage = 6
-	PreemptStage_PREEMPT_STAGE_MAX_PRESENCE    PreemptStage = 7
-)
-
-// Enum value maps for PreemptStage.
-var (
-	PreemptStage_name = map[int32]string{
-		0: "PREEMPT_STAGE_UNSPECIFIED",
-		1: "PREEMPT_STAGE_NONE",
-		2: "PREEMPT_STAGE_DELAY",
-		3: "PREEMPT_STAGE_ENTRY",
-		4: "PREEMPT_STAGE_TRACK_CLEARANCE",
-		5: "PREEMPT_STAGE_DWELL",
-		6: "PREEMPT_STAGE_EXIT",
-		7: "PREEMPT_STAGE_MAX_PRESENCE",
-	}
-	PreemptStage_value = map[string]int32{
-		"PREEMPT_STAGE_UNSPECIFIED":     0,
-		"PREEMPT_STAGE_NONE":            1,
-		"PREEMPT_STAGE_DELAY":           2,
-		"PREEMPT_STAGE_ENTRY":           3,
-		"PREEMPT_STAGE_TRACK_CLEARANCE": 4,
-		"PREEMPT_STAGE_DWELL":           5,
-		"PREEMPT_STAGE_EXIT":            6,
-		"PREEMPT_STAGE_MAX_PRESENCE":    7,
-	}
-)
-
-func (x PreemptStage) Enum() *PreemptStage {
-	p := new(PreemptStage)
-	*p = x
-	return p
-}
-
-func (x PreemptStage) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (PreemptStage) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[15].Descriptor()
-}
-
-func (PreemptStage) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[15]
-}
-
-func (x PreemptStage) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use PreemptStage.Descriptor instead.
-func (PreemptStage) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{15}
-}
-
-type PriorityType int32
-
-const (
-	PriorityType_PRIORITY_TYPE_NONE    PriorityType = 0
-	PriorityType_PRIORITY_TYPE_TRANSIT PriorityType = 1
-	PriorityType_PRIORITY_TYPE_FREIGHT PriorityType = 2
-	PriorityType_PRIORITY_TYPE_OTHER   PriorityType = 3
-)
-
-// Enum value maps for PriorityType.
-var (
-	PriorityType_name = map[int32]string{
-		0: "PRIORITY_TYPE_NONE",
-		1: "PRIORITY_TYPE_TRANSIT",
-		2: "PRIORITY_TYPE_FREIGHT",
-		3: "PRIORITY_TYPE_OTHER",
-	}
-	PriorityType_value = map[string]int32{
-		"PRIORITY_TYPE_NONE":    0,
-		"PRIORITY_TYPE_TRANSIT": 1,
-		"PRIORITY_TYPE_FREIGHT": 2,
-		"PRIORITY_TYPE_OTHER":   3,
-	}
-)
-
-func (x PriorityType) Enum() *PriorityType {
-	p := new(PriorityType)
-	*p = x
-	return p
-}
-
-func (x PriorityType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (PriorityType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[16].Descriptor()
-}
-
-func (PriorityType) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[16]
-}
-
-func (x PriorityType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use PriorityType.Descriptor instead.
-func (PriorityType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{16}
-}
-
-type Stage int32
-
-const (
-	Stage_STAGE_UNSPECIFIED Stage = 0
-	Stage_STAGE_REQUESTED   Stage = 1
-	Stage_STAGE_GRANTED     Stage = 2
-	Stage_STAGE_ACTIVE      Stage = 3
-	Stage_STAGE_COMPLETED   Stage = 4
-	Stage_STAGE_DENIED      Stage = 5
-)
-
-// Enum value maps for Stage.
-var (
-	Stage_name = map[int32]string{
-		0: "STAGE_UNSPECIFIED",
-		1: "STAGE_REQUESTED",
-		2: "STAGE_GRANTED",
-		3: "STAGE_ACTIVE",
-		4: "STAGE_COMPLETED",
-		5: "STAGE_DENIED",
-	}
-	Stage_value = map[string]int32{
-		"STAGE_UNSPECIFIED": 0,
-		"STAGE_REQUESTED":   1,
-		"STAGE_GRANTED":     2,
-		"STAGE_ACTIVE":      3,
-		"STAGE_COMPLETED":   4,
-		"STAGE_DENIED":      5,
-	}
-)
-
-func (x Stage) Enum() *Stage {
-	p := new(Stage)
-	*p = x
-	return p
-}
-
-func (x Stage) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Stage) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[17].Descriptor()
-}
-
-func (Stage) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[17]
-}
-
-func (x Stage) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Stage.Descriptor instead.
-func (Stage) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{17}
-}
-
-type SignalOperationOnBattery int32
-
-const (
-	SignalOperationOnBattery_SIGNAL_OPERATION_ON_BATTERY_FULL_OPERATION SignalOperationOnBattery = 0
-	SignalOperationOnBattery_SIGNAL_OPERATION_ON_BATTERY_FLASH          SignalOperationOnBattery = 1
-	SignalOperationOnBattery_SIGNAL_OPERATION_ON_BATTERY_NOT_ON_BATTERY SignalOperationOnBattery = 2
-)
-
-// Enum value maps for SignalOperationOnBattery.
-var (
-	SignalOperationOnBattery_name = map[int32]string{
-		0: "SIGNAL_OPERATION_ON_BATTERY_FULL_OPERATION",
-		1: "SIGNAL_OPERATION_ON_BATTERY_FLASH",
-		2: "SIGNAL_OPERATION_ON_BATTERY_NOT_ON_BATTERY",
-	}
-	SignalOperationOnBattery_value = map[string]int32{
-		"SIGNAL_OPERATION_ON_BATTERY_FULL_OPERATION": 0,
-		"SIGNAL_OPERATION_ON_BATTERY_FLASH":          1,
-		"SIGNAL_OPERATION_ON_BATTERY_NOT_ON_BATTERY": 2,
-	}
-)
-
-func (x SignalOperationOnBattery) Enum() *SignalOperationOnBattery {
-	p := new(SignalOperationOnBattery)
-	*p = x
-	return p
-}
-
-func (x SignalOperationOnBattery) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (SignalOperationOnBattery) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[18].Descriptor()
-}
-
-func (SignalOperationOnBattery) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[18]
-}
-
-func (x SignalOperationOnBattery) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use SignalOperationOnBattery.Descriptor instead.
-func (SignalOperationOnBattery) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{18}
-}
-
-type BatteryTestState int32
-
-const (
-	BatteryTestState_BATTERY_TEST_STATE_IDLE        BatteryTestState = 0
-	BatteryTestState_BATTERY_TEST_STATE_IN_PROGRESS BatteryTestState = 1
-	BatteryTestState_BATTERY_TEST_STATE_PASSED      BatteryTestState = 2
-	BatteryTestState_BATTERY_TEST_STATE_FAILED      BatteryTestState = 3
-)
-
-// Enum value maps for BatteryTestState.
-var (
-	BatteryTestState_name = map[int32]string{
-		0: "BATTERY_TEST_STATE_IDLE",
-		1: "BATTERY_TEST_STATE_IN_PROGRESS",
-		2: "BATTERY_TEST_STATE_PASSED",
-		3: "BATTERY_TEST_STATE_FAILED",
-	}
-	BatteryTestState_value = map[string]int32{
-		"BATTERY_TEST_STATE_IDLE":        0,
-		"BATTERY_TEST_STATE_IN_PROGRESS": 1,
-		"BATTERY_TEST_STATE_PASSED":      2,
-		"BATTERY_TEST_STATE_FAILED":      3,
-	}
-)
-
-func (x BatteryTestState) Enum() *BatteryTestState {
-	p := new(BatteryTestState)
-	*p = x
-	return p
-}
-
-func (x BatteryTestState) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (BatteryTestState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[19].Descriptor()
-}
-
-func (BatteryTestState) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[19]
-}
-
-func (x BatteryTestState) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use BatteryTestState.Descriptor instead.
-func (BatteryTestState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{19}
-}
-
-type PowerSource int32
-
-const (
-	PowerSource_POWER_SOURCE_ON_LINE    PowerSource = 0
-	PowerSource_POWER_SOURCE_ON_BATTERY PowerSource = 1
-	PowerSource_POWER_SOURCE_BYPASS     PowerSource = 2
-	PowerSource_POWER_SOURCE_OFF        PowerSource = 3
-	PowerSource_POWER_SOURCE_SOLAR      PowerSource = 4
-	PowerSource_POWER_SOURCE_GENERATOR  PowerSource = 5
-)
-
-// Enum value maps for PowerSource.
-var (
-	PowerSource_name = map[int32]string{
-		0: "POWER_SOURCE_ON_LINE",
-		1: "POWER_SOURCE_ON_BATTERY",
-		2: "POWER_SOURCE_BYPASS",
-		3: "POWER_SOURCE_OFF",
-		4: "POWER_SOURCE_SOLAR",
-		5: "POWER_SOURCE_GENERATOR",
-	}
-	PowerSource_value = map[string]int32{
-		"POWER_SOURCE_ON_LINE":    0,
-		"POWER_SOURCE_ON_BATTERY": 1,
-		"POWER_SOURCE_BYPASS":     2,
-		"POWER_SOURCE_OFF":        3,
-		"POWER_SOURCE_SOLAR":      4,
-		"POWER_SOURCE_GENERATOR":  5,
-	}
-)
-
-func (x PowerSource) Enum() *PowerSource {
-	p := new(PowerSource)
-	*p = x
-	return p
-}
-
-func (x PowerSource) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (PowerSource) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[20].Descriptor()
-}
-
-func (PowerSource) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[20]
-}
-
-func (x PowerSource) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use PowerSource.Descriptor instead.
-func (PowerSource) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{20}
-}
-
-type OpenitsSignalControlFaultSeverity int32
-
-const (
-	OpenitsSignalControlFaultSeverity_OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_INFO     OpenitsSignalControlFaultSeverity = 0
-	OpenitsSignalControlFaultSeverity_OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_WARNING  OpenitsSignalControlFaultSeverity = 1
-	OpenitsSignalControlFaultSeverity_OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_MINOR    OpenitsSignalControlFaultSeverity = 2
-	OpenitsSignalControlFaultSeverity_OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_MAJOR    OpenitsSignalControlFaultSeverity = 3
-	OpenitsSignalControlFaultSeverity_OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_CRITICAL OpenitsSignalControlFaultSeverity = 4
-)
-
-// Enum value maps for OpenitsSignalControlFaultSeverity.
-var (
-	OpenitsSignalControlFaultSeverity_name = map[int32]string{
-		0: "OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_INFO",
-		1: "OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_WARNING",
-		2: "OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_MINOR",
-		3: "OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_MAJOR",
-		4: "OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_CRITICAL",
-	}
-	OpenitsSignalControlFaultSeverity_value = map[string]int32{
-		"OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_INFO":     0,
-		"OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_WARNING":  1,
-		"OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_MINOR":    2,
-		"OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_MAJOR":    3,
-		"OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_CRITICAL": 4,
-	}
-)
-
-func (x OpenitsSignalControlFaultSeverity) Enum() *OpenitsSignalControlFaultSeverity {
-	p := new(OpenitsSignalControlFaultSeverity)
-	*p = x
-	return p
-}
-
-func (x OpenitsSignalControlFaultSeverity) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (OpenitsSignalControlFaultSeverity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_state_proto_enumTypes[21].Descriptor()
-}
-
-func (OpenitsSignalControlFaultSeverity) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_state_proto_enumTypes[21]
-}
-
-func (x OpenitsSignalControlFaultSeverity) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use OpenitsSignalControlFaultSeverity.Descriptor instead.
-func (OpenitsSignalControlFaultSeverity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{21}
-}
-
 type SignalController struct {
 	state           protoimpl.MessageState  `protogen:"open.v1"`
 	Config          *SignalControllerConfig `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
@@ -1438,18 +189,18 @@ func (x *SignalController) GetFaults() *Faults {
 
 type SignalControllerConfig struct {
 	state           protoimpl.MessageState                 `protogen:"open.v1"`
-	Elevation       string                                 `protobuf:"bytes,1,opt,name=elevation,proto3" json:"elevation,omitempty"`
-	Heading         uint32                                 `protobuf:"varint,2,opt,name=heading,proto3" json:"heading,omitempty"`
-	Id              string                                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	Elevation       *string                                `protobuf:"bytes,1,opt,name=elevation,proto3,oneof" json:"elevation,omitempty"`
+	Heading         *uint32                                `protobuf:"varint,2,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
+	Id              *string                                `protobuf:"bytes,3,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate     *timestamppb.Timestamp                 `protobuf:"bytes,8,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
-	Latitude        string                                 `protobuf:"bytes,4,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	Latitude        *string                                `protobuf:"bytes,4,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference *SignalControllerConfigLinearReference `protobuf:"bytes,9,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
-	Longitude       string                                 `protobuf:"bytes,5,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	MaintainedBy    string                                 `protobuf:"bytes,10,opt,name=maintained_by,json=maintainedBy,proto3" json:"maintained_by,omitempty"`
-	Name            string                                 `protobuf:"bytes,6,opt,name=name,proto3" json:"name,omitempty"`
-	Owner           string                                 `protobuf:"bytes,11,opt,name=owner,proto3" json:"owner,omitempty"`
-	RoadReference   string                                 `protobuf:"bytes,7,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
-	SiteId          string                                 `protobuf:"bytes,12,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
+	Longitude       *string                                `protobuf:"bytes,5,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
+	MaintainedBy    *string                                `protobuf:"bytes,10,opt,name=maintained_by,json=maintainedBy,proto3,oneof" json:"maintained_by,omitempty"`
+	Name            *string                                `protobuf:"bytes,6,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Owner           *string                                `protobuf:"bytes,11,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	RoadReference   *string                                `protobuf:"bytes,7,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
+	SiteId          *string                                `protobuf:"bytes,12,opt,name=site_id,json=siteId,proto3,oneof" json:"site_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1485,22 +236,22 @@ func (*SignalControllerConfig) Descriptor() ([]byte, []int) {
 }
 
 func (x *SignalControllerConfig) GetElevation() string {
-	if x != nil {
-		return x.Elevation
+	if x != nil && x.Elevation != nil {
+		return *x.Elevation
 	}
 	return ""
 }
 
 func (x *SignalControllerConfig) GetHeading() uint32 {
-	if x != nil {
-		return x.Heading
+	if x != nil && x.Heading != nil {
+		return *x.Heading
 	}
 	return 0
 }
 
 func (x *SignalControllerConfig) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
@@ -1513,8 +264,8 @@ func (x *SignalControllerConfig) GetInstallDate() *timestamppb.Timestamp {
 }
 
 func (x *SignalControllerConfig) GetLatitude() string {
-	if x != nil {
-		return x.Latitude
+	if x != nil && x.Latitude != nil {
+		return *x.Latitude
 	}
 	return ""
 }
@@ -1527,53 +278,53 @@ func (x *SignalControllerConfig) GetLinearReference() *SignalControllerConfigLin
 }
 
 func (x *SignalControllerConfig) GetLongitude() string {
-	if x != nil {
-		return x.Longitude
+	if x != nil && x.Longitude != nil {
+		return *x.Longitude
 	}
 	return ""
 }
 
 func (x *SignalControllerConfig) GetMaintainedBy() string {
-	if x != nil {
-		return x.MaintainedBy
+	if x != nil && x.MaintainedBy != nil {
+		return *x.MaintainedBy
 	}
 	return ""
 }
 
 func (x *SignalControllerConfig) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *SignalControllerConfig) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
 
 func (x *SignalControllerConfig) GetRoadReference() string {
-	if x != nil {
-		return x.RoadReference
+	if x != nil && x.RoadReference != nil {
+		return *x.RoadReference
 	}
 	return ""
 }
 
 func (x *SignalControllerConfig) GetSiteId() string {
-	if x != nil {
-		return x.SiteId
+	if x != nil && x.SiteId != nil {
+		return *x.SiteId
 	}
 	return ""
 }
 
 type SignalControllerConfigLinearReference struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	RouteDesignator string                 `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3" json:"route_designator,omitempty"`
-	Direction       string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"`
-	Measure         string                 `protobuf:"bytes,3,opt,name=measure,proto3" json:"measure,omitempty"`
-	LrsMethod       string                 `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3" json:"lrs_method,omitempty"`
+	RouteDesignator *string                `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3,oneof" json:"route_designator,omitempty"`
+	Direction       *string                `protobuf:"bytes,2,opt,name=direction,proto3,oneof" json:"direction,omitempty"`
+	Measure         *string                `protobuf:"bytes,3,opt,name=measure,proto3,oneof" json:"measure,omitempty"`
+	LrsMethod       *string                `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3,oneof" json:"lrs_method,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1609,53 +360,53 @@ func (*SignalControllerConfigLinearReference) Descriptor() ([]byte, []int) {
 }
 
 func (x *SignalControllerConfigLinearReference) GetRouteDesignator() string {
-	if x != nil {
-		return x.RouteDesignator
+	if x != nil && x.RouteDesignator != nil {
+		return *x.RouteDesignator
 	}
 	return ""
 }
 
 func (x *SignalControllerConfigLinearReference) GetDirection() string {
-	if x != nil {
-		return x.Direction
+	if x != nil && x.Direction != nil {
+		return *x.Direction
 	}
 	return ""
 }
 
 func (x *SignalControllerConfigLinearReference) GetMeasure() string {
-	if x != nil {
-		return x.Measure
+	if x != nil && x.Measure != nil {
+		return *x.Measure
 	}
 	return ""
 }
 
 func (x *SignalControllerConfigLinearReference) GetLrsMethod() string {
-	if x != nil {
-		return x.LrsMethod
+	if x != nil && x.LrsMethod != nil {
+		return *x.LrsMethod
 	}
 	return ""
 }
 
 type SignalControllerState struct {
 	state           protoimpl.MessageState                `protogen:"open.v1"`
-	Elevation       string                                `protobuf:"bytes,1,opt,name=elevation,proto3" json:"elevation,omitempty"`
-	Firmware        string                                `protobuf:"bytes,2,opt,name=firmware,proto3" json:"firmware,omitempty"`
-	FirmwareBuild   string                                `protobuf:"bytes,12,opt,name=firmware_build,json=firmwareBuild,proto3" json:"firmware_build,omitempty"`
-	HardwareVersion string                                `protobuf:"bytes,13,opt,name=hardware_version,json=hardwareVersion,proto3" json:"hardware_version,omitempty"`
-	Heading         uint32                                `protobuf:"varint,3,opt,name=heading,proto3" json:"heading,omitempty"`
-	Id              string                                `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
+	Elevation       *string                               `protobuf:"bytes,1,opt,name=elevation,proto3,oneof" json:"elevation,omitempty"`
+	Firmware        *string                               `protobuf:"bytes,2,opt,name=firmware,proto3,oneof" json:"firmware,omitempty"`
+	FirmwareBuild   *string                               `protobuf:"bytes,12,opt,name=firmware_build,json=firmwareBuild,proto3,oneof" json:"firmware_build,omitempty"`
+	HardwareVersion *string                               `protobuf:"bytes,13,opt,name=hardware_version,json=hardwareVersion,proto3,oneof" json:"hardware_version,omitempty"`
+	Heading         *uint32                               `protobuf:"varint,3,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
+	Id              *string                               `protobuf:"bytes,4,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate     *timestamppb.Timestamp                `protobuf:"bytes,14,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
-	Latitude        string                                `protobuf:"bytes,5,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	Latitude        *string                               `protobuf:"bytes,5,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference *SignalControllerStateLinearReference `protobuf:"bytes,15,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
-	Longitude       string                                `protobuf:"bytes,6,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	MaintainedBy    string                                `protobuf:"bytes,16,opt,name=maintained_by,json=maintainedBy,proto3" json:"maintained_by,omitempty"`
-	Make            string                                `protobuf:"bytes,7,opt,name=make,proto3" json:"make,omitempty"`
-	Model           string                                `protobuf:"bytes,8,opt,name=model,proto3" json:"model,omitempty"`
-	Name            string                                `protobuf:"bytes,9,opt,name=name,proto3" json:"name,omitempty"`
-	Owner           string                                `protobuf:"bytes,17,opt,name=owner,proto3" json:"owner,omitempty"`
-	RoadReference   string                                `protobuf:"bytes,10,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
-	Serial          string                                `protobuf:"bytes,11,opt,name=serial,proto3" json:"serial,omitempty"`
-	SiteId          string                                `protobuf:"bytes,18,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
+	Longitude       *string                               `protobuf:"bytes,6,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
+	MaintainedBy    *string                               `protobuf:"bytes,16,opt,name=maintained_by,json=maintainedBy,proto3,oneof" json:"maintained_by,omitempty"`
+	Make            *string                               `protobuf:"bytes,7,opt,name=make,proto3,oneof" json:"make,omitempty"`
+	Model           *string                               `protobuf:"bytes,8,opt,name=model,proto3,oneof" json:"model,omitempty"`
+	Name            *string                               `protobuf:"bytes,9,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Owner           *string                               `protobuf:"bytes,17,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	RoadReference   *string                               `protobuf:"bytes,10,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
+	Serial          *string                               `protobuf:"bytes,11,opt,name=serial,proto3,oneof" json:"serial,omitempty"`
+	SiteId          *string                               `protobuf:"bytes,18,opt,name=site_id,json=siteId,proto3,oneof" json:"site_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1691,43 +442,43 @@ func (*SignalControllerState) Descriptor() ([]byte, []int) {
 }
 
 func (x *SignalControllerState) GetElevation() string {
-	if x != nil {
-		return x.Elevation
+	if x != nil && x.Elevation != nil {
+		return *x.Elevation
 	}
 	return ""
 }
 
 func (x *SignalControllerState) GetFirmware() string {
-	if x != nil {
-		return x.Firmware
+	if x != nil && x.Firmware != nil {
+		return *x.Firmware
 	}
 	return ""
 }
 
 func (x *SignalControllerState) GetFirmwareBuild() string {
-	if x != nil {
-		return x.FirmwareBuild
+	if x != nil && x.FirmwareBuild != nil {
+		return *x.FirmwareBuild
 	}
 	return ""
 }
 
 func (x *SignalControllerState) GetHardwareVersion() string {
-	if x != nil {
-		return x.HardwareVersion
+	if x != nil && x.HardwareVersion != nil {
+		return *x.HardwareVersion
 	}
 	return ""
 }
 
 func (x *SignalControllerState) GetHeading() uint32 {
-	if x != nil {
-		return x.Heading
+	if x != nil && x.Heading != nil {
+		return *x.Heading
 	}
 	return 0
 }
 
 func (x *SignalControllerState) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
@@ -1740,8 +491,8 @@ func (x *SignalControllerState) GetInstallDate() *timestamppb.Timestamp {
 }
 
 func (x *SignalControllerState) GetLatitude() string {
-	if x != nil {
-		return x.Latitude
+	if x != nil && x.Latitude != nil {
+		return *x.Latitude
 	}
 	return ""
 }
@@ -1754,74 +505,74 @@ func (x *SignalControllerState) GetLinearReference() *SignalControllerStateLinea
 }
 
 func (x *SignalControllerState) GetLongitude() string {
-	if x != nil {
-		return x.Longitude
+	if x != nil && x.Longitude != nil {
+		return *x.Longitude
 	}
 	return ""
 }
 
 func (x *SignalControllerState) GetMaintainedBy() string {
-	if x != nil {
-		return x.MaintainedBy
+	if x != nil && x.MaintainedBy != nil {
+		return *x.MaintainedBy
 	}
 	return ""
 }
 
 func (x *SignalControllerState) GetMake() string {
-	if x != nil {
-		return x.Make
+	if x != nil && x.Make != nil {
+		return *x.Make
 	}
 	return ""
 }
 
 func (x *SignalControllerState) GetModel() string {
-	if x != nil {
-		return x.Model
+	if x != nil && x.Model != nil {
+		return *x.Model
 	}
 	return ""
 }
 
 func (x *SignalControllerState) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *SignalControllerState) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
 
 func (x *SignalControllerState) GetRoadReference() string {
-	if x != nil {
-		return x.RoadReference
+	if x != nil && x.RoadReference != nil {
+		return *x.RoadReference
 	}
 	return ""
 }
 
 func (x *SignalControllerState) GetSerial() string {
-	if x != nil {
-		return x.Serial
+	if x != nil && x.Serial != nil {
+		return *x.Serial
 	}
 	return ""
 }
 
 func (x *SignalControllerState) GetSiteId() string {
-	if x != nil {
-		return x.SiteId
+	if x != nil && x.SiteId != nil {
+		return *x.SiteId
 	}
 	return ""
 }
 
 type SignalControllerStateLinearReference struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	RouteDesignator string                 `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3" json:"route_designator,omitempty"`
-	Direction       string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"`
-	Measure         string                 `protobuf:"bytes,3,opt,name=measure,proto3" json:"measure,omitempty"`
-	LrsMethod       string                 `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3" json:"lrs_method,omitempty"`
+	RouteDesignator *string                `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3,oneof" json:"route_designator,omitempty"`
+	Direction       *string                `protobuf:"bytes,2,opt,name=direction,proto3,oneof" json:"direction,omitempty"`
+	Measure         *string                `protobuf:"bytes,3,opt,name=measure,proto3,oneof" json:"measure,omitempty"`
+	LrsMethod       *string                `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3,oneof" json:"lrs_method,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1857,38 +608,38 @@ func (*SignalControllerStateLinearReference) Descriptor() ([]byte, []int) {
 }
 
 func (x *SignalControllerStateLinearReference) GetRouteDesignator() string {
-	if x != nil {
-		return x.RouteDesignator
+	if x != nil && x.RouteDesignator != nil {
+		return *x.RouteDesignator
 	}
 	return ""
 }
 
 func (x *SignalControllerStateLinearReference) GetDirection() string {
-	if x != nil {
-		return x.Direction
+	if x != nil && x.Direction != nil {
+		return *x.Direction
 	}
 	return ""
 }
 
 func (x *SignalControllerStateLinearReference) GetMeasure() string {
-	if x != nil {
-		return x.Measure
+	if x != nil && x.Measure != nil {
+		return *x.Measure
 	}
 	return ""
 }
 
 func (x *SignalControllerStateLinearReference) GetLrsMethod() string {
-	if x != nil {
-		return x.LrsMethod
+	if x != nil && x.LrsMethod != nil {
+		return *x.LrsMethod
 	}
 	return ""
 }
 
 type Startup struct {
 	state                 protoimpl.MessageState `protogen:"open.v1"`
-	FlashDurationSeconds  uint32                 `protobuf:"varint,1,opt,name=flash_duration_seconds,json=flashDurationSeconds,proto3" json:"flash_duration_seconds,omitempty"`
+	FlashDurationSeconds  *uint32                `protobuf:"varint,1,opt,name=flash_duration_seconds,json=flashDurationSeconds,proto3,oneof" json:"flash_duration_seconds,omitempty"`
 	FlashPhases           []uint32               `protobuf:"varint,2,rep,packed,name=flash_phases,json=flashPhases,proto3" json:"flash_phases,omitempty"`
-	AllRedDurationSeconds uint32                 `protobuf:"varint,3,opt,name=all_red_duration_seconds,json=allRedDurationSeconds,proto3" json:"all_red_duration_seconds,omitempty"`
+	AllRedDurationSeconds *uint32                `protobuf:"varint,3,opt,name=all_red_duration_seconds,json=allRedDurationSeconds,proto3,oneof" json:"all_red_duration_seconds,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -1924,8 +675,8 @@ func (*Startup) Descriptor() ([]byte, []int) {
 }
 
 func (x *Startup) GetFlashDurationSeconds() uint32 {
-	if x != nil {
-		return x.FlashDurationSeconds
+	if x != nil && x.FlashDurationSeconds != nil {
+		return *x.FlashDurationSeconds
 	}
 	return 0
 }
@@ -1938,8 +689,8 @@ func (x *Startup) GetFlashPhases() []uint32 {
 }
 
 func (x *Startup) GetAllRedDurationSeconds() uint32 {
-	if x != nil {
-		return x.AllRedDurationSeconds
+	if x != nil && x.AllRedDurationSeconds != nil {
+		return *x.AllRedDurationSeconds
 	}
 	return 0
 }
@@ -1990,7 +741,7 @@ func (x *Phases) GetPhase() []*Phase {
 
 type Phase struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PhaseNumber   uint32                 `protobuf:"varint,1,opt,name=phase_number,json=phaseNumber,proto3" json:"phase_number,omitempty"`
+	PhaseNumber   *uint32                `protobuf:"varint,1,opt,name=phase_number,json=phaseNumber,proto3,oneof" json:"phase_number,omitempty"`
 	Config        *PhaseConfig           `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
 	State         *PhaseState            `protobuf:"bytes,3,opt,name=state,proto3" json:"state,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -2028,8 +779,8 @@ func (*Phase) Descriptor() ([]byte, []int) {
 }
 
 func (x *Phase) GetPhaseNumber() uint32 {
-	if x != nil {
-		return x.PhaseNumber
+	if x != nil && x.PhaseNumber != nil {
+		return *x.PhaseNumber
 	}
 	return 0
 }
@@ -2050,15 +801,15 @@ func (x *Phase) GetState() *PhaseState {
 
 type PhaseConfig struct {
 	state                     protoimpl.MessageState `protogen:"open.v1"`
-	PhaseNumber               uint32                 `protobuf:"varint,1,opt,name=phase_number,json=phaseNumber,proto3" json:"phase_number,omitempty"`
-	Enabled                   bool                   `protobuf:"varint,2,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	PhaseNumber               *uint32                `protobuf:"varint,1,opt,name=phase_number,json=phaseNumber,proto3,oneof" json:"phase_number,omitempty"`
+	Enabled                   *bool                  `protobuf:"varint,2,opt,name=enabled,proto3,oneof" json:"enabled,omitempty"`
 	Ring                      uint32                 `protobuf:"varint,3,opt,name=ring,proto3" json:"ring,omitempty"`
 	Barrier                   uint32                 `protobuf:"varint,4,opt,name=barrier,proto3" json:"barrier,omitempty"`
 	Timing                    *Timing                `protobuf:"bytes,5,opt,name=timing,proto3" json:"timing,omitempty"`
-	MaxGreen_2                string                 `protobuf:"bytes,6,opt,name=max_green_2,json=maxGreen2,proto3" json:"max_green_2,omitempty"`
-	RedRevert                 string                 `protobuf:"bytes,9,opt,name=red_revert,json=redRevert,proto3" json:"red_revert,omitempty"`
-	CrossingDistanceM         string                 `protobuf:"bytes,10,opt,name=crossing_distance_m,json=crossingDistanceM,proto3" json:"crossing_distance_m,omitempty"`
-	LeadingPedIntervalSeconds string                 `protobuf:"bytes,11,opt,name=leading_ped_interval_seconds,json=leadingPedIntervalSeconds,proto3" json:"leading_ped_interval_seconds,omitempty"`
+	MaxGreen_2                *string                `protobuf:"bytes,6,opt,name=max_green_2,json=maxGreen2,proto3,oneof" json:"max_green_2,omitempty"`
+	RedRevert                 *string                `protobuf:"bytes,9,opt,name=red_revert,json=redRevert,proto3,oneof" json:"red_revert,omitempty"`
+	CrossingDistanceM         *string                `protobuf:"bytes,10,opt,name=crossing_distance_m,json=crossingDistanceM,proto3,oneof" json:"crossing_distance_m,omitempty"`
+	LeadingPedIntervalSeconds *string                `protobuf:"bytes,11,opt,name=leading_ped_interval_seconds,json=leadingPedIntervalSeconds,proto3,oneof" json:"leading_ped_interval_seconds,omitempty"`
 	Options                   *Options               `protobuf:"bytes,7,opt,name=options,proto3" json:"options,omitempty"`
 	VolumeDensity             *VolumeDensity         `protobuf:"bytes,8,opt,name=volume_density,json=volumeDensity,proto3" json:"volume_density,omitempty"`
 	unknownFields             protoimpl.UnknownFields
@@ -2096,15 +847,15 @@ func (*PhaseConfig) Descriptor() ([]byte, []int) {
 }
 
 func (x *PhaseConfig) GetPhaseNumber() uint32 {
-	if x != nil {
-		return x.PhaseNumber
+	if x != nil && x.PhaseNumber != nil {
+		return *x.PhaseNumber
 	}
 	return 0
 }
 
 func (x *PhaseConfig) GetEnabled() bool {
-	if x != nil {
-		return x.Enabled
+	if x != nil && x.Enabled != nil {
+		return *x.Enabled
 	}
 	return false
 }
@@ -2131,29 +882,29 @@ func (x *PhaseConfig) GetTiming() *Timing {
 }
 
 func (x *PhaseConfig) GetMaxGreen_2() string {
-	if x != nil {
-		return x.MaxGreen_2
+	if x != nil && x.MaxGreen_2 != nil {
+		return *x.MaxGreen_2
 	}
 	return ""
 }
 
 func (x *PhaseConfig) GetRedRevert() string {
-	if x != nil {
-		return x.RedRevert
+	if x != nil && x.RedRevert != nil {
+		return *x.RedRevert
 	}
 	return ""
 }
 
 func (x *PhaseConfig) GetCrossingDistanceM() string {
-	if x != nil {
-		return x.CrossingDistanceM
+	if x != nil && x.CrossingDistanceM != nil {
+		return *x.CrossingDistanceM
 	}
 	return ""
 }
 
 func (x *PhaseConfig) GetLeadingPedIntervalSeconds() string {
-	if x != nil {
-		return x.LeadingPedIntervalSeconds
+	if x != nil && x.LeadingPedIntervalSeconds != nil {
+		return *x.LeadingPedIntervalSeconds
 	}
 	return ""
 }
@@ -2174,13 +925,13 @@ func (x *PhaseConfig) GetVolumeDensity() *VolumeDensity {
 
 type Timing struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	MaxGreen      string                 `protobuf:"bytes,1,opt,name=max_green,json=maxGreen,proto3" json:"max_green,omitempty"`
-	MinGreen      string                 `protobuf:"bytes,2,opt,name=min_green,json=minGreen,proto3" json:"min_green,omitempty"`
-	Passage       string                 `protobuf:"bytes,3,opt,name=passage,proto3" json:"passage,omitempty"`
-	PedClear      uint32                 `protobuf:"varint,4,opt,name=ped_clear,json=pedClear,proto3" json:"ped_clear,omitempty"`
-	RedClear      string                 `protobuf:"bytes,5,opt,name=red_clear,json=redClear,proto3" json:"red_clear,omitempty"`
-	Walk          uint32                 `protobuf:"varint,6,opt,name=walk,proto3" json:"walk,omitempty"`
-	YellowChange  string                 `protobuf:"bytes,7,opt,name=yellow_change,json=yellowChange,proto3" json:"yellow_change,omitempty"`
+	MaxGreen      *string                `protobuf:"bytes,1,opt,name=max_green,json=maxGreen,proto3,oneof" json:"max_green,omitempty"`
+	MinGreen      *string                `protobuf:"bytes,2,opt,name=min_green,json=minGreen,proto3,oneof" json:"min_green,omitempty"`
+	Passage       *string                `protobuf:"bytes,3,opt,name=passage,proto3,oneof" json:"passage,omitempty"`
+	PedClear      *uint32                `protobuf:"varint,4,opt,name=ped_clear,json=pedClear,proto3,oneof" json:"ped_clear,omitempty"`
+	RedClear      *string                `protobuf:"bytes,5,opt,name=red_clear,json=redClear,proto3,oneof" json:"red_clear,omitempty"`
+	Walk          *uint32                `protobuf:"varint,6,opt,name=walk,proto3,oneof" json:"walk,omitempty"`
+	YellowChange  *string                `protobuf:"bytes,7,opt,name=yellow_change,json=yellowChange,proto3,oneof" json:"yellow_change,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2216,64 +967,64 @@ func (*Timing) Descriptor() ([]byte, []int) {
 }
 
 func (x *Timing) GetMaxGreen() string {
-	if x != nil {
-		return x.MaxGreen
+	if x != nil && x.MaxGreen != nil {
+		return *x.MaxGreen
 	}
 	return ""
 }
 
 func (x *Timing) GetMinGreen() string {
-	if x != nil {
-		return x.MinGreen
+	if x != nil && x.MinGreen != nil {
+		return *x.MinGreen
 	}
 	return ""
 }
 
 func (x *Timing) GetPassage() string {
-	if x != nil {
-		return x.Passage
+	if x != nil && x.Passage != nil {
+		return *x.Passage
 	}
 	return ""
 }
 
 func (x *Timing) GetPedClear() uint32 {
-	if x != nil {
-		return x.PedClear
+	if x != nil && x.PedClear != nil {
+		return *x.PedClear
 	}
 	return 0
 }
 
 func (x *Timing) GetRedClear() string {
-	if x != nil {
-		return x.RedClear
+	if x != nil && x.RedClear != nil {
+		return *x.RedClear
 	}
 	return ""
 }
 
 func (x *Timing) GetWalk() uint32 {
-	if x != nil {
-		return x.Walk
+	if x != nil && x.Walk != nil {
+		return *x.Walk
 	}
 	return 0
 }
 
 func (x *Timing) GetYellowChange() string {
-	if x != nil {
-		return x.YellowChange
+	if x != nil && x.YellowChange != nil {
+		return *x.YellowChange
 	}
 	return ""
 }
 
 type Options struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
-	MinRecall         bool                   `protobuf:"varint,1,opt,name=min_recall,json=minRecall,proto3" json:"min_recall,omitempty"`
-	MaxRecall         bool                   `protobuf:"varint,2,opt,name=max_recall,json=maxRecall,proto3" json:"max_recall,omitempty"`
-	PedRecall         bool                   `protobuf:"varint,3,opt,name=ped_recall,json=pedRecall,proto3" json:"ped_recall,omitempty"`
-	SoftRecall        bool                   `protobuf:"varint,4,opt,name=soft_recall,json=softRecall,proto3" json:"soft_recall,omitempty"`
-	DualEntry         bool                   `protobuf:"varint,5,opt,name=dual_entry,json=dualEntry,proto3" json:"dual_entry,omitempty"`
-	RestInWalk        bool                   `protobuf:"varint,6,opt,name=rest_in_walk,json=restInWalk,proto3" json:"rest_in_walk,omitempty"`
-	SimultaneousGap   bool                   `protobuf:"varint,7,opt,name=simultaneous_gap,json=simultaneousGap,proto3" json:"simultaneous_gap,omitempty"`
-	CallToNonactuated bool                   `protobuf:"varint,8,opt,name=call_to_nonactuated,json=callToNonactuated,proto3" json:"call_to_nonactuated,omitempty"`
+	MinRecall         *bool                  `protobuf:"varint,1,opt,name=min_recall,json=minRecall,proto3,oneof" json:"min_recall,omitempty"`
+	MaxRecall         *bool                  `protobuf:"varint,2,opt,name=max_recall,json=maxRecall,proto3,oneof" json:"max_recall,omitempty"`
+	PedRecall         *bool                  `protobuf:"varint,3,opt,name=ped_recall,json=pedRecall,proto3,oneof" json:"ped_recall,omitempty"`
+	SoftRecall        *bool                  `protobuf:"varint,4,opt,name=soft_recall,json=softRecall,proto3,oneof" json:"soft_recall,omitempty"`
+	DualEntry         *bool                  `protobuf:"varint,5,opt,name=dual_entry,json=dualEntry,proto3,oneof" json:"dual_entry,omitempty"`
+	RestInWalk        *bool                  `protobuf:"varint,6,opt,name=rest_in_walk,json=restInWalk,proto3,oneof" json:"rest_in_walk,omitempty"`
+	SimultaneousGap   *bool                  `protobuf:"varint,7,opt,name=simultaneous_gap,json=simultaneousGap,proto3,oneof" json:"simultaneous_gap,omitempty"`
+	CallToNonactuated *bool                  `protobuf:"varint,8,opt,name=call_to_nonactuated,json=callToNonactuated,proto3,oneof" json:"call_to_nonactuated,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -2309,68 +1060,68 @@ func (*Options) Descriptor() ([]byte, []int) {
 }
 
 func (x *Options) GetMinRecall() bool {
-	if x != nil {
-		return x.MinRecall
+	if x != nil && x.MinRecall != nil {
+		return *x.MinRecall
 	}
 	return false
 }
 
 func (x *Options) GetMaxRecall() bool {
-	if x != nil {
-		return x.MaxRecall
+	if x != nil && x.MaxRecall != nil {
+		return *x.MaxRecall
 	}
 	return false
 }
 
 func (x *Options) GetPedRecall() bool {
-	if x != nil {
-		return x.PedRecall
+	if x != nil && x.PedRecall != nil {
+		return *x.PedRecall
 	}
 	return false
 }
 
 func (x *Options) GetSoftRecall() bool {
-	if x != nil {
-		return x.SoftRecall
+	if x != nil && x.SoftRecall != nil {
+		return *x.SoftRecall
 	}
 	return false
 }
 
 func (x *Options) GetDualEntry() bool {
-	if x != nil {
-		return x.DualEntry
+	if x != nil && x.DualEntry != nil {
+		return *x.DualEntry
 	}
 	return false
 }
 
 func (x *Options) GetRestInWalk() bool {
-	if x != nil {
-		return x.RestInWalk
+	if x != nil && x.RestInWalk != nil {
+		return *x.RestInWalk
 	}
 	return false
 }
 
 func (x *Options) GetSimultaneousGap() bool {
-	if x != nil {
-		return x.SimultaneousGap
+	if x != nil && x.SimultaneousGap != nil {
+		return *x.SimultaneousGap
 	}
 	return false
 }
 
 func (x *Options) GetCallToNonactuated() bool {
-	if x != nil {
-		return x.CallToNonactuated
+	if x != nil && x.CallToNonactuated != nil {
+		return *x.CallToNonactuated
 	}
 	return false
 }
 
 type VolumeDensity struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
-	AddedInitial        string                 `protobuf:"bytes,1,opt,name=added_initial,json=addedInitial,proto3" json:"added_initial,omitempty"`
-	MaxInitial          uint32                 `protobuf:"varint,2,opt,name=max_initial,json=maxInitial,proto3" json:"max_initial,omitempty"`
-	TimeBeforeReduction uint32                 `protobuf:"varint,3,opt,name=time_before_reduction,json=timeBeforeReduction,proto3" json:"time_before_reduction,omitempty"`
-	TimeToReduce        uint32                 `protobuf:"varint,4,opt,name=time_to_reduce,json=timeToReduce,proto3" json:"time_to_reduce,omitempty"`
-	MinGap              string                 `protobuf:"bytes,5,opt,name=min_gap,json=minGap,proto3" json:"min_gap,omitempty"`
+	AddedInitial        *string                `protobuf:"bytes,1,opt,name=added_initial,json=addedInitial,proto3,oneof" json:"added_initial,omitempty"`
+	MaxInitial          *uint32                `protobuf:"varint,2,opt,name=max_initial,json=maxInitial,proto3,oneof" json:"max_initial,omitempty"`
+	TimeBeforeReduction *uint32                `protobuf:"varint,3,opt,name=time_before_reduction,json=timeBeforeReduction,proto3,oneof" json:"time_before_reduction,omitempty"`
+	TimeToReduce        *uint32                `protobuf:"varint,4,opt,name=time_to_reduce,json=timeToReduce,proto3,oneof" json:"time_to_reduce,omitempty"`
+	MinGap              *string                `protobuf:"bytes,5,opt,name=min_gap,json=minGap,proto3,oneof" json:"min_gap,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -2406,47 +1157,47 @@ func (*VolumeDensity) Descriptor() ([]byte, []int) {
 }
 
 func (x *VolumeDensity) GetAddedInitial() string {
-	if x != nil {
-		return x.AddedInitial
+	if x != nil && x.AddedInitial != nil {
+		return *x.AddedInitial
 	}
 	return ""
 }
 
 func (x *VolumeDensity) GetMaxInitial() uint32 {
-	if x != nil {
-		return x.MaxInitial
+	if x != nil && x.MaxInitial != nil {
+		return *x.MaxInitial
 	}
 	return 0
 }
 
 func (x *VolumeDensity) GetTimeBeforeReduction() uint32 {
-	if x != nil {
-		return x.TimeBeforeReduction
+	if x != nil && x.TimeBeforeReduction != nil {
+		return *x.TimeBeforeReduction
 	}
 	return 0
 }
 
 func (x *VolumeDensity) GetTimeToReduce() uint32 {
-	if x != nil {
-		return x.TimeToReduce
+	if x != nil && x.TimeToReduce != nil {
+		return *x.TimeToReduce
 	}
 	return 0
 }
 
 func (x *VolumeDensity) GetMinGap() string {
-	if x != nil {
-		return x.MinGap
+	if x != nil && x.MinGap != nil {
+		return *x.MinGap
 	}
 	return ""
 }
 
 type PhaseState struct {
 	state                    protoimpl.MessageState `protogen:"open.v1"`
-	NextPhase                uint32                 `protobuf:"varint,3,opt,name=next_phase,json=nextPhase,proto3" json:"next_phase,omitempty"`
-	PedInterval              PedIntervalType        `protobuf:"varint,4,opt,name=ped_interval,json=pedInterval,proto3,enum=openits.signal_control.v1.PedIntervalType" json:"ped_interval,omitempty"`
-	PedIntervalElapsedMs     uint32                 `protobuf:"varint,5,opt,name=ped_interval_elapsed_ms,json=pedIntervalElapsedMs,proto3" json:"ped_interval_elapsed_ms,omitempty"`
-	VehicleInterval          VehIntervalType        `protobuf:"varint,6,opt,name=vehicle_interval,json=vehicleInterval,proto3,enum=openits.signal_control.v1.VehIntervalType" json:"vehicle_interval,omitempty"`
-	VehicleIntervalElapsedMs uint32                 `protobuf:"varint,7,opt,name=vehicle_interval_elapsed_ms,json=vehicleIntervalElapsedMs,proto3" json:"vehicle_interval_elapsed_ms,omitempty"`
+	NextPhase                *uint32                `protobuf:"varint,3,opt,name=next_phase,json=nextPhase,proto3,oneof" json:"next_phase,omitempty"`
+	PedInterval              *PedIntervalType       `protobuf:"varint,4,opt,name=ped_interval,json=pedInterval,proto3,enum=openits.signal_control.v1.PedIntervalType,oneof" json:"ped_interval,omitempty"`
+	PedIntervalElapsedMs     *uint32                `protobuf:"varint,5,opt,name=ped_interval_elapsed_ms,json=pedIntervalElapsedMs,proto3,oneof" json:"ped_interval_elapsed_ms,omitempty"`
+	VehicleInterval          *VehIntervalType       `protobuf:"varint,6,opt,name=vehicle_interval,json=vehicleInterval,proto3,enum=openits.signal_control.v1.VehIntervalType,oneof" json:"vehicle_interval,omitempty"`
+	VehicleIntervalElapsedMs *uint32                `protobuf:"varint,7,opt,name=vehicle_interval_elapsed_ms,json=vehicleIntervalElapsedMs,proto3,oneof" json:"vehicle_interval_elapsed_ms,omitempty"`
 	unknownFields            protoimpl.UnknownFields
 	sizeCache                protoimpl.SizeCache
 }
@@ -2482,36 +1233,36 @@ func (*PhaseState) Descriptor() ([]byte, []int) {
 }
 
 func (x *PhaseState) GetNextPhase() uint32 {
-	if x != nil {
-		return x.NextPhase
+	if x != nil && x.NextPhase != nil {
+		return *x.NextPhase
 	}
 	return 0
 }
 
 func (x *PhaseState) GetPedInterval() PedIntervalType {
-	if x != nil {
-		return x.PedInterval
+	if x != nil && x.PedInterval != nil {
+		return *x.PedInterval
 	}
 	return PedIntervalType_PED_INTERVAL_TYPE_UNSPECIFIED
 }
 
 func (x *PhaseState) GetPedIntervalElapsedMs() uint32 {
-	if x != nil {
-		return x.PedIntervalElapsedMs
+	if x != nil && x.PedIntervalElapsedMs != nil {
+		return *x.PedIntervalElapsedMs
 	}
 	return 0
 }
 
 func (x *PhaseState) GetVehicleInterval() VehIntervalType {
-	if x != nil {
-		return x.VehicleInterval
+	if x != nil && x.VehicleInterval != nil {
+		return *x.VehicleInterval
 	}
 	return VehIntervalType_VEH_INTERVAL_TYPE_UNSPECIFIED
 }
 
 func (x *PhaseState) GetVehicleIntervalElapsedMs() uint32 {
-	if x != nil {
-		return x.VehicleIntervalElapsedMs
+	if x != nil && x.VehicleIntervalElapsedMs != nil {
+		return *x.VehicleIntervalElapsedMs
 	}
 	return 0
 }
@@ -2562,7 +1313,7 @@ func (x *Detectors) GetDetector() []*DetectorsDetector {
 
 type DetectorsDetector struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	DetectorId    uint32                   `protobuf:"varint,1,opt,name=detector_id,json=detectorId,proto3" json:"detector_id,omitempty"`
+	DetectorId    *uint32                  `protobuf:"varint,1,opt,name=detector_id,json=detectorId,proto3,oneof" json:"detector_id,omitempty"`
 	Config        *DetectorsDetectorConfig `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
 	State         *DetectorsDetectorState  `protobuf:"bytes,3,opt,name=state,proto3" json:"state,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -2600,8 +1351,8 @@ func (*DetectorsDetector) Descriptor() ([]byte, []int) {
 }
 
 func (x *DetectorsDetector) GetDetectorId() uint32 {
-	if x != nil {
-		return x.DetectorId
+	if x != nil && x.DetectorId != nil {
+		return *x.DetectorId
 	}
 	return 0
 }
@@ -2622,15 +1373,16 @@ func (x *DetectorsDetector) GetState() *DetectorsDetectorState {
 
 type DetectorsDetectorConfig struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	DetectorId     uint32                 `protobuf:"varint,1,opt,name=detector_id,json=detectorId,proto3" json:"detector_id,omitempty"`
+	DetectorId     *uint32                `protobuf:"varint,1,opt,name=detector_id,json=detectorId,proto3,oneof" json:"detector_id,omitempty"`
 	Type           string                 `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
 	AssignedPhases []uint32               `protobuf:"varint,3,rep,packed,name=assigned_phases,json=assignedPhases,proto3" json:"assigned_phases,omitempty"`
-	Enabled        bool                   `protobuf:"varint,4,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	Delay          uint32                 `protobuf:"varint,5,opt,name=delay,proto3" json:"delay,omitempty"`
-	Extend         string                 `protobuf:"bytes,6,opt,name=extend,proto3" json:"extend,omitempty"`
-	Mode           DetectorMode           `protobuf:"varint,7,opt,name=mode,proto3,enum=openits.signal_control.v1.DetectorMode" json:"mode,omitempty"`
+	Enabled        *bool                  `protobuf:"varint,4,opt,name=enabled,proto3,oneof" json:"enabled,omitempty"`
+	Name           *string                `protobuf:"bytes,11,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Delay          *string                `protobuf:"bytes,5,opt,name=delay,proto3,oneof" json:"delay,omitempty"`
+	Extend         *string                `protobuf:"bytes,6,opt,name=extend,proto3,oneof" json:"extend,omitempty"`
+	Mode           *DetectorMode          `protobuf:"varint,7,opt,name=mode,proto3,enum=openits.signal_control.v1.DetectorMode,oneof" json:"mode,omitempty"`
 	ExtendPhases   []uint32               `protobuf:"varint,8,rep,packed,name=extend_phases,json=extendPhases,proto3" json:"extend_phases,omitempty"`
-	FailAction     DetectorFailAction     `protobuf:"varint,9,opt,name=fail_action,json=failAction,proto3,enum=openits.signal_control.v1.DetectorFailAction" json:"fail_action,omitempty"`
+	FailAction     *DetectorFailAction    `protobuf:"varint,9,opt,name=fail_action,json=failAction,proto3,enum=openits.signal_control.v1.DetectorFailAction,oneof" json:"fail_action,omitempty"`
 	Diagnostics    *Diagnostics           `protobuf:"bytes,10,opt,name=diagnostics,proto3" json:"diagnostics,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -2667,8 +1419,8 @@ func (*DetectorsDetectorConfig) Descriptor() ([]byte, []int) {
 }
 
 func (x *DetectorsDetectorConfig) GetDetectorId() uint32 {
-	if x != nil {
-		return x.DetectorId
+	if x != nil && x.DetectorId != nil {
+		return *x.DetectorId
 	}
 	return 0
 }
@@ -2688,29 +1440,36 @@ func (x *DetectorsDetectorConfig) GetAssignedPhases() []uint32 {
 }
 
 func (x *DetectorsDetectorConfig) GetEnabled() bool {
-	if x != nil {
-		return x.Enabled
+	if x != nil && x.Enabled != nil {
+		return *x.Enabled
 	}
 	return false
 }
 
-func (x *DetectorsDetectorConfig) GetDelay() uint32 {
-	if x != nil {
-		return x.Delay
+func (x *DetectorsDetectorConfig) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
-	return 0
+	return ""
+}
+
+func (x *DetectorsDetectorConfig) GetDelay() string {
+	if x != nil && x.Delay != nil {
+		return *x.Delay
+	}
+	return ""
 }
 
 func (x *DetectorsDetectorConfig) GetExtend() string {
-	if x != nil {
-		return x.Extend
+	if x != nil && x.Extend != nil {
+		return *x.Extend
 	}
 	return ""
 }
 
 func (x *DetectorsDetectorConfig) GetMode() DetectorMode {
-	if x != nil {
-		return x.Mode
+	if x != nil && x.Mode != nil {
+		return *x.Mode
 	}
 	return DetectorMode_DETECTOR_MODE_UNSPECIFIED
 }
@@ -2723,8 +1482,8 @@ func (x *DetectorsDetectorConfig) GetExtendPhases() []uint32 {
 }
 
 func (x *DetectorsDetectorConfig) GetFailAction() DetectorFailAction {
-	if x != nil {
-		return x.FailAction
+	if x != nil && x.FailAction != nil {
+		return *x.FailAction
 	}
 	return DetectorFailAction_DETECTOR_FAIL_ACTION_UNSPECIFIED
 }
@@ -2738,9 +1497,9 @@ func (x *DetectorsDetectorConfig) GetDiagnostics() *Diagnostics {
 
 type Diagnostics struct {
 	state                  protoimpl.MessageState `protogen:"open.v1"`
-	NoActivityMinutes      uint32                 `protobuf:"varint,1,opt,name=no_activity_minutes,json=noActivityMinutes,proto3" json:"no_activity_minutes,omitempty"`
-	MaxPresenceMinutes     uint32                 `protobuf:"varint,2,opt,name=max_presence_minutes,json=maxPresenceMinutes,proto3" json:"max_presence_minutes,omitempty"`
-	ErraticCountsPerMinute uint32                 `protobuf:"varint,3,opt,name=erratic_counts_per_minute,json=erraticCountsPerMinute,proto3" json:"erratic_counts_per_minute,omitempty"`
+	NoActivityMinutes      *uint32                `protobuf:"varint,1,opt,name=no_activity_minutes,json=noActivityMinutes,proto3,oneof" json:"no_activity_minutes,omitempty"`
+	MaxPresenceMinutes     *uint32                `protobuf:"varint,2,opt,name=max_presence_minutes,json=maxPresenceMinutes,proto3,oneof" json:"max_presence_minutes,omitempty"`
+	ErraticCountsPerMinute *uint32                `protobuf:"varint,3,opt,name=erratic_counts_per_minute,json=erraticCountsPerMinute,proto3,oneof" json:"erratic_counts_per_minute,omitempty"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
 }
@@ -2776,32 +1535,32 @@ func (*Diagnostics) Descriptor() ([]byte, []int) {
 }
 
 func (x *Diagnostics) GetNoActivityMinutes() uint32 {
-	if x != nil {
-		return x.NoActivityMinutes
+	if x != nil && x.NoActivityMinutes != nil {
+		return *x.NoActivityMinutes
 	}
 	return 0
 }
 
 func (x *Diagnostics) GetMaxPresenceMinutes() uint32 {
-	if x != nil {
-		return x.MaxPresenceMinutes
+	if x != nil && x.MaxPresenceMinutes != nil {
+		return *x.MaxPresenceMinutes
 	}
 	return 0
 }
 
 func (x *Diagnostics) GetErraticCountsPerMinute() uint32 {
-	if x != nil {
-		return x.ErraticCountsPerMinute
+	if x != nil && x.ErraticCountsPerMinute != nil {
+		return *x.ErraticCountsPerMinute
 	}
 	return 0
 }
 
 type DetectorsDetectorState struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Active         bool                   `protobuf:"varint,1,opt,name=active,proto3" json:"active,omitempty"`
+	Active         *bool                  `protobuf:"varint,1,opt,name=active,proto3,oneof" json:"active,omitempty"`
 	LastActivation *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=last_activation,json=lastActivation,proto3" json:"last_activation,omitempty"`
-	ActuationCount uint64                 `protobuf:"varint,3,opt,name=actuation_count,json=actuationCount,proto3" json:"actuation_count,omitempty"`
-	Fault          bool                   `protobuf:"varint,4,opt,name=fault,proto3" json:"fault,omitempty"`
+	ActuationCount *uint64                `protobuf:"varint,3,opt,name=actuation_count,json=actuationCount,proto3,oneof" json:"actuation_count,omitempty"`
+	Fault          *bool                  `protobuf:"varint,4,opt,name=fault,proto3,oneof" json:"fault,omitempty"`
 	Measurement    *Measurement           `protobuf:"bytes,5,opt,name=measurement,proto3" json:"measurement,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -2838,8 +1597,8 @@ func (*DetectorsDetectorState) Descriptor() ([]byte, []int) {
 }
 
 func (x *DetectorsDetectorState) GetActive() bool {
-	if x != nil {
-		return x.Active
+	if x != nil && x.Active != nil {
+		return *x.Active
 	}
 	return false
 }
@@ -2852,15 +1611,15 @@ func (x *DetectorsDetectorState) GetLastActivation() *timestamppb.Timestamp {
 }
 
 func (x *DetectorsDetectorState) GetActuationCount() uint64 {
-	if x != nil {
-		return x.ActuationCount
+	if x != nil && x.ActuationCount != nil {
+		return *x.ActuationCount
 	}
 	return 0
 }
 
 func (x *DetectorsDetectorState) GetFault() bool {
-	if x != nil {
-		return x.Fault
+	if x != nil && x.Fault != nil {
+		return *x.Fault
 	}
 	return false
 }
@@ -2874,10 +1633,10 @@ func (x *DetectorsDetectorState) GetMeasurement() *Measurement {
 
 type Measurement struct {
 	state                   protoimpl.MessageState `protogen:"open.v1"`
-	Volume                  uint64                 `protobuf:"varint,1,opt,name=volume,proto3" json:"volume,omitempty"`
-	Occupancy               string                 `protobuf:"bytes,2,opt,name=occupancy,proto3" json:"occupancy,omitempty"`
-	SpeedKmh                string                 `protobuf:"bytes,3,opt,name=speed_kmh,json=speedKmh,proto3" json:"speed_kmh,omitempty"`
-	CollectionPeriodSeconds uint32                 `protobuf:"varint,4,opt,name=collection_period_seconds,json=collectionPeriodSeconds,proto3" json:"collection_period_seconds,omitempty"`
+	Volume                  *uint32                `protobuf:"varint,1,opt,name=volume,proto3,oneof" json:"volume,omitempty"`
+	Occupancy               *string                `protobuf:"bytes,2,opt,name=occupancy,proto3,oneof" json:"occupancy,omitempty"`
+	SpeedKmh                *string                `protobuf:"bytes,3,opt,name=speed_kmh,json=speedKmh,proto3,oneof" json:"speed_kmh,omitempty"`
+	CollectionPeriodSeconds *uint32                `protobuf:"varint,4,opt,name=collection_period_seconds,json=collectionPeriodSeconds,proto3,oneof" json:"collection_period_seconds,omitempty"`
 	CollectedAt             *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=collected_at,json=collectedAt,proto3" json:"collected_at,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
@@ -2913,30 +1672,30 @@ func (*Measurement) Descriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{18}
 }
 
-func (x *Measurement) GetVolume() uint64 {
-	if x != nil {
-		return x.Volume
+func (x *Measurement) GetVolume() uint32 {
+	if x != nil && x.Volume != nil {
+		return *x.Volume
 	}
 	return 0
 }
 
 func (x *Measurement) GetOccupancy() string {
-	if x != nil {
-		return x.Occupancy
+	if x != nil && x.Occupancy != nil {
+		return *x.Occupancy
 	}
 	return ""
 }
 
 func (x *Measurement) GetSpeedKmh() string {
-	if x != nil {
-		return x.SpeedKmh
+	if x != nil && x.SpeedKmh != nil {
+		return *x.SpeedKmh
 	}
 	return ""
 }
 
 func (x *Measurement) GetCollectionPeriodSeconds() uint32 {
-	if x != nil {
-		return x.CollectionPeriodSeconds
+	if x != nil && x.CollectionPeriodSeconds != nil {
+		return *x.CollectionPeriodSeconds
 	}
 	return 0
 }
@@ -2994,7 +1753,7 @@ func (x *Overlaps) GetOverlap() []*Overlap {
 
 type Overlap struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	OverlapNumber uint32                 `protobuf:"varint,4,opt,name=overlap_number,json=overlapNumber,proto3" json:"overlap_number,omitempty"`
+	OverlapNumber *uint32                `protobuf:"varint,4,opt,name=overlap_number,json=overlapNumber,proto3,oneof" json:"overlap_number,omitempty"`
 	Config        *OverlapConfig         `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
 	State         *OverlapState          `protobuf:"bytes,3,opt,name=state,proto3" json:"state,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -3032,8 +1791,8 @@ func (*Overlap) Descriptor() ([]byte, []int) {
 }
 
 func (x *Overlap) GetOverlapNumber() uint32 {
-	if x != nil {
-		return x.OverlapNumber
+	if x != nil && x.OverlapNumber != nil {
+		return *x.OverlapNumber
 	}
 	return 0
 }
@@ -3054,14 +1813,14 @@ func (x *Overlap) GetState() *OverlapState {
 
 type OverlapConfig struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
-	OverlapNumber    uint32                 `protobuf:"varint,9,opt,name=overlap_number,json=overlapNumber,proto3" json:"overlap_number,omitempty"`
-	Name             string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	OverlapNumber    *uint32                `protobuf:"varint,9,opt,name=overlap_number,json=overlapNumber,proto3,oneof" json:"overlap_number,omitempty"`
+	Name             *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	Type             string                 `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
 	IncludedPhases   []uint32               `protobuf:"varint,4,rep,packed,name=included_phases,json=includedPhases,proto3" json:"included_phases,omitempty"`
 	ModifierPhases   []uint32               `protobuf:"varint,10,rep,packed,name=modifier_phases,json=modifierPhases,proto3" json:"modifier_phases,omitempty"`
-	TrailingGreen    string                 `protobuf:"bytes,5,opt,name=trailing_green,json=trailingGreen,proto3" json:"trailing_green,omitempty"`
-	TrailingYellow   string                 `protobuf:"bytes,6,opt,name=trailing_yellow,json=trailingYellow,proto3" json:"trailing_yellow,omitempty"`
-	TrailingRedClear string                 `protobuf:"bytes,7,opt,name=trailing_red_clear,json=trailingRedClear,proto3" json:"trailing_red_clear,omitempty"`
+	TrailingGreen    *string                `protobuf:"bytes,5,opt,name=trailing_green,json=trailingGreen,proto3,oneof" json:"trailing_green,omitempty"`
+	TrailingYellow   *string                `protobuf:"bytes,6,opt,name=trailing_yellow,json=trailingYellow,proto3,oneof" json:"trailing_yellow,omitempty"`
+	TrailingRedClear *string                `protobuf:"bytes,7,opt,name=trailing_red_clear,json=trailingRedClear,proto3,oneof" json:"trailing_red_clear,omitempty"`
 	Fya              *Fya                   `protobuf:"bytes,8,opt,name=fya,proto3" json:"fya,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
@@ -3098,15 +1857,15 @@ func (*OverlapConfig) Descriptor() ([]byte, []int) {
 }
 
 func (x *OverlapConfig) GetOverlapNumber() uint32 {
-	if x != nil {
-		return x.OverlapNumber
+	if x != nil && x.OverlapNumber != nil {
+		return *x.OverlapNumber
 	}
 	return 0
 }
 
 func (x *OverlapConfig) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -3133,22 +1892,22 @@ func (x *OverlapConfig) GetModifierPhases() []uint32 {
 }
 
 func (x *OverlapConfig) GetTrailingGreen() string {
-	if x != nil {
-		return x.TrailingGreen
+	if x != nil && x.TrailingGreen != nil {
+		return *x.TrailingGreen
 	}
 	return ""
 }
 
 func (x *OverlapConfig) GetTrailingYellow() string {
-	if x != nil {
-		return x.TrailingYellow
+	if x != nil && x.TrailingYellow != nil {
+		return *x.TrailingYellow
 	}
 	return ""
 }
 
 func (x *OverlapConfig) GetTrailingRedClear() string {
-	if x != nil {
-		return x.TrailingRedClear
+	if x != nil && x.TrailingRedClear != nil {
+		return *x.TrailingRedClear
 	}
 	return ""
 }
@@ -3162,8 +1921,8 @@ func (x *OverlapConfig) GetFya() *Fya {
 
 type Fya struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
-	ProtectedLeftPhase   uint32                 `protobuf:"varint,1,opt,name=protected_left_phase,json=protectedLeftPhase,proto3" json:"protected_left_phase,omitempty"`
-	OpposingThroughPhase uint32                 `protobuf:"varint,2,opt,name=opposing_through_phase,json=opposingThroughPhase,proto3" json:"opposing_through_phase,omitempty"`
+	ProtectedLeftPhase   *uint32                `protobuf:"varint,1,opt,name=protected_left_phase,json=protectedLeftPhase,proto3,oneof" json:"protected_left_phase,omitempty"`
+	OpposingThroughPhase *uint32                `protobuf:"varint,2,opt,name=opposing_through_phase,json=opposingThroughPhase,proto3,oneof" json:"opposing_through_phase,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -3199,23 +1958,23 @@ func (*Fya) Descriptor() ([]byte, []int) {
 }
 
 func (x *Fya) GetProtectedLeftPhase() uint32 {
-	if x != nil {
-		return x.ProtectedLeftPhase
+	if x != nil && x.ProtectedLeftPhase != nil {
+		return *x.ProtectedLeftPhase
 	}
 	return 0
 }
 
 func (x *Fya) GetOpposingThroughPhase() uint32 {
-	if x != nil {
-		return x.OpposingThroughPhase
+	if x != nil && x.OpposingThroughPhase != nil {
+		return *x.OpposingThroughPhase
 	}
 	return 0
 }
 
 type OverlapState struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	CurrentInterval OverlapIntervalType    `protobuf:"varint,1,opt,name=current_interval,json=currentInterval,proto3,enum=openits.signal_control.v1.OverlapIntervalType" json:"current_interval,omitempty"`
-	Active          bool                   `protobuf:"varint,2,opt,name=active,proto3" json:"active,omitempty"`
+	CurrentInterval *OverlapIntervalType   `protobuf:"varint,1,opt,name=current_interval,json=currentInterval,proto3,enum=openits.signal_control.v1.OverlapIntervalType,oneof" json:"current_interval,omitempty"`
+	Active          *bool                  `protobuf:"varint,2,opt,name=active,proto3,oneof" json:"active,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -3251,15 +2010,15 @@ func (*OverlapState) Descriptor() ([]byte, []int) {
 }
 
 func (x *OverlapState) GetCurrentInterval() OverlapIntervalType {
-	if x != nil {
-		return x.CurrentInterval
+	if x != nil && x.CurrentInterval != nil {
+		return *x.CurrentInterval
 	}
 	return OverlapIntervalType_OVERLAP_INTERVAL_TYPE_UNSPECIFIED
 }
 
 func (x *OverlapState) GetActive() bool {
-	if x != nil {
-		return x.Active
+	if x != nil && x.Active != nil {
+		return *x.Active
 	}
 	return false
 }
@@ -3310,14 +2069,14 @@ func (x *Channels) GetChannel() []*Channel {
 
 type Channel struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ChannelNumber uint32                 `protobuf:"varint,1,opt,name=channel_number,json=channelNumber,proto3" json:"channel_number,omitempty"`
+	ChannelNumber *uint32                `protobuf:"varint,1,opt,name=channel_number,json=channelNumber,proto3,oneof" json:"channel_number,omitempty"`
 	// Types that are valid to be assigned to Source:
 	//
 	//	*Channel_Phase
 	//	*Channel_Overlap
-	Source        isChannel_Source  `protobuf_oneof:"source"`
-	Movement      string            `protobuf:"bytes,4,opt,name=movement,proto3" json:"movement,omitempty"`
-	FlashState    ChannelFlashState `protobuf:"varint,5,opt,name=flash_state,json=flashState,proto3,enum=openits.signal_control.v1.ChannelFlashState" json:"flash_state,omitempty"`
+	Source        isChannel_Source   `protobuf_oneof:"source"`
+	Movement      *string            `protobuf:"bytes,4,opt,name=movement,proto3,oneof" json:"movement,omitempty"`
+	FlashState    *ChannelFlashState `protobuf:"varint,5,opt,name=flash_state,json=flashState,proto3,enum=openits.signal_control.v1.ChannelFlashState,oneof" json:"flash_state,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3353,8 +2112,8 @@ func (*Channel) Descriptor() ([]byte, []int) {
 }
 
 func (x *Channel) GetChannelNumber() uint32 {
-	if x != nil {
-		return x.ChannelNumber
+	if x != nil && x.ChannelNumber != nil {
+		return *x.ChannelNumber
 	}
 	return 0
 }
@@ -3385,15 +2144,15 @@ func (x *Channel) GetOverlap() uint32 {
 }
 
 func (x *Channel) GetMovement() string {
-	if x != nil {
-		return x.Movement
+	if x != nil && x.Movement != nil {
+		return *x.Movement
 	}
 	return ""
 }
 
 func (x *Channel) GetFlashState() ChannelFlashState {
-	if x != nil {
-		return x.FlashState
+	if x != nil && x.FlashState != nil {
+		return *x.FlashState
 	}
 	return ChannelFlashState_CHANNEL_FLASH_STATE_UNSPECIFIED
 }
@@ -3460,8 +2219,8 @@ func (x *ConflictMonitor) GetPermissive() []*Permissive {
 
 type Permissive struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ChannelA      uint32                 `protobuf:"varint,1,opt,name=channel_a,json=channelA,proto3" json:"channel_a,omitempty"`
-	ChannelB      uint32                 `protobuf:"varint,2,opt,name=channel_b,json=channelB,proto3" json:"channel_b,omitempty"`
+	ChannelA      *uint32                `protobuf:"varint,1,opt,name=channel_a,json=channelA,proto3,oneof" json:"channel_a,omitempty"`
+	ChannelB      *uint32                `protobuf:"varint,2,opt,name=channel_b,json=channelB,proto3,oneof" json:"channel_b,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3497,15 +2256,15 @@ func (*Permissive) Descriptor() ([]byte, []int) {
 }
 
 func (x *Permissive) GetChannelA() uint32 {
-	if x != nil {
-		return x.ChannelA
+	if x != nil && x.ChannelA != nil {
+		return *x.ChannelA
 	}
 	return 0
 }
 
 func (x *Permissive) GetChannelB() uint32 {
-	if x != nil {
-		return x.ChannelB
+	if x != nil && x.ChannelB != nil {
+		return *x.ChannelB
 	}
 	return 0
 }
@@ -3564,14 +2323,14 @@ func (x *Coordination) GetState() *CoordinationState {
 
 type TimingPlan struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
-	PlanId            uint32                 `protobuf:"varint,1,opt,name=plan_id,json=planId,proto3" json:"plan_id,omitempty"`
+	PlanId            *uint32                `protobuf:"varint,1,opt,name=plan_id,json=planId,proto3,oneof" json:"plan_id,omitempty"`
 	CycleLength       uint32                 `protobuf:"varint,2,opt,name=cycle_length,json=cycleLength,proto3" json:"cycle_length,omitempty"`
-	Offset            uint32                 `protobuf:"varint,3,opt,name=offset,proto3" json:"offset,omitempty"`
+	Offset            *uint32                `protobuf:"varint,3,opt,name=offset,proto3,oneof" json:"offset,omitempty"`
 	CoordinatedPhases []uint32               `protobuf:"varint,5,rep,packed,name=coordinated_phases,json=coordinatedPhases,proto3" json:"coordinated_phases,omitempty"`
-	OffsetReference   OffsetReference        `protobuf:"varint,6,opt,name=offset_reference,json=offsetReference,proto3,enum=openits.signal_control.v1.OffsetReference" json:"offset_reference,omitempty"`
-	TransitionMode    TransitionMode         `protobuf:"varint,7,opt,name=transition_mode,json=transitionMode,proto3,enum=openits.signal_control.v1.TransitionMode" json:"transition_mode,omitempty"`
-	ForceOffMode      ForceOffMode           `protobuf:"varint,8,opt,name=force_off_mode,json=forceOffMode,proto3,enum=openits.signal_control.v1.ForceOffMode" json:"force_off_mode,omitempty"`
-	SequenceId        uint32                 `protobuf:"varint,9,opt,name=sequence_id,json=sequenceId,proto3" json:"sequence_id,omitempty"`
+	OffsetReference   *OffsetReference       `protobuf:"varint,6,opt,name=offset_reference,json=offsetReference,proto3,enum=openits.signal_control.v1.OffsetReference,oneof" json:"offset_reference,omitempty"`
+	TransitionMode    *TransitionMode        `protobuf:"varint,7,opt,name=transition_mode,json=transitionMode,proto3,enum=openits.signal_control.v1.TransitionMode,oneof" json:"transition_mode,omitempty"`
+	ForceOffMode      *ForceOffMode          `protobuf:"varint,8,opt,name=force_off_mode,json=forceOffMode,proto3,enum=openits.signal_control.v1.ForceOffMode,oneof" json:"force_off_mode,omitempty"`
+	SequenceId        *uint32                `protobuf:"varint,9,opt,name=sequence_id,json=sequenceId,proto3,oneof" json:"sequence_id,omitempty"`
 	Split             []*Split               `protobuf:"bytes,4,rep,name=split,proto3" json:"split,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
@@ -3608,8 +2367,8 @@ func (*TimingPlan) Descriptor() ([]byte, []int) {
 }
 
 func (x *TimingPlan) GetPlanId() uint32 {
-	if x != nil {
-		return x.PlanId
+	if x != nil && x.PlanId != nil {
+		return *x.PlanId
 	}
 	return 0
 }
@@ -3622,8 +2381,8 @@ func (x *TimingPlan) GetCycleLength() uint32 {
 }
 
 func (x *TimingPlan) GetOffset() uint32 {
-	if x != nil {
-		return x.Offset
+	if x != nil && x.Offset != nil {
+		return *x.Offset
 	}
 	return 0
 }
@@ -3636,29 +2395,29 @@ func (x *TimingPlan) GetCoordinatedPhases() []uint32 {
 }
 
 func (x *TimingPlan) GetOffsetReference() OffsetReference {
-	if x != nil {
-		return x.OffsetReference
+	if x != nil && x.OffsetReference != nil {
+		return *x.OffsetReference
 	}
 	return OffsetReference_OFFSET_REFERENCE_UNSPECIFIED
 }
 
 func (x *TimingPlan) GetTransitionMode() TransitionMode {
-	if x != nil {
-		return x.TransitionMode
+	if x != nil && x.TransitionMode != nil {
+		return *x.TransitionMode
 	}
 	return TransitionMode_TRANSITION_MODE_UNSPECIFIED
 }
 
 func (x *TimingPlan) GetForceOffMode() ForceOffMode {
-	if x != nil {
-		return x.ForceOffMode
+	if x != nil && x.ForceOffMode != nil {
+		return *x.ForceOffMode
 	}
 	return ForceOffMode_FORCE_OFF_MODE_UNSPECIFIED
 }
 
 func (x *TimingPlan) GetSequenceId() uint32 {
-	if x != nil {
-		return x.SequenceId
+	if x != nil && x.SequenceId != nil {
+		return *x.SequenceId
 	}
 	return 0
 }
@@ -3672,9 +2431,9 @@ func (x *TimingPlan) GetSplit() []*Split {
 
 type Split struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PhaseNumber   uint32                 `protobuf:"varint,1,opt,name=phase_number,json=phaseNumber,proto3" json:"phase_number,omitempty"`
-	SplitSeconds  uint32                 `protobuf:"varint,2,opt,name=split_seconds,json=splitSeconds,proto3" json:"split_seconds,omitempty"`
-	SplitMode     SplitMode              `protobuf:"varint,3,opt,name=split_mode,json=splitMode,proto3,enum=openits.signal_control.v1.SplitMode" json:"split_mode,omitempty"`
+	PhaseNumber   *uint32                `protobuf:"varint,1,opt,name=phase_number,json=phaseNumber,proto3,oneof" json:"phase_number,omitempty"`
+	SplitSeconds  *uint32                `protobuf:"varint,2,opt,name=split_seconds,json=splitSeconds,proto3,oneof" json:"split_seconds,omitempty"`
+	SplitMode     *SplitMode             `protobuf:"varint,3,opt,name=split_mode,json=splitMode,proto3,enum=openits.signal_control.v1.SplitMode,oneof" json:"split_mode,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3710,30 +2469,30 @@ func (*Split) Descriptor() ([]byte, []int) {
 }
 
 func (x *Split) GetPhaseNumber() uint32 {
-	if x != nil {
-		return x.PhaseNumber
+	if x != nil && x.PhaseNumber != nil {
+		return *x.PhaseNumber
 	}
 	return 0
 }
 
 func (x *Split) GetSplitSeconds() uint32 {
-	if x != nil {
-		return x.SplitSeconds
+	if x != nil && x.SplitSeconds != nil {
+		return *x.SplitSeconds
 	}
 	return 0
 }
 
 func (x *Split) GetSplitMode() SplitMode {
-	if x != nil {
-		return x.SplitMode
+	if x != nil && x.SplitMode != nil {
+		return *x.SplitMode
 	}
 	return SplitMode_SPLIT_MODE_UNSPECIFIED
 }
 
 type CoordinationState struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ActivePlan    uint32                 `protobuf:"varint,1,opt,name=active_plan,json=activePlan,proto3" json:"active_plan,omitempty"`
-	CycleState    CycleState             `protobuf:"varint,2,opt,name=cycle_state,json=cycleState,proto3,enum=openits.signal_control.v1.CycleState" json:"cycle_state,omitempty"`
+	ActivePlan    *uint32                `protobuf:"varint,1,opt,name=active_plan,json=activePlan,proto3,oneof" json:"active_plan,omitempty"`
+	CycleState    *string                `protobuf:"bytes,2,opt,name=cycle_state,json=cycleState,proto3,oneof" json:"cycle_state,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3769,17 +2528,17 @@ func (*CoordinationState) Descriptor() ([]byte, []int) {
 }
 
 func (x *CoordinationState) GetActivePlan() uint32 {
-	if x != nil {
-		return x.ActivePlan
+	if x != nil && x.ActivePlan != nil {
+		return *x.ActivePlan
 	}
 	return 0
 }
 
-func (x *CoordinationState) GetCycleState() CycleState {
-	if x != nil {
-		return x.CycleState
+func (x *CoordinationState) GetCycleState() string {
+	if x != nil && x.CycleState != nil {
+		return *x.CycleState
 	}
-	return CycleState_CYCLE_STATE_FREE
+	return ""
 }
 
 type Sequences struct {
@@ -3828,8 +2587,8 @@ func (x *Sequences) GetSequence() []*Sequence {
 
 type Sequence struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SequenceId    uint32                 `protobuf:"varint,1,opt,name=sequence_id,json=sequenceId,proto3" json:"sequence_id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	SequenceId    *uint32                `protobuf:"varint,1,opt,name=sequence_id,json=sequenceId,proto3,oneof" json:"sequence_id,omitempty"`
+	Name          *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	RingSequence  []*RingSequence        `protobuf:"bytes,3,rep,name=ring_sequence,json=ringSequence,proto3" json:"ring_sequence,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -3866,15 +2625,15 @@ func (*Sequence) Descriptor() ([]byte, []int) {
 }
 
 func (x *Sequence) GetSequenceId() uint32 {
-	if x != nil {
-		return x.SequenceId
+	if x != nil && x.SequenceId != nil {
+		return *x.SequenceId
 	}
 	return 0
 }
 
 func (x *Sequence) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -3888,7 +2647,7 @@ func (x *Sequence) GetRingSequence() []*RingSequence {
 
 type RingSequence struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Ring          uint32                 `protobuf:"varint,1,opt,name=ring,proto3" json:"ring,omitempty"`
+	Ring          *uint32                `protobuf:"varint,1,opt,name=ring,proto3,oneof" json:"ring,omitempty"`
 	OrderedPhases []uint32               `protobuf:"varint,2,rep,packed,name=ordered_phases,json=orderedPhases,proto3" json:"ordered_phases,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -3925,8 +2684,8 @@ func (*RingSequence) Descriptor() ([]byte, []int) {
 }
 
 func (x *RingSequence) GetRing() uint32 {
-	if x != nil {
-		return x.Ring
+	if x != nil && x.Ring != nil {
+		return *x.Ring
 	}
 	return 0
 }
@@ -3940,8 +2699,8 @@ func (x *RingSequence) GetOrderedPhases() []uint32 {
 
 type Timebase struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Timezone      string                 `protobuf:"bytes,4,opt,name=timezone,proto3" json:"timezone,omitempty"`
-	ObserveDst    bool                   `protobuf:"varint,5,opt,name=observe_dst,json=observeDst,proto3" json:"observe_dst,omitempty"`
+	Timezone      *string                `protobuf:"bytes,4,opt,name=timezone,proto3,oneof" json:"timezone,omitempty"`
+	ObserveDst    *bool                  `protobuf:"varint,5,opt,name=observe_dst,json=observeDst,proto3,oneof" json:"observe_dst,omitempty"`
 	DayPlan       []*DayPlan             `protobuf:"bytes,1,rep,name=day_plan,json=dayPlan,proto3" json:"day_plan,omitempty"`
 	ScheduleEntry []*ScheduleEntry       `protobuf:"bytes,2,rep,name=schedule_entry,json=scheduleEntry,proto3" json:"schedule_entry,omitempty"`
 	Clock         *Clock                 `protobuf:"bytes,3,opt,name=clock,proto3" json:"clock,omitempty"`
@@ -3980,15 +2739,15 @@ func (*Timebase) Descriptor() ([]byte, []int) {
 }
 
 func (x *Timebase) GetTimezone() string {
-	if x != nil {
-		return x.Timezone
+	if x != nil && x.Timezone != nil {
+		return *x.Timezone
 	}
 	return ""
 }
 
 func (x *Timebase) GetObserveDst() bool {
-	if x != nil {
-		return x.ObserveDst
+	if x != nil && x.ObserveDst != nil {
+		return *x.ObserveDst
 	}
 	return false
 }
@@ -4016,8 +2775,8 @@ func (x *Timebase) GetClock() *Clock {
 
 type DayPlan struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	DayPlanId     uint32                 `protobuf:"varint,1,opt,name=day_plan_id,json=dayPlanId,proto3" json:"day_plan_id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	DayPlanId     *uint32                `protobuf:"varint,1,opt,name=day_plan_id,json=dayPlanId,proto3,oneof" json:"day_plan_id,omitempty"`
+	Name          *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	Action        []*Action              `protobuf:"bytes,3,rep,name=action,proto3" json:"action,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -4054,15 +2813,15 @@ func (*DayPlan) Descriptor() ([]byte, []int) {
 }
 
 func (x *DayPlan) GetDayPlanId() uint32 {
-	if x != nil {
-		return x.DayPlanId
+	if x != nil && x.DayPlanId != nil {
+		return *x.DayPlanId
 	}
 	return 0
 }
 
 func (x *DayPlan) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -4076,7 +2835,7 @@ func (x *DayPlan) GetAction() []*Action {
 
 type Action struct {
 	state     protoimpl.MessageState `protogen:"open.v1"`
-	StartTime string                 `protobuf:"bytes,1,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	StartTime *string                `protobuf:"bytes,1,opt,name=start_time,json=startTime,proto3,oneof" json:"start_time,omitempty"`
 	// Types that are valid to be assigned to Activate:
 	//
 	//	*Action_TimingPlan
@@ -4117,8 +2876,8 @@ func (*Action) Descriptor() ([]byte, []int) {
 }
 
 func (x *Action) GetStartTime() string {
-	if x != nil {
-		return x.StartTime
+	if x != nil && x.StartTime != nil {
+		return *x.StartTime
 	}
 	return ""
 }
@@ -4166,8 +2925,8 @@ func (*Action_SpecialOperation) isAction_Activate() {}
 
 type ScheduleEntry struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ScheduleId    uint32                 `protobuf:"varint,1,opt,name=schedule_id,json=scheduleId,proto3" json:"schedule_id,omitempty"`
-	DayPlan       uint32                 `protobuf:"varint,5,opt,name=day_plan,json=dayPlan,proto3" json:"day_plan,omitempty"`
+	ScheduleId    *uint32                `protobuf:"varint,1,opt,name=schedule_id,json=scheduleId,proto3,oneof" json:"schedule_id,omitempty"`
+	DayPlan       *uint32                `protobuf:"varint,5,opt,name=day_plan,json=dayPlan,proto3,oneof" json:"day_plan,omitempty"`
 	DaysOfMonth   []uint32               `protobuf:"varint,4,rep,packed,name=days_of_month,json=daysOfMonth,proto3" json:"days_of_month,omitempty"`
 	DaysOfWeek    []DayOfWeek            `protobuf:"varint,3,rep,packed,name=days_of_week,json=daysOfWeek,proto3,enum=openits.signal_control.v1.DayOfWeek" json:"days_of_week,omitempty"`
 	Months        []Month                `protobuf:"varint,2,rep,packed,name=months,proto3,enum=openits.signal_control.v1.Month" json:"months,omitempty"`
@@ -4206,15 +2965,15 @@ func (*ScheduleEntry) Descriptor() ([]byte, []int) {
 }
 
 func (x *ScheduleEntry) GetScheduleId() uint32 {
-	if x != nil {
-		return x.ScheduleId
+	if x != nil && x.ScheduleId != nil {
+		return *x.ScheduleId
 	}
 	return 0
 }
 
 func (x *ScheduleEntry) GetDayPlan() uint32 {
-	if x != nil {
-		return x.DayPlan
+	if x != nil && x.DayPlan != nil {
+		return *x.DayPlan
 	}
 	return 0
 }
@@ -4243,9 +3002,9 @@ func (x *ScheduleEntry) GetMonths() []Month {
 type Clock struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	CurrentTime   *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=current_time,json=currentTime,proto3" json:"current_time,omitempty"`
-	TimeSource    string                 `protobuf:"bytes,2,opt,name=time_source,json=timeSource,proto3" json:"time_source,omitempty"`
-	SyncStatus    SyncStatus             `protobuf:"varint,3,opt,name=sync_status,json=syncStatus,proto3,enum=openits.signal_control.v1.SyncStatus" json:"sync_status,omitempty"`
-	OffsetMs      int32                  `protobuf:"varint,4,opt,name=offset_ms,json=offsetMs,proto3" json:"offset_ms,omitempty"`
+	TimeSource    *string                `protobuf:"bytes,2,opt,name=time_source,json=timeSource,proto3,oneof" json:"time_source,omitempty"`
+	SyncStatus    *SyncStatus            `protobuf:"varint,3,opt,name=sync_status,json=syncStatus,proto3,enum=openits.signal_control.v1.SyncStatus,oneof" json:"sync_status,omitempty"`
+	OffsetMs      *int32                 `protobuf:"varint,4,opt,name=offset_ms,json=offsetMs,proto3,oneof" json:"offset_ms,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4288,22 +3047,22 @@ func (x *Clock) GetCurrentTime() *timestamppb.Timestamp {
 }
 
 func (x *Clock) GetTimeSource() string {
-	if x != nil {
-		return x.TimeSource
+	if x != nil && x.TimeSource != nil {
+		return *x.TimeSource
 	}
 	return ""
 }
 
 func (x *Clock) GetSyncStatus() SyncStatus {
-	if x != nil {
-		return x.SyncStatus
+	if x != nil && x.SyncStatus != nil {
+		return *x.SyncStatus
 	}
 	return SyncStatus_SYNC_STATUS_UNSPECIFIED
 }
 
 func (x *Clock) GetOffsetMs() int32 {
-	if x != nil {
-		return x.OffsetMs
+	if x != nil && x.OffsetMs != nil {
+		return *x.OffsetMs
 	}
 	return 0
 }
@@ -4354,7 +3113,7 @@ func (x *Preemption) GetPreemptor() []*Preemptor {
 
 type Preemptor struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PreemptorId   uint32                 `protobuf:"varint,1,opt,name=preemptor_id,json=preemptorId,proto3" json:"preemptor_id,omitempty"`
+	PreemptorId   *uint32                `protobuf:"varint,1,opt,name=preemptor_id,json=preemptorId,proto3,oneof" json:"preemptor_id,omitempty"`
 	Config        *PreemptorConfig       `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
 	State         *PreemptorState        `protobuf:"bytes,3,opt,name=state,proto3" json:"state,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -4392,8 +3151,8 @@ func (*Preemptor) Descriptor() ([]byte, []int) {
 }
 
 func (x *Preemptor) GetPreemptorId() uint32 {
-	if x != nil {
-		return x.PreemptorId
+	if x != nil && x.PreemptorId != nil {
+		return *x.PreemptorId
 	}
 	return 0
 }
@@ -4414,19 +3173,19 @@ func (x *Preemptor) GetState() *PreemptorState {
 
 type PreemptorConfig struct {
 	state                  protoimpl.MessageState `protogen:"open.v1"`
-	PreemptorId            uint32                 `protobuf:"varint,1,opt,name=preemptor_id,json=preemptorId,proto3" json:"preemptor_id,omitempty"`
+	PreemptorId            *uint32                `protobuf:"varint,1,opt,name=preemptor_id,json=preemptorId,proto3,oneof" json:"preemptor_id,omitempty"`
 	Type                   string                 `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
-	PriorityOrder          uint32                 `protobuf:"varint,3,opt,name=priority_order,json=priorityOrder,proto3" json:"priority_order,omitempty"`
-	DelaySeconds           uint32                 `protobuf:"varint,4,opt,name=delay_seconds,json=delaySeconds,proto3" json:"delay_seconds,omitempty"`
-	MinGreenBeforeEntry    uint32                 `protobuf:"varint,5,opt,name=min_green_before_entry,json=minGreenBeforeEntry,proto3" json:"min_green_before_entry,omitempty"`
-	MinWalkBeforeEntry     uint32                 `protobuf:"varint,6,opt,name=min_walk_before_entry,json=minWalkBeforeEntry,proto3" json:"min_walk_before_entry,omitempty"`
-	MinPedClearBeforeEntry uint32                 `protobuf:"varint,12,opt,name=min_ped_clear_before_entry,json=minPedClearBeforeEntry,proto3" json:"min_ped_clear_before_entry,omitempty"`
+	PriorityOrder          *uint32                `protobuf:"varint,3,opt,name=priority_order,json=priorityOrder,proto3,oneof" json:"priority_order,omitempty"`
+	DelaySeconds           *uint32                `protobuf:"varint,4,opt,name=delay_seconds,json=delaySeconds,proto3,oneof" json:"delay_seconds,omitempty"`
+	MinGreenBeforeEntry    *uint32                `protobuf:"varint,5,opt,name=min_green_before_entry,json=minGreenBeforeEntry,proto3,oneof" json:"min_green_before_entry,omitempty"`
+	MinWalkBeforeEntry     *uint32                `protobuf:"varint,6,opt,name=min_walk_before_entry,json=minWalkBeforeEntry,proto3,oneof" json:"min_walk_before_entry,omitempty"`
+	MinPedClearBeforeEntry *uint32                `protobuf:"varint,12,opt,name=min_ped_clear_before_entry,json=minPedClearBeforeEntry,proto3,oneof" json:"min_ped_clear_before_entry,omitempty"`
 	TrackClearance         *TrackClearance        `protobuf:"bytes,7,opt,name=track_clearance,json=trackClearance,proto3" json:"track_clearance,omitempty"`
 	DwellPhases            []uint32               `protobuf:"varint,8,rep,packed,name=dwell_phases,json=dwellPhases,proto3" json:"dwell_phases,omitempty"`
-	MinDwellSeconds        uint32                 `protobuf:"varint,9,opt,name=min_dwell_seconds,json=minDwellSeconds,proto3" json:"min_dwell_seconds,omitempty"`
-	FlashDwellSeconds      uint32                 `protobuf:"varint,13,opt,name=flash_dwell_seconds,json=flashDwellSeconds,proto3" json:"flash_dwell_seconds,omitempty"`
+	MinDwellSeconds        *uint32                `protobuf:"varint,9,opt,name=min_dwell_seconds,json=minDwellSeconds,proto3,oneof" json:"min_dwell_seconds,omitempty"`
+	FlashDwellSeconds      *uint32                `protobuf:"varint,13,opt,name=flash_dwell_seconds,json=flashDwellSeconds,proto3,oneof" json:"flash_dwell_seconds,omitempty"`
 	ExitPhases             []uint32               `protobuf:"varint,10,rep,packed,name=exit_phases,json=exitPhases,proto3" json:"exit_phases,omitempty"`
-	MaxPresenceSeconds     uint32                 `protobuf:"varint,11,opt,name=max_presence_seconds,json=maxPresenceSeconds,proto3" json:"max_presence_seconds,omitempty"`
+	MaxPresenceSeconds     *uint32                `protobuf:"varint,11,opt,name=max_presence_seconds,json=maxPresenceSeconds,proto3,oneof" json:"max_presence_seconds,omitempty"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
 }
@@ -4462,8 +3221,8 @@ func (*PreemptorConfig) Descriptor() ([]byte, []int) {
 }
 
 func (x *PreemptorConfig) GetPreemptorId() uint32 {
-	if x != nil {
-		return x.PreemptorId
+	if x != nil && x.PreemptorId != nil {
+		return *x.PreemptorId
 	}
 	return 0
 }
@@ -4476,36 +3235,36 @@ func (x *PreemptorConfig) GetType() string {
 }
 
 func (x *PreemptorConfig) GetPriorityOrder() uint32 {
-	if x != nil {
-		return x.PriorityOrder
+	if x != nil && x.PriorityOrder != nil {
+		return *x.PriorityOrder
 	}
 	return 0
 }
 
 func (x *PreemptorConfig) GetDelaySeconds() uint32 {
-	if x != nil {
-		return x.DelaySeconds
+	if x != nil && x.DelaySeconds != nil {
+		return *x.DelaySeconds
 	}
 	return 0
 }
 
 func (x *PreemptorConfig) GetMinGreenBeforeEntry() uint32 {
-	if x != nil {
-		return x.MinGreenBeforeEntry
+	if x != nil && x.MinGreenBeforeEntry != nil {
+		return *x.MinGreenBeforeEntry
 	}
 	return 0
 }
 
 func (x *PreemptorConfig) GetMinWalkBeforeEntry() uint32 {
-	if x != nil {
-		return x.MinWalkBeforeEntry
+	if x != nil && x.MinWalkBeforeEntry != nil {
+		return *x.MinWalkBeforeEntry
 	}
 	return 0
 }
 
 func (x *PreemptorConfig) GetMinPedClearBeforeEntry() uint32 {
-	if x != nil {
-		return x.MinPedClearBeforeEntry
+	if x != nil && x.MinPedClearBeforeEntry != nil {
+		return *x.MinPedClearBeforeEntry
 	}
 	return 0
 }
@@ -4525,15 +3284,15 @@ func (x *PreemptorConfig) GetDwellPhases() []uint32 {
 }
 
 func (x *PreemptorConfig) GetMinDwellSeconds() uint32 {
-	if x != nil {
-		return x.MinDwellSeconds
+	if x != nil && x.MinDwellSeconds != nil {
+		return *x.MinDwellSeconds
 	}
 	return 0
 }
 
 func (x *PreemptorConfig) GetFlashDwellSeconds() uint32 {
-	if x != nil {
-		return x.FlashDwellSeconds
+	if x != nil && x.FlashDwellSeconds != nil {
+		return *x.FlashDwellSeconds
 	}
 	return 0
 }
@@ -4546,8 +3305,8 @@ func (x *PreemptorConfig) GetExitPhases() []uint32 {
 }
 
 func (x *PreemptorConfig) GetMaxPresenceSeconds() uint32 {
-	if x != nil {
-		return x.MaxPresenceSeconds
+	if x != nil && x.MaxPresenceSeconds != nil {
+		return *x.MaxPresenceSeconds
 	}
 	return 0
 }
@@ -4606,10 +3365,10 @@ func (x *TrackClearance) GetGreenSeconds() uint32 {
 
 type PreemptorState struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Active        bool                   `protobuf:"varint,1,opt,name=active,proto3" json:"active,omitempty"`
+	Active        *bool                  `protobuf:"varint,1,opt,name=active,proto3,oneof" json:"active,omitempty"`
 	ActiveSince   *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=active_since,json=activeSince,proto3" json:"active_since,omitempty"`
-	CurrentStage  PreemptStage           `protobuf:"varint,3,opt,name=current_stage,json=currentStage,proto3,enum=openits.signal_control.v1.PreemptStage" json:"current_stage,omitempty"`
-	SourceId      string                 `protobuf:"bytes,4,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`
+	CurrentStage  *PreemptStage          `protobuf:"varint,3,opt,name=current_stage,json=currentStage,proto3,enum=openits.signal_control.v1.PreemptStage,oneof" json:"current_stage,omitempty"`
+	SourceId      *string                `protobuf:"bytes,4,opt,name=source_id,json=sourceId,proto3,oneof" json:"source_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4645,8 +3404,8 @@ func (*PreemptorState) Descriptor() ([]byte, []int) {
 }
 
 func (x *PreemptorState) GetActive() bool {
-	if x != nil {
-		return x.Active
+	if x != nil && x.Active != nil {
+		return *x.Active
 	}
 	return false
 }
@@ -4659,15 +3418,15 @@ func (x *PreemptorState) GetActiveSince() *timestamppb.Timestamp {
 }
 
 func (x *PreemptorState) GetCurrentStage() PreemptStage {
-	if x != nil {
-		return x.CurrentStage
+	if x != nil && x.CurrentStage != nil {
+		return *x.CurrentStage
 	}
 	return PreemptStage_PREEMPT_STAGE_UNSPECIFIED
 }
 
 func (x *PreemptorState) GetSourceId() string {
-	if x != nil {
-		return x.SourceId
+	if x != nil && x.SourceId != nil {
+		return *x.SourceId
 	}
 	return ""
 }
@@ -4726,7 +3485,7 @@ func (x *Priority) GetState() *PriorityState {
 
 type Strategy struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	StrategyId    uint32                 `protobuf:"varint,1,opt,name=strategy_id,json=strategyId,proto3" json:"strategy_id,omitempty"`
+	StrategyId    *uint32                `protobuf:"varint,1,opt,name=strategy_id,json=strategyId,proto3,oneof" json:"strategy_id,omitempty"`
 	Config        *StrategyConfig        `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -4763,8 +3522,8 @@ func (*Strategy) Descriptor() ([]byte, []int) {
 }
 
 func (x *Strategy) GetStrategyId() uint32 {
-	if x != nil {
-		return x.StrategyId
+	if x != nil && x.StrategyId != nil {
+		return *x.StrategyId
 	}
 	return 0
 }
@@ -4778,11 +3537,11 @@ func (x *Strategy) GetConfig() *StrategyConfig {
 
 type StrategyConfig struct {
 	state                    protoimpl.MessageState `protogen:"open.v1"`
-	StrategyId               uint32                 `protobuf:"varint,1,opt,name=strategy_id,json=strategyId,proto3" json:"strategy_id,omitempty"`
-	PriorityClass            PriorityType           `protobuf:"varint,2,opt,name=priority_class,json=priorityClass,proto3,enum=openits.signal_control.v1.PriorityType" json:"priority_class,omitempty"`
-	MaxEarlyGreenSeconds     uint32                 `protobuf:"varint,3,opt,name=max_early_green_seconds,json=maxEarlyGreenSeconds,proto3" json:"max_early_green_seconds,omitempty"`
-	MaxGreenExtensionSeconds uint32                 `protobuf:"varint,4,opt,name=max_green_extension_seconds,json=maxGreenExtensionSeconds,proto3" json:"max_green_extension_seconds,omitempty"`
-	ReserviceIntervalSeconds uint32                 `protobuf:"varint,5,opt,name=reservice_interval_seconds,json=reserviceIntervalSeconds,proto3" json:"reservice_interval_seconds,omitempty"`
+	StrategyId               *uint32                `protobuf:"varint,1,opt,name=strategy_id,json=strategyId,proto3,oneof" json:"strategy_id,omitempty"`
+	PriorityClass            *string                `protobuf:"bytes,2,opt,name=priority_class,json=priorityClass,proto3,oneof" json:"priority_class,omitempty"`
+	MaxEarlyGreenSeconds     *uint32                `protobuf:"varint,3,opt,name=max_early_green_seconds,json=maxEarlyGreenSeconds,proto3,oneof" json:"max_early_green_seconds,omitempty"`
+	MaxGreenExtensionSeconds *uint32                `protobuf:"varint,4,opt,name=max_green_extension_seconds,json=maxGreenExtensionSeconds,proto3,oneof" json:"max_green_extension_seconds,omitempty"`
+	ReserviceIntervalSeconds *uint32                `protobuf:"varint,5,opt,name=reservice_interval_seconds,json=reserviceIntervalSeconds,proto3,oneof" json:"reservice_interval_seconds,omitempty"`
 	ServedPhases             []uint32               `protobuf:"varint,6,rep,packed,name=served_phases,json=servedPhases,proto3" json:"served_phases,omitempty"`
 	unknownFields            protoimpl.UnknownFields
 	sizeCache                protoimpl.SizeCache
@@ -4819,36 +3578,36 @@ func (*StrategyConfig) Descriptor() ([]byte, []int) {
 }
 
 func (x *StrategyConfig) GetStrategyId() uint32 {
-	if x != nil {
-		return x.StrategyId
+	if x != nil && x.StrategyId != nil {
+		return *x.StrategyId
 	}
 	return 0
 }
 
-func (x *StrategyConfig) GetPriorityClass() PriorityType {
-	if x != nil {
-		return x.PriorityClass
+func (x *StrategyConfig) GetPriorityClass() string {
+	if x != nil && x.PriorityClass != nil {
+		return *x.PriorityClass
 	}
-	return PriorityType_PRIORITY_TYPE_NONE
+	return ""
 }
 
 func (x *StrategyConfig) GetMaxEarlyGreenSeconds() uint32 {
-	if x != nil {
-		return x.MaxEarlyGreenSeconds
+	if x != nil && x.MaxEarlyGreenSeconds != nil {
+		return *x.MaxEarlyGreenSeconds
 	}
 	return 0
 }
 
 func (x *StrategyConfig) GetMaxGreenExtensionSeconds() uint32 {
-	if x != nil {
-		return x.MaxGreenExtensionSeconds
+	if x != nil && x.MaxGreenExtensionSeconds != nil {
+		return *x.MaxGreenExtensionSeconds
 	}
 	return 0
 }
 
 func (x *StrategyConfig) GetReserviceIntervalSeconds() uint32 {
-	if x != nil {
-		return x.ReserviceIntervalSeconds
+	if x != nil && x.ReserviceIntervalSeconds != nil {
+		return *x.ReserviceIntervalSeconds
 	}
 	return 0
 }
@@ -4906,11 +3665,11 @@ func (x *PriorityState) GetActiveRequest() []*ActiveRequest {
 
 type ActiveRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	RequestId     string                 `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
-	PriorityType  PriorityType           `protobuf:"varint,2,opt,name=priority_type,json=priorityType,proto3,enum=openits.signal_control.v1.PriorityType" json:"priority_type,omitempty"`
-	VehicleId     string                 `protobuf:"bytes,3,opt,name=vehicle_id,json=vehicleId,proto3" json:"vehicle_id,omitempty"`
-	Stage         Stage                  `protobuf:"varint,4,opt,name=stage,proto3,enum=openits.signal_control.v1.Stage" json:"stage,omitempty"`
-	StrategyId    uint32                 `protobuf:"varint,5,opt,name=strategy_id,json=strategyId,proto3" json:"strategy_id,omitempty"`
+	RequestId     *string                `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3,oneof" json:"request_id,omitempty"`
+	PriorityType  *string                `protobuf:"bytes,2,opt,name=priority_type,json=priorityType,proto3,oneof" json:"priority_type,omitempty"`
+	VehicleId     *string                `protobuf:"bytes,3,opt,name=vehicle_id,json=vehicleId,proto3,oneof" json:"vehicle_id,omitempty"`
+	Stage         *Stage                 `protobuf:"varint,4,opt,name=stage,proto3,enum=openits.signal_control.v1.Stage,oneof" json:"stage,omitempty"`
+	StrategyId    *uint32                `protobuf:"varint,5,opt,name=strategy_id,json=strategyId,proto3,oneof" json:"strategy_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4946,46 +3705,46 @@ func (*ActiveRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *ActiveRequest) GetRequestId() string {
-	if x != nil {
-		return x.RequestId
+	if x != nil && x.RequestId != nil {
+		return *x.RequestId
 	}
 	return ""
 }
 
-func (x *ActiveRequest) GetPriorityType() PriorityType {
-	if x != nil {
-		return x.PriorityType
+func (x *ActiveRequest) GetPriorityType() string {
+	if x != nil && x.PriorityType != nil {
+		return *x.PriorityType
 	}
-	return PriorityType_PRIORITY_TYPE_NONE
+	return ""
 }
 
 func (x *ActiveRequest) GetVehicleId() string {
-	if x != nil {
-		return x.VehicleId
+	if x != nil && x.VehicleId != nil {
+		return *x.VehicleId
 	}
 	return ""
 }
 
 func (x *ActiveRequest) GetStage() Stage {
-	if x != nil {
-		return x.Stage
+	if x != nil && x.Stage != nil {
+		return *x.Stage
 	}
 	return Stage_STAGE_UNSPECIFIED
 }
 
 func (x *ActiveRequest) GetStrategyId() uint32 {
-	if x != nil {
-		return x.StrategyId
+	if x != nil && x.StrategyId != nil {
+		return *x.StrategyId
 	}
 	return 0
 }
 
 type Operation struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Mode           string                 `protobuf:"bytes,1,opt,name=mode,proto3" json:"mode,omitempty"`
-	FlashActive    bool                   `protobuf:"varint,2,opt,name=flash_active,json=flashActive,proto3" json:"flash_active,omitempty"`
-	FlashCause     string                 `protobuf:"bytes,3,opt,name=flash_cause,json=flashCause,proto3" json:"flash_cause,omitempty"`
-	Mmu            *Mmu                   `protobuf:"bytes,4,opt,name=mmu,proto3" json:"mmu,omitempty"`
+	Mode           *string                `protobuf:"bytes,1,opt,name=mode,proto3,oneof" json:"mode,omitempty"`
+	FlashActive    *bool                  `protobuf:"varint,2,opt,name=flash_active,json=flashActive,proto3,oneof" json:"flash_active,omitempty"`
+	FlashCause     *string                `protobuf:"bytes,3,opt,name=flash_cause,json=flashCause,proto3,oneof" json:"flash_cause,omitempty"`
+	Monitor        *Monitor               `protobuf:"bytes,6,opt,name=monitor,proto3" json:"monitor,omitempty"`
 	LastModeChange *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=last_mode_change,json=lastModeChange,proto3" json:"last_mode_change,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -5022,29 +3781,29 @@ func (*Operation) Descriptor() ([]byte, []int) {
 }
 
 func (x *Operation) GetMode() string {
-	if x != nil {
-		return x.Mode
+	if x != nil && x.Mode != nil {
+		return *x.Mode
 	}
 	return ""
 }
 
 func (x *Operation) GetFlashActive() bool {
-	if x != nil {
-		return x.FlashActive
+	if x != nil && x.FlashActive != nil {
+		return *x.FlashActive
 	}
 	return false
 }
 
 func (x *Operation) GetFlashCause() string {
-	if x != nil {
-		return x.FlashCause
+	if x != nil && x.FlashCause != nil {
+		return *x.FlashCause
 	}
 	return ""
 }
 
-func (x *Operation) GetMmu() *Mmu {
+func (x *Operation) GetMonitor() *Monitor {
 	if x != nil {
-		return x.Mmu
+		return x.Monitor
 	}
 	return nil
 }
@@ -5056,29 +3815,29 @@ func (x *Operation) GetLastModeChange() *timestamppb.Timestamp {
 	return nil
 }
 
-type Mmu struct {
+type Monitor struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
-	FaultType        string                 `protobuf:"bytes,1,opt,name=fault_type,json=faultType,proto3" json:"fault_type,omitempty"`
+	FaultType        *string                `protobuf:"bytes,1,opt,name=fault_type,json=faultType,proto3,oneof" json:"fault_type,omitempty"`
 	FaultingChannels []uint32               `protobuf:"varint,2,rep,packed,name=faulting_channels,json=faultingChannels,proto3" json:"faulting_channels,omitempty"`
-	Latched          bool                   `protobuf:"varint,3,opt,name=latched,proto3" json:"latched,omitempty"`
+	Latched          *bool                  `protobuf:"varint,3,opt,name=latched,proto3,oneof" json:"latched,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
 
-func (x *Mmu) Reset() {
-	*x = Mmu{}
+func (x *Monitor) Reset() {
+	*x = Monitor{}
 	mi := &file_openits_signal_control_v1_state_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *Mmu) String() string {
+func (x *Monitor) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Mmu) ProtoMessage() {}
+func (*Monitor) ProtoMessage() {}
 
-func (x *Mmu) ProtoReflect() protoreflect.Message {
+func (x *Monitor) ProtoReflect() protoreflect.Message {
 	mi := &file_openits_signal_control_v1_state_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -5090,28 +3849,28 @@ func (x *Mmu) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Mmu.ProtoReflect.Descriptor instead.
-func (*Mmu) Descriptor() ([]byte, []int) {
+// Deprecated: Use Monitor.ProtoReflect.Descriptor instead.
+func (*Monitor) Descriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{51}
 }
 
-func (x *Mmu) GetFaultType() string {
-	if x != nil {
-		return x.FaultType
+func (x *Monitor) GetFaultType() string {
+	if x != nil && x.FaultType != nil {
+		return *x.FaultType
 	}
 	return ""
 }
 
-func (x *Mmu) GetFaultingChannels() []uint32 {
+func (x *Monitor) GetFaultingChannels() []uint32 {
 	if x != nil {
 		return x.FaultingChannels
 	}
 	return nil
 }
 
-func (x *Mmu) GetLatched() bool {
-	if x != nil {
-		return x.Latched
+func (x *Monitor) GetLatched() bool {
+	if x != nil && x.Latched != nil {
+		return *x.Latched
 	}
 	return false
 }
@@ -5213,17 +3972,17 @@ func (x *CabinetPowerConfig) GetOnBatteryPolicy() *v1.ScOnBatteryPolicy {
 }
 
 type CabinetPowerState struct {
-	state                    protoimpl.MessageState   `protogen:"open.v1"`
-	PolicePanelOpen          bool                     `protobuf:"varint,7,opt,name=police_panel_open,json=policePanelOpen,proto3" json:"police_panel_open,omitempty"`
-	SignalOperationOnBattery SignalOperationOnBattery `protobuf:"varint,9,opt,name=signal_operation_on_battery,json=signalOperationOnBattery,proto3,enum=openits.signal_control.v1.SignalOperationOnBattery" json:"signal_operation_on_battery,omitempty"`
-	Battery                  *Battery                 `protobuf:"bytes,1,opt,name=battery,proto3" json:"battery,omitempty"`
-	DoorOpen                 bool                     `protobuf:"varint,2,opt,name=door_open,json=doorOpen,proto3" json:"door_open,omitempty"`
-	Generator                *Generator               `protobuf:"bytes,3,opt,name=generator,proto3" json:"generator,omitempty"`
-	LineFrequencyHz          string                   `protobuf:"bytes,4,opt,name=line_frequency_hz,json=lineFrequencyHz,proto3" json:"line_frequency_hz,omitempty"`
-	LineVoltageV             string                   `protobuf:"bytes,5,opt,name=line_voltage_v,json=lineVoltageV,proto3" json:"line_voltage_v,omitempty"`
-	OnBatteryPolicy          *v1.ScOnBatteryPolicy    `protobuf:"bytes,6,opt,name=on_battery_policy,json=onBatteryPolicy,proto3" json:"on_battery_policy,omitempty"`
-	PowerSource              PowerSource              `protobuf:"varint,8,opt,name=power_source,json=powerSource,proto3,enum=openits.signal_control.v1.PowerSource" json:"power_source,omitempty"`
-	TransferCount            uint32                   `protobuf:"varint,10,opt,name=transfer_count,json=transferCount,proto3" json:"transfer_count,omitempty"`
+	state                    protoimpl.MessageState    `protogen:"open.v1"`
+	PolicePanelOpen          *bool                     `protobuf:"varint,7,opt,name=police_panel_open,json=policePanelOpen,proto3,oneof" json:"police_panel_open,omitempty"`
+	SignalOperationOnBattery *SignalOperationOnBattery `protobuf:"varint,9,opt,name=signal_operation_on_battery,json=signalOperationOnBattery,proto3,enum=openits.signal_control.v1.SignalOperationOnBattery,oneof" json:"signal_operation_on_battery,omitempty"`
+	Battery                  *Battery                  `protobuf:"bytes,1,opt,name=battery,proto3" json:"battery,omitempty"`
+	DoorOpen                 *bool                     `protobuf:"varint,2,opt,name=door_open,json=doorOpen,proto3,oneof" json:"door_open,omitempty"`
+	Generator                *Generator                `protobuf:"bytes,3,opt,name=generator,proto3" json:"generator,omitempty"`
+	LineFrequencyHz          *string                   `protobuf:"bytes,4,opt,name=line_frequency_hz,json=lineFrequencyHz,proto3,oneof" json:"line_frequency_hz,omitempty"`
+	LineVoltageV             *string                   `protobuf:"bytes,5,opt,name=line_voltage_v,json=lineVoltageV,proto3,oneof" json:"line_voltage_v,omitempty"`
+	OnBatteryPolicy          *v1.ScOnBatteryPolicy     `protobuf:"bytes,6,opt,name=on_battery_policy,json=onBatteryPolicy,proto3" json:"on_battery_policy,omitempty"`
+	PowerSource              *PowerSource              `protobuf:"varint,8,opt,name=power_source,json=powerSource,proto3,enum=openits.signal_control.v1.PowerSource,oneof" json:"power_source,omitempty"`
+	TransferCount            *uint32                   `protobuf:"varint,10,opt,name=transfer_count,json=transferCount,proto3,oneof" json:"transfer_count,omitempty"`
 	unknownFields            protoimpl.UnknownFields
 	sizeCache                protoimpl.SizeCache
 }
@@ -5259,15 +4018,15 @@ func (*CabinetPowerState) Descriptor() ([]byte, []int) {
 }
 
 func (x *CabinetPowerState) GetPolicePanelOpen() bool {
-	if x != nil {
-		return x.PolicePanelOpen
+	if x != nil && x.PolicePanelOpen != nil {
+		return *x.PolicePanelOpen
 	}
 	return false
 }
 
 func (x *CabinetPowerState) GetSignalOperationOnBattery() SignalOperationOnBattery {
-	if x != nil {
-		return x.SignalOperationOnBattery
+	if x != nil && x.SignalOperationOnBattery != nil {
+		return *x.SignalOperationOnBattery
 	}
 	return SignalOperationOnBattery_SIGNAL_OPERATION_ON_BATTERY_FULL_OPERATION
 }
@@ -5280,8 +4039,8 @@ func (x *CabinetPowerState) GetBattery() *Battery {
 }
 
 func (x *CabinetPowerState) GetDoorOpen() bool {
-	if x != nil {
-		return x.DoorOpen
+	if x != nil && x.DoorOpen != nil {
+		return *x.DoorOpen
 	}
 	return false
 }
@@ -5294,15 +4053,15 @@ func (x *CabinetPowerState) GetGenerator() *Generator {
 }
 
 func (x *CabinetPowerState) GetLineFrequencyHz() string {
-	if x != nil {
-		return x.LineFrequencyHz
+	if x != nil && x.LineFrequencyHz != nil {
+		return *x.LineFrequencyHz
 	}
 	return ""
 }
 
 func (x *CabinetPowerState) GetLineVoltageV() string {
-	if x != nil {
-		return x.LineVoltageV
+	if x != nil && x.LineVoltageV != nil {
+		return *x.LineVoltageV
 	}
 	return ""
 }
@@ -5315,27 +4074,27 @@ func (x *CabinetPowerState) GetOnBatteryPolicy() *v1.ScOnBatteryPolicy {
 }
 
 func (x *CabinetPowerState) GetPowerSource() PowerSource {
-	if x != nil {
-		return x.PowerSource
+	if x != nil && x.PowerSource != nil {
+		return *x.PowerSource
 	}
 	return PowerSource_POWER_SOURCE_ON_LINE
 }
 
 func (x *CabinetPowerState) GetTransferCount() uint32 {
-	if x != nil {
-		return x.TransferCount
+	if x != nil && x.TransferCount != nil {
+		return *x.TransferCount
 	}
 	return 0
 }
 
 type Battery struct {
 	state                   protoimpl.MessageState `protogen:"open.v1"`
-	StateOfChargePct        uint32                 `protobuf:"varint,1,opt,name=state_of_charge_pct,json=stateOfChargePct,proto3" json:"state_of_charge_pct,omitempty"`
-	RuntimeRemainingMinutes uint32                 `protobuf:"varint,2,opt,name=runtime_remaining_minutes,json=runtimeRemainingMinutes,proto3" json:"runtime_remaining_minutes,omitempty"`
-	VoltageV                string                 `protobuf:"bytes,3,opt,name=voltage_v,json=voltageV,proto3" json:"voltage_v,omitempty"`
-	TemperatureC            string                 `protobuf:"bytes,4,opt,name=temperature_c,json=temperatureC,proto3" json:"temperature_c,omitempty"`
-	ChargerFault            bool                   `protobuf:"varint,5,opt,name=charger_fault,json=chargerFault,proto3" json:"charger_fault,omitempty"`
-	TestState               BatteryTestState       `protobuf:"varint,6,opt,name=test_state,json=testState,proto3,enum=openits.signal_control.v1.BatteryTestState" json:"test_state,omitempty"`
+	StateOfChargePct        *uint32                `protobuf:"varint,1,opt,name=state_of_charge_pct,json=stateOfChargePct,proto3,oneof" json:"state_of_charge_pct,omitempty"`
+	RuntimeRemainingMinutes *uint32                `protobuf:"varint,2,opt,name=runtime_remaining_minutes,json=runtimeRemainingMinutes,proto3,oneof" json:"runtime_remaining_minutes,omitempty"`
+	VoltageV                *string                `protobuf:"bytes,3,opt,name=voltage_v,json=voltageV,proto3,oneof" json:"voltage_v,omitempty"`
+	TemperatureC            *string                `protobuf:"bytes,4,opt,name=temperature_c,json=temperatureC,proto3,oneof" json:"temperature_c,omitempty"`
+	ChargerFault            *bool                  `protobuf:"varint,5,opt,name=charger_fault,json=chargerFault,proto3,oneof" json:"charger_fault,omitempty"`
+	TestState               *BatteryTestState      `protobuf:"varint,6,opt,name=test_state,json=testState,proto3,enum=openits.signal_control.v1.BatteryTestState,oneof" json:"test_state,omitempty"`
 	LastTest                *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=last_test,json=lastTest,proto3" json:"last_test,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
@@ -5372,43 +4131,43 @@ func (*Battery) Descriptor() ([]byte, []int) {
 }
 
 func (x *Battery) GetStateOfChargePct() uint32 {
-	if x != nil {
-		return x.StateOfChargePct
+	if x != nil && x.StateOfChargePct != nil {
+		return *x.StateOfChargePct
 	}
 	return 0
 }
 
 func (x *Battery) GetRuntimeRemainingMinutes() uint32 {
-	if x != nil {
-		return x.RuntimeRemainingMinutes
+	if x != nil && x.RuntimeRemainingMinutes != nil {
+		return *x.RuntimeRemainingMinutes
 	}
 	return 0
 }
 
 func (x *Battery) GetVoltageV() string {
-	if x != nil {
-		return x.VoltageV
+	if x != nil && x.VoltageV != nil {
+		return *x.VoltageV
 	}
 	return ""
 }
 
 func (x *Battery) GetTemperatureC() string {
-	if x != nil {
-		return x.TemperatureC
+	if x != nil && x.TemperatureC != nil {
+		return *x.TemperatureC
 	}
 	return ""
 }
 
 func (x *Battery) GetChargerFault() bool {
-	if x != nil {
-		return x.ChargerFault
+	if x != nil && x.ChargerFault != nil {
+		return *x.ChargerFault
 	}
 	return false
 }
 
 func (x *Battery) GetTestState() BatteryTestState {
-	if x != nil {
-		return x.TestState
+	if x != nil && x.TestState != nil {
+		return *x.TestState
 	}
 	return BatteryTestState_BATTERY_TEST_STATE_IDLE
 }
@@ -5422,8 +4181,8 @@ func (x *Battery) GetLastTest() *timestamppb.Timestamp {
 
 type Generator struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Running       bool                   `protobuf:"varint,1,opt,name=running,proto3" json:"running,omitempty"`
-	FuelLevelPct  uint32                 `protobuf:"varint,2,opt,name=fuel_level_pct,json=fuelLevelPct,proto3" json:"fuel_level_pct,omitempty"`
+	Running       *bool                  `protobuf:"varint,1,opt,name=running,proto3,oneof" json:"running,omitempty"`
+	FuelLevelPct  *uint32                `protobuf:"varint,2,opt,name=fuel_level_pct,json=fuelLevelPct,proto3,oneof" json:"fuel_level_pct,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -5459,15 +4218,15 @@ func (*Generator) Descriptor() ([]byte, []int) {
 }
 
 func (x *Generator) GetRunning() bool {
-	if x != nil {
-		return x.Running
+	if x != nil && x.Running != nil {
+		return *x.Running
 	}
 	return false
 }
 
 func (x *Generator) GetFuelLevelPct() uint32 {
-	if x != nil {
-		return x.FuelLevelPct
+	if x != nil && x.FuelLevelPct != nil {
+		return *x.FuelLevelPct
 	}
 	return 0
 }
@@ -5517,13 +4276,13 @@ func (x *Faults) GetFault() []*Fault {
 }
 
 type Fault struct {
-	state          protoimpl.MessageState            `protogen:"open.v1"`
-	Category       string                            `protobuf:"bytes,1,opt,name=category,proto3" json:"category,omitempty"`
-	CorrelatesWith string                            `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3" json:"correlates_with,omitempty"`
-	Description    string                            `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	FaultId        string                            `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3" json:"fault_id,omitempty"`
-	FirstObserved  *timestamppb.Timestamp            `protobuf:"bytes,4,opt,name=first_observed,json=firstObserved,proto3" json:"first_observed,omitempty"`
-	Severity       OpenitsSignalControlFaultSeverity `protobuf:"varint,5,opt,name=severity,proto3,enum=openits.signal_control.v1.OpenitsSignalControlFaultSeverity" json:"severity,omitempty"`
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Category       *string                `protobuf:"bytes,1,opt,name=category,proto3,oneof" json:"category,omitempty"`
+	CorrelatesWith *string                `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3,oneof" json:"correlates_with,omitempty"`
+	Description    *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	FaultId        *string                `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3,oneof" json:"fault_id,omitempty"`
+	FirstObserved  *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=first_observed,json=firstObserved,proto3" json:"first_observed,omitempty"`
+	Severity       *FaultSeverity         `protobuf:"varint,5,opt,name=severity,proto3,enum=openits.signal_control.v1.FaultSeverity,oneof" json:"severity,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -5559,29 +4318,29 @@ func (*Fault) Descriptor() ([]byte, []int) {
 }
 
 func (x *Fault) GetCategory() string {
-	if x != nil {
-		return x.Category
+	if x != nil && x.Category != nil {
+		return *x.Category
 	}
 	return ""
 }
 
 func (x *Fault) GetCorrelatesWith() string {
-	if x != nil {
-		return x.CorrelatesWith
+	if x != nil && x.CorrelatesWith != nil {
+		return *x.CorrelatesWith
 	}
 	return ""
 }
 
 func (x *Fault) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
 
 func (x *Fault) GetFaultId() string {
-	if x != nil {
-		return x.FaultId
+	if x != nil && x.FaultId != nil {
+		return *x.FaultId
 	}
 	return ""
 }
@@ -5593,18 +4352,18 @@ func (x *Fault) GetFirstObserved() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *Fault) GetSeverity() OpenitsSignalControlFaultSeverity {
-	if x != nil {
-		return x.Severity
+func (x *Fault) GetSeverity() FaultSeverity {
+	if x != nil && x.Severity != nil {
+		return *x.Severity
 	}
-	return OpenitsSignalControlFaultSeverity_OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_INFO
+	return FaultSeverity_FAULT_SEVERITY_INFO
 }
 
 var File_openits_signal_control_v1_state_proto protoreflect.FileDescriptor
 
 const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\n" +
-	"%openits/signal_control/v1/state.proto\x12\x19openits.signal_control.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1copenits/types/v1/types.proto\"\xe2\b\n" +
+	"%openits/signal_control/v1/state.proto\x12\x19openits.signal_control.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%openits/signal_control/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\xe2\b\n" +
 	"\x10SignalController\x12I\n" +
 	"\x06config\x18\x01 \x01(\v21.openits.signal_control.v1.SignalControllerConfigR\x06config\x12F\n" +
 	"\x05state\x18\x02 \x01(\v20.openits.signal_control.v1.SignalControllerStateR\x05state\x12<\n" +
@@ -5624,524 +4383,581 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\bpriority\x18\x10 \x01(\v2#.openits.signal_control.v1.PriorityR\bpriority\x12B\n" +
 	"\toperation\x18\a \x01(\v2$.openits.signal_control.v1.OperationR\toperation\x12L\n" +
 	"\rcabinet_power\x18\r \x01(\v2'.openits.signal_control.v1.CabinetPowerR\fcabinetPower\x129\n" +
-	"\x06faults\x18\b \x01(\v2!.openits.signal_control.v1.FaultsR\x06faults\"\xd5\x03\n" +
-	"\x16SignalControllerConfig\x12\x1c\n" +
-	"\televation\x18\x01 \x01(\tR\televation\x12\x18\n" +
-	"\aheading\x18\x02 \x01(\rR\aheading\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\x12=\n" +
-	"\finstall_date\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1a\n" +
-	"\blatitude\x18\x04 \x01(\tR\blatitude\x12k\n" +
-	"\x10linear_reference\x18\t \x01(\v2@.openits.signal_control.v1.SignalControllerConfigLinearReferenceR\x0flinearReference\x12\x1c\n" +
-	"\tlongitude\x18\x05 \x01(\tR\tlongitude\x12#\n" +
+	"\x06faults\x18\b \x01(\v2!.openits.signal_control.v1.FaultsR\x06faults\"\x87\x05\n" +
+	"\x16SignalControllerConfig\x12!\n" +
+	"\televation\x18\x01 \x01(\tH\x00R\televation\x88\x01\x01\x12\x1d\n" +
+	"\aheading\x18\x02 \x01(\rH\x01R\aheading\x88\x01\x01\x12\x13\n" +
+	"\x02id\x18\x03 \x01(\tH\x02R\x02id\x88\x01\x01\x12=\n" +
+	"\finstall_date\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	"\blatitude\x18\x04 \x01(\tH\x03R\blatitude\x88\x01\x01\x12k\n" +
+	"\x10linear_reference\x18\t \x01(\v2@.openits.signal_control.v1.SignalControllerConfigLinearReferenceR\x0flinearReference\x12!\n" +
+	"\tlongitude\x18\x05 \x01(\tH\x04R\tlongitude\x88\x01\x01\x12(\n" +
 	"\rmaintained_by\x18\n" +
-	" \x01(\tR\fmaintainedBy\x12\x12\n" +
-	"\x04name\x18\x06 \x01(\tR\x04name\x12\x14\n" +
-	"\x05owner\x18\v \x01(\tR\x05owner\x12%\n" +
-	"\x0eroad_reference\x18\a \x01(\tR\rroadReference\x12\x17\n" +
-	"\asite_id\x18\f \x01(\tR\x06siteId\"\xa9\x01\n" +
-	"%SignalControllerConfigLinearReference\x12)\n" +
-	"\x10route_designator\x18\x01 \x01(\tR\x0frouteDesignator\x12\x1c\n" +
-	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
-	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
+	" \x01(\tH\x05R\fmaintainedBy\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x06 \x01(\tH\x06R\x04name\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\v \x01(\tH\aR\x05owner\x88\x01\x01\x12*\n" +
+	"\x0eroad_reference\x18\a \x01(\tH\bR\rroadReference\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\f \x01(\tH\tR\x06siteId\x88\x01\x01B\f\n" +
 	"\n" +
-	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"\x83\x05\n" +
-	"\x15SignalControllerState\x12\x1c\n" +
-	"\televation\x18\x01 \x01(\tR\televation\x12\x1a\n" +
-	"\bfirmware\x18\x02 \x01(\tR\bfirmware\x12%\n" +
-	"\x0efirmware_build\x18\f \x01(\tR\rfirmwareBuild\x12)\n" +
-	"\x10hardware_version\x18\r \x01(\tR\x0fhardwareVersion\x12\x18\n" +
-	"\aheading\x18\x03 \x01(\rR\aheading\x12\x0e\n" +
-	"\x02id\x18\x04 \x01(\tR\x02id\x12=\n" +
-	"\finstall_date\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1a\n" +
-	"\blatitude\x18\x05 \x01(\tR\blatitude\x12j\n" +
-	"\x10linear_reference\x18\x0f \x01(\v2?.openits.signal_control.v1.SignalControllerStateLinearReferenceR\x0flinearReference\x12\x1c\n" +
-	"\tlongitude\x18\x06 \x01(\tR\tlongitude\x12#\n" +
-	"\rmaintained_by\x18\x10 \x01(\tR\fmaintainedBy\x12\x12\n" +
-	"\x04make\x18\a \x01(\tR\x04make\x12\x14\n" +
-	"\x05model\x18\b \x01(\tR\x05model\x12\x12\n" +
-	"\x04name\x18\t \x01(\tR\x04name\x12\x14\n" +
-	"\x05owner\x18\x11 \x01(\tR\x05owner\x12%\n" +
+	"_elevationB\n" +
+	"\n" +
+	"\b_headingB\x05\n" +
+	"\x03_idB\v\n" +
+	"\t_latitudeB\f\n" +
+	"\n" +
+	"_longitudeB\x10\n" +
+	"\x0e_maintained_byB\a\n" +
+	"\x05_nameB\b\n" +
+	"\x06_ownerB\x11\n" +
+	"\x0f_road_referenceB\n" +
+	"\n" +
+	"\b_site_id\"\xfb\x01\n" +
+	"%SignalControllerConfigLinearReference\x12.\n" +
+	"\x10route_designator\x18\x01 \x01(\tH\x00R\x0frouteDesignator\x88\x01\x01\x12!\n" +
+	"\tdirection\x18\x02 \x01(\tH\x01R\tdirection\x88\x01\x01\x12\x1d\n" +
+	"\ameasure\x18\x03 \x01(\tH\x02R\ameasure\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"lrs_method\x18\x04 \x01(\tH\x03R\tlrsMethod\x88\x01\x01B\x13\n" +
+	"\x11_route_designatorB\f\n" +
+	"\n" +
+	"_directionB\n" +
+	"\n" +
+	"\b_measureB\r\n" +
+	"\v_lrs_method\"\xa6\a\n" +
+	"\x15SignalControllerState\x12!\n" +
+	"\televation\x18\x01 \x01(\tH\x00R\televation\x88\x01\x01\x12\x1f\n" +
+	"\bfirmware\x18\x02 \x01(\tH\x01R\bfirmware\x88\x01\x01\x12*\n" +
+	"\x0efirmware_build\x18\f \x01(\tH\x02R\rfirmwareBuild\x88\x01\x01\x12.\n" +
+	"\x10hardware_version\x18\r \x01(\tH\x03R\x0fhardwareVersion\x88\x01\x01\x12\x1d\n" +
+	"\aheading\x18\x03 \x01(\rH\x04R\aheading\x88\x01\x01\x12\x13\n" +
+	"\x02id\x18\x04 \x01(\tH\x05R\x02id\x88\x01\x01\x12=\n" +
+	"\finstall_date\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	"\blatitude\x18\x05 \x01(\tH\x06R\blatitude\x88\x01\x01\x12j\n" +
+	"\x10linear_reference\x18\x0f \x01(\v2?.openits.signal_control.v1.SignalControllerStateLinearReferenceR\x0flinearReference\x12!\n" +
+	"\tlongitude\x18\x06 \x01(\tH\aR\tlongitude\x88\x01\x01\x12(\n" +
+	"\rmaintained_by\x18\x10 \x01(\tH\bR\fmaintainedBy\x88\x01\x01\x12\x17\n" +
+	"\x04make\x18\a \x01(\tH\tR\x04make\x88\x01\x01\x12\x19\n" +
+	"\x05model\x18\b \x01(\tH\n" +
+	"R\x05model\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\t \x01(\tH\vR\x04name\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\x11 \x01(\tH\fR\x05owner\x88\x01\x01\x12*\n" +
 	"\x0eroad_reference\x18\n" +
-	" \x01(\tR\rroadReference\x12\x16\n" +
-	"\x06serial\x18\v \x01(\tR\x06serial\x12\x17\n" +
-	"\asite_id\x18\x12 \x01(\tR\x06siteId\"\xa8\x01\n" +
-	"$SignalControllerStateLinearReference\x12)\n" +
-	"\x10route_designator\x18\x01 \x01(\tR\x0frouteDesignator\x12\x1c\n" +
-	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
-	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
+	" \x01(\tH\rR\rroadReference\x88\x01\x01\x12\x1b\n" +
+	"\x06serial\x18\v \x01(\tH\x0eR\x06serial\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\x12 \x01(\tH\x0fR\x06siteId\x88\x01\x01B\f\n" +
 	"\n" +
-	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"\x9b\x01\n" +
-	"\aStartup\x124\n" +
-	"\x16flash_duration_seconds\x18\x01 \x01(\rR\x14flashDurationSeconds\x12!\n" +
-	"\fflash_phases\x18\x02 \x03(\rR\vflashPhases\x127\n" +
-	"\x18all_red_duration_seconds\x18\x03 \x01(\rR\x15allRedDurationSeconds\"@\n" +
+	"_elevationB\v\n" +
+	"\t_firmwareB\x11\n" +
+	"\x0f_firmware_buildB\x13\n" +
+	"\x11_hardware_versionB\n" +
+	"\n" +
+	"\b_headingB\x05\n" +
+	"\x03_idB\v\n" +
+	"\t_latitudeB\f\n" +
+	"\n" +
+	"_longitudeB\x10\n" +
+	"\x0e_maintained_byB\a\n" +
+	"\x05_makeB\b\n" +
+	"\x06_modelB\a\n" +
+	"\x05_nameB\b\n" +
+	"\x06_ownerB\x11\n" +
+	"\x0f_road_referenceB\t\n" +
+	"\a_serialB\n" +
+	"\n" +
+	"\b_site_id\"\xfa\x01\n" +
+	"$SignalControllerStateLinearReference\x12.\n" +
+	"\x10route_designator\x18\x01 \x01(\tH\x00R\x0frouteDesignator\x88\x01\x01\x12!\n" +
+	"\tdirection\x18\x02 \x01(\tH\x01R\tdirection\x88\x01\x01\x12\x1d\n" +
+	"\ameasure\x18\x03 \x01(\tH\x02R\ameasure\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"lrs_method\x18\x04 \x01(\tH\x03R\tlrsMethod\x88\x01\x01B\x13\n" +
+	"\x11_route_designatorB\f\n" +
+	"\n" +
+	"_directionB\n" +
+	"\n" +
+	"\b_measureB\r\n" +
+	"\v_lrs_method\"\xdd\x01\n" +
+	"\aStartup\x129\n" +
+	"\x16flash_duration_seconds\x18\x01 \x01(\rH\x00R\x14flashDurationSeconds\x88\x01\x01\x12!\n" +
+	"\fflash_phases\x18\x02 \x03(\rR\vflashPhases\x12<\n" +
+	"\x18all_red_duration_seconds\x18\x03 \x01(\rH\x01R\x15allRedDurationSeconds\x88\x01\x01B\x19\n" +
+	"\x17_flash_duration_secondsB\x1b\n" +
+	"\x19_all_red_duration_seconds\"@\n" +
 	"\x06Phases\x126\n" +
-	"\x05phase\x18\x01 \x03(\v2 .openits.signal_control.v1.PhaseR\x05phase\"\xa7\x01\n" +
-	"\x05Phase\x12!\n" +
-	"\fphase_number\x18\x01 \x01(\rR\vphaseNumber\x12>\n" +
+	"\x05phase\x18\x01 \x03(\v2 .openits.signal_control.v1.PhaseR\x05phase\"\xbd\x01\n" +
+	"\x05Phase\x12&\n" +
+	"\fphase_number\x18\x01 \x01(\rH\x00R\vphaseNumber\x88\x01\x01\x12>\n" +
 	"\x06config\x18\x02 \x01(\v2&.openits.signal_control.v1.PhaseConfigR\x06config\x12;\n" +
-	"\x05state\x18\x03 \x01(\v2%.openits.signal_control.v1.PhaseStateR\x05state\"\xf2\x03\n" +
-	"\vPhaseConfig\x12!\n" +
-	"\fphase_number\x18\x01 \x01(\rR\vphaseNumber\x12\x18\n" +
-	"\aenabled\x18\x02 \x01(\bR\aenabled\x12\x12\n" +
+	"\x05state\x18\x03 \x01(\v2%.openits.signal_control.v1.PhaseStateR\x05stateB\x0f\n" +
+	"\r_phase_number\"\x85\x05\n" +
+	"\vPhaseConfig\x12&\n" +
+	"\fphase_number\x18\x01 \x01(\rH\x00R\vphaseNumber\x88\x01\x01\x12\x1d\n" +
+	"\aenabled\x18\x02 \x01(\bH\x01R\aenabled\x88\x01\x01\x12\x12\n" +
 	"\x04ring\x18\x03 \x01(\rR\x04ring\x12\x18\n" +
 	"\abarrier\x18\x04 \x01(\rR\abarrier\x129\n" +
-	"\x06timing\x18\x05 \x01(\v2!.openits.signal_control.v1.TimingR\x06timing\x12\x1e\n" +
-	"\vmax_green_2\x18\x06 \x01(\tR\tmaxGreen2\x12\x1d\n" +
+	"\x06timing\x18\x05 \x01(\v2!.openits.signal_control.v1.TimingR\x06timing\x12#\n" +
+	"\vmax_green_2\x18\x06 \x01(\tH\x02R\tmaxGreen2\x88\x01\x01\x12\"\n" +
 	"\n" +
-	"red_revert\x18\t \x01(\tR\tredRevert\x12.\n" +
+	"red_revert\x18\t \x01(\tH\x03R\tredRevert\x88\x01\x01\x123\n" +
 	"\x13crossing_distance_m\x18\n" +
-	" \x01(\tR\x11crossingDistanceM\x12?\n" +
-	"\x1cleading_ped_interval_seconds\x18\v \x01(\tR\x19leadingPedIntervalSeconds\x12<\n" +
+	" \x01(\tH\x04R\x11crossingDistanceM\x88\x01\x01\x12D\n" +
+	"\x1cleading_ped_interval_seconds\x18\v \x01(\tH\x05R\x19leadingPedIntervalSeconds\x88\x01\x01\x12<\n" +
 	"\aoptions\x18\a \x01(\v2\".openits.signal_control.v1.OptionsR\aoptions\x12O\n" +
-	"\x0evolume_density\x18\b \x01(\v2(.openits.signal_control.v1.VolumeDensityR\rvolumeDensity\"\xcf\x01\n" +
-	"\x06Timing\x12\x1b\n" +
-	"\tmax_green\x18\x01 \x01(\tR\bmaxGreen\x12\x1b\n" +
-	"\tmin_green\x18\x02 \x01(\tR\bminGreen\x12\x18\n" +
-	"\apassage\x18\x03 \x01(\tR\apassage\x12\x1b\n" +
-	"\tped_clear\x18\x04 \x01(\rR\bpedClear\x12\x1b\n" +
-	"\tred_clear\x18\x05 \x01(\tR\bredClear\x12\x12\n" +
-	"\x04walk\x18\x06 \x01(\rR\x04walk\x12#\n" +
-	"\ryellow_change\x18\a \x01(\tR\fyellowChange\"\xa3\x02\n" +
-	"\aOptions\x12\x1d\n" +
+	"\x0evolume_density\x18\b \x01(\v2(.openits.signal_control.v1.VolumeDensityR\rvolumeDensityB\x0f\n" +
+	"\r_phase_numberB\n" +
 	"\n" +
-	"min_recall\x18\x01 \x01(\bR\tminRecall\x12\x1d\n" +
+	"\b_enabledB\x0e\n" +
+	"\f_max_green_2B\r\n" +
+	"\v_red_revertB\x16\n" +
+	"\x14_crossing_distance_mB\x1f\n" +
+	"\x1d_leading_ped_interval_seconds\"\xd1\x02\n" +
+	"\x06Timing\x12 \n" +
+	"\tmax_green\x18\x01 \x01(\tH\x00R\bmaxGreen\x88\x01\x01\x12 \n" +
+	"\tmin_green\x18\x02 \x01(\tH\x01R\bminGreen\x88\x01\x01\x12\x1d\n" +
+	"\apassage\x18\x03 \x01(\tH\x02R\apassage\x88\x01\x01\x12 \n" +
+	"\tped_clear\x18\x04 \x01(\rH\x03R\bpedClear\x88\x01\x01\x12 \n" +
+	"\tred_clear\x18\x05 \x01(\tH\x04R\bredClear\x88\x01\x01\x12\x17\n" +
+	"\x04walk\x18\x06 \x01(\rH\x05R\x04walk\x88\x01\x01\x12(\n" +
+	"\ryellow_change\x18\a \x01(\tH\x06R\fyellowChange\x88\x01\x01B\f\n" +
 	"\n" +
-	"max_recall\x18\x02 \x01(\bR\tmaxRecall\x12\x1d\n" +
+	"_max_greenB\f\n" +
 	"\n" +
-	"ped_recall\x18\x03 \x01(\bR\tpedRecall\x12\x1f\n" +
-	"\vsoft_recall\x18\x04 \x01(\bR\n" +
-	"softRecall\x12\x1d\n" +
+	"_min_greenB\n" +
 	"\n" +
-	"dual_entry\x18\x05 \x01(\bR\tdualEntry\x12 \n" +
-	"\frest_in_walk\x18\x06 \x01(\bR\n" +
-	"restInWalk\x12)\n" +
-	"\x10simultaneous_gap\x18\a \x01(\bR\x0fsimultaneousGap\x12.\n" +
-	"\x13call_to_nonactuated\x18\b \x01(\bR\x11callToNonactuated\"\xc8\x01\n" +
-	"\rVolumeDensity\x12#\n" +
-	"\radded_initial\x18\x01 \x01(\tR\faddedInitial\x12\x1f\n" +
-	"\vmax_initial\x18\x02 \x01(\rR\n" +
-	"maxInitial\x122\n" +
-	"\x15time_before_reduction\x18\x03 \x01(\rR\x13timeBeforeReduction\x12$\n" +
-	"\x0etime_to_reduce\x18\x04 \x01(\rR\ftimeToReduce\x12\x17\n" +
-	"\amin_gap\x18\x05 \x01(\tR\x06minGap\"\xc7\x02\n" +
+	"\b_passageB\f\n" +
 	"\n" +
-	"PhaseState\x12\x1d\n" +
+	"_ped_clearB\f\n" +
 	"\n" +
-	"next_phase\x18\x03 \x01(\rR\tnextPhase\x12M\n" +
-	"\fped_interval\x18\x04 \x01(\x0e2*.openits.signal_control.v1.PedIntervalTypeR\vpedInterval\x125\n" +
-	"\x17ped_interval_elapsed_ms\x18\x05 \x01(\rR\x14pedIntervalElapsedMs\x12U\n" +
-	"\x10vehicle_interval\x18\x06 \x01(\x0e2*.openits.signal_control.v1.VehIntervalTypeR\x0fvehicleInterval\x12=\n" +
-	"\x1bvehicle_interval_elapsed_ms\x18\a \x01(\rR\x18vehicleIntervalElapsedMs\"U\n" +
+	"_red_clearB\a\n" +
+	"\x05_walkB\x10\n" +
+	"\x0e_yellow_change\"\xd5\x03\n" +
+	"\aOptions\x12\"\n" +
+	"\n" +
+	"min_recall\x18\x01 \x01(\bH\x00R\tminRecall\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"max_recall\x18\x02 \x01(\bH\x01R\tmaxRecall\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"ped_recall\x18\x03 \x01(\bH\x02R\tpedRecall\x88\x01\x01\x12$\n" +
+	"\vsoft_recall\x18\x04 \x01(\bH\x03R\n" +
+	"softRecall\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"dual_entry\x18\x05 \x01(\bH\x04R\tdualEntry\x88\x01\x01\x12%\n" +
+	"\frest_in_walk\x18\x06 \x01(\bH\x05R\n" +
+	"restInWalk\x88\x01\x01\x12.\n" +
+	"\x10simultaneous_gap\x18\a \x01(\bH\x06R\x0fsimultaneousGap\x88\x01\x01\x123\n" +
+	"\x13call_to_nonactuated\x18\b \x01(\bH\aR\x11callToNonactuated\x88\x01\x01B\r\n" +
+	"\v_min_recallB\r\n" +
+	"\v_max_recallB\r\n" +
+	"\v_ped_recallB\x0e\n" +
+	"\f_soft_recallB\r\n" +
+	"\v_dual_entryB\x0f\n" +
+	"\r_rest_in_walkB\x13\n" +
+	"\x11_simultaneous_gapB\x16\n" +
+	"\x14_call_to_nonactuated\"\xbc\x02\n" +
+	"\rVolumeDensity\x12(\n" +
+	"\radded_initial\x18\x01 \x01(\tH\x00R\faddedInitial\x88\x01\x01\x12$\n" +
+	"\vmax_initial\x18\x02 \x01(\rH\x01R\n" +
+	"maxInitial\x88\x01\x01\x127\n" +
+	"\x15time_before_reduction\x18\x03 \x01(\rH\x02R\x13timeBeforeReduction\x88\x01\x01\x12)\n" +
+	"\x0etime_to_reduce\x18\x04 \x01(\rH\x03R\ftimeToReduce\x88\x01\x01\x12\x1c\n" +
+	"\amin_gap\x18\x05 \x01(\tH\x04R\x06minGap\x88\x01\x01B\x10\n" +
+	"\x0e_added_initialB\x0e\n" +
+	"\f_max_initialB\x18\n" +
+	"\x16_time_before_reductionB\x11\n" +
+	"\x0f_time_to_reduceB\n" +
+	"\n" +
+	"\b_min_gap\"\xd1\x03\n" +
+	"\n" +
+	"PhaseState\x12\"\n" +
+	"\n" +
+	"next_phase\x18\x03 \x01(\rH\x00R\tnextPhase\x88\x01\x01\x12R\n" +
+	"\fped_interval\x18\x04 \x01(\x0e2*.openits.signal_control.v1.PedIntervalTypeH\x01R\vpedInterval\x88\x01\x01\x12:\n" +
+	"\x17ped_interval_elapsed_ms\x18\x05 \x01(\rH\x02R\x14pedIntervalElapsedMs\x88\x01\x01\x12Z\n" +
+	"\x10vehicle_interval\x18\x06 \x01(\x0e2*.openits.signal_control.v1.VehIntervalTypeH\x03R\x0fvehicleInterval\x88\x01\x01\x12B\n" +
+	"\x1bvehicle_interval_elapsed_ms\x18\a \x01(\rH\x04R\x18vehicleIntervalElapsedMs\x88\x01\x01B\r\n" +
+	"\v_next_phaseB\x0f\n" +
+	"\r_ped_intervalB\x1a\n" +
+	"\x18_ped_interval_elapsed_msB\x13\n" +
+	"\x11_vehicle_intervalB\x1e\n" +
+	"\x1c_vehicle_interval_elapsed_ms\"U\n" +
 	"\tDetectors\x12H\n" +
-	"\bdetector\x18\x01 \x03(\v2,.openits.signal_control.v1.DetectorsDetectorR\bdetector\"\xc9\x01\n" +
-	"\x11DetectorsDetector\x12\x1f\n" +
-	"\vdetector_id\x18\x01 \x01(\rR\n" +
-	"detectorId\x12J\n" +
+	"\bdetector\x18\x01 \x03(\v2,.openits.signal_control.v1.DetectorsDetectorR\bdetector\"\xde\x01\n" +
+	"\x11DetectorsDetector\x12$\n" +
+	"\vdetector_id\x18\x01 \x01(\rH\x00R\n" +
+	"detectorId\x88\x01\x01\x12J\n" +
 	"\x06config\x18\x02 \x01(\v22.openits.signal_control.v1.DetectorsDetectorConfigR\x06config\x12G\n" +
-	"\x05state\x18\x03 \x01(\v21.openits.signal_control.v1.DetectorsDetectorStateR\x05state\"\xbb\x03\n" +
-	"\x17DetectorsDetectorConfig\x12\x1f\n" +
-	"\vdetector_id\x18\x01 \x01(\rR\n" +
-	"detectorId\x12\x12\n" +
+	"\x05state\x18\x03 \x01(\v21.openits.signal_control.v1.DetectorsDetectorStateR\x05stateB\x0e\n" +
+	"\f_detector_id\"\xc5\x04\n" +
+	"\x17DetectorsDetectorConfig\x12$\n" +
+	"\vdetector_id\x18\x01 \x01(\rH\x00R\n" +
+	"detectorId\x88\x01\x01\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\tR\x04type\x12'\n" +
-	"\x0fassigned_phases\x18\x03 \x03(\rR\x0eassignedPhases\x12\x18\n" +
-	"\aenabled\x18\x04 \x01(\bR\aenabled\x12\x14\n" +
-	"\x05delay\x18\x05 \x01(\rR\x05delay\x12\x16\n" +
-	"\x06extend\x18\x06 \x01(\tR\x06extend\x12;\n" +
-	"\x04mode\x18\a \x01(\x0e2'.openits.signal_control.v1.DetectorModeR\x04mode\x12#\n" +
-	"\rextend_phases\x18\b \x03(\rR\fextendPhases\x12N\n" +
-	"\vfail_action\x18\t \x01(\x0e2-.openits.signal_control.v1.DetectorFailActionR\n" +
-	"failAction\x12H\n" +
+	"\x0fassigned_phases\x18\x03 \x03(\rR\x0eassignedPhases\x12\x1d\n" +
+	"\aenabled\x18\x04 \x01(\bH\x01R\aenabled\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\v \x01(\tH\x02R\x04name\x88\x01\x01\x12\x19\n" +
+	"\x05delay\x18\x05 \x01(\tH\x03R\x05delay\x88\x01\x01\x12\x1b\n" +
+	"\x06extend\x18\x06 \x01(\tH\x04R\x06extend\x88\x01\x01\x12@\n" +
+	"\x04mode\x18\a \x01(\x0e2'.openits.signal_control.v1.DetectorModeH\x05R\x04mode\x88\x01\x01\x12#\n" +
+	"\rextend_phases\x18\b \x03(\rR\fextendPhases\x12S\n" +
+	"\vfail_action\x18\t \x01(\x0e2-.openits.signal_control.v1.DetectorFailActionH\x06R\n" +
+	"failAction\x88\x01\x01\x12H\n" +
 	"\vdiagnostics\x18\n" +
-	" \x01(\v2&.openits.signal_control.v1.DiagnosticsR\vdiagnostics\"\xaa\x01\n" +
-	"\vDiagnostics\x12.\n" +
-	"\x13no_activity_minutes\x18\x01 \x01(\rR\x11noActivityMinutes\x120\n" +
-	"\x14max_presence_minutes\x18\x02 \x01(\rR\x12maxPresenceMinutes\x129\n" +
-	"\x19erratic_counts_per_minute\x18\x03 \x01(\rR\x16erraticCountsPerMinute\"\xfe\x01\n" +
-	"\x16DetectorsDetectorState\x12\x16\n" +
-	"\x06active\x18\x01 \x01(\bR\x06active\x12C\n" +
-	"\x0flast_activation\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x0elastActivation\x12'\n" +
-	"\x0factuation_count\x18\x03 \x01(\x04R\x0eactuationCount\x12\x14\n" +
-	"\x05fault\x18\x04 \x01(\bR\x05fault\x12H\n" +
-	"\vmeasurement\x18\x05 \x01(\v2&.openits.signal_control.v1.MeasurementR\vmeasurement\"\xdb\x01\n" +
-	"\vMeasurement\x12\x16\n" +
-	"\x06volume\x18\x01 \x01(\x04R\x06volume\x12\x1c\n" +
-	"\toccupancy\x18\x02 \x01(\tR\toccupancy\x12\x1b\n" +
-	"\tspeed_kmh\x18\x03 \x01(\tR\bspeedKmh\x12:\n" +
-	"\x19collection_period_seconds\x18\x04 \x01(\rR\x17collectionPeriodSeconds\x12=\n" +
-	"\fcollected_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\vcollectedAt\"H\n" +
+	" \x01(\v2&.openits.signal_control.v1.DiagnosticsR\vdiagnosticsB\x0e\n" +
+	"\f_detector_idB\n" +
+	"\n" +
+	"\b_enabledB\a\n" +
+	"\x05_nameB\b\n" +
+	"\x06_delayB\t\n" +
+	"\a_extendB\a\n" +
+	"\x05_modeB\x0e\n" +
+	"\f_fail_action\"\x88\x02\n" +
+	"\vDiagnostics\x123\n" +
+	"\x13no_activity_minutes\x18\x01 \x01(\rH\x00R\x11noActivityMinutes\x88\x01\x01\x125\n" +
+	"\x14max_presence_minutes\x18\x02 \x01(\rH\x01R\x12maxPresenceMinutes\x88\x01\x01\x12>\n" +
+	"\x19erratic_counts_per_minute\x18\x03 \x01(\rH\x02R\x16erraticCountsPerMinute\x88\x01\x01B\x16\n" +
+	"\x14_no_activity_minutesB\x17\n" +
+	"\x15_max_presence_minutesB\x1c\n" +
+	"\x1a_erratic_counts_per_minute\"\xb6\x02\n" +
+	"\x16DetectorsDetectorState\x12\x1b\n" +
+	"\x06active\x18\x01 \x01(\bH\x00R\x06active\x88\x01\x01\x12C\n" +
+	"\x0flast_activation\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x0elastActivation\x12,\n" +
+	"\x0factuation_count\x18\x03 \x01(\x04H\x01R\x0eactuationCount\x88\x01\x01\x12\x19\n" +
+	"\x05fault\x18\x04 \x01(\bH\x02R\x05fault\x88\x01\x01\x12H\n" +
+	"\vmeasurement\x18\x05 \x01(\v2&.openits.signal_control.v1.MeasurementR\vmeasurementB\t\n" +
+	"\a_activeB\x12\n" +
+	"\x10_actuation_countB\b\n" +
+	"\x06_fault\"\xb4\x02\n" +
+	"\vMeasurement\x12\x1b\n" +
+	"\x06volume\x18\x01 \x01(\rH\x00R\x06volume\x88\x01\x01\x12!\n" +
+	"\toccupancy\x18\x02 \x01(\tH\x01R\toccupancy\x88\x01\x01\x12 \n" +
+	"\tspeed_kmh\x18\x03 \x01(\tH\x02R\bspeedKmh\x88\x01\x01\x12?\n" +
+	"\x19collection_period_seconds\x18\x04 \x01(\rH\x03R\x17collectionPeriodSeconds\x88\x01\x01\x12=\n" +
+	"\fcollected_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\vcollectedAtB\t\n" +
+	"\a_volumeB\f\n" +
+	"\n" +
+	"_occupancyB\f\n" +
+	"\n" +
+	"_speed_kmhB\x1c\n" +
+	"\x1a_collection_period_seconds\"H\n" +
 	"\bOverlaps\x12<\n" +
-	"\aoverlap\x18\x01 \x03(\v2\".openits.signal_control.v1.OverlapR\aoverlap\"\xc3\x01\n" +
-	"\aOverlap\x12%\n" +
-	"\x0eoverlap_number\x18\x04 \x01(\rR\roverlapNumber\x12@\n" +
+	"\aoverlap\x18\x01 \x03(\v2\".openits.signal_control.v1.OverlapR\aoverlap\"\xdb\x01\n" +
+	"\aOverlap\x12*\n" +
+	"\x0eoverlap_number\x18\x04 \x01(\rH\x00R\roverlapNumber\x88\x01\x01\x12@\n" +
 	"\x06config\x18\x02 \x01(\v2(.openits.signal_control.v1.OverlapConfigR\x06config\x12=\n" +
-	"\x05state\x18\x03 \x01(\v2'.openits.signal_control.v1.OverlapStateR\x05stateJ\x04\b\x01\x10\x02R\n" +
-	"overlap_id\"\xf2\x02\n" +
-	"\rOverlapConfig\x12%\n" +
-	"\x0eoverlap_number\x18\t \x01(\rR\roverlapNumber\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
+	"\x05state\x18\x03 \x01(\v2'.openits.signal_control.v1.OverlapStateR\x05stateB\x11\n" +
+	"\x0f_overlap_numberJ\x04\b\x01\x10\x02R\n" +
+	"overlap_id\"\xe5\x03\n" +
+	"\rOverlapConfig\x12*\n" +
+	"\x0eoverlap_number\x18\t \x01(\rH\x00R\roverlapNumber\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x12\n" +
 	"\x04type\x18\x03 \x01(\tR\x04type\x12'\n" +
 	"\x0fincluded_phases\x18\x04 \x03(\rR\x0eincludedPhases\x12'\n" +
 	"\x0fmodifier_phases\x18\n" +
-	" \x03(\rR\x0emodifierPhases\x12%\n" +
-	"\x0etrailing_green\x18\x05 \x01(\tR\rtrailingGreen\x12'\n" +
-	"\x0ftrailing_yellow\x18\x06 \x01(\tR\x0etrailingYellow\x12,\n" +
-	"\x12trailing_red_clear\x18\a \x01(\tR\x10trailingRedClear\x120\n" +
-	"\x03fya\x18\b \x01(\v2\x1e.openits.signal_control.v1.FyaR\x03fyaJ\x04\b\x01\x10\x02R\n" +
-	"overlap_id\"m\n" +
-	"\x03Fya\x120\n" +
-	"\x14protected_left_phase\x18\x01 \x01(\rR\x12protectedLeftPhase\x124\n" +
-	"\x16opposing_through_phase\x18\x02 \x01(\rR\x14opposingThroughPhase\"\x81\x01\n" +
-	"\fOverlapState\x12Y\n" +
-	"\x10current_interval\x18\x01 \x01(\x0e2..openits.signal_control.v1.OverlapIntervalTypeR\x0fcurrentInterval\x12\x16\n" +
-	"\x06active\x18\x02 \x01(\bR\x06active\"H\n" +
+	" \x03(\rR\x0emodifierPhases\x12*\n" +
+	"\x0etrailing_green\x18\x05 \x01(\tH\x02R\rtrailingGreen\x88\x01\x01\x12,\n" +
+	"\x0ftrailing_yellow\x18\x06 \x01(\tH\x03R\x0etrailingYellow\x88\x01\x01\x121\n" +
+	"\x12trailing_red_clear\x18\a \x01(\tH\x04R\x10trailingRedClear\x88\x01\x01\x120\n" +
+	"\x03fya\x18\b \x01(\v2\x1e.openits.signal_control.v1.FyaR\x03fyaB\x11\n" +
+	"\x0f_overlap_numberB\a\n" +
+	"\x05_nameB\x11\n" +
+	"\x0f_trailing_greenB\x12\n" +
+	"\x10_trailing_yellowB\x15\n" +
+	"\x13_trailing_red_clearJ\x04\b\x01\x10\x02R\n" +
+	"overlap_id\"\xab\x01\n" +
+	"\x03Fya\x125\n" +
+	"\x14protected_left_phase\x18\x01 \x01(\rH\x00R\x12protectedLeftPhase\x88\x01\x01\x129\n" +
+	"\x16opposing_through_phase\x18\x02 \x01(\rH\x01R\x14opposingThroughPhase\x88\x01\x01B\x17\n" +
+	"\x15_protected_left_phaseB\x19\n" +
+	"\x17_opposing_through_phase\"\xab\x01\n" +
+	"\fOverlapState\x12^\n" +
+	"\x10current_interval\x18\x01 \x01(\x0e2..openits.signal_control.v1.OverlapIntervalTypeH\x00R\x0fcurrentInterval\x88\x01\x01\x12\x1b\n" +
+	"\x06active\x18\x02 \x01(\bH\x01R\x06active\x88\x01\x01B\x13\n" +
+	"\x11_current_intervalB\t\n" +
+	"\a_active\"H\n" +
 	"\bChannels\x12<\n" +
-	"\achannel\x18\x01 \x03(\v2\".openits.signal_control.v1.ChannelR\achannel\"\xd9\x01\n" +
-	"\aChannel\x12%\n" +
-	"\x0echannel_number\x18\x01 \x01(\rR\rchannelNumber\x12\x16\n" +
+	"\achannel\x18\x01 \x03(\v2\".openits.signal_control.v1.ChannelR\achannel\"\x98\x02\n" +
+	"\aChannel\x12*\n" +
+	"\x0echannel_number\x18\x01 \x01(\rH\x01R\rchannelNumber\x88\x01\x01\x12\x16\n" +
 	"\x05phase\x18\x02 \x01(\rH\x00R\x05phase\x12\x1a\n" +
-	"\aoverlap\x18\x03 \x01(\rH\x00R\aoverlap\x12\x1a\n" +
-	"\bmovement\x18\x04 \x01(\tR\bmovement\x12M\n" +
-	"\vflash_state\x18\x05 \x01(\x0e2,.openits.signal_control.v1.ChannelFlashStateR\n" +
-	"flashStateB\b\n" +
-	"\x06source\"X\n" +
+	"\aoverlap\x18\x03 \x01(\rH\x00R\aoverlap\x12\x1f\n" +
+	"\bmovement\x18\x04 \x01(\tH\x02R\bmovement\x88\x01\x01\x12R\n" +
+	"\vflash_state\x18\x05 \x01(\x0e2,.openits.signal_control.v1.ChannelFlashStateH\x03R\n" +
+	"flashState\x88\x01\x01B\b\n" +
+	"\x06sourceB\x11\n" +
+	"\x0f_channel_numberB\v\n" +
+	"\t_movementB\x0e\n" +
+	"\f_flash_state\"X\n" +
 	"\x0fConflictMonitor\x12E\n" +
 	"\n" +
 	"permissive\x18\x01 \x03(\v2%.openits.signal_control.v1.PermissiveR\n" +
-	"permissive\"F\n" +
+	"permissive\"l\n" +
 	"\n" +
-	"Permissive\x12\x1b\n" +
-	"\tchannel_a\x18\x01 \x01(\rR\bchannelA\x12\x1b\n" +
-	"\tchannel_b\x18\x02 \x01(\rR\bchannelB\"\x9a\x01\n" +
+	"Permissive\x12 \n" +
+	"\tchannel_a\x18\x01 \x01(\rH\x00R\bchannelA\x88\x01\x01\x12 \n" +
+	"\tchannel_b\x18\x02 \x01(\rH\x01R\bchannelB\x88\x01\x01B\f\n" +
+	"\n" +
+	"_channel_aB\f\n" +
+	"\n" +
+	"_channel_b\"\x9a\x01\n" +
 	"\fCoordination\x12F\n" +
 	"\vtiming_plan\x18\x01 \x03(\v2%.openits.signal_control.v1.TimingPlanR\n" +
 	"timingPlan\x12B\n" +
-	"\x05state\x18\x02 \x01(\v2,.openits.signal_control.v1.CoordinationStateR\x05state\"\xe2\x03\n" +
+	"\x05state\x18\x02 \x01(\v2,.openits.signal_control.v1.CoordinationStateR\x05state\"\xe3\x04\n" +
 	"\n" +
-	"TimingPlan\x12\x17\n" +
-	"\aplan_id\x18\x01 \x01(\rR\x06planId\x12!\n" +
-	"\fcycle_length\x18\x02 \x01(\rR\vcycleLength\x12\x16\n" +
-	"\x06offset\x18\x03 \x01(\rR\x06offset\x12-\n" +
-	"\x12coordinated_phases\x18\x05 \x03(\rR\x11coordinatedPhases\x12U\n" +
-	"\x10offset_reference\x18\x06 \x01(\x0e2*.openits.signal_control.v1.OffsetReferenceR\x0foffsetReference\x12R\n" +
-	"\x0ftransition_mode\x18\a \x01(\x0e2).openits.signal_control.v1.TransitionModeR\x0etransitionMode\x12M\n" +
-	"\x0eforce_off_mode\x18\b \x01(\x0e2'.openits.signal_control.v1.ForceOffModeR\fforceOffMode\x12\x1f\n" +
-	"\vsequence_id\x18\t \x01(\rR\n" +
-	"sequenceId\x126\n" +
-	"\x05split\x18\x04 \x03(\v2 .openits.signal_control.v1.SplitR\x05split\"\x94\x01\n" +
-	"\x05Split\x12!\n" +
-	"\fphase_number\x18\x01 \x01(\rR\vphaseNumber\x12#\n" +
-	"\rsplit_seconds\x18\x02 \x01(\rR\fsplitSeconds\x12C\n" +
+	"TimingPlan\x12\x1c\n" +
+	"\aplan_id\x18\x01 \x01(\rH\x00R\x06planId\x88\x01\x01\x12!\n" +
+	"\fcycle_length\x18\x02 \x01(\rR\vcycleLength\x12\x1b\n" +
+	"\x06offset\x18\x03 \x01(\rH\x01R\x06offset\x88\x01\x01\x12-\n" +
+	"\x12coordinated_phases\x18\x05 \x03(\rR\x11coordinatedPhases\x12Z\n" +
+	"\x10offset_reference\x18\x06 \x01(\x0e2*.openits.signal_control.v1.OffsetReferenceH\x02R\x0foffsetReference\x88\x01\x01\x12W\n" +
+	"\x0ftransition_mode\x18\a \x01(\x0e2).openits.signal_control.v1.TransitionModeH\x03R\x0etransitionMode\x88\x01\x01\x12R\n" +
+	"\x0eforce_off_mode\x18\b \x01(\x0e2'.openits.signal_control.v1.ForceOffModeH\x04R\fforceOffMode\x88\x01\x01\x12$\n" +
+	"\vsequence_id\x18\t \x01(\rH\x05R\n" +
+	"sequenceId\x88\x01\x01\x126\n" +
+	"\x05split\x18\x04 \x03(\v2 .openits.signal_control.v1.SplitR\x05splitB\n" +
 	"\n" +
-	"split_mode\x18\x03 \x01(\x0e2$.openits.signal_control.v1.SplitModeR\tsplitMode\"|\n" +
-	"\x11CoordinationState\x12\x1f\n" +
-	"\vactive_plan\x18\x01 \x01(\rR\n" +
-	"activePlan\x12F\n" +
-	"\vcycle_state\x18\x02 \x01(\x0e2%.openits.signal_control.v1.CycleStateR\n" +
-	"cycleState\"L\n" +
+	"\b_plan_idB\t\n" +
+	"\a_offsetB\x13\n" +
+	"\x11_offset_referenceB\x12\n" +
+	"\x10_transition_modeB\x11\n" +
+	"\x0f_force_off_modeB\x0e\n" +
+	"\f_sequence_id\"\xd5\x01\n" +
+	"\x05Split\x12&\n" +
+	"\fphase_number\x18\x01 \x01(\rH\x00R\vphaseNumber\x88\x01\x01\x12(\n" +
+	"\rsplit_seconds\x18\x02 \x01(\rH\x01R\fsplitSeconds\x88\x01\x01\x12H\n" +
+	"\n" +
+	"split_mode\x18\x03 \x01(\x0e2$.openits.signal_control.v1.SplitModeH\x02R\tsplitMode\x88\x01\x01B\x0f\n" +
+	"\r_phase_numberB\x10\n" +
+	"\x0e_split_secondsB\r\n" +
+	"\v_split_mode\"\x7f\n" +
+	"\x11CoordinationState\x12$\n" +
+	"\vactive_plan\x18\x01 \x01(\rH\x00R\n" +
+	"activePlan\x88\x01\x01\x12$\n" +
+	"\vcycle_state\x18\x02 \x01(\tH\x01R\n" +
+	"cycleState\x88\x01\x01B\x0e\n" +
+	"\f_active_planB\x0e\n" +
+	"\f_cycle_state\"L\n" +
 	"\tSequences\x12?\n" +
-	"\bsequence\x18\x01 \x03(\v2#.openits.signal_control.v1.SequenceR\bsequence\"\x8d\x01\n" +
-	"\bSequence\x12\x1f\n" +
-	"\vsequence_id\x18\x01 \x01(\rR\n" +
-	"sequenceId\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12L\n" +
-	"\rring_sequence\x18\x03 \x03(\v2'.openits.signal_control.v1.RingSequenceR\fringSequence\"I\n" +
-	"\fRingSequence\x12\x12\n" +
-	"\x04ring\x18\x01 \x01(\rR\x04ring\x12%\n" +
-	"\x0eordered_phases\x18\x02 \x03(\rR\rorderedPhases\"\x8f\x02\n" +
-	"\bTimebase\x12\x1a\n" +
-	"\btimezone\x18\x04 \x01(\tR\btimezone\x12\x1f\n" +
-	"\vobserve_dst\x18\x05 \x01(\bR\n" +
-	"observeDst\x12=\n" +
+	"\bsequence\x18\x01 \x03(\v2#.openits.signal_control.v1.SequenceR\bsequence\"\xb0\x01\n" +
+	"\bSequence\x12$\n" +
+	"\vsequence_id\x18\x01 \x01(\rH\x00R\n" +
+	"sequenceId\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12L\n" +
+	"\rring_sequence\x18\x03 \x03(\v2'.openits.signal_control.v1.RingSequenceR\fringSequenceB\x0e\n" +
+	"\f_sequence_idB\a\n" +
+	"\x05_name\"W\n" +
+	"\fRingSequence\x12\x17\n" +
+	"\x04ring\x18\x01 \x01(\rH\x00R\x04ring\x88\x01\x01\x12%\n" +
+	"\x0eordered_phases\x18\x02 \x03(\rR\rorderedPhasesB\a\n" +
+	"\x05_ring\"\xb6\x02\n" +
+	"\bTimebase\x12\x1f\n" +
+	"\btimezone\x18\x04 \x01(\tH\x00R\btimezone\x88\x01\x01\x12$\n" +
+	"\vobserve_dst\x18\x05 \x01(\bH\x01R\n" +
+	"observeDst\x88\x01\x01\x12=\n" +
 	"\bday_plan\x18\x01 \x03(\v2\".openits.signal_control.v1.DayPlanR\adayPlan\x12O\n" +
 	"\x0eschedule_entry\x18\x02 \x03(\v2(.openits.signal_control.v1.ScheduleEntryR\rscheduleEntry\x126\n" +
-	"\x05clock\x18\x03 \x01(\v2 .openits.signal_control.v1.ClockR\x05clock\"x\n" +
-	"\aDayPlan\x12\x1e\n" +
-	"\vday_plan_id\x18\x01 \x01(\rR\tdayPlanId\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x129\n" +
-	"\x06action\x18\x03 \x03(\v2!.openits.signal_control.v1.ActionR\x06action\"\xb2\x01\n" +
-	"\x06Action\x12\x1d\n" +
+	"\x05clock\x18\x03 \x01(\v2 .openits.signal_control.v1.ClockR\x05clockB\v\n" +
+	"\t_timezoneB\x0e\n" +
+	"\f_observe_dst\"\x9b\x01\n" +
+	"\aDayPlan\x12#\n" +
+	"\vday_plan_id\x18\x01 \x01(\rH\x00R\tdayPlanId\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x129\n" +
+	"\x06action\x18\x03 \x03(\v2!.openits.signal_control.v1.ActionR\x06actionB\x0e\n" +
+	"\f_day_plan_idB\a\n" +
+	"\x05_name\"\xc6\x01\n" +
+	"\x06Action\x12\"\n" +
 	"\n" +
-	"start_time\x18\x01 \x01(\tR\tstartTime\x12!\n" +
+	"start_time\x18\x01 \x01(\tH\x01R\tstartTime\x88\x01\x01\x12!\n" +
 	"\vtiming_plan\x18\x02 \x01(\rH\x00R\n" +
 	"timingPlan\x12Z\n" +
 	"\x11special_operation\x18\x03 \x01(\x0e2+.openits.signal_control.v1.SpecialOperationH\x00R\x10specialOperationB\n" +
 	"\n" +
-	"\bactivate\"\xf1\x01\n" +
-	"\rScheduleEntry\x12\x1f\n" +
-	"\vschedule_id\x18\x01 \x01(\rR\n" +
-	"scheduleId\x12\x19\n" +
-	"\bday_plan\x18\x05 \x01(\rR\adayPlan\x12\"\n" +
+	"\bactivateB\r\n" +
+	"\v_start_time\"\x98\x02\n" +
+	"\rScheduleEntry\x12$\n" +
+	"\vschedule_id\x18\x01 \x01(\rH\x00R\n" +
+	"scheduleId\x88\x01\x01\x12\x1e\n" +
+	"\bday_plan\x18\x05 \x01(\rH\x01R\adayPlan\x88\x01\x01\x12\"\n" +
 	"\rdays_of_month\x18\x04 \x03(\rR\vdaysOfMonth\x12F\n" +
 	"\fdays_of_week\x18\x03 \x03(\x0e2$.openits.signal_control.v1.DayOfWeekR\n" +
 	"daysOfWeek\x128\n" +
-	"\x06months\x18\x02 \x03(\x0e2 .openits.signal_control.v1.MonthR\x06months\"\xcc\x01\n" +
+	"\x06months\x18\x02 \x03(\x0e2 .openits.signal_control.v1.MonthR\x06monthsB\x0e\n" +
+	"\f_schedule_idB\v\n" +
+	"\t_day_plan\"\x89\x02\n" +
 	"\x05Clock\x12=\n" +
-	"\fcurrent_time\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\vcurrentTime\x12\x1f\n" +
-	"\vtime_source\x18\x02 \x01(\tR\n" +
-	"timeSource\x12F\n" +
-	"\vsync_status\x18\x03 \x01(\x0e2%.openits.signal_control.v1.SyncStatusR\n" +
-	"syncStatus\x12\x1b\n" +
-	"\toffset_ms\x18\x04 \x01(\x05R\boffsetMs\"P\n" +
+	"\fcurrent_time\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\vcurrentTime\x12$\n" +
+	"\vtime_source\x18\x02 \x01(\tH\x00R\n" +
+	"timeSource\x88\x01\x01\x12K\n" +
+	"\vsync_status\x18\x03 \x01(\x0e2%.openits.signal_control.v1.SyncStatusH\x01R\n" +
+	"syncStatus\x88\x01\x01\x12 \n" +
+	"\toffset_ms\x18\x04 \x01(\x05H\x02R\boffsetMs\x88\x01\x01B\x0e\n" +
+	"\f_time_sourceB\x0e\n" +
+	"\f_sync_statusB\f\n" +
+	"\n" +
+	"_offset_ms\"P\n" +
 	"\n" +
 	"Preemption\x12B\n" +
-	"\tpreemptor\x18\x04 \x03(\v2$.openits.signal_control.v1.PreemptorR\tpreemptor\"\xb3\x01\n" +
-	"\tPreemptor\x12!\n" +
-	"\fpreemptor_id\x18\x01 \x01(\rR\vpreemptorId\x12B\n" +
+	"\tpreemptor\x18\x04 \x03(\v2$.openits.signal_control.v1.PreemptorR\tpreemptor\"\xc9\x01\n" +
+	"\tPreemptor\x12&\n" +
+	"\fpreemptor_id\x18\x01 \x01(\rH\x00R\vpreemptorId\x88\x01\x01\x12B\n" +
 	"\x06config\x18\x02 \x01(\v2*.openits.signal_control.v1.PreemptorConfigR\x06config\x12?\n" +
-	"\x05state\x18\x03 \x01(\v2).openits.signal_control.v1.PreemptorStateR\x05state\"\xde\x04\n" +
-	"\x0fPreemptorConfig\x12!\n" +
-	"\fpreemptor_id\x18\x01 \x01(\rR\vpreemptorId\x12\x12\n" +
-	"\x04type\x18\x02 \x01(\tR\x04type\x12%\n" +
-	"\x0epriority_order\x18\x03 \x01(\rR\rpriorityOrder\x12#\n" +
-	"\rdelay_seconds\x18\x04 \x01(\rR\fdelaySeconds\x123\n" +
-	"\x16min_green_before_entry\x18\x05 \x01(\rR\x13minGreenBeforeEntry\x121\n" +
-	"\x15min_walk_before_entry\x18\x06 \x01(\rR\x12minWalkBeforeEntry\x12:\n" +
-	"\x1amin_ped_clear_before_entry\x18\f \x01(\rR\x16minPedClearBeforeEntry\x12R\n" +
+	"\x05state\x18\x03 \x01(\v2).openits.signal_control.v1.PreemptorStateR\x05stateB\x0f\n" +
+	"\r_preemptor_id\"\xdc\x06\n" +
+	"\x0fPreemptorConfig\x12&\n" +
+	"\fpreemptor_id\x18\x01 \x01(\rH\x00R\vpreemptorId\x88\x01\x01\x12\x12\n" +
+	"\x04type\x18\x02 \x01(\tR\x04type\x12*\n" +
+	"\x0epriority_order\x18\x03 \x01(\rH\x01R\rpriorityOrder\x88\x01\x01\x12(\n" +
+	"\rdelay_seconds\x18\x04 \x01(\rH\x02R\fdelaySeconds\x88\x01\x01\x128\n" +
+	"\x16min_green_before_entry\x18\x05 \x01(\rH\x03R\x13minGreenBeforeEntry\x88\x01\x01\x126\n" +
+	"\x15min_walk_before_entry\x18\x06 \x01(\rH\x04R\x12minWalkBeforeEntry\x88\x01\x01\x12?\n" +
+	"\x1amin_ped_clear_before_entry\x18\f \x01(\rH\x05R\x16minPedClearBeforeEntry\x88\x01\x01\x12R\n" +
 	"\x0ftrack_clearance\x18\a \x01(\v2).openits.signal_control.v1.TrackClearanceR\x0etrackClearance\x12!\n" +
-	"\fdwell_phases\x18\b \x03(\rR\vdwellPhases\x12*\n" +
-	"\x11min_dwell_seconds\x18\t \x01(\rR\x0fminDwellSeconds\x12.\n" +
-	"\x13flash_dwell_seconds\x18\r \x01(\rR\x11flashDwellSeconds\x12\x1f\n" +
+	"\fdwell_phases\x18\b \x03(\rR\vdwellPhases\x12/\n" +
+	"\x11min_dwell_seconds\x18\t \x01(\rH\x06R\x0fminDwellSeconds\x88\x01\x01\x123\n" +
+	"\x13flash_dwell_seconds\x18\r \x01(\rH\aR\x11flashDwellSeconds\x88\x01\x01\x12\x1f\n" +
 	"\vexit_phases\x18\n" +
 	" \x03(\rR\n" +
-	"exitPhases\x120\n" +
-	"\x14max_presence_seconds\x18\v \x01(\rR\x12maxPresenceSeconds\"M\n" +
+	"exitPhases\x125\n" +
+	"\x14max_presence_seconds\x18\v \x01(\rH\bR\x12maxPresenceSeconds\x88\x01\x01B\x0f\n" +
+	"\r_preemptor_idB\x11\n" +
+	"\x0f_priority_orderB\x10\n" +
+	"\x0e_delay_secondsB\x19\n" +
+	"\x17_min_green_before_entryB\x18\n" +
+	"\x16_min_walk_before_entryB\x1d\n" +
+	"\x1b_min_ped_clear_before_entryB\x14\n" +
+	"\x12_min_dwell_secondsB\x16\n" +
+	"\x14_flash_dwell_secondsB\x17\n" +
+	"\x15_max_presence_seconds\"M\n" +
 	"\x0eTrackClearance\x12\x16\n" +
 	"\x06phases\x18\x01 \x03(\rR\x06phases\x12#\n" +
-	"\rgreen_seconds\x18\x02 \x01(\rR\fgreenSeconds\"\xd2\x01\n" +
-	"\x0ePreemptorState\x12\x16\n" +
-	"\x06active\x18\x01 \x01(\bR\x06active\x12=\n" +
-	"\factive_since\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\vactiveSince\x12L\n" +
-	"\rcurrent_stage\x18\x03 \x01(\x0e2'.openits.signal_control.v1.PreemptStageR\fcurrentStage\x12\x1b\n" +
-	"\tsource_id\x18\x04 \x01(\tR\bsourceId\"\x8b\x01\n" +
+	"\rgreen_seconds\x18\x02 \x01(\rR\fgreenSeconds\"\x8c\x02\n" +
+	"\x0ePreemptorState\x12\x1b\n" +
+	"\x06active\x18\x01 \x01(\bH\x00R\x06active\x88\x01\x01\x12=\n" +
+	"\factive_since\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\vactiveSince\x12Q\n" +
+	"\rcurrent_stage\x18\x03 \x01(\x0e2'.openits.signal_control.v1.PreemptStageH\x01R\fcurrentStage\x88\x01\x01\x12 \n" +
+	"\tsource_id\x18\x04 \x01(\tH\x02R\bsourceId\x88\x01\x01B\t\n" +
+	"\a_activeB\x10\n" +
+	"\x0e_current_stageB\f\n" +
+	"\n" +
+	"_source_id\"\x8b\x01\n" +
 	"\bPriority\x12?\n" +
 	"\bstrategy\x18\x01 \x03(\v2#.openits.signal_control.v1.StrategyR\bstrategy\x12>\n" +
-	"\x05state\x18\x02 \x01(\v2(.openits.signal_control.v1.PriorityStateR\x05state\"n\n" +
-	"\bStrategy\x12\x1f\n" +
-	"\vstrategy_id\x18\x01 \x01(\rR\n" +
-	"strategyId\x12A\n" +
-	"\x06config\x18\x02 \x01(\v2).openits.signal_control.v1.StrategyConfigR\x06config\"\xda\x02\n" +
-	"\x0eStrategyConfig\x12\x1f\n" +
-	"\vstrategy_id\x18\x01 \x01(\rR\n" +
-	"strategyId\x12N\n" +
-	"\x0epriority_class\x18\x02 \x01(\x0e2'.openits.signal_control.v1.PriorityTypeR\rpriorityClass\x125\n" +
-	"\x17max_early_green_seconds\x18\x03 \x01(\rR\x14maxEarlyGreenSeconds\x12=\n" +
-	"\x1bmax_green_extension_seconds\x18\x04 \x01(\rR\x18maxGreenExtensionSeconds\x12<\n" +
-	"\x1areservice_interval_seconds\x18\x05 \x01(\rR\x18reserviceIntervalSeconds\x12#\n" +
-	"\rserved_phases\x18\x06 \x03(\rR\fservedPhases\"`\n" +
+	"\x05state\x18\x02 \x01(\v2(.openits.signal_control.v1.PriorityStateR\x05state\"\x83\x01\n" +
+	"\bStrategy\x12$\n" +
+	"\vstrategy_id\x18\x01 \x01(\rH\x00R\n" +
+	"strategyId\x88\x01\x01\x12A\n" +
+	"\x06config\x18\x02 \x01(\v2).openits.signal_control.v1.StrategyConfigR\x06configB\x0e\n" +
+	"\f_strategy_id\"\xc8\x03\n" +
+	"\x0eStrategyConfig\x12$\n" +
+	"\vstrategy_id\x18\x01 \x01(\rH\x00R\n" +
+	"strategyId\x88\x01\x01\x12*\n" +
+	"\x0epriority_class\x18\x02 \x01(\tH\x01R\rpriorityClass\x88\x01\x01\x12:\n" +
+	"\x17max_early_green_seconds\x18\x03 \x01(\rH\x02R\x14maxEarlyGreenSeconds\x88\x01\x01\x12B\n" +
+	"\x1bmax_green_extension_seconds\x18\x04 \x01(\rH\x03R\x18maxGreenExtensionSeconds\x88\x01\x01\x12A\n" +
+	"\x1areservice_interval_seconds\x18\x05 \x01(\rH\x04R\x18reserviceIntervalSeconds\x88\x01\x01\x12#\n" +
+	"\rserved_phases\x18\x06 \x03(\rR\fservedPhasesB\x0e\n" +
+	"\f_strategy_idB\x11\n" +
+	"\x0f_priority_classB\x1a\n" +
+	"\x18_max_early_green_secondsB\x1e\n" +
+	"\x1c_max_green_extension_secondsB\x1d\n" +
+	"\x1b_reservice_interval_seconds\"`\n" +
 	"\rPriorityState\x12O\n" +
-	"\x0eactive_request\x18\x01 \x03(\v2(.openits.signal_control.v1.ActiveRequestR\ractiveRequest\"\xf4\x01\n" +
-	"\rActiveRequest\x12\x1d\n" +
+	"\x0eactive_request\x18\x01 \x03(\v2(.openits.signal_control.v1.ActiveRequestR\ractiveRequest\"\xae\x02\n" +
+	"\rActiveRequest\x12\"\n" +
 	"\n" +
-	"request_id\x18\x01 \x01(\tR\trequestId\x12L\n" +
-	"\rpriority_type\x18\x02 \x01(\x0e2'.openits.signal_control.v1.PriorityTypeR\fpriorityType\x12\x1d\n" +
+	"request_id\x18\x01 \x01(\tH\x00R\trequestId\x88\x01\x01\x12(\n" +
+	"\rpriority_type\x18\x02 \x01(\tH\x01R\fpriorityType\x88\x01\x01\x12\"\n" +
 	"\n" +
-	"vehicle_id\x18\x03 \x01(\tR\tvehicleId\x126\n" +
-	"\x05stage\x18\x04 \x01(\x0e2 .openits.signal_control.v1.StageR\x05stage\x12\x1f\n" +
-	"\vstrategy_id\x18\x05 \x01(\rR\n" +
-	"strategyId\"\xdb\x01\n" +
-	"\tOperation\x12\x12\n" +
-	"\x04mode\x18\x01 \x01(\tR\x04mode\x12!\n" +
-	"\fflash_active\x18\x02 \x01(\bR\vflashActive\x12\x1f\n" +
-	"\vflash_cause\x18\x03 \x01(\tR\n" +
-	"flashCause\x120\n" +
-	"\x03mmu\x18\x04 \x01(\v2\x1e.openits.signal_control.v1.MmuR\x03mmu\x12D\n" +
-	"\x10last_mode_change\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\x0elastModeChange\"k\n" +
-	"\x03Mmu\x12\x1d\n" +
+	"vehicle_id\x18\x03 \x01(\tH\x02R\tvehicleId\x88\x01\x01\x12;\n" +
+	"\x05stage\x18\x04 \x01(\x0e2 .openits.signal_control.v1.StageH\x03R\x05stage\x88\x01\x01\x12$\n" +
+	"\vstrategy_id\x18\x05 \x01(\rH\x04R\n" +
+	"strategyId\x88\x01\x01B\r\n" +
+	"\v_request_idB\x10\n" +
+	"\x0e_priority_typeB\r\n" +
+	"\v_vehicle_idB\b\n" +
+	"\x06_stageB\x0e\n" +
+	"\f_strategy_id\"\xab\x02\n" +
+	"\tOperation\x12\x17\n" +
+	"\x04mode\x18\x01 \x01(\tH\x00R\x04mode\x88\x01\x01\x12&\n" +
+	"\fflash_active\x18\x02 \x01(\bH\x01R\vflashActive\x88\x01\x01\x12$\n" +
+	"\vflash_cause\x18\x03 \x01(\tH\x02R\n" +
+	"flashCause\x88\x01\x01\x12<\n" +
+	"\amonitor\x18\x06 \x01(\v2\".openits.signal_control.v1.MonitorR\amonitor\x12D\n" +
+	"\x10last_mode_change\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\x0elastModeChangeB\a\n" +
+	"\x05_modeB\x0f\n" +
+	"\r_flash_activeB\x0e\n" +
+	"\f_flash_causeJ\x04\b\x04\x10\x05R\x03mmu\"\x94\x01\n" +
+	"\aMonitor\x12\"\n" +
 	"\n" +
-	"fault_type\x18\x01 \x01(\tR\tfaultType\x12+\n" +
-	"\x11faulting_channels\x18\x02 \x03(\rR\x10faultingChannels\x12\x18\n" +
-	"\alatched\x18\x03 \x01(\bR\alatched\"\xf8\x02\n" +
+	"fault_type\x18\x01 \x01(\tH\x00R\tfaultType\x88\x01\x01\x12+\n" +
+	"\x11faulting_channels\x18\x02 \x03(\rR\x10faultingChannels\x12\x1d\n" +
+	"\alatched\x18\x03 \x01(\bH\x01R\alatched\x88\x01\x01B\r\n" +
+	"\v_fault_typeB\n" +
+	"\n" +
+	"\b_latched\"\xf8\x02\n" +
 	"\fCabinetPower\x12E\n" +
 	"\x06config\x18\v \x01(\v2-.openits.signal_control.v1.CabinetPowerConfigR\x06config\x12B\n" +
 	"\x05state\x18\f \x01(\v2,.openits.signal_control.v1.CabinetPowerStateR\x05stateJ\x04\b\x01\x10\x02J\x04\b\x02\x10\x03J\x04\b\x03\x10\x04J\x04\b\x04\x10\x05J\x04\b\x05\x10\x06J\x04\b\x06\x10\aJ\x04\b\a\x10\bJ\x04\b\b\x10\tJ\x04\b\t\x10\n" +
 	"J\x04\b\n" +
 	"\x10\vR\abatteryR\tdoor_openR\tgeneratorR\x11line_frequency_hzR\x0eline_voltage_vR\x11police_panel_openR\fpower_sourceR\x0etransfer_countR\x11on_battery_policyR\x1bsignal_operation_on_battery\"e\n" +
 	"\x12CabinetPowerConfig\x12O\n" +
-	"\x11on_battery_policy\x18\x01 \x01(\v2#.openits.types.v1.ScOnBatteryPolicyR\x0fonBatteryPolicy\"\xe7\x04\n" +
-	"\x11CabinetPowerState\x12*\n" +
-	"\x11police_panel_open\x18\a \x01(\bR\x0fpolicePanelOpen\x12r\n" +
-	"\x1bsignal_operation_on_battery\x18\t \x01(\x0e23.openits.signal_control.v1.SignalOperationOnBatteryR\x18signalOperationOnBattery\x12<\n" +
-	"\abattery\x18\x01 \x01(\v2\".openits.signal_control.v1.BatteryR\abattery\x12\x1b\n" +
-	"\tdoor_open\x18\x02 \x01(\bR\bdoorOpen\x12B\n" +
-	"\tgenerator\x18\x03 \x01(\v2$.openits.signal_control.v1.GeneratorR\tgenerator\x12*\n" +
-	"\x11line_frequency_hz\x18\x04 \x01(\tR\x0flineFrequencyHz\x12$\n" +
-	"\x0eline_voltage_v\x18\x05 \x01(\tR\flineVoltageV\x12O\n" +
-	"\x11on_battery_policy\x18\x06 \x01(\v2#.openits.types.v1.ScOnBatteryPolicyR\x0fonBatteryPolicy\x12I\n" +
-	"\fpower_source\x18\b \x01(\x0e2&.openits.signal_control.v1.PowerSourceR\vpowerSource\x12%\n" +
+	"\x11on_battery_policy\x18\x01 \x01(\v2#.openits.types.v1.ScOnBatteryPolicyR\x0fonBatteryPolicy\"\x9b\x06\n" +
+	"\x11CabinetPowerState\x12/\n" +
+	"\x11police_panel_open\x18\a \x01(\bH\x00R\x0fpolicePanelOpen\x88\x01\x01\x12w\n" +
+	"\x1bsignal_operation_on_battery\x18\t \x01(\x0e23.openits.signal_control.v1.SignalOperationOnBatteryH\x01R\x18signalOperationOnBattery\x88\x01\x01\x12<\n" +
+	"\abattery\x18\x01 \x01(\v2\".openits.signal_control.v1.BatteryR\abattery\x12 \n" +
+	"\tdoor_open\x18\x02 \x01(\bH\x02R\bdoorOpen\x88\x01\x01\x12B\n" +
+	"\tgenerator\x18\x03 \x01(\v2$.openits.signal_control.v1.GeneratorR\tgenerator\x12/\n" +
+	"\x11line_frequency_hz\x18\x04 \x01(\tH\x03R\x0flineFrequencyHz\x88\x01\x01\x12)\n" +
+	"\x0eline_voltage_v\x18\x05 \x01(\tH\x04R\flineVoltageV\x88\x01\x01\x12O\n" +
+	"\x11on_battery_policy\x18\x06 \x01(\v2#.openits.types.v1.ScOnBatteryPolicyR\x0fonBatteryPolicy\x12N\n" +
+	"\fpower_source\x18\b \x01(\x0e2&.openits.signal_control.v1.PowerSourceH\x05R\vpowerSource\x88\x01\x01\x12*\n" +
 	"\x0etransfer_count\x18\n" +
-	" \x01(\rR\rtransferCount\"\xe0\x02\n" +
-	"\aBattery\x12-\n" +
-	"\x13state_of_charge_pct\x18\x01 \x01(\rR\x10stateOfChargePct\x12:\n" +
-	"\x19runtime_remaining_minutes\x18\x02 \x01(\rR\x17runtimeRemainingMinutes\x12\x1b\n" +
-	"\tvoltage_v\x18\x03 \x01(\tR\bvoltageV\x12#\n" +
-	"\rtemperature_c\x18\x04 \x01(\tR\ftemperatureC\x12#\n" +
-	"\rcharger_fault\x18\x05 \x01(\bR\fchargerFault\x12J\n" +
+	" \x01(\rH\x06R\rtransferCount\x88\x01\x01B\x14\n" +
+	"\x12_police_panel_openB\x1e\n" +
+	"\x1c_signal_operation_on_batteryB\f\n" +
 	"\n" +
-	"test_state\x18\x06 \x01(\x0e2+.openits.signal_control.v1.BatteryTestStateR\ttestState\x127\n" +
-	"\tlast_test\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\blastTest\"K\n" +
-	"\tGenerator\x12\x18\n" +
-	"\arunning\x18\x01 \x01(\bR\arunning\x12$\n" +
-	"\x0efuel_level_pct\x18\x02 \x01(\rR\ffuelLevelPct\"@\n" +
+	"_door_openB\x14\n" +
+	"\x12_line_frequency_hzB\x11\n" +
+	"\x0f_line_voltage_vB\x0f\n" +
+	"\r_power_sourceB\x11\n" +
+	"\x0f_transfer_count\"\xf5\x03\n" +
+	"\aBattery\x122\n" +
+	"\x13state_of_charge_pct\x18\x01 \x01(\rH\x00R\x10stateOfChargePct\x88\x01\x01\x12?\n" +
+	"\x19runtime_remaining_minutes\x18\x02 \x01(\rH\x01R\x17runtimeRemainingMinutes\x88\x01\x01\x12 \n" +
+	"\tvoltage_v\x18\x03 \x01(\tH\x02R\bvoltageV\x88\x01\x01\x12(\n" +
+	"\rtemperature_c\x18\x04 \x01(\tH\x03R\ftemperatureC\x88\x01\x01\x12(\n" +
+	"\rcharger_fault\x18\x05 \x01(\bH\x04R\fchargerFault\x88\x01\x01\x12O\n" +
+	"\n" +
+	"test_state\x18\x06 \x01(\x0e2+.openits.signal_control.v1.BatteryTestStateH\x05R\ttestState\x88\x01\x01\x127\n" +
+	"\tlast_test\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\blastTestB\x16\n" +
+	"\x14_state_of_charge_pctB\x1c\n" +
+	"\x1a_runtime_remaining_minutesB\f\n" +
+	"\n" +
+	"_voltage_vB\x10\n" +
+	"\x0e_temperature_cB\x10\n" +
+	"\x0e_charger_faultB\r\n" +
+	"\v_test_state\"t\n" +
+	"\tGenerator\x12\x1d\n" +
+	"\arunning\x18\x01 \x01(\bH\x00R\arunning\x88\x01\x01\x12)\n" +
+	"\x0efuel_level_pct\x18\x02 \x01(\rH\x01R\ffuelLevelPct\x88\x01\x01B\n" +
+	"\n" +
+	"\b_runningB\x11\n" +
+	"\x0f_fuel_level_pct\"@\n" +
 	"\x06Faults\x126\n" +
-	"\x05fault\x18\x01 \x03(\v2 .openits.signal_control.v1.FaultR\x05fault\"\xa6\x02\n" +
-	"\x05Fault\x12\x1a\n" +
-	"\bcategory\x18\x01 \x01(\tR\bcategory\x12'\n" +
-	"\x0fcorrelates_with\x18\x06 \x01(\tR\x0ecorrelatesWith\x12 \n" +
-	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x19\n" +
-	"\bfault_id\x18\x03 \x01(\tR\afaultId\x12A\n" +
-	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12X\n" +
-	"\bseverity\x18\x05 \x01(\x0e2<.openits.signal_control.v1.OpenitsSignalControlFaultSeverityR\bseverity*\xca\x01\n" +
-	"\x0fPedIntervalType\x12!\n" +
-	"\x1dPED_INTERVAL_TYPE_UNSPECIFIED\x10\x00\x12\x1a\n" +
-	"\x16PED_INTERVAL_TYPE_WALK\x10\x01\x12\x1f\n" +
-	"\x1bPED_INTERVAL_TYPE_PED_CLEAR\x10\x02\x12\x1f\n" +
-	"\x1bPED_INTERVAL_TYPE_DONT_WALK\x10\x03\x12\x1a\n" +
-	"\x16PED_INTERVAL_TYPE_DARK\x10\x04\x12\x1a\n" +
-	"\x16PED_INTERVAL_TYPE_NONE\x10\x05*\xce\x01\n" +
-	"\x0fVehIntervalType\x12!\n" +
-	"\x1dVEH_INTERVAL_TYPE_UNSPECIFIED\x10\x00\x12\x1b\n" +
-	"\x17VEH_INTERVAL_TYPE_GREEN\x10\x01\x12#\n" +
-	"\x1fVEH_INTERVAL_TYPE_YELLOW_CHANGE\x10\x02\x12\x1f\n" +
-	"\x1bVEH_INTERVAL_TYPE_RED_CLEAR\x10\x03\x12\x19\n" +
-	"\x15VEH_INTERVAL_TYPE_RED\x10\x04\x12\x1a\n" +
-	"\x16VEH_INTERVAL_TYPE_DARK\x10\x05*b\n" +
-	"\fDetectorMode\x12\x1d\n" +
-	"\x19DETECTOR_MODE_UNSPECIFIED\x10\x00\x12\x1a\n" +
-	"\x16DETECTOR_MODE_PRESENCE\x10\x01\x12\x17\n" +
-	"\x13DETECTOR_MODE_PULSE\x10\x02*\xca\x01\n" +
-	"\x12DetectorFailAction\x12$\n" +
-	" DETECTOR_FAIL_ACTION_UNSPECIFIED\x10\x00\x12\x1d\n" +
-	"\x19DETECTOR_FAIL_ACTION_NONE\x10\x01\x12#\n" +
-	"\x1fDETECTOR_FAIL_ACTION_MIN_RECALL\x10\x02\x12#\n" +
-	"\x1fDETECTOR_FAIL_ACTION_MAX_RECALL\x10\x03\x12%\n" +
-	"!DETECTOR_FAIL_ACTION_MAX_PRESENCE\x10\x04*\xc2\x02\n" +
-	"\x13OverlapIntervalType\x12%\n" +
-	"!OVERLAP_INTERVAL_TYPE_UNSPECIFIED\x10\x00\x12\x1f\n" +
-	"\x1bOVERLAP_INTERVAL_TYPE_GREEN\x10\x01\x12(\n" +
-	"$OVERLAP_INTERVAL_TYPE_TRAILING_GREEN\x10\x02\x12 \n" +
-	"\x1cOVERLAP_INTERVAL_TYPE_YELLOW\x10\x03\x12'\n" +
-	"#OVERLAP_INTERVAL_TYPE_RED_CLEARANCE\x10\x04\x12\x1d\n" +
-	"\x19OVERLAP_INTERVAL_TYPE_OFF\x10\x05\x12\x1e\n" +
-	"\x1aOVERLAP_INTERVAL_TYPE_DARK\x10\x06\x12/\n" +
-	"+OVERLAP_INTERVAL_TYPE_FLASHING_YELLOW_ARROW\x10\a*\x93\x01\n" +
-	"\x11ChannelFlashState\x12#\n" +
-	"\x1fCHANNEL_FLASH_STATE_UNSPECIFIED\x10\x00\x12\x1b\n" +
-	"\x17CHANNEL_FLASH_STATE_RED\x10\x01\x12\x1e\n" +
-	"\x1aCHANNEL_FLASH_STATE_YELLOW\x10\x02\x12\x1c\n" +
-	"\x18CHANNEL_FLASH_STATE_NONE\x10\x03*\xa1\x01\n" +
-	"\x0fOffsetReference\x12 \n" +
-	"\x1cOFFSET_REFERENCE_UNSPECIFIED\x10\x00\x12#\n" +
-	"\x1fOFFSET_REFERENCE_BEGIN_OF_GREEN\x10\x01\x12$\n" +
-	" OFFSET_REFERENCE_BEGIN_OF_YELLOW\x10\x02\x12!\n" +
-	"\x1dOFFSET_REFERENCE_END_OF_GREEN\x10\x03*\xab\x01\n" +
-	"\x0eTransitionMode\x12\x1f\n" +
-	"\x1bTRANSITION_MODE_UNSPECIFIED\x10\x00\x12\x19\n" +
-	"\x15TRANSITION_MODE_DWELL\x10\x01\x12\x1c\n" +
-	"\x18TRANSITION_MODE_SHORTWAY\x10\x02\x12\x1c\n" +
-	"\x18TRANSITION_MODE_ADD_ONLY\x10\x03\x12!\n" +
-	"\x1dTRANSITION_MODE_SUBTRACT_ONLY\x10\x04*e\n" +
-	"\fForceOffMode\x12\x1e\n" +
-	"\x1aFORCE_OFF_MODE_UNSPECIFIED\x10\x00\x12\x18\n" +
-	"\x14FORCE_OFF_MODE_FIXED\x10\x01\x12\x1b\n" +
-	"\x17FORCE_OFF_MODE_FLOATING\x10\x02*\x8d\x02\n" +
-	"\tSplitMode\x12\x1a\n" +
-	"\x16SPLIT_MODE_UNSPECIFIED\x10\x00\x12\x14\n" +
-	"\x10SPLIT_MODE_OTHER\x10\x01\x12\x1d\n" +
-	"\x19SPLIT_MODE_MINIMUM_RECALL\x10\x02\x12\x1d\n" +
-	"\x19SPLIT_MODE_MAXIMUM_RECALL\x10\x03\x12\x19\n" +
-	"\x15SPLIT_MODE_PED_RECALL\x10\x04\x12 \n" +
-	"\x1cSPLIT_MODE_COORDINATED_FIXED\x10\x05\x12#\n" +
-	"\x1fSPLIT_MODE_COORDINATED_FLOATING\x10\x06\x12\x19\n" +
-	"\x15SPLIT_MODE_PHASE_OMIT\x10\a\x12\x13\n" +
-	"\x0fSPLIT_MODE_NONE\x10\b*\xa2\x01\n" +
-	"\n" +
-	"CycleState\x12\x14\n" +
-	"\x10CYCLE_STATE_FREE\x10\x00\x12\x17\n" +
-	"\x13CYCLE_STATE_IN_STEP\x10\x01\x12\x1e\n" +
-	"\x1aCYCLE_STATE_TRANSITION_ADD\x10\x02\x12#\n" +
-	"\x1fCYCLE_STATE_TRANSITION_SUBTRACT\x10\x03\x12 \n" +
-	"\x1cCYCLE_STATE_TRANSITION_DWELL\x10\x04*n\n" +
-	"\x10SpecialOperation\x12!\n" +
-	"\x1dSPECIAL_OPERATION_UNSPECIFIED\x10\x00\x12\x1a\n" +
-	"\x16SPECIAL_OPERATION_FREE\x10\x01\x12\x1b\n" +
-	"\x17SPECIAL_OPERATION_FLASH\x10\x02*\xd8\x01\n" +
-	"\tDayOfWeek\x12\x1b\n" +
-	"\x17DAY_OF_WEEK_UNSPECIFIED\x10\x00\x12\x16\n" +
-	"\x12DAY_OF_WEEK_MONDAY\x10\x01\x12\x17\n" +
-	"\x13DAY_OF_WEEK_TUESDAY\x10\x02\x12\x19\n" +
-	"\x15DAY_OF_WEEK_WEDNESDAY\x10\x03\x12\x18\n" +
-	"\x14DAY_OF_WEEK_THURSDAY\x10\x04\x12\x16\n" +
-	"\x12DAY_OF_WEEK_FRIDAY\x10\x05\x12\x18\n" +
-	"\x14DAY_OF_WEEK_SATURDAY\x10\x06\x12\x16\n" +
-	"\x12DAY_OF_WEEK_SUNDAY\x10\a*\xf8\x01\n" +
-	"\x05Month\x12\x15\n" +
-	"\x11MONTH_UNSPECIFIED\x10\x00\x12\x11\n" +
-	"\rMONTH_JANUARY\x10\x01\x12\x12\n" +
-	"\x0eMONTH_FEBRUARY\x10\x02\x12\x0f\n" +
-	"\vMONTH_MARCH\x10\x03\x12\x0f\n" +
-	"\vMONTH_APRIL\x10\x04\x12\r\n" +
-	"\tMONTH_MAY\x10\x05\x12\x0e\n" +
-	"\n" +
-	"MONTH_JUNE\x10\x06\x12\x0e\n" +
-	"\n" +
-	"MONTH_JULY\x10\a\x12\x10\n" +
-	"\fMONTH_AUGUST\x10\b\x12\x13\n" +
-	"\x0fMONTH_SEPTEMBER\x10\t\x12\x11\n" +
-	"\rMONTH_OCTOBER\x10\n" +
-	"\x12\x12\n" +
-	"\x0eMONTH_NOVEMBER\x10\v\x12\x12\n" +
-	"\x0eMONTH_DECEMBER\x10\f*\x93\x01\n" +
-	"\n" +
-	"SyncStatus\x12\x1b\n" +
-	"\x17SYNC_STATUS_UNSPECIFIED\x10\x00\x12\x16\n" +
-	"\x12SYNC_STATUS_SYNCED\x10\x01\x12\x18\n" +
-	"\x14SYNC_STATUS_HOLDOVER\x10\x02\x12\x18\n" +
-	"\x14SYNC_STATUS_UNSYNCED\x10\x03\x12\x1c\n" +
-	"\x18SYNC_STATUS_FREE_RUNNING\x10\x04*\xeb\x01\n" +
-	"\fPreemptStage\x12\x1d\n" +
-	"\x19PREEMPT_STAGE_UNSPECIFIED\x10\x00\x12\x16\n" +
-	"\x12PREEMPT_STAGE_NONE\x10\x01\x12\x17\n" +
-	"\x13PREEMPT_STAGE_DELAY\x10\x02\x12\x17\n" +
-	"\x13PREEMPT_STAGE_ENTRY\x10\x03\x12!\n" +
-	"\x1dPREEMPT_STAGE_TRACK_CLEARANCE\x10\x04\x12\x17\n" +
-	"\x13PREEMPT_STAGE_DWELL\x10\x05\x12\x16\n" +
-	"\x12PREEMPT_STAGE_EXIT\x10\x06\x12\x1e\n" +
-	"\x1aPREEMPT_STAGE_MAX_PRESENCE\x10\a*u\n" +
-	"\fPriorityType\x12\x16\n" +
-	"\x12PRIORITY_TYPE_NONE\x10\x00\x12\x19\n" +
-	"\x15PRIORITY_TYPE_TRANSIT\x10\x01\x12\x19\n" +
-	"\x15PRIORITY_TYPE_FREIGHT\x10\x02\x12\x17\n" +
-	"\x13PRIORITY_TYPE_OTHER\x10\x03*\x7f\n" +
-	"\x05Stage\x12\x15\n" +
-	"\x11STAGE_UNSPECIFIED\x10\x00\x12\x13\n" +
-	"\x0fSTAGE_REQUESTED\x10\x01\x12\x11\n" +
-	"\rSTAGE_GRANTED\x10\x02\x12\x10\n" +
-	"\fSTAGE_ACTIVE\x10\x03\x12\x13\n" +
-	"\x0fSTAGE_COMPLETED\x10\x04\x12\x10\n" +
-	"\fSTAGE_DENIED\x10\x05*\xa1\x01\n" +
-	"\x18SignalOperationOnBattery\x12.\n" +
-	"*SIGNAL_OPERATION_ON_BATTERY_FULL_OPERATION\x10\x00\x12%\n" +
-	"!SIGNAL_OPERATION_ON_BATTERY_FLASH\x10\x01\x12.\n" +
-	"*SIGNAL_OPERATION_ON_BATTERY_NOT_ON_BATTERY\x10\x02*\x91\x01\n" +
-	"\x10BatteryTestState\x12\x1b\n" +
-	"\x17BATTERY_TEST_STATE_IDLE\x10\x00\x12\"\n" +
-	"\x1eBATTERY_TEST_STATE_IN_PROGRESS\x10\x01\x12\x1d\n" +
-	"\x19BATTERY_TEST_STATE_PASSED\x10\x02\x12\x1d\n" +
-	"\x19BATTERY_TEST_STATE_FAILED\x10\x03*\xa7\x01\n" +
-	"\vPowerSource\x12\x18\n" +
-	"\x14POWER_SOURCE_ON_LINE\x10\x00\x12\x1b\n" +
-	"\x17POWER_SOURCE_ON_BATTERY\x10\x01\x12\x17\n" +
-	"\x13POWER_SOURCE_BYPASS\x10\x02\x12\x14\n" +
-	"\x10POWER_SOURCE_OFF\x10\x03\x12\x16\n" +
-	"\x12POWER_SOURCE_SOLAR\x10\x04\x12\x1a\n" +
-	"\x16POWER_SOURCE_GENERATOR\x10\x05*\x9c\x02\n" +
-	"!OpenitsSignalControlFaultSeverity\x12.\n" +
-	"*OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_INFO\x10\x00\x121\n" +
-	"-OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_WARNING\x10\x01\x12/\n" +
-	"+OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_MINOR\x10\x02\x12/\n" +
-	"+OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_MAJOR\x10\x03\x122\n" +
-	".OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_CRITICAL\x10\x04BXZVgithub.com/Vikasa2M/openits-models/pkg/proto/openits/signal_control/v1;signalcontrolv1b\x06proto3"
+	"\x05fault\x18\x01 \x03(\v2 .openits.signal_control.v1.FaultR\x05fault\"\xf6\x02\n" +
+	"\x05Fault\x12\x1f\n" +
+	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12,\n" +
+	"\x0fcorrelates_with\x18\x06 \x01(\tH\x01R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x02R\vdescription\x88\x01\x01\x12\x1e\n" +
+	"\bfault_id\x18\x03 \x01(\tH\x03R\afaultId\x88\x01\x01\x12A\n" +
+	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12I\n" +
+	"\bseverity\x18\x05 \x01(\x0e2(.openits.signal_control.v1.FaultSeverityH\x04R\bseverity\x88\x01\x01B\v\n" +
+	"\t_categoryB\x12\n" +
+	"\x10_correlates_withB\x0e\n" +
+	"\f_descriptionB\v\n" +
+	"\t_fault_idB\v\n" +
+	"\t_severityBXZVgithub.com/Vikasa2M/openits-models/pkg/proto/openits/signal_control/v1;signalcontrolv1b\x06proto3"
 
 var (
 	file_openits_signal_control_v1_state_proto_rawDescOnce sync.Once
@@ -6155,191 +4971,185 @@ func file_openits_signal_control_v1_state_proto_rawDescGZIP() []byte {
 	return file_openits_signal_control_v1_state_proto_rawDescData
 }
 
-var file_openits_signal_control_v1_state_proto_enumTypes = make([]protoimpl.EnumInfo, 22)
 var file_openits_signal_control_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 59)
 var file_openits_signal_control_v1_state_proto_goTypes = []any{
-	(PedIntervalType)(0),                          // 0: openits.signal_control.v1.PedIntervalType
-	(VehIntervalType)(0),                          // 1: openits.signal_control.v1.VehIntervalType
-	(DetectorMode)(0),                             // 2: openits.signal_control.v1.DetectorMode
-	(DetectorFailAction)(0),                       // 3: openits.signal_control.v1.DetectorFailAction
-	(OverlapIntervalType)(0),                      // 4: openits.signal_control.v1.OverlapIntervalType
-	(ChannelFlashState)(0),                        // 5: openits.signal_control.v1.ChannelFlashState
-	(OffsetReference)(0),                          // 6: openits.signal_control.v1.OffsetReference
-	(TransitionMode)(0),                           // 7: openits.signal_control.v1.TransitionMode
-	(ForceOffMode)(0),                             // 8: openits.signal_control.v1.ForceOffMode
-	(SplitMode)(0),                                // 9: openits.signal_control.v1.SplitMode
-	(CycleState)(0),                               // 10: openits.signal_control.v1.CycleState
-	(SpecialOperation)(0),                         // 11: openits.signal_control.v1.SpecialOperation
-	(DayOfWeek)(0),                                // 12: openits.signal_control.v1.DayOfWeek
-	(Month)(0),                                    // 13: openits.signal_control.v1.Month
-	(SyncStatus)(0),                               // 14: openits.signal_control.v1.SyncStatus
-	(PreemptStage)(0),                             // 15: openits.signal_control.v1.PreemptStage
-	(PriorityType)(0),                             // 16: openits.signal_control.v1.PriorityType
-	(Stage)(0),                                    // 17: openits.signal_control.v1.Stage
-	(SignalOperationOnBattery)(0),                 // 18: openits.signal_control.v1.SignalOperationOnBattery
-	(BatteryTestState)(0),                         // 19: openits.signal_control.v1.BatteryTestState
-	(PowerSource)(0),                              // 20: openits.signal_control.v1.PowerSource
-	(OpenitsSignalControlFaultSeverity)(0),        // 21: openits.signal_control.v1.OpenitsSignalControlFaultSeverity
-	(*SignalController)(nil),                      // 22: openits.signal_control.v1.SignalController
-	(*SignalControllerConfig)(nil),                // 23: openits.signal_control.v1.SignalControllerConfig
-	(*SignalControllerConfigLinearReference)(nil), // 24: openits.signal_control.v1.SignalControllerConfigLinearReference
-	(*SignalControllerState)(nil),                 // 25: openits.signal_control.v1.SignalControllerState
-	(*SignalControllerStateLinearReference)(nil),  // 26: openits.signal_control.v1.SignalControllerStateLinearReference
-	(*Startup)(nil),                               // 27: openits.signal_control.v1.Startup
-	(*Phases)(nil),                                // 28: openits.signal_control.v1.Phases
-	(*Phase)(nil),                                 // 29: openits.signal_control.v1.Phase
-	(*PhaseConfig)(nil),                           // 30: openits.signal_control.v1.PhaseConfig
-	(*Timing)(nil),                                // 31: openits.signal_control.v1.Timing
-	(*Options)(nil),                               // 32: openits.signal_control.v1.Options
-	(*VolumeDensity)(nil),                         // 33: openits.signal_control.v1.VolumeDensity
-	(*PhaseState)(nil),                            // 34: openits.signal_control.v1.PhaseState
-	(*Detectors)(nil),                             // 35: openits.signal_control.v1.Detectors
-	(*DetectorsDetector)(nil),                     // 36: openits.signal_control.v1.DetectorsDetector
-	(*DetectorsDetectorConfig)(nil),               // 37: openits.signal_control.v1.DetectorsDetectorConfig
-	(*Diagnostics)(nil),                           // 38: openits.signal_control.v1.Diagnostics
-	(*DetectorsDetectorState)(nil),                // 39: openits.signal_control.v1.DetectorsDetectorState
-	(*Measurement)(nil),                           // 40: openits.signal_control.v1.Measurement
-	(*Overlaps)(nil),                              // 41: openits.signal_control.v1.Overlaps
-	(*Overlap)(nil),                               // 42: openits.signal_control.v1.Overlap
-	(*OverlapConfig)(nil),                         // 43: openits.signal_control.v1.OverlapConfig
-	(*Fya)(nil),                                   // 44: openits.signal_control.v1.Fya
-	(*OverlapState)(nil),                          // 45: openits.signal_control.v1.OverlapState
-	(*Channels)(nil),                              // 46: openits.signal_control.v1.Channels
-	(*Channel)(nil),                               // 47: openits.signal_control.v1.Channel
-	(*ConflictMonitor)(nil),                       // 48: openits.signal_control.v1.ConflictMonitor
-	(*Permissive)(nil),                            // 49: openits.signal_control.v1.Permissive
-	(*Coordination)(nil),                          // 50: openits.signal_control.v1.Coordination
-	(*TimingPlan)(nil),                            // 51: openits.signal_control.v1.TimingPlan
-	(*Split)(nil),                                 // 52: openits.signal_control.v1.Split
-	(*CoordinationState)(nil),                     // 53: openits.signal_control.v1.CoordinationState
-	(*Sequences)(nil),                             // 54: openits.signal_control.v1.Sequences
-	(*Sequence)(nil),                              // 55: openits.signal_control.v1.Sequence
-	(*RingSequence)(nil),                          // 56: openits.signal_control.v1.RingSequence
-	(*Timebase)(nil),                              // 57: openits.signal_control.v1.Timebase
-	(*DayPlan)(nil),                               // 58: openits.signal_control.v1.DayPlan
-	(*Action)(nil),                                // 59: openits.signal_control.v1.Action
-	(*ScheduleEntry)(nil),                         // 60: openits.signal_control.v1.ScheduleEntry
-	(*Clock)(nil),                                 // 61: openits.signal_control.v1.Clock
-	(*Preemption)(nil),                            // 62: openits.signal_control.v1.Preemption
-	(*Preemptor)(nil),                             // 63: openits.signal_control.v1.Preemptor
-	(*PreemptorConfig)(nil),                       // 64: openits.signal_control.v1.PreemptorConfig
-	(*TrackClearance)(nil),                        // 65: openits.signal_control.v1.TrackClearance
-	(*PreemptorState)(nil),                        // 66: openits.signal_control.v1.PreemptorState
-	(*Priority)(nil),                              // 67: openits.signal_control.v1.Priority
-	(*Strategy)(nil),                              // 68: openits.signal_control.v1.Strategy
-	(*StrategyConfig)(nil),                        // 69: openits.signal_control.v1.StrategyConfig
-	(*PriorityState)(nil),                         // 70: openits.signal_control.v1.PriorityState
-	(*ActiveRequest)(nil),                         // 71: openits.signal_control.v1.ActiveRequest
-	(*Operation)(nil),                             // 72: openits.signal_control.v1.Operation
-	(*Mmu)(nil),                                   // 73: openits.signal_control.v1.Mmu
-	(*CabinetPower)(nil),                          // 74: openits.signal_control.v1.CabinetPower
-	(*CabinetPowerConfig)(nil),                    // 75: openits.signal_control.v1.CabinetPowerConfig
-	(*CabinetPowerState)(nil),                     // 76: openits.signal_control.v1.CabinetPowerState
-	(*Battery)(nil),                               // 77: openits.signal_control.v1.Battery
-	(*Generator)(nil),                             // 78: openits.signal_control.v1.Generator
-	(*Faults)(nil),                                // 79: openits.signal_control.v1.Faults
-	(*Fault)(nil),                                 // 80: openits.signal_control.v1.Fault
-	(*timestamppb.Timestamp)(nil),                 // 81: google.protobuf.Timestamp
-	(*v1.ScOnBatteryPolicy)(nil),                  // 82: openits.types.v1.ScOnBatteryPolicy
+	(*SignalController)(nil),                      // 0: openits.signal_control.v1.SignalController
+	(*SignalControllerConfig)(nil),                // 1: openits.signal_control.v1.SignalControllerConfig
+	(*SignalControllerConfigLinearReference)(nil), // 2: openits.signal_control.v1.SignalControllerConfigLinearReference
+	(*SignalControllerState)(nil),                 // 3: openits.signal_control.v1.SignalControllerState
+	(*SignalControllerStateLinearReference)(nil),  // 4: openits.signal_control.v1.SignalControllerStateLinearReference
+	(*Startup)(nil),                               // 5: openits.signal_control.v1.Startup
+	(*Phases)(nil),                                // 6: openits.signal_control.v1.Phases
+	(*Phase)(nil),                                 // 7: openits.signal_control.v1.Phase
+	(*PhaseConfig)(nil),                           // 8: openits.signal_control.v1.PhaseConfig
+	(*Timing)(nil),                                // 9: openits.signal_control.v1.Timing
+	(*Options)(nil),                               // 10: openits.signal_control.v1.Options
+	(*VolumeDensity)(nil),                         // 11: openits.signal_control.v1.VolumeDensity
+	(*PhaseState)(nil),                            // 12: openits.signal_control.v1.PhaseState
+	(*Detectors)(nil),                             // 13: openits.signal_control.v1.Detectors
+	(*DetectorsDetector)(nil),                     // 14: openits.signal_control.v1.DetectorsDetector
+	(*DetectorsDetectorConfig)(nil),               // 15: openits.signal_control.v1.DetectorsDetectorConfig
+	(*Diagnostics)(nil),                           // 16: openits.signal_control.v1.Diagnostics
+	(*DetectorsDetectorState)(nil),                // 17: openits.signal_control.v1.DetectorsDetectorState
+	(*Measurement)(nil),                           // 18: openits.signal_control.v1.Measurement
+	(*Overlaps)(nil),                              // 19: openits.signal_control.v1.Overlaps
+	(*Overlap)(nil),                               // 20: openits.signal_control.v1.Overlap
+	(*OverlapConfig)(nil),                         // 21: openits.signal_control.v1.OverlapConfig
+	(*Fya)(nil),                                   // 22: openits.signal_control.v1.Fya
+	(*OverlapState)(nil),                          // 23: openits.signal_control.v1.OverlapState
+	(*Channels)(nil),                              // 24: openits.signal_control.v1.Channels
+	(*Channel)(nil),                               // 25: openits.signal_control.v1.Channel
+	(*ConflictMonitor)(nil),                       // 26: openits.signal_control.v1.ConflictMonitor
+	(*Permissive)(nil),                            // 27: openits.signal_control.v1.Permissive
+	(*Coordination)(nil),                          // 28: openits.signal_control.v1.Coordination
+	(*TimingPlan)(nil),                            // 29: openits.signal_control.v1.TimingPlan
+	(*Split)(nil),                                 // 30: openits.signal_control.v1.Split
+	(*CoordinationState)(nil),                     // 31: openits.signal_control.v1.CoordinationState
+	(*Sequences)(nil),                             // 32: openits.signal_control.v1.Sequences
+	(*Sequence)(nil),                              // 33: openits.signal_control.v1.Sequence
+	(*RingSequence)(nil),                          // 34: openits.signal_control.v1.RingSequence
+	(*Timebase)(nil),                              // 35: openits.signal_control.v1.Timebase
+	(*DayPlan)(nil),                               // 36: openits.signal_control.v1.DayPlan
+	(*Action)(nil),                                // 37: openits.signal_control.v1.Action
+	(*ScheduleEntry)(nil),                         // 38: openits.signal_control.v1.ScheduleEntry
+	(*Clock)(nil),                                 // 39: openits.signal_control.v1.Clock
+	(*Preemption)(nil),                            // 40: openits.signal_control.v1.Preemption
+	(*Preemptor)(nil),                             // 41: openits.signal_control.v1.Preemptor
+	(*PreemptorConfig)(nil),                       // 42: openits.signal_control.v1.PreemptorConfig
+	(*TrackClearance)(nil),                        // 43: openits.signal_control.v1.TrackClearance
+	(*PreemptorState)(nil),                        // 44: openits.signal_control.v1.PreemptorState
+	(*Priority)(nil),                              // 45: openits.signal_control.v1.Priority
+	(*Strategy)(nil),                              // 46: openits.signal_control.v1.Strategy
+	(*StrategyConfig)(nil),                        // 47: openits.signal_control.v1.StrategyConfig
+	(*PriorityState)(nil),                         // 48: openits.signal_control.v1.PriorityState
+	(*ActiveRequest)(nil),                         // 49: openits.signal_control.v1.ActiveRequest
+	(*Operation)(nil),                             // 50: openits.signal_control.v1.Operation
+	(*Monitor)(nil),                               // 51: openits.signal_control.v1.Monitor
+	(*CabinetPower)(nil),                          // 52: openits.signal_control.v1.CabinetPower
+	(*CabinetPowerConfig)(nil),                    // 53: openits.signal_control.v1.CabinetPowerConfig
+	(*CabinetPowerState)(nil),                     // 54: openits.signal_control.v1.CabinetPowerState
+	(*Battery)(nil),                               // 55: openits.signal_control.v1.Battery
+	(*Generator)(nil),                             // 56: openits.signal_control.v1.Generator
+	(*Faults)(nil),                                // 57: openits.signal_control.v1.Faults
+	(*Fault)(nil),                                 // 58: openits.signal_control.v1.Fault
+	(*timestamppb.Timestamp)(nil),                 // 59: google.protobuf.Timestamp
+	(PedIntervalType)(0),                          // 60: openits.signal_control.v1.PedIntervalType
+	(VehIntervalType)(0),                          // 61: openits.signal_control.v1.VehIntervalType
+	(DetectorMode)(0),                             // 62: openits.signal_control.v1.DetectorMode
+	(DetectorFailAction)(0),                       // 63: openits.signal_control.v1.DetectorFailAction
+	(OverlapIntervalType)(0),                      // 64: openits.signal_control.v1.OverlapIntervalType
+	(ChannelFlashState)(0),                        // 65: openits.signal_control.v1.ChannelFlashState
+	(OffsetReference)(0),                          // 66: openits.signal_control.v1.OffsetReference
+	(TransitionMode)(0),                           // 67: openits.signal_control.v1.TransitionMode
+	(ForceOffMode)(0),                             // 68: openits.signal_control.v1.ForceOffMode
+	(SplitMode)(0),                                // 69: openits.signal_control.v1.SplitMode
+	(SpecialOperation)(0),                         // 70: openits.signal_control.v1.SpecialOperation
+	(DayOfWeek)(0),                                // 71: openits.signal_control.v1.DayOfWeek
+	(Month)(0),                                    // 72: openits.signal_control.v1.Month
+	(SyncStatus)(0),                               // 73: openits.signal_control.v1.SyncStatus
+	(PreemptStage)(0),                             // 74: openits.signal_control.v1.PreemptStage
+	(Stage)(0),                                    // 75: openits.signal_control.v1.Stage
+	(*v1.ScOnBatteryPolicy)(nil),                  // 76: openits.types.v1.ScOnBatteryPolicy
+	(SignalOperationOnBattery)(0),                 // 77: openits.signal_control.v1.SignalOperationOnBattery
+	(PowerSource)(0),                              // 78: openits.signal_control.v1.PowerSource
+	(BatteryTestState)(0),                         // 79: openits.signal_control.v1.BatteryTestState
+	(FaultSeverity)(0),                            // 80: openits.signal_control.v1.FaultSeverity
 }
 var file_openits_signal_control_v1_state_proto_depIdxs = []int32{
-	23, // 0: openits.signal_control.v1.SignalController.config:type_name -> openits.signal_control.v1.SignalControllerConfig
-	25, // 1: openits.signal_control.v1.SignalController.state:type_name -> openits.signal_control.v1.SignalControllerState
-	27, // 2: openits.signal_control.v1.SignalController.startup:type_name -> openits.signal_control.v1.Startup
-	28, // 3: openits.signal_control.v1.SignalController.phases:type_name -> openits.signal_control.v1.Phases
-	35, // 4: openits.signal_control.v1.SignalController.detectors:type_name -> openits.signal_control.v1.Detectors
-	41, // 5: openits.signal_control.v1.SignalController.overlaps:type_name -> openits.signal_control.v1.Overlaps
-	46, // 6: openits.signal_control.v1.SignalController.channels:type_name -> openits.signal_control.v1.Channels
-	48, // 7: openits.signal_control.v1.SignalController.conflict_monitor:type_name -> openits.signal_control.v1.ConflictMonitor
-	50, // 8: openits.signal_control.v1.SignalController.coordination:type_name -> openits.signal_control.v1.Coordination
-	54, // 9: openits.signal_control.v1.SignalController.sequences:type_name -> openits.signal_control.v1.Sequences
-	57, // 10: openits.signal_control.v1.SignalController.timebase:type_name -> openits.signal_control.v1.Timebase
-	62, // 11: openits.signal_control.v1.SignalController.preemption:type_name -> openits.signal_control.v1.Preemption
-	67, // 12: openits.signal_control.v1.SignalController.priority:type_name -> openits.signal_control.v1.Priority
-	72, // 13: openits.signal_control.v1.SignalController.operation:type_name -> openits.signal_control.v1.Operation
-	74, // 14: openits.signal_control.v1.SignalController.cabinet_power:type_name -> openits.signal_control.v1.CabinetPower
-	79, // 15: openits.signal_control.v1.SignalController.faults:type_name -> openits.signal_control.v1.Faults
-	81, // 16: openits.signal_control.v1.SignalControllerConfig.install_date:type_name -> google.protobuf.Timestamp
-	24, // 17: openits.signal_control.v1.SignalControllerConfig.linear_reference:type_name -> openits.signal_control.v1.SignalControllerConfigLinearReference
-	81, // 18: openits.signal_control.v1.SignalControllerState.install_date:type_name -> google.protobuf.Timestamp
-	26, // 19: openits.signal_control.v1.SignalControllerState.linear_reference:type_name -> openits.signal_control.v1.SignalControllerStateLinearReference
-	29, // 20: openits.signal_control.v1.Phases.phase:type_name -> openits.signal_control.v1.Phase
-	30, // 21: openits.signal_control.v1.Phase.config:type_name -> openits.signal_control.v1.PhaseConfig
-	34, // 22: openits.signal_control.v1.Phase.state:type_name -> openits.signal_control.v1.PhaseState
-	31, // 23: openits.signal_control.v1.PhaseConfig.timing:type_name -> openits.signal_control.v1.Timing
-	32, // 24: openits.signal_control.v1.PhaseConfig.options:type_name -> openits.signal_control.v1.Options
-	33, // 25: openits.signal_control.v1.PhaseConfig.volume_density:type_name -> openits.signal_control.v1.VolumeDensity
-	0,  // 26: openits.signal_control.v1.PhaseState.ped_interval:type_name -> openits.signal_control.v1.PedIntervalType
-	1,  // 27: openits.signal_control.v1.PhaseState.vehicle_interval:type_name -> openits.signal_control.v1.VehIntervalType
-	36, // 28: openits.signal_control.v1.Detectors.detector:type_name -> openits.signal_control.v1.DetectorsDetector
-	37, // 29: openits.signal_control.v1.DetectorsDetector.config:type_name -> openits.signal_control.v1.DetectorsDetectorConfig
-	39, // 30: openits.signal_control.v1.DetectorsDetector.state:type_name -> openits.signal_control.v1.DetectorsDetectorState
-	2,  // 31: openits.signal_control.v1.DetectorsDetectorConfig.mode:type_name -> openits.signal_control.v1.DetectorMode
-	3,  // 32: openits.signal_control.v1.DetectorsDetectorConfig.fail_action:type_name -> openits.signal_control.v1.DetectorFailAction
-	38, // 33: openits.signal_control.v1.DetectorsDetectorConfig.diagnostics:type_name -> openits.signal_control.v1.Diagnostics
-	81, // 34: openits.signal_control.v1.DetectorsDetectorState.last_activation:type_name -> google.protobuf.Timestamp
-	40, // 35: openits.signal_control.v1.DetectorsDetectorState.measurement:type_name -> openits.signal_control.v1.Measurement
-	81, // 36: openits.signal_control.v1.Measurement.collected_at:type_name -> google.protobuf.Timestamp
-	42, // 37: openits.signal_control.v1.Overlaps.overlap:type_name -> openits.signal_control.v1.Overlap
-	43, // 38: openits.signal_control.v1.Overlap.config:type_name -> openits.signal_control.v1.OverlapConfig
-	45, // 39: openits.signal_control.v1.Overlap.state:type_name -> openits.signal_control.v1.OverlapState
-	44, // 40: openits.signal_control.v1.OverlapConfig.fya:type_name -> openits.signal_control.v1.Fya
-	4,  // 41: openits.signal_control.v1.OverlapState.current_interval:type_name -> openits.signal_control.v1.OverlapIntervalType
-	47, // 42: openits.signal_control.v1.Channels.channel:type_name -> openits.signal_control.v1.Channel
-	5,  // 43: openits.signal_control.v1.Channel.flash_state:type_name -> openits.signal_control.v1.ChannelFlashState
-	49, // 44: openits.signal_control.v1.ConflictMonitor.permissive:type_name -> openits.signal_control.v1.Permissive
-	51, // 45: openits.signal_control.v1.Coordination.timing_plan:type_name -> openits.signal_control.v1.TimingPlan
-	53, // 46: openits.signal_control.v1.Coordination.state:type_name -> openits.signal_control.v1.CoordinationState
-	6,  // 47: openits.signal_control.v1.TimingPlan.offset_reference:type_name -> openits.signal_control.v1.OffsetReference
-	7,  // 48: openits.signal_control.v1.TimingPlan.transition_mode:type_name -> openits.signal_control.v1.TransitionMode
-	8,  // 49: openits.signal_control.v1.TimingPlan.force_off_mode:type_name -> openits.signal_control.v1.ForceOffMode
-	52, // 50: openits.signal_control.v1.TimingPlan.split:type_name -> openits.signal_control.v1.Split
-	9,  // 51: openits.signal_control.v1.Split.split_mode:type_name -> openits.signal_control.v1.SplitMode
-	10, // 52: openits.signal_control.v1.CoordinationState.cycle_state:type_name -> openits.signal_control.v1.CycleState
-	55, // 53: openits.signal_control.v1.Sequences.sequence:type_name -> openits.signal_control.v1.Sequence
-	56, // 54: openits.signal_control.v1.Sequence.ring_sequence:type_name -> openits.signal_control.v1.RingSequence
-	58, // 55: openits.signal_control.v1.Timebase.day_plan:type_name -> openits.signal_control.v1.DayPlan
-	60, // 56: openits.signal_control.v1.Timebase.schedule_entry:type_name -> openits.signal_control.v1.ScheduleEntry
-	61, // 57: openits.signal_control.v1.Timebase.clock:type_name -> openits.signal_control.v1.Clock
-	59, // 58: openits.signal_control.v1.DayPlan.action:type_name -> openits.signal_control.v1.Action
-	11, // 59: openits.signal_control.v1.Action.special_operation:type_name -> openits.signal_control.v1.SpecialOperation
-	12, // 60: openits.signal_control.v1.ScheduleEntry.days_of_week:type_name -> openits.signal_control.v1.DayOfWeek
-	13, // 61: openits.signal_control.v1.ScheduleEntry.months:type_name -> openits.signal_control.v1.Month
-	81, // 62: openits.signal_control.v1.Clock.current_time:type_name -> google.protobuf.Timestamp
-	14, // 63: openits.signal_control.v1.Clock.sync_status:type_name -> openits.signal_control.v1.SyncStatus
-	63, // 64: openits.signal_control.v1.Preemption.preemptor:type_name -> openits.signal_control.v1.Preemptor
-	64, // 65: openits.signal_control.v1.Preemptor.config:type_name -> openits.signal_control.v1.PreemptorConfig
-	66, // 66: openits.signal_control.v1.Preemptor.state:type_name -> openits.signal_control.v1.PreemptorState
-	65, // 67: openits.signal_control.v1.PreemptorConfig.track_clearance:type_name -> openits.signal_control.v1.TrackClearance
-	81, // 68: openits.signal_control.v1.PreemptorState.active_since:type_name -> google.protobuf.Timestamp
-	15, // 69: openits.signal_control.v1.PreemptorState.current_stage:type_name -> openits.signal_control.v1.PreemptStage
-	68, // 70: openits.signal_control.v1.Priority.strategy:type_name -> openits.signal_control.v1.Strategy
-	70, // 71: openits.signal_control.v1.Priority.state:type_name -> openits.signal_control.v1.PriorityState
-	69, // 72: openits.signal_control.v1.Strategy.config:type_name -> openits.signal_control.v1.StrategyConfig
-	16, // 73: openits.signal_control.v1.StrategyConfig.priority_class:type_name -> openits.signal_control.v1.PriorityType
-	71, // 74: openits.signal_control.v1.PriorityState.active_request:type_name -> openits.signal_control.v1.ActiveRequest
-	16, // 75: openits.signal_control.v1.ActiveRequest.priority_type:type_name -> openits.signal_control.v1.PriorityType
-	17, // 76: openits.signal_control.v1.ActiveRequest.stage:type_name -> openits.signal_control.v1.Stage
-	73, // 77: openits.signal_control.v1.Operation.mmu:type_name -> openits.signal_control.v1.Mmu
-	81, // 78: openits.signal_control.v1.Operation.last_mode_change:type_name -> google.protobuf.Timestamp
-	75, // 79: openits.signal_control.v1.CabinetPower.config:type_name -> openits.signal_control.v1.CabinetPowerConfig
-	76, // 80: openits.signal_control.v1.CabinetPower.state:type_name -> openits.signal_control.v1.CabinetPowerState
-	82, // 81: openits.signal_control.v1.CabinetPowerConfig.on_battery_policy:type_name -> openits.types.v1.ScOnBatteryPolicy
-	18, // 82: openits.signal_control.v1.CabinetPowerState.signal_operation_on_battery:type_name -> openits.signal_control.v1.SignalOperationOnBattery
-	77, // 83: openits.signal_control.v1.CabinetPowerState.battery:type_name -> openits.signal_control.v1.Battery
-	78, // 84: openits.signal_control.v1.CabinetPowerState.generator:type_name -> openits.signal_control.v1.Generator
-	82, // 85: openits.signal_control.v1.CabinetPowerState.on_battery_policy:type_name -> openits.types.v1.ScOnBatteryPolicy
-	20, // 86: openits.signal_control.v1.CabinetPowerState.power_source:type_name -> openits.signal_control.v1.PowerSource
-	19, // 87: openits.signal_control.v1.Battery.test_state:type_name -> openits.signal_control.v1.BatteryTestState
-	81, // 88: openits.signal_control.v1.Battery.last_test:type_name -> google.protobuf.Timestamp
-	80, // 89: openits.signal_control.v1.Faults.fault:type_name -> openits.signal_control.v1.Fault
-	81, // 90: openits.signal_control.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	21, // 91: openits.signal_control.v1.Fault.severity:type_name -> openits.signal_control.v1.OpenitsSignalControlFaultSeverity
-	92, // [92:92] is the sub-list for method output_type
-	92, // [92:92] is the sub-list for method input_type
-	92, // [92:92] is the sub-list for extension type_name
-	92, // [92:92] is the sub-list for extension extendee
-	0,  // [0:92] is the sub-list for field type_name
+	1,  // 0: openits.signal_control.v1.SignalController.config:type_name -> openits.signal_control.v1.SignalControllerConfig
+	3,  // 1: openits.signal_control.v1.SignalController.state:type_name -> openits.signal_control.v1.SignalControllerState
+	5,  // 2: openits.signal_control.v1.SignalController.startup:type_name -> openits.signal_control.v1.Startup
+	6,  // 3: openits.signal_control.v1.SignalController.phases:type_name -> openits.signal_control.v1.Phases
+	13, // 4: openits.signal_control.v1.SignalController.detectors:type_name -> openits.signal_control.v1.Detectors
+	19, // 5: openits.signal_control.v1.SignalController.overlaps:type_name -> openits.signal_control.v1.Overlaps
+	24, // 6: openits.signal_control.v1.SignalController.channels:type_name -> openits.signal_control.v1.Channels
+	26, // 7: openits.signal_control.v1.SignalController.conflict_monitor:type_name -> openits.signal_control.v1.ConflictMonitor
+	28, // 8: openits.signal_control.v1.SignalController.coordination:type_name -> openits.signal_control.v1.Coordination
+	32, // 9: openits.signal_control.v1.SignalController.sequences:type_name -> openits.signal_control.v1.Sequences
+	35, // 10: openits.signal_control.v1.SignalController.timebase:type_name -> openits.signal_control.v1.Timebase
+	40, // 11: openits.signal_control.v1.SignalController.preemption:type_name -> openits.signal_control.v1.Preemption
+	45, // 12: openits.signal_control.v1.SignalController.priority:type_name -> openits.signal_control.v1.Priority
+	50, // 13: openits.signal_control.v1.SignalController.operation:type_name -> openits.signal_control.v1.Operation
+	52, // 14: openits.signal_control.v1.SignalController.cabinet_power:type_name -> openits.signal_control.v1.CabinetPower
+	57, // 15: openits.signal_control.v1.SignalController.faults:type_name -> openits.signal_control.v1.Faults
+	59, // 16: openits.signal_control.v1.SignalControllerConfig.install_date:type_name -> google.protobuf.Timestamp
+	2,  // 17: openits.signal_control.v1.SignalControllerConfig.linear_reference:type_name -> openits.signal_control.v1.SignalControllerConfigLinearReference
+	59, // 18: openits.signal_control.v1.SignalControllerState.install_date:type_name -> google.protobuf.Timestamp
+	4,  // 19: openits.signal_control.v1.SignalControllerState.linear_reference:type_name -> openits.signal_control.v1.SignalControllerStateLinearReference
+	7,  // 20: openits.signal_control.v1.Phases.phase:type_name -> openits.signal_control.v1.Phase
+	8,  // 21: openits.signal_control.v1.Phase.config:type_name -> openits.signal_control.v1.PhaseConfig
+	12, // 22: openits.signal_control.v1.Phase.state:type_name -> openits.signal_control.v1.PhaseState
+	9,  // 23: openits.signal_control.v1.PhaseConfig.timing:type_name -> openits.signal_control.v1.Timing
+	10, // 24: openits.signal_control.v1.PhaseConfig.options:type_name -> openits.signal_control.v1.Options
+	11, // 25: openits.signal_control.v1.PhaseConfig.volume_density:type_name -> openits.signal_control.v1.VolumeDensity
+	60, // 26: openits.signal_control.v1.PhaseState.ped_interval:type_name -> openits.signal_control.v1.PedIntervalType
+	61, // 27: openits.signal_control.v1.PhaseState.vehicle_interval:type_name -> openits.signal_control.v1.VehIntervalType
+	14, // 28: openits.signal_control.v1.Detectors.detector:type_name -> openits.signal_control.v1.DetectorsDetector
+	15, // 29: openits.signal_control.v1.DetectorsDetector.config:type_name -> openits.signal_control.v1.DetectorsDetectorConfig
+	17, // 30: openits.signal_control.v1.DetectorsDetector.state:type_name -> openits.signal_control.v1.DetectorsDetectorState
+	62, // 31: openits.signal_control.v1.DetectorsDetectorConfig.mode:type_name -> openits.signal_control.v1.DetectorMode
+	63, // 32: openits.signal_control.v1.DetectorsDetectorConfig.fail_action:type_name -> openits.signal_control.v1.DetectorFailAction
+	16, // 33: openits.signal_control.v1.DetectorsDetectorConfig.diagnostics:type_name -> openits.signal_control.v1.Diagnostics
+	59, // 34: openits.signal_control.v1.DetectorsDetectorState.last_activation:type_name -> google.protobuf.Timestamp
+	18, // 35: openits.signal_control.v1.DetectorsDetectorState.measurement:type_name -> openits.signal_control.v1.Measurement
+	59, // 36: openits.signal_control.v1.Measurement.collected_at:type_name -> google.protobuf.Timestamp
+	20, // 37: openits.signal_control.v1.Overlaps.overlap:type_name -> openits.signal_control.v1.Overlap
+	21, // 38: openits.signal_control.v1.Overlap.config:type_name -> openits.signal_control.v1.OverlapConfig
+	23, // 39: openits.signal_control.v1.Overlap.state:type_name -> openits.signal_control.v1.OverlapState
+	22, // 40: openits.signal_control.v1.OverlapConfig.fya:type_name -> openits.signal_control.v1.Fya
+	64, // 41: openits.signal_control.v1.OverlapState.current_interval:type_name -> openits.signal_control.v1.OverlapIntervalType
+	25, // 42: openits.signal_control.v1.Channels.channel:type_name -> openits.signal_control.v1.Channel
+	65, // 43: openits.signal_control.v1.Channel.flash_state:type_name -> openits.signal_control.v1.ChannelFlashState
+	27, // 44: openits.signal_control.v1.ConflictMonitor.permissive:type_name -> openits.signal_control.v1.Permissive
+	29, // 45: openits.signal_control.v1.Coordination.timing_plan:type_name -> openits.signal_control.v1.TimingPlan
+	31, // 46: openits.signal_control.v1.Coordination.state:type_name -> openits.signal_control.v1.CoordinationState
+	66, // 47: openits.signal_control.v1.TimingPlan.offset_reference:type_name -> openits.signal_control.v1.OffsetReference
+	67, // 48: openits.signal_control.v1.TimingPlan.transition_mode:type_name -> openits.signal_control.v1.TransitionMode
+	68, // 49: openits.signal_control.v1.TimingPlan.force_off_mode:type_name -> openits.signal_control.v1.ForceOffMode
+	30, // 50: openits.signal_control.v1.TimingPlan.split:type_name -> openits.signal_control.v1.Split
+	69, // 51: openits.signal_control.v1.Split.split_mode:type_name -> openits.signal_control.v1.SplitMode
+	33, // 52: openits.signal_control.v1.Sequences.sequence:type_name -> openits.signal_control.v1.Sequence
+	34, // 53: openits.signal_control.v1.Sequence.ring_sequence:type_name -> openits.signal_control.v1.RingSequence
+	36, // 54: openits.signal_control.v1.Timebase.day_plan:type_name -> openits.signal_control.v1.DayPlan
+	38, // 55: openits.signal_control.v1.Timebase.schedule_entry:type_name -> openits.signal_control.v1.ScheduleEntry
+	39, // 56: openits.signal_control.v1.Timebase.clock:type_name -> openits.signal_control.v1.Clock
+	37, // 57: openits.signal_control.v1.DayPlan.action:type_name -> openits.signal_control.v1.Action
+	70, // 58: openits.signal_control.v1.Action.special_operation:type_name -> openits.signal_control.v1.SpecialOperation
+	71, // 59: openits.signal_control.v1.ScheduleEntry.days_of_week:type_name -> openits.signal_control.v1.DayOfWeek
+	72, // 60: openits.signal_control.v1.ScheduleEntry.months:type_name -> openits.signal_control.v1.Month
+	59, // 61: openits.signal_control.v1.Clock.current_time:type_name -> google.protobuf.Timestamp
+	73, // 62: openits.signal_control.v1.Clock.sync_status:type_name -> openits.signal_control.v1.SyncStatus
+	41, // 63: openits.signal_control.v1.Preemption.preemptor:type_name -> openits.signal_control.v1.Preemptor
+	42, // 64: openits.signal_control.v1.Preemptor.config:type_name -> openits.signal_control.v1.PreemptorConfig
+	44, // 65: openits.signal_control.v1.Preemptor.state:type_name -> openits.signal_control.v1.PreemptorState
+	43, // 66: openits.signal_control.v1.PreemptorConfig.track_clearance:type_name -> openits.signal_control.v1.TrackClearance
+	59, // 67: openits.signal_control.v1.PreemptorState.active_since:type_name -> google.protobuf.Timestamp
+	74, // 68: openits.signal_control.v1.PreemptorState.current_stage:type_name -> openits.signal_control.v1.PreemptStage
+	46, // 69: openits.signal_control.v1.Priority.strategy:type_name -> openits.signal_control.v1.Strategy
+	48, // 70: openits.signal_control.v1.Priority.state:type_name -> openits.signal_control.v1.PriorityState
+	47, // 71: openits.signal_control.v1.Strategy.config:type_name -> openits.signal_control.v1.StrategyConfig
+	49, // 72: openits.signal_control.v1.PriorityState.active_request:type_name -> openits.signal_control.v1.ActiveRequest
+	75, // 73: openits.signal_control.v1.ActiveRequest.stage:type_name -> openits.signal_control.v1.Stage
+	51, // 74: openits.signal_control.v1.Operation.monitor:type_name -> openits.signal_control.v1.Monitor
+	59, // 75: openits.signal_control.v1.Operation.last_mode_change:type_name -> google.protobuf.Timestamp
+	53, // 76: openits.signal_control.v1.CabinetPower.config:type_name -> openits.signal_control.v1.CabinetPowerConfig
+	54, // 77: openits.signal_control.v1.CabinetPower.state:type_name -> openits.signal_control.v1.CabinetPowerState
+	76, // 78: openits.signal_control.v1.CabinetPowerConfig.on_battery_policy:type_name -> openits.types.v1.ScOnBatteryPolicy
+	77, // 79: openits.signal_control.v1.CabinetPowerState.signal_operation_on_battery:type_name -> openits.signal_control.v1.SignalOperationOnBattery
+	55, // 80: openits.signal_control.v1.CabinetPowerState.battery:type_name -> openits.signal_control.v1.Battery
+	56, // 81: openits.signal_control.v1.CabinetPowerState.generator:type_name -> openits.signal_control.v1.Generator
+	76, // 82: openits.signal_control.v1.CabinetPowerState.on_battery_policy:type_name -> openits.types.v1.ScOnBatteryPolicy
+	78, // 83: openits.signal_control.v1.CabinetPowerState.power_source:type_name -> openits.signal_control.v1.PowerSource
+	79, // 84: openits.signal_control.v1.Battery.test_state:type_name -> openits.signal_control.v1.BatteryTestState
+	59, // 85: openits.signal_control.v1.Battery.last_test:type_name -> google.protobuf.Timestamp
+	58, // 86: openits.signal_control.v1.Faults.fault:type_name -> openits.signal_control.v1.Fault
+	59, // 87: openits.signal_control.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	80, // 88: openits.signal_control.v1.Fault.severity:type_name -> openits.signal_control.v1.FaultSeverity
+	89, // [89:89] is the sub-list for method output_type
+	89, // [89:89] is the sub-list for method input_type
+	89, // [89:89] is the sub-list for extension type_name
+	89, // [89:89] is the sub-list for extension extendee
+	0,  // [0:89] is the sub-list for field type_name
 }
 
 func init() { file_openits_signal_control_v1_state_proto_init() }
@@ -6347,27 +5157,69 @@ func file_openits_signal_control_v1_state_proto_init() {
 	if File_openits_signal_control_v1_state_proto != nil {
 		return
 	}
+	file_openits_signal_control_v1_types_proto_init()
+	file_openits_signal_control_v1_state_proto_msgTypes[1].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[2].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[3].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[4].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[5].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[7].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[8].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[9].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[10].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[11].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[12].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[14].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[15].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[16].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[17].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[18].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[20].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[21].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[22].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[23].OneofWrappers = []any{}
 	file_openits_signal_control_v1_state_proto_msgTypes[25].OneofWrappers = []any{
 		(*Channel_Phase)(nil),
 		(*Channel_Overlap)(nil),
 	}
+	file_openits_signal_control_v1_state_proto_msgTypes[27].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[29].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[30].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[31].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[33].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[34].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[35].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[36].OneofWrappers = []any{}
 	file_openits_signal_control_v1_state_proto_msgTypes[37].OneofWrappers = []any{
 		(*Action_TimingPlan)(nil),
 		(*Action_SpecialOperation)(nil),
 	}
+	file_openits_signal_control_v1_state_proto_msgTypes[38].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[39].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[41].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[42].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[44].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[46].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[47].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[49].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[50].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[51].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[54].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[55].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[56].OneofWrappers = []any{}
+	file_openits_signal_control_v1_state_proto_msgTypes[58].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_signal_control_v1_state_proto_rawDesc), len(file_openits_signal_control_v1_state_proto_rawDesc)),
-			NumEnums:      22,
+			NumEnums:      0,
 			NumMessages:   59,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_openits_signal_control_v1_state_proto_goTypes,
 		DependencyIndexes: file_openits_signal_control_v1_state_proto_depIdxs,
-		EnumInfos:         file_openits_signal_control_v1_state_proto_enumTypes,
 		MessageInfos:      file_openits_signal_control_v1_state_proto_msgTypes,
 	}.Build()
 	File_openits_signal_control_v1_state_proto = out.File

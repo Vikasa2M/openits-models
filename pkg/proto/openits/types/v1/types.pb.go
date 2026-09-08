@@ -194,9 +194,9 @@ func (*WireSource_PlcRegister_) isWireSource_Tag() {}
 
 type ScOnBatteryPolicy struct {
 	state                      protoimpl.MessageState `protogen:"open.v1"`
-	Mode                       OnBatteryMode          `protobuf:"varint,1,opt,name=mode,proto3,enum=openits.types.v1.OnBatteryMode" json:"mode,omitempty"`
-	TransitionAtSocPct         uint32                 `protobuf:"varint,2,opt,name=transition_at_soc_pct,json=transitionAtSocPct,proto3" json:"transition_at_soc_pct,omitempty"`
-	TransitionAtRuntimeMinutes uint32                 `protobuf:"varint,3,opt,name=transition_at_runtime_minutes,json=transitionAtRuntimeMinutes,proto3" json:"transition_at_runtime_minutes,omitempty"`
+	Mode                       *OnBatteryMode         `protobuf:"varint,1,opt,name=mode,proto3,enum=openits.types.v1.OnBatteryMode,oneof" json:"mode,omitempty"`
+	TransitionAtSocPct         *uint32                `protobuf:"varint,2,opt,name=transition_at_soc_pct,json=transitionAtSocPct,proto3,oneof" json:"transition_at_soc_pct,omitempty"`
+	TransitionAtRuntimeMinutes *uint32                `protobuf:"varint,3,opt,name=transition_at_runtime_minutes,json=transitionAtRuntimeMinutes,proto3,oneof" json:"transition_at_runtime_minutes,omitempty"`
 	unknownFields              protoimpl.UnknownFields
 	sizeCache                  protoimpl.SizeCache
 }
@@ -232,30 +232,30 @@ func (*ScOnBatteryPolicy) Descriptor() ([]byte, []int) {
 }
 
 func (x *ScOnBatteryPolicy) GetMode() OnBatteryMode {
-	if x != nil {
-		return x.Mode
+	if x != nil && x.Mode != nil {
+		return *x.Mode
 	}
 	return OnBatteryMode_ON_BATTERY_MODE_UNSPECIFIED
 }
 
 func (x *ScOnBatteryPolicy) GetTransitionAtSocPct() uint32 {
-	if x != nil {
-		return x.TransitionAtSocPct
+	if x != nil && x.TransitionAtSocPct != nil {
+		return *x.TransitionAtSocPct
 	}
 	return 0
 }
 
 func (x *ScOnBatteryPolicy) GetTransitionAtRuntimeMinutes() uint32 {
-	if x != nil {
-		return x.TransitionAtRuntimeMinutes
+	if x != nil && x.TransitionAtRuntimeMinutes != nil {
+		return *x.TransitionAtRuntimeMinutes
 	}
 	return 0
 }
 
 type WireSource_Indiana struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	IndianaCode   uint32                 `protobuf:"varint,1,opt,name=indiana_code,json=indianaCode,proto3" json:"indiana_code,omitempty"`
-	IndianaParam  uint32                 `protobuf:"varint,2,opt,name=indiana_param,json=indianaParam,proto3" json:"indiana_param,omitempty"`
+	IndianaCode   *uint32                `protobuf:"varint,1,opt,name=indiana_code,json=indianaCode,proto3,oneof" json:"indiana_code,omitempty"`
+	IndianaParam  *uint32                `protobuf:"varint,2,opt,name=indiana_param,json=indianaParam,proto3,oneof" json:"indiana_param,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -291,23 +291,23 @@ func (*WireSource_Indiana) Descriptor() ([]byte, []int) {
 }
 
 func (x *WireSource_Indiana) GetIndianaCode() uint32 {
-	if x != nil {
-		return x.IndianaCode
+	if x != nil && x.IndianaCode != nil {
+		return *x.IndianaCode
 	}
 	return 0
 }
 
 func (x *WireSource_Indiana) GetIndianaParam() uint32 {
-	if x != nil {
-		return x.IndianaParam
+	if x != nil && x.IndianaParam != nil {
+		return *x.IndianaParam
 	}
 	return 0
 }
 
 type WireSource_NtcipOid struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Oid           string                 `protobuf:"bytes,1,opt,name=oid,proto3" json:"oid,omitempty"`
-	OidValue      string                 `protobuf:"bytes,2,opt,name=oid_value,json=oidValue,proto3" json:"oid_value,omitempty"`
+	Oid           *string                `protobuf:"bytes,1,opt,name=oid,proto3,oneof" json:"oid,omitempty"`
+	OidValue      *string                `protobuf:"bytes,2,opt,name=oid_value,json=oidValue,proto3,oneof" json:"oid_value,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -343,23 +343,23 @@ func (*WireSource_NtcipOid) Descriptor() ([]byte, []int) {
 }
 
 func (x *WireSource_NtcipOid) GetOid() string {
-	if x != nil {
-		return x.Oid
+	if x != nil && x.Oid != nil {
+		return *x.Oid
 	}
 	return ""
 }
 
 func (x *WireSource_NtcipOid) GetOidValue() string {
-	if x != nil {
-		return x.OidValue
+	if x != nil && x.OidValue != nil {
+		return *x.OidValue
 	}
 	return ""
 }
 
 type WireSource_PlcRegister struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Register      string                 `protobuf:"bytes,1,opt,name=register,proto3" json:"register,omitempty"`
-	RegisterValue string                 `protobuf:"bytes,2,opt,name=register_value,json=registerValue,proto3" json:"register_value,omitempty"`
+	Register      *string                `protobuf:"bytes,1,opt,name=register,proto3,oneof" json:"register,omitempty"`
+	RegisterValue *string                `protobuf:"bytes,2,opt,name=register_value,json=registerValue,proto3,oneof" json:"register_value,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -395,15 +395,15 @@ func (*WireSource_PlcRegister) Descriptor() ([]byte, []int) {
 }
 
 func (x *WireSource_PlcRegister) GetRegister() string {
-	if x != nil {
-		return x.Register
+	if x != nil && x.Register != nil {
+		return *x.Register
 	}
 	return ""
 }
 
 func (x *WireSource_PlcRegister) GetRegisterValue() string {
-	if x != nil {
-		return x.RegisterValue
+	if x != nil && x.RegisterValue != nil {
+		return *x.RegisterValue
 	}
 	return ""
 }
@@ -412,7 +412,7 @@ var File_openits_types_v1_types_proto protoreflect.FileDescriptor
 
 const file_openits_types_v1_types_proto_rawDesc = "" +
 	"\n" +
-	"\x1copenits/types/v1/types.proto\x12\x10openits.types.v1\"\x85\x04\n" +
+	"\x1copenits/types/v1/types.proto\x12\x10openits.types.v1\"\xfc\x04\n" +
 	"\n" +
 	"WireSource\x12\x18\n" +
 	"\adecoder\x18\x01 \x01(\tR\adecoder\x12@\n" +
@@ -420,21 +420,31 @@ const file_openits_types_v1_types_proto_rawDesc = "" +
 	"\tntcip_oid\x18\x03 \x01(\v2%.openits.types.v1.WireSource.NtcipOidH\x00R\bntcipOid\x12\x1f\n" +
 	"\n" +
 	"message_id\x18\x04 \x01(\rH\x00R\tmessageId\x12M\n" +
-	"\fplc_register\x18\x05 \x01(\v2(.openits.types.v1.WireSource.PlcRegisterH\x00R\vplcRegister\x1aQ\n" +
-	"\aIndiana\x12!\n" +
-	"\findiana_code\x18\x01 \x01(\rR\vindianaCode\x12#\n" +
-	"\rindiana_param\x18\x02 \x01(\rR\findianaParam\x1a9\n" +
-	"\bNtcipOid\x12\x10\n" +
-	"\x03oid\x18\x01 \x01(\tR\x03oid\x12\x1b\n" +
-	"\toid_value\x18\x02 \x01(\tR\boidValue\x1aP\n" +
-	"\vPlcRegister\x12\x1a\n" +
-	"\bregister\x18\x01 \x01(\tR\bregister\x12%\n" +
-	"\x0eregister_value\x18\x02 \x01(\tR\rregisterValueB\x05\n" +
-	"\x03tag\"\xbe\x01\n" +
-	"\x11ScOnBatteryPolicy\x123\n" +
-	"\x04mode\x18\x01 \x01(\x0e2\x1f.openits.types.v1.OnBatteryModeR\x04mode\x121\n" +
-	"\x15transition_at_soc_pct\x18\x02 \x01(\rR\x12transitionAtSocPct\x12A\n" +
-	"\x1dtransition_at_runtime_minutes\x18\x03 \x01(\rR\x1atransitionAtRuntimeMinutes*o\n" +
+	"\fplc_register\x18\x05 \x01(\v2(.openits.types.v1.WireSource.PlcRegisterH\x00R\vplcRegister\x1a~\n" +
+	"\aIndiana\x12&\n" +
+	"\findiana_code\x18\x01 \x01(\rH\x00R\vindianaCode\x88\x01\x01\x12(\n" +
+	"\rindiana_param\x18\x02 \x01(\rH\x01R\findianaParam\x88\x01\x01B\x0f\n" +
+	"\r_indiana_codeB\x10\n" +
+	"\x0e_indiana_param\x1aY\n" +
+	"\bNtcipOid\x12\x15\n" +
+	"\x03oid\x18\x01 \x01(\tH\x00R\x03oid\x88\x01\x01\x12 \n" +
+	"\toid_value\x18\x02 \x01(\tH\x01R\boidValue\x88\x01\x01B\x06\n" +
+	"\x04_oidB\f\n" +
+	"\n" +
+	"_oid_value\x1az\n" +
+	"\vPlcRegister\x12\x1f\n" +
+	"\bregister\x18\x01 \x01(\tH\x00R\bregister\x88\x01\x01\x12*\n" +
+	"\x0eregister_value\x18\x02 \x01(\tH\x01R\rregisterValue\x88\x01\x01B\v\n" +
+	"\t_registerB\x11\n" +
+	"\x0f_register_valueB\x05\n" +
+	"\x03tag\"\x92\x02\n" +
+	"\x11ScOnBatteryPolicy\x128\n" +
+	"\x04mode\x18\x01 \x01(\x0e2\x1f.openits.types.v1.OnBatteryModeH\x00R\x04mode\x88\x01\x01\x126\n" +
+	"\x15transition_at_soc_pct\x18\x02 \x01(\rH\x01R\x12transitionAtSocPct\x88\x01\x01\x12F\n" +
+	"\x1dtransition_at_runtime_minutes\x18\x03 \x01(\rH\x02R\x1atransitionAtRuntimeMinutes\x88\x01\x01B\a\n" +
+	"\x05_modeB\x18\n" +
+	"\x16_transition_at_soc_pctB \n" +
+	"\x1e_transition_at_runtime_minutes*o\n" +
 	"\rOnBatteryMode\x12\x1f\n" +
 	"\x1bON_BATTERY_MODE_UNSPECIFIED\x10\x00\x12\"\n" +
 	"\x1eON_BATTERY_MODE_FULL_OPERATION\x10\x01\x12\x19\n" +
@@ -485,6 +495,10 @@ func file_openits_types_v1_types_proto_init() {
 		(*WireSource_MessageId)(nil),
 		(*WireSource_PlcRegister_)(nil),
 	}
+	file_openits_types_v1_types_proto_msgTypes[1].OneofWrappers = []any{}
+	file_openits_types_v1_types_proto_msgTypes[2].OneofWrappers = []any{}
+	file_openits_types_v1_types_proto_msgTypes[3].OneofWrappers = []any{}
+	file_openits_types_v1_types_proto_msgTypes[4].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

@@ -6,7 +6,7 @@
     "sequence": "1",
     "previous-state": "closed",
     "new-state": "open",
-    "new-direction": "southbound",
+    "new-direction": "openits-types:direction-southbound",
     "initiated-by": "operator:jsmith"
   }
 }

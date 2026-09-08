@@ -9,7 +9,7 @@
       "strategy": [
         { "strategy-id": 1, "config": {
           "strategy-id": 1,
-          "priority-class": "transit",
+          "priority-class": "openits-signal-control-types:priority-transit",
           "max-early-green-seconds": 10,
           "max-green-extension-seconds": 15,
           "reservice-interval-seconds": 120,
@@ -17,7 +17,7 @@
       ],
       "state": {
         "active-request": [
-          { "request-id": "prs-4471", "priority-type": "transit",
+          { "request-id": "prs-4471", "priority-type": "openits-signal-control-types:priority-transit",
             "vehicle-id": "bus-1029", "stage": "granted", "strategy-id": 1 }
         ]
       }

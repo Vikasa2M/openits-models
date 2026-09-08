@@ -2,8 +2,8 @@
   "openits-reversible-lane:reversible-lane": {
     "config": {
       "id": "us75-contraflow",
-      "direction-a": "northbound",
-      "direction-b": "southbound"
+      "direction-a": "openits-types:direction-northbound",
+      "direction-b": "openits-types:direction-southbound"
     },
     "segments": {
       "segment": [

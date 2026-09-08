@@ -23,304 +23,17 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type FaultSeverity int32
-
-const (
-	FaultSeverity_FAULT_SEVERITY_INFO     FaultSeverity = 0
-	FaultSeverity_FAULT_SEVERITY_WARNING  FaultSeverity = 1
-	FaultSeverity_FAULT_SEVERITY_MINOR    FaultSeverity = 2
-	FaultSeverity_FAULT_SEVERITY_MAJOR    FaultSeverity = 3
-	FaultSeverity_FAULT_SEVERITY_CRITICAL FaultSeverity = 4
-)
-
-// Enum value maps for FaultSeverity.
-var (
-	FaultSeverity_name = map[int32]string{
-		0: "FAULT_SEVERITY_INFO",
-		1: "FAULT_SEVERITY_WARNING",
-		2: "FAULT_SEVERITY_MINOR",
-		3: "FAULT_SEVERITY_MAJOR",
-		4: "FAULT_SEVERITY_CRITICAL",
-	}
-	FaultSeverity_value = map[string]int32{
-		"FAULT_SEVERITY_INFO":     0,
-		"FAULT_SEVERITY_WARNING":  1,
-		"FAULT_SEVERITY_MINOR":    2,
-		"FAULT_SEVERITY_MAJOR":    3,
-		"FAULT_SEVERITY_CRITICAL": 4,
-	}
-)
-
-func (x FaultSeverity) Enum() *FaultSeverity {
-	p := new(FaultSeverity)
-	*p = x
-	return p
-}
-
-func (x FaultSeverity) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (FaultSeverity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_events_proto_enumTypes[0].Descriptor()
-}
-
-func (FaultSeverity) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_events_proto_enumTypes[0]
-}
-
-func (x FaultSeverity) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use FaultSeverity.Descriptor instead.
-func (FaultSeverity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_events_proto_rawDescGZIP(), []int{0}
-}
-
-type Source int32
-
-const (
-	Source_SOURCE_UNSPECIFIED Source = 0
-	Source_SOURCE_SCHEDULE    Source = 1
-	Source_SOURCE_OPERATOR    Source = 2
-	Source_SOURCE_ADAPTIVE    Source = 3
-	Source_SOURCE_PREEMPTION  Source = 4
-)
-
-// Enum value maps for Source.
-var (
-	Source_name = map[int32]string{
-		0: "SOURCE_UNSPECIFIED",
-		1: "SOURCE_SCHEDULE",
-		2: "SOURCE_OPERATOR",
-		3: "SOURCE_ADAPTIVE",
-		4: "SOURCE_PREEMPTION",
-	}
-	Source_value = map[string]int32{
-		"SOURCE_UNSPECIFIED": 0,
-		"SOURCE_SCHEDULE":    1,
-		"SOURCE_OPERATOR":    2,
-		"SOURCE_ADAPTIVE":    3,
-		"SOURCE_PREEMPTION":  4,
-	}
-)
-
-func (x Source) Enum() *Source {
-	p := new(Source)
-	*p = x
-	return p
-}
-
-func (x Source) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Source) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_events_proto_enumTypes[1].Descriptor()
-}
-
-func (Source) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_events_proto_enumTypes[1]
-}
-
-func (x Source) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Source.Descriptor instead.
-func (Source) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_events_proto_rawDescGZIP(), []int{1}
-}
-
-type TsamEngagementState int32
-
-const (
-	TsamEngagementState_TSAM_ENGAGEMENT_STATE_UNSPECIFIED TsamEngagementState = 0
-	TsamEngagementState_TSAM_ENGAGEMENT_STATE_DISABLED    TsamEngagementState = 1
-	TsamEngagementState_TSAM_ENGAGEMENT_STATE_ADVISORY    TsamEngagementState = 2
-	TsamEngagementState_TSAM_ENGAGEMENT_STATE_ACTIVE      TsamEngagementState = 3
-	TsamEngagementState_TSAM_ENGAGEMENT_STATE_SUSPENDED   TsamEngagementState = 4
-)
-
-// Enum value maps for TsamEngagementState.
-var (
-	TsamEngagementState_name = map[int32]string{
-		0: "TSAM_ENGAGEMENT_STATE_UNSPECIFIED",
-		1: "TSAM_ENGAGEMENT_STATE_DISABLED",
-		2: "TSAM_ENGAGEMENT_STATE_ADVISORY",
-		3: "TSAM_ENGAGEMENT_STATE_ACTIVE",
-		4: "TSAM_ENGAGEMENT_STATE_SUSPENDED",
-	}
-	TsamEngagementState_value = map[string]int32{
-		"TSAM_ENGAGEMENT_STATE_UNSPECIFIED": 0,
-		"TSAM_ENGAGEMENT_STATE_DISABLED":    1,
-		"TSAM_ENGAGEMENT_STATE_ADVISORY":    2,
-		"TSAM_ENGAGEMENT_STATE_ACTIVE":      3,
-		"TSAM_ENGAGEMENT_STATE_SUSPENDED":   4,
-	}
-)
-
-func (x TsamEngagementState) Enum() *TsamEngagementState {
-	p := new(TsamEngagementState)
-	*p = x
-	return p
-}
-
-func (x TsamEngagementState) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (TsamEngagementState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_events_proto_enumTypes[2].Descriptor()
-}
-
-func (TsamEngagementState) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_events_proto_enumTypes[2]
-}
-
-func (x TsamEngagementState) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use TsamEngagementState.Descriptor instead.
-func (TsamEngagementState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_events_proto_rawDescGZIP(), []int{2}
-}
-
-type AdjustmentType int32
-
-const (
-	AdjustmentType_ADJUSTMENT_TYPE_UNSPECIFIED       AdjustmentType = 0
-	AdjustmentType_ADJUSTMENT_TYPE_CYCLE_LENGTH      AdjustmentType = 1
-	AdjustmentType_ADJUSTMENT_TYPE_SPLIT_ADJUSTMENT  AdjustmentType = 2
-	AdjustmentType_ADJUSTMENT_TYPE_OFFSET_ADJUSTMENT AdjustmentType = 3
-	AdjustmentType_ADJUSTMENT_TYPE_PHASE_EXTENSION   AdjustmentType = 4
-	AdjustmentType_ADJUSTMENT_TYPE_PHASE_TRUNCATION  AdjustmentType = 5
-	AdjustmentType_ADJUSTMENT_TYPE_PLAN_CHANGE       AdjustmentType = 6
-	AdjustmentType_ADJUSTMENT_TYPE_OTHER             AdjustmentType = 7
-)
-
-// Enum value maps for AdjustmentType.
-var (
-	AdjustmentType_name = map[int32]string{
-		0: "ADJUSTMENT_TYPE_UNSPECIFIED",
-		1: "ADJUSTMENT_TYPE_CYCLE_LENGTH",
-		2: "ADJUSTMENT_TYPE_SPLIT_ADJUSTMENT",
-		3: "ADJUSTMENT_TYPE_OFFSET_ADJUSTMENT",
-		4: "ADJUSTMENT_TYPE_PHASE_EXTENSION",
-		5: "ADJUSTMENT_TYPE_PHASE_TRUNCATION",
-		6: "ADJUSTMENT_TYPE_PLAN_CHANGE",
-		7: "ADJUSTMENT_TYPE_OTHER",
-	}
-	AdjustmentType_value = map[string]int32{
-		"ADJUSTMENT_TYPE_UNSPECIFIED":       0,
-		"ADJUSTMENT_TYPE_CYCLE_LENGTH":      1,
-		"ADJUSTMENT_TYPE_SPLIT_ADJUSTMENT":  2,
-		"ADJUSTMENT_TYPE_OFFSET_ADJUSTMENT": 3,
-		"ADJUSTMENT_TYPE_PHASE_EXTENSION":   4,
-		"ADJUSTMENT_TYPE_PHASE_TRUNCATION":  5,
-		"ADJUSTMENT_TYPE_PLAN_CHANGE":       6,
-		"ADJUSTMENT_TYPE_OTHER":             7,
-	}
-)
-
-func (x AdjustmentType) Enum() *AdjustmentType {
-	p := new(AdjustmentType)
-	*p = x
-	return p
-}
-
-func (x AdjustmentType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (AdjustmentType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_events_proto_enumTypes[3].Descriptor()
-}
-
-func (AdjustmentType) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_events_proto_enumTypes[3]
-}
-
-func (x AdjustmentType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use AdjustmentType.Descriptor instead.
-func (AdjustmentType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_events_proto_rawDescGZIP(), []int{3}
-}
-
-type DenialReason int32
-
-const (
-	DenialReason_DENIAL_REASON_UNSPECIFIED              DenialReason = 0
-	DenialReason_DENIAL_REASON_RESERVICE_LOCK           DenialReason = 1
-	DenialReason_DENIAL_REASON_COORD_CONSTRAINT         DenialReason = 2
-	DenialReason_DENIAL_REASON_HIGHER_PRIORITY_CONFLICT DenialReason = 3
-	DenialReason_DENIAL_REASON_DISABLED                 DenialReason = 4
-	DenialReason_DENIAL_REASON_OTHER                    DenialReason = 5
-)
-
-// Enum value maps for DenialReason.
-var (
-	DenialReason_name = map[int32]string{
-		0: "DENIAL_REASON_UNSPECIFIED",
-		1: "DENIAL_REASON_RESERVICE_LOCK",
-		2: "DENIAL_REASON_COORD_CONSTRAINT",
-		3: "DENIAL_REASON_HIGHER_PRIORITY_CONFLICT",
-		4: "DENIAL_REASON_DISABLED",
-		5: "DENIAL_REASON_OTHER",
-	}
-	DenialReason_value = map[string]int32{
-		"DENIAL_REASON_UNSPECIFIED":              0,
-		"DENIAL_REASON_RESERVICE_LOCK":           1,
-		"DENIAL_REASON_COORD_CONSTRAINT":         2,
-		"DENIAL_REASON_HIGHER_PRIORITY_CONFLICT": 3,
-		"DENIAL_REASON_DISABLED":                 4,
-		"DENIAL_REASON_OTHER":                    5,
-	}
-)
-
-func (x DenialReason) Enum() *DenialReason {
-	p := new(DenialReason)
-	*p = x
-	return p
-}
-
-func (x DenialReason) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (DenialReason) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_events_proto_enumTypes[4].Descriptor()
-}
-
-func (DenialReason) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_events_proto_enumTypes[4]
-}
-
-func (x DenialReason) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use DenialReason.Descriptor instead.
-func (DenialReason) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_events_proto_rawDescGZIP(), []int{4}
-}
-
 type ControllerFaultEvent struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	FaultId        string                 `protobuf:"bytes,2,opt,name=fault_id,json=faultId,proto3" json:"fault_id,omitempty"`
 	Severity       FaultSeverity          `protobuf:"varint,3,opt,name=severity,proto3,enum=openits.signal_control.v1.FaultSeverity" json:"severity,omitempty"`
-	Description    string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	Description    *string                `protobuf:"bytes,4,opt,name=description,proto3,oneof" json:"description,omitempty"`
 	Raised         bool                   `protobuf:"varint,5,opt,name=raised,proto3" json:"raised,omitempty"`
-	FlashCause     string                 `protobuf:"bytes,10,opt,name=flash_cause,json=flashCause,proto3" json:"flash_cause,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	FlashCause     *string                `protobuf:"bytes,10,opt,name=flash_cause,json=flashCause,proto3,oneof" json:"flash_cause,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,8,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,8,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -380,8 +93,8 @@ func (x *ControllerFaultEvent) GetSeverity() FaultSeverity {
 }
 
 func (x *ControllerFaultEvent) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
@@ -394,15 +107,15 @@ func (x *ControllerFaultEvent) GetRaised() bool {
 }
 
 func (x *ControllerFaultEvent) GetFlashCause() string {
-	if x != nil {
-		return x.FlashCause
+	if x != nil && x.FlashCause != nil {
+		return *x.FlashCause
 	}
 	return ""
 }
 
 func (x *ControllerFaultEvent) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -415,8 +128,8 @@ func (x *ControllerFaultEvent) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *ControllerFaultEvent) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -443,19 +156,27 @@ func (x *ControllerFaultEvent) GetSourceDeviceId() string {
 }
 
 type CoordinationChange struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	NewValue       int32                  `protobuf:"varint,3,opt,name=new_value,json=newValue,proto3" json:"new_value,omitempty"`
-	SplitNumber    uint32                 `protobuf:"varint,4,opt,name=split_number,json=splitNumber,proto3" json:"split_number,omitempty"`
-	PreviousValue  int32                  `protobuf:"varint,5,opt,name=previous_value,json=previousValue,proto3" json:"previous_value,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
-	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,8,opt,name=owner,proto3" json:"owner,omitempty"`
-	Sequence       uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
-	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
-	SourceDeviceId string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Kind                 string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
+	PhaseNumber          *uint32                `protobuf:"varint,2,opt,name=phase_number,json=phaseNumber,proto3,oneof" json:"phase_number,omitempty"`
+	Pattern              *uint32                `protobuf:"varint,10,opt,name=pattern,proto3,oneof" json:"pattern,omitempty"`
+	PreviousPattern      *uint32                `protobuf:"varint,11,opt,name=previous_pattern,json=previousPattern,proto3,oneof" json:"previous_pattern,omitempty"`
+	CycleLengthS         *uint32                `protobuf:"varint,12,opt,name=cycle_length_s,json=cycleLengthS,proto3,oneof" json:"cycle_length_s,omitempty"`
+	PreviousCycleLengthS *uint32                `protobuf:"varint,13,opt,name=previous_cycle_length_s,json=previousCycleLengthS,proto3,oneof" json:"previous_cycle_length_s,omitempty"`
+	OffsetS              *uint32                `protobuf:"varint,14,opt,name=offset_s,json=offsetS,proto3,oneof" json:"offset_s,omitempty"`
+	PreviousOffsetS      *uint32                `protobuf:"varint,15,opt,name=previous_offset_s,json=previousOffsetS,proto3,oneof" json:"previous_offset_s,omitempty"`
+	SplitS               *uint32                `protobuf:"varint,16,opt,name=split_s,json=splitS,proto3,oneof" json:"split_s,omitempty"`
+	PreviousSplitS       *uint32                `protobuf:"varint,17,opt,name=previous_split_s,json=previousSplitS,proto3,oneof" json:"previous_split_s,omitempty"`
+	CycleState           *string                `protobuf:"bytes,18,opt,name=cycle_state,json=cycleState,proto3,oneof" json:"cycle_state,omitempty"`
+	PreviousCycleState   *string                `protobuf:"bytes,19,opt,name=previous_cycle_state,json=previousCycleState,proto3,oneof" json:"previous_cycle_state,omitempty"`
+	ObservedBy           *string                `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
+	OccurredAt           *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
+	Owner                *string                `protobuf:"bytes,8,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	Sequence             uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	Source               *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
+	SourceDeviceId       string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *CoordinationChange) Reset() {
@@ -495,30 +216,86 @@ func (x *CoordinationChange) GetKind() string {
 	return ""
 }
 
-func (x *CoordinationChange) GetNewValue() int32 {
-	if x != nil {
-		return x.NewValue
+func (x *CoordinationChange) GetPhaseNumber() uint32 {
+	if x != nil && x.PhaseNumber != nil {
+		return *x.PhaseNumber
 	}
 	return 0
 }
 
-func (x *CoordinationChange) GetSplitNumber() uint32 {
-	if x != nil {
-		return x.SplitNumber
+func (x *CoordinationChange) GetPattern() uint32 {
+	if x != nil && x.Pattern != nil {
+		return *x.Pattern
 	}
 	return 0
 }
 
-func (x *CoordinationChange) GetPreviousValue() int32 {
-	if x != nil {
-		return x.PreviousValue
+func (x *CoordinationChange) GetPreviousPattern() uint32 {
+	if x != nil && x.PreviousPattern != nil {
+		return *x.PreviousPattern
 	}
 	return 0
+}
+
+func (x *CoordinationChange) GetCycleLengthS() uint32 {
+	if x != nil && x.CycleLengthS != nil {
+		return *x.CycleLengthS
+	}
+	return 0
+}
+
+func (x *CoordinationChange) GetPreviousCycleLengthS() uint32 {
+	if x != nil && x.PreviousCycleLengthS != nil {
+		return *x.PreviousCycleLengthS
+	}
+	return 0
+}
+
+func (x *CoordinationChange) GetOffsetS() uint32 {
+	if x != nil && x.OffsetS != nil {
+		return *x.OffsetS
+	}
+	return 0
+}
+
+func (x *CoordinationChange) GetPreviousOffsetS() uint32 {
+	if x != nil && x.PreviousOffsetS != nil {
+		return *x.PreviousOffsetS
+	}
+	return 0
+}
+
+func (x *CoordinationChange) GetSplitS() uint32 {
+	if x != nil && x.SplitS != nil {
+		return *x.SplitS
+	}
+	return 0
+}
+
+func (x *CoordinationChange) GetPreviousSplitS() uint32 {
+	if x != nil && x.PreviousSplitS != nil {
+		return *x.PreviousSplitS
+	}
+	return 0
+}
+
+func (x *CoordinationChange) GetCycleState() string {
+	if x != nil && x.CycleState != nil {
+		return *x.CycleState
+	}
+	return ""
+}
+
+func (x *CoordinationChange) GetPreviousCycleState() string {
+	if x != nil && x.PreviousCycleState != nil {
+		return *x.PreviousCycleState
+	}
+	return ""
 }
 
 func (x *CoordinationChange) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -531,8 +308,8 @@ func (x *CoordinationChange) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *CoordinationChange) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -562,11 +339,11 @@ type DetectorReport struct {
 	state             protoimpl.MessageState    `protogen:"open.v1"`
 	Kind              string                    `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	IntervalStart     *timestamppb.Timestamp    `protobuf:"bytes,2,opt,name=interval_start,json=intervalStart,proto3" json:"interval_start,omitempty"`
-	IntervalDurationS uint32                    `protobuf:"varint,3,opt,name=interval_duration_s,json=intervalDurationS,proto3" json:"interval_duration_s,omitempty"`
+	IntervalDurationS *uint32                   `protobuf:"varint,3,opt,name=interval_duration_s,json=intervalDurationS,proto3,oneof" json:"interval_duration_s,omitempty"`
 	Detector          []*DetectorReportDetector `protobuf:"bytes,4,rep,name=detector,proto3" json:"detector,omitempty"`
-	ObservedBy        string                    `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	ObservedBy        *string                   `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt        *timestamppb.Timestamp    `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner             string                    `protobuf:"bytes,7,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner             *string                   `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence          uint64                    `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId    string                    `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields     protoimpl.UnknownFields
@@ -618,8 +395,8 @@ func (x *DetectorReport) GetIntervalStart() *timestamppb.Timestamp {
 }
 
 func (x *DetectorReport) GetIntervalDurationS() uint32 {
-	if x != nil {
-		return x.IntervalDurationS
+	if x != nil && x.IntervalDurationS != nil {
+		return *x.IntervalDurationS
 	}
 	return 0
 }
@@ -632,8 +409,8 @@ func (x *DetectorReport) GetDetector() []*DetectorReportDetector {
 }
 
 func (x *DetectorReport) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -646,8 +423,8 @@ func (x *DetectorReport) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *DetectorReport) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -668,10 +445,10 @@ func (x *DetectorReport) GetSourceDeviceId() string {
 
 type DetectorReportDetector struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	DetectorId    uint32                 `protobuf:"varint,1,opt,name=detector_id,json=detectorId,proto3" json:"detector_id,omitempty"`
-	PhaseServed   uint32                 `protobuf:"varint,2,opt,name=phase_served,json=phaseServed,proto3" json:"phase_served,omitempty"`
-	Volume        uint32                 `protobuf:"varint,3,opt,name=volume,proto3" json:"volume,omitempty"`
-	Occupancy     string                 `protobuf:"bytes,4,opt,name=occupancy,proto3" json:"occupancy,omitempty"`
+	DetectorId    *uint32                `protobuf:"varint,1,opt,name=detector_id,json=detectorId,proto3,oneof" json:"detector_id,omitempty"`
+	PhaseServed   *uint32                `protobuf:"varint,2,opt,name=phase_served,json=phaseServed,proto3,oneof" json:"phase_served,omitempty"`
+	Volume        *uint32                `protobuf:"varint,3,opt,name=volume,proto3,oneof" json:"volume,omitempty"`
+	Occupancy     *string                `protobuf:"bytes,4,opt,name=occupancy,proto3,oneof" json:"occupancy,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -707,29 +484,29 @@ func (*DetectorReportDetector) Descriptor() ([]byte, []int) {
 }
 
 func (x *DetectorReportDetector) GetDetectorId() uint32 {
-	if x != nil {
-		return x.DetectorId
+	if x != nil && x.DetectorId != nil {
+		return *x.DetectorId
 	}
 	return 0
 }
 
 func (x *DetectorReportDetector) GetPhaseServed() uint32 {
-	if x != nil {
-		return x.PhaseServed
+	if x != nil && x.PhaseServed != nil {
+		return *x.PhaseServed
 	}
 	return 0
 }
 
 func (x *DetectorReportDetector) GetVolume() uint32 {
-	if x != nil {
-		return x.Volume
+	if x != nil && x.Volume != nil {
+		return *x.Volume
 	}
 	return 0
 }
 
 func (x *DetectorReportDetector) GetOccupancy() string {
-	if x != nil {
-		return x.Occupancy
+	if x != nil && x.Occupancy != nil {
+		return *x.Occupancy
 	}
 	return ""
 }
@@ -738,12 +515,10 @@ type DetectorTransition struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	Channel        uint32                 `protobuf:"varint,2,opt,name=channel,proto3" json:"channel,omitempty"`
-	Lane           string                 `protobuf:"bytes,4,opt,name=lane,proto3" json:"lane,omitempty"`
-	Approach       string                 `protobuf:"bytes,5,opt,name=approach,proto3" json:"approach,omitempty"`
-	PhaseServed    uint32                 `protobuf:"varint,6,opt,name=phase_served,json=phaseServed,proto3" json:"phase_served,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,8,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	PhaseServed    *uint32                `protobuf:"varint,6,opt,name=phase_served,json=phaseServed,proto3,oneof" json:"phase_served,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,8,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,9,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,9,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,10,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -795,30 +570,16 @@ func (x *DetectorTransition) GetChannel() uint32 {
 	return 0
 }
 
-func (x *DetectorTransition) GetLane() string {
-	if x != nil {
-		return x.Lane
-	}
-	return ""
-}
-
-func (x *DetectorTransition) GetApproach() string {
-	if x != nil {
-		return x.Approach
-	}
-	return ""
-}
-
 func (x *DetectorTransition) GetPhaseServed() uint32 {
-	if x != nil {
-		return x.PhaseServed
+	if x != nil && x.PhaseServed != nil {
+		return *x.PhaseServed
 	}
 	return 0
 }
 
 func (x *DetectorTransition) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -831,8 +592,8 @@ func (x *DetectorTransition) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *DetectorTransition) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -861,14 +622,14 @@ func (x *DetectorTransition) GetSourceDeviceId() string {
 type OperationalStatusReport struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	Mode           string                 `protobuf:"bytes,2,opt,name=mode,proto3" json:"mode,omitempty"`
-	FlashActive    bool                   `protobuf:"varint,10,opt,name=flash_active,json=flashActive,proto3" json:"flash_active,omitempty"`
-	FlashCause     string                 `protobuf:"bytes,11,opt,name=flash_cause,json=flashCause,proto3" json:"flash_cause,omitempty"`
+	Mode           *string                `protobuf:"bytes,2,opt,name=mode,proto3,oneof" json:"mode,omitempty"`
+	FlashActive    *bool                  `protobuf:"varint,10,opt,name=flash_active,json=flashActive,proto3,oneof" json:"flash_active,omitempty"`
+	FlashCause     *string                `protobuf:"bytes,11,opt,name=flash_cause,json=flashCause,proto3,oneof" json:"flash_cause,omitempty"`
 	LastModeChange *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=last_mode_change,json=lastModeChange,proto3" json:"last_mode_change,omitempty"`
-	UptimeSeconds  uint64                 `protobuf:"varint,5,opt,name=uptime_seconds,json=uptimeSeconds,proto3" json:"uptime_seconds,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	UptimeSeconds  *uint64                `protobuf:"varint,5,opt,name=uptime_seconds,json=uptimeSeconds,proto3,oneof" json:"uptime_seconds,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,8,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,8,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -913,22 +674,22 @@ func (x *OperationalStatusReport) GetKind() string {
 }
 
 func (x *OperationalStatusReport) GetMode() string {
-	if x != nil {
-		return x.Mode
+	if x != nil && x.Mode != nil {
+		return *x.Mode
 	}
 	return ""
 }
 
 func (x *OperationalStatusReport) GetFlashActive() bool {
-	if x != nil {
-		return x.FlashActive
+	if x != nil && x.FlashActive != nil {
+		return *x.FlashActive
 	}
 	return false
 }
 
 func (x *OperationalStatusReport) GetFlashCause() string {
-	if x != nil {
-		return x.FlashCause
+	if x != nil && x.FlashCause != nil {
+		return *x.FlashCause
 	}
 	return ""
 }
@@ -941,15 +702,15 @@ func (x *OperationalStatusReport) GetLastModeChange() *timestamppb.Timestamp {
 }
 
 func (x *OperationalStatusReport) GetUptimeSeconds() uint64 {
-	if x != nil {
-		return x.UptimeSeconds
+	if x != nil && x.UptimeSeconds != nil {
+		return *x.UptimeSeconds
 	}
 	return 0
 }
 
 func (x *OperationalStatusReport) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -962,8 +723,8 @@ func (x *OperationalStatusReport) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *OperationalStatusReport) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -986,9 +747,9 @@ type OverlapChange struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	OverlapNumber  uint32                 `protobuf:"varint,2,opt,name=overlap_number,json=overlapNumber,proto3" json:"overlap_number,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,6,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -1041,8 +802,8 @@ func (x *OverlapChange) GetOverlapNumber() uint32 {
 }
 
 func (x *OverlapChange) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -1055,8 +816,8 @@ func (x *OverlapChange) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *OverlapChange) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -1085,11 +846,11 @@ func (x *OverlapChange) GetSourceDeviceId() string {
 type PedestrianEvent struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	Kind            string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	PhaseNumber     uint32                 `protobuf:"varint,2,opt,name=phase_number,json=phaseNumber,proto3" json:"phase_number,omitempty"`
-	DetectorChannel uint32                 `protobuf:"varint,3,opt,name=detector_channel,json=detectorChannel,proto3" json:"detector_channel,omitempty"`
-	ObservedBy      string                 `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	PhaseNumber     *uint32                `protobuf:"varint,2,opt,name=phase_number,json=phaseNumber,proto3,oneof" json:"phase_number,omitempty"`
+	DetectorChannel *uint32                `protobuf:"varint,3,opt,name=detector_channel,json=detectorChannel,proto3,oneof" json:"detector_channel,omitempty"`
+	ObservedBy      *string                `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt      *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner           string                 `protobuf:"bytes,7,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner           *string                `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence        uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	Source          *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId  string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -1135,22 +896,22 @@ func (x *PedestrianEvent) GetKind() string {
 }
 
 func (x *PedestrianEvent) GetPhaseNumber() uint32 {
-	if x != nil {
-		return x.PhaseNumber
+	if x != nil && x.PhaseNumber != nil {
+		return *x.PhaseNumber
 	}
 	return 0
 }
 
 func (x *PedestrianEvent) GetDetectorChannel() uint32 {
-	if x != nil {
-		return x.DetectorChannel
+	if x != nil && x.DetectorChannel != nil {
+		return *x.DetectorChannel
 	}
 	return 0
 }
 
 func (x *PedestrianEvent) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -1163,8 +924,8 @@ func (x *PedestrianEvent) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *PedestrianEvent) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -1194,11 +955,11 @@ type PhaseStateChange struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	PhaseNumber    uint32                 `protobuf:"varint,2,opt,name=phase_number,json=phaseNumber,proto3" json:"phase_number,omitempty"`
-	HoldActive     bool                   `protobuf:"varint,5,opt,name=hold_active,json=holdActive,proto3" json:"hold_active,omitempty"`
-	CallRegistered bool                   `protobuf:"varint,6,opt,name=call_registered,json=callRegistered,proto3" json:"call_registered,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,8,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	HoldActive     *bool                  `protobuf:"varint,5,opt,name=hold_active,json=holdActive,proto3,oneof" json:"hold_active,omitempty"`
+	CallRegistered *bool                  `protobuf:"varint,6,opt,name=call_registered,json=callRegistered,proto3,oneof" json:"call_registered,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,8,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,9,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,9,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,10,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -1251,22 +1012,22 @@ func (x *PhaseStateChange) GetPhaseNumber() uint32 {
 }
 
 func (x *PhaseStateChange) GetHoldActive() bool {
-	if x != nil {
-		return x.HoldActive
+	if x != nil && x.HoldActive != nil {
+		return *x.HoldActive
 	}
 	return false
 }
 
 func (x *PhaseStateChange) GetCallRegistered() bool {
-	if x != nil {
-		return x.CallRegistered
+	if x != nil && x.CallRegistered != nil {
+		return *x.CallRegistered
 	}
 	return false
 }
 
 func (x *PhaseStateChange) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -1279,8 +1040,8 @@ func (x *PhaseStateChange) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *PhaseStateChange) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -1309,14 +1070,14 @@ func (x *PhaseStateChange) GetSourceDeviceId() string {
 type PlanApplied struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	PlanId         uint32                 `protobuf:"varint,2,opt,name=plan_id,json=planId,proto3" json:"plan_id,omitempty"`
-	CycleLengthS   uint32                 `protobuf:"varint,3,opt,name=cycle_length_s,json=cycleLengthS,proto3" json:"cycle_length_s,omitempty"`
-	OffsetS        uint32                 `protobuf:"varint,4,opt,name=offset_s,json=offsetS,proto3" json:"offset_s,omitempty"`
-	SplitSet       uint32                 `protobuf:"varint,5,opt,name=split_set,json=splitSet,proto3" json:"split_set,omitempty"`
-	Source         Source                 `protobuf:"varint,6,opt,name=source,proto3,enum=openits.signal_control.v1.Source" json:"source,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,8,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	PlanId         *uint32                `protobuf:"varint,2,opt,name=plan_id,json=planId,proto3,oneof" json:"plan_id,omitempty"`
+	CycleLengthS   *uint32                `protobuf:"varint,3,opt,name=cycle_length_s,json=cycleLengthS,proto3,oneof" json:"cycle_length_s,omitempty"`
+	OffsetS        *uint32                `protobuf:"varint,4,opt,name=offset_s,json=offsetS,proto3,oneof" json:"offset_s,omitempty"`
+	SplitSet       *uint32                `protobuf:"varint,5,opt,name=split_set,json=splitSet,proto3,oneof" json:"split_set,omitempty"`
+	Trigger        *string                `protobuf:"bytes,11,opt,name=trigger,proto3,oneof" json:"trigger,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,8,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,9,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,9,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,10,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -1361,43 +1122,43 @@ func (x *PlanApplied) GetKind() string {
 }
 
 func (x *PlanApplied) GetPlanId() uint32 {
-	if x != nil {
-		return x.PlanId
+	if x != nil && x.PlanId != nil {
+		return *x.PlanId
 	}
 	return 0
 }
 
 func (x *PlanApplied) GetCycleLengthS() uint32 {
-	if x != nil {
-		return x.CycleLengthS
+	if x != nil && x.CycleLengthS != nil {
+		return *x.CycleLengthS
 	}
 	return 0
 }
 
 func (x *PlanApplied) GetOffsetS() uint32 {
-	if x != nil {
-		return x.OffsetS
+	if x != nil && x.OffsetS != nil {
+		return *x.OffsetS
 	}
 	return 0
 }
 
 func (x *PlanApplied) GetSplitSet() uint32 {
-	if x != nil {
-		return x.SplitSet
+	if x != nil && x.SplitSet != nil {
+		return *x.SplitSet
 	}
 	return 0
 }
 
-func (x *PlanApplied) GetSource() Source {
-	if x != nil {
-		return x.Source
+func (x *PlanApplied) GetTrigger() string {
+	if x != nil && x.Trigger != nil {
+		return *x.Trigger
 	}
-	return Source_SOURCE_UNSPECIFIED
+	return ""
 }
 
 func (x *PlanApplied) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -1410,8 +1171,8 @@ func (x *PlanApplied) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *PlanApplied) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -1435,10 +1196,10 @@ type PreemptionActivated struct {
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	PreemptNumber  uint32                 `protobuf:"varint,8,opt,name=preempt_number,json=preemptNumber,proto3" json:"preempt_number,omitempty"`
 	Type           string                 `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
-	SourceId       string                 `protobuf:"bytes,3,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	SourceId       *string                `protobuf:"bytes,3,opt,name=source_id,json=sourceId,proto3,oneof" json:"source_id,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,6,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -1498,15 +1259,15 @@ func (x *PreemptionActivated) GetType() string {
 }
 
 func (x *PreemptionActivated) GetSourceId() string {
-	if x != nil {
-		return x.SourceId
+	if x != nil && x.SourceId != nil {
+		return *x.SourceId
 	}
 	return ""
 }
 
 func (x *PreemptionActivated) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -1519,8 +1280,8 @@ func (x *PreemptionActivated) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *PreemptionActivated) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -1551,10 +1312,10 @@ type PreemptionCleared struct {
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	PreemptNumber  uint32                 `protobuf:"varint,8,opt,name=preempt_number,json=preemptNumber,proto3" json:"preempt_number,omitempty"`
 	Type           string                 `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
-	SourceId       string                 `protobuf:"bytes,3,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	SourceId       *string                `protobuf:"bytes,3,opt,name=source_id,json=sourceId,proto3,oneof" json:"source_id,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,6,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -1614,15 +1375,15 @@ func (x *PreemptionCleared) GetType() string {
 }
 
 func (x *PreemptionCleared) GetSourceId() string {
-	if x != nil {
-		return x.SourceId
+	if x != nil && x.SourceId != nil {
+		return *x.SourceId
 	}
 	return ""
 }
 
 func (x *PreemptionCleared) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -1635,8 +1396,8 @@ func (x *PreemptionCleared) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *PreemptionCleared) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -1665,11 +1426,11 @@ func (x *PreemptionCleared) GetSourceDeviceId() string {
 type PreemptionEvent struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	PreemptNumber  uint32                 `protobuf:"varint,2,opt,name=preempt_number,json=preemptNumber,proto3" json:"preempt_number,omitempty"`
-	SourceId       string                 `protobuf:"bytes,4,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	PreemptNumber  *uint32                `protobuf:"varint,2,opt,name=preempt_number,json=preemptNumber,proto3,oneof" json:"preempt_number,omitempty"`
+	SourceId       *string                `protobuf:"bytes,4,opt,name=source_id,json=sourceId,proto3,oneof" json:"source_id,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,7,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -1715,22 +1476,22 @@ func (x *PreemptionEvent) GetKind() string {
 }
 
 func (x *PreemptionEvent) GetPreemptNumber() uint32 {
-	if x != nil {
-		return x.PreemptNumber
+	if x != nil && x.PreemptNumber != nil {
+		return *x.PreemptNumber
 	}
 	return 0
 }
 
 func (x *PreemptionEvent) GetSourceId() string {
-	if x != nil {
-		return x.SourceId
+	if x != nil && x.SourceId != nil {
+		return *x.SourceId
 	}
 	return ""
 }
 
 func (x *PreemptionEvent) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -1743,8 +1504,8 @@ func (x *PreemptionEvent) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *PreemptionEvent) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -1773,14 +1534,13 @@ func (x *PreemptionEvent) GetSourceDeviceId() string {
 type TsamModeChanged struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	Prior          TsamEngagementState    `protobuf:"varint,2,opt,name=prior,proto3,enum=openits.signal_control.v1.TsamEngagementState" json:"prior,omitempty"`
+	Prior          *TsamEngagementState   `protobuf:"varint,2,opt,name=prior,proto3,enum=openits.signal_control.v1.TsamEngagementState,oneof" json:"prior,omitempty"`
 	Current        TsamEngagementState    `protobuf:"varint,3,opt,name=current,proto3,enum=openits.signal_control.v1.TsamEngagementState" json:"current,omitempty"`
-	Reason         string                 `protobuf:"bytes,4,opt,name=reason,proto3" json:"reason,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	Reason         *string                `protobuf:"bytes,4,opt,name=reason,proto3,oneof" json:"reason,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,8,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,8,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
-	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -1824,8 +1584,8 @@ func (x *TsamModeChanged) GetKind() string {
 }
 
 func (x *TsamModeChanged) GetPrior() TsamEngagementState {
-	if x != nil {
-		return x.Prior
+	if x != nil && x.Prior != nil {
+		return *x.Prior
 	}
 	return TsamEngagementState_TSAM_ENGAGEMENT_STATE_UNSPECIFIED
 }
@@ -1838,15 +1598,15 @@ func (x *TsamModeChanged) GetCurrent() TsamEngagementState {
 }
 
 func (x *TsamModeChanged) GetReason() string {
-	if x != nil {
-		return x.Reason
+	if x != nil && x.Reason != nil {
+		return *x.Reason
 	}
 	return ""
 }
 
 func (x *TsamModeChanged) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -1859,8 +1619,8 @@ func (x *TsamModeChanged) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *TsamModeChanged) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -1870,13 +1630,6 @@ func (x *TsamModeChanged) GetSequence() uint64 {
 		return x.Sequence
 	}
 	return 0
-}
-
-func (x *TsamModeChanged) GetSource() *v1.WireSource {
-	if x != nil {
-		return x.Source
-	}
-	return nil
 }
 
 func (x *TsamModeChanged) GetSourceDeviceId() string {
@@ -1889,16 +1642,15 @@ func (x *TsamModeChanged) GetSourceDeviceId() string {
 type TsamRecommendationApplied struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	Kind             string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	RecommendationId string                 `protobuf:"bytes,2,opt,name=recommendation_id,json=recommendationId,proto3" json:"recommendation_id,omitempty"`
+	RecommendationId *string                `protobuf:"bytes,2,opt,name=recommendation_id,json=recommendationId,proto3,oneof" json:"recommendation_id,omitempty"`
 	AdjustmentType   AdjustmentType         `protobuf:"varint,3,opt,name=adjustment_type,json=adjustmentType,proto3,enum=openits.signal_control.v1.AdjustmentType" json:"adjustment_type,omitempty"`
-	MagnitudeSeconds string                 `protobuf:"bytes,4,opt,name=magnitude_seconds,json=magnitudeSeconds,proto3" json:"magnitude_seconds,omitempty"`
-	PhaseNumber      uint32                 `protobuf:"varint,5,opt,name=phase_number,json=phaseNumber,proto3" json:"phase_number,omitempty"`
-	Rationale        string                 `protobuf:"bytes,6,opt,name=rationale,proto3" json:"rationale,omitempty"`
-	ObservedBy       string                 `protobuf:"bytes,9,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	MagnitudeSeconds *string                `protobuf:"bytes,4,opt,name=magnitude_seconds,json=magnitudeSeconds,proto3,oneof" json:"magnitude_seconds,omitempty"`
+	PhaseNumber      *uint32                `protobuf:"varint,5,opt,name=phase_number,json=phaseNumber,proto3,oneof" json:"phase_number,omitempty"`
+	Rationale        *string                `protobuf:"bytes,6,opt,name=rationale,proto3,oneof" json:"rationale,omitempty"`
+	ObservedBy       *string                `protobuf:"bytes,9,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt       *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner            string                 `protobuf:"bytes,10,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner            *string                `protobuf:"bytes,10,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence         uint64                 `protobuf:"varint,11,opt,name=sequence,proto3" json:"sequence,omitempty"`
-	Source           *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId   string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
@@ -1942,8 +1694,8 @@ func (x *TsamRecommendationApplied) GetKind() string {
 }
 
 func (x *TsamRecommendationApplied) GetRecommendationId() string {
-	if x != nil {
-		return x.RecommendationId
+	if x != nil && x.RecommendationId != nil {
+		return *x.RecommendationId
 	}
 	return ""
 }
@@ -1956,29 +1708,29 @@ func (x *TsamRecommendationApplied) GetAdjustmentType() AdjustmentType {
 }
 
 func (x *TsamRecommendationApplied) GetMagnitudeSeconds() string {
-	if x != nil {
-		return x.MagnitudeSeconds
+	if x != nil && x.MagnitudeSeconds != nil {
+		return *x.MagnitudeSeconds
 	}
 	return ""
 }
 
 func (x *TsamRecommendationApplied) GetPhaseNumber() uint32 {
-	if x != nil {
-		return x.PhaseNumber
+	if x != nil && x.PhaseNumber != nil {
+		return *x.PhaseNumber
 	}
 	return 0
 }
 
 func (x *TsamRecommendationApplied) GetRationale() string {
-	if x != nil {
-		return x.Rationale
+	if x != nil && x.Rationale != nil {
+		return *x.Rationale
 	}
 	return ""
 }
 
 func (x *TsamRecommendationApplied) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -1991,8 +1743,8 @@ func (x *TsamRecommendationApplied) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *TsamRecommendationApplied) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -2002,13 +1754,6 @@ func (x *TsamRecommendationApplied) GetSequence() uint64 {
 		return x.Sequence
 	}
 	return 0
-}
-
-func (x *TsamRecommendationApplied) GetSource() *v1.WireSource {
-	if x != nil {
-		return x.Source
-	}
-	return nil
 }
 
 func (x *TsamRecommendationApplied) GetSourceDeviceId() string {
@@ -2022,13 +1767,13 @@ type TspEvent struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	Kind              string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	TspNumber         uint32                 `protobuf:"varint,10,opt,name=tsp_number,json=tspNumber,proto3" json:"tsp_number,omitempty"`
-	VehicleId         string                 `protobuf:"bytes,3,opt,name=vehicle_id,json=vehicleId,proto3" json:"vehicle_id,omitempty"`
-	PriorityClass     uint32                 `protobuf:"varint,4,opt,name=priority_class,json=priorityClass,proto3" json:"priority_class,omitempty"`
-	AdjustmentSeconds string                 `protobuf:"bytes,5,opt,name=adjustment_seconds,json=adjustmentSeconds,proto3" json:"adjustment_seconds,omitempty"`
-	DenialReason      DenialReason           `protobuf:"varint,11,opt,name=denial_reason,json=denialReason,proto3,enum=openits.signal_control.v1.DenialReason" json:"denial_reason,omitempty"`
-	ObservedBy        string                 `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	VehicleId         *string                `protobuf:"bytes,3,opt,name=vehicle_id,json=vehicleId,proto3,oneof" json:"vehicle_id,omitempty"`
+	PriorityClass     *uint32                `protobuf:"varint,4,opt,name=priority_class,json=priorityClass,proto3,oneof" json:"priority_class,omitempty"`
+	AdjustmentSeconds *string                `protobuf:"bytes,5,opt,name=adjustment_seconds,json=adjustmentSeconds,proto3,oneof" json:"adjustment_seconds,omitempty"`
+	DenialReason      *DenialReason          `protobuf:"varint,11,opt,name=denial_reason,json=denialReason,proto3,enum=openits.signal_control.v1.DenialReason,oneof" json:"denial_reason,omitempty"`
+	ObservedBy        *string                `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner             string                 `protobuf:"bytes,8,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner             *string                `protobuf:"bytes,8,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence          uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	Source            *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId    string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -2081,36 +1826,36 @@ func (x *TspEvent) GetTspNumber() uint32 {
 }
 
 func (x *TspEvent) GetVehicleId() string {
-	if x != nil {
-		return x.VehicleId
+	if x != nil && x.VehicleId != nil {
+		return *x.VehicleId
 	}
 	return ""
 }
 
 func (x *TspEvent) GetPriorityClass() uint32 {
-	if x != nil {
-		return x.PriorityClass
+	if x != nil && x.PriorityClass != nil {
+		return *x.PriorityClass
 	}
 	return 0
 }
 
 func (x *TspEvent) GetAdjustmentSeconds() string {
-	if x != nil {
-		return x.AdjustmentSeconds
+	if x != nil && x.AdjustmentSeconds != nil {
+		return *x.AdjustmentSeconds
 	}
 	return ""
 }
 
 func (x *TspEvent) GetDenialReason() DenialReason {
-	if x != nil {
-		return x.DenialReason
+	if x != nil && x.DenialReason != nil {
+		return *x.DenialReason
 	}
 	return DenialReason_DENIAL_REASON_UNSPECIFIED
 }
 
 func (x *TspEvent) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -2123,8 +1868,8 @@ func (x *TspEvent) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *TspEvent) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -2153,9 +1898,9 @@ func (x *TspEvent) GetSourceDeviceId() string {
 type UnmappedEvent struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,3,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,3,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,4,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,4,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,5,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,6,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -2201,8 +1946,8 @@ func (x *UnmappedEvent) GetKind() string {
 }
 
 func (x *UnmappedEvent) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -2215,8 +1960,8 @@ func (x *UnmappedEvent) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *UnmappedEvent) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -2246,268 +1991,329 @@ var File_openits_signal_control_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"&openits/signal_control/v1/events.proto\x12\x19openits.signal_control.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1copenits/types/v1/types.proto\"\xd6\x03\n" +
+	"&openits/signal_control/v1/events.proto\x12\x19openits.signal_control.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%openits/signal_control/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\xa4\x04\n" +
 	"\x14ControllerFaultEvent\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x19\n" +
 	"\bfault_id\x18\x02 \x01(\tR\afaultId\x12D\n" +
-	"\bseverity\x18\x03 \x01(\x0e2(.openits.signal_control.v1.FaultSeverityR\bseverity\x12 \n" +
-	"\vdescription\x18\x04 \x01(\tR\vdescription\x12\x16\n" +
-	"\x06raised\x18\x05 \x01(\bR\x06raised\x12\x1f\n" +
+	"\bseverity\x18\x03 \x01(\x0e2(.openits.signal_control.v1.FaultSeverityR\bseverity\x12%\n" +
+	"\vdescription\x18\x04 \x01(\tH\x00R\vdescription\x88\x01\x01\x12\x16\n" +
+	"\x06raised\x18\x05 \x01(\bR\x06raised\x12$\n" +
 	"\vflash_cause\x18\n" +
-	" \x01(\tR\n" +
-	"flashCause\x12\x1f\n" +
-	"\vobserved_by\x18\a \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	" \x01(\tH\x01R\n" +
+	"flashCause\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\a \x01(\tH\x02R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\b \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\b \x01(\tH\x03R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\t \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xff\x02\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x0e\n" +
+	"\f_descriptionB\x0e\n" +
+	"\f_flash_causeB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\x9e\b\n" +
 	"\x12CoordinationChange\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12\x1b\n" +
-	"\tnew_value\x18\x03 \x01(\x05R\bnewValue\x12!\n" +
-	"\fsplit_number\x18\x04 \x01(\rR\vsplitNumber\x12%\n" +
-	"\x0eprevious_value\x18\x05 \x01(\x05R\rpreviousValue\x12\x1f\n" +
-	"\vobserved_by\x18\a \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12&\n" +
+	"\fphase_number\x18\x02 \x01(\rH\x00R\vphaseNumber\x88\x01\x01\x12\x1d\n" +
+	"\apattern\x18\n" +
+	" \x01(\rH\x01R\apattern\x88\x01\x01\x12.\n" +
+	"\x10previous_pattern\x18\v \x01(\rH\x02R\x0fpreviousPattern\x88\x01\x01\x12)\n" +
+	"\x0ecycle_length_s\x18\f \x01(\rH\x03R\fcycleLengthS\x88\x01\x01\x12:\n" +
+	"\x17previous_cycle_length_s\x18\r \x01(\rH\x04R\x14previousCycleLengthS\x88\x01\x01\x12\x1e\n" +
+	"\boffset_s\x18\x0e \x01(\rH\x05R\aoffsetS\x88\x01\x01\x12/\n" +
+	"\x11previous_offset_s\x18\x0f \x01(\rH\x06R\x0fpreviousOffsetS\x88\x01\x01\x12\x1c\n" +
+	"\asplit_s\x18\x10 \x01(\rH\aR\x06splitS\x88\x01\x01\x12-\n" +
+	"\x10previous_split_s\x18\x11 \x01(\rH\bR\x0epreviousSplitS\x88\x01\x01\x12$\n" +
+	"\vcycle_state\x18\x12 \x01(\tH\tR\n" +
+	"cycleState\x88\x01\x01\x125\n" +
+	"\x14previous_cycle_state\x18\x13 \x01(\tH\n" +
+	"R\x12previousCycleState\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\a \x01(\tH\vR\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\b \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\b \x01(\tH\fR\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\t \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xa0\x03\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x0f\n" +
+	"\r_phase_numberB\n" +
+	"\n" +
+	"\b_patternB\x13\n" +
+	"\x11_previous_patternB\x11\n" +
+	"\x0f_cycle_length_sB\x1a\n" +
+	"\x18_previous_cycle_length_sB\v\n" +
+	"\t_offset_sB\x14\n" +
+	"\x12_previous_offset_sB\n" +
+	"\n" +
+	"\b_split_sB\x13\n" +
+	"\x11_previous_split_sB\x0e\n" +
+	"\f_cycle_stateB\x17\n" +
+	"\x15_previous_cycle_stateB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_ownerJ\x04\b\x03\x10\x04J\x04\b\x04\x10\x05J\x04\b\x05\x10\x06R\tnew_valueR\fsplit_numberR\x0eprevious_value\"\xe1\x03\n" +
 	"\x0eDetectorReport\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12A\n" +
-	"\x0einterval_start\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\rintervalStart\x12.\n" +
-	"\x13interval_duration_s\x18\x03 \x01(\rR\x11intervalDurationS\x12M\n" +
-	"\bdetector\x18\x04 \x03(\v21.openits.signal_control.v1.DetectorReportDetectorR\bdetector\x12\x1f\n" +
-	"\vobserved_by\x18\x06 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x0einterval_start\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\rintervalStart\x123\n" +
+	"\x13interval_duration_s\x18\x03 \x01(\rH\x00R\x11intervalDurationS\x88\x01\x01\x12M\n" +
+	"\bdetector\x18\x04 \x03(\v21.openits.signal_control.v1.DetectorReportDetectorR\bdetector\x12$\n" +
+	"\vobserved_by\x18\x06 \x01(\tH\x01R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\a \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\a \x01(\tH\x02R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\b \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\x92\x01\n" +
-	"\x16DetectorReportDetector\x12\x1f\n" +
-	"\vdetector_id\x18\x01 \x01(\rR\n" +
-	"detectorId\x12!\n" +
-	"\fphase_served\x18\x02 \x01(\rR\vphaseServed\x12\x16\n" +
-	"\x06volume\x18\x03 \x01(\rR\x06volume\x12\x1c\n" +
-	"\toccupancy\x18\x04 \x01(\tR\toccupancy\"\x85\x03\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x16\n" +
+	"\x14_interval_duration_sB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xe0\x01\n" +
+	"\x16DetectorReportDetector\x12$\n" +
+	"\vdetector_id\x18\x01 \x01(\rH\x00R\n" +
+	"detectorId\x88\x01\x01\x12&\n" +
+	"\fphase_served\x18\x02 \x01(\rH\x01R\vphaseServed\x88\x01\x01\x12\x1b\n" +
+	"\x06volume\x18\x03 \x01(\rH\x02R\x06volume\x88\x01\x01\x12!\n" +
+	"\toccupancy\x18\x04 \x01(\tH\x03R\toccupancy\x88\x01\x01B\x0e\n" +
+	"\f_detector_idB\x0f\n" +
+	"\r_phase_servedB\t\n" +
+	"\a_volumeB\f\n" +
+	"\n" +
+	"_occupancy\"\xab\x03\n" +
 	"\x12DetectorTransition\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x18\n" +
-	"\achannel\x18\x02 \x01(\rR\achannel\x12\x12\n" +
-	"\x04lane\x18\x04 \x01(\tR\x04lane\x12\x1a\n" +
-	"\bapproach\x18\x05 \x01(\tR\bapproach\x12!\n" +
-	"\fphase_served\x18\x06 \x01(\rR\vphaseServed\x12\x1f\n" +
-	"\vobserved_by\x18\b \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\achannel\x18\x02 \x01(\rR\achannel\x12&\n" +
+	"\fphase_served\x18\x06 \x01(\rH\x00R\vphaseServed\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\b \x01(\tH\x01R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\t \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\t \x01(\tH\x02R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\n" +
 	" \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xac\x03\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x0f\n" +
+	"\r_phase_servedB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_ownerJ\x04\b\x04\x10\x05J\x04\b\x05\x10\x06R\x04laneR\bapproach\"\xa1\x04\n" +
 	"\x17OperationalStatusReport\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12\x12\n" +
-	"\x04mode\x18\x02 \x01(\tR\x04mode\x12!\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12\x17\n" +
+	"\x04mode\x18\x02 \x01(\tH\x00R\x04mode\x88\x01\x01\x12&\n" +
 	"\fflash_active\x18\n" +
-	" \x01(\bR\vflashActive\x12\x1f\n" +
-	"\vflash_cause\x18\v \x01(\tR\n" +
-	"flashCause\x12D\n" +
-	"\x10last_mode_change\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x0elastModeChange\x12%\n" +
-	"\x0euptime_seconds\x18\x05 \x01(\x04R\ruptimeSeconds\x12\x1f\n" +
-	"\vobserved_by\x18\a \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	" \x01(\bH\x01R\vflashActive\x88\x01\x01\x12$\n" +
+	"\vflash_cause\x18\v \x01(\tH\x02R\n" +
+	"flashCause\x88\x01\x01\x12D\n" +
+	"\x10last_mode_change\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x0elastModeChange\x12*\n" +
+	"\x0euptime_seconds\x18\x05 \x01(\x04H\x03R\ruptimeSeconds\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\a \x01(\tH\x04R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\b \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\b \x01(\tH\x05R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\t \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xba\x02\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\a\n" +
+	"\x05_modeB\x0f\n" +
+	"\r_flash_activeB\x0e\n" +
+	"\f_flash_causeB\x11\n" +
+	"\x0f_uptime_secondsB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xde\x02\n" +
 	"\rOverlapChange\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12%\n" +
-	"\x0eoverlap_number\x18\x02 \x01(\rR\roverlapNumber\x12\x1f\n" +
-	"\vobserved_by\x18\x05 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x0eoverlap_number\x18\x02 \x01(\rR\roverlapNumber\x12$\n" +
+	"\vobserved_by\x18\x05 \x01(\tH\x00R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\x06 \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\x06 \x01(\tH\x01R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\a \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xe3\x02\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xb7\x03\n" +
 	"\x0fPedestrianEvent\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12!\n" +
-	"\fphase_number\x18\x02 \x01(\rR\vphaseNumber\x12)\n" +
-	"\x10detector_channel\x18\x03 \x01(\rR\x0fdetectorChannel\x12\x1f\n" +
-	"\vobserved_by\x18\x06 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12&\n" +
+	"\fphase_number\x18\x02 \x01(\rH\x00R\vphaseNumber\x88\x01\x01\x12.\n" +
+	"\x10detector_channel\x18\x03 \x01(\rH\x01R\x0fdetectorChannel\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x06 \x01(\tH\x02R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\a \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\a \x01(\tH\x03R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\b \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\x83\x03\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x0f\n" +
+	"\r_phase_numberB\x13\n" +
+	"\x11_detector_channelB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xd5\x03\n" +
 	"\x10PhaseStateChange\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12!\n" +
-	"\fphase_number\x18\x02 \x01(\rR\vphaseNumber\x12\x1f\n" +
-	"\vhold_active\x18\x05 \x01(\bR\n" +
-	"holdActive\x12'\n" +
-	"\x0fcall_registered\x18\x06 \x01(\bR\x0ecallRegistered\x12\x1f\n" +
-	"\vobserved_by\x18\b \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\fphase_number\x18\x02 \x01(\rR\vphaseNumber\x12$\n" +
+	"\vhold_active\x18\x05 \x01(\bH\x00R\n" +
+	"holdActive\x88\x01\x01\x12,\n" +
+	"\x0fcall_registered\x18\x06 \x01(\bH\x01R\x0ecallRegistered\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\b \x01(\tH\x02R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\t \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\t \x01(\tH\x03R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\n" +
 	" \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\x8d\x03\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x0e\n" +
+	"\f_hold_activeB\x12\n" +
+	"\x10_call_registeredB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xfd\x03\n" +
 	"\vPlanApplied\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12\x17\n" +
-	"\aplan_id\x18\x02 \x01(\rR\x06planId\x12$\n" +
-	"\x0ecycle_length_s\x18\x03 \x01(\rR\fcycleLengthS\x12\x19\n" +
-	"\boffset_s\x18\x04 \x01(\rR\aoffsetS\x12\x1b\n" +
-	"\tsplit_set\x18\x05 \x01(\rR\bsplitSet\x129\n" +
-	"\x06source\x18\x06 \x01(\x0e2!.openits.signal_control.v1.SourceR\x06source\x12\x1f\n" +
-	"\vobserved_by\x18\b \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12\x1c\n" +
+	"\aplan_id\x18\x02 \x01(\rH\x00R\x06planId\x88\x01\x01\x12)\n" +
+	"\x0ecycle_length_s\x18\x03 \x01(\rH\x01R\fcycleLengthS\x88\x01\x01\x12\x1e\n" +
+	"\boffset_s\x18\x04 \x01(\rH\x02R\aoffsetS\x88\x01\x01\x12 \n" +
+	"\tsplit_set\x18\x05 \x01(\rH\x03R\bsplitSet\x88\x01\x01\x12\x1d\n" +
+	"\atrigger\x18\v \x01(\tH\x04R\atrigger\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\b \x01(\tH\x05R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\t \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\t \x01(\tH\x06R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\n" +
 	" \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xf1\x02\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\n" +
+	"\n" +
+	"\b_plan_idB\x11\n" +
+	"\x0f_cycle_length_sB\v\n" +
+	"\t_offset_sB\f\n" +
+	"\n" +
+	"_split_setB\n" +
+	"\n" +
+	"\b_triggerB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_ownerJ\x04\b\x06\x10\aR\x06source\"\xa8\x03\n" +
 	"\x13PreemptionActivated\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12%\n" +
 	"\x0epreempt_number\x18\b \x01(\rR\rpreemptNumber\x12\x12\n" +
-	"\x04type\x18\x02 \x01(\tR\x04type\x12\x1b\n" +
-	"\tsource_id\x18\x03 \x01(\tR\bsourceId\x12\x1f\n" +
-	"\vobserved_by\x18\x05 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04type\x18\x02 \x01(\tR\x04type\x12 \n" +
+	"\tsource_id\x18\x03 \x01(\tH\x00R\bsourceId\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x05 \x01(\tH\x01R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\x06 \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\x06 \x01(\tH\x02R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\a \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xef\x02\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\f\n" +
+	"\n" +
+	"_source_idB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xa6\x03\n" +
 	"\x11PreemptionCleared\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12%\n" +
 	"\x0epreempt_number\x18\b \x01(\rR\rpreemptNumber\x12\x12\n" +
-	"\x04type\x18\x02 \x01(\tR\x04type\x12\x1b\n" +
-	"\tsource_id\x18\x03 \x01(\tR\bsourceId\x12\x1f\n" +
-	"\vobserved_by\x18\x05 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04type\x18\x02 \x01(\tR\x04type\x12 \n" +
+	"\tsource_id\x18\x03 \x01(\tH\x00R\bsourceId\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x05 \x01(\tH\x01R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\x06 \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\x06 \x01(\tH\x02R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\a \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xd9\x02\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\f\n" +
+	"\n" +
+	"_source_idB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xa8\x03\n" +
 	"\x0fPreemptionEvent\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12%\n" +
-	"\x0epreempt_number\x18\x02 \x01(\rR\rpreemptNumber\x12\x1b\n" +
-	"\tsource_id\x18\x04 \x01(\tR\bsourceId\x12\x1f\n" +
-	"\vobserved_by\x18\x06 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12*\n" +
+	"\x0epreempt_number\x18\x02 \x01(\rH\x00R\rpreemptNumber\x88\x01\x01\x12 \n" +
+	"\tsource_id\x18\x04 \x01(\tH\x01R\bsourceId\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x06 \x01(\tH\x02R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\a \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\a \x01(\tH\x03R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\b \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xbd\x03\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x11\n" +
+	"\x0f_preempt_numberB\f\n" +
+	"\n" +
+	"_source_idB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xd8\x03\n" +
 	"\x0fTsamModeChanged\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12D\n" +
-	"\x05prior\x18\x02 \x01(\x0e2..openits.signal_control.v1.TsamEngagementStateR\x05prior\x12H\n" +
-	"\acurrent\x18\x03 \x01(\x0e2..openits.signal_control.v1.TsamEngagementStateR\acurrent\x12\x16\n" +
-	"\x06reason\x18\x04 \x01(\tR\x06reason\x12\x1f\n" +
-	"\vobserved_by\x18\a \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12I\n" +
+	"\x05prior\x18\x02 \x01(\x0e2..openits.signal_control.v1.TsamEngagementStateH\x00R\x05prior\x88\x01\x01\x12H\n" +
+	"\acurrent\x18\x03 \x01(\x0e2..openits.signal_control.v1.TsamEngagementStateR\acurrent\x12\x1b\n" +
+	"\x06reason\x18\x04 \x01(\tH\x01R\x06reason\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\a \x01(\tH\x02R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\b \x01(\tR\x05owner\x12\x1a\n" +
-	"\bsequence\x18\t \x01(\x04R\bsequence\x124\n" +
-	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\x8e\x04\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\b \x01(\tH\x03R\x05owner\x88\x01\x01\x12\x1a\n" +
+	"\bsequence\x18\t \x01(\x04R\bsequence\x12(\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\b\n" +
+	"\x06_priorB\t\n" +
+	"\a_reasonB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_ownerJ\x04\bd\x10eR\x06source\"\xe9\x04\n" +
 	"\x19TsamRecommendationApplied\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12+\n" +
-	"\x11recommendation_id\x18\x02 \x01(\tR\x10recommendationId\x12R\n" +
-	"\x0fadjustment_type\x18\x03 \x01(\x0e2).openits.signal_control.v1.AdjustmentTypeR\x0eadjustmentType\x12+\n" +
-	"\x11magnitude_seconds\x18\x04 \x01(\tR\x10magnitudeSeconds\x12!\n" +
-	"\fphase_number\x18\x05 \x01(\rR\vphaseNumber\x12\x1c\n" +
-	"\trationale\x18\x06 \x01(\tR\trationale\x12\x1f\n" +
-	"\vobserved_by\x18\t \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x120\n" +
+	"\x11recommendation_id\x18\x02 \x01(\tH\x00R\x10recommendationId\x88\x01\x01\x12R\n" +
+	"\x0fadjustment_type\x18\x03 \x01(\x0e2).openits.signal_control.v1.AdjustmentTypeR\x0eadjustmentType\x120\n" +
+	"\x11magnitude_seconds\x18\x04 \x01(\tH\x01R\x10magnitudeSeconds\x88\x01\x01\x12&\n" +
+	"\fphase_number\x18\x05 \x01(\rH\x02R\vphaseNumber\x88\x01\x01\x12!\n" +
+	"\trationale\x18\x06 \x01(\tH\x03R\trationale\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\t \x01(\tH\x04R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
+	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\n" +
-	" \x01(\tR\x05owner\x12\x1a\n" +
-	"\bsequence\x18\v \x01(\x04R\bsequence\x124\n" +
-	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xf0\x03\n" +
+	" \x01(\tH\x05R\x05owner\x88\x01\x01\x12\x1a\n" +
+	"\bsequence\x18\v \x01(\x04R\bsequence\x12(\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x14\n" +
+	"\x12_recommendation_idB\x14\n" +
+	"\x12_magnitude_secondsB\x0f\n" +
+	"\r_phase_numberB\f\n" +
+	"\n" +
+	"_rationaleB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_ownerJ\x04\bd\x10eR\x06source\"\xf3\x04\n" +
 	"\bTspEvent\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x1d\n" +
 	"\n" +
 	"tsp_number\x18\n" +
-	" \x01(\rR\ttspNumber\x12\x1d\n" +
+	" \x01(\rR\ttspNumber\x12\"\n" +
 	"\n" +
-	"vehicle_id\x18\x03 \x01(\tR\tvehicleId\x12%\n" +
-	"\x0epriority_class\x18\x04 \x01(\rR\rpriorityClass\x12-\n" +
-	"\x12adjustment_seconds\x18\x05 \x01(\tR\x11adjustmentSeconds\x12L\n" +
-	"\rdenial_reason\x18\v \x01(\x0e2'.openits.signal_control.v1.DenialReasonR\fdenialReason\x12\x1f\n" +
-	"\vobserved_by\x18\a \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"vehicle_id\x18\x03 \x01(\tH\x00R\tvehicleId\x88\x01\x01\x12*\n" +
+	"\x0epriority_class\x18\x04 \x01(\rH\x01R\rpriorityClass\x88\x01\x01\x122\n" +
+	"\x12adjustment_seconds\x18\x05 \x01(\tH\x02R\x11adjustmentSeconds\x88\x01\x01\x12Q\n" +
+	"\rdenial_reason\x18\v \x01(\x0e2'.openits.signal_control.v1.DenialReasonH\x03R\fdenialReason\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\a \x01(\tH\x04R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\b \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\b \x01(\tH\x05R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\t \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\x93\x02\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\r\n" +
+	"\v_vehicle_idB\x11\n" +
+	"\x0f_priority_classB\x15\n" +
+	"\x13_adjustment_secondsB\x10\n" +
+	"\x0e_denial_reasonB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xb7\x02\n" +
 	"\rUnmappedEvent\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12\x1f\n" +
-	"\vobserved_by\x18\x03 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12$\n" +
+	"\vobserved_by\x18\x03 \x01(\tH\x00R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\x04 \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\x04 \x01(\tH\x01R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\x05 \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x06 \x01(\tR\x0esourceDeviceId*\x95\x01\n" +
-	"\rFaultSeverity\x12\x17\n" +
-	"\x13FAULT_SEVERITY_INFO\x10\x00\x12\x1a\n" +
-	"\x16FAULT_SEVERITY_WARNING\x10\x01\x12\x18\n" +
-	"\x14FAULT_SEVERITY_MINOR\x10\x02\x12\x18\n" +
-	"\x14FAULT_SEVERITY_MAJOR\x10\x03\x12\x1b\n" +
-	"\x17FAULT_SEVERITY_CRITICAL\x10\x04*v\n" +
-	"\x06Source\x12\x16\n" +
-	"\x12SOURCE_UNSPECIFIED\x10\x00\x12\x13\n" +
-	"\x0fSOURCE_SCHEDULE\x10\x01\x12\x13\n" +
-	"\x0fSOURCE_OPERATOR\x10\x02\x12\x13\n" +
-	"\x0fSOURCE_ADAPTIVE\x10\x03\x12\x15\n" +
-	"\x11SOURCE_PREEMPTION\x10\x04*\xcb\x01\n" +
-	"\x13TsamEngagementState\x12%\n" +
-	"!TSAM_ENGAGEMENT_STATE_UNSPECIFIED\x10\x00\x12\"\n" +
-	"\x1eTSAM_ENGAGEMENT_STATE_DISABLED\x10\x01\x12\"\n" +
-	"\x1eTSAM_ENGAGEMENT_STATE_ADVISORY\x10\x02\x12 \n" +
-	"\x1cTSAM_ENGAGEMENT_STATE_ACTIVE\x10\x03\x12#\n" +
-	"\x1fTSAM_ENGAGEMENT_STATE_SUSPENDED\x10\x04*\xa7\x02\n" +
-	"\x0eAdjustmentType\x12\x1f\n" +
-	"\x1bADJUSTMENT_TYPE_UNSPECIFIED\x10\x00\x12 \n" +
-	"\x1cADJUSTMENT_TYPE_CYCLE_LENGTH\x10\x01\x12$\n" +
-	" ADJUSTMENT_TYPE_SPLIT_ADJUSTMENT\x10\x02\x12%\n" +
-	"!ADJUSTMENT_TYPE_OFFSET_ADJUSTMENT\x10\x03\x12#\n" +
-	"\x1fADJUSTMENT_TYPE_PHASE_EXTENSION\x10\x04\x12$\n" +
-	" ADJUSTMENT_TYPE_PHASE_TRUNCATION\x10\x05\x12\x1f\n" +
-	"\x1bADJUSTMENT_TYPE_PLAN_CHANGE\x10\x06\x12\x19\n" +
-	"\x15ADJUSTMENT_TYPE_OTHER\x10\a*\xd4\x01\n" +
-	"\fDenialReason\x12\x1d\n" +
-	"\x19DENIAL_REASON_UNSPECIFIED\x10\x00\x12 \n" +
-	"\x1cDENIAL_REASON_RESERVICE_LOCK\x10\x01\x12\"\n" +
-	"\x1eDENIAL_REASON_COORD_CONSTRAINT\x10\x02\x12*\n" +
-	"&DENIAL_REASON_HIGHER_PRIORITY_CONFLICT\x10\x03\x12\x1a\n" +
-	"\x16DENIAL_REASON_DISABLED\x10\x04\x12\x17\n" +
-	"\x13DENIAL_REASON_OTHER\x10\x05BXZVgithub.com/Vikasa2M/openits-models/pkg/proto/openits/signal_control/v1;signalcontrolv1b\x06proto3"
+	"\x10source_device_id\x18\x06 \x01(\tR\x0esourceDeviceIdB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_ownerBXZVgithub.com/Vikasa2M/openits-models/pkg/proto/openits/signal_control/v1;signalcontrolv1b\x06proto3"
 
 var (
 	file_openits_signal_control_v1_events_proto_rawDescOnce sync.Once
@@ -2521,78 +2327,73 @@ func file_openits_signal_control_v1_events_proto_rawDescGZIP() []byte {
 	return file_openits_signal_control_v1_events_proto_rawDescData
 }
 
-var file_openits_signal_control_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
 var file_openits_signal_control_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_openits_signal_control_v1_events_proto_goTypes = []any{
-	(FaultSeverity)(0),                // 0: openits.signal_control.v1.FaultSeverity
-	(Source)(0),                       // 1: openits.signal_control.v1.Source
-	(TsamEngagementState)(0),          // 2: openits.signal_control.v1.TsamEngagementState
-	(AdjustmentType)(0),               // 3: openits.signal_control.v1.AdjustmentType
-	(DenialReason)(0),                 // 4: openits.signal_control.v1.DenialReason
-	(*ControllerFaultEvent)(nil),      // 5: openits.signal_control.v1.ControllerFaultEvent
-	(*CoordinationChange)(nil),        // 6: openits.signal_control.v1.CoordinationChange
-	(*DetectorReport)(nil),            // 7: openits.signal_control.v1.DetectorReport
-	(*DetectorReportDetector)(nil),    // 8: openits.signal_control.v1.DetectorReportDetector
-	(*DetectorTransition)(nil),        // 9: openits.signal_control.v1.DetectorTransition
-	(*OperationalStatusReport)(nil),   // 10: openits.signal_control.v1.OperationalStatusReport
-	(*OverlapChange)(nil),             // 11: openits.signal_control.v1.OverlapChange
-	(*PedestrianEvent)(nil),           // 12: openits.signal_control.v1.PedestrianEvent
-	(*PhaseStateChange)(nil),          // 13: openits.signal_control.v1.PhaseStateChange
-	(*PlanApplied)(nil),               // 14: openits.signal_control.v1.PlanApplied
-	(*PreemptionActivated)(nil),       // 15: openits.signal_control.v1.PreemptionActivated
-	(*PreemptionCleared)(nil),         // 16: openits.signal_control.v1.PreemptionCleared
-	(*PreemptionEvent)(nil),           // 17: openits.signal_control.v1.PreemptionEvent
-	(*TsamModeChanged)(nil),           // 18: openits.signal_control.v1.TsamModeChanged
-	(*TsamRecommendationApplied)(nil), // 19: openits.signal_control.v1.TsamRecommendationApplied
-	(*TspEvent)(nil),                  // 20: openits.signal_control.v1.TspEvent
-	(*UnmappedEvent)(nil),             // 21: openits.signal_control.v1.UnmappedEvent
-	(*timestamppb.Timestamp)(nil),     // 22: google.protobuf.Timestamp
-	(*v1.WireSource)(nil),             // 23: openits.types.v1.WireSource
+	(*ControllerFaultEvent)(nil),      // 0: openits.signal_control.v1.ControllerFaultEvent
+	(*CoordinationChange)(nil),        // 1: openits.signal_control.v1.CoordinationChange
+	(*DetectorReport)(nil),            // 2: openits.signal_control.v1.DetectorReport
+	(*DetectorReportDetector)(nil),    // 3: openits.signal_control.v1.DetectorReportDetector
+	(*DetectorTransition)(nil),        // 4: openits.signal_control.v1.DetectorTransition
+	(*OperationalStatusReport)(nil),   // 5: openits.signal_control.v1.OperationalStatusReport
+	(*OverlapChange)(nil),             // 6: openits.signal_control.v1.OverlapChange
+	(*PedestrianEvent)(nil),           // 7: openits.signal_control.v1.PedestrianEvent
+	(*PhaseStateChange)(nil),          // 8: openits.signal_control.v1.PhaseStateChange
+	(*PlanApplied)(nil),               // 9: openits.signal_control.v1.PlanApplied
+	(*PreemptionActivated)(nil),       // 10: openits.signal_control.v1.PreemptionActivated
+	(*PreemptionCleared)(nil),         // 11: openits.signal_control.v1.PreemptionCleared
+	(*PreemptionEvent)(nil),           // 12: openits.signal_control.v1.PreemptionEvent
+	(*TsamModeChanged)(nil),           // 13: openits.signal_control.v1.TsamModeChanged
+	(*TsamRecommendationApplied)(nil), // 14: openits.signal_control.v1.TsamRecommendationApplied
+	(*TspEvent)(nil),                  // 15: openits.signal_control.v1.TspEvent
+	(*UnmappedEvent)(nil),             // 16: openits.signal_control.v1.UnmappedEvent
+	(FaultSeverity)(0),                // 17: openits.signal_control.v1.FaultSeverity
+	(*timestamppb.Timestamp)(nil),     // 18: google.protobuf.Timestamp
+	(*v1.WireSource)(nil),             // 19: openits.types.v1.WireSource
+	(TsamEngagementState)(0),          // 20: openits.signal_control.v1.TsamEngagementState
+	(AdjustmentType)(0),               // 21: openits.signal_control.v1.AdjustmentType
+	(DenialReason)(0),                 // 22: openits.signal_control.v1.DenialReason
 }
 var file_openits_signal_control_v1_events_proto_depIdxs = []int32{
-	0,  // 0: openits.signal_control.v1.ControllerFaultEvent.severity:type_name -> openits.signal_control.v1.FaultSeverity
-	22, // 1: openits.signal_control.v1.ControllerFaultEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	23, // 2: openits.signal_control.v1.ControllerFaultEvent.source:type_name -> openits.types.v1.WireSource
-	22, // 3: openits.signal_control.v1.CoordinationChange.occurred_at:type_name -> google.protobuf.Timestamp
-	23, // 4: openits.signal_control.v1.CoordinationChange.source:type_name -> openits.types.v1.WireSource
-	22, // 5: openits.signal_control.v1.DetectorReport.interval_start:type_name -> google.protobuf.Timestamp
-	8,  // 6: openits.signal_control.v1.DetectorReport.detector:type_name -> openits.signal_control.v1.DetectorReportDetector
-	22, // 7: openits.signal_control.v1.DetectorReport.occurred_at:type_name -> google.protobuf.Timestamp
-	22, // 8: openits.signal_control.v1.DetectorTransition.occurred_at:type_name -> google.protobuf.Timestamp
-	23, // 9: openits.signal_control.v1.DetectorTransition.source:type_name -> openits.types.v1.WireSource
-	22, // 10: openits.signal_control.v1.OperationalStatusReport.last_mode_change:type_name -> google.protobuf.Timestamp
-	22, // 11: openits.signal_control.v1.OperationalStatusReport.occurred_at:type_name -> google.protobuf.Timestamp
-	22, // 12: openits.signal_control.v1.OverlapChange.occurred_at:type_name -> google.protobuf.Timestamp
-	23, // 13: openits.signal_control.v1.OverlapChange.source:type_name -> openits.types.v1.WireSource
-	22, // 14: openits.signal_control.v1.PedestrianEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	23, // 15: openits.signal_control.v1.PedestrianEvent.source:type_name -> openits.types.v1.WireSource
-	22, // 16: openits.signal_control.v1.PhaseStateChange.occurred_at:type_name -> google.protobuf.Timestamp
-	23, // 17: openits.signal_control.v1.PhaseStateChange.source:type_name -> openits.types.v1.WireSource
-	1,  // 18: openits.signal_control.v1.PlanApplied.source:type_name -> openits.signal_control.v1.Source
-	22, // 19: openits.signal_control.v1.PlanApplied.occurred_at:type_name -> google.protobuf.Timestamp
-	22, // 20: openits.signal_control.v1.PreemptionActivated.occurred_at:type_name -> google.protobuf.Timestamp
-	23, // 21: openits.signal_control.v1.PreemptionActivated.source:type_name -> openits.types.v1.WireSource
-	22, // 22: openits.signal_control.v1.PreemptionCleared.occurred_at:type_name -> google.protobuf.Timestamp
-	23, // 23: openits.signal_control.v1.PreemptionCleared.source:type_name -> openits.types.v1.WireSource
-	22, // 24: openits.signal_control.v1.PreemptionEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	23, // 25: openits.signal_control.v1.PreemptionEvent.source:type_name -> openits.types.v1.WireSource
-	2,  // 26: openits.signal_control.v1.TsamModeChanged.prior:type_name -> openits.signal_control.v1.TsamEngagementState
-	2,  // 27: openits.signal_control.v1.TsamModeChanged.current:type_name -> openits.signal_control.v1.TsamEngagementState
-	22, // 28: openits.signal_control.v1.TsamModeChanged.occurred_at:type_name -> google.protobuf.Timestamp
-	23, // 29: openits.signal_control.v1.TsamModeChanged.source:type_name -> openits.types.v1.WireSource
-	3,  // 30: openits.signal_control.v1.TsamRecommendationApplied.adjustment_type:type_name -> openits.signal_control.v1.AdjustmentType
-	22, // 31: openits.signal_control.v1.TsamRecommendationApplied.occurred_at:type_name -> google.protobuf.Timestamp
-	23, // 32: openits.signal_control.v1.TsamRecommendationApplied.source:type_name -> openits.types.v1.WireSource
-	4,  // 33: openits.signal_control.v1.TspEvent.denial_reason:type_name -> openits.signal_control.v1.DenialReason
-	22, // 34: openits.signal_control.v1.TspEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	23, // 35: openits.signal_control.v1.TspEvent.source:type_name -> openits.types.v1.WireSource
-	22, // 36: openits.signal_control.v1.UnmappedEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	23, // 37: openits.signal_control.v1.UnmappedEvent.source:type_name -> openits.types.v1.WireSource
-	38, // [38:38] is the sub-list for method output_type
-	38, // [38:38] is the sub-list for method input_type
-	38, // [38:38] is the sub-list for extension type_name
-	38, // [38:38] is the sub-list for extension extendee
-	0,  // [0:38] is the sub-list for field type_name
+	17, // 0: openits.signal_control.v1.ControllerFaultEvent.severity:type_name -> openits.signal_control.v1.FaultSeverity
+	18, // 1: openits.signal_control.v1.ControllerFaultEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	19, // 2: openits.signal_control.v1.ControllerFaultEvent.source:type_name -> openits.types.v1.WireSource
+	18, // 3: openits.signal_control.v1.CoordinationChange.occurred_at:type_name -> google.protobuf.Timestamp
+	19, // 4: openits.signal_control.v1.CoordinationChange.source:type_name -> openits.types.v1.WireSource
+	18, // 5: openits.signal_control.v1.DetectorReport.interval_start:type_name -> google.protobuf.Timestamp
+	3,  // 6: openits.signal_control.v1.DetectorReport.detector:type_name -> openits.signal_control.v1.DetectorReportDetector
+	18, // 7: openits.signal_control.v1.DetectorReport.occurred_at:type_name -> google.protobuf.Timestamp
+	18, // 8: openits.signal_control.v1.DetectorTransition.occurred_at:type_name -> google.protobuf.Timestamp
+	19, // 9: openits.signal_control.v1.DetectorTransition.source:type_name -> openits.types.v1.WireSource
+	18, // 10: openits.signal_control.v1.OperationalStatusReport.last_mode_change:type_name -> google.protobuf.Timestamp
+	18, // 11: openits.signal_control.v1.OperationalStatusReport.occurred_at:type_name -> google.protobuf.Timestamp
+	18, // 12: openits.signal_control.v1.OverlapChange.occurred_at:type_name -> google.protobuf.Timestamp
+	19, // 13: openits.signal_control.v1.OverlapChange.source:type_name -> openits.types.v1.WireSource
+	18, // 14: openits.signal_control.v1.PedestrianEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	19, // 15: openits.signal_control.v1.PedestrianEvent.source:type_name -> openits.types.v1.WireSource
+	18, // 16: openits.signal_control.v1.PhaseStateChange.occurred_at:type_name -> google.protobuf.Timestamp
+	19, // 17: openits.signal_control.v1.PhaseStateChange.source:type_name -> openits.types.v1.WireSource
+	18, // 18: openits.signal_control.v1.PlanApplied.occurred_at:type_name -> google.protobuf.Timestamp
+	18, // 19: openits.signal_control.v1.PreemptionActivated.occurred_at:type_name -> google.protobuf.Timestamp
+	19, // 20: openits.signal_control.v1.PreemptionActivated.source:type_name -> openits.types.v1.WireSource
+	18, // 21: openits.signal_control.v1.PreemptionCleared.occurred_at:type_name -> google.protobuf.Timestamp
+	19, // 22: openits.signal_control.v1.PreemptionCleared.source:type_name -> openits.types.v1.WireSource
+	18, // 23: openits.signal_control.v1.PreemptionEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	19, // 24: openits.signal_control.v1.PreemptionEvent.source:type_name -> openits.types.v1.WireSource
+	20, // 25: openits.signal_control.v1.TsamModeChanged.prior:type_name -> openits.signal_control.v1.TsamEngagementState
+	20, // 26: openits.signal_control.v1.TsamModeChanged.current:type_name -> openits.signal_control.v1.TsamEngagementState
+	18, // 27: openits.signal_control.v1.TsamModeChanged.occurred_at:type_name -> google.protobuf.Timestamp
+	21, // 28: openits.signal_control.v1.TsamRecommendationApplied.adjustment_type:type_name -> openits.signal_control.v1.AdjustmentType
+	18, // 29: openits.signal_control.v1.TsamRecommendationApplied.occurred_at:type_name -> google.protobuf.Timestamp
+	22, // 30: openits.signal_control.v1.TspEvent.denial_reason:type_name -> openits.signal_control.v1.DenialReason
+	18, // 31: openits.signal_control.v1.TspEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	19, // 32: openits.signal_control.v1.TspEvent.source:type_name -> openits.types.v1.WireSource
+	18, // 33: openits.signal_control.v1.UnmappedEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	19, // 34: openits.signal_control.v1.UnmappedEvent.source:type_name -> openits.types.v1.WireSource
+	35, // [35:35] is the sub-list for method output_type
+	35, // [35:35] is the sub-list for method input_type
+	35, // [35:35] is the sub-list for extension type_name
+	35, // [35:35] is the sub-list for extension extendee
+	0,  // [0:35] is the sub-list for field type_name
 }
 
 func init() { file_openits_signal_control_v1_events_proto_init() }
@@ -2600,19 +2401,36 @@ func file_openits_signal_control_v1_events_proto_init() {
 	if File_openits_signal_control_v1_events_proto != nil {
 		return
 	}
+	file_openits_signal_control_v1_types_proto_init()
+	file_openits_signal_control_v1_events_proto_msgTypes[0].OneofWrappers = []any{}
+	file_openits_signal_control_v1_events_proto_msgTypes[1].OneofWrappers = []any{}
+	file_openits_signal_control_v1_events_proto_msgTypes[2].OneofWrappers = []any{}
+	file_openits_signal_control_v1_events_proto_msgTypes[3].OneofWrappers = []any{}
+	file_openits_signal_control_v1_events_proto_msgTypes[4].OneofWrappers = []any{}
+	file_openits_signal_control_v1_events_proto_msgTypes[5].OneofWrappers = []any{}
+	file_openits_signal_control_v1_events_proto_msgTypes[6].OneofWrappers = []any{}
+	file_openits_signal_control_v1_events_proto_msgTypes[7].OneofWrappers = []any{}
+	file_openits_signal_control_v1_events_proto_msgTypes[8].OneofWrappers = []any{}
+	file_openits_signal_control_v1_events_proto_msgTypes[9].OneofWrappers = []any{}
+	file_openits_signal_control_v1_events_proto_msgTypes[10].OneofWrappers = []any{}
+	file_openits_signal_control_v1_events_proto_msgTypes[11].OneofWrappers = []any{}
+	file_openits_signal_control_v1_events_proto_msgTypes[12].OneofWrappers = []any{}
+	file_openits_signal_control_v1_events_proto_msgTypes[13].OneofWrappers = []any{}
+	file_openits_signal_control_v1_events_proto_msgTypes[14].OneofWrappers = []any{}
+	file_openits_signal_control_v1_events_proto_msgTypes[15].OneofWrappers = []any{}
+	file_openits_signal_control_v1_events_proto_msgTypes[16].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_signal_control_v1_events_proto_rawDesc), len(file_openits_signal_control_v1_events_proto_rawDesc)),
-			NumEnums:      5,
+			NumEnums:      0,
 			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_openits_signal_control_v1_events_proto_goTypes,
 		DependencyIndexes: file_openits_signal_control_v1_events_proto_depIdxs,
-		EnumInfos:         file_openits_signal_control_v1_events_proto_enumTypes,
 		MessageInfos:      file_openits_signal_control_v1_events_proto_msgTypes,
 	}.Build()
 	File_openits_signal_control_v1_events_proto = out.File

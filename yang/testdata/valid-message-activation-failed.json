@@ -7,7 +7,7 @@
     "attempted-memory-type": "changeable",
     "attempted-slot-number": 42,
     "reason": "Message validation failed: incompatible font size for target sign.",
-    "error-type": "unsupported-tag",
+    "error-type": "openits-dms-types:activation-error-unsupported-tag",
     "error-position": 17
   }
 }

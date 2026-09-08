@@ -26,7 +26,7 @@
         {
           "zone-id": "eb-travel-lanes",
           "name": "EB travel lanes",
-          "function": "incident",
+          "function": "openits-perception-types:zf-incident",
           "legal-heading": 92,
           "dwell-s": 30,
           "min-confidence": 70,
@@ -76,8 +76,6 @@
       "zone": [
         {
           "zone-id": "eb-travel-lanes",
-          "occupancy-count": 1,
-          "presence": true,
           "average-speed-kmh": "87.3"
         }
       ]

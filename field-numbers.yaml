@@ -1090,6 +1090,7 @@ messages:
         longitude: 3
         vertex_index: 1
     openits.perception.v1.ZoneIncidentCleared:
+        clear_reason: 3
         incident_id: 1
         kind: 99
         observed_by: 4
@@ -1100,6 +1101,7 @@ messages:
         zone_id: 2
     openits.perception.v1.ZoneIncidentDetected:
         confidence: 10
+        first_observed: 17
         incident_id: 1
         kind: 99
         latitude: 7
@@ -1118,11 +1120,13 @@ messages:
         zone_id: 2
     openits.perception.v1.ZoneIncidentUpdated:
         confidence: 5
+        disposition: 11
         incident_id: 1
         kind: 99
         observed_by: 6
         occurred_at: 7
         owner: 8
+        reviewed_by: 12
         sequence: 9
         severity: 3
         source_device_id: 10
@@ -2412,16 +2416,27 @@ messages:
         state: 2
         timing_plan: 1
     openits.signal_control.v1.CoordinationChange:
+        cycle_length_s: 12
+        cycle_state: 18
         kind: 99
         new_value: 3
         observed_by: 7
         occurred_at: 6
+        offset_s: 14
         owner: 8
+        pattern: 10
+        phase_number: 2
+        previous_cycle_length_s: 13
+        previous_cycle_state: 19
+        previous_offset_s: 15
+        previous_pattern: 11
+        previous_split_s: 17
         previous_value: 5
         sequence: 9
         source: 100
         source_device_id: 1
         split_number: 4
+        split_s: 16
     openits.signal_control.v1.CoordinationState:
         active_plan: 1
         cycle_state: 2
@@ -2472,6 +2487,7 @@ messages:
         extend_phases: 8
         fail_action: 9
         mode: 7
+        name: 11
         type: 2
     openits.signal_control.v1.DetectorsDetectorState:
         active: 1
@@ -2508,6 +2524,10 @@ messages:
         fault_type: 1
         faulting_channels: 2
         latched: 3
+    openits.signal_control.v1.Monitor:
+        fault_type: 1
+        faulting_channels: 2
+        latched: 3
     openits.signal_control.v1.OnBatteryPolicy:
         mode: 1
         transition_at_runtime_minutes: 3
@@ -2518,6 +2538,7 @@ messages:
         last_mode_change: 5
         mmu: 4
         mode: 1
+        monitor: 6
     openits.signal_control.v1.OperationalStatusReport:
         flash_active: 10
         flash_cause: 11
@@ -2629,6 +2650,7 @@ messages:
         source: 6
         source_device_id: 1
         split_set: 5
+        trigger: 11
     openits.signal_control.v1.Preemption:
         preemptor: 4
     openits.signal_control.v1.PreemptionActivated:
@@ -3106,8 +3128,13 @@ messages:
         latitude: 2
         longitude: 3
         point_index: 1
+    openits.work_zone.v1.WorkerPresence:
+        last_confirmed_at: 3
+        method: 2
+        workers_present: 1
     openits.work_zone.v1.ZoneStateChanged:
         direction: 4
+        end_verified: 18
         kind: 99
         lane_impact: 5
         notice: 7
@@ -3115,11 +3142,15 @@ messages:
         occurred_at: 9
         owner: 10
         point: 11
+        reduced_speed_limit_kmh: 16
         sequence: 12
         source_device_id: 13
+        start_verified: 17
         temporary_signal: 6
         window_end: 3
         window_start: 2
+        work_zone_type: 14
+        worker_presence: 15
         zone_id: 1
     openits.zone_occupancy.v1.ObservedClass:
         class: 1

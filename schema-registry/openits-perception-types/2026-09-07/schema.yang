@@ -1,0 +1,404 @@
+module openits-perception-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:perception-types";
+  prefix openits-perception-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Perception-sensor event-kind identity hierarchy. Derives from the
+     cross-service openits-types:device-event-kind root so perception
+     events emitted via the generic cross-service notifications
+     (openits-common-fault-events) carry a service-classified 'kind'
+     identityref, filterable with derived-from-or-self at any altitude.
+
+     The leaf fault identities mirror the fault-category catalog
+     formerly carried in-module by openits-perception (the gen-1
+     hierarchy, now deleted): perception-event-kind is the service
+     root that incident-type (an event) and perception-fault-event-kind
+     derive from. Both live here so a vendor identity module can extend
+     them by importing this -types module alone, without pulling in the
+     openits-perception service core.
+
+     Detected-object classification (object-class) was hoisted to
+     openits-types on 2026-08-15: more than one capability classifies
+     what it detects, and a bay-occupancy sensor that does no tracking
+     must be able to name a truck without importing this module.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.6.0";
+
+  revision 2026-09-07 {
+    description
+      "Close the two gaps that made the incident taxonomy unable to
+       describe what AID is deployed to find. All additive.
+
+       Adds six incident types. incident-collision is the headline one:
+       a crash previously had to be reported as a stopped vehicle, which
+       reads to a dispatcher as a disabled car rather than a scene
+       needing response. incident-stopped-vehicle-shoulder separates the
+       highest-volume alarm class from a lane blockage, since the two
+       are dispositioned differently. Plus incident-smoke-fire,
+       incident-slow-vehicle (one vehicle, as against the existing
+       incident-slowed-traffic condition of the stream),
+       incident-animal-in-roadway (the object-class vocabulary could
+       already name an animal; the incident taxonomy could not report
+       one), and incident-other, whose absence reliably drives vendors
+       to invent private catch-all identities.
+
+       Adds the incident-clear-reason axis consumed by
+       openits-perception-events:zone-incident-cleared.";
+    reference "docs/06-extension-model.md (core as an identity base).";
+  }
+  revision 2026-08-15 {
+    description
+      "Hoist the object-class identity hierarchy to openits-types. It is
+       a foundation-layer classification axis, not perception's alone —
+       the zone-occupancy capability classifies the population present
+       in a region, and a sensor that does no tracking should not import
+       a tracking service's -types module to say what it found.
+
+       BREAKING (pre-1.0): identityref values move namespace, from
+       'openits-perception-types:object-*' to 'openits-types:object-*'.
+       Proto tags are unaffected (identityrefs render as strings).";
+    reference "docs/08-capability-architecture.md.";
+  }
+  revision 2026-08-05 {
+    description
+      "Model-review remediation (2026-08): stamp an explicit value
+       statement on every enumeration member that lacked one.
+       Wire-neutral: each stamped value equals the previous positional
+       auto-assignment (RFC 7950 9.6.4.2); this locks the append-only
+       enum discipline the wire contract depends on.";
+    reference "RFC 7950 9.6.4.2.";
+  }
+  revision 2026-07-21 {
+    description
+      "Perception/AID review fixes: add a shared zone-id typedef (used by the
+       config zone-id and the notification zone-id leaves); add an
+       incident-disposition typedef (pending/confirmed/false-alarm) and a
+       pcp-zone-incident-updated notification-kind identity for AID
+       operability. Additive.";
+    reference "FHWA Traffic Incident Management (TIM).";
+  }
+  revision 2026-07-16 {
+    description
+      "Incident semantics: add an incident-severity typedef (FHWA TIM
+       minor/intermediate/major) so a traffic incident carries its own
+       operational-impact severity instead of reusing the equipment
+       fault-severity axis. Consumed by the incident inventory
+       (openits-perception) and the zone-incident-detected notification.";
+    reference "FHWA Traffic Incident Management (TIM).";
+  }
+  revision 2026-07-13 {
+    description
+      "Add three notification-kind identities under
+       perception-event-kind: pcp-zone-incident-detected,
+       pcp-zone-incident-cleared, pcp-zone-interval-report. These are
+       the 'kind' identityref targets adopted by the corresponding
+       openits-perception-events notifications under the unified
+       event contract (every notification now carries a mandatory
+       'kind' plus 'uses openits-types:event-header').
+       pcp-zone-interval-report is additionally dual-based on
+       openits-types:report-event-kind so a consumer can filter every
+       periodic report across services with
+       derived-from-or-self(report-event-kind); the other two are
+       discrete detect/clear events, not periodic reports, so they
+       stay single-based. Additive.
+
+       Also relocate object-class (+ object-* leaves) and incident-type
+       (+ incident-* leaves) here from the openits-perception service
+       core, so vendor identity modules extend them via the
+       lightweight -types module. Re-root object-class as a standalone
+       classification identity: it no longer derives from
+       perception-event-kind / device-event-kind, because a tracked-
+       object class is not an event and must not appear under the
+       cross-service event root. incident-type keeps its
+       perception-event-kind base (it is an event).";
+    reference "RFC 7950 section 11.";
+  }
+  revision 2026-07-11 {
+    description
+      "Initial revision. Service root, dual-classified fault sub-base,
+       and leaf fault identities migrated from the gen-1
+       openits-perception fault-category catalog (deleted from the
+       service module in the same change) as part of the fault-
+       taxonomy gen-2 consolidation.";
+    reference
+      "ARC-IT 9.1 Service Packages TM01 (Infrastructure-Based Traffic
+       Surveillance) and TM08 (Traffic Incident Management System).";
+  }
+
+  /* --------------------------------------------------------------
+   * Typedefs
+   * -------------------------------------------------------------- */
+
+  typedef zone-id {
+    type string { length "1..64"; pattern '[a-zA-Z0-9_-]+'; }
+    description "Sensor-local analytics-zone identifier.";
+  }
+
+  /* --------------------------------------------------------------
+   * Service root + dual-classified sub-base
+   * -------------------------------------------------------------- */
+
+  identity perception-event-kind {
+    base openits-types:device-event-kind;
+    description
+      "Root for perception-sensor events. Service dimension of the
+       event-kind taxonomy; behavioral roots (incident, object,
+       fault) derive from this so a consumer can filter all
+       perception events.";
+  }
+
+  identity perception-fault-event-kind {
+    base openits-types:fault-event-kind;
+    base perception-event-kind;
+    description
+      "Perception-sensor fault events. Dual-classified: by behavioral
+       class (fault-event-kind) and by service (perception-event-
+       kind). Used as the fallback kind when a decoder cannot map a
+       more specific leaf identity.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notification-kind identities ('kind' identityref targets for
+   * openits-perception-events notifications)
+   * -------------------------------------------------------------- */
+
+  identity pcp-zone-incident-detected {
+    base perception-event-kind;
+    description "An incident was detected in a zone.";
+  }
+  identity pcp-zone-incident-cleared {
+    base perception-event-kind;
+    description "A previously-detected zone incident cleared.";
+  }
+  identity pcp-zone-interval-report {
+    base perception-event-kind;
+    base openits-types:report-event-kind;
+    description "Periodic per-zone interval report.";
+  }
+  identity pcp-zone-incident-updated {
+    base perception-event-kind;
+    description "A detected incident's attributes (severity / speed / confidence) changed.";
+  }
+
+  /* --------------------------------------------------------------
+   * Fault leaf identities (mirror the former openits-perception
+   * fault-category catalog)
+   * -------------------------------------------------------------- */
+
+  identity perception-fault-blockage {
+    base perception-fault-event-kind;
+    description
+      "Optical window blocked or fouled (dirt, ice, condensation).";
+  }
+  identity perception-fault-pose-drift {
+    base perception-fault-event-kind;
+    description
+      "Sensor extrinsic calibration has drifted; zone geometry
+       unreliable.";
+  }
+  identity perception-fault-processing {
+    base perception-fault-event-kind;
+    description
+      "On-board perception pipeline degraded or restarted.";
+  }
+  identity perception-fault-power {
+    base perception-fault-event-kind;
+    description
+      "Power-supply or input-voltage fault at the sensor.";
+  }
+  identity perception-fault-communication {
+    base perception-fault-event-kind;
+    description
+      "Communication fault between sensor and upstream system.";
+  }
+  identity perception-fault-temperature {
+    base perception-fault-event-kind;
+    description
+      "Internal temperature outside the operating envelope.";
+  }
+
+
+  /* --------------------------------------------------------------
+   * Incident types (these ARE events: emitted via
+   * zone-incident-detected, so they derive from perception-event-kind)
+   * -------------------------------------------------------------- */
+
+  typedef incident-severity {
+    type enumeration {
+      enum minor {
+        value 0;
+        description
+          "Minor incident — little or no travel-lane impact (e.g. debris
+           on the shoulder, a disabled vehicle off the roadway).";
+      }
+      enum intermediate {
+        value 1;
+        description
+          "Intermediate incident — partial roadway/lane impact expected to
+           clear within a moderate window.";
+      }
+      enum major {
+        value 2;
+        description
+          "Major incident — significant roadway impact, extended duration,
+           or a safety-critical condition (e.g. wrong-way vehicle, roadway
+           closure).";
+      }
+    }
+    description
+      "Operational severity of a detected traffic incident — its impact on
+       traffic and safety. This is a DIFFERENT axis from the equipment
+       openits-types:fault-severity (which triages device faults); a
+       stopped-vehicle incident and a detector fault are not comparable on
+       one scale. Levels follow the FHWA Traffic Incident Management
+       minor / intermediate / major classification.";
+    reference "FHWA Traffic Incident Management (TIM) severity levels.";
+  }
+
+  typedef incident-disposition {
+    type enumeration {
+      enum pending     { value 0; description "Not yet reviewed by an operator."; }
+      enum confirmed   { value 1; description "Operator confirmed the incident is real."; }
+      enum false-alarm {
+        value 2;
+        description
+          "Operator marked the incident a false alarm; the pipeline may
+           suppress re-alarm.";
+      }
+    }
+    description "Operator disposition of a detected incident (AID false-alarm management).";
+  }
+
+  identity incident-clear-reason {
+    description
+      "Why an incident stopped being reported. Absent a reason, a
+       consumer cannot tell a real clearance from a false alarm an
+       operator dismissed or a sensor that simply stopped seeing --
+       which is the difference between closing a response and auditing
+       the detector.";
+  }
+  identity pcp-clear-no-longer-observed {
+    base incident-clear-reason;
+    description "The pipeline no longer observes the condition; the normal clearance.";
+  }
+  identity pcp-clear-operator-false-alarm {
+    base incident-clear-reason;
+    description
+      "An operator reviewed the detection and dismissed it as a false
+       alarm. The counter that matters for AID performance: a detector
+       whose clearances are mostly this one is miscalibrated.";
+  }
+  identity pcp-clear-zone-removed {
+    base incident-clear-reason;
+    description "The zone the incident was detected in was reconfigured or deleted.";
+  }
+  identity pcp-clear-sensor-fault {
+    base incident-clear-reason;
+    description
+      "The sensor or pipeline faulted, so the incident is no longer
+       being tracked. Not evidence the condition ended.";
+  }
+
+  identity incident-type {
+    base perception-event-kind;
+    description "Root identity for zone-detected incident types.";
+  }
+  identity incident-collision {
+    base incident-type;
+    description
+      "A collision occurred in or adjacent to the zone. The event AID is
+       deployed to catch, and the one the taxonomy could not name: a
+       crash was previously reported as a stopped vehicle, which reads
+       to a dispatcher as a disabled car rather than a scene needing
+       response.";
+  }
+  identity incident-stopped-vehicle-shoulder {
+    base incident-type;
+    description
+      "A vehicle is stopped on the shoulder rather than in a travel
+       lane. The most frequent AID alarm by volume, and dispositioned
+       differently from a lane blockage -- collapsing it into
+       incident-stopped-vehicle makes every shoulder stop look like a
+       lane obstruction.";
+  }
+  identity incident-smoke-fire {
+    base incident-type;
+    description "Smoke or fire in or beside the roadway.";
+  }
+  identity incident-slow-vehicle {
+    base incident-type;
+    description
+      "A single vehicle moving far below the prevailing speed. Distinct
+       from incident-slowed-traffic, which is a condition of the traffic
+       stream rather than one vehicle.";
+  }
+  identity incident-animal-in-roadway {
+    base incident-type;
+    description
+      "An animal in the traveled way. The object-class vocabulary could
+       already name an animal; the incident taxonomy could not report
+       one.";
+  }
+  identity incident-other {
+    base incident-type;
+    description
+      "A detection the pipeline classified as an incident but not as any
+       catalogued type. Present so a vendor need not invent a private
+       identity for the catch-all case, which is what a missing 'other'
+       reliably produces.";
+  }
+
+  identity incident-stopped-vehicle {
+    base incident-type;
+    description
+      "Vehicle stationary in a travel lane beyond the zone's dwell
+       threshold.";
+  }
+  identity incident-wrong-way-vehicle {
+    base incident-type;
+    description
+      "Vehicle travelling against the zone's legal direction.";
+  }
+  identity incident-pedestrian-in-roadway { base incident-type; description "Pedestrian inside a travel-lane zone."; }
+  identity incident-debris-in-roadway {
+    base incident-type;
+    description
+      "Foreign object detected in a travel-lane zone.";
+  }
+  identity incident-queue-spillback {
+    base incident-type;
+    description
+      "Queue extends beyond the zone's spillback boundary.";
+  }
+  identity incident-near-miss {
+    base incident-type;
+    description
+      "Trajectory conflict between two tracks below the safety
+       threshold.";
+  }
+  identity incident-congestion {
+    base incident-type;
+    description
+      "Sustained congestion in the zone — density above the congestion
+       threshold across the dwell window.";
+  }
+  identity incident-slowed-traffic {
+    base incident-type;
+    description
+      "Traffic in the zone slowed materially below the expected free-
+       flow speed without meeting the congestion threshold.";
+  }
+}

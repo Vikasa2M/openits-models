@@ -56,7 +56,7 @@
         {
           "zone-id": "nb-mainline",
           "name": "NB mainline",
-          "function": "incident",
+          "function": "openits-perception-types:zf-incident",
           "vertex": [
             { "vertex-index": 0, "latitude": "28.3547000", "longitude": "-81.4736000" },
             { "vertex-index": 1, "latitude": "28.3549000", "longitude": "-81.4736000" },

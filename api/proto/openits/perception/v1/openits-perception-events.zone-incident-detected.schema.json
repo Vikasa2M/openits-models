@@ -7,6 +7,10 @@
       "minimum": 0,
       "type": "integer"
     },
+    "first-observed": {
+      "format": "date-time",
+      "type": "string"
+    },
     "incident-id": {
       "type": "string"
     },

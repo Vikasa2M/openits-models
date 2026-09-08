@@ -7,7 +7,7 @@
     "cycle-length-s": 120,
     "offset-s": 35,
     "split-set": 2,
-    "source": "schedule",
-    "occurred-at": "2026-07-11T14:05:00Z"
+    "occurred-at": "2026-07-11T14:05:00Z",
+    "trigger": "openits-types:trigger-schedule"
   }
 }

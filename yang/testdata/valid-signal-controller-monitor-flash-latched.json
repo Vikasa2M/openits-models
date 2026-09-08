@@ -37,8 +37,8 @@
       "mode": "openits-signal-control-types:mode-flash",
       "flash-active": true,
       "flash-cause": "openits-signal-control-types:flash-mmu-conflict",
-      "mmu": {
-        "fault-type": "openits-signal-control-types:mmu-conflict",
+      "monitor": {
+        "fault-type": "openits-signal-control-types:monitor-conflict",
         "faulting-channels": [2, 6],
         "latched": true
       },

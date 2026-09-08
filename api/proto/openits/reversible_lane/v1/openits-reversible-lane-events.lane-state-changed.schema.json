@@ -50,13 +50,6 @@
       "type": "string"
     },
     "new-direction": {
-      "enum": [
-        "eastbound",
-        "northbound",
-        "southbound",
-        "unknown",
-        "westbound"
-      ],
       "type": "string"
     },
     "new-state": {
@@ -82,13 +75,6 @@
       "type": "string"
     },
     "previous-direction": {
-      "enum": [
-        "eastbound",
-        "northbound",
-        "southbound",
-        "unknown",
-        "westbound"
-      ],
       "type": "string"
     },
     "previous-state": {

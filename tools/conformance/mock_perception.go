@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"google.golang.org/protobuf/proto"
 	"time"
 
 	commonv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/common/v1"
@@ -47,7 +48,7 @@ func collectPerception() (*yangpkg.Device, error) {
 	}
 	zoneCfg.ZoneId = strPtr("eb-travel-lanes")
 	zoneCfg.Name = strPtr("EB travel lanes")
-	zoneCfg.Function = yangpkg.OpenitsPerception_ZoneFunction_incident
+	zoneCfg.Function = yangpkg.OpenitsPerceptionTypes_ZoneFunction_zf_incident
 	zoneCfg.LegalHeading = u16Ptr(92)
 	for i, ll := range [][2]float64{{32.8560, -96.7280}, {32.8561, -96.7278}, {32.8559, -96.7277}, {32.8558, -96.7279}} {
 		v, err := zoneCfg.NewVertex(uint8(i))
@@ -82,8 +83,6 @@ func collectPerception() (*yangpkg.Device, error) {
 		return nil, err
 	}
 	zoneSt.ZoneId = strPtr("eb-travel-lanes")
-	zoneSt.OccupancyCount = u16Ptr(4)
-	zoneSt.Presence = boolPtr(true)
 	zoneSt.AverageSpeedKmh = f64Ptr(86.1)
 
 	// The openits-zone-occupancy capability, composed here behind the
@@ -197,14 +196,14 @@ func subscribePerception(ctx context.Context, out chan<- tests.EventEnvelope, wi
 			CETime:   time.Now().UTC(),
 			Data: &perceptionv1.ZoneIncidentDetected{
 				Kind:        "openits-perception-types:pcp-zone-incident-detected",
-				IncidentId:  "inc-2026-04-19-0007",
-				ZoneId:      "eb-travel-lanes",
-				Type:        "openits-perception-types:incident-stopped-vehicle",
-				Severity:    perceptionv1.IncidentSeverity_INCIDENT_SEVERITY_INTERMEDIATE,
-				TrackId:     1042,
-				ObjectClass: "openits-types:object-passenger-vehicle",
-				SpeedKmh:    "0.0",
-				Confidence:  88,
+				IncidentId:  proto.String("inc-2026-04-19-0007"),
+				ZoneId:      proto.String("eb-travel-lanes"),
+				Type:        proto.String("openits-perception-types:incident-stopped-vehicle"),
+				Severity:    perceptionv1.IncidentSeverity_INCIDENT_SEVERITY_INTERMEDIATE.Enum(),
+				TrackId:     proto.Uint32(1042),
+				ObjectClass: proto.String("openits-types:object-passenger-vehicle"),
+				SpeedKmh:    proto.String("0.0"),
+				Confidence:  proto.Uint32(88),
 			},
 		},
 		{
@@ -217,13 +216,13 @@ func subscribePerception(ctx context.Context, out chan<- tests.EventEnvelope, wi
 				Kind: "openits-perception-types:pcp-zone-interval-report",
 				Zone: []*perceptionv1.ZoneIntervalReportZone{
 					{
-						ZoneId:            "eb-travel-lanes",
-						IntervalDurationS: 300,
-						CrossedVolume:     47,
-						AverageSpeedKmh:   "88.3",
+						ZoneId:            proto.String("eb-travel-lanes"),
+						IntervalDurationS: proto.Uint32(300),
+						CrossedVolume:     proto.Uint32(47),
+						AverageSpeedKmh:   proto.String("88.3"),
 						ClassCount: []*perceptionv1.ClassCount{
-							{Class: "openits-types:object-passenger-vehicle", Count: 42},
-							{Class: "openits-types:object-truck", Count: 5},
+							{Class: proto.String("openits-types:object-passenger-vehicle"), Count: proto.Uint32(42)},
+							{Class: proto.String("openits-types:object-truck"), Count: proto.Uint32(5)},
 						},
 					},
 				},
@@ -239,23 +238,23 @@ func subscribePerception(ctx context.Context, out chan<- tests.EventEnvelope, wi
 				Kind: "openits-zone-occupancy-types:zoc-zone-occupancy-interval-report",
 				Zone: []*zoneoccupancyv1.Zone{
 					{
-						ZoneId:            "eb-shoulder-refuge",
-						IntervalDurationS: 300,
+						ZoneId:            proto.String("eb-shoulder-refuge"),
+						IntervalDurationS: proto.Uint32(300),
 						// The presence population: five distinct objects were
 						// in the refuge at some point in the interval. This is
 						// NOT a throughput volume and deliberately does not
 						// match the travel-lane crossed-volume of 47 above —
 						// a report where the two agreed would not demonstrate
 						// that they measure different things.
-						ObservedCount:      5,
-						OccupancyPercent:   "62.5",
-						PeakOccupancyCount: 3,
+						ObservedCount:      proto.Uint32(5),
+						OccupancyPercent:   proto.String("62.5"),
+						PeakOccupancyCount: proto.Uint32(3),
 						// Sums to observed-count with object-unknown as the
 						// catch-all, so no observed object is dropped.
 						ObservedClass: []*zoneoccupancyv1.ObservedClass{
-							{Class: "openits-types:object-passenger-vehicle", Count: 3, MeanConfidence: 90},
-							{Class: "openits-types:object-truck", Count: 1, MeanConfidence: 84},
-							{Class: "openits-types:object-unknown", Count: 1, MeanConfidence: 41},
+							{Class: proto.String("openits-types:object-passenger-vehicle"), Count: proto.Uint32(3), MeanConfidence: proto.Uint32(90)},
+							{Class: proto.String("openits-types:object-truck"), Count: proto.Uint32(1), MeanConfidence: proto.Uint32(84)},
+							{Class: proto.String("openits-types:object-unknown"), Count: proto.Uint32(1), MeanConfidence: proto.Uint32(41)},
 						},
 					},
 				},
@@ -283,12 +282,12 @@ func subscribePerception(ctx context.Context, out chan<- tests.EventEnvelope, wi
 				Sequence:           4471,
 				ZoneId:             "eb-shoulder-refuge",
 				Presence:           true,
-				OccupancyCount:     2,
+				OccupancyCount:     proto.Uint32(2),
 				OccupiedSince:      timestamppb.New(time.Date(2026, 4, 19, 11, 58, 12, 0, time.UTC)),
-				PresenceConfidence: 96,
+				PresenceConfidence: proto.Uint32(96),
 				PresentClass: []*zoneoccupancyv1.PresentClass{
-					{Class: "openits-types:object-passenger-vehicle", Count: 1, ClassificationConfidence: 91},
-					{Class: "openits-types:object-truck", Count: 1, ClassificationConfidence: 84},
+					{Class: proto.String("openits-types:object-passenger-vehicle"), Count: proto.Uint32(1), ClassificationConfidence: proto.Uint32(91)},
+					{Class: proto.String("openits-types:object-truck"), Count: proto.Uint32(1), ClassificationConfidence: proto.Uint32(84)},
 				},
 			},
 		},

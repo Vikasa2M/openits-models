@@ -31,12 +31,12 @@ hand-rolled Protobuf-only. Each was rejected for a specific reason:
   industry tooling is weaker.
 - **Protobuf-only** — would have worked at the wire layer but
   forces every constraint to live in code. The phase-timing rules —
-  MUTCD's yellow-change mandate (3–6 s, §4F.17, the only one of the
-  three with a genuine MUTCD basis), the engineering-determined
-  red-clear ceiling (≤6 s; MUTCD sets no minimum), and the
-  engineering-floor minimum green (not a MUTCD value at all) —
-  would have to be hand-implemented per validator instead of
-  declared once in the YANG.
+  the engineering floors in `openits-nema-common` (yellow positive,
+  red-clear non-negative, min-green at least a second) and the US MUTCD
+  bounds a deployment opts into through `yang/deviations/` (§4F.17's
+  3–6 s yellow range, its paragraph-6 red-clear ceiling) — would have to
+  be hand-implemented per validator instead of declared once in the
+  YANG, and the deviation tier would have no expression at all.
 
 **Why YANG.** Three reasons stand out:
 

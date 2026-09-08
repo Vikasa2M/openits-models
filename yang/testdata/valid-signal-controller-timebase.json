@@ -25,7 +25,7 @@
       ],
       "clock": {
         "current-time": "2026-07-14T12:00:00Z",
-        "time-source": "openits-signal-control-types:time-source-gnss",
+        "time-source": "openits-types:time-source-gnss",
         "sync-status": "synced",
         "offset-ms": 12
       }

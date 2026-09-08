@@ -5,54 +5,53 @@ package openits.perception.v1;
 option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/perception/v1;perceptionv1";
 
 import "google/protobuf/timestamp.proto";
+import "openits/perception/v1/types.proto";
 
 message ZoneIncidentCleared {
   string kind = 99;
-  string incident_id = 1;
-  string zone_id = 2;
-  string observed_by = 4;
+  optional string incident_id = 1;
+  optional string zone_id = 2;
+  optional string clear_reason = 3;
+  optional string observed_by = 4;
   google.protobuf.Timestamp occurred_at = 5;
-  string owner = 6;
+  optional string owner = 6;
   uint64 sequence = 7;
   string source_device_id = 8;
 }
 
 message ZoneIncidentDetected {
   string kind = 99;
-  string incident_id = 1;
-  string zone_id = 2;
-  string type = 3;
-  IncidentSeverity severity = 4;
-  uint32 track_id = 5;
-  uint32 track_epoch = 16;
-  string object_class = 6;
-  string speed_kmh = 9;
-  uint32 confidence = 10;
-  string latitude = 7;
-  string longitude = 8;
-  string observed_by = 11;
+  optional string incident_id = 1;
+  optional string zone_id = 2;
+  optional string type = 3;
+  optional IncidentSeverity severity = 4;
+  optional uint32 track_id = 5;
+  optional uint32 track_epoch = 16;
+  optional string object_class = 6;
+  optional string speed_kmh = 9;
+  google.protobuf.Timestamp first_observed = 17;
+  optional uint32 confidence = 10;
+  optional string latitude = 7;
+  optional string longitude = 8;
+  optional string observed_by = 11;
   google.protobuf.Timestamp occurred_at = 12;
-  string owner = 13;
+  optional string owner = 13;
   uint64 sequence = 14;
   string source_device_id = 15;
 }
 
-enum IncidentSeverity {
-  INCIDENT_SEVERITY_MINOR = 0;
-  INCIDENT_SEVERITY_INTERMEDIATE = 1;
-  INCIDENT_SEVERITY_MAJOR = 2;
-}
-
 message ZoneIncidentUpdated {
   string kind = 99;
-  string incident_id = 1;
-  string zone_id = 2;
-  IncidentSeverity severity = 3;
-  string speed_kmh = 4;
-  uint32 confidence = 5;
-  string observed_by = 6;
+  optional string incident_id = 1;
+  optional string zone_id = 2;
+  optional IncidentSeverity severity = 3;
+  optional string speed_kmh = 4;
+  optional uint32 confidence = 5;
+  optional IncidentDisposition disposition = 11;
+  optional string reviewed_by = 12;
+  optional string observed_by = 6;
   google.protobuf.Timestamp occurred_at = 7;
-  string owner = 8;
+  optional string owner = 8;
   uint64 sequence = 9;
   string source_device_id = 10;
 }
@@ -60,9 +59,9 @@ message ZoneIncidentUpdated {
 message ZoneIntervalReport {
   string kind = 99;
   repeated ZoneIntervalReportZone zone = 1;
-  string observed_by = 2;
+  optional string observed_by = 2;
   google.protobuf.Timestamp occurred_at = 3;
-  string owner = 4;
+  optional string owner = 4;
   uint64 sequence = 5;
   string source_device_id = 6;
 }
@@ -70,16 +69,16 @@ message ZoneIntervalReport {
 message ZoneIntervalReportZone {
   reserved 7, 8;
   reserved "observed_count", "occupancy_percent";
-  string zone_id = 1;
+  optional string zone_id = 1;
   google.protobuf.Timestamp interval_start = 2;
-  uint32 interval_duration_s = 3;
-  uint32 crossed_volume = 6;
-  string average_speed_kmh = 4;
+  optional uint32 interval_duration_s = 3;
+  optional uint32 crossed_volume = 6;
+  optional string average_speed_kmh = 4;
   repeated ClassCount class_count = 5;
 }
 
 message ClassCount {
-  string class = 1;
-  uint32 count = 2;
+  optional string class = 1;
+  optional uint32 count = 2;
 }
 

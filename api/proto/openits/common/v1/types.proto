@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package openits.common.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/common/v1;commonv1";
+
+enum FaultSeverity {
+  FAULT_SEVERITY_INFO = 0;
+  FAULT_SEVERITY_WARNING = 1;
+  FAULT_SEVERITY_MINOR = 2;
+  FAULT_SEVERITY_MAJOR = 3;
+  FAULT_SEVERITY_CRITICAL = 4;
+}
+

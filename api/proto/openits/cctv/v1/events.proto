@@ -5,62 +5,55 @@ package openits.cctv.v1;
 option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/cctv/v1;cctvv1";
 
 import "google/protobuf/timestamp.proto";
+import "openits/cctv/v1/types.proto";
 
 message LockoutDenied {
   string kind = 99;
   string requested_by = 1;
-  uint32 requested_priority = 2;
-  string current_holder = 3;
-  uint32 held_priority = 4;
-  string observed_by = 5;
+  optional uint32 requested_priority = 2;
+  optional string current_holder = 3;
+  optional uint32 held_priority = 4;
+  optional string observed_by = 5;
   google.protobuf.Timestamp occurred_at = 6;
-  string owner = 7;
+  optional string owner = 7;
   uint64 sequence = 8;
   string source_device_id = 9;
 }
 
 message PtzMoveCommanded {
   string kind = 99;
-  string commanded_by = 1;
+  optional string commanded_by = 1;
   PtzMoveMode move_mode = 2;
   PtzMoveCommandedAbsolute absolute = 3;
   PtzMoveCommandedVelocity velocity = 4;
-  string observed_by = 5;
+  optional string observed_by = 5;
   google.protobuf.Timestamp occurred_at = 6;
-  string owner = 7;
+  optional string owner = 7;
   uint64 sequence = 8;
   string source_device_id = 9;
 }
 
-enum PtzMoveMode {
-  PTZ_MOVE_MODE_ABSOLUTE = 0;
-  PTZ_MOVE_MODE_VELOCITY = 1;
-  PTZ_MOVE_MODE_PRESET = 2;
-  PTZ_MOVE_MODE_TOUR = 3;
-  PTZ_MOVE_MODE_IDLE = 4;
-}
-
 message PtzMoveCommandedAbsolute {
-  string pan_degrees = 1;
-  string tilt_degrees = 2;
-  uint32 zoom_percent = 3;
+  optional string pan_degrees = 1;
+  optional string tilt_degrees = 2;
+  optional uint32 zoom_percent = 3;
 }
 
 message PtzMoveCommandedVelocity {
-  int32 pan_speed = 1;
-  int32 tilt_speed = 2;
-  int32 zoom_speed = 3;
+  optional int32 pan_speed = 1;
+  optional int32 tilt_speed = 2;
+  optional int32 zoom_speed = 3;
 }
 
 message PtzPresetRecalled {
   string kind = 99;
   uint32 preset_id = 1;
-  string preset_name = 2;
-  string recalled_by = 3;
-  bool via_tour = 4;
-  string observed_by = 5;
+  optional string preset_name = 2;
+  optional string recalled_by = 3;
+  optional bool via_tour = 4;
+  optional string observed_by = 5;
   google.protobuf.Timestamp occurred_at = 6;
-  string owner = 7;
+  optional string owner = 7;
   uint64 sequence = 8;
   string source_device_id = 9;
 }
@@ -68,18 +61,12 @@ message PtzPresetRecalled {
 message TourStateChanged {
   string kind = 99;
   uint32 tour_id = 1;
-  TourRunState previous_state = 2;
+  optional TourRunState previous_state = 2;
   TourRunState current_state = 3;
-  string observed_by = 4;
+  optional string observed_by = 4;
   google.protobuf.Timestamp occurred_at = 5;
-  string owner = 6;
+  optional string owner = 6;
   uint64 sequence = 7;
   string source_device_id = 8;
-}
-
-enum TourRunState {
-  TOUR_RUN_STATE_STOPPED = 0;
-  TOUR_RUN_STATE_RUNNING = 1;
-  TOUR_RUN_STATE_PAUSED = 2;
 }
 

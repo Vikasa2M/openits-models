@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package openits.perception.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/perception/v1;perceptionv1";
+
+enum IncidentSeverity {
+  INCIDENT_SEVERITY_MINOR = 0;
+  INCIDENT_SEVERITY_INTERMEDIATE = 1;
+  INCIDENT_SEVERITY_MAJOR = 2;
+}
+
+enum IncidentDisposition {
+  INCIDENT_DISPOSITION_PENDING = 0;
+  INCIDENT_DISPOSITION_CONFIRMED = 1;
+  INCIDENT_DISPOSITION_FALSE_ALARM = 2;
+}
+
+enum Lifecycle {
+  LIFECYCLE_TENTATIVE = 0;
+  LIFECYCLE_CONFIRMED = 1;
+  LIFECYCLE_COASTING = 2;
+}
+
+enum FaultSeverity {
+  FAULT_SEVERITY_INFO = 0;
+  FAULT_SEVERITY_WARNING = 1;
+  FAULT_SEVERITY_MINOR = 2;
+  FAULT_SEVERITY_MAJOR = 3;
+  FAULT_SEVERITY_CRITICAL = 4;
+}
+

@@ -23,7 +23,7 @@ ce-id    = ULID(timestamp = stable-time-ms, randomness = digest[0:10])
   give two observers of one event two different ids, which is the exact
   outcome this construction exists to prevent.
 - `identity-bytes` is the canonical, binary protobuf payload with the
-  producer-assigned leaves cleared to their zero values before encoding:
+  producer-assigned leaves cleared before encoding:
   - **`sequence`** — a per-producer counter that resets on restart and differs
     between redundant producers. It is transport bookkeeping for gap
     detection, not event identity.
@@ -31,6 +31,15 @@ ce-id    = ULID(timestamp = stable-time-ms, randomness = digest[0:10])
 
   Every other leaf participates. Clear them on a *copy*: the wire payload
   still carries both values.
+
+  **Cleared means absent, not zero.** The two are the same bytes only for a
+  field with proto3 implicit presence. `observed-by` is optional in every
+  notification that carries it, so the binding gives it *explicit* presence
+  (`optional string`) — and there, assigning the empty string serializes a
+  zero-length field while clearing the field serializes nothing at all. An
+  implementation that assigns `""` instead of clearing produces a different
+  digest for every event, so the distinction is normative here even though it
+  is invisible for `sequence`, which is mandatory and therefore bare.
 
 ## Invariants
 
@@ -42,6 +51,18 @@ ce-id    = ULID(timestamp = stable-time-ms, randomness = digest[0:10])
   the id without coordinating.
 - **Collision-resistant enough:** 80 bits of content-derived randomness inside
   the ULID within a millisecond window.
+
+The invariants hold *within* one schema revision. The id is a function of the
+encoded payload, so a revision that changes how a value encodes changes that
+event's id — which is what the move to explicit presence did for any leaf
+carrying a legitimately zero value: previously indistinguishable from absent
+and therefore unserialized, it now encodes as an explicit zero. The published
+vectors below are unaffected (they carry a non-empty string, which encodes
+identically either way), but an event stream spanning that upgrade will carry
+two ids for one occurrence, and deduplication across the boundary should be
+expected to miss. This is a property of any encoding-visible schema change,
+not of this construction; the dated schema revision in `ce-dataschema` is what
+tells a consumer which side of such a boundary an event was produced on.
 
 ### Producer obligation
 

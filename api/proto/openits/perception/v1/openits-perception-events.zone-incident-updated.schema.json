@@ -7,6 +7,14 @@
       "minimum": 0,
       "type": "integer"
     },
+    "disposition": {
+      "enum": [
+        "confirmed",
+        "false-alarm",
+        "pending"
+      ],
+      "type": "string"
+    },
     "incident-id": {
       "type": "string"
     },
@@ -24,6 +32,9 @@
       "type": "string"
     },
     "owner": {
+      "type": "string"
+    },
+    "reviewed-by": {
       "type": "string"
     },
     "sequence": {

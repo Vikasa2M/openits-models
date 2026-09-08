@@ -22,133 +22,14 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type Unit int32
-
-const (
-	Unit_UNIT_CELSIUS                Unit = 0
-	Unit_UNIT_METERS_PER_SECOND      Unit = 1
-	Unit_UNIT_METERS                 Unit = 2
-	Unit_UNIT_MILLIMETERS            Unit = 3
-	Unit_UNIT_MILLIMETERS_PER_HOUR   Unit = 4
-	Unit_UNIT_PERCENT                Unit = 5
-	Unit_UNIT_HECTOPASCALS           Unit = 6
-	Unit_UNIT_WATTS_PER_SQUARE_METER Unit = 7
-	Unit_UNIT_PARTS_PER_MILLION      Unit = 8
-	Unit_UNIT_DEGREES                Unit = 9
-	Unit_UNIT_DIMENSIONLESS          Unit = 10
-)
-
-// Enum value maps for Unit.
-var (
-	Unit_name = map[int32]string{
-		0:  "UNIT_CELSIUS",
-		1:  "UNIT_METERS_PER_SECOND",
-		2:  "UNIT_METERS",
-		3:  "UNIT_MILLIMETERS",
-		4:  "UNIT_MILLIMETERS_PER_HOUR",
-		5:  "UNIT_PERCENT",
-		6:  "UNIT_HECTOPASCALS",
-		7:  "UNIT_WATTS_PER_SQUARE_METER",
-		8:  "UNIT_PARTS_PER_MILLION",
-		9:  "UNIT_DEGREES",
-		10: "UNIT_DIMENSIONLESS",
-	}
-	Unit_value = map[string]int32{
-		"UNIT_CELSIUS":                0,
-		"UNIT_METERS_PER_SECOND":      1,
-		"UNIT_METERS":                 2,
-		"UNIT_MILLIMETERS":            3,
-		"UNIT_MILLIMETERS_PER_HOUR":   4,
-		"UNIT_PERCENT":                5,
-		"UNIT_HECTOPASCALS":           6,
-		"UNIT_WATTS_PER_SQUARE_METER": 7,
-		"UNIT_PARTS_PER_MILLION":      8,
-		"UNIT_DEGREES":                9,
-		"UNIT_DIMENSIONLESS":          10,
-	}
-)
-
-func (x Unit) Enum() *Unit {
-	p := new(Unit)
-	*p = x
-	return p
-}
-
-func (x Unit) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Unit) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_events_proto_enumTypes[0].Descriptor()
-}
-
-func (Unit) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_events_proto_enumTypes[0]
-}
-
-func (x Unit) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Unit.Descriptor instead.
-func (Unit) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_events_proto_rawDescGZIP(), []int{0}
-}
-
-type Direction int32
-
-const (
-	Direction_DIRECTION_ENTERED Direction = 0
-	Direction_DIRECTION_EXITED  Direction = 1
-)
-
-// Enum value maps for Direction.
-var (
-	Direction_name = map[int32]string{
-		0: "DIRECTION_ENTERED",
-		1: "DIRECTION_EXITED",
-	}
-	Direction_value = map[string]int32{
-		"DIRECTION_ENTERED": 0,
-		"DIRECTION_EXITED":  1,
-	}
-)
-
-func (x Direction) Enum() *Direction {
-	p := new(Direction)
-	*p = x
-	return p
-}
-
-func (x Direction) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Direction) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_events_proto_enumTypes[1].Descriptor()
-}
-
-func (Direction) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_events_proto_enumTypes[1]
-}
-
-func (x Direction) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Direction.Descriptor instead.
-func (Direction) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_events_proto_rawDescGZIP(), []int{1}
-}
-
 type SensorRecalibrated struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	SensorId       string                 `protobuf:"bytes,1,opt,name=sensor_id,json=sensorId,proto3" json:"sensor_id,omitempty"`
-	CalibratedBy   string                 `protobuf:"bytes,2,opt,name=calibrated_by,json=calibratedBy,proto3" json:"calibrated_by,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,4,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	SensorId       *string                `protobuf:"bytes,1,opt,name=sensor_id,json=sensorId,proto3,oneof" json:"sensor_id,omitempty"`
+	CalibratedBy   *string                `protobuf:"bytes,2,opt,name=calibrated_by,json=calibratedBy,proto3,oneof" json:"calibrated_by,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,4,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,6,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,8,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -193,22 +74,22 @@ func (x *SensorRecalibrated) GetKind() string {
 }
 
 func (x *SensorRecalibrated) GetSensorId() string {
-	if x != nil {
-		return x.SensorId
+	if x != nil && x.SensorId != nil {
+		return *x.SensorId
 	}
 	return ""
 }
 
 func (x *SensorRecalibrated) GetCalibratedBy() string {
-	if x != nil {
-		return x.CalibratedBy
+	if x != nil && x.CalibratedBy != nil {
+		return *x.CalibratedBy
 	}
 	return ""
 }
 
 func (x *SensorRecalibrated) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -221,8 +102,8 @@ func (x *SensorRecalibrated) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *SensorRecalibrated) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -244,16 +125,16 @@ func (x *SensorRecalibrated) GetSourceDeviceId() string {
 type WeatherAlert struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	Kind             string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	ThresholdId      string                 `protobuf:"bytes,1,opt,name=threshold_id,json=thresholdId,proto3" json:"threshold_id,omitempty"`
-	ObservedValue    string                 `protobuf:"bytes,2,opt,name=observed_value,json=observedValue,proto3" json:"observed_value,omitempty"`
-	ThresholdValue   string                 `protobuf:"bytes,3,opt,name=threshold_value,json=thresholdValue,proto3" json:"threshold_value,omitempty"`
-	SensorId         string                 `protobuf:"bytes,12,opt,name=sensor_id,json=sensorId,proto3" json:"sensor_id,omitempty"`
-	Unit             Unit                   `protobuf:"varint,4,opt,name=unit,proto3,enum=openits.ess.v1.Unit" json:"unit,omitempty"`
-	Direction        Direction              `protobuf:"varint,5,opt,name=direction,proto3,enum=openits.ess.v1.Direction" json:"direction,omitempty"`
-	HumanDescription string                 `protobuf:"bytes,6,opt,name=human_description,json=humanDescription,proto3" json:"human_description,omitempty"`
-	ObservedBy       string                 `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	ThresholdId      *string                `protobuf:"bytes,1,opt,name=threshold_id,json=thresholdId,proto3,oneof" json:"threshold_id,omitempty"`
+	ObservedValue    *string                `protobuf:"bytes,2,opt,name=observed_value,json=observedValue,proto3,oneof" json:"observed_value,omitempty"`
+	ThresholdValue   *string                `protobuf:"bytes,3,opt,name=threshold_value,json=thresholdValue,proto3,oneof" json:"threshold_value,omitempty"`
+	SensorId         *string                `protobuf:"bytes,12,opt,name=sensor_id,json=sensorId,proto3,oneof" json:"sensor_id,omitempty"`
+	Unit             *Unit                  `protobuf:"varint,4,opt,name=unit,proto3,enum=openits.ess.v1.Unit,oneof" json:"unit,omitempty"`
+	Direction        *Direction             `protobuf:"varint,5,opt,name=direction,proto3,enum=openits.ess.v1.Direction,oneof" json:"direction,omitempty"`
+	HumanDescription *string                `protobuf:"bytes,6,opt,name=human_description,json=humanDescription,proto3,oneof" json:"human_description,omitempty"`
+	ObservedBy       *string                `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt       *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner            string                 `protobuf:"bytes,9,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner            *string                `protobuf:"bytes,9,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence         uint64                 `protobuf:"varint,10,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId   string                 `protobuf:"bytes,11,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields    protoimpl.UnknownFields
@@ -298,57 +179,57 @@ func (x *WeatherAlert) GetKind() string {
 }
 
 func (x *WeatherAlert) GetThresholdId() string {
-	if x != nil {
-		return x.ThresholdId
+	if x != nil && x.ThresholdId != nil {
+		return *x.ThresholdId
 	}
 	return ""
 }
 
 func (x *WeatherAlert) GetObservedValue() string {
-	if x != nil {
-		return x.ObservedValue
+	if x != nil && x.ObservedValue != nil {
+		return *x.ObservedValue
 	}
 	return ""
 }
 
 func (x *WeatherAlert) GetThresholdValue() string {
-	if x != nil {
-		return x.ThresholdValue
+	if x != nil && x.ThresholdValue != nil {
+		return *x.ThresholdValue
 	}
 	return ""
 }
 
 func (x *WeatherAlert) GetSensorId() string {
-	if x != nil {
-		return x.SensorId
+	if x != nil && x.SensorId != nil {
+		return *x.SensorId
 	}
 	return ""
 }
 
 func (x *WeatherAlert) GetUnit() Unit {
-	if x != nil {
-		return x.Unit
+	if x != nil && x.Unit != nil {
+		return *x.Unit
 	}
 	return Unit_UNIT_CELSIUS
 }
 
 func (x *WeatherAlert) GetDirection() Direction {
-	if x != nil {
-		return x.Direction
+	if x != nil && x.Direction != nil {
+		return *x.Direction
 	}
 	return Direction_DIRECTION_ENTERED
 }
 
 func (x *WeatherAlert) GetHumanDescription() string {
-	if x != nil {
-		return x.HumanDescription
+	if x != nil && x.HumanDescription != nil {
+		return *x.HumanDescription
 	}
 	return ""
 }
 
 func (x *WeatherAlert) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -361,8 +242,8 @@ func (x *WeatherAlert) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *WeatherAlert) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -385,51 +266,51 @@ var File_openits_ess_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_ess_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"\x1bopenits/ess/v1/events.proto\x12\x0eopenits.ess.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa4\x02\n" +
+	"\x1bopenits/ess/v1/events.proto\x12\x0eopenits.ess.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1aopenits/ess/v1/types.proto\"\xf2\x02\n" +
 	"\x12SensorRecalibrated\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12\x1b\n" +
-	"\tsensor_id\x18\x01 \x01(\tR\bsensorId\x12#\n" +
-	"\rcalibrated_by\x18\x02 \x01(\tR\fcalibratedBy\x12\x1f\n" +
-	"\vobserved_by\x18\x04 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12 \n" +
+	"\tsensor_id\x18\x01 \x01(\tH\x00R\bsensorId\x88\x01\x01\x12(\n" +
+	"\rcalibrated_by\x18\x02 \x01(\tH\x01R\fcalibratedBy\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x04 \x01(\tH\x02R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\x06 \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\x06 \x01(\tH\x03R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\a \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceId\"\xfc\x03\n" +
+	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceIdB\f\n" +
+	"\n" +
+	"_sensor_idB\x10\n" +
+	"\x0e_calibrated_byB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xb6\x05\n" +
 	"\fWeatherAlert\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12!\n" +
-	"\fthreshold_id\x18\x01 \x01(\tR\vthresholdId\x12%\n" +
-	"\x0eobserved_value\x18\x02 \x01(\tR\robservedValue\x12'\n" +
-	"\x0fthreshold_value\x18\x03 \x01(\tR\x0ethresholdValue\x12\x1b\n" +
-	"\tsensor_id\x18\f \x01(\tR\bsensorId\x12(\n" +
-	"\x04unit\x18\x04 \x01(\x0e2\x14.openits.ess.v1.UnitR\x04unit\x127\n" +
-	"\tdirection\x18\x05 \x01(\x0e2\x19.openits.ess.v1.DirectionR\tdirection\x12+\n" +
-	"\x11human_description\x18\x06 \x01(\tR\x10humanDescription\x12\x1f\n" +
-	"\vobserved_by\x18\a \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12&\n" +
+	"\fthreshold_id\x18\x01 \x01(\tH\x00R\vthresholdId\x88\x01\x01\x12*\n" +
+	"\x0eobserved_value\x18\x02 \x01(\tH\x01R\robservedValue\x88\x01\x01\x12,\n" +
+	"\x0fthreshold_value\x18\x03 \x01(\tH\x02R\x0ethresholdValue\x88\x01\x01\x12 \n" +
+	"\tsensor_id\x18\f \x01(\tH\x03R\bsensorId\x88\x01\x01\x12-\n" +
+	"\x04unit\x18\x04 \x01(\x0e2\x14.openits.ess.v1.UnitH\x04R\x04unit\x88\x01\x01\x12<\n" +
+	"\tdirection\x18\x05 \x01(\x0e2\x19.openits.ess.v1.DirectionH\x05R\tdirection\x88\x01\x01\x120\n" +
+	"\x11human_description\x18\x06 \x01(\tH\x06R\x10humanDescription\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\a \x01(\tH\aR\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\t \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\t \x01(\tH\bR\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\n" +
 	" \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\v \x01(\tR\x0esourceDeviceId*\x8a\x02\n" +
-	"\x04Unit\x12\x10\n" +
-	"\fUNIT_CELSIUS\x10\x00\x12\x1a\n" +
-	"\x16UNIT_METERS_PER_SECOND\x10\x01\x12\x0f\n" +
-	"\vUNIT_METERS\x10\x02\x12\x14\n" +
-	"\x10UNIT_MILLIMETERS\x10\x03\x12\x1d\n" +
-	"\x19UNIT_MILLIMETERS_PER_HOUR\x10\x04\x12\x10\n" +
-	"\fUNIT_PERCENT\x10\x05\x12\x15\n" +
-	"\x11UNIT_HECTOPASCALS\x10\x06\x12\x1f\n" +
-	"\x1bUNIT_WATTS_PER_SQUARE_METER\x10\a\x12\x1a\n" +
-	"\x16UNIT_PARTS_PER_MILLION\x10\b\x12\x10\n" +
-	"\fUNIT_DEGREES\x10\t\x12\x16\n" +
-	"\x12UNIT_DIMENSIONLESS\x10\n" +
-	"*8\n" +
-	"\tDirection\x12\x15\n" +
-	"\x11DIRECTION_ENTERED\x10\x00\x12\x14\n" +
-	"\x10DIRECTION_EXITED\x10\x01BCZAgithub.com/Vikasa2M/openits-models/pkg/proto/openits/ess/v1;essv1b\x06proto3"
+	"\x10source_device_id\x18\v \x01(\tR\x0esourceDeviceIdB\x0f\n" +
+	"\r_threshold_idB\x11\n" +
+	"\x0f_observed_valueB\x12\n" +
+	"\x10_threshold_valueB\f\n" +
+	"\n" +
+	"_sensor_idB\a\n" +
+	"\x05_unitB\f\n" +
+	"\n" +
+	"_directionB\x14\n" +
+	"\x12_human_descriptionB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_ownerBCZAgithub.com/Vikasa2M/openits-models/pkg/proto/openits/ess/v1;essv1b\x06proto3"
 
 var (
 	file_openits_ess_v1_events_proto_rawDescOnce sync.Once
@@ -443,20 +324,19 @@ func file_openits_ess_v1_events_proto_rawDescGZIP() []byte {
 	return file_openits_ess_v1_events_proto_rawDescData
 }
 
-var file_openits_ess_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_openits_ess_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_openits_ess_v1_events_proto_goTypes = []any{
-	(Unit)(0),                     // 0: openits.ess.v1.Unit
-	(Direction)(0),                // 1: openits.ess.v1.Direction
-	(*SensorRecalibrated)(nil),    // 2: openits.ess.v1.SensorRecalibrated
-	(*WeatherAlert)(nil),          // 3: openits.ess.v1.WeatherAlert
-	(*timestamppb.Timestamp)(nil), // 4: google.protobuf.Timestamp
+	(*SensorRecalibrated)(nil),    // 0: openits.ess.v1.SensorRecalibrated
+	(*WeatherAlert)(nil),          // 1: openits.ess.v1.WeatherAlert
+	(*timestamppb.Timestamp)(nil), // 2: google.protobuf.Timestamp
+	(Unit)(0),                     // 3: openits.ess.v1.Unit
+	(Direction)(0),                // 4: openits.ess.v1.Direction
 }
 var file_openits_ess_v1_events_proto_depIdxs = []int32{
-	4, // 0: openits.ess.v1.SensorRecalibrated.occurred_at:type_name -> google.protobuf.Timestamp
-	0, // 1: openits.ess.v1.WeatherAlert.unit:type_name -> openits.ess.v1.Unit
-	1, // 2: openits.ess.v1.WeatherAlert.direction:type_name -> openits.ess.v1.Direction
-	4, // 3: openits.ess.v1.WeatherAlert.occurred_at:type_name -> google.protobuf.Timestamp
+	2, // 0: openits.ess.v1.SensorRecalibrated.occurred_at:type_name -> google.protobuf.Timestamp
+	3, // 1: openits.ess.v1.WeatherAlert.unit:type_name -> openits.ess.v1.Unit
+	4, // 2: openits.ess.v1.WeatherAlert.direction:type_name -> openits.ess.v1.Direction
+	2, // 3: openits.ess.v1.WeatherAlert.occurred_at:type_name -> google.protobuf.Timestamp
 	4, // [4:4] is the sub-list for method output_type
 	4, // [4:4] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name
@@ -469,19 +349,21 @@ func file_openits_ess_v1_events_proto_init() {
 	if File_openits_ess_v1_events_proto != nil {
 		return
 	}
+	file_openits_ess_v1_types_proto_init()
+	file_openits_ess_v1_events_proto_msgTypes[0].OneofWrappers = []any{}
+	file_openits_ess_v1_events_proto_msgTypes[1].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_ess_v1_events_proto_rawDesc), len(file_openits_ess_v1_events_proto_rawDesc)),
-			NumEnums:      2,
+			NumEnums:      0,
 			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_openits_ess_v1_events_proto_goTypes,
 		DependencyIndexes: file_openits_ess_v1_events_proto_depIdxs,
-		EnumInfos:         file_openits_ess_v1_events_proto_enumTypes,
 		MessageInfos:      file_openits_ess_v1_events_proto_msgTypes,
 	}.Build()
 	File_openits_ess_v1_events_proto = out.File

@@ -1,0 +1,527 @@
+module openits-dms-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:dms-types";
+  prefix openits-dms-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "DMS service types: message/status typedefs and the DMS event-kind
+     identity hierarchy (fault, mode, and notification-kind sub-bases).
+     Derives from the cross-service openits-types:device-event-kind root
+     so DMS events emitted via the generic cross-service notifications
+     (openits-common-fault-events, openits-common-mode-events) carry a
+     service-classified 'kind' identityref, filterable with
+     derived-from-or-self at any altitude.
+
+     Leaf fault identities classify DMS fault events on the wire; the
+     device's active-fault list reuses the same dms-fault-event-kind base.
+     New identities are additive.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.7.0";
+
+  revision 2026-09-07 {
+    description
+      "Add the activation-error identity hierarchy backing
+       openits-dms-events:message-activation-failed/error-type, which was
+       a closed seven-member enumeration.
+
+       That enum claimed to mirror NTCIP 1203 dmsMultiSyntaxError but
+       carried five of its fifteen members, and did not represent
+       dmsActivateMsgError at all -- so the three failures a TMC actually
+       sees every day (the activation lost to a higher-priority message,
+       the stored message's CRC no longer matches what was authored, the
+       sign is in local mode and ignoring central) all collapsed to
+       'other' plus prose. An operator could not tell 'fix the message'
+       from 'check the sign' without reading the free-text reason.
+
+       Modeled as an identity rather than a wider enum because NTCIP
+       grew this list itself between v02 and v03 (the graphics members),
+       which is this project's own test for a vendor-extensible axis.
+       Two sub-bases carry the split that drives operator response:
+       activation-error-content (dmsMultiSyntaxError -- the message is
+       not renderable) and activation-error-control (dmsActivateMsgError
+       -- the sign refused it), with hardware and unclassified failures
+       under the root.
+
+       Migration from the retired enum members:
+         syntax            -> activation-error-syntax
+         unsupported-tag   -> activation-error-unsupported-tag
+         font-not-found    -> activation-error-font-not-defined
+         graphic-not-found -> activation-error-graphic-not-defined
+         too-long          -> activation-error-text-too-big
+         hardware          -> activation-error-hardware
+         other             -> activation-error-other
+       New members use the NTCIP object's own vocabulary so the mapping
+       a decoder writes is one-to-one and checkable.
+
+       Also normalizes two multi-tag descriptions to American
+       spelling ('color'), matching the identity names beside them.
+       Description-only.";
+    reference "NTCIP 1203 v03 (dmsMultiSyntaxError / dmsActivateMsgError).";
+  }
+  revision 2026-08-27 {
+    description
+      "Add the dms-message-changed and dms-sign-status-report
+       notification-kind identities, the 'kind' identityref targets for
+       the two notifications openits-dms-events gains in the same change
+       set. Identity additions are non-breaking.";
+  }
+  revision 2026-08-23 {
+    description
+      "NTCIP 1203 fidelity pass (docs/reference/dms-ntcip-1203-fidelity.md):
+
+       - Add two leaf fault identities closing gaps in shortErrorStatus
+         coverage that did not fold honestly into an existing category:
+         dms-fault-photocell (ambient-light sensor) and dms-fault-message
+         (the sign's own complaint about displayed message content).
+         Identity additions are non-breaking.
+       - Document that message-memory-type ordinals are OpenITS-owned and
+         deliberately NOT the NTCIP wire values, and that the absence of a
+         currentBuffer member is intentional. Description-only.
+       - Add three activation-trigger identities under the shared
+         openits-types:mode-change-trigger axis (trigger-power-recovery,
+         trigger-power-loss, trigger-end-of-duration), completing NTCIP
+         1203 dmsMsgSourceMode coverage alongside the existing shared
+         trigger-comm-loss / trigger-schedule / trigger-operator. Consumed
+         by the new openits-dms activation-trigger leaf. Additive.";
+    reference
+      "NTCIP 1203 v03 (shortErrorStatus, dmsMessageMemoryType,
+       dmsMsgSourceMode).";
+  }
+  revision 2026-08-05 {
+    description
+      "Model-review remediation (2026-08): stamp an explicit value
+       statement on every enumeration member that lacked one.
+       Wire-neutral: each stamped value equals the previous positional
+       auto-assignment (RFC 7950 9.6.4.2); this locks the append-only
+       enum discipline the wire contract depends on.";
+    reference "RFC 7950 9.6.4.2.";
+  }
+  revision 2026-07-21 {
+    description
+      "Add the multi-tag identity family (full standard NTCIP 1203 MULTI set
+       incl. field/color-background/moving-text/spacing-character/hex-character)
+       for supported-multi-tags. Additive. Refresh stale gen-1 description
+       text (no fault-category catalog). Collapse the duplicate same-date
+       2026-07-13 revision statements into one.
+       - Prefix control-authority identities (cctv-control-* / dms-control-*); BREAKING identityref strings.
+       - Document that sign-mode mode-value identities are module-scoped (no wire collision).
+       - Relate dms-control-mode to the shared openits-types:control-source axis (doc only).";
+    reference "NTCIP 1203 v03 (MULTI).";
+  }
+  revision 2026-07-16 {
+    description
+      "Split the DMS mode vocabulary: add a dms-control-mode identity
+       family (control-local / external / central / central-override /
+       simulation / other = NTCIP 1203 dmsControlMode, who drives the
+       sign) and reframe sign-mode as the display-state axis (what the
+       face shows), removing mode-central and mode-simulation which were
+       control concepts. Add a dms-message-status typedef (NTCIP
+       dmsMessageStatus lifecycle). BREAKING (pre-v1): two sign-mode
+       identities removed; wire-neutral (identityref serialises as a
+       string).";
+    reference "NTCIP 1203 v03 (dmsControlMode, dmsMessageStatus).";
+  }
+  revision 2026-07-14 {
+    description
+      "Cut 3c (events layering): adopt typedef message-memory-type
+       moved here from openits-dms. Additive.";
+  }
+  revision 2026-07-13 {
+    description
+      "Add the dms-message-activation-failed notification-kind
+       identity under dms-event-kind: the 'kind' identityref target
+       adopted by openits-dms-events:message-activation-failed under
+       the unified event contract (the notification now carries a
+       mandatory 'kind' plus 'uses openits-types:event-header').
+       Not a periodic report, so single-based. Additive.
+
+       Stamp openits-version (borrowed from OpenConfig's
+       openconfig-version practice) so tooling can read a
+       compatibility-intent signal independent of the revision date.
+       Add the sign-mode identity hierarchy (converted from the
+       enumeration formerly in openits-dms) so vendors can add
+       proprietary operating modes without a base-model revision.
+       sign-mode derives from openits-types:operational-mode so its
+       values can be carried in the generic mode-changed
+       prior/current identityref.";
+    reference "RFC 7950 section 11.";
+  }
+  revision 2026-06-11 {
+    description
+      "Initial revision. Service root, dual-classified fault and mode
+       sub-bases, and leaf fault identities mirroring the openits-dms
+       fault-category catalog.";
+    reference
+      "NTCIP 1203:2010 (DMS functional reference; fault classes).";
+  }
+
+  /* --------------------------------------------------------------
+   * Typedefs
+   * -------------------------------------------------------------- */
+
+  typedef message-memory-type {
+    type enumeration {
+      enum permanent { value 1; }
+      enum changeable { value 2; }
+      enum volatile  { value 3; }
+      enum schedule  { value 4; }
+      enum blank     { value 5; }
+    }
+    description
+      "Message-memory bank, modeled after NTCIP 1203 dmsMessageMemoryType.
+       Permanent messages survive power loss and cannot be modified;
+       changeable persist until overwritten; volatile are cleared on reboot.
+
+       ORDINALS ARE NOT NTCIP ORDINALS.  These values are OpenITS-owned and
+       deliberately renumbered from the wire encoding (NTCIP permanent = 2,
+       changeable = 3, volatile = 4, currentBuffer = 5, schedule = 6,
+       blank = 7).  A decoder MUST map by name, never pass the integer
+       through.  NTCIP's currentBuffer bank has no member here on purpose:
+       the message on the face is a readback, modeled as
+       openits-dms:sign/control/state/active, not a sixth library bank that
+       could be written to.";
+    reference "NTCIP 1203 v03 (dmsMessageMemoryType).";
+  }
+
+  typedef dms-message-status {
+    type enumeration {
+      enum not-used { value 0; description "Slot is empty / unused."; }
+      enum modifying { value 1; description "Slot content is being written."; }
+      enum validating { value 2; description "Slot content is being validated (CRC / MULTI syntax)."; }
+      enum valid { value 3; description "Slot content is validated and deployable."; }
+      enum error { value 4; description "Slot content failed validation and must not be activated."; }
+    }
+    description "Per-slot message validation lifecycle (NTCIP 1203 dmsMessageStatus).";
+  }
+
+  /* --------------------------------------------------------------
+   * Service root + dual-classified sub-bases
+   * -------------------------------------------------------------- */
+
+  identity dms-event-kind {
+    base openits-types:device-event-kind;
+    description
+      "Root for dynamic-message-sign events. Behavioral-class
+       sub-bases derive from this plus the matching cross-service
+       base in openits-types.";
+  }
+
+  identity dms-fault-event-kind {
+    base openits-types:fault-event-kind;
+    base dms-event-kind;
+    description
+      "DMS fault events. Dual-classified: by behavioral class
+       (fault-event-kind) and by service (dms-event-kind). Used as
+       the fallback kind when a decoder cannot map a more specific
+       leaf identity.";
+  }
+
+  identity dms-mode-event-kind {
+    base openits-types:mode-event-kind;
+    base dms-event-kind;
+    description
+      "DMS mode transitions — spans both dms-control-mode (who is
+       driving: local / external / central / central-override /
+       simulation / other) and the sign-mode display-state (off /
+       blank / test / normal). The mode-changed notification's
+       prior/current strings are interpreted in this mode-space.
+       (central and simulation are dms-control-mode values, not
+       sign-mode.)";
+    reference "NTCIP 1203:2010 (dmsControlMode).";
+  }
+
+  /* --------------------------------------------------------------
+   * Notification-kind identities ('kind' identityref targets for
+   * openits-dms-events notifications)
+   * -------------------------------------------------------------- */
+
+  identity dms-message-activation-failed {
+    base dms-event-kind;
+    description "A message activation attempt failed.";
+  }
+
+  identity dms-message-changed {
+    base dms-event-kind;
+    description "The message on the sign face changed.";
+  }
+
+  identity dms-sign-status-report {
+    base dms-event-kind;
+    description "Periodic sign display / environment snapshot.";
+  }
+
+  /* --------------------------------------------------------------
+   * Activation-failure classification
+   *
+   * Backs openits-dms-events:message-activation-failed/error-type.
+   * NTCIP 1203 reports activation failure through TWO objects, and the
+   * distinction is what an operator acts on:
+   *
+   *   dmsMultiSyntaxError  — the message CONTENT is not renderable on
+   *                          this sign. The operator edits the message.
+   *   dmsActivateMsgError  — the content was fine; the sign REFUSED the
+   *                          activation (priority too low, stale CRC,
+   *                          sign under local control). The operator
+   *                          checks sign state, not the message.
+   *
+   * An identity rather than an enumeration because NTCIP itself grew
+   * this list between v02 and v03 (the graphics members), which is the
+   * project's own test for an extensible axis, and because a vendor can
+   * report a refusal reason the standard has not catalogued. New members
+   * are additive.
+   * -------------------------------------------------------------- */
+
+  identity activation-error {
+    description
+      "Why a message activation or validation failed. Derived identities
+       group under activation-error-content (the message cannot be
+       rendered) or activation-error-control (the sign declined to show
+       it); hardware and unclassified failures derive from this root
+       directly.";
+    reference "NTCIP 1203 v03 (dmsMultiSyntaxError / dmsActivateMsgError).";
+  }
+
+  identity activation-error-content {
+    base activation-error;
+    description
+      "The attempted MULTI content cannot be rendered on this sign.
+       Fixing it means changing the message. Mirrors NTCIP 1203
+       dmsMultiSyntaxError; error-position locates the fault in the
+       MULTI string.";
+    reference "NTCIP 1203 v03 (dmsMultiSyntaxError).";
+  }
+  identity activation-error-syntax            { base activation-error-content; description "General MULTI syntax error not covered by a more specific member."; }
+  identity activation-error-unsupported-tag   { base activation-error-content; description "A MULTI tag this sign does not implement (see sign/state/capabilities/supported-multi-tags)."; }
+  identity activation-error-unsupported-tag-value { base activation-error-content; description "A supported MULTI tag carried a value out of the sign's supported range."; }
+  identity activation-error-text-too-big      { base activation-error-content; description "The message does not fit the sign face at the requested font/layout."; }
+  identity activation-error-font-not-defined  { base activation-error-content; description "A referenced font is not loaded on the sign."; }
+  identity activation-error-font-version-id   { base activation-error-content; description "A referenced font is present but its version id does not match the one the message names."; }
+  identity activation-error-character-not-defined { base activation-error-content; description "The selected font has no glyph for a character in the message — a legibility fault, not a layout one."; }
+  identity activation-error-graphic-not-defined   { base activation-error-content; description "A referenced graphic is not loaded on the sign."; }
+  identity activation-error-graphic-id        { base activation-error-content; description "A referenced graphic is present but its id/version does not match the one the message names."; }
+  identity activation-error-too-many-pages    { base activation-error-content; description "The message declares more pages than the sign (or the governing policy) allows."; }
+  identity activation-error-tag-conflict      { base activation-error-content; description "Two MULTI tags in the message cannot both apply (e.g. conflicting justification or region tags)."; }
+  identity activation-error-flash-region      { base activation-error-content; description "A flashing-region tag names a region the sign cannot flash."; }
+  identity activation-error-field-device-not-exist { base activation-error-content; description "A [fN] dynamic field references a data source this sign does not have."; }
+  identity activation-error-field-device      { base activation-error-content; description "A [fN] dynamic field's data source exists but failed to supply a value."; }
+
+  identity activation-error-control {
+    base activation-error;
+    description
+      "The sign declined the activation for a reason unrelated to
+       message content. Mirrors NTCIP 1203 dmsActivateMsgError. These
+       are the everyday TMC failures — a lower-priority message losing
+       to a higher-priority one, a stale CRC after a library edit, a
+       sign a technician left in local control — and none of them was
+       representable before: they all collapsed to 'other'.";
+    reference "NTCIP 1203 v03 (dmsActivateMsgError).";
+  }
+  identity activation-error-priority          { base activation-error-control; description "The requested run-time priority did not outrank the message already displayed."; }
+  identity activation-error-message-crc       { base activation-error-control; description "The CRC the activation carried does not match the stored message — the slot was rewritten since the activation was composed."; }
+  identity activation-error-message-status    { base activation-error-control; description "The targeted message is not in a state that can be activated (e.g. still being modified)."; }
+  identity activation-error-message-memory-type { base activation-error-control; description "The targeted memory bank is not valid for activation on this sign."; }
+  identity activation-error-message-number    { base activation-error-control; description "No message exists at the targeted slot number in the targeted bank."; }
+  identity activation-error-under-validation  { base activation-error-control; description "The message is still being validated and cannot be activated yet."; }
+  identity activation-error-local-mode        { base activation-error-control; description "The sign is under local (field) control and is ignoring central activations."; }
+  identity activation-error-central-mode      { base activation-error-control; description "The sign is under central control and declined an activation from another source."; }
+  identity activation-error-central-override-mode { base activation-error-control; description "A central override is in force and outranks this activation."; }
+
+  identity activation-error-hardware {
+    base activation-error;
+    description
+      "A hardware fault prevented activation. Not a content error and
+       not a refusal: the sign accepted the message and could not drive
+       the face. The corresponding device fault is reported separately
+       through openits-common-fault-events.";
+  }
+  identity activation-error-other {
+    base activation-error;
+    description
+      "Failure the sign reported but did not classify. Maps to the
+       'other' member of either NTCIP object; present so a decoder never
+       has to invent a more specific cause than the wire gave it.";
+  }
+
+  /* --------------------------------------------------------------
+   * MULTI markup tags (NTCIP 1203; open, vendor-extensible)
+   * -------------------------------------------------------------- */
+
+  identity multi-tag {
+    description "Base for an NTCIP 1203 MULTI markup tag a sign supports (vendor-extensible).";
+  }
+  identity multi-tag-new-line          { base multi-tag; description "[nl] new line."; }
+  identity multi-tag-new-page          { base multi-tag; description "[np] new page."; }
+  identity multi-tag-font              { base multi-tag; description "[fontN] font selection."; }
+  identity multi-tag-color-foreground  { base multi-tag; description "[cfR,G,B] foreground color."; }
+  identity multi-tag-color-background  { base multi-tag; description "[cbR,G,B] background color."; }
+  identity multi-tag-flash             { base multi-tag; description "[flt]/[flo] flashing text."; }
+  identity multi-tag-justify-line      { base multi-tag; description "[jlN] line justification."; }
+  identity multi-tag-justify-page      { base multi-tag; description "[jpN] page justification."; }
+  identity multi-tag-page-time         { base multi-tag; description "[ptNoO] page on/off time."; }
+  identity multi-tag-graphic           { base multi-tag; description "[gN] graphic insertion."; }
+  identity multi-tag-text-rectangle    { base multi-tag; description "[trX,Y,W,H] text rectangle."; }
+  identity multi-tag-field             { base multi-tag; description "[fN] dynamic field / data insertion."; }
+  identity multi-tag-moving-text       { base multi-tag; description "[mvN] moving/scrolling text."; }
+  identity multi-tag-spacing-character { base multi-tag; description "[scN] inter-character spacing."; }
+  identity multi-tag-hex-character     { base multi-tag; description "[hcN] hexadecimal character code."; }
+
+  /* --------------------------------------------------------------
+   * Fault leaf identities (mirror openits-dms fault-category)
+   * -------------------------------------------------------------- */
+
+  identity dms-fault-lamp {
+    base dms-fault-event-kind;
+    description "Lamp / pixel-bank illumination fault.";
+  }
+  identity dms-fault-pixel {
+    base dms-fault-event-kind;
+    description "Individual pixel failure detected by self-test.";
+  }
+  identity dms-fault-controller {
+    base dms-fault-event-kind;
+    description
+      "Internal sign-controller fault (CPU, memory, watchdog, etc.).";
+  }
+  identity dms-fault-environment {
+    base dms-fault-event-kind;
+    description
+      "Environmental fault (cabinet temperature, humidity, door).";
+  }
+  identity dms-fault-power {
+    base dms-fault-event-kind;
+    description "Power-supply or input-voltage fault.";
+  }
+  identity dms-fault-communication {
+    base dms-fault-event-kind;
+    description
+      "Communication fault between sign and upstream system.";
+  }
+  identity dms-fault-photocell {
+    base dms-fault-event-kind;
+    description
+      "Ambient-light (photocell) sensor fault. Distinct from
+       dms-fault-environment: the sensor governs automatic brightness, so a
+       failure degrades legibility — a stuck-low reading dims the face in
+       daylight — rather than indicating an enclosure condition.";
+    reference "NTCIP 1203 v03 (shortErrorStatus photocellError).";
+  }
+  identity dms-fault-message {
+    base dms-fault-event-kind;
+    description
+      "The sign reports a fault with the message content itself — the
+       stored or displayed message is unusable (failed validation, a
+       dangling font/graphic reference, or a library row that no longer
+       matches its CRC). Distinct from dms-fault-controller: the hardware
+       is healthy and the content is not.";
+    reference "NTCIP 1203 v03 (shortErrorStatus messageError).";
+  }
+
+  /*
+   * Sign operating mode. Modeled as an identity (not an enumeration)
+   * so vendors can add proprietary operating modes by deriving from
+   * sign-mode in their own module without a base-model revision.
+   */
+  identity sign-mode {
+    base openits-types:operational-mode;
+    description
+      "Base identity for what the sign face is currently displaying
+       (off / blank / a normal message / a test pattern) — the
+       display-state axis, distinct from dms-control-mode (who is
+       driving). Mode-value identities here (mode-off, mode-unknown, ...)
+       are intentionally module-scoped; on the wire they are
+       module-qualified (openits-dms-types:mode-off vs
+       openits-ramp-metering-types:mode-off) so there is no collision. Not
+       service-prefixed pre-v1 to avoid churn.";
+  }
+  identity mode-unknown {
+    base sign-mode;
+    description "Operating mode is unknown or not reported.";
+  }
+  identity mode-off {
+    base sign-mode;
+    description "Sign is powered down.";
+  }
+  identity mode-blank {
+    base sign-mode;
+    description "Sign is powered but displaying nothing.";
+  }
+  identity mode-test {
+    base sign-mode;
+    description "Sign is in a diagnostic/test display mode.";
+  }
+  identity mode-normal {
+    base sign-mode;
+    description "Steady-state operating mode.";
+  }
+
+  identity dms-control-mode {
+    base openits-types:operational-mode;
+    description
+      "Base identity for who is driving the sign (NTCIP 1203 dmsControlMode),
+       distinct from what the face displays. Relationship to
+       openits-types:control-source: dms-control-mode is the detailed
+       NTCIP-1203 control axis; it maps coarsely onto control-source
+       (dms-control-central -> control-central, dms-control-local ->
+       control-manual, ...) for cross-service authority filtering.";
+  }
+  /* --------------------------------------------------------------
+   * Activation triggers (WHY a message is on the face)
+   *
+   * These derive from the shared openits-types:mode-change-trigger axis
+   * and complete NTCIP 1203 dmsMsgSourceMode coverage. That object mixes
+   * two orthogonal axes: its authority values (local / central /
+   * timebasedScheduler / otherCom*) belong to control-mode, and its
+   * causal values belong here. trigger-comm-loss, trigger-schedule and
+   * trigger-operator already exist in openits-types and are reused; only
+   * the three sign-specific causes below were missing.
+   *
+   * Scoped to DMS rather than openits-types deliberately: identityrefs
+   * serialize module-qualified, so there is no collision, and a
+   * power-recovery cause on every service's shared surface is not yet
+   * warranted. Promoting one of these to openits-types later is additive
+   * and non-breaking if a second service needs it.
+   * -------------------------------------------------------------- */
+
+  identity trigger-power-recovery {
+    base openits-types:mode-change-trigger;
+    description
+      "The sign restored this message on its own after power returned
+       (NTCIP 1203 powerRecovery). Distinguishes an autonomous restore
+       from a central re-activation, which matters when auditing whether
+       the face reflects current TMC intent.";
+    reference "NTCIP 1203 v03 (dmsMsgSourceMode powerRecovery).";
+  }
+  identity trigger-power-loss {
+    base openits-types:mode-change-trigger;
+    description
+      "The sign entered its power-loss fallback (NTCIP 1203 powerLoss).";
+    reference "NTCIP 1203 v03 (dmsMsgSourceMode powerLoss).";
+  }
+  identity trigger-end-of-duration {
+    base openits-types:mode-change-trigger;
+    description
+      "The previous activation's duration expired and the sign fell back
+       to its end-of-duration message (NTCIP 1203 endDuration). Not a
+       fault: the expiry is the commanded behavior.";
+    reference "NTCIP 1203 v03 (dmsMsgSourceMode endDuration).";
+  }
+
+  identity dms-control-local            { base dms-control-mode; description "A field technician has local control at the sign; central commands are not honoured."; }
+  identity dms-control-external         { base dms-control-mode; description "An external system (not the TMC) is driving the sign."; }
+  identity dms-control-central          { base dms-control-mode; description "The TMC / central system is driving the sign."; }
+  identity dms-control-central-override { base dms-control-mode; description "Central has overridden local control."; }
+  identity dms-control-simulation       { base dms-control-mode; description "The sign is in simulation / off-line test control."; }
+  identity dms-control-other            { base dms-control-mode; description "A vendor-specific control mode not covered above."; }
+}

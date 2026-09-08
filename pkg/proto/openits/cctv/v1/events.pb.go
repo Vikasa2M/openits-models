@@ -22,120 +22,16 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type PtzMoveMode int32
-
-const (
-	PtzMoveMode_PTZ_MOVE_MODE_ABSOLUTE PtzMoveMode = 0
-	PtzMoveMode_PTZ_MOVE_MODE_VELOCITY PtzMoveMode = 1
-	PtzMoveMode_PTZ_MOVE_MODE_PRESET   PtzMoveMode = 2
-	PtzMoveMode_PTZ_MOVE_MODE_TOUR     PtzMoveMode = 3
-	PtzMoveMode_PTZ_MOVE_MODE_IDLE     PtzMoveMode = 4
-)
-
-// Enum value maps for PtzMoveMode.
-var (
-	PtzMoveMode_name = map[int32]string{
-		0: "PTZ_MOVE_MODE_ABSOLUTE",
-		1: "PTZ_MOVE_MODE_VELOCITY",
-		2: "PTZ_MOVE_MODE_PRESET",
-		3: "PTZ_MOVE_MODE_TOUR",
-		4: "PTZ_MOVE_MODE_IDLE",
-	}
-	PtzMoveMode_value = map[string]int32{
-		"PTZ_MOVE_MODE_ABSOLUTE": 0,
-		"PTZ_MOVE_MODE_VELOCITY": 1,
-		"PTZ_MOVE_MODE_PRESET":   2,
-		"PTZ_MOVE_MODE_TOUR":     3,
-		"PTZ_MOVE_MODE_IDLE":     4,
-	}
-)
-
-func (x PtzMoveMode) Enum() *PtzMoveMode {
-	p := new(PtzMoveMode)
-	*p = x
-	return p
-}
-
-func (x PtzMoveMode) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (PtzMoveMode) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_cctv_v1_events_proto_enumTypes[0].Descriptor()
-}
-
-func (PtzMoveMode) Type() protoreflect.EnumType {
-	return &file_openits_cctv_v1_events_proto_enumTypes[0]
-}
-
-func (x PtzMoveMode) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use PtzMoveMode.Descriptor instead.
-func (PtzMoveMode) EnumDescriptor() ([]byte, []int) {
-	return file_openits_cctv_v1_events_proto_rawDescGZIP(), []int{0}
-}
-
-type TourRunState int32
-
-const (
-	TourRunState_TOUR_RUN_STATE_STOPPED TourRunState = 0
-	TourRunState_TOUR_RUN_STATE_RUNNING TourRunState = 1
-	TourRunState_TOUR_RUN_STATE_PAUSED  TourRunState = 2
-)
-
-// Enum value maps for TourRunState.
-var (
-	TourRunState_name = map[int32]string{
-		0: "TOUR_RUN_STATE_STOPPED",
-		1: "TOUR_RUN_STATE_RUNNING",
-		2: "TOUR_RUN_STATE_PAUSED",
-	}
-	TourRunState_value = map[string]int32{
-		"TOUR_RUN_STATE_STOPPED": 0,
-		"TOUR_RUN_STATE_RUNNING": 1,
-		"TOUR_RUN_STATE_PAUSED":  2,
-	}
-)
-
-func (x TourRunState) Enum() *TourRunState {
-	p := new(TourRunState)
-	*p = x
-	return p
-}
-
-func (x TourRunState) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (TourRunState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_cctv_v1_events_proto_enumTypes[1].Descriptor()
-}
-
-func (TourRunState) Type() protoreflect.EnumType {
-	return &file_openits_cctv_v1_events_proto_enumTypes[1]
-}
-
-func (x TourRunState) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use TourRunState.Descriptor instead.
-func (TourRunState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_cctv_v1_events_proto_rawDescGZIP(), []int{1}
-}
-
 type LockoutDenied struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	Kind              string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	RequestedBy       string                 `protobuf:"bytes,1,opt,name=requested_by,json=requestedBy,proto3" json:"requested_by,omitempty"`
-	RequestedPriority uint32                 `protobuf:"varint,2,opt,name=requested_priority,json=requestedPriority,proto3" json:"requested_priority,omitempty"`
-	CurrentHolder     string                 `protobuf:"bytes,3,opt,name=current_holder,json=currentHolder,proto3" json:"current_holder,omitempty"`
-	HeldPriority      uint32                 `protobuf:"varint,4,opt,name=held_priority,json=heldPriority,proto3" json:"held_priority,omitempty"`
-	ObservedBy        string                 `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	RequestedPriority *uint32                `protobuf:"varint,2,opt,name=requested_priority,json=requestedPriority,proto3,oneof" json:"requested_priority,omitempty"`
+	CurrentHolder     *string                `protobuf:"bytes,3,opt,name=current_holder,json=currentHolder,proto3,oneof" json:"current_holder,omitempty"`
+	HeldPriority      *uint32                `protobuf:"varint,4,opt,name=held_priority,json=heldPriority,proto3,oneof" json:"held_priority,omitempty"`
+	ObservedBy        *string                `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner             string                 `protobuf:"bytes,7,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner             *string                `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence          uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId    string                 `protobuf:"bytes,9,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields     protoimpl.UnknownFields
@@ -187,29 +83,29 @@ func (x *LockoutDenied) GetRequestedBy() string {
 }
 
 func (x *LockoutDenied) GetRequestedPriority() uint32 {
-	if x != nil {
-		return x.RequestedPriority
+	if x != nil && x.RequestedPriority != nil {
+		return *x.RequestedPriority
 	}
 	return 0
 }
 
 func (x *LockoutDenied) GetCurrentHolder() string {
-	if x != nil {
-		return x.CurrentHolder
+	if x != nil && x.CurrentHolder != nil {
+		return *x.CurrentHolder
 	}
 	return ""
 }
 
 func (x *LockoutDenied) GetHeldPriority() uint32 {
-	if x != nil {
-		return x.HeldPriority
+	if x != nil && x.HeldPriority != nil {
+		return *x.HeldPriority
 	}
 	return 0
 }
 
 func (x *LockoutDenied) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -222,8 +118,8 @@ func (x *LockoutDenied) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *LockoutDenied) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -245,13 +141,13 @@ func (x *LockoutDenied) GetSourceDeviceId() string {
 type PtzMoveCommanded struct {
 	state          protoimpl.MessageState    `protogen:"open.v1"`
 	Kind           string                    `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	CommandedBy    string                    `protobuf:"bytes,1,opt,name=commanded_by,json=commandedBy,proto3" json:"commanded_by,omitempty"`
+	CommandedBy    *string                   `protobuf:"bytes,1,opt,name=commanded_by,json=commandedBy,proto3,oneof" json:"commanded_by,omitempty"`
 	MoveMode       PtzMoveMode               `protobuf:"varint,2,opt,name=move_mode,json=moveMode,proto3,enum=openits.cctv.v1.PtzMoveMode" json:"move_mode,omitempty"`
 	Absolute       *PtzMoveCommandedAbsolute `protobuf:"bytes,3,opt,name=absolute,proto3" json:"absolute,omitempty"`
 	Velocity       *PtzMoveCommandedVelocity `protobuf:"bytes,4,opt,name=velocity,proto3" json:"velocity,omitempty"`
-	ObservedBy     string                    `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	ObservedBy     *string                   `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp    `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                    `protobuf:"bytes,7,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                   `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                    `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId string                    `protobuf:"bytes,9,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -296,8 +192,8 @@ func (x *PtzMoveCommanded) GetKind() string {
 }
 
 func (x *PtzMoveCommanded) GetCommandedBy() string {
-	if x != nil {
-		return x.CommandedBy
+	if x != nil && x.CommandedBy != nil {
+		return *x.CommandedBy
 	}
 	return ""
 }
@@ -324,8 +220,8 @@ func (x *PtzMoveCommanded) GetVelocity() *PtzMoveCommandedVelocity {
 }
 
 func (x *PtzMoveCommanded) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -338,8 +234,8 @@ func (x *PtzMoveCommanded) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *PtzMoveCommanded) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -360,9 +256,9 @@ func (x *PtzMoveCommanded) GetSourceDeviceId() string {
 
 type PtzMoveCommandedAbsolute struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PanDegrees    string                 `protobuf:"bytes,1,opt,name=pan_degrees,json=panDegrees,proto3" json:"pan_degrees,omitempty"`
-	TiltDegrees   string                 `protobuf:"bytes,2,opt,name=tilt_degrees,json=tiltDegrees,proto3" json:"tilt_degrees,omitempty"`
-	ZoomPercent   uint32                 `protobuf:"varint,3,opt,name=zoom_percent,json=zoomPercent,proto3" json:"zoom_percent,omitempty"`
+	PanDegrees    *string                `protobuf:"bytes,1,opt,name=pan_degrees,json=panDegrees,proto3,oneof" json:"pan_degrees,omitempty"`
+	TiltDegrees   *string                `protobuf:"bytes,2,opt,name=tilt_degrees,json=tiltDegrees,proto3,oneof" json:"tilt_degrees,omitempty"`
+	ZoomPercent   *uint32                `protobuf:"varint,3,opt,name=zoom_percent,json=zoomPercent,proto3,oneof" json:"zoom_percent,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -398,31 +294,31 @@ func (*PtzMoveCommandedAbsolute) Descriptor() ([]byte, []int) {
 }
 
 func (x *PtzMoveCommandedAbsolute) GetPanDegrees() string {
-	if x != nil {
-		return x.PanDegrees
+	if x != nil && x.PanDegrees != nil {
+		return *x.PanDegrees
 	}
 	return ""
 }
 
 func (x *PtzMoveCommandedAbsolute) GetTiltDegrees() string {
-	if x != nil {
-		return x.TiltDegrees
+	if x != nil && x.TiltDegrees != nil {
+		return *x.TiltDegrees
 	}
 	return ""
 }
 
 func (x *PtzMoveCommandedAbsolute) GetZoomPercent() uint32 {
-	if x != nil {
-		return x.ZoomPercent
+	if x != nil && x.ZoomPercent != nil {
+		return *x.ZoomPercent
 	}
 	return 0
 }
 
 type PtzMoveCommandedVelocity struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PanSpeed      int32                  `protobuf:"varint,1,opt,name=pan_speed,json=panSpeed,proto3" json:"pan_speed,omitempty"`
-	TiltSpeed     int32                  `protobuf:"varint,2,opt,name=tilt_speed,json=tiltSpeed,proto3" json:"tilt_speed,omitempty"`
-	ZoomSpeed     int32                  `protobuf:"varint,3,opt,name=zoom_speed,json=zoomSpeed,proto3" json:"zoom_speed,omitempty"`
+	PanSpeed      *int32                 `protobuf:"varint,1,opt,name=pan_speed,json=panSpeed,proto3,oneof" json:"pan_speed,omitempty"`
+	TiltSpeed     *int32                 `protobuf:"varint,2,opt,name=tilt_speed,json=tiltSpeed,proto3,oneof" json:"tilt_speed,omitempty"`
+	ZoomSpeed     *int32                 `protobuf:"varint,3,opt,name=zoom_speed,json=zoomSpeed,proto3,oneof" json:"zoom_speed,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -458,22 +354,22 @@ func (*PtzMoveCommandedVelocity) Descriptor() ([]byte, []int) {
 }
 
 func (x *PtzMoveCommandedVelocity) GetPanSpeed() int32 {
-	if x != nil {
-		return x.PanSpeed
+	if x != nil && x.PanSpeed != nil {
+		return *x.PanSpeed
 	}
 	return 0
 }
 
 func (x *PtzMoveCommandedVelocity) GetTiltSpeed() int32 {
-	if x != nil {
-		return x.TiltSpeed
+	if x != nil && x.TiltSpeed != nil {
+		return *x.TiltSpeed
 	}
 	return 0
 }
 
 func (x *PtzMoveCommandedVelocity) GetZoomSpeed() int32 {
-	if x != nil {
-		return x.ZoomSpeed
+	if x != nil && x.ZoomSpeed != nil {
+		return *x.ZoomSpeed
 	}
 	return 0
 }
@@ -482,12 +378,12 @@ type PtzPresetRecalled struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	PresetId       uint32                 `protobuf:"varint,1,opt,name=preset_id,json=presetId,proto3" json:"preset_id,omitempty"`
-	PresetName     string                 `protobuf:"bytes,2,opt,name=preset_name,json=presetName,proto3" json:"preset_name,omitempty"`
-	RecalledBy     string                 `protobuf:"bytes,3,opt,name=recalled_by,json=recalledBy,proto3" json:"recalled_by,omitempty"`
-	ViaTour        bool                   `protobuf:"varint,4,opt,name=via_tour,json=viaTour,proto3" json:"via_tour,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	PresetName     *string                `protobuf:"bytes,2,opt,name=preset_name,json=presetName,proto3,oneof" json:"preset_name,omitempty"`
+	RecalledBy     *string                `protobuf:"bytes,3,opt,name=recalled_by,json=recalledBy,proto3,oneof" json:"recalled_by,omitempty"`
+	ViaTour        *bool                  `protobuf:"varint,4,opt,name=via_tour,json=viaTour,proto3,oneof" json:"via_tour,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,7,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,9,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -539,29 +435,29 @@ func (x *PtzPresetRecalled) GetPresetId() uint32 {
 }
 
 func (x *PtzPresetRecalled) GetPresetName() string {
-	if x != nil {
-		return x.PresetName
+	if x != nil && x.PresetName != nil {
+		return *x.PresetName
 	}
 	return ""
 }
 
 func (x *PtzPresetRecalled) GetRecalledBy() string {
-	if x != nil {
-		return x.RecalledBy
+	if x != nil && x.RecalledBy != nil {
+		return *x.RecalledBy
 	}
 	return ""
 }
 
 func (x *PtzPresetRecalled) GetViaTour() bool {
-	if x != nil {
-		return x.ViaTour
+	if x != nil && x.ViaTour != nil {
+		return *x.ViaTour
 	}
 	return false
 }
 
 func (x *PtzPresetRecalled) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -574,8 +470,8 @@ func (x *PtzPresetRecalled) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *PtzPresetRecalled) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -598,11 +494,11 @@ type TourStateChanged struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	TourId         uint32                 `protobuf:"varint,1,opt,name=tour_id,json=tourId,proto3" json:"tour_id,omitempty"`
-	PreviousState  TourRunState           `protobuf:"varint,2,opt,name=previous_state,json=previousState,proto3,enum=openits.cctv.v1.TourRunState" json:"previous_state,omitempty"`
+	PreviousState  *TourRunState          `protobuf:"varint,2,opt,name=previous_state,json=previousState,proto3,enum=openits.cctv.v1.TourRunState,oneof" json:"previous_state,omitempty"`
 	CurrentState   TourRunState           `protobuf:"varint,3,opt,name=current_state,json=currentState,proto3,enum=openits.cctv.v1.TourRunState" json:"current_state,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,4,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,4,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,6,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,8,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -654,8 +550,8 @@ func (x *TourStateChanged) GetTourId() uint32 {
 }
 
 func (x *TourStateChanged) GetPreviousState() TourRunState {
-	if x != nil {
-		return x.PreviousState
+	if x != nil && x.PreviousState != nil {
+		return *x.PreviousState
 	}
 	return TourRunState_TOUR_RUN_STATE_STOPPED
 }
@@ -668,8 +564,8 @@ func (x *TourStateChanged) GetCurrentState() TourRunState {
 }
 
 func (x *TourStateChanged) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -682,8 +578,8 @@ func (x *TourStateChanged) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *TourStateChanged) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -706,81 +602,94 @@ var File_openits_cctv_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_cctv_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"\x1copenits/cctv/v1/events.proto\x12\x0fopenits.cctv.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xfb\x02\n" +
+	"\x1copenits/cctv/v1/events.proto\x12\x0fopenits.cctv.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bopenits/cctv/v1/types.proto\"\xea\x03\n" +
 	"\rLockoutDenied\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12!\n" +
-	"\frequested_by\x18\x01 \x01(\tR\vrequestedBy\x12-\n" +
-	"\x12requested_priority\x18\x02 \x01(\rR\x11requestedPriority\x12%\n" +
-	"\x0ecurrent_holder\x18\x03 \x01(\tR\rcurrentHolder\x12#\n" +
-	"\rheld_priority\x18\x04 \x01(\rR\fheldPriority\x12\x1f\n" +
-	"\vobserved_by\x18\x05 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\frequested_by\x18\x01 \x01(\tR\vrequestedBy\x122\n" +
+	"\x12requested_priority\x18\x02 \x01(\rH\x00R\x11requestedPriority\x88\x01\x01\x12*\n" +
+	"\x0ecurrent_holder\x18\x03 \x01(\tH\x01R\rcurrentHolder\x88\x01\x01\x12(\n" +
+	"\rheld_priority\x18\x04 \x01(\rH\x02R\fheldPriority\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x05 \x01(\tH\x03R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\a \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\a \x01(\tH\x04R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\b \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceId\"\xcc\x03\n" +
+	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceIdB\x15\n" +
+	"\x13_requested_priorityB\x11\n" +
+	"\x0f_current_holderB\x10\n" +
+	"\x0e_held_priorityB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\x86\x04\n" +
 	"\x10PtzMoveCommanded\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12!\n" +
-	"\fcommanded_by\x18\x01 \x01(\tR\vcommandedBy\x129\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12&\n" +
+	"\fcommanded_by\x18\x01 \x01(\tH\x00R\vcommandedBy\x88\x01\x01\x129\n" +
 	"\tmove_mode\x18\x02 \x01(\x0e2\x1c.openits.cctv.v1.PtzMoveModeR\bmoveMode\x12E\n" +
 	"\babsolute\x18\x03 \x01(\v2).openits.cctv.v1.PtzMoveCommandedAbsoluteR\babsolute\x12E\n" +
-	"\bvelocity\x18\x04 \x01(\v2).openits.cctv.v1.PtzMoveCommandedVelocityR\bvelocity\x12\x1f\n" +
-	"\vobserved_by\x18\x05 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\bvelocity\x18\x04 \x01(\v2).openits.cctv.v1.PtzMoveCommandedVelocityR\bvelocity\x12$\n" +
+	"\vobserved_by\x18\x05 \x01(\tH\x01R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\a \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\a \x01(\tH\x02R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\b \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceId\"\x81\x01\n" +
-	"\x18PtzMoveCommandedAbsolute\x12\x1f\n" +
-	"\vpan_degrees\x18\x01 \x01(\tR\n" +
-	"panDegrees\x12!\n" +
-	"\ftilt_degrees\x18\x02 \x01(\tR\vtiltDegrees\x12!\n" +
-	"\fzoom_percent\x18\x03 \x01(\rR\vzoomPercent\"u\n" +
-	"\x18PtzMoveCommandedVelocity\x12\x1b\n" +
-	"\tpan_speed\x18\x01 \x01(\x05R\bpanSpeed\x12\x1d\n" +
+	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceIdB\x0f\n" +
+	"\r_commanded_byB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xc2\x01\n" +
+	"\x18PtzMoveCommandedAbsolute\x12$\n" +
+	"\vpan_degrees\x18\x01 \x01(\tH\x00R\n" +
+	"panDegrees\x88\x01\x01\x12&\n" +
+	"\ftilt_degrees\x18\x02 \x01(\tH\x01R\vtiltDegrees\x88\x01\x01\x12&\n" +
+	"\fzoom_percent\x18\x03 \x01(\rH\x02R\vzoomPercent\x88\x01\x01B\x0e\n" +
+	"\f_pan_degreesB\x0f\n" +
+	"\r_tilt_degreesB\x0f\n" +
+	"\r_zoom_percent\"\xb0\x01\n" +
+	"\x18PtzMoveCommandedVelocity\x12 \n" +
+	"\tpan_speed\x18\x01 \x01(\x05H\x00R\bpanSpeed\x88\x01\x01\x12\"\n" +
 	"\n" +
-	"tilt_speed\x18\x02 \x01(\x05R\ttiltSpeed\x12\x1d\n" +
+	"tilt_speed\x18\x02 \x01(\x05H\x01R\ttiltSpeed\x88\x01\x01\x12\"\n" +
 	"\n" +
-	"zoom_speed\x18\x03 \x01(\x05R\tzoomSpeed\"\xdb\x02\n" +
+	"zoom_speed\x18\x03 \x01(\x05H\x02R\tzoomSpeed\x88\x01\x01B\f\n" +
+	"\n" +
+	"_pan_speedB\r\n" +
+	"\v_tilt_speedB\r\n" +
+	"\v_zoom_speed\"\xbb\x03\n" +
 	"\x11PtzPresetRecalled\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x1b\n" +
-	"\tpreset_id\x18\x01 \x01(\rR\bpresetId\x12\x1f\n" +
-	"\vpreset_name\x18\x02 \x01(\tR\n" +
-	"presetName\x12\x1f\n" +
-	"\vrecalled_by\x18\x03 \x01(\tR\n" +
-	"recalledBy\x12\x19\n" +
-	"\bvia_tour\x18\x04 \x01(\bR\aviaTour\x12\x1f\n" +
-	"\vobserved_by\x18\x05 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\tpreset_id\x18\x01 \x01(\rR\bpresetId\x12$\n" +
+	"\vpreset_name\x18\x02 \x01(\tH\x00R\n" +
+	"presetName\x88\x01\x01\x12$\n" +
+	"\vrecalled_by\x18\x03 \x01(\tH\x01R\n" +
+	"recalledBy\x88\x01\x01\x12\x1e\n" +
+	"\bvia_tour\x18\x04 \x01(\bH\x02R\aviaTour\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x05 \x01(\tH\x03R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\a \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\a \x01(\tH\x04R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\b \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceId\"\x83\x03\n" +
+	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceIdB\x0e\n" +
+	"\f_preset_nameB\x0e\n" +
+	"\f_recalled_byB\v\n" +
+	"\t_via_tourB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xbf\x03\n" +
 	"\x10TourStateChanged\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x17\n" +
-	"\atour_id\x18\x01 \x01(\rR\x06tourId\x12D\n" +
-	"\x0eprevious_state\x18\x02 \x01(\x0e2\x1d.openits.cctv.v1.TourRunStateR\rpreviousState\x12B\n" +
-	"\rcurrent_state\x18\x03 \x01(\x0e2\x1d.openits.cctv.v1.TourRunStateR\fcurrentState\x12\x1f\n" +
-	"\vobserved_by\x18\x04 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\atour_id\x18\x01 \x01(\rR\x06tourId\x12I\n" +
+	"\x0eprevious_state\x18\x02 \x01(\x0e2\x1d.openits.cctv.v1.TourRunStateH\x00R\rpreviousState\x88\x01\x01\x12B\n" +
+	"\rcurrent_state\x18\x03 \x01(\x0e2\x1d.openits.cctv.v1.TourRunStateR\fcurrentState\x12$\n" +
+	"\vobserved_by\x18\x04 \x01(\tH\x01R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\x06 \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\x06 \x01(\tH\x02R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\a \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceId*\x8f\x01\n" +
-	"\vPtzMoveMode\x12\x1a\n" +
-	"\x16PTZ_MOVE_MODE_ABSOLUTE\x10\x00\x12\x1a\n" +
-	"\x16PTZ_MOVE_MODE_VELOCITY\x10\x01\x12\x18\n" +
-	"\x14PTZ_MOVE_MODE_PRESET\x10\x02\x12\x16\n" +
-	"\x12PTZ_MOVE_MODE_TOUR\x10\x03\x12\x16\n" +
-	"\x12PTZ_MOVE_MODE_IDLE\x10\x04*a\n" +
-	"\fTourRunState\x12\x1a\n" +
-	"\x16TOUR_RUN_STATE_STOPPED\x10\x00\x12\x1a\n" +
-	"\x16TOUR_RUN_STATE_RUNNING\x10\x01\x12\x19\n" +
-	"\x15TOUR_RUN_STATE_PAUSED\x10\x02BEZCgithub.com/Vikasa2M/openits-models/pkg/proto/openits/cctv/v1;cctvv1b\x06proto3"
+	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceIdB\x11\n" +
+	"\x0f_previous_stateB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_ownerBEZCgithub.com/Vikasa2M/openits-models/pkg/proto/openits/cctv/v1;cctvv1b\x06proto3"
 
 var (
 	file_openits_cctv_v1_events_proto_rawDescOnce sync.Once
@@ -794,29 +703,28 @@ func file_openits_cctv_v1_events_proto_rawDescGZIP() []byte {
 	return file_openits_cctv_v1_events_proto_rawDescData
 }
 
-var file_openits_cctv_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_openits_cctv_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_openits_cctv_v1_events_proto_goTypes = []any{
-	(PtzMoveMode)(0),                 // 0: openits.cctv.v1.PtzMoveMode
-	(TourRunState)(0),                // 1: openits.cctv.v1.TourRunState
-	(*LockoutDenied)(nil),            // 2: openits.cctv.v1.LockoutDenied
-	(*PtzMoveCommanded)(nil),         // 3: openits.cctv.v1.PtzMoveCommanded
-	(*PtzMoveCommandedAbsolute)(nil), // 4: openits.cctv.v1.PtzMoveCommandedAbsolute
-	(*PtzMoveCommandedVelocity)(nil), // 5: openits.cctv.v1.PtzMoveCommandedVelocity
-	(*PtzPresetRecalled)(nil),        // 6: openits.cctv.v1.PtzPresetRecalled
-	(*TourStateChanged)(nil),         // 7: openits.cctv.v1.TourStateChanged
-	(*timestamppb.Timestamp)(nil),    // 8: google.protobuf.Timestamp
+	(*LockoutDenied)(nil),            // 0: openits.cctv.v1.LockoutDenied
+	(*PtzMoveCommanded)(nil),         // 1: openits.cctv.v1.PtzMoveCommanded
+	(*PtzMoveCommandedAbsolute)(nil), // 2: openits.cctv.v1.PtzMoveCommandedAbsolute
+	(*PtzMoveCommandedVelocity)(nil), // 3: openits.cctv.v1.PtzMoveCommandedVelocity
+	(*PtzPresetRecalled)(nil),        // 4: openits.cctv.v1.PtzPresetRecalled
+	(*TourStateChanged)(nil),         // 5: openits.cctv.v1.TourStateChanged
+	(*timestamppb.Timestamp)(nil),    // 6: google.protobuf.Timestamp
+	(PtzMoveMode)(0),                 // 7: openits.cctv.v1.PtzMoveMode
+	(TourRunState)(0),                // 8: openits.cctv.v1.TourRunState
 }
 var file_openits_cctv_v1_events_proto_depIdxs = []int32{
-	8, // 0: openits.cctv.v1.LockoutDenied.occurred_at:type_name -> google.protobuf.Timestamp
-	0, // 1: openits.cctv.v1.PtzMoveCommanded.move_mode:type_name -> openits.cctv.v1.PtzMoveMode
-	4, // 2: openits.cctv.v1.PtzMoveCommanded.absolute:type_name -> openits.cctv.v1.PtzMoveCommandedAbsolute
-	5, // 3: openits.cctv.v1.PtzMoveCommanded.velocity:type_name -> openits.cctv.v1.PtzMoveCommandedVelocity
-	8, // 4: openits.cctv.v1.PtzMoveCommanded.occurred_at:type_name -> google.protobuf.Timestamp
-	8, // 5: openits.cctv.v1.PtzPresetRecalled.occurred_at:type_name -> google.protobuf.Timestamp
-	1, // 6: openits.cctv.v1.TourStateChanged.previous_state:type_name -> openits.cctv.v1.TourRunState
-	1, // 7: openits.cctv.v1.TourStateChanged.current_state:type_name -> openits.cctv.v1.TourRunState
-	8, // 8: openits.cctv.v1.TourStateChanged.occurred_at:type_name -> google.protobuf.Timestamp
+	6, // 0: openits.cctv.v1.LockoutDenied.occurred_at:type_name -> google.protobuf.Timestamp
+	7, // 1: openits.cctv.v1.PtzMoveCommanded.move_mode:type_name -> openits.cctv.v1.PtzMoveMode
+	2, // 2: openits.cctv.v1.PtzMoveCommanded.absolute:type_name -> openits.cctv.v1.PtzMoveCommandedAbsolute
+	3, // 3: openits.cctv.v1.PtzMoveCommanded.velocity:type_name -> openits.cctv.v1.PtzMoveCommandedVelocity
+	6, // 4: openits.cctv.v1.PtzMoveCommanded.occurred_at:type_name -> google.protobuf.Timestamp
+	6, // 5: openits.cctv.v1.PtzPresetRecalled.occurred_at:type_name -> google.protobuf.Timestamp
+	8, // 6: openits.cctv.v1.TourStateChanged.previous_state:type_name -> openits.cctv.v1.TourRunState
+	8, // 7: openits.cctv.v1.TourStateChanged.current_state:type_name -> openits.cctv.v1.TourRunState
+	6, // 8: openits.cctv.v1.TourStateChanged.occurred_at:type_name -> google.protobuf.Timestamp
 	9, // [9:9] is the sub-list for method output_type
 	9, // [9:9] is the sub-list for method input_type
 	9, // [9:9] is the sub-list for extension type_name
@@ -829,19 +737,25 @@ func file_openits_cctv_v1_events_proto_init() {
 	if File_openits_cctv_v1_events_proto != nil {
 		return
 	}
+	file_openits_cctv_v1_types_proto_init()
+	file_openits_cctv_v1_events_proto_msgTypes[0].OneofWrappers = []any{}
+	file_openits_cctv_v1_events_proto_msgTypes[1].OneofWrappers = []any{}
+	file_openits_cctv_v1_events_proto_msgTypes[2].OneofWrappers = []any{}
+	file_openits_cctv_v1_events_proto_msgTypes[3].OneofWrappers = []any{}
+	file_openits_cctv_v1_events_proto_msgTypes[4].OneofWrappers = []any{}
+	file_openits_cctv_v1_events_proto_msgTypes[5].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_cctv_v1_events_proto_rawDesc), len(file_openits_cctv_v1_events_proto_rawDesc)),
-			NumEnums:      2,
+			NumEnums:      0,
 			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_openits_cctv_v1_events_proto_goTypes,
 		DependencyIndexes: file_openits_cctv_v1_events_proto_depIdxs,
-		EnumInfos:         file_openits_cctv_v1_events_proto_enumTypes,
 		MessageInfos:      file_openits_cctv_v1_events_proto_msgTypes,
 	}.Build()
 	File_openits_cctv_v1_events_proto = out.File
