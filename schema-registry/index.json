@@ -5,7 +5,7 @@
     {
       "slug": "cctv",
       "namespace": "urn:openits:yang:cctv",
-      "description": "NTCIP 1205 CCTV / PTZ camera management — the neutral field-device\nmodel: identity and mounting, PTZ position / presets / tours,\nstream/encoder status, enclosure environmental controls, and an\nactive-fault inventory. Stream/encoder status is the field-device side\n(what the camera/encoder emits), distinct from a center-side VMS.\n\nVendor analytics calibration (e.g. TrafficVision detection-zone\ncalibration) is NOT camera management and stays in the vendor augments;\nthis is the neutral device model those augments extend. Joystick-\nownership arbitration (who holds control) lands in a follow-up revision.\n\nCopyright (c) 2026. Distributed under Apache 2.0.",
+      "description": "NTCIP 1205 CCTV / PTZ camera management — the neutral field-device\r\nmodel: identity and mounting, PTZ position / presets / tours,\r\nstream/encoder status, enclosure environmental controls, and an\r\nactive-fault inventory. Stream/encoder status is the field-device side\r\n(what the camera/encoder emits), distinct from a center-side VMS.\r\n\r\nVendor analytics calibration (e.g. TrafficVision detection-zone\r\ncalibration) is NOT camera management and stays in the vendor augments;\r\nthis is the neutral device model those augments extend. Joystick-\r\nownership arbitration (who holds control) lands in a follow-up revision.\r\n\r\nCopyright (c) 2026. Distributed under Apache 2.0.",
       "revisions": [
         "2026-07-17",
         "2026-07-21",
@@ -64,7 +64,7 @@
     {
       "slug": "dms",
       "namespace": "urn:openits:yang:dms",
-      "description": "YANG data model for Dynamic Message Signs (DMS).\n\nTransport-independent replacement for NTCIP 1203 v03, aligned\nwith ARC-IT 9.1 service package TI06 (Traffic Information\nDissemination).  The model is deliberately structure-first: sign\nidentity, a message-memory library, a commanded control surface\n(mode, brightness, message activation, and fallback messages),\nenvironment sensors, and pixel/lamp health live under a single\n`sign` container with config / state separation applied to every\nnode that has both sides.\n\nNodes are annotated with the 'arc-it-flow' extension so tooling\ncan emit ARC-IT coverage reports.\n\nCopyright (c) 2026.  Distributed under Apache 2.0.",
+      "description": "YANG data model for Dynamic Message Signs (DMS).\r\n\r\nTransport-independent replacement for NTCIP 1203 v03, aligned\r\nwith ARC-IT 9.1 service package TI06 (Traffic Information\r\nDissemination).  The model is deliberately structure-first: sign\r\nidentity, a message-memory library, a commanded control surface\r\n(mode, brightness, message activation, and fallback messages),\r\nenvironment sensors, and pixel/lamp health live under a single\r\n`sign` container with config / state separation applied to every\r\nnode that has both sides.\r\n\r\nNodes are annotated with the 'arc-it-flow' extension so tooling\r\ncan emit ARC-IT coverage reports.\r\n\r\nCopyright (c) 2026.  Distributed under Apache 2.0.",
       "revisions": [
         "2026-04-19",
         "2026-05-23",
@@ -188,7 +188,7 @@
     {
       "slug": "ess",
       "namespace": "urn:openits:yang:ess",
-      "description": "YANG data model for Environmental Sensor Stations (ESS) — the\nroadside devices commonly referred to as RWIS (Road Weather\nInformation System).\n\nTransport-independent replacement for NTCIP 1204 v04, aligned\nwith ARC-IT 9.1 service package MC01 (Environmental Monitoring\nStation).\n\nESS devices are pure-observation: no actuators, no commands, no\nsafety-critical timing.  The model therefore has almost no\n`must`-constraints.  Bounded values are enforced via YANG\n`range` (humidity 0..100 %, wind-direction 0..360°, pressure\n300..1100 hPa, etc.) rather than XPath constraints, because the\nbounds are **physical** rather than **operational**.\n\nEvery numeric leaf carries a `units` statement.  Agents that\nreport different units MUST convert at the translator boundary;\nthe wire format is canonical.\n\nCopyright (c) 2026.  Distributed under Apache 2.0.",
+      "description": "YANG data model for Environmental Sensor Stations (ESS) — the\r\nroadside devices commonly referred to as RWIS (Road Weather\r\nInformation System).\r\n\r\nTransport-independent replacement for NTCIP 1204 v04, aligned\r\nwith ARC-IT 9.1 service package MC01 (Environmental Monitoring\r\nStation).\r\n\r\nESS devices are pure-observation: no actuators, no commands, no\r\nsafety-critical timing.  The model therefore has almost no\r\n`must`-constraints.  Bounded values are enforced via YANG\r\n`range` (humidity 0..100 %, wind-direction 0..360°, pressure\r\n300..1100 hPa, etc.) rather than XPath constraints, because the\r\nbounds are **physical** rather than **operational**.\r\n\r\nEvery numeric leaf carries a `units` statement.  Agents that\r\nreport different units MUST convert at the translator boundary;\r\nthe wire format is canonical.\r\n\r\nCopyright (c) 2026.  Distributed under Apache 2.0.",
       "revisions": [
         "2026-04-19",
         "2026-06-11",
@@ -279,7 +279,7 @@
     {
       "slug": "perception",
       "namespace": "urn:openits:yang:perception",
-      "description": "YANG data model for roadside perception sensors — LiDAR and\ntracking-radar units that emit object-level tracks (position,\nspeed, heading, classification) rather than per-lane aggregates.\n\nAligned with ARC-IT 9.1 service packages TM01 (Infrastructure-\nBased Traffic Surveillance) and TM08 (Traffic Incident\nManagement System).  The model is vendor-neutral: it applies to\nany sensor whose on-board perception pipeline produces tracked\nobjects and zone analytics.  There is no NTCIP analog — this is\na post-NTCIP device class.  Vendor-specific capabilities ride\nin vendor augment modules per docs/06-extension-model.md, never\nin this module.\n\nObject classes and incident types are identity hierarchies, not\nenums: perception vendors extend both via the identity-only\nTier-2 pattern (docs/06-extension-model.md) without touching\nthis module.  Closed physical sets remain enums.\n\nTrack lists are high-churn state; consumers needing full-rate\nobject data subscribe to the streamed state path rather than\npolling.  Zone analytics and incidents are the operator-facing\nproduct and ride as notifications.\n\nCopyright (c) 2026.  Distributed under Apache 2.0.",
+      "description": "YANG data model for roadside perception sensors — LiDAR and\r\ntracking-radar units that emit object-level tracks (position,\r\nspeed, heading, classification) rather than per-lane aggregates.\r\n\r\nAligned with ARC-IT 9.1 service packages TM01 (Infrastructure-\r\nBased Traffic Surveillance) and TM08 (Traffic Incident\r\nManagement System).  The model is vendor-neutral: it applies to\r\nany sensor whose on-board perception pipeline produces tracked\r\nobjects and zone analytics.  There is no NTCIP analog — this is\r\na post-NTCIP device class.  Vendor-specific capabilities ride\r\nin vendor augment modules per docs/06-extension-model.md, never\r\nin this module.\r\n\r\nObject classes and incident types are identity hierarchies, not\r\nenums: perception vendors extend both via the identity-only\r\nTier-2 pattern (docs/06-extension-model.md) without touching\r\nthis module.  Closed physical sets remain enums.\r\n\r\nTrack lists are high-churn state; consumers needing full-rate\r\nobject data subscribe to the streamed state path rather than\r\npolling.  Zone analytics and incidents are the operator-facing\r\nproduct and ride as notifications.\r\n\r\nCopyright (c) 2026.  Distributed under Apache 2.0.",
       "revisions": [
         "2026-07-07",
         "2026-07-10",
@@ -376,7 +376,7 @@
     {
       "slug": "ramp-metering",
       "namespace": "urn:openits:yang:ramp-metering",
-      "description": "YANG data model for freeway entrance-ramp metering devices.\n\nTransport-independent replacement for NTCIP 1207 v02, aligned\nwith ARC-IT 9.1 service package TI03 (Traffic Metering).\n\nRamp meters share NEMA phase-timing vocabulary with signal\ncontrollers; the shared grouping lives in openits-nema-common\nso the MUTCD minimums stay in one place across services.\nRamp-meter-specific constructs (release rate, headway, queue\noverride, per-lane operation) are modelled here.\n\nCopyright (c) 2026.  Distributed under Apache 2.0.",
+      "description": "YANG data model for freeway entrance-ramp metering devices.\r\n\r\nTransport-independent replacement for NTCIP 1207 v02, aligned\r\nwith ARC-IT 9.1 service package TI03 (Traffic Metering).\r\n\r\nRamp meters share NEMA phase-timing vocabulary with signal\r\ncontrollers; the shared grouping lives in openits-nema-common\r\nso the MUTCD minimums stay in one place across services.\r\nRamp-meter-specific constructs (release rate, headway, queue\r\noverride, per-lane operation) are modelled here.\r\n\r\nCopyright (c) 2026.  Distributed under Apache 2.0.",
       "revisions": [
         "2026-04-19",
         "2026-06-11",
@@ -492,7 +492,7 @@
     {
       "slug": "reversible-lane",
       "namespace": "urn:openits:yang:reversible-lane",
-      "description": "YANG data model for reversible-lane facilities — corridors,\nbridges, and tunnels whose lanes carry traffic in either of two\nopposing directions under operator control.\n\nAligned with ARC-IT 9.1 service package TM16 (Reversible Lane\nManagement).  Facilities of this class are typically driven by\na PLC exposing lane state through a register map; the model is\ntransport-independent, so SRTP, Modbus, DNP3, or NTCIP adapters\nmap onto it identically.  Wire provenance for register-decoded\nevents rides in the openits-types wire-source 'plc-register'\ncase.  Vendor-specific capabilities ride in vendor augment\nmodules per docs/06-extension-model.md, never in this module.\n\nThe facility is a four-state machine.  With direction-a =\nnorthbound and direction-b = southbound, the operator-visible\nstates map to: Open NB (open + northbound), Open SB (open +\nsouthbound), Closed, and In-Transition.  Directions are\nconfigured per facility so east-west corridors use the same\nmodel.\n\nStructured per the config/state idiom: every commanded surface\n(facility `config` directions, `control/config`, and each lane's\n`segments/segment/lane/config`) is config true and every\nreadback (`state`, `control/state`, and each lane's\n`segments/segment/lane/state`) is config false, one per lane per\nMUTCD Chapter 4M (a lane-use control signal governs a single\nlane, not a whole segment).\n\nThis is a safety-critical control model.  `must` constraints on\nevery commanded, config-true surface forbid unsafe or\ninconsistent writes and conforming controllers MUST refuse\nwrites that violate them:\n  - the facility's two travel directions must be concrete and\n    cardinal opposites (`config/direction-a` /\n    `config/direction-b`);\n  - an open target-state must name a target-direction that is\n    one of the facility's configured directions\n    (`control/config`);\n  - per lane, a commanded green-arrow or flashing-yellow-X\n    toward one direction requires a commanded steady red-X\n    toward the other (`segments/segment/lane/config`) — the\n    green-implies-opposing-red-X invariant.\nThe config-false readback (`state`, `control/state`,\n`segments/segment/lane/state`) carries no `must`: it reports\nanomalies — including a lane reading back green-arrow to both\ndirections — as data plus a fault/alarm, not as illegal data;\na misbehaving facility's telemetry must stay representable so\nit can be reported (see lcs-conflict-detected).\n\nCopyright (c) 2026.  Distributed under Apache 2.0.",
+      "description": "YANG data model for reversible-lane facilities — corridors,\r\nbridges, and tunnels whose lanes carry traffic in either of two\r\nopposing directions under operator control.\r\n\r\nAligned with ARC-IT 9.1 service package TM16 (Reversible Lane\r\nManagement).  Facilities of this class are typically driven by\r\na PLC exposing lane state through a register map; the model is\r\ntransport-independent, so SRTP, Modbus, DNP3, or NTCIP adapters\r\nmap onto it identically.  Wire provenance for register-decoded\r\nevents rides in the openits-types wire-source 'plc-register'\r\ncase.  Vendor-specific capabilities ride in vendor augment\r\nmodules per docs/06-extension-model.md, never in this module.\r\n\r\nThe facility is a four-state machine.  With direction-a =\r\nnorthbound and direction-b = southbound, the operator-visible\r\nstates map to: Open NB (open + northbound), Open SB (open +\r\nsouthbound), Closed, and In-Transition.  Directions are\r\nconfigured per facility so east-west corridors use the same\r\nmodel.\r\n\r\nStructured per the config/state idiom: every commanded surface\r\n(facility `config` directions, `control/config`, and each lane's\r\n`segments/segment/lane/config`) is config true and every\r\nreadback (`state`, `control/state`, and each lane's\r\n`segments/segment/lane/state`) is config false, one per lane per\r\nMUTCD Chapter 4M (a lane-use control signal governs a single\r\nlane, not a whole segment).\r\n\r\nThis is a safety-critical control model.  `must` constraints on\r\nevery commanded, config-true surface forbid unsafe or\r\ninconsistent writes and conforming controllers MUST refuse\r\nwrites that violate them:\r\n  - the facility's two travel directions must be concrete and\r\n    cardinal opposites (`config/direction-a` /\r\n    `config/direction-b`);\r\n  - an open target-state must name a target-direction that is\r\n    one of the facility's configured directions\r\n    (`control/config`);\r\n  - per lane, a commanded green-arrow or flashing-yellow-X\r\n    toward one direction requires a commanded steady red-X\r\n    toward the other (`segments/segment/lane/config`) — the\r\n    green-implies-opposing-red-X invariant.\r\nThe config-false readback (`state`, `control/state`,\r\n`segments/segment/lane/state`) carries no `must`: it reports\r\nanomalies — including a lane reading back green-arrow to both\r\ndirections — as data plus a fault/alarm, not as illegal data;\r\na misbehaving facility's telemetry must stay representable so\r\nit can be reported (see lcs-conflict-detected).\r\n\r\nCopyright (c) 2026.  Distributed under Apache 2.0.",
       "revisions": [
         "2026-07-07",
         "2026-07-10",
@@ -503,11 +503,14 @@
         "2026-07-15",
         "2026-07-21",
         "2026-07-23",
-        "2026-08-05"
+        "2026-08-05",
+        "2026-09-14"
       ],
       "events": [
         "openits.reversible-lane.fault-cleared.v1",
         "openits.reversible-lane.fault-raised.v1",
+        "openits.reversible-lane.gate-mode-changed.v1",
+        "openits.reversible-lane.gate-position-changed.v1",
         "openits.reversible-lane.lane-state-changed.v1",
         "openits.reversible-lane.lcs-conflict-detected.v1",
         "openits.reversible-lane.transition-timeout.v1"
@@ -557,7 +560,8 @@
             "2026-07-13",
             "2026-07-14",
             "2026-07-21",
-            "2026-07-23"
+            "2026-07-23",
+            "2026-09-14"
           ],
           "refStd": [
             "MUTCD 11th ed. Chapter 4M",
@@ -573,7 +577,8 @@
             "2026-07-13",
             "2026-07-14",
             "2026-07-15",
-            "2026-07-21"
+            "2026-07-21",
+            "2026-09-14"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TM16 (Reversible Lane Management)",
@@ -588,7 +593,7 @@
     {
       "slug": "rsu",
       "namespace": "urn:openits:yang:rsu",
-      "description": "Roadside Unit (RSU) YANG module for V2X communication.\nModels NTCIP 1218-compliant RSUs including DSRC/C-V2X channels,\nV2X message broadcasting (SPaT, MAP, TIM; BSM receive/forward), and\nsecurity.",
+      "description": "Roadside Unit (RSU) YANG module for V2X communication.\r\nModels NTCIP 1218-compliant RSUs including DSRC/C-V2X channels,\r\nV2X message broadcasting (SPaT, MAP, TIM; BSM receive/forward), and\r\nsecurity.",
       "revisions": [
         "2024-12-26",
         "2026-04-19",
@@ -721,7 +726,7 @@
     {
       "slug": "signal-control",
       "namespace": "urn:openits:yang:signal-control",
-      "description": "A YANG data model for roadside traffic signal controllers.\n\nThis module is designed to align with the ARC-IT (Architecture\nReference for Cooperative and Intelligent Transportation)\nTraffic Signal Control service package, providing a transport-\nindependent replacement for the SNMP/MIB coupling of NTCIP 1202.\n\nNodes are annotated with the 'arc-it-flow' extension to document\nwhich ARC-IT information flow each data element participates in.\nTooling can walk the module tree and emit coverage reports\nagainst ARC-IT for conformance review.\n\nCopyright (c) 2026.  Distributed under Apache 2.0.",
+      "description": "A YANG data model for roadside traffic signal controllers.\r\n\r\nThis module is designed to align with the ARC-IT (Architecture\r\nReference for Cooperative and Intelligent Transportation)\r\nTraffic Signal Control service package, providing a transport-\r\nindependent replacement for the SNMP/MIB coupling of NTCIP 1202.\r\n\r\nNodes are annotated with the 'arc-it-flow' extension to document\r\nwhich ARC-IT information flow each data element participates in.\r\nTooling can walk the module tree and emit coverage reports\r\nagainst ARC-IT for conformance review.\r\n\r\nCopyright (c) 2026.  Distributed under Apache 2.0.",
       "revisions": [
         "2026-04-18",
         "2026-04-19",
@@ -909,7 +914,7 @@
     {
       "slug": "traffic-sensor",
       "namespace": "urn:openits:yang:traffic-sensor",
-      "description": "YANG data model for roadside traffic sensors — the radar,\nmagnetometer, and loop-emulation detector stations that report\nper-lane volume, occupancy, speed, and length-based vehicle\nclassification.\n\nTransport-independent replacement for NTCIP 1209 (Transportation\nSensor Systems), aligned with ARC-IT 9.1 service package TM01\n(Infrastructure-Based Traffic Surveillance).  The model is\nvendor-neutral: any per-lane aggregating detector — side-fire\nradar, magnetometer array, loop emulation — maps onto it.\nVendor-specific capabilities ride in vendor augment modules per\ndocs/06-extension-model.md, never in this module.\n\nTraffic sensors are pure-observation devices: the only writable\nnodes are the lane / classification-bin setup and the reporting\ninterval.  Bounded values are enforced via YANG `range` because\nthe bounds are physical rather than operational.\n\nEvery numeric leaf carries a `units` statement.  Agents that\nreport different units MUST convert at the translator boundary;\nthe wire format is canonical.\n\nCopyright (c) 2026.  Distributed under Apache 2.0.",
+      "description": "YANG data model for roadside traffic sensors — the radar,\r\nmagnetometer, and loop-emulation detector stations that report\r\nper-lane volume, occupancy, speed, and length-based vehicle\r\nclassification.\r\n\r\nTransport-independent replacement for NTCIP 1209 (Transportation\r\nSensor Systems), aligned with ARC-IT 9.1 service package TM01\r\n(Infrastructure-Based Traffic Surveillance).  The model is\r\nvendor-neutral: any per-lane aggregating detector — side-fire\r\nradar, magnetometer array, loop emulation — maps onto it.\r\nVendor-specific capabilities ride in vendor augment modules per\r\ndocs/06-extension-model.md, never in this module.\r\n\r\nTraffic sensors are pure-observation devices: the only writable\r\nnodes are the lane / classification-bin setup and the reporting\r\ninterval.  Bounded values are enforced via YANG `range` because\r\nthe bounds are physical rather than operational.\r\n\r\nEvery numeric leaf carries a `units` statement.  Agents that\r\nreport different units MUST convert at the translator boundary;\r\nthe wire format is canonical.\r\n\r\nCopyright (c) 2026.  Distributed under Apache 2.0.",
       "revisions": [
         "2026-07-07",
         "2026-07-10",
@@ -1021,7 +1026,7 @@
     {
       "slug": "work-zone",
       "namespace": "urn:openits:yang:work-zone-types",
-      "description": "Identities and scalars for work zones: lane closures, roadworks,\nand other planned disruptions to the traveled way.\n\nA work zone is not a device. It has no configuration to push and no\nstate to poll -- it is an external fact about the roadway, reported\nby whatever upstream system tracks it, and this family therefore\nhas no core config/state module and no conformance kind. See the\nevents module header for the full rationale.\n\nCopyright (c) 2026. Distributed under Apache 2.0.",
+      "description": "Identities and scalars for work zones: lane closures, roadworks,\r\nand other planned disruptions to the traveled way.\r\n\r\nA work zone is not a device. It has no configuration to push and no\r\nstate to poll -- it is an external fact about the roadway, reported\r\nby whatever upstream system tracks it, and this family therefore\r\nhas no core config/state module and no conformance kind. See the\r\nevents module header for the full rationale.\r\n\r\nCopyright (c) 2026. Distributed under Apache 2.0.",
       "revisions": [
         "2026-09-02"
       ],
@@ -1052,7 +1057,7 @@
     {
       "slug": "zone-occupancy",
       "namespace": "urn:openits:yang:zone-occupancy",
-      "description": "Zone-occupancy capability: whether a defined region is occupied\nright now, by how many objects, of what class, and for how long.\n\nThis is presence, not throughput, and the distinction is the reason\nthe capability exists. Throughput answers 'how many passed and how\nfast' and belongs to openits-vehicle-detection; a vehicle that\narrives and parks never traverses anything and is invisible to it.\nOccupancy answers 'what is here now' — different cardinality,\ndifferent time semantics, different consumers.\n\nA device implements this capability by 'using' the 'zone-occupancy'\ngrouping, typically behind a feature since not every unit of a\ngiven type senses occupancy. The capability is deliberately\nindependent of tracking: an in-ground magnetometer or an overhead\nultrasonic sensor implements occupancy and nothing else — no\ntracks, no polygons, no incident detection — and must be able to\ndescribe what it does without importing a perception service core\n(docs/08-capability-architecture.md).\n\nCopyright (c) 2026. Distributed under Apache 2.0.",
+      "description": "Zone-occupancy capability: whether a defined region is occupied\r\nright now, by how many objects, of what class, and for how long.\r\n\r\nThis is presence, not throughput, and the distinction is the reason\r\nthe capability exists. Throughput answers 'how many passed and how\r\nfast' and belongs to openits-vehicle-detection; a vehicle that\r\narrives and parks never traverses anything and is invisible to it.\r\nOccupancy answers 'what is here now' — different cardinality,\r\ndifferent time semantics, different consumers.\r\n\r\nA device implements this capability by 'using' the 'zone-occupancy'\r\ngrouping, typically behind a feature since not every unit of a\r\ngiven type senses occupancy. The capability is deliberately\r\nindependent of tracking: an in-ground magnetometer or an overhead\r\nultrasonic sensor implements occupancy and nothing else — no\r\ntracks, no polygons, no incident detection — and must be able to\r\ndescribe what it does without importing a perception service core\r\n(docs/08-capability-architecture.md).\r\n\r\nCopyright (c) 2026. Distributed under Apache 2.0.",
       "revisions": [
         "2026-08-15",
         "2026-08-23",
@@ -1871,6 +1876,13 @@
         "openits-reversible-lane-events/2026-07-23/schema.json",
         "openits-reversible-lane-events/2026-07-23/schema.proto",
         "openits-reversible-lane-events/2026-07-23/schema.yang"
+      ],
+      "2026-09-14": [
+        "openits-reversible-lane-events/2026-09-14/MANIFEST.json",
+        "openits-reversible-lane-events/2026-09-14/README.md",
+        "openits-reversible-lane-events/2026-09-14/schema.json",
+        "openits-reversible-lane-events/2026-09-14/schema.proto",
+        "openits-reversible-lane-events/2026-09-14/schema.yang"
       ]
     },
     "openits-reversible-lane-types": {
@@ -1883,6 +1895,11 @@
         "openits-reversible-lane-types/2026-07-21/MANIFEST.json",
         "openits-reversible-lane-types/2026-07-21/README.md",
         "openits-reversible-lane-types/2026-07-21/schema.yang"
+      ],
+      "2026-09-14": [
+        "openits-reversible-lane-types/2026-09-14/MANIFEST.json",
+        "openits-reversible-lane-types/2026-09-14/README.md",
+        "openits-reversible-lane-types/2026-09-14/schema.yang"
       ]
     },
     "openits-rsu": {
