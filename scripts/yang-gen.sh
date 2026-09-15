@@ -153,8 +153,23 @@ generate_go() {
 # touched; real content drift is still caught.
 normalize_go_header() {
     local f="$1"
-    sed -e 's|by [^ ]*/github.com/openconfig/ygot|by github.com/openconfig/ygot|' \
-        -e "s|${ROOT_DIR}/||g" "$f" >"$f.tmp" && mv "$f.tmp" "$f"
+    # ygot on Windows emits C:/... paths; Git Bash ROOT_DIR is /c/... — the
+    # plain ${ROOT_DIR}/ strip misses those and leaves machine-local headers
+    # that blow up `make check-gen` on Linux CI. Also strip a cygpath -m form
+    # and any absolute .../yang/ prefix so the committed file matches main.
+    local win_root=""
+    if command -v cygpath >/dev/null 2>&1; then
+        win_root=$(cygpath -m "$ROOT_DIR" 2>/dev/null || true)
+    fi
+    local sed_args=(
+        -e 's|by [^ ]*/github.com/openconfig/ygot|by github.com/openconfig/ygot|'
+        -e "s|${ROOT_DIR}/||g"
+        -e 's|[^[:space:]]*/yang/|yang/|g'
+    )
+    if [ -n "$win_root" ]; then
+        sed_args+=(-e "s|${win_root}/||g")
+    fi
+    sed "${sed_args[@]}" "$f" >"$f.tmp" && mv "$f.tmp" "$f"
 }
 
 main() {
