@@ -116,6 +116,13 @@ if ! command -v docker &>/dev/null; then
     exit 2
 fi
 
+# Fail fast if the daemon is down — otherwise the batch container produces an
+# empty YL_OUT and every valid-* fixture looks like a schema failure.
+if ! docker info >/dev/null 2>&1; then
+    echo "docker daemon is not running; start Docker and re-run make validate-yang" >&2
+    exit 2
+fi
+
 if ! command -v python3 &>/dev/null; then
     echo "python3 not found; needed by check-notif-mandatory.py" >&2
     exit 2
@@ -157,7 +164,19 @@ python3 "$SCRIPT_DIR/check-notif-mandatory.py" --schemas "${SCHEMAS[@]}" -- \
 # Single-container yanglint pass: validate every fixture inside ONE container.
 # Emits "YLPASS <file>" / "YLFAIL <file>" per fixture, read by yl_ok. SCHEMAS
 # is passed via the environment to avoid quoting the module list into sh.
-docker run --rm -e "SCHEMAS=${SCHEMAS[*]}" -v "$PWD:/w" -w /w "$IMAGE" sh -c '
+#
+# Git Bash (MSYS) rewrites -v /c/Users/...:/w into a broken host path, which
+# leaves /w empty inside the container — every valid-* then "fails" and every
+# invalid-* "passes" as rejected. Disable conversion for this invocation.
+mount_src=$PWD
+if command -v cygpath >/dev/null 2>&1; then
+    mount_src=$(cygpath -w "$PWD")
+elif [[ "$(uname -s)" == MINGW* || "$(uname -s)" == MSYS* ]] && command -v pwd >/dev/null 2>&1; then
+    mount_src=$(pwd -W 2>/dev/null || echo "$PWD")
+fi
+MSYS_NO_PATHCONV=1 MSYS2_ARG_CONV_EXCL='*' docker run --rm \
+    -e "SCHEMAS=${SCHEMAS[*]}" \
+    -v "${mount_src}:/w" -w /w "$IMAGE" sh -c '
     for f in yang/testdata/valid-*.json yang/testdata/invalid-*.json; do
         [ -e "$f" ] || continue
         if yanglint -f json -p yang $SCHEMAS "$f" >/dev/null 2>&1 \
@@ -167,7 +186,18 @@ docker run --rm -e "SCHEMAS=${SCHEMAS[*]}" -v "$PWD:/w" -w /w "$IMAGE" sh -c '
             echo "YLFAIL $f"
         fi
     done
-' > "$YL_OUT" 2>/dev/null
+' > "$YL_OUT"
+yl_status=$?
+if [ "$yl_status" -ne 0 ]; then
+    echo "validate-yang: docker/yanglint batch failed (exit $yl_status)" >&2
+    cat "$YL_OUT" >&2 || true
+    exit 2
+fi
+if ! grep -q '^YLPASS \|^YLFAIL ' "$YL_OUT"; then
+    echo "validate-yang: docker produced no YLPASS/YLFAIL lines (empty or broken mount?)" >&2
+    cat "$YL_OUT" >&2 || true
+    exit 2
+fi
 
 mandatory_ok() {
     grep -qxF "OK $1" "$MANDATORY_OUT"
