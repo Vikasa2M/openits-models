@@ -7,6 +7,17 @@ for the Go module. See [`docs/versioning.md`](docs/versioning.md) for how the
 Go module version, per-module YANG revision dates, and protobuf wire
 compatibility relate.
 
+## [0.6.0](https://github.com/Vikasa2M/openits-models/compare/v0.5.0...v0.6.0) (2026-09-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* 51 wire changes across nine proto files. Optional scalars gain explicit presence, so Go consumers see pointers in struct literals and direct field assignment (reads through GetX() are unaffected). Seven classification axes emit module-qualified identity strings instead of enum names. Thirteen generated enum type and value names lose a redundant prefix. Detector delay changes JSON encoding from number to string and detector volume from string to number. plan-applied's `source` leaf is renamed `trigger`. See docs/migration/v0.6.0.md for every mapping and an upgrade checklist.
+
+### Features
+
+* pre-1.0 wire cleanup — field presence, identity conversions, generator fixes ([ade90ff](https://github.com/Vikasa2M/openits-models/commit/ade90ffd9c5a17767a2c4932021aa35a036154f4))
+
 ## [0.5.0](https://github.com/Vikasa2M/openits-models/compare/v0.4.0...v0.5.0) (2026-09-05)
 
 
