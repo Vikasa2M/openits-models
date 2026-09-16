@@ -38,7 +38,7 @@ using the following YANG input files:
 	- yang/openits-cctv-types.yang
 	- yang/openits-cctv.yang
 Imported modules were sourced from:
-	- yang/ietf/...
+	- yang:yang/ietf/...
 */
 package openits
 

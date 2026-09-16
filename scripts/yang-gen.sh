@@ -177,10 +177,12 @@ normalize_go_header() {
     local sed_args=(
         -e 's|by [^ ]*/github.com/openconfig/ygot|by github.com/openconfig/ygot|'
         -e "s|${ROOT_DIR}/||g"
-        -e 's|[^[:space:]]*[\\/]yang[\\/]|yang/|g'
         -e 's|\\|/|g'
-        -e 's|^\t- yang;yang/ietf/\.\.\.$|\t- yang/ietf/...|'
-        -e 's|^\t- .*[\\/]yang;.*[\\/]yang[\\/]ietf[\\/]\.\.\.$|\t- yang/ietf/...|'
+        # ygot prints -path as one include entry. The script passes
+        # <yang>:<yang>/ietf, so Linux CI emits "yang:yang/ietf/...".
+        # A greedy ".../yang/" collapse turns the Windows form into
+        # "yang/ietf/..." and fails check-gen. Force the one canonical line.
+        -e 's|^\t- .*ietf.*$|\t- yang:yang/ietf/...|'
     )
     if [ -n "$win_root" ]; then
         sed_args+=(-e "s|${win_root}/||g")
