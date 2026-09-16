@@ -531,11 +531,14 @@
         "2026-07-21",
         "2026-07-23",
         "2026-08-05",
-        "2026-09-08"
+        "2026-09-08",
+        "2026-09-14"
       ],
       "events": [
         "openits.reversible-lane.fault-cleared.v1",
         "openits.reversible-lane.fault-raised.v1",
+        "openits.reversible-lane.gate-mode-changed.v1",
+        "openits.reversible-lane.gate-position-changed.v1",
         "openits.reversible-lane.lane-state-changed.v1",
         "openits.reversible-lane.lcs-conflict-detected.v1",
         "openits.reversible-lane.transition-timeout.v1"
@@ -589,7 +592,8 @@
             "2026-07-14",
             "2026-07-21",
             "2026-07-23",
-            "2026-09-08"
+            "2026-09-08",
+            "2026-09-14"
           ],
           "refStd": [
             "MUTCD 11th ed. Chapter 4M",
@@ -607,7 +611,8 @@
             "2026-07-14",
             "2026-07-15",
             "2026-07-21",
-            "2026-09-08"
+            "2026-09-08",
+            "2026-09-14"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TM16 (Reversible Lane Management)",
@@ -2016,6 +2021,13 @@
         "openits-reversible-lane-events/2026-09-08/schema.json",
         "openits-reversible-lane-events/2026-09-08/schema.proto",
         "openits-reversible-lane-events/2026-09-08/schema.yang"
+      ],
+      "2026-09-14": [
+        "openits-reversible-lane-events/2026-09-14/MANIFEST.json",
+        "openits-reversible-lane-events/2026-09-14/README.md",
+        "openits-reversible-lane-events/2026-09-14/schema.json",
+        "openits-reversible-lane-events/2026-09-14/schema.proto",
+        "openits-reversible-lane-events/2026-09-14/schema.yang"
       ]
     },
     "openits-reversible-lane-types": {
@@ -2033,6 +2045,11 @@
         "openits-reversible-lane-types/2026-09-08/MANIFEST.json",
         "openits-reversible-lane-types/2026-09-08/README.md",
         "openits-reversible-lane-types/2026-09-08/schema.yang"
+      ],
+      "2026-09-14": [
+        "openits-reversible-lane-types/2026-09-14/MANIFEST.json",
+        "openits-reversible-lane-types/2026-09-14/README.md",
+        "openits-reversible-lane-types/2026-09-14/schema.yang"
       ]
     },
     "openits-rsu": {

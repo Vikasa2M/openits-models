@@ -31,16 +31,34 @@ module openits-reversible-lane-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.5.0";
+  openits-types:openits-version "0.6.0";
 
   revision 2026-09-14 {
     description
-      "Add PLC-faithful gate-position and gate-operating-mode typedefs,
-       notification-kind identities rl-gate-position-changed and
-       rl-gate-mode-changed, and leaf fault identities for per-gate
-       alarms (failed-to-close/open, estop, cmd-refused, invalid-inputs)
-       and cabinet DI faults (lf, sp, door, cabinet-estop). Additive —
-       identityref and new typedefs; no existing enum values moved.";
+      "Add gate-position and gate-operating-mode typedefs for a facility
+       PLC status word, notification-kind identities
+       rl-gate-position-changed and rl-gate-mode-changed, and leaf fault
+       identities for per-gate alarms (failed-to-close/open, estop,
+       cmd-refused, invalid-inputs) and cabinet DI faults (lf, sp, door,
+       cabinet-estop). Additive — identityref and new typedefs; no
+       existing enum values moved.";
+    reference "RFC 7950 §11.";
+  }
+
+  revision 2026-09-08 {
+    description
+      "Remove the travel-direction enum in favour of the foundation's
+       identity axis (breaking, pre-1.0).
+
+       Three surfaces modeled cardinal direction three ways: this enum,
+       work-zone's own identity set, and a free-form string on
+       device-identity-config's linear-reference. openits-types now holds
+       one axis. Migration: northbound -> openits-types:direction-northbound
+       and likewise for the other three; 'unknown' has no successor here,
+       because every leaf that used this typedef names a single
+       carriageway and now types to carriageway-direction, which admits
+       no unknown value.";
+    reference "RFC 7950 §11.";
   }
   revision 2026-07-21 {
     description
@@ -97,16 +115,6 @@ module openits-reversible-lane-types {
    * Typedefs
    * -------------------------------------------------------------- */
 
-  typedef travel-direction {
-    type enumeration {
-      enum unknown    { value 0; }
-      enum northbound { value 1; }
-      enum southbound { value 2; }
-      enum eastbound  { value 3; }
-      enum westbound  { value 4; }
-    }
-    description "Cardinal direction of legal travel.";
-  }
 
   typedef lane-flow-state {
     type enumeration {
@@ -147,10 +155,12 @@ module openits-reversible-lane-types {
     }
     description
       "Physical barrier / warning-gate motion or rest state as reported
-       by a facility PLC register map (e.g. Cameleon ACS DSW bits 4–6).
-       Distinct from the coarser openits-reversible-lane:gate-state used
-       on the facility tree: this typedef keeps closing/opening separate
-       so a poller does not collapse in-motion readings.";
+       by a facility PLC status word. Distinct from the coarser
+       openits-reversible-lane:gate-state used on the facility tree:
+       this typedef keeps closing/opening separate so a poller does not
+       collapse in-motion readings.";
+    reference
+      "ARC-IT 9.1 Service Package TM16 (Reversible Lane Management).";
   }
 
   typedef gate-operating-mode {
@@ -161,8 +171,10 @@ module openits-reversible-lane-types {
       enum offline { value 3; }
     }
     description
-      "Gate operating mode as reported by a facility PLC register map
-       (e.g. Cameleon ACS DSW bits 0–1). Orthogonal to gate-position.";
+      "Gate operating mode as reported by a facility PLC status word.
+       Orthogonal to gate-position.";
+    reference
+      "ARC-IT 9.1 Service Package TM16 (Reversible Lane Management).";
   }
 
   /* --------------------------------------------------------------

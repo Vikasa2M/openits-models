@@ -27,15 +27,25 @@ module openits-reversible-lane-events {
      from the base module (ygot's proto generator fails on modules
      containing notification statements).";
 
-  openits-types:openits-version "0.5.0";
+  openits-types:openits-version "0.6.0";
 
   revision 2026-09-14 {
     description
       "Add gate-position-changed and gate-mode-changed notifications for
-       per-gate PLC readbacks (Cameleon-style ACS DSW words). Each carries
-       gate-id, from/to on the PLC-faithful typedefs in
-       openits-reversible-lane-types, and wire-source (srtp/modbus/dnp3).
-       Additive.";
+       per-gate readbacks of a facility PLC status word. Each carries
+       gate-id, from/to on the gate-position and gate-operating-mode
+       typedefs in openits-reversible-lane-types, and wire-source
+       (srtp/modbus/dnp3). Additive.";
+    reference "RFC 7950 §11.";
+  }
+
+  revision 2026-09-08 {
+    description
+      "Retype the four direction leaves onto
+       openits-types:carriageway-direction (breaking, pre-1.0). See
+       openits-reversible-lane-types' revision of the same date for the
+       member mapping.";
+    reference "RFC 7950 §11.";
   }
   revision 2026-07-23 {
     description
@@ -143,7 +153,7 @@ module openits-reversible-lane-events {
       description "State before the change.";
     }
     leaf previous-direction {
-      type openits-reversible-lane-types:travel-direction;
+      type identityref { base openits-types:carriageway-direction; }
       description "Open direction before the change, when previous-state was open.";
     }
     leaf new-state {
@@ -151,7 +161,7 @@ module openits-reversible-lane-events {
       description "State after the change.";
     }
     leaf new-direction {
-      type openits-reversible-lane-types:travel-direction;
+      type identityref { base openits-types:carriageway-direction; }
       description "Open direction after the change, when new-state is open.";
     }
     leaf initiated-by {
@@ -186,11 +196,11 @@ module openits-reversible-lane-events {
     uses openits-types:event-header;
 
     leaf from-direction {
-      type openits-reversible-lane-types:travel-direction;
+      type identityref { base openits-types:carriageway-direction; }
       description "Direction that was open when the changeover started.";
     }
     leaf to-direction {
-      type openits-reversible-lane-types:travel-direction;
+      type identityref { base openits-types:carriageway-direction; }
       description "Direction (or closure) the changeover was moving toward.";
     }
     leaf started-at {

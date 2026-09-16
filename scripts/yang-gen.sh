@@ -91,23 +91,10 @@ generate_go() {
     log_info "Generating Go code from openits YANG modules..."
     mkdir -p "$OUT_GO_DIR"
 
-    # Stage a CR-stripped copy of yang/. AutocrLF worktrees otherwise feed
-    # ygot descriptions/revisions with \r, which embeds into openits.go and
-    # fails `make check-gen` on Linux CI. Copy keeps uncommitted YANG edits.
-    local yang_stage
-    yang_stage=$(mktemp -d)
-    # shellcheck disable=SC2064
-    trap 'rm -rf "'"$yang_stage"'"' RETURN
-    mkdir -p "$yang_stage/yang"
-    cp -a "$YANG_DIR/." "$yang_stage/yang/"
-    # Also need ietf under yang/ietf — already inside YANG_DIR copy.
-    local f
-    while IFS= read -r -d '' f; do
-        tr -d '\r' <"$f" >"$f.lf" && mv "$f.lf" "$f"
-    done < <(find "$yang_stage/yang" -type f -name '*.yang' -print0)
-    local yang_src="$yang_stage/yang"
-    log_info "Using CR-stripped YANG staging dir for ygot"
-
+    # .gitattributes forces LF on checkout, so ygot reads yang/ directly.
+    # A temp staging copy is unnecessary and puts an absolute temp path
+    # into the generated header.
+    local yang_src="$YANG_DIR"
     local yang_paths="$yang_src:$yang_src/ietf"
 
     generator \
@@ -171,27 +158,38 @@ generate_go() {
 # touched; real content drift is still caught.
 normalize_go_header() {
     local f="$1"
-    # ygot embeds absolute input paths in the header. On Linux ROOT_DIR strip
-    # is enough; on Windows we also see C:/... and C:\...\Temp\tmp.XXX\yang
-    # staging paths (backslashes). Collapse every absolute .../yang[/\] form
-    # and the "Imported modules were sourced from" path list to repo-relative.
+    # ygot embeds absolute input paths in the leading block comment (through
+    # the closing */ before `package`). Rewrite only that header. A whole-file
+    # substitution would also rewrite any .../yang/ string that ends up inside
+    # an embedded YANG description.
     local win_root=""
     if command -v cygpath >/dev/null 2>&1; then
         win_root=$(cygpath -m "$ROOT_DIR" 2>/dev/null || true)
     fi
+    local header body
+    header=$(mktemp)
+    body=$(mktemp)
+    awk -v hdr="$header" -v bod="$body" '
+        !done && /^\*\// { print > hdr; done=1; next }
+        !done { print > hdr; next }
+        { print > bod }
+    ' "$f"
     local sed_args=(
         -e 's|by [^ ]*/github.com/openconfig/ygot|by github.com/openconfig/ygot|'
         -e "s|${ROOT_DIR}/||g"
         -e 's|[^[:space:]]*[\\/]yang[\\/]|yang/|g'
+        -e 's|\\|/|g'
         -e 's|^\t- yang;yang/ietf/\.\.\.$|\t- yang/ietf/...|'
         -e 's|^\t- .*[\\/]yang;.*[\\/]yang[\\/]ietf[\\/]\.\.\.$|\t- yang/ietf/...|'
     )
     if [ -n "$win_root" ]; then
         sed_args+=(-e "s|${win_root}/||g")
     fi
-    sed "${sed_args[@]}" "$f" >"$f.tmp" && mv "$f.tmp" "$f"
+    sed "${sed_args[@]}" "$header" >"$header.norm"
+    cat "$header.norm" "$body" >"$f.tmp"
     # Never ship CR in the generated Go.
-    tr -d '\r' <"$f" >"$f.tmp" && mv "$f.tmp" "$f"
+    tr -d '\r' <"$f.tmp" >"$f"
+    rm -f "$header" "$header.norm" "$body" "$f.tmp"
 }
 
 main() {

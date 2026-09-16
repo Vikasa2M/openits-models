@@ -263,13 +263,6 @@
       "type": "string"
     },
     "new-direction": {
-      "enum": [
-        "eastbound",
-        "northbound",
-        "southbound",
-        "unknown",
-        "westbound"
-      ],
       "type": "string"
     },
     "new-state": {
@@ -295,13 +288,6 @@
       "type": "string"
     },
     "previous-direction": {
-      "enum": [
-        "eastbound",
-        "northbound",
-        "southbound",
-        "unknown",
-        "westbound"
-      ],
       "type": "string"
     },
     "previous-state": {
@@ -449,13 +435,6 @@
   "additionalProperties": false,
   "properties": {
     "from-direction": {
-      "enum": [
-        "eastbound",
-        "northbound",
-        "southbound",
-        "unknown",
-        "westbound"
-      ],
       "type": "string"
     },
     "kind": {
@@ -496,13 +475,6 @@
       "type": "integer"
     },
     "to-direction": {
-      "enum": [
-        "eastbound",
-        "northbound",
-        "southbound",
-        "unknown",
-        "westbound"
-      ],
       "type": "string"
     }
   },
