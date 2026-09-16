@@ -171,10 +171,10 @@ generate_go() {
 # touched; real content drift is still caught.
 normalize_go_header() {
     local f="$1"
-    # ygot on Windows emits C:/... paths; Git Bash ROOT_DIR is /c/... — the
-    # plain ${ROOT_DIR}/ strip misses those and leaves machine-local headers
-    # that blow up `make check-gen` on Linux CI. Also strip a cygpath -m form
-    # and any absolute .../yang/ prefix so the committed file matches main.
+    # ygot embeds absolute input paths in the header. On Linux ROOT_DIR strip
+    # is enough; on Windows we also see C:/... and C:\...\Temp\tmp.XXX\yang
+    # staging paths (backslashes). Collapse every absolute .../yang[/\] form
+    # and the "Imported modules were sourced from" path list to repo-relative.
     local win_root=""
     if command -v cygpath >/dev/null 2>&1; then
         win_root=$(cygpath -m "$ROOT_DIR" 2>/dev/null || true)
@@ -182,14 +182,15 @@ normalize_go_header() {
     local sed_args=(
         -e 's|by [^ ]*/github.com/openconfig/ygot|by github.com/openconfig/ygot|'
         -e "s|${ROOT_DIR}/||g"
-        -e 's|[^[:space:]]*/yang/|yang/|g'
+        -e 's|[^[:space:]]*[\\/]yang[\\/]|yang/|g'
+        -e 's|^\t- yang;yang/ietf/\.\.\.$|\t- yang/ietf/...|'
+        -e 's|^\t- .*[\\/]yang;.*[\\/]yang[\\/]ietf[\\/]\.\.\.$|\t- yang/ietf/...|'
     )
     if [ -n "$win_root" ]; then
         sed_args+=(-e "s|${win_root}/||g")
     fi
     sed "${sed_args[@]}" "$f" >"$f.tmp" && mv "$f.tmp" "$f"
-    # Belt-and-suspenders: never ship CR in the generated Go (embedded schema
-    # JSON must match Linux CI, which always regenerates from LF YANG).
+    # Never ship CR in the generated Go.
     tr -d '\r' <"$f" >"$f.tmp" && mv "$f.tmp" "$f"
 }
 
