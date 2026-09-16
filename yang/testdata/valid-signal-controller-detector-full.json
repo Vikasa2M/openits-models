@@ -22,7 +22,7 @@
             "type": "openits-signal-control-types:detector-inductive-loop",
             "assigned-phases": [2],
             "enabled": true,
-            "delay": 3,
+            "delay": "3.0",
             "extend": "1.5",
             "mode": "presence",
             "fail-action": "max-recall"
@@ -31,7 +31,7 @@
             "active": true,
             "actuation-count": "1421",
             "fault": false,
-            "measurement": { "volume": "842", "occupancy": "12.5", "speed-kmh": "61.0" }
+            "measurement": { "volume": 842, "occupancy": "12.5", "speed-kmh": "61.0" }
           }
         }
       ]

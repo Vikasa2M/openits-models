@@ -1,0 +1,325 @@
+module openits-work-zone-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:work-zone-types";
+  prefix openits-work-zone-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Identities and scalars for work zones: lane closures, roadworks,
+     and other planned disruptions to the traveled way.
+
+     A work zone is not a device. It has no configuration to push and no
+     state to poll -- it is an external fact about the roadway, reported
+     by whatever upstream system tracks it, and this family therefore
+     has no core config/state module and no conformance kind. See the
+     events module header for the full rationale.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.2.0";
+
+  revision 2026-09-07 {
+    description
+      "Make roadway-direction cardinal (breaking, pre-1.0).
+
+       wz-direction-forward and wz-direction-reverse were defined
+       against 'increasing/decreasing linear reference', a frame the
+       event never carries: zone-state-changed publishes WGS84 geometry
+       and an opaque zone-id, with no route designator, LRS method or
+       measure anywhere in the payload. A consumer therefore could not
+       resolve either value to a carriageway, which is the one thing the
+       direction is for -- picking the DMS to post to, or deciding
+       whether a traveler is heading into the closure.
+
+       Replaced with the cardinal set WZDx v4 and TMDD both use:
+       northbound / southbound / eastbound / westbound, plus
+       inner-loop / outer-loop for ring roads where cardinal direction
+       changes along the route. wz-direction-both is unchanged. Adds
+       wz-direction-unknown so a feed that does not report a direction
+       says so, rather than being mapped to 'both' -- which is a
+       positive claim that both carriageways are affected and would
+       over-warn.
+
+       This also converges the family: reversible-lane already models
+       travel direction cardinally, and device-identity-config's
+       linear-reference carries 'NB'/'SB' strings. Work-zone was the
+       third representation.
+
+       BREAKING (pre-1.0): identityref values are wire strings;
+       producers emitting wz-direction-forward / -reverse must map to a
+       cardinal value, which requires the route bearing the LRS frame
+       already implied.
+
+       Also in this revision, all additive:
+
+       Completes the lane-impact vocabulary against WZDx v4's
+       vehicle_impact. Four members covered the twelve WZDx publishes,
+       so the common merge, shift, split and flagging setups had no
+       value and fell to whichever of the four was least wrong. Adds
+       wz-all-lanes-open, wz-merge-left/-right, wz-shift-left/-right,
+       wz-lane-split, wz-flagging and wz-impact-unknown.
+
+       Adds work-zone-type (static / moving / planned-moving-area). A
+       moving operation's geometry is a snapshot valid at the instant it
+       was published, and a consumer that caches it the way it caches a
+       static closure reports a closure where the crew no longer is.
+
+       Adds worker-presence-method, the axis behind the new
+       worker-presence container in openits-work-zone-events: an
+       automated camera detection and a schedule-derived assumption are
+       both 'workers present', and a consumer deciding whether to post a
+       reduced speed limit needs to tell them apart.";
+    reference "WZDx v4 (RoadEventCoreDetails.direction).";
+  }
+  revision 2026-09-02 {
+    description
+      "Initial revision. Work-zone identifier, the event-kind identity
+       axis, the lane-impact and roadway-direction vocabularies, and
+       wz-comm-health-event-kind -- a placeholder sub-base dual-based on
+       openits-types:comm-health-event-kind and work-zone-event-kind. A
+       work-zone feed reports its communication health through the
+       shared openits-common-comm-health-events notifications rather
+       than a work-zone-specific event; the dual base is what fans those
+       notifications out to the work-zone service token.";
+  }
+
+  typedef work-zone-id {
+    type string {
+      length "1..128";
+    }
+    description
+      "The upstream feed's identifier for a work zone. Opaque here and
+       never parsed: its structure is the reporting system's business,
+       and a consumer that decomposes it has coupled itself to one
+       feed's conventions.
+
+       Longer, and with no charset pattern, unlike this repo's other id
+       typedefs (typically 1..64 with pattern '[a-zA-Z0-9_-]+'): real
+       feed ids concatenate agency/district/year/segment components that
+       would truncate at 64, and commonly contain '.', ':', or '/',
+       which a charset pattern would reject.";
+  }
+
+  identity work-zone-event-kind {
+    base openits-types:device-event-kind;
+    description
+      "Base identity for work-zone event classifiers. Derives from
+       device-event-kind -- not because a work zone is a device, but
+       because wz-activated/wz-updated/wz-cleared are events, and the
+       event taxonomy is rooted there regardless of what emits the
+       event. This lets a consumer filter every work-zone event
+       fleet-wide with derived-from-or-self(kind,
+       'openits-types:device-event-kind'), alongside every other
+       service's events.";
+  }
+  identity wz-activated {
+    base work-zone-event-kind;
+    description "The zone is now in effect.";
+  }
+  identity wz-updated {
+    base work-zone-event-kind;
+    description
+      "A zone already in effect changed -- geometry, window, impact, or
+       any other reported field.";
+  }
+  identity wz-cleared {
+    base work-zone-event-kind;
+    description
+      "The zone is no longer in effect. The event still carries the
+       zone's geometry and window, so a consumer can close its record
+       without a prior lookup.";
+  }
+
+  identity wz-comm-health-event-kind {
+    base openits-types:comm-health-event-kind;
+    base work-zone-event-kind;
+    description
+      "Work-zone feed communication-health events. A work-zone feed is a
+       data source rather than a field device, but its communication
+       health -- poll outcomes, loss windows, time drift -- is the same
+       shape every other service reports, so it reports through
+       openits-common-comm-health-events rather than a work-zone-specific
+       event of its own.
+
+       The dual base is what routes it: the cross-service base makes the
+       common notifications applicable, and the work-zone base is what
+       fans them out to the work-zone service token. Placeholder
+       sub-base; leaf identities land in a future revision.";
+  }
+
+  identity lane-impact {
+    description
+      "Base identity for what a work zone does to the traveled way.
+       An identity rather than an enumeration so a deployment can add a
+       local impact class without a model revision.";
+  }
+  identity wz-all-lanes-closed {
+    base lane-impact;
+    description "Every through lane in the affected direction is closed.";
+  }
+  identity wz-some-lanes-closed {
+    base lane-impact;
+    description "One or more through lanes are closed; at least one remains open.";
+  }
+  identity wz-shoulder-closed {
+    base lane-impact;
+    description "Only the shoulder is closed; all through lanes remain open.";
+  }
+  identity wz-alternating-one-way {
+    base lane-impact;
+    description
+      "A single lane carries both directions alternately, typically
+       flagger- or temporary-signal-controlled.";
+  }
+
+  identity wz-all-lanes-open {
+    base lane-impact;
+    description
+      "Work is present but no through lane is closed -- the case a feed
+       publishes for a shoulder-adjacent or overnight setup that has not
+       taken a lane yet. Distinct from the zone being cleared.";
+  }
+  identity wz-merge-left {
+    base lane-impact;
+    description "Traffic must merge left through the zone.";
+  }
+  identity wz-merge-right {
+    base lane-impact;
+    description "Traffic must merge right through the zone.";
+  }
+  identity wz-shift-left {
+    base lane-impact;
+    description "Lanes are shifted left, keeping the same lane count.";
+  }
+  identity wz-shift-right {
+    base lane-impact;
+    description "Lanes are shifted right, keeping the same lane count.";
+  }
+  identity wz-lane-split {
+    base lane-impact;
+    description "Traffic is split around the work area, with lanes on both sides.";
+  }
+  identity wz-flagging {
+    base lane-impact;
+    description
+      "A flagger controls movement through the zone. Distinct from
+       wz-alternating-one-way, which describes the resulting traffic
+       pattern: a flagger may also meter a single closed lane.";
+  }
+  identity wz-impact-unknown {
+    base lane-impact;
+    description
+      "The feed did not report a lane impact. A positive statement of
+       ignorance, so a consumer does not read an absent value as
+       'no impact'.";
+  }
+
+  identity work-zone-type {
+    description
+      "Whether the zone stays put. A moving operation (striping, sweeping,
+       mowing) has a geometry that is valid only at the instant it was
+       published, and a consumer must not cache it the way it caches a
+       static closure.";
+    reference "WZDx v4 (WorkZoneRoadEvent.work_zone_type).";
+  }
+  identity wz-static {
+    base work-zone-type;
+    description "Fixed location for the duration of the zone.";
+  }
+  identity wz-moving {
+    base work-zone-type;
+    description "The operation moves along the roadway; geometry is a snapshot.";
+  }
+  identity wz-planned-moving-area {
+    base work-zone-type;
+    description
+      "A moving operation confined to a planned area, published as the
+       area rather than the instantaneous position.";
+    reference "WZDx v4 (work_zone_type: planned-moving-area).";
+  }
+
+  identity worker-presence-method {
+    description
+      "How the feed determined whether workers are present, so a
+       consumer can weigh the claim: an automated detection and a
+       schedule-derived guess warrant different confidence before, say,
+       posting a reduced speed limit.";
+    reference "WZDx v4 (WorkerPresence.method).";
+  }
+  identity worker-presence-camera-monitoring    { base worker-presence-method; description "Determined by camera monitoring of the work area."; }
+  identity worker-presence-arrow-board-present  { base worker-presence-method; description "Inferred from an arrow board being deployed."; }
+  identity worker-presence-cone-present         { base worker-presence-method; description "Inferred from channelizing devices being deployed."; }
+  identity worker-presence-scheduled            { base worker-presence-method; description "Derived from the planned work schedule, not observed."; }
+  identity worker-presence-gps-tracking         { base worker-presence-method; description "Derived from GPS tracking of crew or equipment."; }
+  identity worker-presence-other                { base worker-presence-method; description "Determined by a method not otherwise classified."; }
+
+  identity roadway-direction {
+    description
+      "Base identity for the direction of travel a work zone affects.
+
+       Cardinal, not linear-reference-relative. A consumer receives the
+       zone's geometry as WGS84 points and an opaque zone-id; nothing in
+       the payload carries the route, the LRS method, or the measure, so
+       'the direction of increasing linear reference' named a frame the
+       consumer does not have and could not resolve. Cardinal direction
+       is what WZDx publishes, what TMDD publishes, and what a traveler
+       information or DMS consumer can act on without a routing join.";
+    reference "WZDx v4 (RoadEventCoreDetails.direction).";
+  }
+  identity wz-direction-northbound {
+    base roadway-direction;
+    description "Traffic traveling north on the affected roadway.";
+  }
+  identity wz-direction-southbound {
+    base roadway-direction;
+    description "Traffic traveling south on the affected roadway.";
+  }
+  identity wz-direction-eastbound {
+    base roadway-direction;
+    description "Traffic traveling east on the affected roadway.";
+  }
+  identity wz-direction-westbound {
+    base roadway-direction;
+    description "Traffic traveling west on the affected roadway.";
+  }
+  identity wz-direction-inner-loop {
+    base roadway-direction;
+    description
+      "The inner carriageway of a ring road or loop, where cardinal
+       direction changes along the route and so cannot name a
+       carriageway.";
+    reference "WZDx v4 (direction: inner-loop).";
+  }
+  identity wz-direction-outer-loop {
+    base roadway-direction;
+    description
+      "The outer carriageway of a ring road or loop; the counterpart to
+       wz-direction-inner-loop.";
+    reference "WZDx v4 (direction: outer-loop).";
+  }
+  identity wz-direction-both {
+    base roadway-direction;
+    description
+      "Both directions are affected. This is a value real feeds publish,
+       not a modeling convenience -- a model that cannot express it
+       pushes the ambiguity into the translator, which has no better
+       information than the feed did.";
+  }
+  identity wz-direction-unknown {
+    base roadway-direction;
+    description
+      "The feed did not report a direction. Distinct from
+       wz-direction-both, which is a positive claim that both are
+       affected: this says the publisher does not know, and a consumer
+       must not infer that both carriageways are impacted.";
+    reference "WZDx v4 (direction: unknown).";
+  }
+}

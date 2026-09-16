@@ -43,13 +43,16 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
-    "kind": {
+    "cycle-length-s": {
+      "maximum": 65535,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "cycle-state": {
       "type": "string"
     },
-    "new-value": {
-      "maximum": 2147483647,
-      "minimum": -2147483648,
-      "type": "integer"
+    "kind": {
+      "type": "string"
     },
     "observed-by": {
       "maxLength": 64,
@@ -61,12 +64,45 @@
       "format": "date-time",
       "type": "string"
     },
+    "offset-s": {
+      "maximum": 65535,
+      "minimum": 0,
+      "type": "integer"
+    },
     "owner": {
       "type": "string"
     },
-    "previous-value": {
-      "maximum": 2147483647,
-      "minimum": -2147483648,
+    "pattern": {
+      "maximum": 255,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "phase-number": {
+      "maximum": 40,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "previous-cycle-length-s": {
+      "maximum": 65535,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "previous-cycle-state": {
+      "type": "string"
+    },
+    "previous-offset-s": {
+      "maximum": 65535,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "previous-pattern": {
+      "maximum": 255,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "previous-split-s": {
+      "maximum": 65535,
+      "minimum": 0,
       "type": "integer"
     },
     "sequence": {
@@ -81,9 +117,9 @@
       "pattern": "^([a-zA-Z0-9_-]+)$",
       "type": "string"
     },
-    "split-number": {
-      "maximum": 40,
-      "minimum": 1,
+    "split-s": {
+      "maximum": 65535,
+      "minimum": 0,
       "type": "integer"
     }
   },

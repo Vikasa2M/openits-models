@@ -8,6 +8,7 @@ import (
 	commonv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/common/v1"
 	yangpkg "github.com/Vikasa2M/openits-models/pkg/yang/openits"
 	"github.com/Vikasa2M/openits-models/tools/conformance/tests"
+	"google.golang.org/protobuf/proto"
 )
 
 // collectCctv builds a fully-populated, spec-compliant CCTV/PTZ observation:
@@ -173,9 +174,9 @@ func subscribeCctv(ctx context.Context, out chan<- tests.EventEnvelope, window t
 			Data: &cctvv1.PtzPresetRecalled{
 				Kind:       "openits-cctv-types:cctv-ptz-preset-recalled",
 				PresetId:   1,
-				PresetName: "NB approach",
-				RecalledBy: "op-tmc-07",
-				ViaTour:    false,
+				PresetName: proto.String("NB approach"),
+				RecalledBy: proto.String("op-tmc-07"),
+				ViaTour:    proto.Bool(false),
 			},
 		},
 		{
@@ -185,9 +186,9 @@ func subscribeCctv(ctx context.Context, out chan<- tests.EventEnvelope, window t
 			CEID:     "01HXYR3K9T8M2NAEQF5P4RCTV2",
 			CETime:   time.Now().UTC(),
 			Data: &cctvv1.TourStateChanged{
-				Kind:         "openits-cctv-types:cctv-tour-state-changed",
-				TourId:       1,
-				PreviousState: cctvv1.TourRunState_TOUR_RUN_STATE_STOPPED,
+				Kind:          "openits-cctv-types:cctv-tour-state-changed",
+				TourId:        1,
+				PreviousState: cctvv1.TourRunState_TOUR_RUN_STATE_STOPPED.Enum(),
 				CurrentState:  cctvv1.TourRunState_TOUR_RUN_STATE_RUNNING,
 			},
 		},
@@ -200,9 +201,9 @@ func subscribeCctv(ctx context.Context, out chan<- tests.EventEnvelope, window t
 			Data: &cctvv1.LockoutDenied{
 				Kind:              "openits-cctv-types:cctv-lockout-denied",
 				RequestedBy:       "op-tmc-12",
-				RequestedPriority: 50,
-				CurrentHolder:     "op-tmc-07",
-				HeldPriority:      200,
+				RequestedPriority: proto.Uint32(50),
+				CurrentHolder:     proto.String("op-tmc-07"),
+				HeldPriority:      proto.Uint32(200),
 			},
 		},
 		{

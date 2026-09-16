@@ -32,3 +32,17 @@ lint:
 breaking:
   use:
     - WIRE_JSON
+  # No ignore_only list, deliberately. Pre-1.0 this repo takes wire breaks
+  # rather than working around them (see docs/versioning.md), and the
+  # temptation is to stage each one here until the release ships. That trade
+  # is worse than it looks: an entry disables the rule for a whole FILE, so a
+  # genuinely unintended break in the same file passes unnoticed for as long
+  # as the entry sits there, and the entry goes inert the moment the change
+  # lands on main — making its removal a separate follow-up PR that is easy
+  # to forget and invisible when forgotten.
+  #
+  # So an intended break shows up as a red `buf breaking` on the PR that
+  # makes it, and a maintainer merges it on the strength of the migration
+  # notes in the module revisions and docs/migration/. The check stays
+  # honest, nothing needs reverting afterwards, and the break is reviewed
+  # where it is made rather than in a config file.

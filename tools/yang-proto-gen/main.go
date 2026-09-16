@@ -24,6 +24,15 @@ func goPackageFor(pkg string) string {
 	return "github.com/Vikasa2M/openits-models/pkg/proto/" + strings.ReplaceAll(pkg, ".", "/") + ";" + goPkgName(pkg)
 }
 
+// protoDirFor returns the output directory a proto package's files live in:
+// the package with dots turned into path separators, matching the layout
+// serviceRoutes already uses ("openits.cctv.v1" -> "openits/cctv/v1"). A
+// per-service types.proto is written there, beside that service's other
+// files and in the same proto package.
+func protoDirFor(pkg string) string {
+	return strings.ReplaceAll(pkg, ".", "/")
+}
+
 // goPkgName derives the bare Go package name from a proto package: strip the
 // leading "openits.", drop "." and "_" separators, keep the version — e.g.
 // "openits.ramp_metering.v1" -> "rampmeteringv1", "openits.types.v1" ->
@@ -78,26 +87,48 @@ func Generate(yangDir, outDir, lockPath string) error {
 	typesTarget := &TypesTarget{File: typesPF, Package: typesPackage, ImportPath: typesFilePath}
 	typesPF.Types = typesTarget
 
-	// claimedEnumNames is keyed per go_package (see goPackageFor), NOT
-	// shared globally across the run — see ProtoFile.ClaimedNames. Every
-	// generated .proto file now carries a PER-SERVICE `option go_package`,
-	// so protoc-gen-go only flattens the files that share one service's
-	// go_package into one Go package (e.g. a service's events.proto +
+	// Enum registries are keyed per go_package (see goPackageFor), NOT
+	// shared globally across the run — see ProtoFile.ClaimedEnums. Every
+	// generated .proto file carries a PER-SERVICE `option go_package`, so
+	// protoc-gen-go only flattens the files sharing one service's
+	// go_package into one Go package (a service's events.proto +
 	// state.proto), not the whole corpus: two different services declaring
 	// the same bare top-level enum name (e.g. "Severity") is legal — they
-	// land in different Go packages — so their claimed-name sets must stay
-	// separate too. claimedNamesFor lazily allocates each package's set.
-	claimedEnumNames := map[string]map[string]bool{}
-	claimedNamesFor := func(pkg string) map[string]bool {
+	// land in different Go packages — so their registries stay separate.
+	//
+	// Each registry declares its package's enums into a per-service
+	// types.proto sitting beside that service's other files, in the SAME
+	// proto package. Same package matters: a proto type is identified by
+	// package + name, so relocating a declaration there changes no
+	// fully-qualified name, no wire bytes and no Go symbol (protoc-gen-go
+	// emits one .go file per .proto but flattens them into the one
+	// go_package). It buys a generated import graph that mirrors the YANG
+	// one — state and events both depend on types, neither on the other.
+	enumRegistries := map[string]*EnumRegistry{}
+	enumTypesFiles := map[string]*outFile{} // relative path -> per-service types file
+	enumRegistryFor := func(pkg string) *EnumRegistry {
 		gp := goPackageFor(pkg)
-		m := claimedEnumNames[gp]
-		if m == nil {
-			m = map[string]bool{}
-			claimedEnumNames[gp] = m
+		r := enumRegistries[gp]
+		if r == nil {
+			r = newEnumRegistry()
+			enumRegistries[gp] = r
+			if pkg != typesPackage {
+				path := protoDirFor(pkg) + "/types.proto"
+				tf := &ProtoFile{
+					Types:          typesTarget,
+					ClaimedEnums:   r,
+					SelfImportPath: path,
+					LockPrefix:     pkg,
+				}
+				r.Target = tf
+				r.ImportPath = path
+				enumTypesFiles[path] = &outFile{pkg: pkg, pf: tf, origins: map[string][]string{}}
+			}
 		}
-		return m
+		return r
 	}
-	typesPF.ClaimedNames = claimedNamesFor(typesPackage)
+	typesPF.ClaimedEnums = enumRegistryFor(typesPackage)
+	typesPF.SelfImportPath = typesFilePath
 
 	files := map[string]*outFile{} // relative output path -> accumulator
 
@@ -126,7 +157,7 @@ func Generate(yangDir, outDir, lockPath string) error {
 		}
 		of := files[relFile]
 		if of == nil {
-			of = &outFile{pkg: pkg, pf: &ProtoFile{Types: typesTarget, ClaimedNames: claimedNamesFor(pkg), LockPrefix: pkg}, origins: map[string][]string{}}
+			of = &outFile{pkg: pkg, pf: &ProtoFile{Types: typesTarget, ClaimedEnums: enumRegistryFor(pkg), SelfImportPath: relFile, LockPrefix: pkg}, origins: map[string][]string{}}
 			files[relFile] = of
 		}
 		for _, c := range sortedChildren(mod) {
@@ -150,7 +181,7 @@ func Generate(yangDir, outDir, lockPath string) error {
 		}
 		of := files[route.file]
 		if of == nil {
-			of = &outFile{pkg: route.pkg, pf: &ProtoFile{Types: typesTarget, ClaimedNames: claimedNamesFor(route.pkg), LockPrefix: route.pkg}, origins: map[string][]string{}}
+			of = &outFile{pkg: route.pkg, pf: &ProtoFile{Types: typesTarget, ClaimedEnums: enumRegistryFor(route.pkg), SelfImportPath: route.file, LockPrefix: route.pkg}, origins: map[string][]string{}}
 			files[route.file] = of
 		}
 		for _, c := range sortedChildren(mod) {
@@ -201,6 +232,15 @@ func Generate(yangDir, outDir, lockPath string) error {
 		added := of.pf.Body.String()[before:]
 		for _, name := range messageNamesIn(added) {
 			of.origins[name] = append(of.origins[name], p.origin)
+		}
+	}
+
+	// Per-service types files join the output set, but only when they
+	// actually received a declaration — a service whose modules declare no
+	// enum gets no empty file.
+	for path, of := range enumTypesFiles {
+		if of.pf.Body.Len() > 0 {
+			files[path] = of
 		}
 	}
 

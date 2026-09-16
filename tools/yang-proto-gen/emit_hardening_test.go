@@ -178,7 +178,7 @@ module shared-config-fixture {
 		t.Fatalf("fixture setup broken: root container not found")
 	}
 	lock := &FieldLock{Messages: map[string]map[string]int{}}
-	pf := &ProtoFile{ClaimedNames: map[string]bool{}}
+	pf := &ProtoFile{ClaimedEnums: newEnumRegistry()}
 	pf.Collisions = collisionSet(root)
 	EmitMessage(root, "Root", lock, shared, pf)
 	got := pf.Body.String()

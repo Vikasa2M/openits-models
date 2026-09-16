@@ -5,6 +5,7 @@ package openits.signal_control.v1;
 option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/signal_control/v1;signalcontrolv1";
 
 import "google/protobuf/timestamp.proto";
+import "openits/signal_control/v1/types.proto";
 import "openits/types/v1/types.proto";
 
 message SignalController {
@@ -27,59 +28,59 @@ message SignalController {
 }
 
 message SignalControllerConfig {
-  string elevation = 1;
-  uint32 heading = 2;
-  string id = 3;
+  optional string elevation = 1;
+  optional uint32 heading = 2;
+  optional string id = 3;
   google.protobuf.Timestamp install_date = 8;
-  string latitude = 4;
+  optional string latitude = 4;
   SignalControllerConfigLinearReference linear_reference = 9;
-  string longitude = 5;
-  string maintained_by = 10;
-  string name = 6;
-  string owner = 11;
-  string road_reference = 7;
-  string site_id = 12;
+  optional string longitude = 5;
+  optional string maintained_by = 10;
+  optional string name = 6;
+  optional string owner = 11;
+  optional string road_reference = 7;
+  optional string site_id = 12;
 }
 
 message SignalControllerConfigLinearReference {
-  string route_designator = 1;
-  string direction = 2;
-  string measure = 3;
-  string lrs_method = 4;
+  optional string route_designator = 1;
+  optional string direction = 2;
+  optional string measure = 3;
+  optional string lrs_method = 4;
 }
 
 message SignalControllerState {
-  string elevation = 1;
-  string firmware = 2;
-  string firmware_build = 12;
-  string hardware_version = 13;
-  uint32 heading = 3;
-  string id = 4;
+  optional string elevation = 1;
+  optional string firmware = 2;
+  optional string firmware_build = 12;
+  optional string hardware_version = 13;
+  optional uint32 heading = 3;
+  optional string id = 4;
   google.protobuf.Timestamp install_date = 14;
-  string latitude = 5;
+  optional string latitude = 5;
   SignalControllerStateLinearReference linear_reference = 15;
-  string longitude = 6;
-  string maintained_by = 16;
-  string make = 7;
-  string model = 8;
-  string name = 9;
-  string owner = 17;
-  string road_reference = 10;
-  string serial = 11;
-  string site_id = 18;
+  optional string longitude = 6;
+  optional string maintained_by = 16;
+  optional string make = 7;
+  optional string model = 8;
+  optional string name = 9;
+  optional string owner = 17;
+  optional string road_reference = 10;
+  optional string serial = 11;
+  optional string site_id = 18;
 }
 
 message SignalControllerStateLinearReference {
-  string route_designator = 1;
-  string direction = 2;
-  string measure = 3;
-  string lrs_method = 4;
+  optional string route_designator = 1;
+  optional string direction = 2;
+  optional string measure = 3;
+  optional string lrs_method = 4;
 }
 
 message Startup {
-  uint32 flash_duration_seconds = 1;
+  optional uint32 flash_duration_seconds = 1;
   repeated uint32 flash_phases = 2;
-  uint32 all_red_duration_seconds = 3;
+  optional uint32 all_red_duration_seconds = 3;
 }
 
 message Phases {
@@ -87,78 +88,60 @@ message Phases {
 }
 
 message Phase {
-  uint32 phase_number = 1;
+  optional uint32 phase_number = 1;
   PhaseConfig config = 2;
   PhaseState state = 3;
 }
 
 message PhaseConfig {
-  uint32 phase_number = 1;
-  bool enabled = 2;
+  optional uint32 phase_number = 1;
+  optional bool enabled = 2;
   uint32 ring = 3;
   uint32 barrier = 4;
   Timing timing = 5;
-  string max_green_2 = 6;
-  string red_revert = 9;
-  string crossing_distance_m = 10;
-  string leading_ped_interval_seconds = 11;
+  optional string max_green_2 = 6;
+  optional string red_revert = 9;
+  optional string crossing_distance_m = 10;
+  optional string leading_ped_interval_seconds = 11;
   Options options = 7;
   VolumeDensity volume_density = 8;
 }
 
 message Timing {
-  string max_green = 1;
-  string min_green = 2;
-  string passage = 3;
-  uint32 ped_clear = 4;
-  string red_clear = 5;
-  uint32 walk = 6;
-  string yellow_change = 7;
+  optional string max_green = 1;
+  optional string min_green = 2;
+  optional string passage = 3;
+  optional uint32 ped_clear = 4;
+  optional string red_clear = 5;
+  optional uint32 walk = 6;
+  optional string yellow_change = 7;
 }
 
 message Options {
-  bool min_recall = 1;
-  bool max_recall = 2;
-  bool ped_recall = 3;
-  bool soft_recall = 4;
-  bool dual_entry = 5;
-  bool rest_in_walk = 6;
-  bool simultaneous_gap = 7;
-  bool call_to_nonactuated = 8;
+  optional bool min_recall = 1;
+  optional bool max_recall = 2;
+  optional bool ped_recall = 3;
+  optional bool soft_recall = 4;
+  optional bool dual_entry = 5;
+  optional bool rest_in_walk = 6;
+  optional bool simultaneous_gap = 7;
+  optional bool call_to_nonactuated = 8;
 }
 
 message VolumeDensity {
-  string added_initial = 1;
-  uint32 max_initial = 2;
-  uint32 time_before_reduction = 3;
-  uint32 time_to_reduce = 4;
-  string min_gap = 5;
+  optional string added_initial = 1;
+  optional uint32 max_initial = 2;
+  optional uint32 time_before_reduction = 3;
+  optional uint32 time_to_reduce = 4;
+  optional string min_gap = 5;
 }
 
 message PhaseState {
-  uint32 next_phase = 3;
-  PedIntervalType ped_interval = 4;
-  uint32 ped_interval_elapsed_ms = 5;
-  VehIntervalType vehicle_interval = 6;
-  uint32 vehicle_interval_elapsed_ms = 7;
-}
-
-enum PedIntervalType {
-  PED_INTERVAL_TYPE_UNSPECIFIED = 0;
-  PED_INTERVAL_TYPE_WALK = 1;
-  PED_INTERVAL_TYPE_PED_CLEAR = 2;
-  PED_INTERVAL_TYPE_DONT_WALK = 3;
-  PED_INTERVAL_TYPE_DARK = 4;
-  PED_INTERVAL_TYPE_NONE = 5;
-}
-
-enum VehIntervalType {
-  VEH_INTERVAL_TYPE_UNSPECIFIED = 0;
-  VEH_INTERVAL_TYPE_GREEN = 1;
-  VEH_INTERVAL_TYPE_YELLOW_CHANGE = 2;
-  VEH_INTERVAL_TYPE_RED_CLEAR = 3;
-  VEH_INTERVAL_TYPE_RED = 4;
-  VEH_INTERVAL_TYPE_DARK = 5;
+  optional uint32 next_phase = 3;
+  optional PedIntervalType ped_interval = 4;
+  optional uint32 ped_interval_elapsed_ms = 5;
+  optional VehIntervalType vehicle_interval = 6;
+  optional uint32 vehicle_interval_elapsed_ms = 7;
 }
 
 message Detectors {
@@ -166,57 +149,44 @@ message Detectors {
 }
 
 message DetectorsDetector {
-  uint32 detector_id = 1;
+  optional uint32 detector_id = 1;
   DetectorsDetectorConfig config = 2;
   DetectorsDetectorState state = 3;
 }
 
 message DetectorsDetectorConfig {
-  uint32 detector_id = 1;
+  optional uint32 detector_id = 1;
   string type = 2;
   repeated uint32 assigned_phases = 3;
-  bool enabled = 4;
-  uint32 delay = 5;
-  string extend = 6;
-  DetectorMode mode = 7;
+  optional bool enabled = 4;
+  optional string name = 11;
+  optional string delay = 5;
+  optional string extend = 6;
+  optional DetectorMode mode = 7;
   repeated uint32 extend_phases = 8;
-  DetectorFailAction fail_action = 9;
+  optional DetectorFailAction fail_action = 9;
   Diagnostics diagnostics = 10;
 }
 
-enum DetectorMode {
-  DETECTOR_MODE_UNSPECIFIED = 0;
-  DETECTOR_MODE_PRESENCE = 1;
-  DETECTOR_MODE_PULSE = 2;
-}
-
-enum DetectorFailAction {
-  DETECTOR_FAIL_ACTION_UNSPECIFIED = 0;
-  DETECTOR_FAIL_ACTION_NONE = 1;
-  DETECTOR_FAIL_ACTION_MIN_RECALL = 2;
-  DETECTOR_FAIL_ACTION_MAX_RECALL = 3;
-  DETECTOR_FAIL_ACTION_MAX_PRESENCE = 4;
-}
-
 message Diagnostics {
-  uint32 no_activity_minutes = 1;
-  uint32 max_presence_minutes = 2;
-  uint32 erratic_counts_per_minute = 3;
+  optional uint32 no_activity_minutes = 1;
+  optional uint32 max_presence_minutes = 2;
+  optional uint32 erratic_counts_per_minute = 3;
 }
 
 message DetectorsDetectorState {
-  bool active = 1;
+  optional bool active = 1;
   google.protobuf.Timestamp last_activation = 2;
-  uint64 actuation_count = 3;
-  bool fault = 4;
+  optional uint64 actuation_count = 3;
+  optional bool fault = 4;
   Measurement measurement = 5;
 }
 
 message Measurement {
-  uint64 volume = 1;
-  string occupancy = 2;
-  string speed_kmh = 3;
-  uint32 collection_period_seconds = 4;
+  optional uint32 volume = 1;
+  optional string occupancy = 2;
+  optional string speed_kmh = 3;
+  optional uint32 collection_period_seconds = 4;
   google.protobuf.Timestamp collected_at = 5;
 }
 
@@ -227,7 +197,7 @@ message Overlaps {
 message Overlap {
   reserved 1;
   reserved "overlap_id";
-  uint32 overlap_number = 4;
+  optional uint32 overlap_number = 4;
   OverlapConfig config = 2;
   OverlapState state = 3;
 }
@@ -235,36 +205,25 @@ message Overlap {
 message OverlapConfig {
   reserved 1;
   reserved "overlap_id";
-  uint32 overlap_number = 9;
-  string name = 2;
+  optional uint32 overlap_number = 9;
+  optional string name = 2;
   string type = 3;
   repeated uint32 included_phases = 4;
   repeated uint32 modifier_phases = 10;
-  string trailing_green = 5;
-  string trailing_yellow = 6;
-  string trailing_red_clear = 7;
+  optional string trailing_green = 5;
+  optional string trailing_yellow = 6;
+  optional string trailing_red_clear = 7;
   Fya fya = 8;
 }
 
 message Fya {
-  uint32 protected_left_phase = 1;
-  uint32 opposing_through_phase = 2;
+  optional uint32 protected_left_phase = 1;
+  optional uint32 opposing_through_phase = 2;
 }
 
 message OverlapState {
-  OverlapIntervalType current_interval = 1;
-  bool active = 2;
-}
-
-enum OverlapIntervalType {
-  OVERLAP_INTERVAL_TYPE_UNSPECIFIED = 0;
-  OVERLAP_INTERVAL_TYPE_GREEN = 1;
-  OVERLAP_INTERVAL_TYPE_TRAILING_GREEN = 2;
-  OVERLAP_INTERVAL_TYPE_YELLOW = 3;
-  OVERLAP_INTERVAL_TYPE_RED_CLEARANCE = 4;
-  OVERLAP_INTERVAL_TYPE_OFF = 5;
-  OVERLAP_INTERVAL_TYPE_DARK = 6;
-  OVERLAP_INTERVAL_TYPE_FLASHING_YELLOW_ARROW = 7;
+  optional OverlapIntervalType current_interval = 1;
+  optional bool active = 2;
 }
 
 message Channels {
@@ -272,20 +231,13 @@ message Channels {
 }
 
 message Channel {
-  uint32 channel_number = 1;
+  optional uint32 channel_number = 1;
   oneof source {
     uint32 phase = 2;
     uint32 overlap = 3;
   }
-  string movement = 4;
-  ChannelFlashState flash_state = 5;
-}
-
-enum ChannelFlashState {
-  CHANNEL_FLASH_STATE_UNSPECIFIED = 0;
-  CHANNEL_FLASH_STATE_RED = 1;
-  CHANNEL_FLASH_STATE_YELLOW = 2;
-  CHANNEL_FLASH_STATE_NONE = 3;
+  optional string movement = 4;
+  optional ChannelFlashState flash_state = 5;
 }
 
 message ConflictMonitor {
@@ -293,8 +245,8 @@ message ConflictMonitor {
 }
 
 message Permissive {
-  uint32 channel_a = 1;
-  uint32 channel_b = 2;
+  optional uint32 channel_a = 1;
+  optional uint32 channel_b = 2;
 }
 
 message Coordination {
@@ -303,67 +255,26 @@ message Coordination {
 }
 
 message TimingPlan {
-  uint32 plan_id = 1;
+  optional uint32 plan_id = 1;
   uint32 cycle_length = 2;
-  uint32 offset = 3;
+  optional uint32 offset = 3;
   repeated uint32 coordinated_phases = 5;
-  OffsetReference offset_reference = 6;
-  TransitionMode transition_mode = 7;
-  ForceOffMode force_off_mode = 8;
-  uint32 sequence_id = 9;
+  optional OffsetReference offset_reference = 6;
+  optional TransitionMode transition_mode = 7;
+  optional ForceOffMode force_off_mode = 8;
+  optional uint32 sequence_id = 9;
   repeated Split split = 4;
 }
 
-enum OffsetReference {
-  OFFSET_REFERENCE_UNSPECIFIED = 0;
-  OFFSET_REFERENCE_BEGIN_OF_GREEN = 1;
-  OFFSET_REFERENCE_BEGIN_OF_YELLOW = 2;
-  OFFSET_REFERENCE_END_OF_GREEN = 3;
-}
-
-enum TransitionMode {
-  TRANSITION_MODE_UNSPECIFIED = 0;
-  TRANSITION_MODE_DWELL = 1;
-  TRANSITION_MODE_SHORTWAY = 2;
-  TRANSITION_MODE_ADD_ONLY = 3;
-  TRANSITION_MODE_SUBTRACT_ONLY = 4;
-}
-
-enum ForceOffMode {
-  FORCE_OFF_MODE_UNSPECIFIED = 0;
-  FORCE_OFF_MODE_FIXED = 1;
-  FORCE_OFF_MODE_FLOATING = 2;
-}
-
 message Split {
-  uint32 phase_number = 1;
-  uint32 split_seconds = 2;
-  SplitMode split_mode = 3;
-}
-
-enum SplitMode {
-  SPLIT_MODE_UNSPECIFIED = 0;
-  SPLIT_MODE_OTHER = 1;
-  SPLIT_MODE_MINIMUM_RECALL = 2;
-  SPLIT_MODE_MAXIMUM_RECALL = 3;
-  SPLIT_MODE_PED_RECALL = 4;
-  SPLIT_MODE_COORDINATED_FIXED = 5;
-  SPLIT_MODE_COORDINATED_FLOATING = 6;
-  SPLIT_MODE_PHASE_OMIT = 7;
-  SPLIT_MODE_NONE = 8;
+  optional uint32 phase_number = 1;
+  optional uint32 split_seconds = 2;
+  optional SplitMode split_mode = 3;
 }
 
 message CoordinationState {
-  uint32 active_plan = 1;
-  CycleState cycle_state = 2;
-}
-
-enum CycleState {
-  CYCLE_STATE_FREE = 0;
-  CYCLE_STATE_IN_STEP = 1;
-  CYCLE_STATE_TRANSITION_ADD = 2;
-  CYCLE_STATE_TRANSITION_SUBTRACT = 3;
-  CYCLE_STATE_TRANSITION_DWELL = 4;
+  optional uint32 active_plan = 1;
+  optional string cycle_state = 2;
 }
 
 message Sequences {
@@ -371,92 +282,51 @@ message Sequences {
 }
 
 message Sequence {
-  uint32 sequence_id = 1;
-  string name = 2;
+  optional uint32 sequence_id = 1;
+  optional string name = 2;
   repeated RingSequence ring_sequence = 3;
 }
 
 message RingSequence {
-  uint32 ring = 1;
+  optional uint32 ring = 1;
   repeated uint32 ordered_phases = 2;
 }
 
 message Timebase {
-  string timezone = 4;
-  bool observe_dst = 5;
+  optional string timezone = 4;
+  optional bool observe_dst = 5;
   repeated DayPlan day_plan = 1;
   repeated ScheduleEntry schedule_entry = 2;
   Clock clock = 3;
 }
 
 message DayPlan {
-  uint32 day_plan_id = 1;
-  string name = 2;
+  optional uint32 day_plan_id = 1;
+  optional string name = 2;
   repeated Action action = 3;
 }
 
 message Action {
-  string start_time = 1;
+  optional string start_time = 1;
   oneof activate {
     uint32 timing_plan = 2;
     SpecialOperation special_operation = 3;
   }
 }
 
-enum SpecialOperation {
-  SPECIAL_OPERATION_UNSPECIFIED = 0;
-  SPECIAL_OPERATION_FREE = 1;
-  SPECIAL_OPERATION_FLASH = 2;
-}
-
 message ScheduleEntry {
-  uint32 schedule_id = 1;
-  uint32 day_plan = 5;
+  optional uint32 schedule_id = 1;
+  optional uint32 day_plan = 5;
   repeated uint32 days_of_month = 4;
   repeated DayOfWeek days_of_week = 3;
   repeated Month months = 2;
 }
 
-enum DayOfWeek {
-  DAY_OF_WEEK_UNSPECIFIED = 0;
-  DAY_OF_WEEK_MONDAY = 1;
-  DAY_OF_WEEK_TUESDAY = 2;
-  DAY_OF_WEEK_WEDNESDAY = 3;
-  DAY_OF_WEEK_THURSDAY = 4;
-  DAY_OF_WEEK_FRIDAY = 5;
-  DAY_OF_WEEK_SATURDAY = 6;
-  DAY_OF_WEEK_SUNDAY = 7;
-}
-
-enum Month {
-  MONTH_UNSPECIFIED = 0;
-  MONTH_JANUARY = 1;
-  MONTH_FEBRUARY = 2;
-  MONTH_MARCH = 3;
-  MONTH_APRIL = 4;
-  MONTH_MAY = 5;
-  MONTH_JUNE = 6;
-  MONTH_JULY = 7;
-  MONTH_AUGUST = 8;
-  MONTH_SEPTEMBER = 9;
-  MONTH_OCTOBER = 10;
-  MONTH_NOVEMBER = 11;
-  MONTH_DECEMBER = 12;
-}
-
 message Clock {
   google.protobuf.Timestamp current_time = 1;
-  string time_source = 2;
-  SyncStatus sync_status = 3;
-  int32 offset_ms = 4;
-}
-
-enum SyncStatus {
-  SYNC_STATUS_UNSPECIFIED = 0;
-  SYNC_STATUS_SYNCED = 1;
-  SYNC_STATUS_HOLDOVER = 2;
-  SYNC_STATUS_UNSYNCED = 3;
-  SYNC_STATUS_FREE_RUNNING = 4;
+  optional string time_source = 2;
+  optional SyncStatus sync_status = 3;
+  optional int32 offset_ms = 4;
 }
 
 message Preemption {
@@ -464,25 +334,25 @@ message Preemption {
 }
 
 message Preemptor {
-  uint32 preemptor_id = 1;
+  optional uint32 preemptor_id = 1;
   PreemptorConfig config = 2;
   PreemptorState state = 3;
 }
 
 message PreemptorConfig {
-  uint32 preemptor_id = 1;
+  optional uint32 preemptor_id = 1;
   string type = 2;
-  uint32 priority_order = 3;
-  uint32 delay_seconds = 4;
-  uint32 min_green_before_entry = 5;
-  uint32 min_walk_before_entry = 6;
-  uint32 min_ped_clear_before_entry = 12;
+  optional uint32 priority_order = 3;
+  optional uint32 delay_seconds = 4;
+  optional uint32 min_green_before_entry = 5;
+  optional uint32 min_walk_before_entry = 6;
+  optional uint32 min_ped_clear_before_entry = 12;
   TrackClearance track_clearance = 7;
   repeated uint32 dwell_phases = 8;
-  uint32 min_dwell_seconds = 9;
-  uint32 flash_dwell_seconds = 13;
+  optional uint32 min_dwell_seconds = 9;
+  optional uint32 flash_dwell_seconds = 13;
   repeated uint32 exit_phases = 10;
-  uint32 max_presence_seconds = 11;
+  optional uint32 max_presence_seconds = 11;
 }
 
 message TrackClearance {
@@ -491,21 +361,10 @@ message TrackClearance {
 }
 
 message PreemptorState {
-  bool active = 1;
+  optional bool active = 1;
   google.protobuf.Timestamp active_since = 2;
-  PreemptStage current_stage = 3;
-  string source_id = 4;
-}
-
-enum PreemptStage {
-  PREEMPT_STAGE_UNSPECIFIED = 0;
-  PREEMPT_STAGE_NONE = 1;
-  PREEMPT_STAGE_DELAY = 2;
-  PREEMPT_STAGE_ENTRY = 3;
-  PREEMPT_STAGE_TRACK_CLEARANCE = 4;
-  PREEMPT_STAGE_DWELL = 5;
-  PREEMPT_STAGE_EXIT = 6;
-  PREEMPT_STAGE_MAX_PRESENCE = 7;
+  optional PreemptStage current_stage = 3;
+  optional string source_id = 4;
 }
 
 message Priority {
@@ -514,24 +373,17 @@ message Priority {
 }
 
 message Strategy {
-  uint32 strategy_id = 1;
+  optional uint32 strategy_id = 1;
   StrategyConfig config = 2;
 }
 
 message StrategyConfig {
-  uint32 strategy_id = 1;
-  PriorityType priority_class = 2;
-  uint32 max_early_green_seconds = 3;
-  uint32 max_green_extension_seconds = 4;
-  uint32 reservice_interval_seconds = 5;
+  optional uint32 strategy_id = 1;
+  optional string priority_class = 2;
+  optional uint32 max_early_green_seconds = 3;
+  optional uint32 max_green_extension_seconds = 4;
+  optional uint32 reservice_interval_seconds = 5;
   repeated uint32 served_phases = 6;
-}
-
-enum PriorityType {
-  PRIORITY_TYPE_NONE = 0;
-  PRIORITY_TYPE_TRANSIT = 1;
-  PRIORITY_TYPE_FREIGHT = 2;
-  PRIORITY_TYPE_OTHER = 3;
 }
 
 message PriorityState {
@@ -539,34 +391,27 @@ message PriorityState {
 }
 
 message ActiveRequest {
-  string request_id = 1;
-  PriorityType priority_type = 2;
-  string vehicle_id = 3;
-  Stage stage = 4;
-  uint32 strategy_id = 5;
-}
-
-enum Stage {
-  STAGE_UNSPECIFIED = 0;
-  STAGE_REQUESTED = 1;
-  STAGE_GRANTED = 2;
-  STAGE_ACTIVE = 3;
-  STAGE_COMPLETED = 4;
-  STAGE_DENIED = 5;
+  optional string request_id = 1;
+  optional string priority_type = 2;
+  optional string vehicle_id = 3;
+  optional Stage stage = 4;
+  optional uint32 strategy_id = 5;
 }
 
 message Operation {
-  string mode = 1;
-  bool flash_active = 2;
-  string flash_cause = 3;
-  Mmu mmu = 4;
+  reserved 4;
+  reserved "mmu";
+  optional string mode = 1;
+  optional bool flash_active = 2;
+  optional string flash_cause = 3;
+  Monitor monitor = 6;
   google.protobuf.Timestamp last_mode_change = 5;
 }
 
-message Mmu {
-  string fault_type = 1;
+message Monitor {
+  optional string fault_type = 1;
   repeated uint32 faulting_channels = 2;
-  bool latched = 3;
+  optional bool latched = 3;
 }
 
 message CabinetPower {
@@ -581,53 +426,31 @@ message CabinetPowerConfig {
 }
 
 message CabinetPowerState {
-  bool police_panel_open = 7;
-  SignalOperationOnBattery signal_operation_on_battery = 9;
+  optional bool police_panel_open = 7;
+  optional SignalOperationOnBattery signal_operation_on_battery = 9;
   Battery battery = 1;
-  bool door_open = 2;
+  optional bool door_open = 2;
   Generator generator = 3;
-  string line_frequency_hz = 4;
-  string line_voltage_v = 5;
+  optional string line_frequency_hz = 4;
+  optional string line_voltage_v = 5;
   openits.types.v1.ScOnBatteryPolicy on_battery_policy = 6;
-  PowerSource power_source = 8;
-  uint32 transfer_count = 10;
-}
-
-enum SignalOperationOnBattery {
-  SIGNAL_OPERATION_ON_BATTERY_FULL_OPERATION = 0;
-  SIGNAL_OPERATION_ON_BATTERY_FLASH = 1;
-  SIGNAL_OPERATION_ON_BATTERY_NOT_ON_BATTERY = 2;
+  optional PowerSource power_source = 8;
+  optional uint32 transfer_count = 10;
 }
 
 message Battery {
-  uint32 state_of_charge_pct = 1;
-  uint32 runtime_remaining_minutes = 2;
-  string voltage_v = 3;
-  string temperature_c = 4;
-  bool charger_fault = 5;
-  BatteryTestState test_state = 6;
+  optional uint32 state_of_charge_pct = 1;
+  optional uint32 runtime_remaining_minutes = 2;
+  optional string voltage_v = 3;
+  optional string temperature_c = 4;
+  optional bool charger_fault = 5;
+  optional BatteryTestState test_state = 6;
   google.protobuf.Timestamp last_test = 7;
 }
 
-enum BatteryTestState {
-  BATTERY_TEST_STATE_IDLE = 0;
-  BATTERY_TEST_STATE_IN_PROGRESS = 1;
-  BATTERY_TEST_STATE_PASSED = 2;
-  BATTERY_TEST_STATE_FAILED = 3;
-}
-
 message Generator {
-  bool running = 1;
-  uint32 fuel_level_pct = 2;
-}
-
-enum PowerSource {
-  POWER_SOURCE_ON_LINE = 0;
-  POWER_SOURCE_ON_BATTERY = 1;
-  POWER_SOURCE_BYPASS = 2;
-  POWER_SOURCE_OFF = 3;
-  POWER_SOURCE_SOLAR = 4;
-  POWER_SOURCE_GENERATOR = 5;
+  optional bool running = 1;
+  optional uint32 fuel_level_pct = 2;
 }
 
 message Faults {
@@ -635,19 +458,11 @@ message Faults {
 }
 
 message Fault {
-  string category = 1;
-  string correlates_with = 6;
-  string description = 2;
-  string fault_id = 3;
+  optional string category = 1;
+  optional string correlates_with = 6;
+  optional string description = 2;
+  optional string fault_id = 3;
   google.protobuf.Timestamp first_observed = 4;
-  OpenitsSignalControlFaultSeverity severity = 5;
-}
-
-enum OpenitsSignalControlFaultSeverity {
-  OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_INFO = 0;
-  OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_WARNING = 1;
-  OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_MINOR = 2;
-  OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_MAJOR = 3;
-  OPENITS_SIGNAL_CONTROL_FAULT_SEVERITY_CRITICAL = 4;
+  optional FaultSeverity severity = 5;
 }
 

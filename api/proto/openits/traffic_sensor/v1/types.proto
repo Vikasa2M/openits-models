@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package openits.traffic_sensor.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/traffic_sensor/v1;trafficsensorv1";
+
+enum DataQuality {
+  DATA_QUALITY_VALID = 0;
+  DATA_QUALITY_SUSPECT = 1;
+  DATA_QUALITY_INVALID = 2;
+}
+
+enum OperationalStatus {
+  OPERATIONAL_STATUS_ACTIVE = 0;
+  OPERATIONAL_STATUS_INACTIVE = 1;
+  OPERATIONAL_STATUS_DEGRADED = 2;
+}
+
+enum LaneNumberingOrigin {
+  LANE_NUMBERING_ORIGIN_LEFTMOST_IN_TRAVEL = 0;
+  LANE_NUMBERING_ORIGIN_RIGHTMOST_IN_TRAVEL = 1;
+  LANE_NUMBERING_ORIGIN_FROM_SENSOR = 2;
+  LANE_NUMBERING_ORIGIN_FROM_MEDIAN = 3;
+}
+
+enum MountingSide {
+  MOUNTING_SIDE_ROADSIDE = 0;
+  MOUNTING_SIDE_MEDIAN = 1;
+  MOUNTING_SIDE_OVERHEAD = 2;
+  MOUNTING_SIDE_UNKNOWN = 3;
+}
+
+enum Status {
+  STATUS_CALIBRATED = 0;
+  STATUS_DUE = 1;
+  STATUS_OVERDUE = 2;
+  STATUS_FAILED = 3;
+  STATUS_UNKNOWN = 4;
+}
+
+enum FaultSeverity {
+  FAULT_SEVERITY_INFO = 0;
+  FAULT_SEVERITY_WARNING = 1;
+  FAULT_SEVERITY_MINOR = 2;
+  FAULT_SEVERITY_MAJOR = 3;
+  FAULT_SEVERITY_CRITICAL = 4;
+}
+

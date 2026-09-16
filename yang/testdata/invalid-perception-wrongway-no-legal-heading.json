@@ -26,7 +26,7 @@
         {
           "zone-id": "eb-travel-lanes",
           "name": "EB travel lanes",
-          "function": "wrong-way",
+          "function": "openits-perception-types:zf-wrong-way",
           "vertex": [
             {
               "vertex-index": 0,

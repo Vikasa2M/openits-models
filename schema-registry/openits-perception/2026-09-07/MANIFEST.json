@@ -1,0 +1,7 @@
+{
+  "module": "openits-perception",
+  "revision": "2026-09-07",
+  "files": [
+    "schema.yang"
+  ]
+}

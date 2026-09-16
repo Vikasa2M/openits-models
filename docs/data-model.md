@@ -29,7 +29,7 @@ OpenConfig converged on ~30 focused modules (`openconfig-bgp`,
 | Layer | Modules | Role |
 |-------|---------|------|
 | Foundation | `openits-types` | Cross-service typedefs, the `device-event-kind` identity root, the `wire-source` provenance grouping, the `arc-it-flow` extension. |
-| Shared domain | `openits-nema-common` | NEMA-adjacent types shared by signal-control and ramp-metering: `phase-number`, `phase-timing` with MUTCD-derived and engineering-floor `must`-constraints. |
+| Shared domain | `openits-nema-common` | NEMA-adjacent types shared by signal-control and ramp-metering: `phase-number`, `phase-timing` with engineering-floor `must`-constraints (jurisdiction bounds live in `yang/deviations/`). |
 | Service core | `openits-signal-control`, `openits-dms`, `openits-ess`, `openits-rsu`, `openits-ramp-metering`, `openits-perception`, `openits-traffic-sensor`, `openits-reversible-lane` | Per-service state tree: identity, configuration, operational status, faults. |
 | Service types | `openits-{signal-control,dms,ess,rsu,ramp-metering,perception,traffic-sensor,reversible-lane}-types` | Per-service event-kind identity hierarchies (plus, for signal-control, shared typedefs), importable without pulling in the service core. |
 | Event modules | `openits-signal-control-{phase,detector,overlap,pedestrian,preemption,coordination,tsp,tsam,raw}-events` | One module per behavioral concern, each ~50–180 lines, each with its own revision cycle. |
@@ -175,17 +175,28 @@ knowledge.
 
 ## Safety constraints live in the schema, once
 
-The phase-timing safety limits are YANG `must` expressions in
-`openits-nema-common:phase-timing`, with citation-grade error messages.
-Yellow change is the one MUTCD-mandated bound — a 3.0-6.0 second range
-(*"Yellow change must be 3.0-6.0 seconds per MUTCD 11th ed. section
-4F.17 paragraph 13"*). Red-clear is a ceiling only: MUTCD 11th ed.
-§4F.17 paragraph 6 sets no minimum, so the schema caps it at 6.0
-seconds and leaves the value itself to engineering practice. Min-green
-is not a MUTCD value at all — it is an engineering floor (`>= 1`
-second) that only forbids a zero-length serve. Both signal-control and
-ramp-metering `uses` the same grouping, so none of these limits can
-drift between services.
+The phase-timing safety limits are YANG `must` expressions, split across
+two tiers with citation-grade error messages at both.
+
+`openits-nema-common:phase-timing` carries the engineering floors only:
+yellow change positive, red clearance non-negative, min-green at least
+one second — a floor that forbids a zero-length serve and is not a MUTCD
+value at all. Both signal-control and ramp-metering `uses` this
+grouping, so none of these can drift between services.
+
+The jurisdiction-specific numbers live one tier up, in
+`yang/deviations/`, which a deployment opts into:
+`openits-signal-control-mutcd` applies the US MUTCD 11th ed. §4F.17
+yellow range of 3.0-6.0 seconds (*"Yellow change must be 3.0-6.0 seconds
+per MUTCD 11th ed. section 4F.17 paragraph 13"*) and the paragraph-6
+red-clear ceiling; `openits-signal-control-mutcd-strict` raises the
+yellow floor to 4.0 seconds.
+
+The split is the point, not an accident of where the code landed. A US
+signal-timing bound is not a fact about a ramp meter, and
+`openits-nema-common` is composed by both — so a constraint belonging to
+one jurisdiction and one device class belongs in a deviation, not in a
+grouping every present and future composer inherits.
 
 This is the concrete payoff of choosing a schema language with a
 constraint vocabulary: any validator that loads the YANG enforces the
@@ -402,7 +413,7 @@ tree, byte-stable, `check-gen`-gated, and never hand-edited — a small excerpt:
 | Small per-concern modules, never mega-modules | OpenConfig | Nine signal-control event modules; companion notification modules |
 | Model telemetry confidently; beware unified config | OpenConfig | Telemetry-first trees; no universal event envelope; per-service identity sub-bases |
 | Taxonomies must be vendor-extensible | OpenConfig (augment-as-escape-valve) | Identity hierarchies with open slots; the Econolite worked example |
-| Constraints belong in the schema | NTCIP (absence thereof) | MUTCD `must` rules in `openits-nema-common`, shared by two services |
+| Constraints belong in the schema | NTCIP (absence thereof) | Engineering floors in `openits-nema-common`, shared by two services; jurisdiction bounds in `yang/deviations/` |
 | Evolve additively; version immutably | Both | RFC 7950 §11 discipline; dated revisions; immutable schema registry; `ce-type` major versions |
 
 And the deliberate divergences from OpenConfig, for readers steeped in

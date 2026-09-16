@@ -23,74 +23,19 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type FaultSeverity int32
-
-const (
-	FaultSeverity_FAULT_SEVERITY_INFO     FaultSeverity = 0
-	FaultSeverity_FAULT_SEVERITY_WARNING  FaultSeverity = 1
-	FaultSeverity_FAULT_SEVERITY_MINOR    FaultSeverity = 2
-	FaultSeverity_FAULT_SEVERITY_MAJOR    FaultSeverity = 3
-	FaultSeverity_FAULT_SEVERITY_CRITICAL FaultSeverity = 4
-)
-
-// Enum value maps for FaultSeverity.
-var (
-	FaultSeverity_name = map[int32]string{
-		0: "FAULT_SEVERITY_INFO",
-		1: "FAULT_SEVERITY_WARNING",
-		2: "FAULT_SEVERITY_MINOR",
-		3: "FAULT_SEVERITY_MAJOR",
-		4: "FAULT_SEVERITY_CRITICAL",
-	}
-	FaultSeverity_value = map[string]int32{
-		"FAULT_SEVERITY_INFO":     0,
-		"FAULT_SEVERITY_WARNING":  1,
-		"FAULT_SEVERITY_MINOR":    2,
-		"FAULT_SEVERITY_MAJOR":    3,
-		"FAULT_SEVERITY_CRITICAL": 4,
-	}
-)
-
-func (x FaultSeverity) Enum() *FaultSeverity {
-	p := new(FaultSeverity)
-	*p = x
-	return p
-}
-
-func (x FaultSeverity) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (FaultSeverity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_common_v1_events_proto_enumTypes[0].Descriptor()
-}
-
-func (FaultSeverity) Type() protoreflect.EnumType {
-	return &file_openits_common_v1_events_proto_enumTypes[0]
-}
-
-func (x FaultSeverity) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use FaultSeverity.Descriptor instead.
-func (FaultSeverity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_common_v1_events_proto_rawDescGZIP(), []int{0}
-}
-
 type CommHealthEvent struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	Kind              string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	DriftMilliseconds int64                  `protobuf:"varint,3,opt,name=drift_milliseconds,json=driftMilliseconds,proto3" json:"drift_milliseconds,omitempty"`
-	AttemptsTotal     uint32                 `protobuf:"varint,4,opt,name=attempts_total,json=attemptsTotal,proto3" json:"attempts_total,omitempty"`
-	AttemptsFailed    uint32                 `protobuf:"varint,5,opt,name=attempts_failed,json=attemptsFailed,proto3" json:"attempts_failed,omitempty"`
-	PercentLoss       uint32                 `protobuf:"varint,6,opt,name=percent_loss,json=percentLoss,proto3" json:"percent_loss,omitempty"`
-	AvgResponseMs     uint32                 `protobuf:"varint,7,opt,name=avg_response_ms,json=avgResponseMs,proto3" json:"avg_response_ms,omitempty"`
-	LinkId            uint32                 `protobuf:"varint,8,opt,name=link_id,json=linkId,proto3" json:"link_id,omitempty"`
-	LinkType          string                 `protobuf:"bytes,12,opt,name=link_type,json=linkType,proto3" json:"link_type,omitempty"`
-	ObservedBy        string                 `protobuf:"bytes,9,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	DriftMilliseconds *int64                 `protobuf:"varint,3,opt,name=drift_milliseconds,json=driftMilliseconds,proto3,oneof" json:"drift_milliseconds,omitempty"`
+	AttemptsTotal     *uint32                `protobuf:"varint,4,opt,name=attempts_total,json=attemptsTotal,proto3,oneof" json:"attempts_total,omitempty"`
+	AttemptsFailed    *uint32                `protobuf:"varint,5,opt,name=attempts_failed,json=attemptsFailed,proto3,oneof" json:"attempts_failed,omitempty"`
+	PercentLoss       *uint32                `protobuf:"varint,6,opt,name=percent_loss,json=percentLoss,proto3,oneof" json:"percent_loss,omitempty"`
+	AvgResponseMs     *uint32                `protobuf:"varint,7,opt,name=avg_response_ms,json=avgResponseMs,proto3,oneof" json:"avg_response_ms,omitempty"`
+	LinkId            *uint32                `protobuf:"varint,8,opt,name=link_id,json=linkId,proto3,oneof" json:"link_id,omitempty"`
+	LinkType          *string                `protobuf:"bytes,12,opt,name=link_type,json=linkType,proto3,oneof" json:"link_type,omitempty"`
+	ObservedBy        *string                `protobuf:"bytes,9,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner             string                 `protobuf:"bytes,10,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner             *string                `protobuf:"bytes,10,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence          uint64                 `protobuf:"varint,11,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	Source            *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId    string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -136,57 +81,57 @@ func (x *CommHealthEvent) GetKind() string {
 }
 
 func (x *CommHealthEvent) GetDriftMilliseconds() int64 {
-	if x != nil {
-		return x.DriftMilliseconds
+	if x != nil && x.DriftMilliseconds != nil {
+		return *x.DriftMilliseconds
 	}
 	return 0
 }
 
 func (x *CommHealthEvent) GetAttemptsTotal() uint32 {
-	if x != nil {
-		return x.AttemptsTotal
+	if x != nil && x.AttemptsTotal != nil {
+		return *x.AttemptsTotal
 	}
 	return 0
 }
 
 func (x *CommHealthEvent) GetAttemptsFailed() uint32 {
-	if x != nil {
-		return x.AttemptsFailed
+	if x != nil && x.AttemptsFailed != nil {
+		return *x.AttemptsFailed
 	}
 	return 0
 }
 
 func (x *CommHealthEvent) GetPercentLoss() uint32 {
-	if x != nil {
-		return x.PercentLoss
+	if x != nil && x.PercentLoss != nil {
+		return *x.PercentLoss
 	}
 	return 0
 }
 
 func (x *CommHealthEvent) GetAvgResponseMs() uint32 {
-	if x != nil {
-		return x.AvgResponseMs
+	if x != nil && x.AvgResponseMs != nil {
+		return *x.AvgResponseMs
 	}
 	return 0
 }
 
 func (x *CommHealthEvent) GetLinkId() uint32 {
-	if x != nil {
-		return x.LinkId
+	if x != nil && x.LinkId != nil {
+		return *x.LinkId
 	}
 	return 0
 }
 
 func (x *CommHealthEvent) GetLinkType() string {
-	if x != nil {
-		return x.LinkType
+	if x != nil && x.LinkType != nil {
+		return *x.LinkType
 	}
 	return ""
 }
 
 func (x *CommHealthEvent) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -199,8 +144,8 @@ func (x *CommHealthEvent) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *CommHealthEvent) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -230,9 +175,9 @@ type FaultCleared struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	FaultId        string                 `protobuf:"bytes,2,opt,name=fault_id,json=faultId,proto3" json:"fault_id,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,4,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,4,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,5,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,5,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,6,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -285,8 +230,8 @@ func (x *FaultCleared) GetFaultId() string {
 }
 
 func (x *FaultCleared) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -299,8 +244,8 @@ func (x *FaultCleared) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *FaultCleared) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -331,11 +276,11 @@ type FaultRaised struct {
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	FaultId        string                 `protobuf:"bytes,2,opt,name=fault_id,json=faultId,proto3" json:"fault_id,omitempty"`
 	Severity       FaultSeverity          `protobuf:"varint,3,opt,name=severity,proto3,enum=openits.common.v1.FaultSeverity" json:"severity,omitempty"`
-	Description    string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
-	CorrelatesWith string                 `protobuf:"bytes,9,opt,name=correlates_with,json=correlatesWith,proto3" json:"correlates_with,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	Description    *string                `protobuf:"bytes,4,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	CorrelatesWith *string                `protobuf:"bytes,9,opt,name=correlates_with,json=correlatesWith,proto3,oneof" json:"correlates_with,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,7,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -395,22 +340,22 @@ func (x *FaultRaised) GetSeverity() FaultSeverity {
 }
 
 func (x *FaultRaised) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
 
 func (x *FaultRaised) GetCorrelatesWith() string {
-	if x != nil {
-		return x.CorrelatesWith
+	if x != nil && x.CorrelatesWith != nil {
+		return *x.CorrelatesWith
 	}
 	return ""
 }
 
 func (x *FaultRaised) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -423,8 +368,8 @@ func (x *FaultRaised) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *FaultRaised) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -453,14 +398,14 @@ func (x *FaultRaised) GetSourceDeviceId() string {
 type ModeChanged struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	Prior          string                 `protobuf:"bytes,2,opt,name=prior,proto3" json:"prior,omitempty"`
+	Prior          *string                `protobuf:"bytes,2,opt,name=prior,proto3,oneof" json:"prior,omitempty"`
 	Current        string                 `protobuf:"bytes,3,opt,name=current,proto3" json:"current,omitempty"`
-	Reason         string                 `protobuf:"bytes,4,opt,name=reason,proto3" json:"reason,omitempty"`
-	ControlSource  string                 `protobuf:"bytes,9,opt,name=control_source,json=controlSource,proto3" json:"control_source,omitempty"`
-	Trigger        string                 `protobuf:"bytes,10,opt,name=trigger,proto3" json:"trigger,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	Reason         *string                `protobuf:"bytes,4,opt,name=reason,proto3,oneof" json:"reason,omitempty"`
+	ControlSource  *string                `protobuf:"bytes,9,opt,name=control_source,json=controlSource,proto3,oneof" json:"control_source,omitempty"`
+	Trigger        *string                `protobuf:"bytes,10,opt,name=trigger,proto3,oneof" json:"trigger,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,7,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -506,8 +451,8 @@ func (x *ModeChanged) GetKind() string {
 }
 
 func (x *ModeChanged) GetPrior() string {
-	if x != nil {
-		return x.Prior
+	if x != nil && x.Prior != nil {
+		return *x.Prior
 	}
 	return ""
 }
@@ -520,29 +465,29 @@ func (x *ModeChanged) GetCurrent() string {
 }
 
 func (x *ModeChanged) GetReason() string {
-	if x != nil {
-		return x.Reason
+	if x != nil && x.Reason != nil {
+		return *x.Reason
 	}
 	return ""
 }
 
 func (x *ModeChanged) GetControlSource() string {
-	if x != nil {
-		return x.ControlSource
+	if x != nil && x.ControlSource != nil {
+		return *x.ControlSource
 	}
 	return ""
 }
 
 func (x *ModeChanged) GetTrigger() string {
-	if x != nil {
-		return x.Trigger
+	if x != nil && x.Trigger != nil {
+		return *x.Trigger
 	}
 	return ""
 }
 
 func (x *ModeChanged) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -555,8 +500,8 @@ func (x *ModeChanged) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *ModeChanged) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -586,72 +531,90 @@ var File_openits_common_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_common_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"\x1eopenits/common/v1/events.proto\x12\x11openits.common.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1copenits/types/v1/types.proto\"\x95\x04\n" +
+	"\x1eopenits/common/v1/events.proto\x12\x11openits.common.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dopenits/common/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\xd9\x05\n" +
 	"\x0fCommHealthEvent\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12-\n" +
-	"\x12drift_milliseconds\x18\x03 \x01(\x03R\x11driftMilliseconds\x12%\n" +
-	"\x0eattempts_total\x18\x04 \x01(\rR\rattemptsTotal\x12'\n" +
-	"\x0fattempts_failed\x18\x05 \x01(\rR\x0eattemptsFailed\x12!\n" +
-	"\fpercent_loss\x18\x06 \x01(\rR\vpercentLoss\x12&\n" +
-	"\x0favg_response_ms\x18\a \x01(\rR\ravgResponseMs\x12\x17\n" +
-	"\alink_id\x18\b \x01(\rR\x06linkId\x12\x1b\n" +
-	"\tlink_type\x18\f \x01(\tR\blinkType\x12\x1f\n" +
-	"\vobserved_by\x18\t \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x122\n" +
+	"\x12drift_milliseconds\x18\x03 \x01(\x03H\x00R\x11driftMilliseconds\x88\x01\x01\x12*\n" +
+	"\x0eattempts_total\x18\x04 \x01(\rH\x01R\rattemptsTotal\x88\x01\x01\x12,\n" +
+	"\x0fattempts_failed\x18\x05 \x01(\rH\x02R\x0eattemptsFailed\x88\x01\x01\x12&\n" +
+	"\fpercent_loss\x18\x06 \x01(\rH\x03R\vpercentLoss\x88\x01\x01\x12+\n" +
+	"\x0favg_response_ms\x18\a \x01(\rH\x04R\ravgResponseMs\x88\x01\x01\x12\x1c\n" +
+	"\alink_id\x18\b \x01(\rH\x05R\x06linkId\x88\x01\x01\x12 \n" +
+	"\tlink_type\x18\f \x01(\tH\x06R\blinkType\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\t \x01(\tH\aR\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
+	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\n" +
-	" \x01(\tR\x05owner\x12\x1a\n" +
+	" \x01(\tH\bR\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\v \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xad\x02\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x15\n" +
+	"\x13_drift_millisecondsB\x11\n" +
+	"\x0f_attempts_totalB\x12\n" +
+	"\x10_attempts_failedB\x0f\n" +
+	"\r_percent_lossB\x12\n" +
+	"\x10_avg_response_msB\n" +
+	"\n" +
+	"\b_link_idB\f\n" +
+	"\n" +
+	"_link_typeB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xd1\x02\n" +
 	"\fFaultCleared\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x19\n" +
-	"\bfault_id\x18\x02 \x01(\tR\afaultId\x12\x1f\n" +
-	"\vobserved_by\x18\x04 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\bfault_id\x18\x02 \x01(\tR\afaultId\x12$\n" +
+	"\vobserved_by\x18\x04 \x01(\tH\x00R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\x05 \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\x05 \x01(\tH\x01R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\x06 \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\xb5\x03\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\x87\x04\n" +
 	"\vFaultRaised\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x19\n" +
 	"\bfault_id\x18\x02 \x01(\tR\afaultId\x12<\n" +
-	"\bseverity\x18\x03 \x01(\x0e2 .openits.common.v1.FaultSeverityR\bseverity\x12 \n" +
-	"\vdescription\x18\x04 \x01(\tR\vdescription\x12'\n" +
-	"\x0fcorrelates_with\x18\t \x01(\tR\x0ecorrelatesWith\x12\x1f\n" +
-	"\vobserved_by\x18\x06 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\bseverity\x18\x03 \x01(\x0e2 .openits.common.v1.FaultSeverityR\bseverity\x12%\n" +
+	"\vdescription\x18\x04 \x01(\tH\x00R\vdescription\x88\x01\x01\x12,\n" +
+	"\x0fcorrelates_with\x18\t \x01(\tH\x01R\x0ecorrelatesWith\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x06 \x01(\tH\x02R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\a \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\a \x01(\tH\x03R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\b \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId\"\x9a\x03\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x0e\n" +
+	"\f_descriptionB\x12\n" +
+	"\x10_correlates_withB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\x86\x04\n" +
 	"\vModeChanged\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12\x14\n" +
-	"\x05prior\x18\x02 \x01(\tR\x05prior\x12\x18\n" +
-	"\acurrent\x18\x03 \x01(\tR\acurrent\x12\x16\n" +
-	"\x06reason\x18\x04 \x01(\tR\x06reason\x12%\n" +
-	"\x0econtrol_source\x18\t \x01(\tR\rcontrolSource\x12\x18\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12\x19\n" +
+	"\x05prior\x18\x02 \x01(\tH\x00R\x05prior\x88\x01\x01\x12\x18\n" +
+	"\acurrent\x18\x03 \x01(\tR\acurrent\x12\x1b\n" +
+	"\x06reason\x18\x04 \x01(\tH\x01R\x06reason\x88\x01\x01\x12*\n" +
+	"\x0econtrol_source\x18\t \x01(\tH\x02R\rcontrolSource\x88\x01\x01\x12\x1d\n" +
 	"\atrigger\x18\n" +
-	" \x01(\tR\atrigger\x12\x1f\n" +
-	"\vobserved_by\x18\x06 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	" \x01(\tH\x03R\atrigger\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x06 \x01(\tH\x04R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\a \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\a \x01(\tH\x05R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\b \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceId*\x95\x01\n" +
-	"\rFaultSeverity\x12\x17\n" +
-	"\x13FAULT_SEVERITY_INFO\x10\x00\x12\x1a\n" +
-	"\x16FAULT_SEVERITY_WARNING\x10\x01\x12\x18\n" +
-	"\x14FAULT_SEVERITY_MINOR\x10\x02\x12\x18\n" +
-	"\x14FAULT_SEVERITY_MAJOR\x10\x03\x12\x1b\n" +
-	"\x17FAULT_SEVERITY_CRITICAL\x10\x04BIZGgithub.com/Vikasa2M/openits-models/pkg/proto/openits/common/v1;commonv1b\x06proto3"
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\b\n" +
+	"\x06_priorB\t\n" +
+	"\a_reasonB\x11\n" +
+	"\x0f_control_sourceB\n" +
+	"\n" +
+	"\b_triggerB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_ownerBIZGgithub.com/Vikasa2M/openits-models/pkg/proto/openits/common/v1;commonv1b\x06proto3"
 
 var (
 	file_openits_common_v1_events_proto_rawDescOnce sync.Once
@@ -665,27 +628,26 @@ func file_openits_common_v1_events_proto_rawDescGZIP() []byte {
 	return file_openits_common_v1_events_proto_rawDescData
 }
 
-var file_openits_common_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_openits_common_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_openits_common_v1_events_proto_goTypes = []any{
-	(FaultSeverity)(0),            // 0: openits.common.v1.FaultSeverity
-	(*CommHealthEvent)(nil),       // 1: openits.common.v1.CommHealthEvent
-	(*FaultCleared)(nil),          // 2: openits.common.v1.FaultCleared
-	(*FaultRaised)(nil),           // 3: openits.common.v1.FaultRaised
-	(*ModeChanged)(nil),           // 4: openits.common.v1.ModeChanged
-	(*timestamppb.Timestamp)(nil), // 5: google.protobuf.Timestamp
-	(*v1.WireSource)(nil),         // 6: openits.types.v1.WireSource
+	(*CommHealthEvent)(nil),       // 0: openits.common.v1.CommHealthEvent
+	(*FaultCleared)(nil),          // 1: openits.common.v1.FaultCleared
+	(*FaultRaised)(nil),           // 2: openits.common.v1.FaultRaised
+	(*ModeChanged)(nil),           // 3: openits.common.v1.ModeChanged
+	(*timestamppb.Timestamp)(nil), // 4: google.protobuf.Timestamp
+	(*v1.WireSource)(nil),         // 5: openits.types.v1.WireSource
+	(FaultSeverity)(0),            // 6: openits.common.v1.FaultSeverity
 }
 var file_openits_common_v1_events_proto_depIdxs = []int32{
-	5, // 0: openits.common.v1.CommHealthEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	6, // 1: openits.common.v1.CommHealthEvent.source:type_name -> openits.types.v1.WireSource
-	5, // 2: openits.common.v1.FaultCleared.occurred_at:type_name -> google.protobuf.Timestamp
-	6, // 3: openits.common.v1.FaultCleared.source:type_name -> openits.types.v1.WireSource
-	0, // 4: openits.common.v1.FaultRaised.severity:type_name -> openits.common.v1.FaultSeverity
-	5, // 5: openits.common.v1.FaultRaised.occurred_at:type_name -> google.protobuf.Timestamp
-	6, // 6: openits.common.v1.FaultRaised.source:type_name -> openits.types.v1.WireSource
-	5, // 7: openits.common.v1.ModeChanged.occurred_at:type_name -> google.protobuf.Timestamp
-	6, // 8: openits.common.v1.ModeChanged.source:type_name -> openits.types.v1.WireSource
+	4, // 0: openits.common.v1.CommHealthEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	5, // 1: openits.common.v1.CommHealthEvent.source:type_name -> openits.types.v1.WireSource
+	4, // 2: openits.common.v1.FaultCleared.occurred_at:type_name -> google.protobuf.Timestamp
+	5, // 3: openits.common.v1.FaultCleared.source:type_name -> openits.types.v1.WireSource
+	6, // 4: openits.common.v1.FaultRaised.severity:type_name -> openits.common.v1.FaultSeverity
+	4, // 5: openits.common.v1.FaultRaised.occurred_at:type_name -> google.protobuf.Timestamp
+	5, // 6: openits.common.v1.FaultRaised.source:type_name -> openits.types.v1.WireSource
+	4, // 7: openits.common.v1.ModeChanged.occurred_at:type_name -> google.protobuf.Timestamp
+	5, // 8: openits.common.v1.ModeChanged.source:type_name -> openits.types.v1.WireSource
 	9, // [9:9] is the sub-list for method output_type
 	9, // [9:9] is the sub-list for method input_type
 	9, // [9:9] is the sub-list for extension type_name
@@ -698,19 +660,23 @@ func file_openits_common_v1_events_proto_init() {
 	if File_openits_common_v1_events_proto != nil {
 		return
 	}
+	file_openits_common_v1_types_proto_init()
+	file_openits_common_v1_events_proto_msgTypes[0].OneofWrappers = []any{}
+	file_openits_common_v1_events_proto_msgTypes[1].OneofWrappers = []any{}
+	file_openits_common_v1_events_proto_msgTypes[2].OneofWrappers = []any{}
+	file_openits_common_v1_events_proto_msgTypes[3].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_common_v1_events_proto_rawDesc), len(file_openits_common_v1_events_proto_rawDesc)),
-			NumEnums:      1,
+			NumEnums:      0,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_openits_common_v1_events_proto_goTypes,
 		DependencyIndexes: file_openits_common_v1_events_proto_depIdxs,
-		EnumInfos:         file_openits_common_v1_events_proto_enumTypes,
 		MessageInfos:      file_openits_common_v1_events_proto_msgTypes,
 	}.Build()
 	File_openits_common_v1_events_proto = out.File

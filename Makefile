@@ -61,12 +61,19 @@ gen: yang-proto-gen proto yang-go asyncapi catalog
 # The buf targets announce and skip when buf is not installed, rather than
 # failing. That is a visible line in the output, not a silent pass, but it
 # does mean a green `make ci` on a machine without buf has not run them.
+# proto-breaking runs LAST on purpose. GitHub runs these as seven independent
+# jobs, so a red buf job there still lets conformance and the YANG gates report;
+# make aborts on the first failing prerequisite, so listing proto-breaking mid-way
+# meant a deliberate pre-1.0 wire break stopped the local run before conformance
+# ever executed — exactly when the change is riskiest and the harness matters most.
+# Last position keeps `make ci` an honest mirror of CI: everything else reports,
+# and the only red left is the break you meant to take.
 ci: check-gen build-tools vet test \
 	validate-yang yang-lint check-revisions check-naming \
 	check-enum-values check-inline-enums check-deviations \
 	check-augment-collisions check-events-layering check-ce-id-vectors \
 	validate-noi check-graduation \
-	proto-lint proto-breaking conformance
+	proto-lint conformance proto-breaking
 
 # Fail if regenerating drifts from what's committed — the freshness gate.
 check-gen: gen

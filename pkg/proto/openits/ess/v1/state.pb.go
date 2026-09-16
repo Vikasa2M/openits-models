@@ -22,515 +22,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type Quality int32
-
-const (
-	Quality_QUALITY_VALID         Quality = 0
-	Quality_QUALITY_SUSPECT       Quality = 1
-	Quality_QUALITY_ESTIMATED     Quality = 2
-	Quality_QUALITY_NOT_INSTALLED Quality = 3
-	Quality_QUALITY_MISSING       Quality = 4
-)
-
-// Enum value maps for Quality.
-var (
-	Quality_name = map[int32]string{
-		0: "QUALITY_VALID",
-		1: "QUALITY_SUSPECT",
-		2: "QUALITY_ESTIMATED",
-		3: "QUALITY_NOT_INSTALLED",
-		4: "QUALITY_MISSING",
-	}
-	Quality_value = map[string]int32{
-		"QUALITY_VALID":         0,
-		"QUALITY_SUSPECT":       1,
-		"QUALITY_ESTIMATED":     2,
-		"QUALITY_NOT_INSTALLED": 3,
-		"QUALITY_MISSING":       4,
-	}
-)
-
-func (x Quality) Enum() *Quality {
-	p := new(Quality)
-	*p = x
-	return p
-}
-
-func (x Quality) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Quality) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_state_proto_enumTypes[0].Descriptor()
-}
-
-func (Quality) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_state_proto_enumTypes[0]
-}
-
-func (x Quality) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Quality.Descriptor instead.
-func (Quality) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{0}
-}
-
-type PrecipitationType int32
-
-const (
-	PrecipitationType_PRECIPITATION_TYPE_UNKNOWN          PrecipitationType = 0
-	PrecipitationType_PRECIPITATION_TYPE_NONE             PrecipitationType = 1
-	PrecipitationType_PRECIPITATION_TYPE_RAIN             PrecipitationType = 2
-	PrecipitationType_PRECIPITATION_TYPE_SNOW             PrecipitationType = 3
-	PrecipitationType_PRECIPITATION_TYPE_SLEET            PrecipitationType = 4
-	PrecipitationType_PRECIPITATION_TYPE_HAIL             PrecipitationType = 5
-	PrecipitationType_PRECIPITATION_TYPE_DRIZZLE          PrecipitationType = 6
-	PrecipitationType_PRECIPITATION_TYPE_OTHER            PrecipitationType = 7
-	PrecipitationType_PRECIPITATION_TYPE_FREEZING_RAIN    PrecipitationType = 8
-	PrecipitationType_PRECIPITATION_TYPE_FREEZING_DRIZZLE PrecipitationType = 9
-	PrecipitationType_PRECIPITATION_TYPE_ICE_CRYSTALS     PrecipitationType = 10
-	PrecipitationType_PRECIPITATION_TYPE_MIXED            PrecipitationType = 11
-)
-
-// Enum value maps for PrecipitationType.
-var (
-	PrecipitationType_name = map[int32]string{
-		0:  "PRECIPITATION_TYPE_UNKNOWN",
-		1:  "PRECIPITATION_TYPE_NONE",
-		2:  "PRECIPITATION_TYPE_RAIN",
-		3:  "PRECIPITATION_TYPE_SNOW",
-		4:  "PRECIPITATION_TYPE_SLEET",
-		5:  "PRECIPITATION_TYPE_HAIL",
-		6:  "PRECIPITATION_TYPE_DRIZZLE",
-		7:  "PRECIPITATION_TYPE_OTHER",
-		8:  "PRECIPITATION_TYPE_FREEZING_RAIN",
-		9:  "PRECIPITATION_TYPE_FREEZING_DRIZZLE",
-		10: "PRECIPITATION_TYPE_ICE_CRYSTALS",
-		11: "PRECIPITATION_TYPE_MIXED",
-	}
-	PrecipitationType_value = map[string]int32{
-		"PRECIPITATION_TYPE_UNKNOWN":          0,
-		"PRECIPITATION_TYPE_NONE":             1,
-		"PRECIPITATION_TYPE_RAIN":             2,
-		"PRECIPITATION_TYPE_SNOW":             3,
-		"PRECIPITATION_TYPE_SLEET":            4,
-		"PRECIPITATION_TYPE_HAIL":             5,
-		"PRECIPITATION_TYPE_DRIZZLE":          6,
-		"PRECIPITATION_TYPE_OTHER":            7,
-		"PRECIPITATION_TYPE_FREEZING_RAIN":    8,
-		"PRECIPITATION_TYPE_FREEZING_DRIZZLE": 9,
-		"PRECIPITATION_TYPE_ICE_CRYSTALS":     10,
-		"PRECIPITATION_TYPE_MIXED":            11,
-	}
-)
-
-func (x PrecipitationType) Enum() *PrecipitationType {
-	p := new(PrecipitationType)
-	*p = x
-	return p
-}
-
-func (x PrecipitationType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (PrecipitationType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_state_proto_enumTypes[1].Descriptor()
-}
-
-func (PrecipitationType) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_state_proto_enumTypes[1]
-}
-
-func (x PrecipitationType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use PrecipitationType.Descriptor instead.
-func (PrecipitationType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{1}
-}
-
-type PrecipitationIntensity int32
-
-const (
-	PrecipitationIntensity_PRECIPITATION_INTENSITY_UNKNOWN  PrecipitationIntensity = 0
-	PrecipitationIntensity_PRECIPITATION_INTENSITY_NONE     PrecipitationIntensity = 1
-	PrecipitationIntensity_PRECIPITATION_INTENSITY_LIGHT    PrecipitationIntensity = 2
-	PrecipitationIntensity_PRECIPITATION_INTENSITY_MODERATE PrecipitationIntensity = 3
-	PrecipitationIntensity_PRECIPITATION_INTENSITY_HEAVY    PrecipitationIntensity = 4
-	PrecipitationIntensity_PRECIPITATION_INTENSITY_VIOLENT  PrecipitationIntensity = 5
-)
-
-// Enum value maps for PrecipitationIntensity.
-var (
-	PrecipitationIntensity_name = map[int32]string{
-		0: "PRECIPITATION_INTENSITY_UNKNOWN",
-		1: "PRECIPITATION_INTENSITY_NONE",
-		2: "PRECIPITATION_INTENSITY_LIGHT",
-		3: "PRECIPITATION_INTENSITY_MODERATE",
-		4: "PRECIPITATION_INTENSITY_HEAVY",
-		5: "PRECIPITATION_INTENSITY_VIOLENT",
-	}
-	PrecipitationIntensity_value = map[string]int32{
-		"PRECIPITATION_INTENSITY_UNKNOWN":  0,
-		"PRECIPITATION_INTENSITY_NONE":     1,
-		"PRECIPITATION_INTENSITY_LIGHT":    2,
-		"PRECIPITATION_INTENSITY_MODERATE": 3,
-		"PRECIPITATION_INTENSITY_HEAVY":    4,
-		"PRECIPITATION_INTENSITY_VIOLENT":  5,
-	}
-)
-
-func (x PrecipitationIntensity) Enum() *PrecipitationIntensity {
-	p := new(PrecipitationIntensity)
-	*p = x
-	return p
-}
-
-func (x PrecipitationIntensity) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (PrecipitationIntensity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_state_proto_enumTypes[2].Descriptor()
-}
-
-func (PrecipitationIntensity) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_state_proto_enumTypes[2]
-}
-
-func (x PrecipitationIntensity) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use PrecipitationIntensity.Descriptor instead.
-func (PrecipitationIntensity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{2}
-}
-
-type VisibilitySituation int32
-
-const (
-	VisibilitySituation_VISIBILITY_SITUATION_UNKNOWN      VisibilitySituation = 0
-	VisibilitySituation_VISIBILITY_SITUATION_CLEAR        VisibilitySituation = 1
-	VisibilitySituation_VISIBILITY_SITUATION_FOG          VisibilitySituation = 2
-	VisibilitySituation_VISIBILITY_SITUATION_HEAVY_FOG    VisibilitySituation = 3
-	VisibilitySituation_VISIBILITY_SITUATION_SMOKE        VisibilitySituation = 4
-	VisibilitySituation_VISIBILITY_SITUATION_BLOWING_SNOW VisibilitySituation = 5
-	VisibilitySituation_VISIBILITY_SITUATION_BLOWING_DUST VisibilitySituation = 6
-	VisibilitySituation_VISIBILITY_SITUATION_HEAVY_RAIN   VisibilitySituation = 7
-	VisibilitySituation_VISIBILITY_SITUATION_HEAVY_SNOW   VisibilitySituation = 8
-	VisibilitySituation_VISIBILITY_SITUATION_MIST_HAZE    VisibilitySituation = 9
-	VisibilitySituation_VISIBILITY_SITUATION_SAND_STORM   VisibilitySituation = 10
-	VisibilitySituation_VISIBILITY_SITUATION_SEA_SPRAY    VisibilitySituation = 11
-	VisibilitySituation_VISIBILITY_SITUATION_SLEET        VisibilitySituation = 12
-)
-
-// Enum value maps for VisibilitySituation.
-var (
-	VisibilitySituation_name = map[int32]string{
-		0:  "VISIBILITY_SITUATION_UNKNOWN",
-		1:  "VISIBILITY_SITUATION_CLEAR",
-		2:  "VISIBILITY_SITUATION_FOG",
-		3:  "VISIBILITY_SITUATION_HEAVY_FOG",
-		4:  "VISIBILITY_SITUATION_SMOKE",
-		5:  "VISIBILITY_SITUATION_BLOWING_SNOW",
-		6:  "VISIBILITY_SITUATION_BLOWING_DUST",
-		7:  "VISIBILITY_SITUATION_HEAVY_RAIN",
-		8:  "VISIBILITY_SITUATION_HEAVY_SNOW",
-		9:  "VISIBILITY_SITUATION_MIST_HAZE",
-		10: "VISIBILITY_SITUATION_SAND_STORM",
-		11: "VISIBILITY_SITUATION_SEA_SPRAY",
-		12: "VISIBILITY_SITUATION_SLEET",
-	}
-	VisibilitySituation_value = map[string]int32{
-		"VISIBILITY_SITUATION_UNKNOWN":      0,
-		"VISIBILITY_SITUATION_CLEAR":        1,
-		"VISIBILITY_SITUATION_FOG":          2,
-		"VISIBILITY_SITUATION_HEAVY_FOG":    3,
-		"VISIBILITY_SITUATION_SMOKE":        4,
-		"VISIBILITY_SITUATION_BLOWING_SNOW": 5,
-		"VISIBILITY_SITUATION_BLOWING_DUST": 6,
-		"VISIBILITY_SITUATION_HEAVY_RAIN":   7,
-		"VISIBILITY_SITUATION_HEAVY_SNOW":   8,
-		"VISIBILITY_SITUATION_MIST_HAZE":    9,
-		"VISIBILITY_SITUATION_SAND_STORM":   10,
-		"VISIBILITY_SITUATION_SEA_SPRAY":    11,
-		"VISIBILITY_SITUATION_SLEET":        12,
-	}
-)
-
-func (x VisibilitySituation) Enum() *VisibilitySituation {
-	p := new(VisibilitySituation)
-	*p = x
-	return p
-}
-
-func (x VisibilitySituation) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (VisibilitySituation) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_state_proto_enumTypes[3].Descriptor()
-}
-
-func (VisibilitySituation) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_state_proto_enumTypes[3]
-}
-
-func (x VisibilitySituation) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use VisibilitySituation.Descriptor instead.
-func (VisibilitySituation) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{3}
-}
-
-type SensingMethod int32
-
-const (
-	SensingMethod_SENSING_METHOD_EMBEDDED            SensingMethod = 0
-	SensingMethod_SENSING_METHOD_NON_INVASIVE_REMOTE SensingMethod = 1
-	SensingMethod_SENSING_METHOD_UNKNOWN             SensingMethod = 2
-)
-
-// Enum value maps for SensingMethod.
-var (
-	SensingMethod_name = map[int32]string{
-		0: "SENSING_METHOD_EMBEDDED",
-		1: "SENSING_METHOD_NON_INVASIVE_REMOTE",
-		2: "SENSING_METHOD_UNKNOWN",
-	}
-	SensingMethod_value = map[string]int32{
-		"SENSING_METHOD_EMBEDDED":            0,
-		"SENSING_METHOD_NON_INVASIVE_REMOTE": 1,
-		"SENSING_METHOD_UNKNOWN":             2,
-	}
-)
-
-func (x SensingMethod) Enum() *SensingMethod {
-	p := new(SensingMethod)
-	*p = x
-	return p
-}
-
-func (x SensingMethod) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (SensingMethod) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_state_proto_enumTypes[4].Descriptor()
-}
-
-func (SensingMethod) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_state_proto_enumTypes[4]
-}
-
-func (x SensingMethod) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use SensingMethod.Descriptor instead.
-func (SensingMethod) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{4}
-}
-
-type PavementCondition int32
-
-const (
-	PavementCondition_PAVEMENT_CONDITION_UNKNOWN        PavementCondition = 0
-	PavementCondition_PAVEMENT_CONDITION_DRY            PavementCondition = 1
-	PavementCondition_PAVEMENT_CONDITION_TRACE_MOISTURE PavementCondition = 2
-	PavementCondition_PAVEMENT_CONDITION_WET            PavementCondition = 3
-	PavementCondition_PAVEMENT_CONDITION_CHEMICALLY_WET PavementCondition = 4
-	PavementCondition_PAVEMENT_CONDITION_ICE_WARNING    PavementCondition = 5
-	PavementCondition_PAVEMENT_CONDITION_ICE_WATCH      PavementCondition = 6
-	PavementCondition_PAVEMENT_CONDITION_SNOW_WARNING   PavementCondition = 7
-	PavementCondition_PAVEMENT_CONDITION_SNOW_WATCH     PavementCondition = 8
-	PavementCondition_PAVEMENT_CONDITION_ABSORPTION     PavementCondition = 9
-	PavementCondition_PAVEMENT_CONDITION_FROST          PavementCondition = 10
-	PavementCondition_PAVEMENT_CONDITION_DEW            PavementCondition = 11
-	PavementCondition_PAVEMENT_CONDITION_ERROR          PavementCondition = 12
-)
-
-// Enum value maps for PavementCondition.
-var (
-	PavementCondition_name = map[int32]string{
-		0:  "PAVEMENT_CONDITION_UNKNOWN",
-		1:  "PAVEMENT_CONDITION_DRY",
-		2:  "PAVEMENT_CONDITION_TRACE_MOISTURE",
-		3:  "PAVEMENT_CONDITION_WET",
-		4:  "PAVEMENT_CONDITION_CHEMICALLY_WET",
-		5:  "PAVEMENT_CONDITION_ICE_WARNING",
-		6:  "PAVEMENT_CONDITION_ICE_WATCH",
-		7:  "PAVEMENT_CONDITION_SNOW_WARNING",
-		8:  "PAVEMENT_CONDITION_SNOW_WATCH",
-		9:  "PAVEMENT_CONDITION_ABSORPTION",
-		10: "PAVEMENT_CONDITION_FROST",
-		11: "PAVEMENT_CONDITION_DEW",
-		12: "PAVEMENT_CONDITION_ERROR",
-	}
-	PavementCondition_value = map[string]int32{
-		"PAVEMENT_CONDITION_UNKNOWN":        0,
-		"PAVEMENT_CONDITION_DRY":            1,
-		"PAVEMENT_CONDITION_TRACE_MOISTURE": 2,
-		"PAVEMENT_CONDITION_WET":            3,
-		"PAVEMENT_CONDITION_CHEMICALLY_WET": 4,
-		"PAVEMENT_CONDITION_ICE_WARNING":    5,
-		"PAVEMENT_CONDITION_ICE_WATCH":      6,
-		"PAVEMENT_CONDITION_SNOW_WARNING":   7,
-		"PAVEMENT_CONDITION_SNOW_WATCH":     8,
-		"PAVEMENT_CONDITION_ABSORPTION":     9,
-		"PAVEMENT_CONDITION_FROST":          10,
-		"PAVEMENT_CONDITION_DEW":            11,
-		"PAVEMENT_CONDITION_ERROR":          12,
-	}
-)
-
-func (x PavementCondition) Enum() *PavementCondition {
-	p := new(PavementCondition)
-	*p = x
-	return p
-}
-
-func (x PavementCondition) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (PavementCondition) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_state_proto_enumTypes[5].Descriptor()
-}
-
-func (PavementCondition) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_state_proto_enumTypes[5]
-}
-
-func (x PavementCondition) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use PavementCondition.Descriptor instead.
-func (PavementCondition) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{5}
-}
-
-type SensorHealth int32
-
-const (
-	SensorHealth_SENSOR_HEALTH_OK           SensorHealth = 0
-	SensorHealth_SENSOR_HEALTH_STALE        SensorHealth = 1
-	SensorHealth_SENSOR_HEALTH_UNCALIBRATED SensorHealth = 2
-	SensorHealth_SENSOR_HEALTH_DEGRADED     SensorHealth = 3
-	SensorHealth_SENSOR_HEALTH_FAILED       SensorHealth = 4
-	SensorHealth_SENSOR_HEALTH_DISABLED     SensorHealth = 5
-)
-
-// Enum value maps for SensorHealth.
-var (
-	SensorHealth_name = map[int32]string{
-		0: "SENSOR_HEALTH_OK",
-		1: "SENSOR_HEALTH_STALE",
-		2: "SENSOR_HEALTH_UNCALIBRATED",
-		3: "SENSOR_HEALTH_DEGRADED",
-		4: "SENSOR_HEALTH_FAILED",
-		5: "SENSOR_HEALTH_DISABLED",
-	}
-	SensorHealth_value = map[string]int32{
-		"SENSOR_HEALTH_OK":           0,
-		"SENSOR_HEALTH_STALE":        1,
-		"SENSOR_HEALTH_UNCALIBRATED": 2,
-		"SENSOR_HEALTH_DEGRADED":     3,
-		"SENSOR_HEALTH_FAILED":       4,
-		"SENSOR_HEALTH_DISABLED":     5,
-	}
-)
-
-func (x SensorHealth) Enum() *SensorHealth {
-	p := new(SensorHealth)
-	*p = x
-	return p
-}
-
-func (x SensorHealth) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (SensorHealth) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_state_proto_enumTypes[6].Descriptor()
-}
-
-func (SensorHealth) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_state_proto_enumTypes[6]
-}
-
-func (x SensorHealth) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use SensorHealth.Descriptor instead.
-func (SensorHealth) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{6}
-}
-
-type FaultSeverity int32
-
-const (
-	FaultSeverity_FAULT_SEVERITY_INFO     FaultSeverity = 0
-	FaultSeverity_FAULT_SEVERITY_WARNING  FaultSeverity = 1
-	FaultSeverity_FAULT_SEVERITY_MINOR    FaultSeverity = 2
-	FaultSeverity_FAULT_SEVERITY_MAJOR    FaultSeverity = 3
-	FaultSeverity_FAULT_SEVERITY_CRITICAL FaultSeverity = 4
-)
-
-// Enum value maps for FaultSeverity.
-var (
-	FaultSeverity_name = map[int32]string{
-		0: "FAULT_SEVERITY_INFO",
-		1: "FAULT_SEVERITY_WARNING",
-		2: "FAULT_SEVERITY_MINOR",
-		3: "FAULT_SEVERITY_MAJOR",
-		4: "FAULT_SEVERITY_CRITICAL",
-	}
-	FaultSeverity_value = map[string]int32{
-		"FAULT_SEVERITY_INFO":     0,
-		"FAULT_SEVERITY_WARNING":  1,
-		"FAULT_SEVERITY_MINOR":    2,
-		"FAULT_SEVERITY_MAJOR":    3,
-		"FAULT_SEVERITY_CRITICAL": 4,
-	}
-)
-
-func (x FaultSeverity) Enum() *FaultSeverity {
-	p := new(FaultSeverity)
-	*p = x
-	return p
-}
-
-func (x FaultSeverity) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (FaultSeverity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_state_proto_enumTypes[7].Descriptor()
-}
-
-func (FaultSeverity) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_state_proto_enumTypes[7]
-}
-
-func (x FaultSeverity) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use FaultSeverity.Descriptor instead.
-func (FaultSeverity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_state_proto_rawDescGZIP(), []int{7}
-}
-
 type Station struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Config        *StationConfig         `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
@@ -649,18 +140,18 @@ func (x *Station) GetFaults() *Faults {
 
 type StationConfig struct {
 	state           protoimpl.MessageState        `protogen:"open.v1"`
-	Elevation       string                        `protobuf:"bytes,7,opt,name=elevation,proto3" json:"elevation,omitempty"`
-	Heading         uint32                        `protobuf:"varint,8,opt,name=heading,proto3" json:"heading,omitempty"`
-	Id              string                        `protobuf:"bytes,9,opt,name=id,proto3" json:"id,omitempty"`
+	Elevation       *string                       `protobuf:"bytes,7,opt,name=elevation,proto3,oneof" json:"elevation,omitempty"`
+	Heading         *uint32                       `protobuf:"varint,8,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
+	Id              *string                       `protobuf:"bytes,9,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate     *timestamppb.Timestamp        `protobuf:"bytes,1,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
-	Latitude        string                        `protobuf:"bytes,2,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	Latitude        *string                       `protobuf:"bytes,2,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference *StationConfigLinearReference `protobuf:"bytes,6,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
-	Longitude       string                        `protobuf:"bytes,3,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	MaintainedBy    string                        `protobuf:"bytes,10,opt,name=maintained_by,json=maintainedBy,proto3" json:"maintained_by,omitempty"`
-	Name            string                        `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
-	Owner           string                        `protobuf:"bytes,11,opt,name=owner,proto3" json:"owner,omitempty"`
-	RoadReference   string                        `protobuf:"bytes,5,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
-	SiteId          string                        `protobuf:"bytes,12,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
+	Longitude       *string                       `protobuf:"bytes,3,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
+	MaintainedBy    *string                       `protobuf:"bytes,10,opt,name=maintained_by,json=maintainedBy,proto3,oneof" json:"maintained_by,omitempty"`
+	Name            *string                       `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Owner           *string                       `protobuf:"bytes,11,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	RoadReference   *string                       `protobuf:"bytes,5,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
+	SiteId          *string                       `protobuf:"bytes,12,opt,name=site_id,json=siteId,proto3,oneof" json:"site_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -696,22 +187,22 @@ func (*StationConfig) Descriptor() ([]byte, []int) {
 }
 
 func (x *StationConfig) GetElevation() string {
-	if x != nil {
-		return x.Elevation
+	if x != nil && x.Elevation != nil {
+		return *x.Elevation
 	}
 	return ""
 }
 
 func (x *StationConfig) GetHeading() uint32 {
-	if x != nil {
-		return x.Heading
+	if x != nil && x.Heading != nil {
+		return *x.Heading
 	}
 	return 0
 }
 
 func (x *StationConfig) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
@@ -724,8 +215,8 @@ func (x *StationConfig) GetInstallDate() *timestamppb.Timestamp {
 }
 
 func (x *StationConfig) GetLatitude() string {
-	if x != nil {
-		return x.Latitude
+	if x != nil && x.Latitude != nil {
+		return *x.Latitude
 	}
 	return ""
 }
@@ -738,53 +229,53 @@ func (x *StationConfig) GetLinearReference() *StationConfigLinearReference {
 }
 
 func (x *StationConfig) GetLongitude() string {
-	if x != nil {
-		return x.Longitude
+	if x != nil && x.Longitude != nil {
+		return *x.Longitude
 	}
 	return ""
 }
 
 func (x *StationConfig) GetMaintainedBy() string {
-	if x != nil {
-		return x.MaintainedBy
+	if x != nil && x.MaintainedBy != nil {
+		return *x.MaintainedBy
 	}
 	return ""
 }
 
 func (x *StationConfig) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *StationConfig) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
 
 func (x *StationConfig) GetRoadReference() string {
-	if x != nil {
-		return x.RoadReference
+	if x != nil && x.RoadReference != nil {
+		return *x.RoadReference
 	}
 	return ""
 }
 
 func (x *StationConfig) GetSiteId() string {
-	if x != nil {
-		return x.SiteId
+	if x != nil && x.SiteId != nil {
+		return *x.SiteId
 	}
 	return ""
 }
 
 type StationConfigLinearReference struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	RouteDesignator string                 `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3" json:"route_designator,omitempty"`
-	Direction       string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"`
-	Measure         string                 `protobuf:"bytes,3,opt,name=measure,proto3" json:"measure,omitempty"`
-	LrsMethod       string                 `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3" json:"lrs_method,omitempty"`
+	RouteDesignator *string                `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3,oneof" json:"route_designator,omitempty"`
+	Direction       *string                `protobuf:"bytes,2,opt,name=direction,proto3,oneof" json:"direction,omitempty"`
+	Measure         *string                `protobuf:"bytes,3,opt,name=measure,proto3,oneof" json:"measure,omitempty"`
+	LrsMethod       *string                `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3,oneof" json:"lrs_method,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -820,53 +311,53 @@ func (*StationConfigLinearReference) Descriptor() ([]byte, []int) {
 }
 
 func (x *StationConfigLinearReference) GetRouteDesignator() string {
-	if x != nil {
-		return x.RouteDesignator
+	if x != nil && x.RouteDesignator != nil {
+		return *x.RouteDesignator
 	}
 	return ""
 }
 
 func (x *StationConfigLinearReference) GetDirection() string {
-	if x != nil {
-		return x.Direction
+	if x != nil && x.Direction != nil {
+		return *x.Direction
 	}
 	return ""
 }
 
 func (x *StationConfigLinearReference) GetMeasure() string {
-	if x != nil {
-		return x.Measure
+	if x != nil && x.Measure != nil {
+		return *x.Measure
 	}
 	return ""
 }
 
 func (x *StationConfigLinearReference) GetLrsMethod() string {
-	if x != nil {
-		return x.LrsMethod
+	if x != nil && x.LrsMethod != nil {
+		return *x.LrsMethod
 	}
 	return ""
 }
 
 type StationState struct {
 	state           protoimpl.MessageState       `protogen:"open.v1"`
-	Elevation       string                       `protobuf:"bytes,11,opt,name=elevation,proto3" json:"elevation,omitempty"`
-	Firmware        string                       `protobuf:"bytes,2,opt,name=firmware,proto3" json:"firmware,omitempty"`
-	FirmwareBuild   string                       `protobuf:"bytes,14,opt,name=firmware_build,json=firmwareBuild,proto3" json:"firmware_build,omitempty"`
-	HardwareVersion string                       `protobuf:"bytes,15,opt,name=hardware_version,json=hardwareVersion,proto3" json:"hardware_version,omitempty"`
-	Heading         uint32                       `protobuf:"varint,12,opt,name=heading,proto3" json:"heading,omitempty"`
-	Id              string                       `protobuf:"bytes,13,opt,name=id,proto3" json:"id,omitempty"`
+	Elevation       *string                      `protobuf:"bytes,11,opt,name=elevation,proto3,oneof" json:"elevation,omitempty"`
+	Firmware        *string                      `protobuf:"bytes,2,opt,name=firmware,proto3,oneof" json:"firmware,omitempty"`
+	FirmwareBuild   *string                      `protobuf:"bytes,14,opt,name=firmware_build,json=firmwareBuild,proto3,oneof" json:"firmware_build,omitempty"`
+	HardwareVersion *string                      `protobuf:"bytes,15,opt,name=hardware_version,json=hardwareVersion,proto3,oneof" json:"hardware_version,omitempty"`
+	Heading         *uint32                      `protobuf:"varint,12,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
+	Id              *string                      `protobuf:"bytes,13,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate     *timestamppb.Timestamp       `protobuf:"bytes,1,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
-	Latitude        string                       `protobuf:"bytes,3,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	Latitude        *string                      `protobuf:"bytes,3,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference *StationStateLinearReference `protobuf:"bytes,10,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
-	Longitude       string                       `protobuf:"bytes,4,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	MaintainedBy    string                       `protobuf:"bytes,16,opt,name=maintained_by,json=maintainedBy,proto3" json:"maintained_by,omitempty"`
-	Make            string                       `protobuf:"bytes,5,opt,name=make,proto3" json:"make,omitempty"`
-	Model           string                       `protobuf:"bytes,6,opt,name=model,proto3" json:"model,omitempty"`
-	Name            string                       `protobuf:"bytes,7,opt,name=name,proto3" json:"name,omitempty"`
-	Owner           string                       `protobuf:"bytes,17,opt,name=owner,proto3" json:"owner,omitempty"`
-	RoadReference   string                       `protobuf:"bytes,8,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
-	Serial          string                       `protobuf:"bytes,9,opt,name=serial,proto3" json:"serial,omitempty"`
-	SiteId          string                       `protobuf:"bytes,18,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
+	Longitude       *string                      `protobuf:"bytes,4,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
+	MaintainedBy    *string                      `protobuf:"bytes,16,opt,name=maintained_by,json=maintainedBy,proto3,oneof" json:"maintained_by,omitempty"`
+	Make            *string                      `protobuf:"bytes,5,opt,name=make,proto3,oneof" json:"make,omitempty"`
+	Model           *string                      `protobuf:"bytes,6,opt,name=model,proto3,oneof" json:"model,omitempty"`
+	Name            *string                      `protobuf:"bytes,7,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Owner           *string                      `protobuf:"bytes,17,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	RoadReference   *string                      `protobuf:"bytes,8,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
+	Serial          *string                      `protobuf:"bytes,9,opt,name=serial,proto3,oneof" json:"serial,omitempty"`
+	SiteId          *string                      `protobuf:"bytes,18,opt,name=site_id,json=siteId,proto3,oneof" json:"site_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -902,43 +393,43 @@ func (*StationState) Descriptor() ([]byte, []int) {
 }
 
 func (x *StationState) GetElevation() string {
-	if x != nil {
-		return x.Elevation
+	if x != nil && x.Elevation != nil {
+		return *x.Elevation
 	}
 	return ""
 }
 
 func (x *StationState) GetFirmware() string {
-	if x != nil {
-		return x.Firmware
+	if x != nil && x.Firmware != nil {
+		return *x.Firmware
 	}
 	return ""
 }
 
 func (x *StationState) GetFirmwareBuild() string {
-	if x != nil {
-		return x.FirmwareBuild
+	if x != nil && x.FirmwareBuild != nil {
+		return *x.FirmwareBuild
 	}
 	return ""
 }
 
 func (x *StationState) GetHardwareVersion() string {
-	if x != nil {
-		return x.HardwareVersion
+	if x != nil && x.HardwareVersion != nil {
+		return *x.HardwareVersion
 	}
 	return ""
 }
 
 func (x *StationState) GetHeading() uint32 {
-	if x != nil {
-		return x.Heading
+	if x != nil && x.Heading != nil {
+		return *x.Heading
 	}
 	return 0
 }
 
 func (x *StationState) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
@@ -951,8 +442,8 @@ func (x *StationState) GetInstallDate() *timestamppb.Timestamp {
 }
 
 func (x *StationState) GetLatitude() string {
-	if x != nil {
-		return x.Latitude
+	if x != nil && x.Latitude != nil {
+		return *x.Latitude
 	}
 	return ""
 }
@@ -965,74 +456,74 @@ func (x *StationState) GetLinearReference() *StationStateLinearReference {
 }
 
 func (x *StationState) GetLongitude() string {
-	if x != nil {
-		return x.Longitude
+	if x != nil && x.Longitude != nil {
+		return *x.Longitude
 	}
 	return ""
 }
 
 func (x *StationState) GetMaintainedBy() string {
-	if x != nil {
-		return x.MaintainedBy
+	if x != nil && x.MaintainedBy != nil {
+		return *x.MaintainedBy
 	}
 	return ""
 }
 
 func (x *StationState) GetMake() string {
-	if x != nil {
-		return x.Make
+	if x != nil && x.Make != nil {
+		return *x.Make
 	}
 	return ""
 }
 
 func (x *StationState) GetModel() string {
-	if x != nil {
-		return x.Model
+	if x != nil && x.Model != nil {
+		return *x.Model
 	}
 	return ""
 }
 
 func (x *StationState) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *StationState) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
 
 func (x *StationState) GetRoadReference() string {
-	if x != nil {
-		return x.RoadReference
+	if x != nil && x.RoadReference != nil {
+		return *x.RoadReference
 	}
 	return ""
 }
 
 func (x *StationState) GetSerial() string {
-	if x != nil {
-		return x.Serial
+	if x != nil && x.Serial != nil {
+		return *x.Serial
 	}
 	return ""
 }
 
 func (x *StationState) GetSiteId() string {
-	if x != nil {
-		return x.SiteId
+	if x != nil && x.SiteId != nil {
+		return *x.SiteId
 	}
 	return ""
 }
 
 type StationStateLinearReference struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	RouteDesignator string                 `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3" json:"route_designator,omitempty"`
-	Direction       string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"`
-	Measure         string                 `protobuf:"bytes,3,opt,name=measure,proto3" json:"measure,omitempty"`
-	LrsMethod       string                 `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3" json:"lrs_method,omitempty"`
+	RouteDesignator *string                `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3,oneof" json:"route_designator,omitempty"`
+	Direction       *string                `protobuf:"bytes,2,opt,name=direction,proto3,oneof" json:"direction,omitempty"`
+	Measure         *string                `protobuf:"bytes,3,opt,name=measure,proto3,oneof" json:"measure,omitempty"`
+	LrsMethod       *string                `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3,oneof" json:"lrs_method,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1068,38 +559,38 @@ func (*StationStateLinearReference) Descriptor() ([]byte, []int) {
 }
 
 func (x *StationStateLinearReference) GetRouteDesignator() string {
-	if x != nil {
-		return x.RouteDesignator
+	if x != nil && x.RouteDesignator != nil {
+		return *x.RouteDesignator
 	}
 	return ""
 }
 
 func (x *StationStateLinearReference) GetDirection() string {
-	if x != nil {
-		return x.Direction
+	if x != nil && x.Direction != nil {
+		return *x.Direction
 	}
 	return ""
 }
 
 func (x *StationStateLinearReference) GetMeasure() string {
-	if x != nil {
-		return x.Measure
+	if x != nil && x.Measure != nil {
+		return *x.Measure
 	}
 	return ""
 }
 
 func (x *StationStateLinearReference) GetLrsMethod() string {
-	if x != nil {
-		return x.LrsMethod
+	if x != nil && x.LrsMethod != nil {
+		return *x.LrsMethod
 	}
 	return ""
 }
 
 type Configuration struct {
 	state                       protoimpl.MessageState `protogen:"open.v1"`
-	WindSensorHeightM           string                 `protobuf:"bytes,1,opt,name=wind_sensor_height_m,json=windSensorHeightM,proto3" json:"wind_sensor_height_m,omitempty"`
-	AirTemperatureSensorHeightM string                 `protobuf:"bytes,2,opt,name=air_temperature_sensor_height_m,json=airTemperatureSensorHeightM,proto3" json:"air_temperature_sensor_height_m,omitempty"`
-	VisibilitySensorHeightM     string                 `protobuf:"bytes,3,opt,name=visibility_sensor_height_m,json=visibilitySensorHeightM,proto3" json:"visibility_sensor_height_m,omitempty"`
+	WindSensorHeightM           *string                `protobuf:"bytes,1,opt,name=wind_sensor_height_m,json=windSensorHeightM,proto3,oneof" json:"wind_sensor_height_m,omitempty"`
+	AirTemperatureSensorHeightM *string                `protobuf:"bytes,2,opt,name=air_temperature_sensor_height_m,json=airTemperatureSensorHeightM,proto3,oneof" json:"air_temperature_sensor_height_m,omitempty"`
+	VisibilitySensorHeightM     *string                `protobuf:"bytes,3,opt,name=visibility_sensor_height_m,json=visibilitySensorHeightM,proto3,oneof" json:"visibility_sensor_height_m,omitempty"`
 	unknownFields               protoimpl.UnknownFields
 	sizeCache                   protoimpl.SizeCache
 }
@@ -1135,40 +626,40 @@ func (*Configuration) Descriptor() ([]byte, []int) {
 }
 
 func (x *Configuration) GetWindSensorHeightM() string {
-	if x != nil {
-		return x.WindSensorHeightM
+	if x != nil && x.WindSensorHeightM != nil {
+		return *x.WindSensorHeightM
 	}
 	return ""
 }
 
 func (x *Configuration) GetAirTemperatureSensorHeightM() string {
-	if x != nil {
-		return x.AirTemperatureSensorHeightM
+	if x != nil && x.AirTemperatureSensorHeightM != nil {
+		return *x.AirTemperatureSensorHeightM
 	}
 	return ""
 }
 
 func (x *Configuration) GetVisibilitySensorHeightM() string {
-	if x != nil {
-		return x.VisibilitySensorHeightM
+	if x != nil && x.VisibilitySensorHeightM != nil {
+		return *x.VisibilitySensorHeightM
 	}
 	return ""
 }
 
 type Atmospheric struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
-	AirTemperatureC     string                 `protobuf:"bytes,1,opt,name=air_temperature_c,json=airTemperatureC,proto3" json:"air_temperature_c,omitempty"`
-	DewpointC           string                 `protobuf:"bytes,2,opt,name=dewpoint_c,json=dewpointC,proto3" json:"dewpoint_c,omitempty"`
-	HumidityPercent     string                 `protobuf:"bytes,3,opt,name=humidity_percent,json=humidityPercent,proto3" json:"humidity_percent,omitempty"`
-	PressureHpa         string                 `protobuf:"bytes,4,opt,name=pressure_hpa,json=pressureHpa,proto3" json:"pressure_hpa,omitempty"`
-	WindSpeedMs         string                 `protobuf:"bytes,5,opt,name=wind_speed_ms,json=windSpeedMs,proto3" json:"wind_speed_ms,omitempty"`
-	WindSpeedAvgMs      string                 `protobuf:"bytes,10,opt,name=wind_speed_avg_ms,json=windSpeedAvgMs,proto3" json:"wind_speed_avg_ms,omitempty"`
-	WindGustMs          string                 `protobuf:"bytes,6,opt,name=wind_gust_ms,json=windGustMs,proto3" json:"wind_gust_ms,omitempty"`
-	WindDirectionDeg    string                 `protobuf:"bytes,7,opt,name=wind_direction_deg,json=windDirectionDeg,proto3" json:"wind_direction_deg,omitempty"`
-	WindDirectionAvgDeg string                 `protobuf:"bytes,12,opt,name=wind_direction_avg_deg,json=windDirectionAvgDeg,proto3" json:"wind_direction_avg_deg,omitempty"`
+	AirTemperatureC     *string                `protobuf:"bytes,1,opt,name=air_temperature_c,json=airTemperatureC,proto3,oneof" json:"air_temperature_c,omitempty"`
+	DewpointC           *string                `protobuf:"bytes,2,opt,name=dewpoint_c,json=dewpointC,proto3,oneof" json:"dewpoint_c,omitempty"`
+	HumidityPercent     *string                `protobuf:"bytes,3,opt,name=humidity_percent,json=humidityPercent,proto3,oneof" json:"humidity_percent,omitempty"`
+	PressureHpa         *string                `protobuf:"bytes,4,opt,name=pressure_hpa,json=pressureHpa,proto3,oneof" json:"pressure_hpa,omitempty"`
+	WindSpeedMs         *string                `protobuf:"bytes,5,opt,name=wind_speed_ms,json=windSpeedMs,proto3,oneof" json:"wind_speed_ms,omitempty"`
+	WindSpeedAvgMs      *string                `protobuf:"bytes,10,opt,name=wind_speed_avg_ms,json=windSpeedAvgMs,proto3,oneof" json:"wind_speed_avg_ms,omitempty"`
+	WindGustMs          *string                `protobuf:"bytes,6,opt,name=wind_gust_ms,json=windGustMs,proto3,oneof" json:"wind_gust_ms,omitempty"`
+	WindDirectionDeg    *string                `protobuf:"bytes,7,opt,name=wind_direction_deg,json=windDirectionDeg,proto3,oneof" json:"wind_direction_deg,omitempty"`
+	WindDirectionAvgDeg *string                `protobuf:"bytes,12,opt,name=wind_direction_avg_deg,json=windDirectionAvgDeg,proto3,oneof" json:"wind_direction_avg_deg,omitempty"`
 	ObservedAt          *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
-	Quality             Quality                `protobuf:"varint,11,opt,name=quality,proto3,enum=openits.ess.v1.Quality" json:"quality,omitempty"`
-	SensorId            string                 `protobuf:"bytes,9,opt,name=sensor_id,json=sensorId,proto3" json:"sensor_id,omitempty"`
+	Quality             *Quality               `protobuf:"varint,11,opt,name=quality,proto3,enum=openits.ess.v1.Quality,oneof" json:"quality,omitempty"`
+	SensorId            *string                `protobuf:"bytes,9,opt,name=sensor_id,json=sensorId,proto3,oneof" json:"sensor_id,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -1204,64 +695,64 @@ func (*Atmospheric) Descriptor() ([]byte, []int) {
 }
 
 func (x *Atmospheric) GetAirTemperatureC() string {
-	if x != nil {
-		return x.AirTemperatureC
+	if x != nil && x.AirTemperatureC != nil {
+		return *x.AirTemperatureC
 	}
 	return ""
 }
 
 func (x *Atmospheric) GetDewpointC() string {
-	if x != nil {
-		return x.DewpointC
+	if x != nil && x.DewpointC != nil {
+		return *x.DewpointC
 	}
 	return ""
 }
 
 func (x *Atmospheric) GetHumidityPercent() string {
-	if x != nil {
-		return x.HumidityPercent
+	if x != nil && x.HumidityPercent != nil {
+		return *x.HumidityPercent
 	}
 	return ""
 }
 
 func (x *Atmospheric) GetPressureHpa() string {
-	if x != nil {
-		return x.PressureHpa
+	if x != nil && x.PressureHpa != nil {
+		return *x.PressureHpa
 	}
 	return ""
 }
 
 func (x *Atmospheric) GetWindSpeedMs() string {
-	if x != nil {
-		return x.WindSpeedMs
+	if x != nil && x.WindSpeedMs != nil {
+		return *x.WindSpeedMs
 	}
 	return ""
 }
 
 func (x *Atmospheric) GetWindSpeedAvgMs() string {
-	if x != nil {
-		return x.WindSpeedAvgMs
+	if x != nil && x.WindSpeedAvgMs != nil {
+		return *x.WindSpeedAvgMs
 	}
 	return ""
 }
 
 func (x *Atmospheric) GetWindGustMs() string {
-	if x != nil {
-		return x.WindGustMs
+	if x != nil && x.WindGustMs != nil {
+		return *x.WindGustMs
 	}
 	return ""
 }
 
 func (x *Atmospheric) GetWindDirectionDeg() string {
-	if x != nil {
-		return x.WindDirectionDeg
+	if x != nil && x.WindDirectionDeg != nil {
+		return *x.WindDirectionDeg
 	}
 	return ""
 }
 
 func (x *Atmospheric) GetWindDirectionAvgDeg() string {
-	if x != nil {
-		return x.WindDirectionAvgDeg
+	if x != nil && x.WindDirectionAvgDeg != nil {
+		return *x.WindDirectionAvgDeg
 	}
 	return ""
 }
@@ -1274,32 +765,32 @@ func (x *Atmospheric) GetObservedAt() *timestamppb.Timestamp {
 }
 
 func (x *Atmospheric) GetQuality() Quality {
-	if x != nil {
-		return x.Quality
+	if x != nil && x.Quality != nil {
+		return *x.Quality
 	}
 	return Quality_QUALITY_VALID
 }
 
 func (x *Atmospheric) GetSensorId() string {
-	if x != nil {
-		return x.SensorId
+	if x != nil && x.SensorId != nil {
+		return *x.SensorId
 	}
 	return ""
 }
 
 type Precipitation struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	Type              PrecipitationType      `protobuf:"varint,1,opt,name=type,proto3,enum=openits.ess.v1.PrecipitationType" json:"type,omitempty"`
-	Intensity         PrecipitationIntensity `protobuf:"varint,2,opt,name=intensity,proto3,enum=openits.ess.v1.PrecipitationIntensity" json:"intensity,omitempty"`
-	RateMmH           string                 `protobuf:"bytes,3,opt,name=rate_mm_h,json=rateMmH,proto3" json:"rate_mm_h,omitempty"`
-	AccumulatedMm     string                 `protobuf:"bytes,4,opt,name=accumulated_mm,json=accumulatedMm,proto3" json:"accumulated_mm,omitempty"`
-	Accumulated_1HMm  string                 `protobuf:"bytes,8,opt,name=accumulated_1h_mm,json=accumulated1hMm,proto3" json:"accumulated_1h_mm,omitempty"`
-	Accumulated_24HMm string                 `protobuf:"bytes,9,opt,name=accumulated_24h_mm,json=accumulated24hMm,proto3" json:"accumulated_24h_mm,omitempty"`
-	SnowDepthMm       string                 `protobuf:"bytes,10,opt,name=snow_depth_mm,json=snowDepthMm,proto3" json:"snow_depth_mm,omitempty"`
-	SnowRateMmH       string                 `protobuf:"bytes,11,opt,name=snow_rate_mm_h,json=snowRateMmH,proto3" json:"snow_rate_mm_h,omitempty"`
-	ObservedAt        *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
-	Quality           Quality                `protobuf:"varint,7,opt,name=quality,proto3,enum=openits.ess.v1.Quality" json:"quality,omitempty"`
-	SensorId          string                 `protobuf:"bytes,6,opt,name=sensor_id,json=sensorId,proto3" json:"sensor_id,omitempty"`
+	state             protoimpl.MessageState  `protogen:"open.v1"`
+	Type              *PrecipitationType      `protobuf:"varint,1,opt,name=type,proto3,enum=openits.ess.v1.PrecipitationType,oneof" json:"type,omitempty"`
+	Intensity         *PrecipitationIntensity `protobuf:"varint,2,opt,name=intensity,proto3,enum=openits.ess.v1.PrecipitationIntensity,oneof" json:"intensity,omitempty"`
+	RateMmH           *string                 `protobuf:"bytes,3,opt,name=rate_mm_h,json=rateMmH,proto3,oneof" json:"rate_mm_h,omitempty"`
+	AccumulatedMm     *string                 `protobuf:"bytes,4,opt,name=accumulated_mm,json=accumulatedMm,proto3,oneof" json:"accumulated_mm,omitempty"`
+	Accumulated_1HMm  *string                 `protobuf:"bytes,8,opt,name=accumulated_1h_mm,json=accumulated1hMm,proto3,oneof" json:"accumulated_1h_mm,omitempty"`
+	Accumulated_24HMm *string                 `protobuf:"bytes,9,opt,name=accumulated_24h_mm,json=accumulated24hMm,proto3,oneof" json:"accumulated_24h_mm,omitempty"`
+	SnowDepthMm       *string                 `protobuf:"bytes,10,opt,name=snow_depth_mm,json=snowDepthMm,proto3,oneof" json:"snow_depth_mm,omitempty"`
+	SnowRateMmH       *string                 `protobuf:"bytes,11,opt,name=snow_rate_mm_h,json=snowRateMmH,proto3,oneof" json:"snow_rate_mm_h,omitempty"`
+	ObservedAt        *timestamppb.Timestamp  `protobuf:"bytes,5,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
+	Quality           *Quality                `protobuf:"varint,7,opt,name=quality,proto3,enum=openits.ess.v1.Quality,oneof" json:"quality,omitempty"`
+	SensorId          *string                 `protobuf:"bytes,6,opt,name=sensor_id,json=sensorId,proto3,oneof" json:"sensor_id,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -1335,57 +826,57 @@ func (*Precipitation) Descriptor() ([]byte, []int) {
 }
 
 func (x *Precipitation) GetType() PrecipitationType {
-	if x != nil {
-		return x.Type
+	if x != nil && x.Type != nil {
+		return *x.Type
 	}
 	return PrecipitationType_PRECIPITATION_TYPE_UNKNOWN
 }
 
 func (x *Precipitation) GetIntensity() PrecipitationIntensity {
-	if x != nil {
-		return x.Intensity
+	if x != nil && x.Intensity != nil {
+		return *x.Intensity
 	}
 	return PrecipitationIntensity_PRECIPITATION_INTENSITY_UNKNOWN
 }
 
 func (x *Precipitation) GetRateMmH() string {
-	if x != nil {
-		return x.RateMmH
+	if x != nil && x.RateMmH != nil {
+		return *x.RateMmH
 	}
 	return ""
 }
 
 func (x *Precipitation) GetAccumulatedMm() string {
-	if x != nil {
-		return x.AccumulatedMm
+	if x != nil && x.AccumulatedMm != nil {
+		return *x.AccumulatedMm
 	}
 	return ""
 }
 
 func (x *Precipitation) GetAccumulated_1HMm() string {
-	if x != nil {
-		return x.Accumulated_1HMm
+	if x != nil && x.Accumulated_1HMm != nil {
+		return *x.Accumulated_1HMm
 	}
 	return ""
 }
 
 func (x *Precipitation) GetAccumulated_24HMm() string {
-	if x != nil {
-		return x.Accumulated_24HMm
+	if x != nil && x.Accumulated_24HMm != nil {
+		return *x.Accumulated_24HMm
 	}
 	return ""
 }
 
 func (x *Precipitation) GetSnowDepthMm() string {
-	if x != nil {
-		return x.SnowDepthMm
+	if x != nil && x.SnowDepthMm != nil {
+		return *x.SnowDepthMm
 	}
 	return ""
 }
 
 func (x *Precipitation) GetSnowRateMmH() string {
-	if x != nil {
-		return x.SnowRateMmH
+	if x != nil && x.SnowRateMmH != nil {
+		return *x.SnowRateMmH
 	}
 	return ""
 }
@@ -1398,26 +889,26 @@ func (x *Precipitation) GetObservedAt() *timestamppb.Timestamp {
 }
 
 func (x *Precipitation) GetQuality() Quality {
-	if x != nil {
-		return x.Quality
+	if x != nil && x.Quality != nil {
+		return *x.Quality
 	}
 	return Quality_QUALITY_VALID
 }
 
 func (x *Precipitation) GetSensorId() string {
-	if x != nil {
-		return x.SensorId
+	if x != nil && x.SensorId != nil {
+		return *x.SensorId
 	}
 	return ""
 }
 
 type Visibility struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	RangeM        uint32                 `protobuf:"varint,1,opt,name=range_m,json=rangeM,proto3" json:"range_m,omitempty"`
-	Situation     VisibilitySituation    `protobuf:"varint,2,opt,name=situation,proto3,enum=openits.ess.v1.VisibilitySituation" json:"situation,omitempty"`
+	RangeM        *uint32                `protobuf:"varint,1,opt,name=range_m,json=rangeM,proto3,oneof" json:"range_m,omitempty"`
+	Situation     *VisibilitySituation   `protobuf:"varint,2,opt,name=situation,proto3,enum=openits.ess.v1.VisibilitySituation,oneof" json:"situation,omitempty"`
 	ObservedAt    *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
-	Quality       Quality                `protobuf:"varint,5,opt,name=quality,proto3,enum=openits.ess.v1.Quality" json:"quality,omitempty"`
-	SensorId      string                 `protobuf:"bytes,4,opt,name=sensor_id,json=sensorId,proto3" json:"sensor_id,omitempty"`
+	Quality       *Quality               `protobuf:"varint,5,opt,name=quality,proto3,enum=openits.ess.v1.Quality,oneof" json:"quality,omitempty"`
+	SensorId      *string                `protobuf:"bytes,4,opt,name=sensor_id,json=sensorId,proto3,oneof" json:"sensor_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1453,15 +944,15 @@ func (*Visibility) Descriptor() ([]byte, []int) {
 }
 
 func (x *Visibility) GetRangeM() uint32 {
-	if x != nil {
-		return x.RangeM
+	if x != nil && x.RangeM != nil {
+		return *x.RangeM
 	}
 	return 0
 }
 
 func (x *Visibility) GetSituation() VisibilitySituation {
-	if x != nil {
-		return x.Situation
+	if x != nil && x.Situation != nil {
+		return *x.Situation
 	}
 	return VisibilitySituation_VISIBILITY_SITUATION_UNKNOWN
 }
@@ -1474,15 +965,15 @@ func (x *Visibility) GetObservedAt() *timestamppb.Timestamp {
 }
 
 func (x *Visibility) GetQuality() Quality {
-	if x != nil {
-		return x.Quality
+	if x != nil && x.Quality != nil {
+		return *x.Quality
 	}
 	return Quality_QUALITY_VALID
 }
 
 func (x *Visibility) GetSensorId() string {
-	if x != nil {
-		return x.SensorId
+	if x != nil && x.SensorId != nil {
+		return *x.SensorId
 	}
 	return ""
 }
@@ -1533,7 +1024,7 @@ func (x *Pavement) GetSensor() []*PavementSensor {
 
 type PavementSensor struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SensorId      string                 `protobuf:"bytes,1,opt,name=sensor_id,json=sensorId,proto3" json:"sensor_id,omitempty"`
+	SensorId      *string                `protobuf:"bytes,1,opt,name=sensor_id,json=sensorId,proto3,oneof" json:"sensor_id,omitempty"`
 	Config        *PavementSensorConfig  `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
 	State         *PavementSensorState   `protobuf:"bytes,3,opt,name=state,proto3" json:"state,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -1571,8 +1062,8 @@ func (*PavementSensor) Descriptor() ([]byte, []int) {
 }
 
 func (x *PavementSensor) GetSensorId() string {
-	if x != nil {
-		return x.SensorId
+	if x != nil && x.SensorId != nil {
+		return *x.SensorId
 	}
 	return ""
 }
@@ -1593,9 +1084,9 @@ func (x *PavementSensor) GetState() *PavementSensorState {
 
 type PavementSensorConfig struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	LaneReference string                 `protobuf:"bytes,1,opt,name=lane_reference,json=laneReference,proto3" json:"lane_reference,omitempty"`
-	SensingMethod SensingMethod          `protobuf:"varint,3,opt,name=sensing_method,json=sensingMethod,proto3,enum=openits.ess.v1.SensingMethod" json:"sensing_method,omitempty"`
-	SensorId      string                 `protobuf:"bytes,2,opt,name=sensor_id,json=sensorId,proto3" json:"sensor_id,omitempty"`
+	LaneReference *string                `protobuf:"bytes,1,opt,name=lane_reference,json=laneReference,proto3,oneof" json:"lane_reference,omitempty"`
+	SensingMethod *SensingMethod         `protobuf:"varint,3,opt,name=sensing_method,json=sensingMethod,proto3,enum=openits.ess.v1.SensingMethod,oneof" json:"sensing_method,omitempty"`
+	SensorId      *string                `protobuf:"bytes,2,opt,name=sensor_id,json=sensorId,proto3,oneof" json:"sensor_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1631,22 +1122,22 @@ func (*PavementSensorConfig) Descriptor() ([]byte, []int) {
 }
 
 func (x *PavementSensorConfig) GetLaneReference() string {
-	if x != nil {
-		return x.LaneReference
+	if x != nil && x.LaneReference != nil {
+		return *x.LaneReference
 	}
 	return ""
 }
 
 func (x *PavementSensorConfig) GetSensingMethod() SensingMethod {
-	if x != nil {
-		return x.SensingMethod
+	if x != nil && x.SensingMethod != nil {
+		return *x.SensingMethod
 	}
 	return SensingMethod_SENSING_METHOD_EMBEDDED
 }
 
 func (x *PavementSensorConfig) GetSensorId() string {
-	if x != nil {
-		return x.SensorId
+	if x != nil && x.SensorId != nil {
+		return *x.SensorId
 	}
 	return ""
 }
@@ -1654,20 +1145,20 @@ func (x *PavementSensorConfig) GetSensorId() string {
 type PavementSensorState struct {
 	state                  protoimpl.MessageState `protogen:"open.v1"`
 	ObservedAt             *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
-	SurfaceTemperatureC    string                 `protobuf:"bytes,2,opt,name=surface_temperature_c,json=surfaceTemperatureC,proto3" json:"surface_temperature_c,omitempty"`
-	Condition              PavementCondition      `protobuf:"varint,3,opt,name=condition,proto3,enum=openits.ess.v1.PavementCondition" json:"condition,omitempty"`
-	FreezePointC           string                 `protobuf:"bytes,4,opt,name=freeze_point_c,json=freezePointC,proto3" json:"freeze_point_c,omitempty"`
-	WaterDepthMm           string                 `protobuf:"bytes,5,opt,name=water_depth_mm,json=waterDepthMm,proto3" json:"water_depth_mm,omitempty"`
-	SalinityPpm            uint32                 `protobuf:"varint,6,opt,name=salinity_ppm,json=salinityPpm,proto3" json:"salinity_ppm,omitempty"`
-	GripCoefficient        string                 `protobuf:"bytes,11,opt,name=grip_coefficient,json=gripCoefficient,proto3" json:"grip_coefficient,omitempty"`
-	ChemicalPercent        string                 `protobuf:"bytes,12,opt,name=chemical_percent,json=chemicalPercent,proto3" json:"chemical_percent,omitempty"`
-	ChemicalFactor         string                 `protobuf:"bytes,13,opt,name=chemical_factor,json=chemicalFactor,proto3" json:"chemical_factor,omitempty"`
-	IceDepthMm             string                 `protobuf:"bytes,14,opt,name=ice_depth_mm,json=iceDepthMm,proto3" json:"ice_depth_mm,omitempty"`
-	SubsurfaceTemperatureC string                 `protobuf:"bytes,7,opt,name=subsurface_temperature_c,json=subsurfaceTemperatureC,proto3" json:"subsurface_temperature_c,omitempty"`
-	SubsurfaceDepthMm      uint32                 `protobuf:"varint,8,opt,name=subsurface_depth_mm,json=subsurfaceDepthMm,proto3" json:"subsurface_depth_mm,omitempty"`
-	LaneReference          string                 `protobuf:"bytes,9,opt,name=lane_reference,json=laneReference,proto3" json:"lane_reference,omitempty"`
-	SensingMethod          SensingMethod          `protobuf:"varint,15,opt,name=sensing_method,json=sensingMethod,proto3,enum=openits.ess.v1.SensingMethod" json:"sensing_method,omitempty"`
-	SensorId               string                 `protobuf:"bytes,10,opt,name=sensor_id,json=sensorId,proto3" json:"sensor_id,omitempty"`
+	SurfaceTemperatureC    *string                `protobuf:"bytes,2,opt,name=surface_temperature_c,json=surfaceTemperatureC,proto3,oneof" json:"surface_temperature_c,omitempty"`
+	Condition              *PavementCondition     `protobuf:"varint,3,opt,name=condition,proto3,enum=openits.ess.v1.PavementCondition,oneof" json:"condition,omitempty"`
+	FreezePointC           *string                `protobuf:"bytes,4,opt,name=freeze_point_c,json=freezePointC,proto3,oneof" json:"freeze_point_c,omitempty"`
+	WaterDepthMm           *string                `protobuf:"bytes,5,opt,name=water_depth_mm,json=waterDepthMm,proto3,oneof" json:"water_depth_mm,omitempty"`
+	SalinityPpm            *uint32                `protobuf:"varint,6,opt,name=salinity_ppm,json=salinityPpm,proto3,oneof" json:"salinity_ppm,omitempty"`
+	GripCoefficient        *string                `protobuf:"bytes,11,opt,name=grip_coefficient,json=gripCoefficient,proto3,oneof" json:"grip_coefficient,omitempty"`
+	ChemicalPercent        *string                `protobuf:"bytes,12,opt,name=chemical_percent,json=chemicalPercent,proto3,oneof" json:"chemical_percent,omitempty"`
+	ChemicalFactor         *string                `protobuf:"bytes,13,opt,name=chemical_factor,json=chemicalFactor,proto3,oneof" json:"chemical_factor,omitempty"`
+	IceDepthMm             *string                `protobuf:"bytes,14,opt,name=ice_depth_mm,json=iceDepthMm,proto3,oneof" json:"ice_depth_mm,omitempty"`
+	SubsurfaceTemperatureC *string                `protobuf:"bytes,7,opt,name=subsurface_temperature_c,json=subsurfaceTemperatureC,proto3,oneof" json:"subsurface_temperature_c,omitempty"`
+	SubsurfaceDepthMm      *uint32                `protobuf:"varint,8,opt,name=subsurface_depth_mm,json=subsurfaceDepthMm,proto3,oneof" json:"subsurface_depth_mm,omitempty"`
+	LaneReference          *string                `protobuf:"bytes,9,opt,name=lane_reference,json=laneReference,proto3,oneof" json:"lane_reference,omitempty"`
+	SensingMethod          *SensingMethod         `protobuf:"varint,15,opt,name=sensing_method,json=sensingMethod,proto3,enum=openits.ess.v1.SensingMethod,oneof" json:"sensing_method,omitempty"`
+	SensorId               *string                `protobuf:"bytes,10,opt,name=sensor_id,json=sensorId,proto3,oneof" json:"sensor_id,omitempty"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
 }
@@ -1710,110 +1201,110 @@ func (x *PavementSensorState) GetObservedAt() *timestamppb.Timestamp {
 }
 
 func (x *PavementSensorState) GetSurfaceTemperatureC() string {
-	if x != nil {
-		return x.SurfaceTemperatureC
+	if x != nil && x.SurfaceTemperatureC != nil {
+		return *x.SurfaceTemperatureC
 	}
 	return ""
 }
 
 func (x *PavementSensorState) GetCondition() PavementCondition {
-	if x != nil {
-		return x.Condition
+	if x != nil && x.Condition != nil {
+		return *x.Condition
 	}
 	return PavementCondition_PAVEMENT_CONDITION_UNKNOWN
 }
 
 func (x *PavementSensorState) GetFreezePointC() string {
-	if x != nil {
-		return x.FreezePointC
+	if x != nil && x.FreezePointC != nil {
+		return *x.FreezePointC
 	}
 	return ""
 }
 
 func (x *PavementSensorState) GetWaterDepthMm() string {
-	if x != nil {
-		return x.WaterDepthMm
+	if x != nil && x.WaterDepthMm != nil {
+		return *x.WaterDepthMm
 	}
 	return ""
 }
 
 func (x *PavementSensorState) GetSalinityPpm() uint32 {
-	if x != nil {
-		return x.SalinityPpm
+	if x != nil && x.SalinityPpm != nil {
+		return *x.SalinityPpm
 	}
 	return 0
 }
 
 func (x *PavementSensorState) GetGripCoefficient() string {
-	if x != nil {
-		return x.GripCoefficient
+	if x != nil && x.GripCoefficient != nil {
+		return *x.GripCoefficient
 	}
 	return ""
 }
 
 func (x *PavementSensorState) GetChemicalPercent() string {
-	if x != nil {
-		return x.ChemicalPercent
+	if x != nil && x.ChemicalPercent != nil {
+		return *x.ChemicalPercent
 	}
 	return ""
 }
 
 func (x *PavementSensorState) GetChemicalFactor() string {
-	if x != nil {
-		return x.ChemicalFactor
+	if x != nil && x.ChemicalFactor != nil {
+		return *x.ChemicalFactor
 	}
 	return ""
 }
 
 func (x *PavementSensorState) GetIceDepthMm() string {
-	if x != nil {
-		return x.IceDepthMm
+	if x != nil && x.IceDepthMm != nil {
+		return *x.IceDepthMm
 	}
 	return ""
 }
 
 func (x *PavementSensorState) GetSubsurfaceTemperatureC() string {
-	if x != nil {
-		return x.SubsurfaceTemperatureC
+	if x != nil && x.SubsurfaceTemperatureC != nil {
+		return *x.SubsurfaceTemperatureC
 	}
 	return ""
 }
 
 func (x *PavementSensorState) GetSubsurfaceDepthMm() uint32 {
-	if x != nil {
-		return x.SubsurfaceDepthMm
+	if x != nil && x.SubsurfaceDepthMm != nil {
+		return *x.SubsurfaceDepthMm
 	}
 	return 0
 }
 
 func (x *PavementSensorState) GetLaneReference() string {
-	if x != nil {
-		return x.LaneReference
+	if x != nil && x.LaneReference != nil {
+		return *x.LaneReference
 	}
 	return ""
 }
 
 func (x *PavementSensorState) GetSensingMethod() SensingMethod {
-	if x != nil {
-		return x.SensingMethod
+	if x != nil && x.SensingMethod != nil {
+		return *x.SensingMethod
 	}
 	return SensingMethod_SENSING_METHOD_EMBEDDED
 }
 
 func (x *PavementSensorState) GetSensorId() string {
-	if x != nil {
-		return x.SensorId
+	if x != nil && x.SensorId != nil {
+		return *x.SensorId
 	}
 	return ""
 }
 
 type Radiation struct {
 	state                      protoimpl.MessageState `protogen:"open.v1"`
-	SolarRadiationWm2          string                 `protobuf:"bytes,1,opt,name=solar_radiation_wm2,json=solarRadiationWm2,proto3" json:"solar_radiation_wm2,omitempty"`
-	SolarRadiationHourlyAvgWm2 string                 `protobuf:"bytes,2,opt,name=solar_radiation_hourly_avg_wm2,json=solarRadiationHourlyAvgWm2,proto3" json:"solar_radiation_hourly_avg_wm2,omitempty"`
+	SolarRadiationWm2          *string                `protobuf:"bytes,1,opt,name=solar_radiation_wm2,json=solarRadiationWm2,proto3,oneof" json:"solar_radiation_wm2,omitempty"`
+	SolarRadiationHourlyAvgWm2 *string                `protobuf:"bytes,2,opt,name=solar_radiation_hourly_avg_wm2,json=solarRadiationHourlyAvgWm2,proto3,oneof" json:"solar_radiation_hourly_avg_wm2,omitempty"`
 	ObservedAt                 *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
-	Quality                    Quality                `protobuf:"varint,5,opt,name=quality,proto3,enum=openits.ess.v1.Quality" json:"quality,omitempty"`
-	SensorId                   string                 `protobuf:"bytes,4,opt,name=sensor_id,json=sensorId,proto3" json:"sensor_id,omitempty"`
+	Quality                    *Quality               `protobuf:"varint,5,opt,name=quality,proto3,enum=openits.ess.v1.Quality,oneof" json:"quality,omitempty"`
+	SensorId                   *string                `protobuf:"bytes,4,opt,name=sensor_id,json=sensorId,proto3,oneof" json:"sensor_id,omitempty"`
 	unknownFields              protoimpl.UnknownFields
 	sizeCache                  protoimpl.SizeCache
 }
@@ -1849,15 +1340,15 @@ func (*Radiation) Descriptor() ([]byte, []int) {
 }
 
 func (x *Radiation) GetSolarRadiationWm2() string {
-	if x != nil {
-		return x.SolarRadiationWm2
+	if x != nil && x.SolarRadiationWm2 != nil {
+		return *x.SolarRadiationWm2
 	}
 	return ""
 }
 
 func (x *Radiation) GetSolarRadiationHourlyAvgWm2() string {
-	if x != nil {
-		return x.SolarRadiationHourlyAvgWm2
+	if x != nil && x.SolarRadiationHourlyAvgWm2 != nil {
+		return *x.SolarRadiationHourlyAvgWm2
 	}
 	return ""
 }
@@ -1870,15 +1361,15 @@ func (x *Radiation) GetObservedAt() *timestamppb.Timestamp {
 }
 
 func (x *Radiation) GetQuality() Quality {
-	if x != nil {
-		return x.Quality
+	if x != nil && x.Quality != nil {
+		return *x.Quality
 	}
 	return Quality_QUALITY_VALID
 }
 
 func (x *Radiation) GetSensorId() string {
-	if x != nil {
-		return x.SensorId
+	if x != nil && x.SensorId != nil {
+		return *x.SensorId
 	}
 	return ""
 }
@@ -1929,7 +1420,7 @@ func (x *Diagnostics) GetSensor() []*DiagnosticsSensor {
 
 type DiagnosticsSensor struct {
 	state         protoimpl.MessageState   `protogen:"open.v1"`
-	SensorId      string                   `protobuf:"bytes,1,opt,name=sensor_id,json=sensorId,proto3" json:"sensor_id,omitempty"`
+	SensorId      *string                  `protobuf:"bytes,1,opt,name=sensor_id,json=sensorId,proto3,oneof" json:"sensor_id,omitempty"`
 	Config        *DiagnosticsSensorConfig `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
 	State         *DiagnosticsSensorState  `protobuf:"bytes,3,opt,name=state,proto3" json:"state,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -1967,8 +1458,8 @@ func (*DiagnosticsSensor) Descriptor() ([]byte, []int) {
 }
 
 func (x *DiagnosticsSensor) GetSensorId() string {
-	if x != nil {
-		return x.SensorId
+	if x != nil && x.SensorId != nil {
+		return *x.SensorId
 	}
 	return ""
 }
@@ -1989,8 +1480,8 @@ func (x *DiagnosticsSensor) GetState() *DiagnosticsSensorState {
 
 type DiagnosticsSensorConfig struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	SampleIntervalS uint32                 `protobuf:"varint,1,opt,name=sample_interval_s,json=sampleIntervalS,proto3" json:"sample_interval_s,omitempty"`
-	SensorId        string                 `protobuf:"bytes,2,opt,name=sensor_id,json=sensorId,proto3" json:"sensor_id,omitempty"`
+	SampleIntervalS *uint32                `protobuf:"varint,1,opt,name=sample_interval_s,json=sampleIntervalS,proto3,oneof" json:"sample_interval_s,omitempty"`
+	SensorId        *string                `protobuf:"bytes,2,opt,name=sensor_id,json=sensorId,proto3,oneof" json:"sensor_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -2026,28 +1517,28 @@ func (*DiagnosticsSensorConfig) Descriptor() ([]byte, []int) {
 }
 
 func (x *DiagnosticsSensorConfig) GetSampleIntervalS() uint32 {
-	if x != nil {
-		return x.SampleIntervalS
+	if x != nil && x.SampleIntervalS != nil {
+		return *x.SampleIntervalS
 	}
 	return 0
 }
 
 func (x *DiagnosticsSensorConfig) GetSensorId() string {
-	if x != nil {
-		return x.SensorId
+	if x != nil && x.SensorId != nil {
+		return *x.SensorId
 	}
 	return ""
 }
 
 type DiagnosticsSensorState struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	Type            string                 `protobuf:"bytes,1,opt,name=type,proto3" json:"type,omitempty"`
-	Health          SensorHealth           `protobuf:"varint,2,opt,name=health,proto3,enum=openits.ess.v1.SensorHealth" json:"health,omitempty"`
+	Type            *string                `protobuf:"bytes,1,opt,name=type,proto3,oneof" json:"type,omitempty"`
+	Health          *SensorHealth          `protobuf:"varint,2,opt,name=health,proto3,enum=openits.ess.v1.SensorHealth,oneof" json:"health,omitempty"`
 	LastObservation *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=last_observation,json=lastObservation,proto3" json:"last_observation,omitempty"`
 	LastCalibration *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=last_calibration,json=lastCalibration,proto3" json:"last_calibration,omitempty"`
 	NextCalibration *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=next_calibration,json=nextCalibration,proto3" json:"next_calibration,omitempty"`
-	SampleIntervalS uint32                 `protobuf:"varint,6,opt,name=sample_interval_s,json=sampleIntervalS,proto3" json:"sample_interval_s,omitempty"`
-	SensorId        string                 `protobuf:"bytes,7,opt,name=sensor_id,json=sensorId,proto3" json:"sensor_id,omitempty"`
+	SampleIntervalS *uint32                `protobuf:"varint,6,opt,name=sample_interval_s,json=sampleIntervalS,proto3,oneof" json:"sample_interval_s,omitempty"`
+	SensorId        *string                `protobuf:"bytes,7,opt,name=sensor_id,json=sensorId,proto3,oneof" json:"sensor_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -2083,15 +1574,15 @@ func (*DiagnosticsSensorState) Descriptor() ([]byte, []int) {
 }
 
 func (x *DiagnosticsSensorState) GetType() string {
-	if x != nil {
-		return x.Type
+	if x != nil && x.Type != nil {
+		return *x.Type
 	}
 	return ""
 }
 
 func (x *DiagnosticsSensorState) GetHealth() SensorHealth {
-	if x != nil {
-		return x.Health
+	if x != nil && x.Health != nil {
+		return *x.Health
 	}
 	return SensorHealth_SENSOR_HEALTH_OK
 }
@@ -2118,15 +1609,15 @@ func (x *DiagnosticsSensorState) GetNextCalibration() *timestamppb.Timestamp {
 }
 
 func (x *DiagnosticsSensorState) GetSampleIntervalS() uint32 {
-	if x != nil {
-		return x.SampleIntervalS
+	if x != nil && x.SampleIntervalS != nil {
+		return *x.SampleIntervalS
 	}
 	return 0
 }
 
 func (x *DiagnosticsSensorState) GetSensorId() string {
-	if x != nil {
-		return x.SensorId
+	if x != nil && x.SensorId != nil {
+		return *x.SensorId
 	}
 	return ""
 }
@@ -2177,12 +1668,12 @@ func (x *Faults) GetFault() []*Fault {
 
 type Fault struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Category       string                 `protobuf:"bytes,1,opt,name=category,proto3" json:"category,omitempty"`
-	CorrelatesWith string                 `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3" json:"correlates_with,omitempty"`
-	Description    string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	FaultId        string                 `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3" json:"fault_id,omitempty"`
+	Category       *string                `protobuf:"bytes,1,opt,name=category,proto3,oneof" json:"category,omitempty"`
+	CorrelatesWith *string                `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3,oneof" json:"correlates_with,omitempty"`
+	Description    *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	FaultId        *string                `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3,oneof" json:"fault_id,omitempty"`
 	FirstObserved  *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=first_observed,json=firstObserved,proto3" json:"first_observed,omitempty"`
-	Severity       FaultSeverity          `protobuf:"varint,5,opt,name=severity,proto3,enum=openits.ess.v1.FaultSeverity" json:"severity,omitempty"`
+	Severity       *FaultSeverity         `protobuf:"varint,5,opt,name=severity,proto3,enum=openits.ess.v1.FaultSeverity,oneof" json:"severity,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -2218,29 +1709,29 @@ func (*Fault) Descriptor() ([]byte, []int) {
 }
 
 func (x *Fault) GetCategory() string {
-	if x != nil {
-		return x.Category
+	if x != nil && x.Category != nil {
+		return *x.Category
 	}
 	return ""
 }
 
 func (x *Fault) GetCorrelatesWith() string {
-	if x != nil {
-		return x.CorrelatesWith
+	if x != nil && x.CorrelatesWith != nil {
+		return *x.CorrelatesWith
 	}
 	return ""
 }
 
 func (x *Fault) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
 
 func (x *Fault) GetFaultId() string {
-	if x != nil {
-		return x.FaultId
+	if x != nil && x.FaultId != nil {
+		return *x.FaultId
 	}
 	return ""
 }
@@ -2253,8 +1744,8 @@ func (x *Fault) GetFirstObserved() *timestamppb.Timestamp {
 }
 
 func (x *Fault) GetSeverity() FaultSeverity {
-	if x != nil {
-		return x.Severity
+	if x != nil && x.Severity != nil {
+		return *x.Severity
 	}
 	return FaultSeverity_FAULT_SEVERITY_INFO
 }
@@ -2263,7 +1754,7 @@ var File_openits_ess_v1_state_proto protoreflect.FileDescriptor
 
 const file_openits_ess_v1_state_proto_rawDesc = "" +
 	"\n" +
-	"\x1aopenits/ess/v1/state.proto\x12\x0eopenits.ess.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd7\x04\n" +
+	"\x1aopenits/ess/v1/state.proto\x12\x0eopenits.ess.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1aopenits/ess/v1/types.proto\"\xd7\x04\n" +
 	"\aStation\x125\n" +
 	"\x06config\x18\x01 \x01(\v2\x1d.openits.ess.v1.StationConfigR\x06config\x122\n" +
 	"\x05state\x18\x02 \x01(\v2\x1c.openits.ess.v1.StationStateR\x05state\x12C\n" +
@@ -2277,232 +1768,288 @@ const file_openits_ess_v1_state_proto_rawDesc = "" +
 	"\bpavement\x18\x06 \x01(\v2\x18.openits.ess.v1.PavementR\bpavement\x127\n" +
 	"\tradiation\x18\a \x01(\v2\x19.openits.ess.v1.RadiationR\tradiation\x12=\n" +
 	"\vdiagnostics\x18\b \x01(\v2\x1b.openits.ess.v1.DiagnosticsR\vdiagnostics\x12.\n" +
-	"\x06faults\x18\t \x01(\v2\x16.openits.ess.v1.FaultsR\x06faults\"\xb8\x03\n" +
-	"\rStationConfig\x12\x1c\n" +
-	"\televation\x18\a \x01(\tR\televation\x12\x18\n" +
-	"\aheading\x18\b \x01(\rR\aheading\x12\x0e\n" +
-	"\x02id\x18\t \x01(\tR\x02id\x12=\n" +
-	"\finstall_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1a\n" +
-	"\blatitude\x18\x02 \x01(\tR\blatitude\x12W\n" +
-	"\x10linear_reference\x18\x06 \x01(\v2,.openits.ess.v1.StationConfigLinearReferenceR\x0flinearReference\x12\x1c\n" +
-	"\tlongitude\x18\x03 \x01(\tR\tlongitude\x12#\n" +
+	"\x06faults\x18\t \x01(\v2\x16.openits.ess.v1.FaultsR\x06faults\"\xea\x04\n" +
+	"\rStationConfig\x12!\n" +
+	"\televation\x18\a \x01(\tH\x00R\televation\x88\x01\x01\x12\x1d\n" +
+	"\aheading\x18\b \x01(\rH\x01R\aheading\x88\x01\x01\x12\x13\n" +
+	"\x02id\x18\t \x01(\tH\x02R\x02id\x88\x01\x01\x12=\n" +
+	"\finstall_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	"\blatitude\x18\x02 \x01(\tH\x03R\blatitude\x88\x01\x01\x12W\n" +
+	"\x10linear_reference\x18\x06 \x01(\v2,.openits.ess.v1.StationConfigLinearReferenceR\x0flinearReference\x12!\n" +
+	"\tlongitude\x18\x03 \x01(\tH\x04R\tlongitude\x88\x01\x01\x12(\n" +
 	"\rmaintained_by\x18\n" +
-	" \x01(\tR\fmaintainedBy\x12\x12\n" +
-	"\x04name\x18\x04 \x01(\tR\x04name\x12\x14\n" +
-	"\x05owner\x18\v \x01(\tR\x05owner\x12%\n" +
-	"\x0eroad_reference\x18\x05 \x01(\tR\rroadReference\x12\x17\n" +
-	"\asite_id\x18\f \x01(\tR\x06siteId\"\xa0\x01\n" +
-	"\x1cStationConfigLinearReference\x12)\n" +
-	"\x10route_designator\x18\x01 \x01(\tR\x0frouteDesignator\x12\x1c\n" +
-	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
-	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
+	" \x01(\tH\x05R\fmaintainedBy\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x04 \x01(\tH\x06R\x04name\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\v \x01(\tH\aR\x05owner\x88\x01\x01\x12*\n" +
+	"\x0eroad_reference\x18\x05 \x01(\tH\bR\rroadReference\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\f \x01(\tH\tR\x06siteId\x88\x01\x01B\f\n" +
 	"\n" +
-	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"\xe6\x04\n" +
-	"\fStationState\x12\x1c\n" +
-	"\televation\x18\v \x01(\tR\televation\x12\x1a\n" +
-	"\bfirmware\x18\x02 \x01(\tR\bfirmware\x12%\n" +
-	"\x0efirmware_build\x18\x0e \x01(\tR\rfirmwareBuild\x12)\n" +
-	"\x10hardware_version\x18\x0f \x01(\tR\x0fhardwareVersion\x12\x18\n" +
-	"\aheading\x18\f \x01(\rR\aheading\x12\x0e\n" +
-	"\x02id\x18\r \x01(\tR\x02id\x12=\n" +
-	"\finstall_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1a\n" +
-	"\blatitude\x18\x03 \x01(\tR\blatitude\x12V\n" +
+	"_elevationB\n" +
+	"\n" +
+	"\b_headingB\x05\n" +
+	"\x03_idB\v\n" +
+	"\t_latitudeB\f\n" +
+	"\n" +
+	"_longitudeB\x10\n" +
+	"\x0e_maintained_byB\a\n" +
+	"\x05_nameB\b\n" +
+	"\x06_ownerB\x11\n" +
+	"\x0f_road_referenceB\n" +
+	"\n" +
+	"\b_site_id\"\xf2\x01\n" +
+	"\x1cStationConfigLinearReference\x12.\n" +
+	"\x10route_designator\x18\x01 \x01(\tH\x00R\x0frouteDesignator\x88\x01\x01\x12!\n" +
+	"\tdirection\x18\x02 \x01(\tH\x01R\tdirection\x88\x01\x01\x12\x1d\n" +
+	"\ameasure\x18\x03 \x01(\tH\x02R\ameasure\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"lrs_method\x18\x04 \x01(\tH\x03R\tlrsMethod\x88\x01\x01B\x13\n" +
+	"\x11_route_designatorB\f\n" +
+	"\n" +
+	"_directionB\n" +
+	"\n" +
+	"\b_measureB\r\n" +
+	"\v_lrs_method\"\x89\a\n" +
+	"\fStationState\x12!\n" +
+	"\televation\x18\v \x01(\tH\x00R\televation\x88\x01\x01\x12\x1f\n" +
+	"\bfirmware\x18\x02 \x01(\tH\x01R\bfirmware\x88\x01\x01\x12*\n" +
+	"\x0efirmware_build\x18\x0e \x01(\tH\x02R\rfirmwareBuild\x88\x01\x01\x12.\n" +
+	"\x10hardware_version\x18\x0f \x01(\tH\x03R\x0fhardwareVersion\x88\x01\x01\x12\x1d\n" +
+	"\aheading\x18\f \x01(\rH\x04R\aheading\x88\x01\x01\x12\x13\n" +
+	"\x02id\x18\r \x01(\tH\x05R\x02id\x88\x01\x01\x12=\n" +
+	"\finstall_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	"\blatitude\x18\x03 \x01(\tH\x06R\blatitude\x88\x01\x01\x12V\n" +
 	"\x10linear_reference\x18\n" +
-	" \x01(\v2+.openits.ess.v1.StationStateLinearReferenceR\x0flinearReference\x12\x1c\n" +
-	"\tlongitude\x18\x04 \x01(\tR\tlongitude\x12#\n" +
-	"\rmaintained_by\x18\x10 \x01(\tR\fmaintainedBy\x12\x12\n" +
-	"\x04make\x18\x05 \x01(\tR\x04make\x12\x14\n" +
-	"\x05model\x18\x06 \x01(\tR\x05model\x12\x12\n" +
-	"\x04name\x18\a \x01(\tR\x04name\x12\x14\n" +
-	"\x05owner\x18\x11 \x01(\tR\x05owner\x12%\n" +
-	"\x0eroad_reference\x18\b \x01(\tR\rroadReference\x12\x16\n" +
-	"\x06serial\x18\t \x01(\tR\x06serial\x12\x17\n" +
-	"\asite_id\x18\x12 \x01(\tR\x06siteId\"\x9f\x01\n" +
-	"\x1bStationStateLinearReference\x12)\n" +
-	"\x10route_designator\x18\x01 \x01(\tR\x0frouteDesignator\x12\x1c\n" +
-	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
-	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
+	" \x01(\v2+.openits.ess.v1.StationStateLinearReferenceR\x0flinearReference\x12!\n" +
+	"\tlongitude\x18\x04 \x01(\tH\aR\tlongitude\x88\x01\x01\x12(\n" +
+	"\rmaintained_by\x18\x10 \x01(\tH\bR\fmaintainedBy\x88\x01\x01\x12\x17\n" +
+	"\x04make\x18\x05 \x01(\tH\tR\x04make\x88\x01\x01\x12\x19\n" +
+	"\x05model\x18\x06 \x01(\tH\n" +
+	"R\x05model\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\a \x01(\tH\vR\x04name\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\x11 \x01(\tH\fR\x05owner\x88\x01\x01\x12*\n" +
+	"\x0eroad_reference\x18\b \x01(\tH\rR\rroadReference\x88\x01\x01\x12\x1b\n" +
+	"\x06serial\x18\t \x01(\tH\x0eR\x06serial\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\x12 \x01(\tH\x0fR\x06siteId\x88\x01\x01B\f\n" +
 	"\n" +
-	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"\xc3\x01\n" +
-	"\rConfiguration\x12/\n" +
-	"\x14wind_sensor_height_m\x18\x01 \x01(\tR\x11windSensorHeightM\x12D\n" +
-	"\x1fair_temperature_sensor_height_m\x18\x02 \x01(\tR\x1bairTemperatureSensorHeightM\x12;\n" +
-	"\x1avisibility_sensor_height_m\x18\x03 \x01(\tR\x17visibilitySensorHeightM\"\x87\x04\n" +
-	"\vAtmospheric\x12*\n" +
-	"\x11air_temperature_c\x18\x01 \x01(\tR\x0fairTemperatureC\x12\x1d\n" +
+	"_elevationB\v\n" +
+	"\t_firmwareB\x11\n" +
+	"\x0f_firmware_buildB\x13\n" +
+	"\x11_hardware_versionB\n" +
 	"\n" +
-	"dewpoint_c\x18\x02 \x01(\tR\tdewpointC\x12)\n" +
-	"\x10humidity_percent\x18\x03 \x01(\tR\x0fhumidityPercent\x12!\n" +
-	"\fpressure_hpa\x18\x04 \x01(\tR\vpressureHpa\x12\"\n" +
-	"\rwind_speed_ms\x18\x05 \x01(\tR\vwindSpeedMs\x12)\n" +
+	"\b_headingB\x05\n" +
+	"\x03_idB\v\n" +
+	"\t_latitudeB\f\n" +
+	"\n" +
+	"_longitudeB\x10\n" +
+	"\x0e_maintained_byB\a\n" +
+	"\x05_makeB\b\n" +
+	"\x06_modelB\a\n" +
+	"\x05_nameB\b\n" +
+	"\x06_ownerB\x11\n" +
+	"\x0f_road_referenceB\t\n" +
+	"\a_serialB\n" +
+	"\n" +
+	"\b_site_id\"\xf1\x01\n" +
+	"\x1bStationStateLinearReference\x12.\n" +
+	"\x10route_designator\x18\x01 \x01(\tH\x00R\x0frouteDesignator\x88\x01\x01\x12!\n" +
+	"\tdirection\x18\x02 \x01(\tH\x01R\tdirection\x88\x01\x01\x12\x1d\n" +
+	"\ameasure\x18\x03 \x01(\tH\x02R\ameasure\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"lrs_method\x18\x04 \x01(\tH\x03R\tlrsMethod\x88\x01\x01B\x13\n" +
+	"\x11_route_designatorB\f\n" +
+	"\n" +
+	"_directionB\n" +
+	"\n" +
+	"\b_measureB\r\n" +
+	"\v_lrs_method\"\xae\x02\n" +
+	"\rConfiguration\x124\n" +
+	"\x14wind_sensor_height_m\x18\x01 \x01(\tH\x00R\x11windSensorHeightM\x88\x01\x01\x12I\n" +
+	"\x1fair_temperature_sensor_height_m\x18\x02 \x01(\tH\x01R\x1bairTemperatureSensorHeightM\x88\x01\x01\x12@\n" +
+	"\x1avisibility_sensor_height_m\x18\x03 \x01(\tH\x02R\x17visibilitySensorHeightM\x88\x01\x01B\x17\n" +
+	"\x15_wind_sensor_height_mB\"\n" +
+	" _air_temperature_sensor_height_mB\x1d\n" +
+	"\x1b_visibility_sensor_height_m\"\x8e\x06\n" +
+	"\vAtmospheric\x12/\n" +
+	"\x11air_temperature_c\x18\x01 \x01(\tH\x00R\x0fairTemperatureC\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"dewpoint_c\x18\x02 \x01(\tH\x01R\tdewpointC\x88\x01\x01\x12.\n" +
+	"\x10humidity_percent\x18\x03 \x01(\tH\x02R\x0fhumidityPercent\x88\x01\x01\x12&\n" +
+	"\fpressure_hpa\x18\x04 \x01(\tH\x03R\vpressureHpa\x88\x01\x01\x12'\n" +
+	"\rwind_speed_ms\x18\x05 \x01(\tH\x04R\vwindSpeedMs\x88\x01\x01\x12.\n" +
 	"\x11wind_speed_avg_ms\x18\n" +
-	" \x01(\tR\x0ewindSpeedAvgMs\x12 \n" +
-	"\fwind_gust_ms\x18\x06 \x01(\tR\n" +
-	"windGustMs\x12,\n" +
-	"\x12wind_direction_deg\x18\a \x01(\tR\x10windDirectionDeg\x123\n" +
-	"\x16wind_direction_avg_deg\x18\f \x01(\tR\x13windDirectionAvgDeg\x12;\n" +
+	" \x01(\tH\x05R\x0ewindSpeedAvgMs\x88\x01\x01\x12%\n" +
+	"\fwind_gust_ms\x18\x06 \x01(\tH\x06R\n" +
+	"windGustMs\x88\x01\x01\x121\n" +
+	"\x12wind_direction_deg\x18\a \x01(\tH\aR\x10windDirectionDeg\x88\x01\x01\x128\n" +
+	"\x16wind_direction_avg_deg\x18\f \x01(\tH\bR\x13windDirectionAvgDeg\x88\x01\x01\x12;\n" +
 	"\vobserved_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"observedAt\x121\n" +
-	"\aquality\x18\v \x01(\x0e2\x17.openits.ess.v1.QualityR\aquality\x12\x1b\n" +
-	"\tsensor_id\x18\t \x01(\tR\bsensorId\"\xff\x03\n" +
-	"\rPrecipitation\x125\n" +
-	"\x04type\x18\x01 \x01(\x0e2!.openits.ess.v1.PrecipitationTypeR\x04type\x12D\n" +
-	"\tintensity\x18\x02 \x01(\x0e2&.openits.ess.v1.PrecipitationIntensityR\tintensity\x12\x1a\n" +
-	"\trate_mm_h\x18\x03 \x01(\tR\arateMmH\x12%\n" +
-	"\x0eaccumulated_mm\x18\x04 \x01(\tR\raccumulatedMm\x12*\n" +
-	"\x11accumulated_1h_mm\x18\b \x01(\tR\x0faccumulated1hMm\x12,\n" +
-	"\x12accumulated_24h_mm\x18\t \x01(\tR\x10accumulated24hMm\x12\"\n" +
-	"\rsnow_depth_mm\x18\n" +
-	" \x01(\tR\vsnowDepthMm\x12#\n" +
-	"\x0esnow_rate_mm_h\x18\v \x01(\tR\vsnowRateMmH\x12;\n" +
-	"\vobserved_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"observedAt\x121\n" +
-	"\aquality\x18\a \x01(\x0e2\x17.openits.ess.v1.QualityR\aquality\x12\x1b\n" +
-	"\tsensor_id\x18\x06 \x01(\tR\bsensorId\"\xf5\x01\n" +
+	"observedAt\x126\n" +
+	"\aquality\x18\v \x01(\x0e2\x17.openits.ess.v1.QualityH\tR\aquality\x88\x01\x01\x12 \n" +
+	"\tsensor_id\x18\t \x01(\tH\n" +
+	"R\bsensorId\x88\x01\x01B\x14\n" +
+	"\x12_air_temperature_cB\r\n" +
+	"\v_dewpoint_cB\x13\n" +
+	"\x11_humidity_percentB\x0f\n" +
+	"\r_pressure_hpaB\x10\n" +
+	"\x0e_wind_speed_msB\x14\n" +
+	"\x12_wind_speed_avg_msB\x0f\n" +
+	"\r_wind_gust_msB\x15\n" +
+	"\x13_wind_direction_degB\x19\n" +
+	"\x17_wind_direction_avg_degB\n" +
 	"\n" +
-	"Visibility\x12\x17\n" +
-	"\arange_m\x18\x01 \x01(\rR\x06rangeM\x12A\n" +
-	"\tsituation\x18\x02 \x01(\x0e2#.openits.ess.v1.VisibilitySituationR\tsituation\x12;\n" +
+	"\b_qualityB\f\n" +
+	"\n" +
+	"_sensor_id\"\xd5\x05\n" +
+	"\rPrecipitation\x12:\n" +
+	"\x04type\x18\x01 \x01(\x0e2!.openits.ess.v1.PrecipitationTypeH\x00R\x04type\x88\x01\x01\x12I\n" +
+	"\tintensity\x18\x02 \x01(\x0e2&.openits.ess.v1.PrecipitationIntensityH\x01R\tintensity\x88\x01\x01\x12\x1f\n" +
+	"\trate_mm_h\x18\x03 \x01(\tH\x02R\arateMmH\x88\x01\x01\x12*\n" +
+	"\x0eaccumulated_mm\x18\x04 \x01(\tH\x03R\raccumulatedMm\x88\x01\x01\x12/\n" +
+	"\x11accumulated_1h_mm\x18\b \x01(\tH\x04R\x0faccumulated1hMm\x88\x01\x01\x121\n" +
+	"\x12accumulated_24h_mm\x18\t \x01(\tH\x05R\x10accumulated24hMm\x88\x01\x01\x12'\n" +
+	"\rsnow_depth_mm\x18\n" +
+	" \x01(\tH\x06R\vsnowDepthMm\x88\x01\x01\x12(\n" +
+	"\x0esnow_rate_mm_h\x18\v \x01(\tH\aR\vsnowRateMmH\x88\x01\x01\x12;\n" +
+	"\vobserved_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x126\n" +
+	"\aquality\x18\a \x01(\x0e2\x17.openits.ess.v1.QualityH\bR\aquality\x88\x01\x01\x12 \n" +
+	"\tsensor_id\x18\x06 \x01(\tH\tR\bsensorId\x88\x01\x01B\a\n" +
+	"\x05_typeB\f\n" +
+	"\n" +
+	"_intensityB\f\n" +
+	"\n" +
+	"_rate_mm_hB\x11\n" +
+	"\x0f_accumulated_mmB\x14\n" +
+	"\x12_accumulated_1h_mmB\x15\n" +
+	"\x13_accumulated_24h_mmB\x10\n" +
+	"\x0e_snow_depth_mmB\x11\n" +
+	"\x0f_snow_rate_mm_hB\n" +
+	"\n" +
+	"\b_qualityB\f\n" +
+	"\n" +
+	"_sensor_id\"\xbd\x02\n" +
+	"\n" +
+	"Visibility\x12\x1c\n" +
+	"\arange_m\x18\x01 \x01(\rH\x00R\x06rangeM\x88\x01\x01\x12F\n" +
+	"\tsituation\x18\x02 \x01(\x0e2#.openits.ess.v1.VisibilitySituationH\x01R\tsituation\x88\x01\x01\x12;\n" +
 	"\vobserved_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"observedAt\x121\n" +
-	"\aquality\x18\x05 \x01(\x0e2\x17.openits.ess.v1.QualityR\aquality\x12\x1b\n" +
-	"\tsensor_id\x18\x04 \x01(\tR\bsensorId\"B\n" +
+	"observedAt\x126\n" +
+	"\aquality\x18\x05 \x01(\x0e2\x17.openits.ess.v1.QualityH\x02R\aquality\x88\x01\x01\x12 \n" +
+	"\tsensor_id\x18\x04 \x01(\tH\x03R\bsensorId\x88\x01\x01B\n" +
+	"\n" +
+	"\b_range_mB\f\n" +
+	"\n" +
+	"_situationB\n" +
+	"\n" +
+	"\b_qualityB\f\n" +
+	"\n" +
+	"_sensor_id\"B\n" +
 	"\bPavement\x126\n" +
-	"\x06sensor\x18\x01 \x03(\v2\x1e.openits.ess.v1.PavementSensorR\x06sensor\"\xa6\x01\n" +
-	"\x0ePavementSensor\x12\x1b\n" +
-	"\tsensor_id\x18\x01 \x01(\tR\bsensorId\x12<\n" +
+	"\x06sensor\x18\x01 \x03(\v2\x1e.openits.ess.v1.PavementSensorR\x06sensor\"\xb9\x01\n" +
+	"\x0ePavementSensor\x12 \n" +
+	"\tsensor_id\x18\x01 \x01(\tH\x00R\bsensorId\x88\x01\x01\x12<\n" +
 	"\x06config\x18\x02 \x01(\v2$.openits.ess.v1.PavementSensorConfigR\x06config\x129\n" +
-	"\x05state\x18\x03 \x01(\v2#.openits.ess.v1.PavementSensorStateR\x05state\"\xa0\x01\n" +
-	"\x14PavementSensorConfig\x12%\n" +
-	"\x0elane_reference\x18\x01 \x01(\tR\rlaneReference\x12D\n" +
-	"\x0esensing_method\x18\x03 \x01(\x0e2\x1d.openits.ess.v1.SensingMethodR\rsensingMethod\x12\x1b\n" +
-	"\tsensor_id\x18\x02 \x01(\tR\bsensorId\"\xcb\x05\n" +
+	"\x05state\x18\x03 \x01(\v2#.openits.ess.v1.PavementSensorStateR\x05stateB\f\n" +
+	"\n" +
+	"_sensor_id\"\xe3\x01\n" +
+	"\x14PavementSensorConfig\x12*\n" +
+	"\x0elane_reference\x18\x01 \x01(\tH\x00R\rlaneReference\x88\x01\x01\x12I\n" +
+	"\x0esensing_method\x18\x03 \x01(\x0e2\x1d.openits.ess.v1.SensingMethodH\x01R\rsensingMethod\x88\x01\x01\x12 \n" +
+	"\tsensor_id\x18\x02 \x01(\tH\x02R\bsensorId\x88\x01\x01B\x11\n" +
+	"\x0f_lane_referenceB\x11\n" +
+	"\x0f_sensing_methodB\f\n" +
+	"\n" +
+	"_sensor_id\"\xa8\b\n" +
 	"\x13PavementSensorState\x12;\n" +
 	"\vobserved_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"observedAt\x122\n" +
-	"\x15surface_temperature_c\x18\x02 \x01(\tR\x13surfaceTemperatureC\x12?\n" +
-	"\tcondition\x18\x03 \x01(\x0e2!.openits.ess.v1.PavementConditionR\tcondition\x12$\n" +
-	"\x0efreeze_point_c\x18\x04 \x01(\tR\ffreezePointC\x12$\n" +
-	"\x0ewater_depth_mm\x18\x05 \x01(\tR\fwaterDepthMm\x12!\n" +
-	"\fsalinity_ppm\x18\x06 \x01(\rR\vsalinityPpm\x12)\n" +
-	"\x10grip_coefficient\x18\v \x01(\tR\x0fgripCoefficient\x12)\n" +
-	"\x10chemical_percent\x18\f \x01(\tR\x0fchemicalPercent\x12'\n" +
-	"\x0fchemical_factor\x18\r \x01(\tR\x0echemicalFactor\x12 \n" +
-	"\fice_depth_mm\x18\x0e \x01(\tR\n" +
-	"iceDepthMm\x128\n" +
-	"\x18subsurface_temperature_c\x18\a \x01(\tR\x16subsurfaceTemperatureC\x12.\n" +
-	"\x13subsurface_depth_mm\x18\b \x01(\rR\x11subsurfaceDepthMm\x12%\n" +
-	"\x0elane_reference\x18\t \x01(\tR\rlaneReference\x12D\n" +
-	"\x0esensing_method\x18\x0f \x01(\x0e2\x1d.openits.ess.v1.SensingMethodR\rsensingMethod\x12\x1b\n" +
+	"observedAt\x127\n" +
+	"\x15surface_temperature_c\x18\x02 \x01(\tH\x00R\x13surfaceTemperatureC\x88\x01\x01\x12D\n" +
+	"\tcondition\x18\x03 \x01(\x0e2!.openits.ess.v1.PavementConditionH\x01R\tcondition\x88\x01\x01\x12)\n" +
+	"\x0efreeze_point_c\x18\x04 \x01(\tH\x02R\ffreezePointC\x88\x01\x01\x12)\n" +
+	"\x0ewater_depth_mm\x18\x05 \x01(\tH\x03R\fwaterDepthMm\x88\x01\x01\x12&\n" +
+	"\fsalinity_ppm\x18\x06 \x01(\rH\x04R\vsalinityPpm\x88\x01\x01\x12.\n" +
+	"\x10grip_coefficient\x18\v \x01(\tH\x05R\x0fgripCoefficient\x88\x01\x01\x12.\n" +
+	"\x10chemical_percent\x18\f \x01(\tH\x06R\x0fchemicalPercent\x88\x01\x01\x12,\n" +
+	"\x0fchemical_factor\x18\r \x01(\tH\aR\x0echemicalFactor\x88\x01\x01\x12%\n" +
+	"\fice_depth_mm\x18\x0e \x01(\tH\bR\n" +
+	"iceDepthMm\x88\x01\x01\x12=\n" +
+	"\x18subsurface_temperature_c\x18\a \x01(\tH\tR\x16subsurfaceTemperatureC\x88\x01\x01\x123\n" +
+	"\x13subsurface_depth_mm\x18\b \x01(\rH\n" +
+	"R\x11subsurfaceDepthMm\x88\x01\x01\x12*\n" +
+	"\x0elane_reference\x18\t \x01(\tH\vR\rlaneReference\x88\x01\x01\x12I\n" +
+	"\x0esensing_method\x18\x0f \x01(\x0e2\x1d.openits.ess.v1.SensingMethodH\fR\rsensingMethod\x88\x01\x01\x12 \n" +
 	"\tsensor_id\x18\n" +
-	" \x01(\tR\bsensorId\"\x8c\x02\n" +
-	"\tRadiation\x12.\n" +
-	"\x13solar_radiation_wm2\x18\x01 \x01(\tR\x11solarRadiationWm2\x12B\n" +
-	"\x1esolar_radiation_hourly_avg_wm2\x18\x02 \x01(\tR\x1asolarRadiationHourlyAvgWm2\x12;\n" +
+	" \x01(\tH\rR\bsensorId\x88\x01\x01B\x18\n" +
+	"\x16_surface_temperature_cB\f\n" +
+	"\n" +
+	"_conditionB\x11\n" +
+	"\x0f_freeze_point_cB\x11\n" +
+	"\x0f_water_depth_mmB\x0f\n" +
+	"\r_salinity_ppmB\x13\n" +
+	"\x11_grip_coefficientB\x13\n" +
+	"\x11_chemical_percentB\x12\n" +
+	"\x10_chemical_factorB\x0f\n" +
+	"\r_ice_depth_mmB\x1b\n" +
+	"\x19_subsurface_temperature_cB\x16\n" +
+	"\x14_subsurface_depth_mmB\x11\n" +
+	"\x0f_lane_referenceB\x11\n" +
+	"\x0f_sensing_methodB\f\n" +
+	"\n" +
+	"_sensor_id\"\xf5\x02\n" +
+	"\tRadiation\x123\n" +
+	"\x13solar_radiation_wm2\x18\x01 \x01(\tH\x00R\x11solarRadiationWm2\x88\x01\x01\x12G\n" +
+	"\x1esolar_radiation_hourly_avg_wm2\x18\x02 \x01(\tH\x01R\x1asolarRadiationHourlyAvgWm2\x88\x01\x01\x12;\n" +
 	"\vobserved_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"observedAt\x121\n" +
-	"\aquality\x18\x05 \x01(\x0e2\x17.openits.ess.v1.QualityR\aquality\x12\x1b\n" +
-	"\tsensor_id\x18\x04 \x01(\tR\bsensorId\"H\n" +
+	"observedAt\x126\n" +
+	"\aquality\x18\x05 \x01(\x0e2\x17.openits.ess.v1.QualityH\x02R\aquality\x88\x01\x01\x12 \n" +
+	"\tsensor_id\x18\x04 \x01(\tH\x03R\bsensorId\x88\x01\x01B\x16\n" +
+	"\x14_solar_radiation_wm2B!\n" +
+	"\x1f_solar_radiation_hourly_avg_wm2B\n" +
+	"\n" +
+	"\b_qualityB\f\n" +
+	"\n" +
+	"_sensor_id\"H\n" +
 	"\vDiagnostics\x129\n" +
-	"\x06sensor\x18\x01 \x03(\v2!.openits.ess.v1.DiagnosticsSensorR\x06sensor\"\xaf\x01\n" +
-	"\x11DiagnosticsSensor\x12\x1b\n" +
-	"\tsensor_id\x18\x01 \x01(\tR\bsensorId\x12?\n" +
+	"\x06sensor\x18\x01 \x03(\v2!.openits.ess.v1.DiagnosticsSensorR\x06sensor\"\xc2\x01\n" +
+	"\x11DiagnosticsSensor\x12 \n" +
+	"\tsensor_id\x18\x01 \x01(\tH\x00R\bsensorId\x88\x01\x01\x12?\n" +
 	"\x06config\x18\x02 \x01(\v2'.openits.ess.v1.DiagnosticsSensorConfigR\x06config\x12<\n" +
-	"\x05state\x18\x03 \x01(\v2&.openits.ess.v1.DiagnosticsSensorStateR\x05state\"b\n" +
-	"\x17DiagnosticsSensorConfig\x12*\n" +
-	"\x11sample_interval_s\x18\x01 \x01(\rR\x0fsampleIntervalS\x12\x1b\n" +
-	"\tsensor_id\x18\x02 \x01(\tR\bsensorId\"\x80\x03\n" +
-	"\x16DiagnosticsSensorState\x12\x12\n" +
-	"\x04type\x18\x01 \x01(\tR\x04type\x124\n" +
-	"\x06health\x18\x02 \x01(\x0e2\x1c.openits.ess.v1.SensorHealthR\x06health\x12E\n" +
+	"\x05state\x18\x03 \x01(\v2&.openits.ess.v1.DiagnosticsSensorStateR\x05stateB\f\n" +
+	"\n" +
+	"_sensor_id\"\x90\x01\n" +
+	"\x17DiagnosticsSensorConfig\x12/\n" +
+	"\x11sample_interval_s\x18\x01 \x01(\rH\x00R\x0fsampleIntervalS\x88\x01\x01\x12 \n" +
+	"\tsensor_id\x18\x02 \x01(\tH\x01R\bsensorId\x88\x01\x01B\x14\n" +
+	"\x12_sample_interval_sB\f\n" +
+	"\n" +
+	"_sensor_id\"\xcc\x03\n" +
+	"\x16DiagnosticsSensorState\x12\x17\n" +
+	"\x04type\x18\x01 \x01(\tH\x00R\x04type\x88\x01\x01\x129\n" +
+	"\x06health\x18\x02 \x01(\x0e2\x1c.openits.ess.v1.SensorHealthH\x01R\x06health\x88\x01\x01\x12E\n" +
 	"\x10last_observation\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\x0flastObservation\x12E\n" +
 	"\x10last_calibration\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x0flastCalibration\x12E\n" +
-	"\x10next_calibration\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\x0fnextCalibration\x12*\n" +
-	"\x11sample_interval_s\x18\x06 \x01(\rR\x0fsampleIntervalS\x12\x1b\n" +
-	"\tsensor_id\x18\a \x01(\tR\bsensorId\"5\n" +
+	"\x10next_calibration\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\x0fnextCalibration\x12/\n" +
+	"\x11sample_interval_s\x18\x06 \x01(\rH\x02R\x0fsampleIntervalS\x88\x01\x01\x12 \n" +
+	"\tsensor_id\x18\a \x01(\tH\x03R\bsensorId\x88\x01\x01B\a\n" +
+	"\x05_typeB\t\n" +
+	"\a_healthB\x14\n" +
+	"\x12_sample_interval_sB\f\n" +
+	"\n" +
+	"_sensor_id\"5\n" +
 	"\x06Faults\x12+\n" +
-	"\x05fault\x18\x01 \x03(\v2\x15.openits.ess.v1.FaultR\x05fault\"\x87\x02\n" +
-	"\x05Fault\x12\x1a\n" +
-	"\bcategory\x18\x01 \x01(\tR\bcategory\x12'\n" +
-	"\x0fcorrelates_with\x18\x06 \x01(\tR\x0ecorrelatesWith\x12 \n" +
-	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x19\n" +
-	"\bfault_id\x18\x03 \x01(\tR\afaultId\x12A\n" +
-	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x129\n" +
-	"\bseverity\x18\x05 \x01(\x0e2\x1d.openits.ess.v1.FaultSeverityR\bseverity*x\n" +
-	"\aQuality\x12\x11\n" +
-	"\rQUALITY_VALID\x10\x00\x12\x13\n" +
-	"\x0fQUALITY_SUSPECT\x10\x01\x12\x15\n" +
-	"\x11QUALITY_ESTIMATED\x10\x02\x12\x19\n" +
-	"\x15QUALITY_NOT_INSTALLED\x10\x03\x12\x13\n" +
-	"\x0fQUALITY_MISSING\x10\x04*\x95\x03\n" +
-	"\x11PrecipitationType\x12\x1e\n" +
-	"\x1aPRECIPITATION_TYPE_UNKNOWN\x10\x00\x12\x1b\n" +
-	"\x17PRECIPITATION_TYPE_NONE\x10\x01\x12\x1b\n" +
-	"\x17PRECIPITATION_TYPE_RAIN\x10\x02\x12\x1b\n" +
-	"\x17PRECIPITATION_TYPE_SNOW\x10\x03\x12\x1c\n" +
-	"\x18PRECIPITATION_TYPE_SLEET\x10\x04\x12\x1b\n" +
-	"\x17PRECIPITATION_TYPE_HAIL\x10\x05\x12\x1e\n" +
-	"\x1aPRECIPITATION_TYPE_DRIZZLE\x10\x06\x12\x1c\n" +
-	"\x18PRECIPITATION_TYPE_OTHER\x10\a\x12$\n" +
-	" PRECIPITATION_TYPE_FREEZING_RAIN\x10\b\x12'\n" +
-	"#PRECIPITATION_TYPE_FREEZING_DRIZZLE\x10\t\x12#\n" +
-	"\x1fPRECIPITATION_TYPE_ICE_CRYSTALS\x10\n" +
-	"\x12\x1c\n" +
-	"\x18PRECIPITATION_TYPE_MIXED\x10\v*\xf0\x01\n" +
-	"\x16PrecipitationIntensity\x12#\n" +
-	"\x1fPRECIPITATION_INTENSITY_UNKNOWN\x10\x00\x12 \n" +
-	"\x1cPRECIPITATION_INTENSITY_NONE\x10\x01\x12!\n" +
-	"\x1dPRECIPITATION_INTENSITY_LIGHT\x10\x02\x12$\n" +
-	" PRECIPITATION_INTENSITY_MODERATE\x10\x03\x12!\n" +
-	"\x1dPRECIPITATION_INTENSITY_HEAVY\x10\x04\x12#\n" +
-	"\x1fPRECIPITATION_INTENSITY_VIOLENT\x10\x05*\xde\x03\n" +
-	"\x13VisibilitySituation\x12 \n" +
-	"\x1cVISIBILITY_SITUATION_UNKNOWN\x10\x00\x12\x1e\n" +
-	"\x1aVISIBILITY_SITUATION_CLEAR\x10\x01\x12\x1c\n" +
-	"\x18VISIBILITY_SITUATION_FOG\x10\x02\x12\"\n" +
-	"\x1eVISIBILITY_SITUATION_HEAVY_FOG\x10\x03\x12\x1e\n" +
-	"\x1aVISIBILITY_SITUATION_SMOKE\x10\x04\x12%\n" +
-	"!VISIBILITY_SITUATION_BLOWING_SNOW\x10\x05\x12%\n" +
-	"!VISIBILITY_SITUATION_BLOWING_DUST\x10\x06\x12#\n" +
-	"\x1fVISIBILITY_SITUATION_HEAVY_RAIN\x10\a\x12#\n" +
-	"\x1fVISIBILITY_SITUATION_HEAVY_SNOW\x10\b\x12\"\n" +
-	"\x1eVISIBILITY_SITUATION_MIST_HAZE\x10\t\x12#\n" +
-	"\x1fVISIBILITY_SITUATION_SAND_STORM\x10\n" +
-	"\x12\"\n" +
-	"\x1eVISIBILITY_SITUATION_SEA_SPRAY\x10\v\x12\x1e\n" +
-	"\x1aVISIBILITY_SITUATION_SLEET\x10\f*p\n" +
-	"\rSensingMethod\x12\x1b\n" +
-	"\x17SENSING_METHOD_EMBEDDED\x10\x00\x12&\n" +
-	"\"SENSING_METHOD_NON_INVASIVE_REMOTE\x10\x01\x12\x1a\n" +
-	"\x16SENSING_METHOD_UNKNOWN\x10\x02*\xc2\x03\n" +
-	"\x11PavementCondition\x12\x1e\n" +
-	"\x1aPAVEMENT_CONDITION_UNKNOWN\x10\x00\x12\x1a\n" +
-	"\x16PAVEMENT_CONDITION_DRY\x10\x01\x12%\n" +
-	"!PAVEMENT_CONDITION_TRACE_MOISTURE\x10\x02\x12\x1a\n" +
-	"\x16PAVEMENT_CONDITION_WET\x10\x03\x12%\n" +
-	"!PAVEMENT_CONDITION_CHEMICALLY_WET\x10\x04\x12\"\n" +
-	"\x1ePAVEMENT_CONDITION_ICE_WARNING\x10\x05\x12 \n" +
-	"\x1cPAVEMENT_CONDITION_ICE_WATCH\x10\x06\x12#\n" +
-	"\x1fPAVEMENT_CONDITION_SNOW_WARNING\x10\a\x12!\n" +
-	"\x1dPAVEMENT_CONDITION_SNOW_WATCH\x10\b\x12!\n" +
-	"\x1dPAVEMENT_CONDITION_ABSORPTION\x10\t\x12\x1c\n" +
-	"\x18PAVEMENT_CONDITION_FROST\x10\n" +
-	"\x12\x1a\n" +
-	"\x16PAVEMENT_CONDITION_DEW\x10\v\x12\x1c\n" +
-	"\x18PAVEMENT_CONDITION_ERROR\x10\f*\xaf\x01\n" +
-	"\fSensorHealth\x12\x14\n" +
-	"\x10SENSOR_HEALTH_OK\x10\x00\x12\x17\n" +
-	"\x13SENSOR_HEALTH_STALE\x10\x01\x12\x1e\n" +
-	"\x1aSENSOR_HEALTH_UNCALIBRATED\x10\x02\x12\x1a\n" +
-	"\x16SENSOR_HEALTH_DEGRADED\x10\x03\x12\x18\n" +
-	"\x14SENSOR_HEALTH_FAILED\x10\x04\x12\x1a\n" +
-	"\x16SENSOR_HEALTH_DISABLED\x10\x05*\x95\x01\n" +
-	"\rFaultSeverity\x12\x17\n" +
-	"\x13FAULT_SEVERITY_INFO\x10\x00\x12\x1a\n" +
-	"\x16FAULT_SEVERITY_WARNING\x10\x01\x12\x18\n" +
-	"\x14FAULT_SEVERITY_MINOR\x10\x02\x12\x18\n" +
-	"\x14FAULT_SEVERITY_MAJOR\x10\x03\x12\x1b\n" +
-	"\x17FAULT_SEVERITY_CRITICAL\x10\x04BCZAgithub.com/Vikasa2M/openits-models/pkg/proto/openits/ess/v1;essv1b\x06proto3"
+	"\x05fault\x18\x01 \x03(\v2\x15.openits.ess.v1.FaultR\x05fault\"\xeb\x02\n" +
+	"\x05Fault\x12\x1f\n" +
+	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12,\n" +
+	"\x0fcorrelates_with\x18\x06 \x01(\tH\x01R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x02R\vdescription\x88\x01\x01\x12\x1e\n" +
+	"\bfault_id\x18\x03 \x01(\tH\x03R\afaultId\x88\x01\x01\x12A\n" +
+	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12>\n" +
+	"\bseverity\x18\x05 \x01(\x0e2\x1d.openits.ess.v1.FaultSeverityH\x04R\bseverity\x88\x01\x01B\v\n" +
+	"\t_categoryB\x12\n" +
+	"\x10_correlates_withB\x0e\n" +
+	"\f_descriptionB\v\n" +
+	"\t_fault_idB\v\n" +
+	"\t_severityBCZAgithub.com/Vikasa2M/openits-models/pkg/proto/openits/ess/v1;essv1b\x06proto3"
 
 var (
 	file_openits_ess_v1_state_proto_rawDescOnce sync.Once
@@ -2516,82 +2063,81 @@ func file_openits_ess_v1_state_proto_rawDescGZIP() []byte {
 	return file_openits_ess_v1_state_proto_rawDescData
 }
 
-var file_openits_ess_v1_state_proto_enumTypes = make([]protoimpl.EnumInfo, 8)
 var file_openits_ess_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_openits_ess_v1_state_proto_goTypes = []any{
-	(Quality)(0),                         // 0: openits.ess.v1.Quality
-	(PrecipitationType)(0),               // 1: openits.ess.v1.PrecipitationType
-	(PrecipitationIntensity)(0),          // 2: openits.ess.v1.PrecipitationIntensity
-	(VisibilitySituation)(0),             // 3: openits.ess.v1.VisibilitySituation
-	(SensingMethod)(0),                   // 4: openits.ess.v1.SensingMethod
-	(PavementCondition)(0),               // 5: openits.ess.v1.PavementCondition
-	(SensorHealth)(0),                    // 6: openits.ess.v1.SensorHealth
-	(FaultSeverity)(0),                   // 7: openits.ess.v1.FaultSeverity
-	(*Station)(nil),                      // 8: openits.ess.v1.Station
-	(*StationConfig)(nil),                // 9: openits.ess.v1.StationConfig
-	(*StationConfigLinearReference)(nil), // 10: openits.ess.v1.StationConfigLinearReference
-	(*StationState)(nil),                 // 11: openits.ess.v1.StationState
-	(*StationStateLinearReference)(nil),  // 12: openits.ess.v1.StationStateLinearReference
-	(*Configuration)(nil),                // 13: openits.ess.v1.Configuration
-	(*Atmospheric)(nil),                  // 14: openits.ess.v1.Atmospheric
-	(*Precipitation)(nil),                // 15: openits.ess.v1.Precipitation
-	(*Visibility)(nil),                   // 16: openits.ess.v1.Visibility
-	(*Pavement)(nil),                     // 17: openits.ess.v1.Pavement
-	(*PavementSensor)(nil),               // 18: openits.ess.v1.PavementSensor
-	(*PavementSensorConfig)(nil),         // 19: openits.ess.v1.PavementSensorConfig
-	(*PavementSensorState)(nil),          // 20: openits.ess.v1.PavementSensorState
-	(*Radiation)(nil),                    // 21: openits.ess.v1.Radiation
-	(*Diagnostics)(nil),                  // 22: openits.ess.v1.Diagnostics
-	(*DiagnosticsSensor)(nil),            // 23: openits.ess.v1.DiagnosticsSensor
-	(*DiagnosticsSensorConfig)(nil),      // 24: openits.ess.v1.DiagnosticsSensorConfig
-	(*DiagnosticsSensorState)(nil),       // 25: openits.ess.v1.DiagnosticsSensorState
-	(*Faults)(nil),                       // 26: openits.ess.v1.Faults
-	(*Fault)(nil),                        // 27: openits.ess.v1.Fault
-	(*timestamppb.Timestamp)(nil),        // 28: google.protobuf.Timestamp
+	(*Station)(nil),                      // 0: openits.ess.v1.Station
+	(*StationConfig)(nil),                // 1: openits.ess.v1.StationConfig
+	(*StationConfigLinearReference)(nil), // 2: openits.ess.v1.StationConfigLinearReference
+	(*StationState)(nil),                 // 3: openits.ess.v1.StationState
+	(*StationStateLinearReference)(nil),  // 4: openits.ess.v1.StationStateLinearReference
+	(*Configuration)(nil),                // 5: openits.ess.v1.Configuration
+	(*Atmospheric)(nil),                  // 6: openits.ess.v1.Atmospheric
+	(*Precipitation)(nil),                // 7: openits.ess.v1.Precipitation
+	(*Visibility)(nil),                   // 8: openits.ess.v1.Visibility
+	(*Pavement)(nil),                     // 9: openits.ess.v1.Pavement
+	(*PavementSensor)(nil),               // 10: openits.ess.v1.PavementSensor
+	(*PavementSensorConfig)(nil),         // 11: openits.ess.v1.PavementSensorConfig
+	(*PavementSensorState)(nil),          // 12: openits.ess.v1.PavementSensorState
+	(*Radiation)(nil),                    // 13: openits.ess.v1.Radiation
+	(*Diagnostics)(nil),                  // 14: openits.ess.v1.Diagnostics
+	(*DiagnosticsSensor)(nil),            // 15: openits.ess.v1.DiagnosticsSensor
+	(*DiagnosticsSensorConfig)(nil),      // 16: openits.ess.v1.DiagnosticsSensorConfig
+	(*DiagnosticsSensorState)(nil),       // 17: openits.ess.v1.DiagnosticsSensorState
+	(*Faults)(nil),                       // 18: openits.ess.v1.Faults
+	(*Fault)(nil),                        // 19: openits.ess.v1.Fault
+	(*timestamppb.Timestamp)(nil),        // 20: google.protobuf.Timestamp
+	(Quality)(0),                         // 21: openits.ess.v1.Quality
+	(PrecipitationType)(0),               // 22: openits.ess.v1.PrecipitationType
+	(PrecipitationIntensity)(0),          // 23: openits.ess.v1.PrecipitationIntensity
+	(VisibilitySituation)(0),             // 24: openits.ess.v1.VisibilitySituation
+	(SensingMethod)(0),                   // 25: openits.ess.v1.SensingMethod
+	(PavementCondition)(0),               // 26: openits.ess.v1.PavementCondition
+	(SensorHealth)(0),                    // 27: openits.ess.v1.SensorHealth
+	(FaultSeverity)(0),                   // 28: openits.ess.v1.FaultSeverity
 }
 var file_openits_ess_v1_state_proto_depIdxs = []int32{
-	9,  // 0: openits.ess.v1.Station.config:type_name -> openits.ess.v1.StationConfig
-	11, // 1: openits.ess.v1.Station.state:type_name -> openits.ess.v1.StationState
-	13, // 2: openits.ess.v1.Station.configuration:type_name -> openits.ess.v1.Configuration
-	14, // 3: openits.ess.v1.Station.atmospheric:type_name -> openits.ess.v1.Atmospheric
-	15, // 4: openits.ess.v1.Station.precipitation:type_name -> openits.ess.v1.Precipitation
-	16, // 5: openits.ess.v1.Station.visibility:type_name -> openits.ess.v1.Visibility
-	17, // 6: openits.ess.v1.Station.pavement:type_name -> openits.ess.v1.Pavement
-	21, // 7: openits.ess.v1.Station.radiation:type_name -> openits.ess.v1.Radiation
-	22, // 8: openits.ess.v1.Station.diagnostics:type_name -> openits.ess.v1.Diagnostics
-	26, // 9: openits.ess.v1.Station.faults:type_name -> openits.ess.v1.Faults
-	28, // 10: openits.ess.v1.StationConfig.install_date:type_name -> google.protobuf.Timestamp
-	10, // 11: openits.ess.v1.StationConfig.linear_reference:type_name -> openits.ess.v1.StationConfigLinearReference
-	28, // 12: openits.ess.v1.StationState.install_date:type_name -> google.protobuf.Timestamp
-	12, // 13: openits.ess.v1.StationState.linear_reference:type_name -> openits.ess.v1.StationStateLinearReference
-	28, // 14: openits.ess.v1.Atmospheric.observed_at:type_name -> google.protobuf.Timestamp
-	0,  // 15: openits.ess.v1.Atmospheric.quality:type_name -> openits.ess.v1.Quality
-	1,  // 16: openits.ess.v1.Precipitation.type:type_name -> openits.ess.v1.PrecipitationType
-	2,  // 17: openits.ess.v1.Precipitation.intensity:type_name -> openits.ess.v1.PrecipitationIntensity
-	28, // 18: openits.ess.v1.Precipitation.observed_at:type_name -> google.protobuf.Timestamp
-	0,  // 19: openits.ess.v1.Precipitation.quality:type_name -> openits.ess.v1.Quality
-	3,  // 20: openits.ess.v1.Visibility.situation:type_name -> openits.ess.v1.VisibilitySituation
-	28, // 21: openits.ess.v1.Visibility.observed_at:type_name -> google.protobuf.Timestamp
-	0,  // 22: openits.ess.v1.Visibility.quality:type_name -> openits.ess.v1.Quality
-	18, // 23: openits.ess.v1.Pavement.sensor:type_name -> openits.ess.v1.PavementSensor
-	19, // 24: openits.ess.v1.PavementSensor.config:type_name -> openits.ess.v1.PavementSensorConfig
-	20, // 25: openits.ess.v1.PavementSensor.state:type_name -> openits.ess.v1.PavementSensorState
-	4,  // 26: openits.ess.v1.PavementSensorConfig.sensing_method:type_name -> openits.ess.v1.SensingMethod
-	28, // 27: openits.ess.v1.PavementSensorState.observed_at:type_name -> google.protobuf.Timestamp
-	5,  // 28: openits.ess.v1.PavementSensorState.condition:type_name -> openits.ess.v1.PavementCondition
-	4,  // 29: openits.ess.v1.PavementSensorState.sensing_method:type_name -> openits.ess.v1.SensingMethod
-	28, // 30: openits.ess.v1.Radiation.observed_at:type_name -> google.protobuf.Timestamp
-	0,  // 31: openits.ess.v1.Radiation.quality:type_name -> openits.ess.v1.Quality
-	23, // 32: openits.ess.v1.Diagnostics.sensor:type_name -> openits.ess.v1.DiagnosticsSensor
-	24, // 33: openits.ess.v1.DiagnosticsSensor.config:type_name -> openits.ess.v1.DiagnosticsSensorConfig
-	25, // 34: openits.ess.v1.DiagnosticsSensor.state:type_name -> openits.ess.v1.DiagnosticsSensorState
-	6,  // 35: openits.ess.v1.DiagnosticsSensorState.health:type_name -> openits.ess.v1.SensorHealth
-	28, // 36: openits.ess.v1.DiagnosticsSensorState.last_observation:type_name -> google.protobuf.Timestamp
-	28, // 37: openits.ess.v1.DiagnosticsSensorState.last_calibration:type_name -> google.protobuf.Timestamp
-	28, // 38: openits.ess.v1.DiagnosticsSensorState.next_calibration:type_name -> google.protobuf.Timestamp
-	27, // 39: openits.ess.v1.Faults.fault:type_name -> openits.ess.v1.Fault
-	28, // 40: openits.ess.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	7,  // 41: openits.ess.v1.Fault.severity:type_name -> openits.ess.v1.FaultSeverity
+	1,  // 0: openits.ess.v1.Station.config:type_name -> openits.ess.v1.StationConfig
+	3,  // 1: openits.ess.v1.Station.state:type_name -> openits.ess.v1.StationState
+	5,  // 2: openits.ess.v1.Station.configuration:type_name -> openits.ess.v1.Configuration
+	6,  // 3: openits.ess.v1.Station.atmospheric:type_name -> openits.ess.v1.Atmospheric
+	7,  // 4: openits.ess.v1.Station.precipitation:type_name -> openits.ess.v1.Precipitation
+	8,  // 5: openits.ess.v1.Station.visibility:type_name -> openits.ess.v1.Visibility
+	9,  // 6: openits.ess.v1.Station.pavement:type_name -> openits.ess.v1.Pavement
+	13, // 7: openits.ess.v1.Station.radiation:type_name -> openits.ess.v1.Radiation
+	14, // 8: openits.ess.v1.Station.diagnostics:type_name -> openits.ess.v1.Diagnostics
+	18, // 9: openits.ess.v1.Station.faults:type_name -> openits.ess.v1.Faults
+	20, // 10: openits.ess.v1.StationConfig.install_date:type_name -> google.protobuf.Timestamp
+	2,  // 11: openits.ess.v1.StationConfig.linear_reference:type_name -> openits.ess.v1.StationConfigLinearReference
+	20, // 12: openits.ess.v1.StationState.install_date:type_name -> google.protobuf.Timestamp
+	4,  // 13: openits.ess.v1.StationState.linear_reference:type_name -> openits.ess.v1.StationStateLinearReference
+	20, // 14: openits.ess.v1.Atmospheric.observed_at:type_name -> google.protobuf.Timestamp
+	21, // 15: openits.ess.v1.Atmospheric.quality:type_name -> openits.ess.v1.Quality
+	22, // 16: openits.ess.v1.Precipitation.type:type_name -> openits.ess.v1.PrecipitationType
+	23, // 17: openits.ess.v1.Precipitation.intensity:type_name -> openits.ess.v1.PrecipitationIntensity
+	20, // 18: openits.ess.v1.Precipitation.observed_at:type_name -> google.protobuf.Timestamp
+	21, // 19: openits.ess.v1.Precipitation.quality:type_name -> openits.ess.v1.Quality
+	24, // 20: openits.ess.v1.Visibility.situation:type_name -> openits.ess.v1.VisibilitySituation
+	20, // 21: openits.ess.v1.Visibility.observed_at:type_name -> google.protobuf.Timestamp
+	21, // 22: openits.ess.v1.Visibility.quality:type_name -> openits.ess.v1.Quality
+	10, // 23: openits.ess.v1.Pavement.sensor:type_name -> openits.ess.v1.PavementSensor
+	11, // 24: openits.ess.v1.PavementSensor.config:type_name -> openits.ess.v1.PavementSensorConfig
+	12, // 25: openits.ess.v1.PavementSensor.state:type_name -> openits.ess.v1.PavementSensorState
+	25, // 26: openits.ess.v1.PavementSensorConfig.sensing_method:type_name -> openits.ess.v1.SensingMethod
+	20, // 27: openits.ess.v1.PavementSensorState.observed_at:type_name -> google.protobuf.Timestamp
+	26, // 28: openits.ess.v1.PavementSensorState.condition:type_name -> openits.ess.v1.PavementCondition
+	25, // 29: openits.ess.v1.PavementSensorState.sensing_method:type_name -> openits.ess.v1.SensingMethod
+	20, // 30: openits.ess.v1.Radiation.observed_at:type_name -> google.protobuf.Timestamp
+	21, // 31: openits.ess.v1.Radiation.quality:type_name -> openits.ess.v1.Quality
+	15, // 32: openits.ess.v1.Diagnostics.sensor:type_name -> openits.ess.v1.DiagnosticsSensor
+	16, // 33: openits.ess.v1.DiagnosticsSensor.config:type_name -> openits.ess.v1.DiagnosticsSensorConfig
+	17, // 34: openits.ess.v1.DiagnosticsSensor.state:type_name -> openits.ess.v1.DiagnosticsSensorState
+	27, // 35: openits.ess.v1.DiagnosticsSensorState.health:type_name -> openits.ess.v1.SensorHealth
+	20, // 36: openits.ess.v1.DiagnosticsSensorState.last_observation:type_name -> google.protobuf.Timestamp
+	20, // 37: openits.ess.v1.DiagnosticsSensorState.last_calibration:type_name -> google.protobuf.Timestamp
+	20, // 38: openits.ess.v1.DiagnosticsSensorState.next_calibration:type_name -> google.protobuf.Timestamp
+	19, // 39: openits.ess.v1.Faults.fault:type_name -> openits.ess.v1.Fault
+	20, // 40: openits.ess.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	28, // 41: openits.ess.v1.Fault.severity:type_name -> openits.ess.v1.FaultSeverity
 	42, // [42:42] is the sub-list for method output_type
 	42, // [42:42] is the sub-list for method input_type
 	42, // [42:42] is the sub-list for extension type_name
@@ -2604,19 +2150,35 @@ func file_openits_ess_v1_state_proto_init() {
 	if File_openits_ess_v1_state_proto != nil {
 		return
 	}
+	file_openits_ess_v1_types_proto_init()
+	file_openits_ess_v1_state_proto_msgTypes[1].OneofWrappers = []any{}
+	file_openits_ess_v1_state_proto_msgTypes[2].OneofWrappers = []any{}
+	file_openits_ess_v1_state_proto_msgTypes[3].OneofWrappers = []any{}
+	file_openits_ess_v1_state_proto_msgTypes[4].OneofWrappers = []any{}
+	file_openits_ess_v1_state_proto_msgTypes[5].OneofWrappers = []any{}
+	file_openits_ess_v1_state_proto_msgTypes[6].OneofWrappers = []any{}
+	file_openits_ess_v1_state_proto_msgTypes[7].OneofWrappers = []any{}
+	file_openits_ess_v1_state_proto_msgTypes[8].OneofWrappers = []any{}
+	file_openits_ess_v1_state_proto_msgTypes[10].OneofWrappers = []any{}
+	file_openits_ess_v1_state_proto_msgTypes[11].OneofWrappers = []any{}
+	file_openits_ess_v1_state_proto_msgTypes[12].OneofWrappers = []any{}
+	file_openits_ess_v1_state_proto_msgTypes[13].OneofWrappers = []any{}
+	file_openits_ess_v1_state_proto_msgTypes[15].OneofWrappers = []any{}
+	file_openits_ess_v1_state_proto_msgTypes[16].OneofWrappers = []any{}
+	file_openits_ess_v1_state_proto_msgTypes[17].OneofWrappers = []any{}
+	file_openits_ess_v1_state_proto_msgTypes[19].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_ess_v1_state_proto_rawDesc), len(file_openits_ess_v1_state_proto_rawDesc)),
-			NumEnums:      8,
+			NumEnums:      0,
 			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_openits_ess_v1_state_proto_goTypes,
 		DependencyIndexes: file_openits_ess_v1_state_proto_depIdxs,
-		EnumInfos:         file_openits_ess_v1_state_proto_enumTypes,
 		MessageInfos:      file_openits_ess_v1_state_proto_msgTypes,
 	}.Build()
 	File_openits_ess_v1_state_proto = out.File

@@ -2,7 +2,7 @@
   "openits-rsu:rsu": {
     "config": { "id": "rsu-unsigned-01", "name": "SPaT enabled, signing off, no escape hatch" },
     "operating": {
-      "config": { "configured-time-source": "gnss-pps" }
+      "config": { "configured-time-source": "openits-types:time-source-gnss-pps" }
     },
     "security": {
       "config": { "security-enabled": false }

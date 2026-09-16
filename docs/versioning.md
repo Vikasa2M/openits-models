@@ -63,6 +63,23 @@ tag versions *the collection*; the revision versions *each module*.
 If `buf breaking` flags a genuinely necessary wire break, that is a
 minor-version bump on the v0.x line (or a major + `/v2` post-1.0).
 
+## Migration notes
+
+A release that changes the wire contract carries a migration note under
+[`docs/migration/`](migration/), written before the release is cut and linked
+from the changelog entry. The changelog says *what* changed; the migration
+note says what a consumer has to do about it, with the old-to-new mapping for
+every renamed or retyped value in one place rather than scattered across
+module revision statements.
+
+Pre-1.0 this is the norm rather than the exception: the project takes wire
+breaks deliberately while they are cheap (see
+[Extension model](06-extension-model.md) for what they cost after 1.0), so
+each such release owes consumers one document that collects them.
+
+- [v0.6.0](migration/v0.6.0.md) — field presence, seven enum-to-identity
+  conversions, DMS activation errors, scalar retypes, enum name un-prefixing.
+
 ## Cutting a release
 
 Releases are driven by **[release-please](https://github.com/googleapis/release-please)**

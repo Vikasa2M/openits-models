@@ -40,25 +40,42 @@ type ProtoFile struct {
 	// so both emit distinctly.
 	EmittedEnums map[string]map[string]string
 
-	// ClaimedNames tracks, across every output ProtoFile that shares this
-	// file's go_package (not the whole run — see Generate's
-	// claimedNamesFor), every top-level enum name already declared by any
-	// of them. Every generated .proto file's `option go_package` is now
-	// derived per-service (see goPackageFor in main.go), so protoc-gen-go
-	// only flattens the files that share ONE service's go_package into one
-	// Go package — e.g. a service's events.proto and state.proto — not the
-	// whole corpus: a bare enum name (e.g. "Severity") that is perfectly
-	// fine to reuse *within* one .proto file (see EmittedEnums) becomes a Go
-	// symbol collision the moment a *different* output file sharing that
-	// go_package also declares it, but two different services declaring the
-	// same bare enum name is legal (different Go packages). ClaimedNames is
-	// the cross-file counterpart to EmittedEnums's within-file dedup:
-	// emitEnum forces module qualification (see enumQualifiedSource)
-	// whenever the bare name is already claimed by another file in the same
-	// go_package, not only when this file has already used it. nil (the
-	// default, used by every pre-Task-8 caller/test) disables the check and
-	// preserves prior behavior.
-	ClaimedNames map[string]bool
+	// ClaimedEnums is the cross-file counterpart to EmittedEnums's
+	// within-file dedup: the registry of every top-level enum already
+	// declared by any output ProtoFile sharing this file's go_package (not
+	// the whole run — see Generate's enumRegistryFor). Every generated
+	// .proto file's `option go_package` is derived per-service (see
+	// goPackageFor in main.go), so protoc-gen-go flattens only the files
+	// sharing ONE service's go_package into one Go package — a service's
+	// events.proto and state.proto — while two different services using the
+	// same bare enum name is legal, being different Go packages.
+	//
+	// Two files in one package that need the SAME enum share one
+	// declaration: the first to ask declares it, and every later file
+	// references that name and imports the declaring file. This matters
+	// because a proto type's identity is its package plus its name, NOT the
+	// file it is declared in — so which file holds the declaration is
+	// invisible on the wire, while re-declaring it in a second file of the
+	// same package is a duplicate symbol the emitter can only resolve by
+	// renaming one of them. That rename drags the enum's VALUE identifiers
+	// along, and protojson serializes enum values by name, so adding a leaf
+	// to an events module would silently rewrite the state tree's JSON.
+	// Deduping keeps every existing name exactly where it is.
+	//
+	// Genuinely different enums that happen to share a base name still
+	// qualify: the registry keys on (base name, value-set signature), so a
+	// second module's disjoint `severity` gets its own module-qualified
+	// name rather than adopting the first's declaration.
+	//
+	// nil (the default, used by unit tests that emit a single standalone
+	// file) disables cross-file sharing and preserves within-file behavior.
+	ClaimedEnums *EnumRegistry
+
+	// SelfImportPath is this file's own proto path (e.g.
+	// "openits/dms/v1/state.proto"), which a second file in the same
+	// package imports when it references an enum this file declared. Empty
+	// on standalone/unit-test files, which never share.
+	SelfImportPath string
 
 	// Collisions is the set of bare nested-message names (ProtoName of a
 	// list/container that is not "config"/"state") that appear more than once
@@ -116,6 +133,91 @@ type TypesTarget struct {
 	ImportPath string
 }
 
+// EnumRegistry is one proto package's shared enum registry, keyed by base
+// proto name then by value-set signature. Every output file in the package
+// holds the same *EnumRegistry, so the first file to need a given enum
+// declares it and the rest reference that declaration.
+type EnumRegistry struct {
+	// byName maps base proto name -> value-set signature -> declaration.
+	byName map[string]map[string]enumDecl
+
+	// Target is the single file every enum in this proto package is
+	// declared into — the package's types.proto — and ImportPath is what a
+	// file referencing one of them imports. Both set by Generate.
+	//
+	// One always-applied rule, not a rule that triggers on a second
+	// reference: an enum's home must not depend on how many output files
+	// happen to use it, or on which is emitted first. That kind of
+	// emergent placement is what produced the cross-file rename this
+	// registry replaced, and it is the mistake OpenConfig's own layering
+	// avoids by giving every model family an explicit *-types module that
+	// dependents point at. This emitter already routes shared *messages*
+	// the same way (see TypesTarget/emitSharedMessage); enums follow the
+	// precedent rather than growing a second mechanism beside it.
+	//
+	// Routing through one sink also keeps the generated import graph
+	// matching the YANG one. Declaring an enum in whichever file asked
+	// first meant a service's state.proto imported its events.proto — an
+	// edge the YANG layer forbids and check-events-layering enforces
+	// against. Both files importing types.proto has no such inversion, and
+	// no import cycle is possible.
+	//
+	// nil Target (unit-test files with no package context) keeps the
+	// declaration in the requesting file.
+	Target     *ProtoFile
+	ImportPath string
+}
+
+// enumDecl records where a shared enum was declared and under what name.
+type enumDecl struct {
+	// name is the proto enum name as declared, which is the base name
+	// unless a same-named enum with a different value set forced
+	// qualification.
+	name string
+	// importPath is the declaring file's proto path, which a referencing
+	// file in the same package must import. Empty when the declaring file
+	// had no SelfImportPath, in which case no sharing is offered.
+	importPath string
+}
+
+func newEnumRegistry() *EnumRegistry {
+	return &EnumRegistry{byName: map[string]map[string]enumDecl{}}
+}
+
+// lookup returns the declaration of the enum with this base name and value
+// set, if some file in the package has already declared it.
+func (r *EnumRegistry) lookup(baseName, sig string) (enumDecl, bool) {
+	if r == nil {
+		return enumDecl{}, false
+	}
+	d, ok := r.byName[baseName][sig]
+	return d, ok
+}
+
+// nameTaken reports whether any enum is already declared under this base
+// name, regardless of value set — the condition that forces a genuinely
+// different enum to qualify.
+func (r *EnumRegistry) nameTaken(baseName string) bool {
+	if r == nil {
+		return false
+	}
+	return len(r.byName[baseName]) > 0
+}
+
+// record registers a declaration this file just emitted.
+func (r *EnumRegistry) record(baseName, sig string, d enumDecl) {
+	if r == nil {
+		return
+	}
+	if r.byName == nil {
+		r.byName = map[string]map[string]enumDecl{}
+	}
+	if r.byName[baseName] == nil {
+		r.byName[baseName] = map[string]enumDecl{}
+	}
+	r.byName[baseName][sig] = d
+}
+
 func (p *ProtoFile) addImport(path string) {
 	if p.Imports == nil {
 		p.Imports = map[string]bool{}
@@ -134,7 +236,7 @@ func (p *ProtoFile) child() *ProtoFile {
 	if p.EmittedEnums == nil {
 		p.EmittedEnums = map[string]map[string]string{}
 	}
-	return &ProtoFile{EmittedShared: p.EmittedShared, EmittedEnums: p.EmittedEnums, ClaimedNames: p.ClaimedNames, Collisions: p.Collisions, Types: p.Types, LockPrefix: p.LockPrefix}
+	return &ProtoFile{EmittedShared: p.EmittedShared, EmittedEnums: p.EmittedEnums, ClaimedEnums: p.ClaimedEnums, SelfImportPath: p.SelfImportPath, Collisions: p.Collisions, Types: p.Types, LockPrefix: p.LockPrefix}
 }
 
 // sortedChildren returns an entry's data children in deterministic order.
@@ -412,7 +514,7 @@ func EmitMessage(e *yang.Entry, msgName string, lock *FieldLock, shared map[stri
 			emitAction(c, lock, shared, &nested, out)
 		case c.IsLeaf():
 			pt := leafFieldType(c, &nested, out)
-			fmt.Fprintf(&body, "  %s %s = %d;\n", pt, fn, tag)
+			fmt.Fprintf(&body, "  %s%s %s = %d;\n", leafPresenceLabel(e, c), pt, fn, tag)
 		case c.IsLeafList():
 			pt := leafFieldType(c, &nested, out)
 			fmt.Fprintf(&body, "  repeated %s %s = %d;\n", pt, fn, tag)
@@ -631,6 +733,103 @@ func emitSharedMessage(c *yang.Entry, sharedMsg string, lock *FieldLock, shared 
 // leaf's type so a list key typed `leafref { path "../config/<key>" }`
 // renders as the target scalar (e.g. uint32), not a string. Every other
 // type maps through ProtoScalar, registering the timestamp import as needed.
+// leafPresenceLabel returns the proto field label leaf c needs inside parent:
+// "optional " when the leaf can legitimately be absent AND its proto type has
+// proto3 implicit presence, "" otherwise.
+//
+// proto3 gives scalars and enums implicit presence: a field set to its zero
+// value and a field never set serialize to the same bytes, so a consumer
+// cannot tell "0 vehicles" from "this sensor reports presence without
+// counting" — a distinction several models state in prose and one
+// (zone-occupancy's occupancy-count) states normatively. Labelling every
+// non-mandatory leaf `optional` gives the binding the distinction the YANG
+// already encodes, and is what the JSON Schema emitter has always done via
+// `required`. Adding the label is wire-safe: the field keeps its number and
+// its encoding, gaining presence through a synthetic oneof.
+//
+// Two shapes are left bare. A mandatory leaf is always on the wire, so
+// implicit presence is unambiguous for it — and leaving it bare is what makes
+// `refine mandatory true` a meaningful tightening rather than decoration.
+// Message-typed leaves (yang:date-and-time -> google.protobuf.Timestamp)
+// already carry explicit presence. Leaf-lists and lists are `repeated`, which
+// has no presence to add, and choice members are emitted inside a proto
+// `oneof`, which supplies presence structurally and forbids the label; both
+// reach the wire through other branches of EmitMessage and never call this.
+func leafPresenceLabel(parent, c *yang.Entry) string {
+	if leafMandatory(parent, c) || !hasImplicitPresence(c) {
+		return ""
+	}
+	return "optional "
+}
+
+// leafMandatory reports whether leaf c is mandatory in the schema parent
+// presents, preferring a `refine` on parent's own `uses` over the merged
+// child's own statement.
+func leafMandatory(parent, c *yang.Entry) bool {
+	if refined, found := refinedMandatory(parent, c); found {
+		return refined
+	}
+	return c.Mandatory == yang.TSTrue
+}
+
+// refinedMandatory reports what parent's own `uses` statements say about
+// leaf c's mandatory-ness via `refine`, and whether any of them said
+// anything at all.
+//
+// goyang merges a grouping's children into the parent's Dir but leaves each
+// `refine` on the UsesStmt without touching the merged entries (entry.go
+// applies mandatory only when it is declared directly on a node or carried by
+// a `deviate`), so a notification that tightens a shared grouping's member —
+// zone-occupancy-changed's `refine presence { mandatory true; }` — is
+// invisible on the merged child and has to be recovered here. Reading only
+// Entry.Mandatory would label that leaf `optional` and silently give away the
+// guarantee the notification exists to make.
+//
+// Mirrors jsonschema_emit.go's applyRefines so the two emitters resolve one
+// YANG statement the same way: only a refine naming a direct child applies at
+// this level (a deeper target sits below an optionality boundary this message
+// does not own), and a later refine of the same leaf wins.
+func refinedMandatory(parent, c *yang.Entry) (mandatory, found bool) {
+	for _, u := range usesOf(parent) {
+		if u == nil {
+			continue
+		}
+		for _, r := range u.Refine {
+			if r == nil || r.Mandatory == nil {
+				continue
+			}
+			if strings.Contains(r.Name, "/") || r.Name != c.Name {
+				continue
+			}
+			mandatory, found = r.Mandatory.Name == "true", true
+		}
+	}
+	return mandatory, found
+}
+
+// hasImplicitPresence reports whether leaf c renders as a proto type that has
+// proto3 implicit presence (a scalar or a generated enum) rather than a
+// message type, which carries presence of its own. Mirrors leafFieldType's
+// dispatch, including its leafref resolution and its string fallback for an
+// unresolvable target, so the label and the type are always decided off the
+// same reading of the leaf.
+func hasImplicitPresence(c *yang.Entry) bool {
+	if c.Type == nil {
+		return false
+	}
+	if c.Type.Kind == yang.Yleafref {
+		if target := resolveLeafref(c); target != nil {
+			return hasImplicitPresence(target)
+		}
+		return true // leafFieldType's "string" fallback
+	}
+	if c.Type.Kind == yang.Yenum {
+		return true
+	}
+	_, isTimestamp := ProtoScalar(c.Type)
+	return !isTimestamp
+}
+
 func leafFieldType(c *yang.Entry, nested *strings.Builder, out *ProtoFile) string {
 	if c.Type.Kind == yang.Yleafref {
 		if target := resolveLeafref(c); target != nil {
@@ -891,6 +1090,23 @@ func emitEnum(c *yang.Entry, nested *strings.Builder, out *ProtoFile) string {
 		return name
 	}
 
+	// This enum may already be declared in the package's types file, by
+	// this file's earlier request or another file's. A proto type is
+	// identified by package + name, not by the file declaring it, so that
+	// declaration is usable verbatim: reference it and import the types
+	// file rather than emitting a second, necessarily-renamed copy.
+	if decl, ok := out.ClaimedEnums.lookup(baseName, sig); ok {
+		if variants == nil {
+			variants = map[string]string{}
+			out.EmittedEnums[baseName] = variants
+		}
+		variants[sig] = decl.name
+		if decl.importPath != "" && decl.importPath != out.SelfImportPath {
+			out.addImport(decl.importPath)
+		}
+		return decl.name
+	}
+
 	// qualifiedSrc drives both the type name and the value prefix, so a
 	// colliding enum gets a distinct name AND distinct value identifiers
 	// (proto enum values share their enclosing file's flat namespace,
@@ -899,14 +1115,12 @@ func emitEnum(c *yang.Entry, nested *strings.Builder, out *ProtoFile) string {
 	// Qualification triggers on either of two conditions: a different
 	// enum already emitted into *this* file under baseName (len(variants)
 	// > 0 — the original within-file check), or baseName already claimed
-	// by *another* output file in this run (out.ClaimedNames — see
-	// ProtoFile.ClaimedNames). The latter matters even on this leaf's
-	// first occurrence in this file: two different files each hitting
-	// "severity" for the first time must not both claim the bare name.
+	// by *another* output file in this package under a DIFFERENT value set
+	// (the reuse case returned above). Either way two distinct enums want
+	// one name, and one of them must qualify.
 	qualifiedSrc := src
 	name := baseName
-	_, nameClaimedElsewhere := out.ClaimedNames[baseName]
-	if len(variants) > 0 || nameClaimedElsewhere {
+	if len(variants) > 0 || out.ClaimedEnums.nameTaken(baseName) {
 		qualifiedSrc = enumQualifiedSource(c, src)
 		name = ProtoName(qualifiedSrc)
 	}
@@ -916,9 +1130,20 @@ func emitEnum(c *yang.Entry, nested *strings.Builder, out *ProtoFile) string {
 		out.EmittedEnums[baseName] = variants
 	}
 	variants[sig] = name
-	if out.ClaimedNames != nil {
-		out.ClaimedNames[name] = true
+
+	// Declare into the package's types file when there is one, so every
+	// output file in the package points at a single sink rather than at
+	// whichever sibling happened to need the enum first.
+	target := nested
+	declPath := out.SelfImportPath
+	if reg := out.ClaimedEnums; reg != nil && reg.Target != nil && reg.Target != out {
+		target = &reg.Target.Body
+		declPath = reg.ImportPath
+		if declPath != "" && declPath != out.SelfImportPath {
+			out.addImport(declPath)
+		}
 	}
+	out.ClaimedEnums.record(baseName, sig, enumDecl{name: name, importPath: declPath})
 
 	prefix := strings.ToUpper(strings.ReplaceAll(qualifiedSrc, "-", "_"))
 	type enumVal struct {
@@ -944,12 +1169,12 @@ func emitEnum(c *yang.Entry, nested *strings.Builder, out *ProtoFile) string {
 		}
 	}
 
-	fmt.Fprintf(nested, "enum %s {\n", name)
+	fmt.Fprintf(target, "enum %s {\n", name)
 	emitted := map[string]bool{}
 	if zeroIdx >= 0 {
 		// A real member already occupies 0: emit it under its own name,
 		// first, and no synthetic sentinel is needed at all.
-		fmt.Fprintf(nested, "  %s = 0;\n", vals[zeroIdx].protoName)
+		fmt.Fprintf(target, "  %s = 0;\n", vals[zeroIdx].protoName)
 		emitted[vals[zeroIdx].protoName] = true
 	} else {
 		// No member occupies 0: synthesize a sentinel to satisfy proto3,
@@ -966,7 +1191,7 @@ func emitEnum(c *yang.Entry, nested *strings.Builder, out *ProtoFile) string {
 			}
 		}
 		if !collides {
-			fmt.Fprintf(nested, "  %s = 0;\n", synthetic)
+			fmt.Fprintf(target, "  %s = 0;\n", synthetic)
 			emitted[synthetic] = true
 		}
 	}
@@ -975,9 +1200,9 @@ func emitEnum(c *yang.Entry, nested *strings.Builder, out *ProtoFile) string {
 			continue
 		}
 		emitted[v.protoName] = true
-		fmt.Fprintf(nested, "  %s = %d;\n", v.protoName, v.val)
+		fmt.Fprintf(target, "  %s = %d;\n", v.protoName, v.val)
 	}
-	fmt.Fprint(nested, "}\n\n")
+	fmt.Fprint(target, "}\n\n")
 
 	return name
 }

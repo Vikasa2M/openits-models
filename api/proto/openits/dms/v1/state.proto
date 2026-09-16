@@ -5,6 +5,7 @@ package openits.dms.v1;
 option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/dms/v1;dmsv1";
 
 import "google/protobuf/timestamp.proto";
+import "openits/dms/v1/types.proto";
 
 message Sign {
   SignConfig config = 1;
@@ -19,121 +20,89 @@ message Sign {
 }
 
 message SignConfig {
-  string elevation = 5;
-  uint32 heading = 6;
-  string id = 7;
+  optional string elevation = 5;
+  optional uint32 heading = 6;
+  optional string id = 7;
   google.protobuf.Timestamp install_date = 1;
-  string latitude = 2;
+  optional string latitude = 2;
   SignConfigLinearReference linear_reference = 4;
-  string longitude = 3;
-  string maintained_by = 10;
-  string name = 8;
-  string owner = 11;
-  string road_reference = 9;
-  string site_id = 12;
+  optional string longitude = 3;
+  optional string maintained_by = 10;
+  optional string name = 8;
+  optional string owner = 11;
+  optional string road_reference = 9;
+  optional string site_id = 12;
 }
 
 message SignConfigLinearReference {
-  string route_designator = 1;
-  string direction = 2;
-  string measure = 3;
-  string lrs_method = 4;
+  optional string route_designator = 1;
+  optional string direction = 2;
+  optional string measure = 3;
+  optional string lrs_method = 4;
 }
 
 message SignState {
-  Technology technology = 1;
-  uint32 sign_width_pixels = 2;
-  uint32 sign_height_pixels = 3;
+  optional string technology = 1;
+  optional uint32 sign_width_pixels = 2;
+  optional uint32 sign_height_pixels = 3;
   Capabilities capabilities = 5;
-  string elevation = 12;
-  string firmware = 4;
-  string firmware_build = 17;
-  string hardware_version = 18;
-  uint32 heading = 13;
-  string id = 14;
+  optional string elevation = 12;
+  optional string firmware = 4;
+  optional string firmware_build = 17;
+  optional string hardware_version = 18;
+  optional uint32 heading = 13;
+  optional string id = 14;
   google.protobuf.Timestamp install_date = 11;
-  string latitude = 6;
+  optional string latitude = 6;
   SignStateLinearReference linear_reference = 19;
-  string longitude = 7;
-  string maintained_by = 20;
-  string make = 8;
-  string model = 9;
-  string name = 15;
-  string owner = 21;
-  string road_reference = 16;
-  string serial = 10;
-  string site_id = 22;
-}
-
-enum Technology {
-  TECHNOLOGY_UNKNOWN = 0;
-  TECHNOLOGY_LED = 1;
-  TECHNOLOGY_FLIP_DISK = 2;
-  TECHNOLOGY_HYBRID = 3;
-  TECHNOLOGY_FIBER_OPTIC = 4;
-  TECHNOLOGY_SHUTTERED = 5;
-  TECHNOLOGY_LAMP = 6;
-  TECHNOLOGY_DRUM = 7;
+  optional string longitude = 7;
+  optional string maintained_by = 20;
+  optional string make = 8;
+  optional string model = 9;
+  optional string name = 15;
+  optional string owner = 21;
+  optional string road_reference = 16;
+  optional string serial = 10;
+  optional string site_id = 22;
 }
 
 message Capabilities {
-  SignType sign_type = 1;
-  uint32 character_height_pixels = 2;
-  uint32 character_width_pixels = 3;
-  uint32 sign_face_height_mm = 9;
-  uint32 sign_face_width_mm = 10;
-  string pixel_pitch_mm = 14;
-  uint32 character_height_mm = 11;
-  uint32 character_width_mm = 12;
-  BeaconType beacon_type = 13;
-  ColorCapability color_capability = 4;
-  uint32 max_pages = 5;
-  bool beacon_capable = 6;
+  optional SignType sign_type = 1;
+  optional uint32 character_height_pixels = 2;
+  optional uint32 character_width_pixels = 3;
+  optional uint32 sign_face_height_mm = 9;
+  optional uint32 sign_face_width_mm = 10;
+  optional string pixel_pitch_mm = 14;
+  optional uint32 character_height_mm = 11;
+  optional uint32 character_width_mm = 12;
+  optional BeaconType beacon_type = 13;
+  optional ColorCapability color_capability = 4;
+  optional uint32 max_pages = 5;
+  optional bool beacon_capable = 6;
   repeated string supported_multi_tags = 7;
   repeated Font font = 8;
   repeated Graphic graphic = 15;
 }
 
-enum SignType {
-  SIGN_TYPE_FULL_MATRIX = 0;
-  SIGN_TYPE_CHAR_MATRIX = 1;
-  SIGN_TYPE_LINE_MATRIX = 2;
-  SIGN_TYPE_OTHER = 3;
-}
-
-enum BeaconType {
-  BEACON_TYPE_NONE = 0;
-  BEACON_TYPE_ONE_BEACON = 1;
-  BEACON_TYPE_TWO_BEACON = 2;
-  BEACON_TYPE_FOUR_BEACON = 3;
-  BEACON_TYPE_OTHER = 4;
-}
-
-enum ColorCapability {
-  COLOR_CAPABILITY_MONOCHROME_1BIT = 0;
-  COLOR_CAPABILITY_MONOCHROME_MULTI = 1;
-  COLOR_CAPABILITY_COLOR = 2;
-}
-
 message Font {
-  uint32 font_number = 1;
-  string name = 2;
-  uint32 character_height_pixels = 3;
-  uint32 character_width_pixels = 4;
+  optional uint32 font_number = 1;
+  optional string name = 2;
+  optional uint32 character_height_pixels = 3;
+  optional uint32 character_width_pixels = 4;
 }
 
 message Graphic {
-  uint32 graphic_number = 1;
-  string name = 2;
-  uint32 height_pixels = 3;
-  uint32 width_pixels = 4;
+  optional uint32 graphic_number = 1;
+  optional string name = 2;
+  optional uint32 height_pixels = 3;
+  optional uint32 width_pixels = 4;
 }
 
 message SignStateLinearReference {
-  string route_designator = 1;
-  string direction = 2;
-  string measure = 3;
-  string lrs_method = 4;
+  optional string route_designator = 1;
+  optional string direction = 2;
+  optional string measure = 3;
+  optional string lrs_method = 4;
 }
 
 message Messages {
@@ -141,47 +110,25 @@ message Messages {
 }
 
 message Slot {
-  OpenitsDmsMessageMemoryType memory_type = 1;
-  uint32 slot_number = 2;
+  optional MessageMemoryType memory_type = 1;
+  optional uint32 slot_number = 2;
   SlotConfig config = 7;
   SlotState state = 8;
 }
 
-enum OpenitsDmsMessageMemoryType {
-  OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED = 0;
-  OPENITS_DMS_MESSAGE_MEMORY_TYPE_PERMANENT = 1;
-  OPENITS_DMS_MESSAGE_MEMORY_TYPE_CHANGEABLE = 2;
-  OPENITS_DMS_MESSAGE_MEMORY_TYPE_VOLATILE = 3;
-  OPENITS_DMS_MESSAGE_MEMORY_TYPE_SCHEDULE = 4;
-  OPENITS_DMS_MESSAGE_MEMORY_TYPE_BLANK = 5;
-}
-
 message SlotConfig {
-  OpenitsDmsMessageMemoryType memory_type = 1;
-  uint32 slot_number = 2;
-  Beacon beacon = 3;
-  uint32 crc = 4;
-  string multi_string = 5;
-  string owner = 6;
-  uint32 priority = 7;
-}
-
-enum Beacon {
-  BEACON_NONE = 0;
-  BEACON_FLASHING = 1;
+  optional MessageMemoryType memory_type = 1;
+  optional uint32 slot_number = 2;
+  optional Beacon beacon = 3;
+  optional uint32 crc = 4;
+  optional string multi_string = 5;
+  optional string owner = 6;
+  optional uint32 priority = 7;
 }
 
 message SlotState {
-  uint32 crc = 2;
-  DmsMessageStatus status = 1;
-}
-
-enum DmsMessageStatus {
-  DMS_MESSAGE_STATUS_NOT_USED = 0;
-  DMS_MESSAGE_STATUS_MODIFYING = 1;
-  DMS_MESSAGE_STATUS_VALIDATING = 2;
-  DMS_MESSAGE_STATUS_VALID = 3;
-  DMS_MESSAGE_STATUS_ERROR = 4;
+  optional uint32 crc = 2;
+  optional DmsMessageStatus status = 1;
 }
 
 message Schedule {
@@ -191,54 +138,27 @@ message Schedule {
 }
 
 message DayPlan {
-  uint32 day_plan_id = 1;
-  string name = 2;
+  optional uint32 day_plan_id = 1;
+  optional string name = 2;
   repeated Action action = 3;
 }
 
 message Action {
-  string start_time = 1;
-  OpenitsDmsMessageMemoryType memory_type = 2;
-  uint32 slot_number = 3;
+  optional string start_time = 1;
+  MessageMemoryType memory_type = 2;
+  optional uint32 slot_number = 3;
 }
 
 message ScheduleEntry {
-  uint32 schedule_id = 1;
-  uint32 day_plan = 5;
+  optional uint32 schedule_id = 1;
+  optional uint32 day_plan = 5;
   repeated uint32 days_of_month = 4;
   repeated DayOfWeek days_of_week = 3;
   repeated Month months = 2;
 }
 
-enum DayOfWeek {
-  DAY_OF_WEEK_UNSPECIFIED = 0;
-  DAY_OF_WEEK_MONDAY = 1;
-  DAY_OF_WEEK_TUESDAY = 2;
-  DAY_OF_WEEK_WEDNESDAY = 3;
-  DAY_OF_WEEK_THURSDAY = 4;
-  DAY_OF_WEEK_FRIDAY = 5;
-  DAY_OF_WEEK_SATURDAY = 6;
-  DAY_OF_WEEK_SUNDAY = 7;
-}
-
-enum Month {
-  MONTH_UNSPECIFIED = 0;
-  MONTH_JANUARY = 1;
-  MONTH_FEBRUARY = 2;
-  MONTH_MARCH = 3;
-  MONTH_APRIL = 4;
-  MONTH_MAY = 5;
-  MONTH_JUNE = 6;
-  MONTH_JULY = 7;
-  MONTH_AUGUST = 8;
-  MONTH_SEPTEMBER = 9;
-  MONTH_OCTOBER = 10;
-  MONTH_NOVEMBER = 11;
-  MONTH_DECEMBER = 12;
-}
-
 message ScheduleState {
-  uint32 active_day_plan_id = 1;
+  optional uint32 active_day_plan_id = 1;
   google.protobuf.Timestamp next_action_at = 2;
 }
 
@@ -248,30 +168,24 @@ message Control {
 }
 
 message ControlConfig {
-  RequestSelfTest request_self_test = 7;
+  optional RequestSelfTest request_self_test = 7;
   ActiveMessage active_message = 4;
   ControlConfigFallback fallback = 5;
-  uint32 brightness_setpoint = 6;
-  string control_mode = 11;
-  string default_page_off_time_s = 1;
-  string default_page_on_time_s = 2;
-  IlluminationControl illumination_control = 3;
-}
-
-enum RequestSelfTest {
-  REQUEST_SELF_TEST_NONE = 0;
-  REQUEST_SELF_TEST_PIXEL_TEST = 1;
-  REQUEST_SELF_TEST_LAMP_TEST = 2;
+  optional uint32 brightness_setpoint = 6;
+  optional string control_mode = 11;
+  optional string default_page_off_time_s = 1;
+  optional string default_page_on_time_s = 2;
+  optional IlluminationControl illumination_control = 3;
 }
 
 message ActiveMessage {
-  uint32 duration_s = 3;
-  bool indefinite = 7;
-  uint32 activation_priority = 4;
-  uint32 crc = 5;
-  string owner = 6;
-  OpenitsDmsMessageMemoryType memory_type = 1;
-  uint32 slot_number = 2;
+  optional uint32 duration_s = 3;
+  optional bool indefinite = 7;
+  optional uint32 activation_priority = 4;
+  optional uint32 crc = 5;
+  optional string owner = 6;
+  optional MessageMemoryType memory_type = 1;
+  optional uint32 slot_number = 2;
 }
 
 message ControlConfigFallback {
@@ -282,88 +196,74 @@ message ControlConfigFallback {
 }
 
 message ControlConfigFallbackCommLoss {
-  uint32 comm_loss_timeout_s = 1;
-  OpenitsDmsMessageMemoryType memory_type = 2;
-  uint32 slot_number = 3;
+  optional uint32 comm_loss_timeout_s = 1;
+  optional MessageMemoryType memory_type = 2;
+  optional uint32 slot_number = 3;
 }
 
 message ControlConfigFallbackEndOfDuration {
-  OpenitsDmsMessageMemoryType memory_type = 1;
-  uint32 slot_number = 2;
+  optional MessageMemoryType memory_type = 1;
+  optional uint32 slot_number = 2;
 }
 
 message ControlConfigFallbackPowerRecovery {
-  uint32 short_outage_threshold_s = 1;
+  optional uint32 short_outage_threshold_s = 1;
   ControlConfigFallbackPowerRecoveryShortOutage short_outage = 2;
   ControlConfigFallbackPowerRecoveryLongOutage long_outage = 3;
 }
 
 message ControlConfigFallbackPowerRecoveryShortOutage {
-  OpenitsDmsMessageMemoryType memory_type = 1;
-  uint32 slot_number = 2;
+  optional MessageMemoryType memory_type = 1;
+  optional uint32 slot_number = 2;
 }
 
 message ControlConfigFallbackPowerRecoveryLongOutage {
-  OpenitsDmsMessageMemoryType memory_type = 1;
-  uint32 slot_number = 2;
+  optional MessageMemoryType memory_type = 1;
+  optional uint32 slot_number = 2;
 }
 
 message ControlConfigFallbackReset {
-  OpenitsDmsMessageMemoryType memory_type = 1;
-  uint32 slot_number = 2;
-}
-
-enum IlluminationControl {
-  ILLUMINATION_CONTROL_PHOTOCELL = 0;
-  ILLUMINATION_CONTROL_TIMER = 1;
-  ILLUMINATION_CONTROL_MANUAL = 2;
+  optional MessageMemoryType memory_type = 1;
+  optional uint32 slot_number = 2;
 }
 
 message ControlState {
   reserved 11;
   reserved "controller_uptime_s";
-  string display_state = 21;
-  BeaconState beacon_state = 6;
+  optional string display_state = 21;
+  optional BeaconState beacon_state = 6;
   google.protobuf.Timestamp last_mode_change = 2;
-  uint32 brightness_current = 8;
+  optional uint32 brightness_current = 8;
   Active active = 9;
   Preempted preempted = 5;
   ControlStateFallback fallback = 7;
-  bool comm_loss_active = 10;
-  bool power_loss_active = 22;
-  uint32 brightness_setpoint = 12;
-  string control_mode = 23;
-  string default_page_off_time_s = 1;
-  string default_page_on_time_s = 3;
-  IlluminationControl illumination_control = 4;
-}
-
-enum BeaconState {
-  BEACON_STATE_NONE = 0;
-  BEACON_STATE_DARK = 1;
-  BEACON_STATE_FLASHING = 2;
-  BEACON_STATE_STEADY = 3;
-  BEACON_STATE_FAULT = 4;
+  optional bool comm_loss_active = 10;
+  optional bool power_loss_active = 22;
+  optional uint32 brightness_setpoint = 12;
+  optional string control_mode = 23;
+  optional string default_page_off_time_s = 1;
+  optional string default_page_on_time_s = 3;
+  optional IlluminationControl illumination_control = 4;
 }
 
 message Active {
   google.protobuf.Timestamp activated_at = 3;
   google.protobuf.Timestamp expires_at = 4;
-  string source = 5;
-  string activation_trigger = 10;
-  Beacon beacon = 11;
-  uint32 crc = 6;
-  OpenitsDmsMessageMemoryType memory_type = 1;
-  string multi_string = 7;
-  string owner = 8;
-  uint32 priority = 9;
-  uint32 slot_number = 2;
+  optional string source = 5;
+  optional string activation_trigger = 10;
+  optional Beacon beacon = 11;
+  optional uint32 crc = 6;
+  optional MessageMemoryType memory_type = 1;
+  optional string multi_string = 7;
+  optional string owner = 8;
+  optional uint32 priority = 9;
+  optional uint32 slot_number = 2;
 }
 
 message Preempted {
-  uint32 remaining_duration_s = 3;
-  OpenitsDmsMessageMemoryType memory_type = 1;
-  uint32 slot_number = 2;
+  optional uint32 remaining_duration_s = 3;
+  optional MessageMemoryType memory_type = 1;
+  optional uint32 slot_number = 2;
 }
 
 message ControlStateFallback {
@@ -374,48 +274,48 @@ message ControlStateFallback {
 }
 
 message ControlStateFallbackCommLoss {
-  uint32 comm_loss_timeout_s = 1;
-  OpenitsDmsMessageMemoryType memory_type = 2;
-  uint32 slot_number = 3;
+  optional uint32 comm_loss_timeout_s = 1;
+  optional MessageMemoryType memory_type = 2;
+  optional uint32 slot_number = 3;
 }
 
 message ControlStateFallbackEndOfDuration {
-  OpenitsDmsMessageMemoryType memory_type = 1;
-  uint32 slot_number = 2;
+  optional MessageMemoryType memory_type = 1;
+  optional uint32 slot_number = 2;
 }
 
 message ControlStateFallbackPowerRecovery {
-  uint32 short_outage_threshold_s = 1;
+  optional uint32 short_outage_threshold_s = 1;
   ControlStateFallbackPowerRecoveryShortOutage short_outage = 2;
   ControlStateFallbackPowerRecoveryLongOutage long_outage = 3;
 }
 
 message ControlStateFallbackPowerRecoveryShortOutage {
-  OpenitsDmsMessageMemoryType memory_type = 1;
-  uint32 slot_number = 2;
+  optional MessageMemoryType memory_type = 1;
+  optional uint32 slot_number = 2;
 }
 
 message ControlStateFallbackPowerRecoveryLongOutage {
-  OpenitsDmsMessageMemoryType memory_type = 1;
-  uint32 slot_number = 2;
+  optional MessageMemoryType memory_type = 1;
+  optional uint32 slot_number = 2;
 }
 
 message ControlStateFallbackReset {
-  OpenitsDmsMessageMemoryType memory_type = 1;
-  uint32 slot_number = 2;
+  optional MessageMemoryType memory_type = 1;
+  optional uint32 slot_number = 2;
 }
 
 message Environment {
   reserved 1;
   reserved "ambient_light_lux";
-  uint32 ambient_light_level = 8;
-  uint32 ambient_illuminance_lux = 9;
-  string cabinet_temperature_c = 2;
-  uint32 humidity_percent = 3;
-  bool door_open = 4;
-  string sign_face_temperature_c = 5;
-  bool fan_active = 6;
-  bool heater_active = 7;
+  optional uint32 ambient_light_level = 8;
+  optional uint32 ambient_illuminance_lux = 9;
+  optional string cabinet_temperature_c = 2;
+  optional uint32 humidity_percent = 3;
+  optional bool door_open = 4;
+  optional string sign_face_temperature_c = 5;
+  optional bool fan_active = 6;
+  optional bool heater_active = 7;
 }
 
 message CabinetPower {
@@ -428,55 +328,39 @@ message CabinetPowerState {
   reserved 6, 7, 9;
   reserved "on_battery_policy", "police_panel_open", "signal_operation_on_battery";
   Battery battery = 1;
-  bool door_open = 2;
+  optional bool door_open = 2;
   Generator generator = 3;
-  string line_frequency_hz = 4;
-  string line_voltage_v = 5;
-  PowerSource power_source = 8;
-  uint32 transfer_count = 10;
+  optional string line_frequency_hz = 4;
+  optional string line_voltage_v = 5;
+  optional PowerSource power_source = 8;
+  optional uint32 transfer_count = 10;
 }
 
 message Battery {
-  uint32 state_of_charge_pct = 1;
-  uint32 runtime_remaining_minutes = 2;
-  string voltage_v = 3;
-  string temperature_c = 4;
-  bool charger_fault = 5;
-  BatteryTestState test_state = 6;
+  optional uint32 state_of_charge_pct = 1;
+  optional uint32 runtime_remaining_minutes = 2;
+  optional string voltage_v = 3;
+  optional string temperature_c = 4;
+  optional bool charger_fault = 5;
+  optional BatteryTestState test_state = 6;
   google.protobuf.Timestamp last_test = 7;
 }
 
-enum BatteryTestState {
-  BATTERY_TEST_STATE_IDLE = 0;
-  BATTERY_TEST_STATE_IN_PROGRESS = 1;
-  BATTERY_TEST_STATE_PASSED = 2;
-  BATTERY_TEST_STATE_FAILED = 3;
-}
-
 message Generator {
-  bool running = 1;
-  uint32 fuel_level_pct = 2;
-}
-
-enum PowerSource {
-  POWER_SOURCE_ON_LINE = 0;
-  POWER_SOURCE_ON_BATTERY = 1;
-  POWER_SOURCE_BYPASS = 2;
-  POWER_SOURCE_OFF = 3;
-  POWER_SOURCE_SOLAR = 4;
-  POWER_SOURCE_GENERATOR = 5;
+  optional bool running = 1;
+  optional uint32 fuel_level_pct = 2;
 }
 
 message Diagnostics {
-  uint32 pixels_total = 11;
-  uint32 pixels_stuck_on = 1;
-  uint32 pixels_stuck_off = 2;
-  uint32 pixels_failed = 12;
-  uint32 lamps_total = 13;
-  uint32 lamps_failed = 14;
-  uint32 beacons_total = 4;
-  uint32 beacons_failed = 5;
-  uint32 controller_uptime_s = 6;
+  optional uint32 pixels_total = 11;
+  optional uint32 pixels_stuck_on = 1;
+  optional uint32 pixels_stuck_off = 2;
+  optional uint32 pixels_failed = 12;
+  optional uint32 lamps_total = 13;
+  optional uint32 lamps_failed = 14;
+  optional uint32 beacons_total = 4;
+  optional uint32 beacons_failed = 5;
+  optional uint32 controller_uptime_s = 6;
   google.protobuf.Timestamp last_self_test = 3;
 }
 
@@ -485,19 +369,11 @@ message Faults {
 }
 
 message Fault {
-  string category = 1;
-  string correlates_with = 6;
-  string description = 2;
-  string fault_id = 3;
+  optional string category = 1;
+  optional string correlates_with = 6;
+  optional string description = 2;
+  optional string fault_id = 3;
   google.protobuf.Timestamp first_observed = 4;
-  FaultSeverity severity = 5;
-}
-
-enum FaultSeverity {
-  FAULT_SEVERITY_INFO = 0;
-  FAULT_SEVERITY_WARNING = 1;
-  FAULT_SEVERITY_MINOR = 2;
-  FAULT_SEVERITY_MAJOR = 3;
-  FAULT_SEVERITY_CRITICAL = 4;
+  optional FaultSeverity severity = 5;
 }
 

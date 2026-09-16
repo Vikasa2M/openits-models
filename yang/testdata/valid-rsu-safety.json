@@ -3,7 +3,7 @@
     "config": { "id": "rsu-safety-01", "name": "Safety Test RSU" },
     "operating": {
       "config": {
-        "configured-time-source": "gnss-pps",
+        "configured-time-source": "openits-types:time-source-gnss-pps",
         "mode": "openits-rsu-types:mode-operate"
       }
     },

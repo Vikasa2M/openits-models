@@ -26,13 +26,13 @@ type ZoneOccupancyChanged struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	Kind               string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	ZoneId             string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	ObservedBy         string                 `protobuf:"bytes,2,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
-	OccupancyCount     uint32                 `protobuf:"varint,3,opt,name=occupancy_count,json=occupancyCount,proto3" json:"occupancy_count,omitempty"`
+	ObservedBy         *string                `protobuf:"bytes,2,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
+	OccupancyCount     *uint32                `protobuf:"varint,3,opt,name=occupancy_count,json=occupancyCount,proto3,oneof" json:"occupancy_count,omitempty"`
 	OccupiedSince      *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=occupied_since,json=occupiedSince,proto3" json:"occupied_since,omitempty"`
 	OccurredAt         *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner              string                 `protobuf:"bytes,6,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner              *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Presence           bool                   `protobuf:"varint,7,opt,name=presence,proto3" json:"presence,omitempty"`
-	PresenceConfidence uint32                 `protobuf:"varint,8,opt,name=presence_confidence,json=presenceConfidence,proto3" json:"presence_confidence,omitempty"`
+	PresenceConfidence *uint32                `protobuf:"varint,8,opt,name=presence_confidence,json=presenceConfidence,proto3,oneof" json:"presence_confidence,omitempty"`
 	PresentClass       []*PresentClass        `protobuf:"bytes,9,rep,name=present_class,json=presentClass,proto3" json:"present_class,omitempty"`
 	Sequence           uint64                 `protobuf:"varint,10,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId     string                 `protobuf:"bytes,11,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -85,15 +85,15 @@ func (x *ZoneOccupancyChanged) GetZoneId() string {
 }
 
 func (x *ZoneOccupancyChanged) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
 
 func (x *ZoneOccupancyChanged) GetOccupancyCount() uint32 {
-	if x != nil {
-		return x.OccupancyCount
+	if x != nil && x.OccupancyCount != nil {
+		return *x.OccupancyCount
 	}
 	return 0
 }
@@ -113,8 +113,8 @@ func (x *ZoneOccupancyChanged) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *ZoneOccupancyChanged) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -127,8 +127,8 @@ func (x *ZoneOccupancyChanged) GetPresence() bool {
 }
 
 func (x *ZoneOccupancyChanged) GetPresenceConfidence() uint32 {
-	if x != nil {
-		return x.PresenceConfidence
+	if x != nil && x.PresenceConfidence != nil {
+		return *x.PresenceConfidence
 	}
 	return 0
 }
@@ -156,9 +156,9 @@ func (x *ZoneOccupancyChanged) GetSourceDeviceId() string {
 
 type PresentClass struct {
 	state                    protoimpl.MessageState `protogen:"open.v1"`
-	Class                    string                 `protobuf:"bytes,1,opt,name=class,proto3" json:"class,omitempty"`
-	Count                    uint32                 `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
-	ClassificationConfidence uint32                 `protobuf:"varint,3,opt,name=classification_confidence,json=classificationConfidence,proto3" json:"classification_confidence,omitempty"`
+	Class                    *string                `protobuf:"bytes,1,opt,name=class,proto3,oneof" json:"class,omitempty"`
+	Count                    *uint32                `protobuf:"varint,2,opt,name=count,proto3,oneof" json:"count,omitempty"`
+	ClassificationConfidence *uint32                `protobuf:"varint,3,opt,name=classification_confidence,json=classificationConfidence,proto3,oneof" json:"classification_confidence,omitempty"`
 	unknownFields            protoimpl.UnknownFields
 	sizeCache                protoimpl.SizeCache
 }
@@ -194,22 +194,22 @@ func (*PresentClass) Descriptor() ([]byte, []int) {
 }
 
 func (x *PresentClass) GetClass() string {
-	if x != nil {
-		return x.Class
+	if x != nil && x.Class != nil {
+		return *x.Class
 	}
 	return ""
 }
 
 func (x *PresentClass) GetCount() uint32 {
-	if x != nil {
-		return x.Count
+	if x != nil && x.Count != nil {
+		return *x.Count
 	}
 	return 0
 }
 
 func (x *PresentClass) GetClassificationConfidence() uint32 {
-	if x != nil {
-		return x.ClassificationConfidence
+	if x != nil && x.ClassificationConfidence != nil {
+		return *x.ClassificationConfidence
 	}
 	return 0
 }
@@ -218,9 +218,9 @@ type ZoneOccupancyIntervalReport struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	Zone           []*Zone                `protobuf:"bytes,1,rep,name=zone,proto3" json:"zone,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,2,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,2,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,4,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,4,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,5,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,6,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -272,8 +272,8 @@ func (x *ZoneOccupancyIntervalReport) GetZone() []*Zone {
 }
 
 func (x *ZoneOccupancyIntervalReport) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -286,8 +286,8 @@ func (x *ZoneOccupancyIntervalReport) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *ZoneOccupancyIntervalReport) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -308,12 +308,12 @@ func (x *ZoneOccupancyIntervalReport) GetSourceDeviceId() string {
 
 type Zone struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
-	ZoneId             string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	ZoneId             *string                `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3,oneof" json:"zone_id,omitempty"`
 	IntervalStart      *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=interval_start,json=intervalStart,proto3" json:"interval_start,omitempty"`
-	IntervalDurationS  uint32                 `protobuf:"varint,3,opt,name=interval_duration_s,json=intervalDurationS,proto3" json:"interval_duration_s,omitempty"`
-	ObservedCount      uint32                 `protobuf:"varint,4,opt,name=observed_count,json=observedCount,proto3" json:"observed_count,omitempty"`
-	OccupancyPercent   string                 `protobuf:"bytes,5,opt,name=occupancy_percent,json=occupancyPercent,proto3" json:"occupancy_percent,omitempty"`
-	PeakOccupancyCount uint32                 `protobuf:"varint,6,opt,name=peak_occupancy_count,json=peakOccupancyCount,proto3" json:"peak_occupancy_count,omitempty"`
+	IntervalDurationS  *uint32                `protobuf:"varint,3,opt,name=interval_duration_s,json=intervalDurationS,proto3,oneof" json:"interval_duration_s,omitempty"`
+	ObservedCount      *uint32                `protobuf:"varint,4,opt,name=observed_count,json=observedCount,proto3,oneof" json:"observed_count,omitempty"`
+	OccupancyPercent   *string                `protobuf:"bytes,5,opt,name=occupancy_percent,json=occupancyPercent,proto3,oneof" json:"occupancy_percent,omitempty"`
+	PeakOccupancyCount *uint32                `protobuf:"varint,6,opt,name=peak_occupancy_count,json=peakOccupancyCount,proto3,oneof" json:"peak_occupancy_count,omitempty"`
 	ObservedClass      []*ObservedClass       `protobuf:"bytes,7,rep,name=observed_class,json=observedClass,proto3" json:"observed_class,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
@@ -350,8 +350,8 @@ func (*Zone) Descriptor() ([]byte, []int) {
 }
 
 func (x *Zone) GetZoneId() string {
-	if x != nil {
-		return x.ZoneId
+	if x != nil && x.ZoneId != nil {
+		return *x.ZoneId
 	}
 	return ""
 }
@@ -364,29 +364,29 @@ func (x *Zone) GetIntervalStart() *timestamppb.Timestamp {
 }
 
 func (x *Zone) GetIntervalDurationS() uint32 {
-	if x != nil {
-		return x.IntervalDurationS
+	if x != nil && x.IntervalDurationS != nil {
+		return *x.IntervalDurationS
 	}
 	return 0
 }
 
 func (x *Zone) GetObservedCount() uint32 {
-	if x != nil {
-		return x.ObservedCount
+	if x != nil && x.ObservedCount != nil {
+		return *x.ObservedCount
 	}
 	return 0
 }
 
 func (x *Zone) GetOccupancyPercent() string {
-	if x != nil {
-		return x.OccupancyPercent
+	if x != nil && x.OccupancyPercent != nil {
+		return *x.OccupancyPercent
 	}
 	return ""
 }
 
 func (x *Zone) GetPeakOccupancyCount() uint32 {
-	if x != nil {
-		return x.PeakOccupancyCount
+	if x != nil && x.PeakOccupancyCount != nil {
+		return *x.PeakOccupancyCount
 	}
 	return 0
 }
@@ -400,9 +400,9 @@ func (x *Zone) GetObservedClass() []*ObservedClass {
 
 type ObservedClass struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Class          string                 `protobuf:"bytes,1,opt,name=class,proto3" json:"class,omitempty"`
-	Count          uint32                 `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
-	MeanConfidence uint32                 `protobuf:"varint,3,opt,name=mean_confidence,json=meanConfidence,proto3" json:"mean_confidence,omitempty"`
+	Class          *string                `protobuf:"bytes,1,opt,name=class,proto3,oneof" json:"class,omitempty"`
+	Count          *uint32                `protobuf:"varint,2,opt,name=count,proto3,oneof" json:"count,omitempty"`
+	MeanConfidence *uint32                `protobuf:"varint,3,opt,name=mean_confidence,json=meanConfidence,proto3,oneof" json:"mean_confidence,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -438,22 +438,22 @@ func (*ObservedClass) Descriptor() ([]byte, []int) {
 }
 
 func (x *ObservedClass) GetClass() string {
-	if x != nil {
-		return x.Class
+	if x != nil && x.Class != nil {
+		return *x.Class
 	}
 	return ""
 }
 
 func (x *ObservedClass) GetCount() uint32 {
-	if x != nil {
-		return x.Count
+	if x != nil && x.Count != nil {
+		return *x.Count
 	}
 	return 0
 }
 
 func (x *ObservedClass) GetMeanConfidence() uint32 {
-	if x != nil {
-		return x.MeanConfidence
+	if x != nil && x.MeanConfidence != nil {
+		return *x.MeanConfidence
 	}
 	return 0
 }
@@ -462,49 +462,67 @@ var File_openits_zone_occupancy_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_zone_occupancy_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"&openits/zone_occupancy/v1/events.proto\x12\x19openits.zone_occupancy.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x84\x04\n" +
+	"&openits/zone_occupancy/v1/events.proto\x12\x19openits.zone_occupancy.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xde\x04\n" +
 	"\x14ZoneOccupancyChanged\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x17\n" +
-	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12\x1f\n" +
-	"\vobserved_by\x18\x02 \x01(\tR\n" +
-	"observedBy\x12'\n" +
-	"\x0foccupancy_count\x18\x03 \x01(\rR\x0eoccupancyCount\x12A\n" +
+	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12$\n" +
+	"\vobserved_by\x18\x02 \x01(\tH\x00R\n" +
+	"observedBy\x88\x01\x01\x12,\n" +
+	"\x0foccupancy_count\x18\x03 \x01(\rH\x01R\x0eoccupancyCount\x88\x01\x01\x12A\n" +
 	"\x0eoccupied_since\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\roccupiedSince\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\x06 \x01(\tR\x05owner\x12\x1a\n" +
-	"\bpresence\x18\a \x01(\bR\bpresence\x12/\n" +
-	"\x13presence_confidence\x18\b \x01(\rR\x12presenceConfidence\x12L\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\x06 \x01(\tH\x02R\x05owner\x88\x01\x01\x12\x1a\n" +
+	"\bpresence\x18\a \x01(\bR\bpresence\x124\n" +
+	"\x13presence_confidence\x18\b \x01(\rH\x03R\x12presenceConfidence\x88\x01\x01\x12L\n" +
 	"\rpresent_class\x18\t \x03(\v2'.openits.zone_occupancy.v1.PresentClassR\fpresentClass\x12\x1a\n" +
 	"\bsequence\x18\n" +
 	" \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\v \x01(\tR\x0esourceDeviceId\"w\n" +
-	"\fPresentClass\x12\x14\n" +
-	"\x05class\x18\x01 \x01(\tR\x05class\x12\x14\n" +
-	"\x05count\x18\x02 \x01(\rR\x05count\x12;\n" +
-	"\x19classification_confidence\x18\x03 \x01(\rR\x18classificationConfidence\"\xa0\x02\n" +
+	"\x10source_device_id\x18\v \x01(\tR\x0esourceDeviceIdB\x0e\n" +
+	"\f_observed_byB\x12\n" +
+	"\x10_occupancy_countB\b\n" +
+	"\x06_ownerB\x16\n" +
+	"\x14_presence_confidence\"\xb8\x01\n" +
+	"\fPresentClass\x12\x19\n" +
+	"\x05class\x18\x01 \x01(\tH\x00R\x05class\x88\x01\x01\x12\x19\n" +
+	"\x05count\x18\x02 \x01(\rH\x01R\x05count\x88\x01\x01\x12@\n" +
+	"\x19classification_confidence\x18\x03 \x01(\rH\x02R\x18classificationConfidence\x88\x01\x01B\b\n" +
+	"\x06_classB\b\n" +
+	"\x06_countB\x1c\n" +
+	"\x1a_classification_confidence\"\xc4\x02\n" +
 	"\x1bZoneOccupancyIntervalReport\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x123\n" +
-	"\x04zone\x18\x01 \x03(\v2\x1f.openits.zone_occupancy.v1.ZoneR\x04zone\x12\x1f\n" +
-	"\vobserved_by\x18\x02 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04zone\x18\x01 \x03(\v2\x1f.openits.zone_occupancy.v1.ZoneR\x04zone\x12$\n" +
+	"\vobserved_by\x18\x02 \x01(\tH\x00R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\x04 \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\x04 \x01(\tH\x01R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\x05 \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\x06 \x01(\tR\x0esourceDeviceId\"\xe9\x02\n" +
-	"\x04Zone\x12\x17\n" +
-	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12A\n" +
-	"\x0einterval_start\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\rintervalStart\x12.\n" +
-	"\x13interval_duration_s\x18\x03 \x01(\rR\x11intervalDurationS\x12%\n" +
-	"\x0eobserved_count\x18\x04 \x01(\rR\robservedCount\x12+\n" +
-	"\x11occupancy_percent\x18\x05 \x01(\tR\x10occupancyPercent\x120\n" +
-	"\x14peak_occupancy_count\x18\x06 \x01(\rR\x12peakOccupancyCount\x12O\n" +
-	"\x0eobserved_class\x18\a \x03(\v2(.openits.zone_occupancy.v1.ObservedClassR\robservedClass\"d\n" +
-	"\rObservedClass\x12\x14\n" +
-	"\x05class\x18\x01 \x01(\tR\x05class\x12\x14\n" +
-	"\x05count\x18\x02 \x01(\rR\x05count\x12'\n" +
-	"\x0fmean_confidence\x18\x03 \x01(\rR\x0emeanConfidenceBXZVgithub.com/Vikasa2M/openits-models/pkg/proto/openits/zone_occupancy/v1;zoneoccupancyv1b\x06proto3"
+	"\x10source_device_id\x18\x06 \x01(\tR\x0esourceDeviceIdB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xe8\x03\n" +
+	"\x04Zone\x12\x1c\n" +
+	"\azone_id\x18\x01 \x01(\tH\x00R\x06zoneId\x88\x01\x01\x12A\n" +
+	"\x0einterval_start\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\rintervalStart\x123\n" +
+	"\x13interval_duration_s\x18\x03 \x01(\rH\x01R\x11intervalDurationS\x88\x01\x01\x12*\n" +
+	"\x0eobserved_count\x18\x04 \x01(\rH\x02R\robservedCount\x88\x01\x01\x120\n" +
+	"\x11occupancy_percent\x18\x05 \x01(\tH\x03R\x10occupancyPercent\x88\x01\x01\x125\n" +
+	"\x14peak_occupancy_count\x18\x06 \x01(\rH\x04R\x12peakOccupancyCount\x88\x01\x01\x12O\n" +
+	"\x0eobserved_class\x18\a \x03(\v2(.openits.zone_occupancy.v1.ObservedClassR\robservedClassB\n" +
+	"\n" +
+	"\b_zone_idB\x16\n" +
+	"\x14_interval_duration_sB\x11\n" +
+	"\x0f_observed_countB\x14\n" +
+	"\x12_occupancy_percentB\x17\n" +
+	"\x15_peak_occupancy_count\"\x9b\x01\n" +
+	"\rObservedClass\x12\x19\n" +
+	"\x05class\x18\x01 \x01(\tH\x00R\x05class\x88\x01\x01\x12\x19\n" +
+	"\x05count\x18\x02 \x01(\rH\x01R\x05count\x88\x01\x01\x12,\n" +
+	"\x0fmean_confidence\x18\x03 \x01(\rH\x02R\x0emeanConfidence\x88\x01\x01B\b\n" +
+	"\x06_classB\b\n" +
+	"\x06_countB\x12\n" +
+	"\x10_mean_confidenceBXZVgithub.com/Vikasa2M/openits-models/pkg/proto/openits/zone_occupancy/v1;zoneoccupancyv1b\x06proto3"
 
 var (
 	file_openits_zone_occupancy_v1_events_proto_rawDescOnce sync.Once
@@ -547,6 +565,11 @@ func file_openits_zone_occupancy_v1_events_proto_init() {
 	if File_openits_zone_occupancy_v1_events_proto != nil {
 		return
 	}
+	file_openits_zone_occupancy_v1_events_proto_msgTypes[0].OneofWrappers = []any{}
+	file_openits_zone_occupancy_v1_events_proto_msgTypes[1].OneofWrappers = []any{}
+	file_openits_zone_occupancy_v1_events_proto_msgTypes[2].OneofWrappers = []any{}
+	file_openits_zone_occupancy_v1_events_proto_msgTypes[3].OneofWrappers = []any{}
+	file_openits_zone_occupancy_v1_events_proto_msgTypes[4].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

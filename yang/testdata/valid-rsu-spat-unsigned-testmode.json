@@ -2,7 +2,7 @@
   "openits-rsu:rsu": {
     "config": { "id": "rsu-testmode-01", "name": "SPaT enabled, signing off, lab test mode" },
     "operating": {
-      "config": { "configured-time-source": "gnss-pps" }
+      "config": { "configured-time-source": "openits-types:time-source-gnss-pps" }
     },
     "security": {
       "config": { "security-enabled": false, "permit-unsigned-broadcast": true }

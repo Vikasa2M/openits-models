@@ -1,0 +1,29 @@
+module presence-fixture {
+  namespace "urn:test:presence-fixture";
+  prefix pf;
+  import ietf-yang-types { prefix yang; }
+
+  // A shared grouping whose members are optional where it is defined. One
+  // composer below tightens `presence` with `refine mandatory true`, which
+  // goyang leaves on the uses statement rather than on the merged child —
+  // the case the proto emitter has to resolve for itself.
+  grouping observation {
+    leaf presence { type boolean; }
+    leaf tally { type uint16; }
+  }
+
+  notification sample {
+    leaf kind {
+      type string;
+      mandatory true;
+    }
+    leaf note { type string; }
+    leaf occurred-at { type yang:date-and-time; }
+    leaf-list tag { type string; }
+    uses observation {
+      refine "presence" {
+        mandatory true;
+      }
+    }
+  }
+}

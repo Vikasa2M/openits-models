@@ -3,13 +3,6 @@
   "additionalProperties": false,
   "properties": {
     "from-direction": {
-      "enum": [
-        "eastbound",
-        "northbound",
-        "southbound",
-        "unknown",
-        "westbound"
-      ],
       "type": "string"
     },
     "kind": {
@@ -50,13 +43,6 @@
       "type": "integer"
     },
     "to-direction": {
-      "enum": [
-        "eastbound",
-        "northbound",
-        "southbound",
-        "unknown",
-        "westbound"
-      ],
       "type": "string"
     }
   },

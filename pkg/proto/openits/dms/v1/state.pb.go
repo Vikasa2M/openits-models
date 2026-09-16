@@ -22,846 +22,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type Technology int32
-
-const (
-	Technology_TECHNOLOGY_UNKNOWN     Technology = 0
-	Technology_TECHNOLOGY_LED         Technology = 1
-	Technology_TECHNOLOGY_FLIP_DISK   Technology = 2
-	Technology_TECHNOLOGY_HYBRID      Technology = 3
-	Technology_TECHNOLOGY_FIBER_OPTIC Technology = 4
-	Technology_TECHNOLOGY_SHUTTERED   Technology = 5
-	Technology_TECHNOLOGY_LAMP        Technology = 6
-	Technology_TECHNOLOGY_DRUM        Technology = 7
-)
-
-// Enum value maps for Technology.
-var (
-	Technology_name = map[int32]string{
-		0: "TECHNOLOGY_UNKNOWN",
-		1: "TECHNOLOGY_LED",
-		2: "TECHNOLOGY_FLIP_DISK",
-		3: "TECHNOLOGY_HYBRID",
-		4: "TECHNOLOGY_FIBER_OPTIC",
-		5: "TECHNOLOGY_SHUTTERED",
-		6: "TECHNOLOGY_LAMP",
-		7: "TECHNOLOGY_DRUM",
-	}
-	Technology_value = map[string]int32{
-		"TECHNOLOGY_UNKNOWN":     0,
-		"TECHNOLOGY_LED":         1,
-		"TECHNOLOGY_FLIP_DISK":   2,
-		"TECHNOLOGY_HYBRID":      3,
-		"TECHNOLOGY_FIBER_OPTIC": 4,
-		"TECHNOLOGY_SHUTTERED":   5,
-		"TECHNOLOGY_LAMP":        6,
-		"TECHNOLOGY_DRUM":        7,
-	}
-)
-
-func (x Technology) Enum() *Technology {
-	p := new(Technology)
-	*p = x
-	return p
-}
-
-func (x Technology) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Technology) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_state_proto_enumTypes[0].Descriptor()
-}
-
-func (Technology) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_state_proto_enumTypes[0]
-}
-
-func (x Technology) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Technology.Descriptor instead.
-func (Technology) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{0}
-}
-
-type SignType int32
-
-const (
-	SignType_SIGN_TYPE_FULL_MATRIX SignType = 0
-	SignType_SIGN_TYPE_CHAR_MATRIX SignType = 1
-	SignType_SIGN_TYPE_LINE_MATRIX SignType = 2
-	SignType_SIGN_TYPE_OTHER       SignType = 3
-)
-
-// Enum value maps for SignType.
-var (
-	SignType_name = map[int32]string{
-		0: "SIGN_TYPE_FULL_MATRIX",
-		1: "SIGN_TYPE_CHAR_MATRIX",
-		2: "SIGN_TYPE_LINE_MATRIX",
-		3: "SIGN_TYPE_OTHER",
-	}
-	SignType_value = map[string]int32{
-		"SIGN_TYPE_FULL_MATRIX": 0,
-		"SIGN_TYPE_CHAR_MATRIX": 1,
-		"SIGN_TYPE_LINE_MATRIX": 2,
-		"SIGN_TYPE_OTHER":       3,
-	}
-)
-
-func (x SignType) Enum() *SignType {
-	p := new(SignType)
-	*p = x
-	return p
-}
-
-func (x SignType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (SignType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_state_proto_enumTypes[1].Descriptor()
-}
-
-func (SignType) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_state_proto_enumTypes[1]
-}
-
-func (x SignType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use SignType.Descriptor instead.
-func (SignType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{1}
-}
-
-type BeaconType int32
-
-const (
-	BeaconType_BEACON_TYPE_NONE        BeaconType = 0
-	BeaconType_BEACON_TYPE_ONE_BEACON  BeaconType = 1
-	BeaconType_BEACON_TYPE_TWO_BEACON  BeaconType = 2
-	BeaconType_BEACON_TYPE_FOUR_BEACON BeaconType = 3
-	BeaconType_BEACON_TYPE_OTHER       BeaconType = 4
-)
-
-// Enum value maps for BeaconType.
-var (
-	BeaconType_name = map[int32]string{
-		0: "BEACON_TYPE_NONE",
-		1: "BEACON_TYPE_ONE_BEACON",
-		2: "BEACON_TYPE_TWO_BEACON",
-		3: "BEACON_TYPE_FOUR_BEACON",
-		4: "BEACON_TYPE_OTHER",
-	}
-	BeaconType_value = map[string]int32{
-		"BEACON_TYPE_NONE":        0,
-		"BEACON_TYPE_ONE_BEACON":  1,
-		"BEACON_TYPE_TWO_BEACON":  2,
-		"BEACON_TYPE_FOUR_BEACON": 3,
-		"BEACON_TYPE_OTHER":       4,
-	}
-)
-
-func (x BeaconType) Enum() *BeaconType {
-	p := new(BeaconType)
-	*p = x
-	return p
-}
-
-func (x BeaconType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (BeaconType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_state_proto_enumTypes[2].Descriptor()
-}
-
-func (BeaconType) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_state_proto_enumTypes[2]
-}
-
-func (x BeaconType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use BeaconType.Descriptor instead.
-func (BeaconType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{2}
-}
-
-type ColorCapability int32
-
-const (
-	ColorCapability_COLOR_CAPABILITY_MONOCHROME_1BIT  ColorCapability = 0
-	ColorCapability_COLOR_CAPABILITY_MONOCHROME_MULTI ColorCapability = 1
-	ColorCapability_COLOR_CAPABILITY_COLOR            ColorCapability = 2
-)
-
-// Enum value maps for ColorCapability.
-var (
-	ColorCapability_name = map[int32]string{
-		0: "COLOR_CAPABILITY_MONOCHROME_1BIT",
-		1: "COLOR_CAPABILITY_MONOCHROME_MULTI",
-		2: "COLOR_CAPABILITY_COLOR",
-	}
-	ColorCapability_value = map[string]int32{
-		"COLOR_CAPABILITY_MONOCHROME_1BIT":  0,
-		"COLOR_CAPABILITY_MONOCHROME_MULTI": 1,
-		"COLOR_CAPABILITY_COLOR":            2,
-	}
-)
-
-func (x ColorCapability) Enum() *ColorCapability {
-	p := new(ColorCapability)
-	*p = x
-	return p
-}
-
-func (x ColorCapability) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (ColorCapability) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_state_proto_enumTypes[3].Descriptor()
-}
-
-func (ColorCapability) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_state_proto_enumTypes[3]
-}
-
-func (x ColorCapability) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use ColorCapability.Descriptor instead.
-func (ColorCapability) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{3}
-}
-
-type OpenitsDmsMessageMemoryType int32
-
-const (
-	OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED OpenitsDmsMessageMemoryType = 0
-	OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_PERMANENT   OpenitsDmsMessageMemoryType = 1
-	OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_CHANGEABLE  OpenitsDmsMessageMemoryType = 2
-	OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_VOLATILE    OpenitsDmsMessageMemoryType = 3
-	OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_SCHEDULE    OpenitsDmsMessageMemoryType = 4
-	OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_BLANK       OpenitsDmsMessageMemoryType = 5
-)
-
-// Enum value maps for OpenitsDmsMessageMemoryType.
-var (
-	OpenitsDmsMessageMemoryType_name = map[int32]string{
-		0: "OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED",
-		1: "OPENITS_DMS_MESSAGE_MEMORY_TYPE_PERMANENT",
-		2: "OPENITS_DMS_MESSAGE_MEMORY_TYPE_CHANGEABLE",
-		3: "OPENITS_DMS_MESSAGE_MEMORY_TYPE_VOLATILE",
-		4: "OPENITS_DMS_MESSAGE_MEMORY_TYPE_SCHEDULE",
-		5: "OPENITS_DMS_MESSAGE_MEMORY_TYPE_BLANK",
-	}
-	OpenitsDmsMessageMemoryType_value = map[string]int32{
-		"OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED": 0,
-		"OPENITS_DMS_MESSAGE_MEMORY_TYPE_PERMANENT":   1,
-		"OPENITS_DMS_MESSAGE_MEMORY_TYPE_CHANGEABLE":  2,
-		"OPENITS_DMS_MESSAGE_MEMORY_TYPE_VOLATILE":    3,
-		"OPENITS_DMS_MESSAGE_MEMORY_TYPE_SCHEDULE":    4,
-		"OPENITS_DMS_MESSAGE_MEMORY_TYPE_BLANK":       5,
-	}
-)
-
-func (x OpenitsDmsMessageMemoryType) Enum() *OpenitsDmsMessageMemoryType {
-	p := new(OpenitsDmsMessageMemoryType)
-	*p = x
-	return p
-}
-
-func (x OpenitsDmsMessageMemoryType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (OpenitsDmsMessageMemoryType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_state_proto_enumTypes[4].Descriptor()
-}
-
-func (OpenitsDmsMessageMemoryType) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_state_proto_enumTypes[4]
-}
-
-func (x OpenitsDmsMessageMemoryType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use OpenitsDmsMessageMemoryType.Descriptor instead.
-func (OpenitsDmsMessageMemoryType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{4}
-}
-
-type Beacon int32
-
-const (
-	Beacon_BEACON_NONE     Beacon = 0
-	Beacon_BEACON_FLASHING Beacon = 1
-)
-
-// Enum value maps for Beacon.
-var (
-	Beacon_name = map[int32]string{
-		0: "BEACON_NONE",
-		1: "BEACON_FLASHING",
-	}
-	Beacon_value = map[string]int32{
-		"BEACON_NONE":     0,
-		"BEACON_FLASHING": 1,
-	}
-)
-
-func (x Beacon) Enum() *Beacon {
-	p := new(Beacon)
-	*p = x
-	return p
-}
-
-func (x Beacon) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Beacon) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_state_proto_enumTypes[5].Descriptor()
-}
-
-func (Beacon) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_state_proto_enumTypes[5]
-}
-
-func (x Beacon) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Beacon.Descriptor instead.
-func (Beacon) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{5}
-}
-
-type DmsMessageStatus int32
-
-const (
-	DmsMessageStatus_DMS_MESSAGE_STATUS_NOT_USED   DmsMessageStatus = 0
-	DmsMessageStatus_DMS_MESSAGE_STATUS_MODIFYING  DmsMessageStatus = 1
-	DmsMessageStatus_DMS_MESSAGE_STATUS_VALIDATING DmsMessageStatus = 2
-	DmsMessageStatus_DMS_MESSAGE_STATUS_VALID      DmsMessageStatus = 3
-	DmsMessageStatus_DMS_MESSAGE_STATUS_ERROR      DmsMessageStatus = 4
-)
-
-// Enum value maps for DmsMessageStatus.
-var (
-	DmsMessageStatus_name = map[int32]string{
-		0: "DMS_MESSAGE_STATUS_NOT_USED",
-		1: "DMS_MESSAGE_STATUS_MODIFYING",
-		2: "DMS_MESSAGE_STATUS_VALIDATING",
-		3: "DMS_MESSAGE_STATUS_VALID",
-		4: "DMS_MESSAGE_STATUS_ERROR",
-	}
-	DmsMessageStatus_value = map[string]int32{
-		"DMS_MESSAGE_STATUS_NOT_USED":   0,
-		"DMS_MESSAGE_STATUS_MODIFYING":  1,
-		"DMS_MESSAGE_STATUS_VALIDATING": 2,
-		"DMS_MESSAGE_STATUS_VALID":      3,
-		"DMS_MESSAGE_STATUS_ERROR":      4,
-	}
-)
-
-func (x DmsMessageStatus) Enum() *DmsMessageStatus {
-	p := new(DmsMessageStatus)
-	*p = x
-	return p
-}
-
-func (x DmsMessageStatus) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (DmsMessageStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_state_proto_enumTypes[6].Descriptor()
-}
-
-func (DmsMessageStatus) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_state_proto_enumTypes[6]
-}
-
-func (x DmsMessageStatus) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use DmsMessageStatus.Descriptor instead.
-func (DmsMessageStatus) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{6}
-}
-
-type DayOfWeek int32
-
-const (
-	DayOfWeek_DAY_OF_WEEK_UNSPECIFIED DayOfWeek = 0
-	DayOfWeek_DAY_OF_WEEK_MONDAY      DayOfWeek = 1
-	DayOfWeek_DAY_OF_WEEK_TUESDAY     DayOfWeek = 2
-	DayOfWeek_DAY_OF_WEEK_WEDNESDAY   DayOfWeek = 3
-	DayOfWeek_DAY_OF_WEEK_THURSDAY    DayOfWeek = 4
-	DayOfWeek_DAY_OF_WEEK_FRIDAY      DayOfWeek = 5
-	DayOfWeek_DAY_OF_WEEK_SATURDAY    DayOfWeek = 6
-	DayOfWeek_DAY_OF_WEEK_SUNDAY      DayOfWeek = 7
-)
-
-// Enum value maps for DayOfWeek.
-var (
-	DayOfWeek_name = map[int32]string{
-		0: "DAY_OF_WEEK_UNSPECIFIED",
-		1: "DAY_OF_WEEK_MONDAY",
-		2: "DAY_OF_WEEK_TUESDAY",
-		3: "DAY_OF_WEEK_WEDNESDAY",
-		4: "DAY_OF_WEEK_THURSDAY",
-		5: "DAY_OF_WEEK_FRIDAY",
-		6: "DAY_OF_WEEK_SATURDAY",
-		7: "DAY_OF_WEEK_SUNDAY",
-	}
-	DayOfWeek_value = map[string]int32{
-		"DAY_OF_WEEK_UNSPECIFIED": 0,
-		"DAY_OF_WEEK_MONDAY":      1,
-		"DAY_OF_WEEK_TUESDAY":     2,
-		"DAY_OF_WEEK_WEDNESDAY":   3,
-		"DAY_OF_WEEK_THURSDAY":    4,
-		"DAY_OF_WEEK_FRIDAY":      5,
-		"DAY_OF_WEEK_SATURDAY":    6,
-		"DAY_OF_WEEK_SUNDAY":      7,
-	}
-)
-
-func (x DayOfWeek) Enum() *DayOfWeek {
-	p := new(DayOfWeek)
-	*p = x
-	return p
-}
-
-func (x DayOfWeek) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (DayOfWeek) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_state_proto_enumTypes[7].Descriptor()
-}
-
-func (DayOfWeek) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_state_proto_enumTypes[7]
-}
-
-func (x DayOfWeek) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use DayOfWeek.Descriptor instead.
-func (DayOfWeek) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{7}
-}
-
-type Month int32
-
-const (
-	Month_MONTH_UNSPECIFIED Month = 0
-	Month_MONTH_JANUARY     Month = 1
-	Month_MONTH_FEBRUARY    Month = 2
-	Month_MONTH_MARCH       Month = 3
-	Month_MONTH_APRIL       Month = 4
-	Month_MONTH_MAY         Month = 5
-	Month_MONTH_JUNE        Month = 6
-	Month_MONTH_JULY        Month = 7
-	Month_MONTH_AUGUST      Month = 8
-	Month_MONTH_SEPTEMBER   Month = 9
-	Month_MONTH_OCTOBER     Month = 10
-	Month_MONTH_NOVEMBER    Month = 11
-	Month_MONTH_DECEMBER    Month = 12
-)
-
-// Enum value maps for Month.
-var (
-	Month_name = map[int32]string{
-		0:  "MONTH_UNSPECIFIED",
-		1:  "MONTH_JANUARY",
-		2:  "MONTH_FEBRUARY",
-		3:  "MONTH_MARCH",
-		4:  "MONTH_APRIL",
-		5:  "MONTH_MAY",
-		6:  "MONTH_JUNE",
-		7:  "MONTH_JULY",
-		8:  "MONTH_AUGUST",
-		9:  "MONTH_SEPTEMBER",
-		10: "MONTH_OCTOBER",
-		11: "MONTH_NOVEMBER",
-		12: "MONTH_DECEMBER",
-	}
-	Month_value = map[string]int32{
-		"MONTH_UNSPECIFIED": 0,
-		"MONTH_JANUARY":     1,
-		"MONTH_FEBRUARY":    2,
-		"MONTH_MARCH":       3,
-		"MONTH_APRIL":       4,
-		"MONTH_MAY":         5,
-		"MONTH_JUNE":        6,
-		"MONTH_JULY":        7,
-		"MONTH_AUGUST":      8,
-		"MONTH_SEPTEMBER":   9,
-		"MONTH_OCTOBER":     10,
-		"MONTH_NOVEMBER":    11,
-		"MONTH_DECEMBER":    12,
-	}
-)
-
-func (x Month) Enum() *Month {
-	p := new(Month)
-	*p = x
-	return p
-}
-
-func (x Month) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Month) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_state_proto_enumTypes[8].Descriptor()
-}
-
-func (Month) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_state_proto_enumTypes[8]
-}
-
-func (x Month) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Month.Descriptor instead.
-func (Month) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{8}
-}
-
-type RequestSelfTest int32
-
-const (
-	RequestSelfTest_REQUEST_SELF_TEST_NONE       RequestSelfTest = 0
-	RequestSelfTest_REQUEST_SELF_TEST_PIXEL_TEST RequestSelfTest = 1
-	RequestSelfTest_REQUEST_SELF_TEST_LAMP_TEST  RequestSelfTest = 2
-)
-
-// Enum value maps for RequestSelfTest.
-var (
-	RequestSelfTest_name = map[int32]string{
-		0: "REQUEST_SELF_TEST_NONE",
-		1: "REQUEST_SELF_TEST_PIXEL_TEST",
-		2: "REQUEST_SELF_TEST_LAMP_TEST",
-	}
-	RequestSelfTest_value = map[string]int32{
-		"REQUEST_SELF_TEST_NONE":       0,
-		"REQUEST_SELF_TEST_PIXEL_TEST": 1,
-		"REQUEST_SELF_TEST_LAMP_TEST":  2,
-	}
-)
-
-func (x RequestSelfTest) Enum() *RequestSelfTest {
-	p := new(RequestSelfTest)
-	*p = x
-	return p
-}
-
-func (x RequestSelfTest) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (RequestSelfTest) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_state_proto_enumTypes[9].Descriptor()
-}
-
-func (RequestSelfTest) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_state_proto_enumTypes[9]
-}
-
-func (x RequestSelfTest) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use RequestSelfTest.Descriptor instead.
-func (RequestSelfTest) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{9}
-}
-
-type IlluminationControl int32
-
-const (
-	IlluminationControl_ILLUMINATION_CONTROL_PHOTOCELL IlluminationControl = 0
-	IlluminationControl_ILLUMINATION_CONTROL_TIMER     IlluminationControl = 1
-	IlluminationControl_ILLUMINATION_CONTROL_MANUAL    IlluminationControl = 2
-)
-
-// Enum value maps for IlluminationControl.
-var (
-	IlluminationControl_name = map[int32]string{
-		0: "ILLUMINATION_CONTROL_PHOTOCELL",
-		1: "ILLUMINATION_CONTROL_TIMER",
-		2: "ILLUMINATION_CONTROL_MANUAL",
-	}
-	IlluminationControl_value = map[string]int32{
-		"ILLUMINATION_CONTROL_PHOTOCELL": 0,
-		"ILLUMINATION_CONTROL_TIMER":     1,
-		"ILLUMINATION_CONTROL_MANUAL":    2,
-	}
-)
-
-func (x IlluminationControl) Enum() *IlluminationControl {
-	p := new(IlluminationControl)
-	*p = x
-	return p
-}
-
-func (x IlluminationControl) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (IlluminationControl) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_state_proto_enumTypes[10].Descriptor()
-}
-
-func (IlluminationControl) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_state_proto_enumTypes[10]
-}
-
-func (x IlluminationControl) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use IlluminationControl.Descriptor instead.
-func (IlluminationControl) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{10}
-}
-
-type BeaconState int32
-
-const (
-	BeaconState_BEACON_STATE_NONE     BeaconState = 0
-	BeaconState_BEACON_STATE_DARK     BeaconState = 1
-	BeaconState_BEACON_STATE_FLASHING BeaconState = 2
-	BeaconState_BEACON_STATE_STEADY   BeaconState = 3
-	BeaconState_BEACON_STATE_FAULT    BeaconState = 4
-)
-
-// Enum value maps for BeaconState.
-var (
-	BeaconState_name = map[int32]string{
-		0: "BEACON_STATE_NONE",
-		1: "BEACON_STATE_DARK",
-		2: "BEACON_STATE_FLASHING",
-		3: "BEACON_STATE_STEADY",
-		4: "BEACON_STATE_FAULT",
-	}
-	BeaconState_value = map[string]int32{
-		"BEACON_STATE_NONE":     0,
-		"BEACON_STATE_DARK":     1,
-		"BEACON_STATE_FLASHING": 2,
-		"BEACON_STATE_STEADY":   3,
-		"BEACON_STATE_FAULT":    4,
-	}
-)
-
-func (x BeaconState) Enum() *BeaconState {
-	p := new(BeaconState)
-	*p = x
-	return p
-}
-
-func (x BeaconState) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (BeaconState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_state_proto_enumTypes[11].Descriptor()
-}
-
-func (BeaconState) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_state_proto_enumTypes[11]
-}
-
-func (x BeaconState) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use BeaconState.Descriptor instead.
-func (BeaconState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{11}
-}
-
-type BatteryTestState int32
-
-const (
-	BatteryTestState_BATTERY_TEST_STATE_IDLE        BatteryTestState = 0
-	BatteryTestState_BATTERY_TEST_STATE_IN_PROGRESS BatteryTestState = 1
-	BatteryTestState_BATTERY_TEST_STATE_PASSED      BatteryTestState = 2
-	BatteryTestState_BATTERY_TEST_STATE_FAILED      BatteryTestState = 3
-)
-
-// Enum value maps for BatteryTestState.
-var (
-	BatteryTestState_name = map[int32]string{
-		0: "BATTERY_TEST_STATE_IDLE",
-		1: "BATTERY_TEST_STATE_IN_PROGRESS",
-		2: "BATTERY_TEST_STATE_PASSED",
-		3: "BATTERY_TEST_STATE_FAILED",
-	}
-	BatteryTestState_value = map[string]int32{
-		"BATTERY_TEST_STATE_IDLE":        0,
-		"BATTERY_TEST_STATE_IN_PROGRESS": 1,
-		"BATTERY_TEST_STATE_PASSED":      2,
-		"BATTERY_TEST_STATE_FAILED":      3,
-	}
-)
-
-func (x BatteryTestState) Enum() *BatteryTestState {
-	p := new(BatteryTestState)
-	*p = x
-	return p
-}
-
-func (x BatteryTestState) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (BatteryTestState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_state_proto_enumTypes[12].Descriptor()
-}
-
-func (BatteryTestState) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_state_proto_enumTypes[12]
-}
-
-func (x BatteryTestState) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use BatteryTestState.Descriptor instead.
-func (BatteryTestState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{12}
-}
-
-type PowerSource int32
-
-const (
-	PowerSource_POWER_SOURCE_ON_LINE    PowerSource = 0
-	PowerSource_POWER_SOURCE_ON_BATTERY PowerSource = 1
-	PowerSource_POWER_SOURCE_BYPASS     PowerSource = 2
-	PowerSource_POWER_SOURCE_OFF        PowerSource = 3
-	PowerSource_POWER_SOURCE_SOLAR      PowerSource = 4
-	PowerSource_POWER_SOURCE_GENERATOR  PowerSource = 5
-)
-
-// Enum value maps for PowerSource.
-var (
-	PowerSource_name = map[int32]string{
-		0: "POWER_SOURCE_ON_LINE",
-		1: "POWER_SOURCE_ON_BATTERY",
-		2: "POWER_SOURCE_BYPASS",
-		3: "POWER_SOURCE_OFF",
-		4: "POWER_SOURCE_SOLAR",
-		5: "POWER_SOURCE_GENERATOR",
-	}
-	PowerSource_value = map[string]int32{
-		"POWER_SOURCE_ON_LINE":    0,
-		"POWER_SOURCE_ON_BATTERY": 1,
-		"POWER_SOURCE_BYPASS":     2,
-		"POWER_SOURCE_OFF":        3,
-		"POWER_SOURCE_SOLAR":      4,
-		"POWER_SOURCE_GENERATOR":  5,
-	}
-)
-
-func (x PowerSource) Enum() *PowerSource {
-	p := new(PowerSource)
-	*p = x
-	return p
-}
-
-func (x PowerSource) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (PowerSource) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_state_proto_enumTypes[13].Descriptor()
-}
-
-func (PowerSource) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_state_proto_enumTypes[13]
-}
-
-func (x PowerSource) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use PowerSource.Descriptor instead.
-func (PowerSource) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{13}
-}
-
-type FaultSeverity int32
-
-const (
-	FaultSeverity_FAULT_SEVERITY_INFO     FaultSeverity = 0
-	FaultSeverity_FAULT_SEVERITY_WARNING  FaultSeverity = 1
-	FaultSeverity_FAULT_SEVERITY_MINOR    FaultSeverity = 2
-	FaultSeverity_FAULT_SEVERITY_MAJOR    FaultSeverity = 3
-	FaultSeverity_FAULT_SEVERITY_CRITICAL FaultSeverity = 4
-)
-
-// Enum value maps for FaultSeverity.
-var (
-	FaultSeverity_name = map[int32]string{
-		0: "FAULT_SEVERITY_INFO",
-		1: "FAULT_SEVERITY_WARNING",
-		2: "FAULT_SEVERITY_MINOR",
-		3: "FAULT_SEVERITY_MAJOR",
-		4: "FAULT_SEVERITY_CRITICAL",
-	}
-	FaultSeverity_value = map[string]int32{
-		"FAULT_SEVERITY_INFO":     0,
-		"FAULT_SEVERITY_WARNING":  1,
-		"FAULT_SEVERITY_MINOR":    2,
-		"FAULT_SEVERITY_MAJOR":    3,
-		"FAULT_SEVERITY_CRITICAL": 4,
-	}
-)
-
-func (x FaultSeverity) Enum() *FaultSeverity {
-	p := new(FaultSeverity)
-	*p = x
-	return p
-}
-
-func (x FaultSeverity) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (FaultSeverity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_state_proto_enumTypes[14].Descriptor()
-}
-
-func (FaultSeverity) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_state_proto_enumTypes[14]
-}
-
-func (x FaultSeverity) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use FaultSeverity.Descriptor instead.
-func (FaultSeverity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{14}
-}
-
 type Sign struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Config        *SignConfig            `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
@@ -972,18 +132,18 @@ func (x *Sign) GetFaults() *Faults {
 
 type SignConfig struct {
 	state           protoimpl.MessageState     `protogen:"open.v1"`
-	Elevation       string                     `protobuf:"bytes,5,opt,name=elevation,proto3" json:"elevation,omitempty"`
-	Heading         uint32                     `protobuf:"varint,6,opt,name=heading,proto3" json:"heading,omitempty"`
-	Id              string                     `protobuf:"bytes,7,opt,name=id,proto3" json:"id,omitempty"`
+	Elevation       *string                    `protobuf:"bytes,5,opt,name=elevation,proto3,oneof" json:"elevation,omitempty"`
+	Heading         *uint32                    `protobuf:"varint,6,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
+	Id              *string                    `protobuf:"bytes,7,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate     *timestamppb.Timestamp     `protobuf:"bytes,1,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
-	Latitude        string                     `protobuf:"bytes,2,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	Latitude        *string                    `protobuf:"bytes,2,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference *SignConfigLinearReference `protobuf:"bytes,4,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
-	Longitude       string                     `protobuf:"bytes,3,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	MaintainedBy    string                     `protobuf:"bytes,10,opt,name=maintained_by,json=maintainedBy,proto3" json:"maintained_by,omitempty"`
-	Name            string                     `protobuf:"bytes,8,opt,name=name,proto3" json:"name,omitempty"`
-	Owner           string                     `protobuf:"bytes,11,opt,name=owner,proto3" json:"owner,omitempty"`
-	RoadReference   string                     `protobuf:"bytes,9,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
-	SiteId          string                     `protobuf:"bytes,12,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
+	Longitude       *string                    `protobuf:"bytes,3,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
+	MaintainedBy    *string                    `protobuf:"bytes,10,opt,name=maintained_by,json=maintainedBy,proto3,oneof" json:"maintained_by,omitempty"`
+	Name            *string                    `protobuf:"bytes,8,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Owner           *string                    `protobuf:"bytes,11,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	RoadReference   *string                    `protobuf:"bytes,9,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
+	SiteId          *string                    `protobuf:"bytes,12,opt,name=site_id,json=siteId,proto3,oneof" json:"site_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1019,22 +179,22 @@ func (*SignConfig) Descriptor() ([]byte, []int) {
 }
 
 func (x *SignConfig) GetElevation() string {
-	if x != nil {
-		return x.Elevation
+	if x != nil && x.Elevation != nil {
+		return *x.Elevation
 	}
 	return ""
 }
 
 func (x *SignConfig) GetHeading() uint32 {
-	if x != nil {
-		return x.Heading
+	if x != nil && x.Heading != nil {
+		return *x.Heading
 	}
 	return 0
 }
 
 func (x *SignConfig) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
@@ -1047,8 +207,8 @@ func (x *SignConfig) GetInstallDate() *timestamppb.Timestamp {
 }
 
 func (x *SignConfig) GetLatitude() string {
-	if x != nil {
-		return x.Latitude
+	if x != nil && x.Latitude != nil {
+		return *x.Latitude
 	}
 	return ""
 }
@@ -1061,53 +221,53 @@ func (x *SignConfig) GetLinearReference() *SignConfigLinearReference {
 }
 
 func (x *SignConfig) GetLongitude() string {
-	if x != nil {
-		return x.Longitude
+	if x != nil && x.Longitude != nil {
+		return *x.Longitude
 	}
 	return ""
 }
 
 func (x *SignConfig) GetMaintainedBy() string {
-	if x != nil {
-		return x.MaintainedBy
+	if x != nil && x.MaintainedBy != nil {
+		return *x.MaintainedBy
 	}
 	return ""
 }
 
 func (x *SignConfig) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *SignConfig) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
 
 func (x *SignConfig) GetRoadReference() string {
-	if x != nil {
-		return x.RoadReference
+	if x != nil && x.RoadReference != nil {
+		return *x.RoadReference
 	}
 	return ""
 }
 
 func (x *SignConfig) GetSiteId() string {
-	if x != nil {
-		return x.SiteId
+	if x != nil && x.SiteId != nil {
+		return *x.SiteId
 	}
 	return ""
 }
 
 type SignConfigLinearReference struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	RouteDesignator string                 `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3" json:"route_designator,omitempty"`
-	Direction       string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"`
-	Measure         string                 `protobuf:"bytes,3,opt,name=measure,proto3" json:"measure,omitempty"`
-	LrsMethod       string                 `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3" json:"lrs_method,omitempty"`
+	RouteDesignator *string                `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3,oneof" json:"route_designator,omitempty"`
+	Direction       *string                `protobuf:"bytes,2,opt,name=direction,proto3,oneof" json:"direction,omitempty"`
+	Measure         *string                `protobuf:"bytes,3,opt,name=measure,proto3,oneof" json:"measure,omitempty"`
+	LrsMethod       *string                `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3,oneof" json:"lrs_method,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1143,57 +303,57 @@ func (*SignConfigLinearReference) Descriptor() ([]byte, []int) {
 }
 
 func (x *SignConfigLinearReference) GetRouteDesignator() string {
-	if x != nil {
-		return x.RouteDesignator
+	if x != nil && x.RouteDesignator != nil {
+		return *x.RouteDesignator
 	}
 	return ""
 }
 
 func (x *SignConfigLinearReference) GetDirection() string {
-	if x != nil {
-		return x.Direction
+	if x != nil && x.Direction != nil {
+		return *x.Direction
 	}
 	return ""
 }
 
 func (x *SignConfigLinearReference) GetMeasure() string {
-	if x != nil {
-		return x.Measure
+	if x != nil && x.Measure != nil {
+		return *x.Measure
 	}
 	return ""
 }
 
 func (x *SignConfigLinearReference) GetLrsMethod() string {
-	if x != nil {
-		return x.LrsMethod
+	if x != nil && x.LrsMethod != nil {
+		return *x.LrsMethod
 	}
 	return ""
 }
 
 type SignState struct {
 	state            protoimpl.MessageState    `protogen:"open.v1"`
-	Technology       Technology                `protobuf:"varint,1,opt,name=technology,proto3,enum=openits.dms.v1.Technology" json:"technology,omitempty"`
-	SignWidthPixels  uint32                    `protobuf:"varint,2,opt,name=sign_width_pixels,json=signWidthPixels,proto3" json:"sign_width_pixels,omitempty"`
-	SignHeightPixels uint32                    `protobuf:"varint,3,opt,name=sign_height_pixels,json=signHeightPixels,proto3" json:"sign_height_pixels,omitempty"`
+	Technology       *string                   `protobuf:"bytes,1,opt,name=technology,proto3,oneof" json:"technology,omitempty"`
+	SignWidthPixels  *uint32                   `protobuf:"varint,2,opt,name=sign_width_pixels,json=signWidthPixels,proto3,oneof" json:"sign_width_pixels,omitempty"`
+	SignHeightPixels *uint32                   `protobuf:"varint,3,opt,name=sign_height_pixels,json=signHeightPixels,proto3,oneof" json:"sign_height_pixels,omitempty"`
 	Capabilities     *Capabilities             `protobuf:"bytes,5,opt,name=capabilities,proto3" json:"capabilities,omitempty"`
-	Elevation        string                    `protobuf:"bytes,12,opt,name=elevation,proto3" json:"elevation,omitempty"`
-	Firmware         string                    `protobuf:"bytes,4,opt,name=firmware,proto3" json:"firmware,omitempty"`
-	FirmwareBuild    string                    `protobuf:"bytes,17,opt,name=firmware_build,json=firmwareBuild,proto3" json:"firmware_build,omitempty"`
-	HardwareVersion  string                    `protobuf:"bytes,18,opt,name=hardware_version,json=hardwareVersion,proto3" json:"hardware_version,omitempty"`
-	Heading          uint32                    `protobuf:"varint,13,opt,name=heading,proto3" json:"heading,omitempty"`
-	Id               string                    `protobuf:"bytes,14,opt,name=id,proto3" json:"id,omitempty"`
+	Elevation        *string                   `protobuf:"bytes,12,opt,name=elevation,proto3,oneof" json:"elevation,omitempty"`
+	Firmware         *string                   `protobuf:"bytes,4,opt,name=firmware,proto3,oneof" json:"firmware,omitempty"`
+	FirmwareBuild    *string                   `protobuf:"bytes,17,opt,name=firmware_build,json=firmwareBuild,proto3,oneof" json:"firmware_build,omitempty"`
+	HardwareVersion  *string                   `protobuf:"bytes,18,opt,name=hardware_version,json=hardwareVersion,proto3,oneof" json:"hardware_version,omitempty"`
+	Heading          *uint32                   `protobuf:"varint,13,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
+	Id               *string                   `protobuf:"bytes,14,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate      *timestamppb.Timestamp    `protobuf:"bytes,11,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
-	Latitude         string                    `protobuf:"bytes,6,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	Latitude         *string                   `protobuf:"bytes,6,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference  *SignStateLinearReference `protobuf:"bytes,19,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
-	Longitude        string                    `protobuf:"bytes,7,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	MaintainedBy     string                    `protobuf:"bytes,20,opt,name=maintained_by,json=maintainedBy,proto3" json:"maintained_by,omitempty"`
-	Make             string                    `protobuf:"bytes,8,opt,name=make,proto3" json:"make,omitempty"`
-	Model            string                    `protobuf:"bytes,9,opt,name=model,proto3" json:"model,omitempty"`
-	Name             string                    `protobuf:"bytes,15,opt,name=name,proto3" json:"name,omitempty"`
-	Owner            string                    `protobuf:"bytes,21,opt,name=owner,proto3" json:"owner,omitempty"`
-	RoadReference    string                    `protobuf:"bytes,16,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
-	Serial           string                    `protobuf:"bytes,10,opt,name=serial,proto3" json:"serial,omitempty"`
-	SiteId           string                    `protobuf:"bytes,22,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
+	Longitude        *string                   `protobuf:"bytes,7,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
+	MaintainedBy     *string                   `protobuf:"bytes,20,opt,name=maintained_by,json=maintainedBy,proto3,oneof" json:"maintained_by,omitempty"`
+	Make             *string                   `protobuf:"bytes,8,opt,name=make,proto3,oneof" json:"make,omitempty"`
+	Model            *string                   `protobuf:"bytes,9,opt,name=model,proto3,oneof" json:"model,omitempty"`
+	Name             *string                   `protobuf:"bytes,15,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Owner            *string                   `protobuf:"bytes,21,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	RoadReference    *string                   `protobuf:"bytes,16,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
+	Serial           *string                   `protobuf:"bytes,10,opt,name=serial,proto3,oneof" json:"serial,omitempty"`
+	SiteId           *string                   `protobuf:"bytes,22,opt,name=site_id,json=siteId,proto3,oneof" json:"site_id,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -1228,23 +388,23 @@ func (*SignState) Descriptor() ([]byte, []int) {
 	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *SignState) GetTechnology() Technology {
-	if x != nil {
-		return x.Technology
+func (x *SignState) GetTechnology() string {
+	if x != nil && x.Technology != nil {
+		return *x.Technology
 	}
-	return Technology_TECHNOLOGY_UNKNOWN
+	return ""
 }
 
 func (x *SignState) GetSignWidthPixels() uint32 {
-	if x != nil {
-		return x.SignWidthPixels
+	if x != nil && x.SignWidthPixels != nil {
+		return *x.SignWidthPixels
 	}
 	return 0
 }
 
 func (x *SignState) GetSignHeightPixels() uint32 {
-	if x != nil {
-		return x.SignHeightPixels
+	if x != nil && x.SignHeightPixels != nil {
+		return *x.SignHeightPixels
 	}
 	return 0
 }
@@ -1257,43 +417,43 @@ func (x *SignState) GetCapabilities() *Capabilities {
 }
 
 func (x *SignState) GetElevation() string {
-	if x != nil {
-		return x.Elevation
+	if x != nil && x.Elevation != nil {
+		return *x.Elevation
 	}
 	return ""
 }
 
 func (x *SignState) GetFirmware() string {
-	if x != nil {
-		return x.Firmware
+	if x != nil && x.Firmware != nil {
+		return *x.Firmware
 	}
 	return ""
 }
 
 func (x *SignState) GetFirmwareBuild() string {
-	if x != nil {
-		return x.FirmwareBuild
+	if x != nil && x.FirmwareBuild != nil {
+		return *x.FirmwareBuild
 	}
 	return ""
 }
 
 func (x *SignState) GetHardwareVersion() string {
-	if x != nil {
-		return x.HardwareVersion
+	if x != nil && x.HardwareVersion != nil {
+		return *x.HardwareVersion
 	}
 	return ""
 }
 
 func (x *SignState) GetHeading() uint32 {
-	if x != nil {
-		return x.Heading
+	if x != nil && x.Heading != nil {
+		return *x.Heading
 	}
 	return 0
 }
 
 func (x *SignState) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
@@ -1306,8 +466,8 @@ func (x *SignState) GetInstallDate() *timestamppb.Timestamp {
 }
 
 func (x *SignState) GetLatitude() string {
-	if x != nil {
-		return x.Latitude
+	if x != nil && x.Latitude != nil {
+		return *x.Latitude
 	}
 	return ""
 }
@@ -1320,82 +480,82 @@ func (x *SignState) GetLinearReference() *SignStateLinearReference {
 }
 
 func (x *SignState) GetLongitude() string {
-	if x != nil {
-		return x.Longitude
+	if x != nil && x.Longitude != nil {
+		return *x.Longitude
 	}
 	return ""
 }
 
 func (x *SignState) GetMaintainedBy() string {
-	if x != nil {
-		return x.MaintainedBy
+	if x != nil && x.MaintainedBy != nil {
+		return *x.MaintainedBy
 	}
 	return ""
 }
 
 func (x *SignState) GetMake() string {
-	if x != nil {
-		return x.Make
+	if x != nil && x.Make != nil {
+		return *x.Make
 	}
 	return ""
 }
 
 func (x *SignState) GetModel() string {
-	if x != nil {
-		return x.Model
+	if x != nil && x.Model != nil {
+		return *x.Model
 	}
 	return ""
 }
 
 func (x *SignState) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *SignState) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
 
 func (x *SignState) GetRoadReference() string {
-	if x != nil {
-		return x.RoadReference
+	if x != nil && x.RoadReference != nil {
+		return *x.RoadReference
 	}
 	return ""
 }
 
 func (x *SignState) GetSerial() string {
-	if x != nil {
-		return x.Serial
+	if x != nil && x.Serial != nil {
+		return *x.Serial
 	}
 	return ""
 }
 
 func (x *SignState) GetSiteId() string {
-	if x != nil {
-		return x.SiteId
+	if x != nil && x.SiteId != nil {
+		return *x.SiteId
 	}
 	return ""
 }
 
 type Capabilities struct {
 	state                 protoimpl.MessageState `protogen:"open.v1"`
-	SignType              SignType               `protobuf:"varint,1,opt,name=sign_type,json=signType,proto3,enum=openits.dms.v1.SignType" json:"sign_type,omitempty"`
-	CharacterHeightPixels uint32                 `protobuf:"varint,2,opt,name=character_height_pixels,json=characterHeightPixels,proto3" json:"character_height_pixels,omitempty"`
-	CharacterWidthPixels  uint32                 `protobuf:"varint,3,opt,name=character_width_pixels,json=characterWidthPixels,proto3" json:"character_width_pixels,omitempty"`
-	SignFaceHeightMm      uint32                 `protobuf:"varint,9,opt,name=sign_face_height_mm,json=signFaceHeightMm,proto3" json:"sign_face_height_mm,omitempty"`
-	SignFaceWidthMm       uint32                 `protobuf:"varint,10,opt,name=sign_face_width_mm,json=signFaceWidthMm,proto3" json:"sign_face_width_mm,omitempty"`
-	PixelPitchMm          string                 `protobuf:"bytes,14,opt,name=pixel_pitch_mm,json=pixelPitchMm,proto3" json:"pixel_pitch_mm,omitempty"`
-	CharacterHeightMm     uint32                 `protobuf:"varint,11,opt,name=character_height_mm,json=characterHeightMm,proto3" json:"character_height_mm,omitempty"`
-	CharacterWidthMm      uint32                 `protobuf:"varint,12,opt,name=character_width_mm,json=characterWidthMm,proto3" json:"character_width_mm,omitempty"`
-	BeaconType            BeaconType             `protobuf:"varint,13,opt,name=beacon_type,json=beaconType,proto3,enum=openits.dms.v1.BeaconType" json:"beacon_type,omitempty"`
-	ColorCapability       ColorCapability        `protobuf:"varint,4,opt,name=color_capability,json=colorCapability,proto3,enum=openits.dms.v1.ColorCapability" json:"color_capability,omitempty"`
-	MaxPages              uint32                 `protobuf:"varint,5,opt,name=max_pages,json=maxPages,proto3" json:"max_pages,omitempty"`
-	BeaconCapable         bool                   `protobuf:"varint,6,opt,name=beacon_capable,json=beaconCapable,proto3" json:"beacon_capable,omitempty"`
+	SignType              *SignType              `protobuf:"varint,1,opt,name=sign_type,json=signType,proto3,enum=openits.dms.v1.SignType,oneof" json:"sign_type,omitempty"`
+	CharacterHeightPixels *uint32                `protobuf:"varint,2,opt,name=character_height_pixels,json=characterHeightPixels,proto3,oneof" json:"character_height_pixels,omitempty"`
+	CharacterWidthPixels  *uint32                `protobuf:"varint,3,opt,name=character_width_pixels,json=characterWidthPixels,proto3,oneof" json:"character_width_pixels,omitempty"`
+	SignFaceHeightMm      *uint32                `protobuf:"varint,9,opt,name=sign_face_height_mm,json=signFaceHeightMm,proto3,oneof" json:"sign_face_height_mm,omitempty"`
+	SignFaceWidthMm       *uint32                `protobuf:"varint,10,opt,name=sign_face_width_mm,json=signFaceWidthMm,proto3,oneof" json:"sign_face_width_mm,omitempty"`
+	PixelPitchMm          *string                `protobuf:"bytes,14,opt,name=pixel_pitch_mm,json=pixelPitchMm,proto3,oneof" json:"pixel_pitch_mm,omitempty"`
+	CharacterHeightMm     *uint32                `protobuf:"varint,11,opt,name=character_height_mm,json=characterHeightMm,proto3,oneof" json:"character_height_mm,omitempty"`
+	CharacterWidthMm      *uint32                `protobuf:"varint,12,opt,name=character_width_mm,json=characterWidthMm,proto3,oneof" json:"character_width_mm,omitempty"`
+	BeaconType            *BeaconType            `protobuf:"varint,13,opt,name=beacon_type,json=beaconType,proto3,enum=openits.dms.v1.BeaconType,oneof" json:"beacon_type,omitempty"`
+	ColorCapability       *ColorCapability       `protobuf:"varint,4,opt,name=color_capability,json=colorCapability,proto3,enum=openits.dms.v1.ColorCapability,oneof" json:"color_capability,omitempty"`
+	MaxPages              *uint32                `protobuf:"varint,5,opt,name=max_pages,json=maxPages,proto3,oneof" json:"max_pages,omitempty"`
+	BeaconCapable         *bool                  `protobuf:"varint,6,opt,name=beacon_capable,json=beaconCapable,proto3,oneof" json:"beacon_capable,omitempty"`
 	SupportedMultiTags    []string               `protobuf:"bytes,7,rep,name=supported_multi_tags,json=supportedMultiTags,proto3" json:"supported_multi_tags,omitempty"`
 	Font                  []*Font                `protobuf:"bytes,8,rep,name=font,proto3" json:"font,omitempty"`
 	Graphic               []*Graphic             `protobuf:"bytes,15,rep,name=graphic,proto3" json:"graphic,omitempty"`
@@ -1434,85 +594,85 @@ func (*Capabilities) Descriptor() ([]byte, []int) {
 }
 
 func (x *Capabilities) GetSignType() SignType {
-	if x != nil {
-		return x.SignType
+	if x != nil && x.SignType != nil {
+		return *x.SignType
 	}
 	return SignType_SIGN_TYPE_FULL_MATRIX
 }
 
 func (x *Capabilities) GetCharacterHeightPixels() uint32 {
-	if x != nil {
-		return x.CharacterHeightPixels
+	if x != nil && x.CharacterHeightPixels != nil {
+		return *x.CharacterHeightPixels
 	}
 	return 0
 }
 
 func (x *Capabilities) GetCharacterWidthPixels() uint32 {
-	if x != nil {
-		return x.CharacterWidthPixels
+	if x != nil && x.CharacterWidthPixels != nil {
+		return *x.CharacterWidthPixels
 	}
 	return 0
 }
 
 func (x *Capabilities) GetSignFaceHeightMm() uint32 {
-	if x != nil {
-		return x.SignFaceHeightMm
+	if x != nil && x.SignFaceHeightMm != nil {
+		return *x.SignFaceHeightMm
 	}
 	return 0
 }
 
 func (x *Capabilities) GetSignFaceWidthMm() uint32 {
-	if x != nil {
-		return x.SignFaceWidthMm
+	if x != nil && x.SignFaceWidthMm != nil {
+		return *x.SignFaceWidthMm
 	}
 	return 0
 }
 
 func (x *Capabilities) GetPixelPitchMm() string {
-	if x != nil {
-		return x.PixelPitchMm
+	if x != nil && x.PixelPitchMm != nil {
+		return *x.PixelPitchMm
 	}
 	return ""
 }
 
 func (x *Capabilities) GetCharacterHeightMm() uint32 {
-	if x != nil {
-		return x.CharacterHeightMm
+	if x != nil && x.CharacterHeightMm != nil {
+		return *x.CharacterHeightMm
 	}
 	return 0
 }
 
 func (x *Capabilities) GetCharacterWidthMm() uint32 {
-	if x != nil {
-		return x.CharacterWidthMm
+	if x != nil && x.CharacterWidthMm != nil {
+		return *x.CharacterWidthMm
 	}
 	return 0
 }
 
 func (x *Capabilities) GetBeaconType() BeaconType {
-	if x != nil {
-		return x.BeaconType
+	if x != nil && x.BeaconType != nil {
+		return *x.BeaconType
 	}
 	return BeaconType_BEACON_TYPE_NONE
 }
 
 func (x *Capabilities) GetColorCapability() ColorCapability {
-	if x != nil {
-		return x.ColorCapability
+	if x != nil && x.ColorCapability != nil {
+		return *x.ColorCapability
 	}
 	return ColorCapability_COLOR_CAPABILITY_MONOCHROME_1BIT
 }
 
 func (x *Capabilities) GetMaxPages() uint32 {
-	if x != nil {
-		return x.MaxPages
+	if x != nil && x.MaxPages != nil {
+		return *x.MaxPages
 	}
 	return 0
 }
 
 func (x *Capabilities) GetBeaconCapable() bool {
-	if x != nil {
-		return x.BeaconCapable
+	if x != nil && x.BeaconCapable != nil {
+		return *x.BeaconCapable
 	}
 	return false
 }
@@ -1540,10 +700,10 @@ func (x *Capabilities) GetGraphic() []*Graphic {
 
 type Font struct {
 	state                 protoimpl.MessageState `protogen:"open.v1"`
-	FontNumber            uint32                 `protobuf:"varint,1,opt,name=font_number,json=fontNumber,proto3" json:"font_number,omitempty"`
-	Name                  string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	CharacterHeightPixels uint32                 `protobuf:"varint,3,opt,name=character_height_pixels,json=characterHeightPixels,proto3" json:"character_height_pixels,omitempty"`
-	CharacterWidthPixels  uint32                 `protobuf:"varint,4,opt,name=character_width_pixels,json=characterWidthPixels,proto3" json:"character_width_pixels,omitempty"`
+	FontNumber            *uint32                `protobuf:"varint,1,opt,name=font_number,json=fontNumber,proto3,oneof" json:"font_number,omitempty"`
+	Name                  *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	CharacterHeightPixels *uint32                `protobuf:"varint,3,opt,name=character_height_pixels,json=characterHeightPixels,proto3,oneof" json:"character_height_pixels,omitempty"`
+	CharacterWidthPixels  *uint32                `protobuf:"varint,4,opt,name=character_width_pixels,json=characterWidthPixels,proto3,oneof" json:"character_width_pixels,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -1579,39 +739,39 @@ func (*Font) Descriptor() ([]byte, []int) {
 }
 
 func (x *Font) GetFontNumber() uint32 {
-	if x != nil {
-		return x.FontNumber
+	if x != nil && x.FontNumber != nil {
+		return *x.FontNumber
 	}
 	return 0
 }
 
 func (x *Font) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *Font) GetCharacterHeightPixels() uint32 {
-	if x != nil {
-		return x.CharacterHeightPixels
+	if x != nil && x.CharacterHeightPixels != nil {
+		return *x.CharacterHeightPixels
 	}
 	return 0
 }
 
 func (x *Font) GetCharacterWidthPixels() uint32 {
-	if x != nil {
-		return x.CharacterWidthPixels
+	if x != nil && x.CharacterWidthPixels != nil {
+		return *x.CharacterWidthPixels
 	}
 	return 0
 }
 
 type Graphic struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	GraphicNumber uint32                 `protobuf:"varint,1,opt,name=graphic_number,json=graphicNumber,proto3" json:"graphic_number,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	HeightPixels  uint32                 `protobuf:"varint,3,opt,name=height_pixels,json=heightPixels,proto3" json:"height_pixels,omitempty"`
-	WidthPixels   uint32                 `protobuf:"varint,4,opt,name=width_pixels,json=widthPixels,proto3" json:"width_pixels,omitempty"`
+	GraphicNumber *uint32                `protobuf:"varint,1,opt,name=graphic_number,json=graphicNumber,proto3,oneof" json:"graphic_number,omitempty"`
+	Name          *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	HeightPixels  *uint32                `protobuf:"varint,3,opt,name=height_pixels,json=heightPixels,proto3,oneof" json:"height_pixels,omitempty"`
+	WidthPixels   *uint32                `protobuf:"varint,4,opt,name=width_pixels,json=widthPixels,proto3,oneof" json:"width_pixels,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1647,39 +807,39 @@ func (*Graphic) Descriptor() ([]byte, []int) {
 }
 
 func (x *Graphic) GetGraphicNumber() uint32 {
-	if x != nil {
-		return x.GraphicNumber
+	if x != nil && x.GraphicNumber != nil {
+		return *x.GraphicNumber
 	}
 	return 0
 }
 
 func (x *Graphic) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *Graphic) GetHeightPixels() uint32 {
-	if x != nil {
-		return x.HeightPixels
+	if x != nil && x.HeightPixels != nil {
+		return *x.HeightPixels
 	}
 	return 0
 }
 
 func (x *Graphic) GetWidthPixels() uint32 {
-	if x != nil {
-		return x.WidthPixels
+	if x != nil && x.WidthPixels != nil {
+		return *x.WidthPixels
 	}
 	return 0
 }
 
 type SignStateLinearReference struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	RouteDesignator string                 `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3" json:"route_designator,omitempty"`
-	Direction       string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"`
-	Measure         string                 `protobuf:"bytes,3,opt,name=measure,proto3" json:"measure,omitempty"`
-	LrsMethod       string                 `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3" json:"lrs_method,omitempty"`
+	RouteDesignator *string                `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3,oneof" json:"route_designator,omitempty"`
+	Direction       *string                `protobuf:"bytes,2,opt,name=direction,proto3,oneof" json:"direction,omitempty"`
+	Measure         *string                `protobuf:"bytes,3,opt,name=measure,proto3,oneof" json:"measure,omitempty"`
+	LrsMethod       *string                `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3,oneof" json:"lrs_method,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1715,29 +875,29 @@ func (*SignStateLinearReference) Descriptor() ([]byte, []int) {
 }
 
 func (x *SignStateLinearReference) GetRouteDesignator() string {
-	if x != nil {
-		return x.RouteDesignator
+	if x != nil && x.RouteDesignator != nil {
+		return *x.RouteDesignator
 	}
 	return ""
 }
 
 func (x *SignStateLinearReference) GetDirection() string {
-	if x != nil {
-		return x.Direction
+	if x != nil && x.Direction != nil {
+		return *x.Direction
 	}
 	return ""
 }
 
 func (x *SignStateLinearReference) GetMeasure() string {
-	if x != nil {
-		return x.Measure
+	if x != nil && x.Measure != nil {
+		return *x.Measure
 	}
 	return ""
 }
 
 func (x *SignStateLinearReference) GetLrsMethod() string {
-	if x != nil {
-		return x.LrsMethod
+	if x != nil && x.LrsMethod != nil {
+		return *x.LrsMethod
 	}
 	return ""
 }
@@ -1787,11 +947,11 @@ func (x *Messages) GetSlot() []*Slot {
 }
 
 type Slot struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	MemoryType    OpenitsDmsMessageMemoryType `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.OpenitsDmsMessageMemoryType" json:"memory_type,omitempty"`
-	SlotNumber    uint32                      `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty"`
-	Config        *SlotConfig                 `protobuf:"bytes,7,opt,name=config,proto3" json:"config,omitempty"`
-	State         *SlotState                  `protobuf:"bytes,8,opt,name=state,proto3" json:"state,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MemoryType    *MessageMemoryType     `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.MessageMemoryType,oneof" json:"memory_type,omitempty"`
+	SlotNumber    *uint32                `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3,oneof" json:"slot_number,omitempty"`
+	Config        *SlotConfig            `protobuf:"bytes,7,opt,name=config,proto3" json:"config,omitempty"`
+	State         *SlotState             `protobuf:"bytes,8,opt,name=state,proto3" json:"state,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1826,16 +986,16 @@ func (*Slot) Descriptor() ([]byte, []int) {
 	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *Slot) GetMemoryType() OpenitsDmsMessageMemoryType {
-	if x != nil {
-		return x.MemoryType
+func (x *Slot) GetMemoryType() MessageMemoryType {
+	if x != nil && x.MemoryType != nil {
+		return *x.MemoryType
 	}
-	return OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED
+	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *Slot) GetSlotNumber() uint32 {
-	if x != nil {
-		return x.SlotNumber
+	if x != nil && x.SlotNumber != nil {
+		return *x.SlotNumber
 	}
 	return 0
 }
@@ -1855,14 +1015,14 @@ func (x *Slot) GetState() *SlotState {
 }
 
 type SlotConfig struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	MemoryType    OpenitsDmsMessageMemoryType `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.OpenitsDmsMessageMemoryType" json:"memory_type,omitempty"`
-	SlotNumber    uint32                      `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty"`
-	Beacon        Beacon                      `protobuf:"varint,3,opt,name=beacon,proto3,enum=openits.dms.v1.Beacon" json:"beacon,omitempty"`
-	Crc           uint32                      `protobuf:"varint,4,opt,name=crc,proto3" json:"crc,omitempty"`
-	MultiString   string                      `protobuf:"bytes,5,opt,name=multi_string,json=multiString,proto3" json:"multi_string,omitempty"`
-	Owner         string                      `protobuf:"bytes,6,opt,name=owner,proto3" json:"owner,omitempty"`
-	Priority      uint32                      `protobuf:"varint,7,opt,name=priority,proto3" json:"priority,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MemoryType    *MessageMemoryType     `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.MessageMemoryType,oneof" json:"memory_type,omitempty"`
+	SlotNumber    *uint32                `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3,oneof" json:"slot_number,omitempty"`
+	Beacon        *Beacon                `protobuf:"varint,3,opt,name=beacon,proto3,enum=openits.dms.v1.Beacon,oneof" json:"beacon,omitempty"`
+	Crc           *uint32                `protobuf:"varint,4,opt,name=crc,proto3,oneof" json:"crc,omitempty"`
+	MultiString   *string                `protobuf:"bytes,5,opt,name=multi_string,json=multiString,proto3,oneof" json:"multi_string,omitempty"`
+	Owner         *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	Priority      *uint32                `protobuf:"varint,7,opt,name=priority,proto3,oneof" json:"priority,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1897,59 +1057,59 @@ func (*SlotConfig) Descriptor() ([]byte, []int) {
 	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *SlotConfig) GetMemoryType() OpenitsDmsMessageMemoryType {
-	if x != nil {
-		return x.MemoryType
+func (x *SlotConfig) GetMemoryType() MessageMemoryType {
+	if x != nil && x.MemoryType != nil {
+		return *x.MemoryType
 	}
-	return OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED
+	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *SlotConfig) GetSlotNumber() uint32 {
-	if x != nil {
-		return x.SlotNumber
+	if x != nil && x.SlotNumber != nil {
+		return *x.SlotNumber
 	}
 	return 0
 }
 
 func (x *SlotConfig) GetBeacon() Beacon {
-	if x != nil {
-		return x.Beacon
+	if x != nil && x.Beacon != nil {
+		return *x.Beacon
 	}
 	return Beacon_BEACON_NONE
 }
 
 func (x *SlotConfig) GetCrc() uint32 {
-	if x != nil {
-		return x.Crc
+	if x != nil && x.Crc != nil {
+		return *x.Crc
 	}
 	return 0
 }
 
 func (x *SlotConfig) GetMultiString() string {
-	if x != nil {
-		return x.MultiString
+	if x != nil && x.MultiString != nil {
+		return *x.MultiString
 	}
 	return ""
 }
 
 func (x *SlotConfig) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
 
 func (x *SlotConfig) GetPriority() uint32 {
-	if x != nil {
-		return x.Priority
+	if x != nil && x.Priority != nil {
+		return *x.Priority
 	}
 	return 0
 }
 
 type SlotState struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Crc           uint32                 `protobuf:"varint,2,opt,name=crc,proto3" json:"crc,omitempty"`
-	Status        DmsMessageStatus       `protobuf:"varint,1,opt,name=status,proto3,enum=openits.dms.v1.DmsMessageStatus" json:"status,omitempty"`
+	Crc           *uint32                `protobuf:"varint,2,opt,name=crc,proto3,oneof" json:"crc,omitempty"`
+	Status        *DmsMessageStatus      `protobuf:"varint,1,opt,name=status,proto3,enum=openits.dms.v1.DmsMessageStatus,oneof" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1985,15 +1145,15 @@ func (*SlotState) Descriptor() ([]byte, []int) {
 }
 
 func (x *SlotState) GetCrc() uint32 {
-	if x != nil {
-		return x.Crc
+	if x != nil && x.Crc != nil {
+		return *x.Crc
 	}
 	return 0
 }
 
 func (x *SlotState) GetStatus() DmsMessageStatus {
-	if x != nil {
-		return x.Status
+	if x != nil && x.Status != nil {
+		return *x.Status
 	}
 	return DmsMessageStatus_DMS_MESSAGE_STATUS_NOT_USED
 }
@@ -2060,8 +1220,8 @@ func (x *Schedule) GetState() *ScheduleState {
 
 type DayPlan struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	DayPlanId     uint32                 `protobuf:"varint,1,opt,name=day_plan_id,json=dayPlanId,proto3" json:"day_plan_id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	DayPlanId     *uint32                `protobuf:"varint,1,opt,name=day_plan_id,json=dayPlanId,proto3,oneof" json:"day_plan_id,omitempty"`
+	Name          *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	Action        []*Action              `protobuf:"bytes,3,rep,name=action,proto3" json:"action,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -2098,15 +1258,15 @@ func (*DayPlan) Descriptor() ([]byte, []int) {
 }
 
 func (x *DayPlan) GetDayPlanId() uint32 {
-	if x != nil {
-		return x.DayPlanId
+	if x != nil && x.DayPlanId != nil {
+		return *x.DayPlanId
 	}
 	return 0
 }
 
 func (x *DayPlan) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -2119,10 +1279,10 @@ func (x *DayPlan) GetAction() []*Action {
 }
 
 type Action struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	StartTime     string                      `protobuf:"bytes,1,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
-	MemoryType    OpenitsDmsMessageMemoryType `protobuf:"varint,2,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.OpenitsDmsMessageMemoryType" json:"memory_type,omitempty"`
-	SlotNumber    uint32                      `protobuf:"varint,3,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	StartTime     *string                `protobuf:"bytes,1,opt,name=start_time,json=startTime,proto3,oneof" json:"start_time,omitempty"`
+	MemoryType    MessageMemoryType      `protobuf:"varint,2,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.MessageMemoryType" json:"memory_type,omitempty"`
+	SlotNumber    *uint32                `protobuf:"varint,3,opt,name=slot_number,json=slotNumber,proto3,oneof" json:"slot_number,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2158,30 +1318,30 @@ func (*Action) Descriptor() ([]byte, []int) {
 }
 
 func (x *Action) GetStartTime() string {
-	if x != nil {
-		return x.StartTime
+	if x != nil && x.StartTime != nil {
+		return *x.StartTime
 	}
 	return ""
 }
 
-func (x *Action) GetMemoryType() OpenitsDmsMessageMemoryType {
+func (x *Action) GetMemoryType() MessageMemoryType {
 	if x != nil {
 		return x.MemoryType
 	}
-	return OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED
+	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *Action) GetSlotNumber() uint32 {
-	if x != nil {
-		return x.SlotNumber
+	if x != nil && x.SlotNumber != nil {
+		return *x.SlotNumber
 	}
 	return 0
 }
 
 type ScheduleEntry struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ScheduleId    uint32                 `protobuf:"varint,1,opt,name=schedule_id,json=scheduleId,proto3" json:"schedule_id,omitempty"`
-	DayPlan       uint32                 `protobuf:"varint,5,opt,name=day_plan,json=dayPlan,proto3" json:"day_plan,omitempty"`
+	ScheduleId    *uint32                `protobuf:"varint,1,opt,name=schedule_id,json=scheduleId,proto3,oneof" json:"schedule_id,omitempty"`
+	DayPlan       *uint32                `protobuf:"varint,5,opt,name=day_plan,json=dayPlan,proto3,oneof" json:"day_plan,omitempty"`
 	DaysOfMonth   []uint32               `protobuf:"varint,4,rep,packed,name=days_of_month,json=daysOfMonth,proto3" json:"days_of_month,omitempty"`
 	DaysOfWeek    []DayOfWeek            `protobuf:"varint,3,rep,packed,name=days_of_week,json=daysOfWeek,proto3,enum=openits.dms.v1.DayOfWeek" json:"days_of_week,omitempty"`
 	Months        []Month                `protobuf:"varint,2,rep,packed,name=months,proto3,enum=openits.dms.v1.Month" json:"months,omitempty"`
@@ -2220,15 +1380,15 @@ func (*ScheduleEntry) Descriptor() ([]byte, []int) {
 }
 
 func (x *ScheduleEntry) GetScheduleId() uint32 {
-	if x != nil {
-		return x.ScheduleId
+	if x != nil && x.ScheduleId != nil {
+		return *x.ScheduleId
 	}
 	return 0
 }
 
 func (x *ScheduleEntry) GetDayPlan() uint32 {
-	if x != nil {
-		return x.DayPlan
+	if x != nil && x.DayPlan != nil {
+		return *x.DayPlan
 	}
 	return 0
 }
@@ -2256,7 +1416,7 @@ func (x *ScheduleEntry) GetMonths() []Month {
 
 type ScheduleState struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	ActiveDayPlanId uint32                 `protobuf:"varint,1,opt,name=active_day_plan_id,json=activeDayPlanId,proto3" json:"active_day_plan_id,omitempty"`
+	ActiveDayPlanId *uint32                `protobuf:"varint,1,opt,name=active_day_plan_id,json=activeDayPlanId,proto3,oneof" json:"active_day_plan_id,omitempty"`
 	NextActionAt    *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=next_action_at,json=nextActionAt,proto3" json:"next_action_at,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
@@ -2293,8 +1453,8 @@ func (*ScheduleState) Descriptor() ([]byte, []int) {
 }
 
 func (x *ScheduleState) GetActiveDayPlanId() uint32 {
-	if x != nil {
-		return x.ActiveDayPlanId
+	if x != nil && x.ActiveDayPlanId != nil {
+		return *x.ActiveDayPlanId
 	}
 	return 0
 }
@@ -2360,14 +1520,14 @@ func (x *Control) GetState() *ControlState {
 
 type ControlConfig struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
-	RequestSelfTest     RequestSelfTest        `protobuf:"varint,7,opt,name=request_self_test,json=requestSelfTest,proto3,enum=openits.dms.v1.RequestSelfTest" json:"request_self_test,omitempty"`
+	RequestSelfTest     *RequestSelfTest       `protobuf:"varint,7,opt,name=request_self_test,json=requestSelfTest,proto3,enum=openits.dms.v1.RequestSelfTest,oneof" json:"request_self_test,omitempty"`
 	ActiveMessage       *ActiveMessage         `protobuf:"bytes,4,opt,name=active_message,json=activeMessage,proto3" json:"active_message,omitempty"`
 	Fallback            *ControlConfigFallback `protobuf:"bytes,5,opt,name=fallback,proto3" json:"fallback,omitempty"`
-	BrightnessSetpoint  uint32                 `protobuf:"varint,6,opt,name=brightness_setpoint,json=brightnessSetpoint,proto3" json:"brightness_setpoint,omitempty"`
-	ControlMode         string                 `protobuf:"bytes,11,opt,name=control_mode,json=controlMode,proto3" json:"control_mode,omitempty"`
-	DefaultPageOffTimeS string                 `protobuf:"bytes,1,opt,name=default_page_off_time_s,json=defaultPageOffTimeS,proto3" json:"default_page_off_time_s,omitempty"`
-	DefaultPageOnTimeS  string                 `protobuf:"bytes,2,opt,name=default_page_on_time_s,json=defaultPageOnTimeS,proto3" json:"default_page_on_time_s,omitempty"`
-	IlluminationControl IlluminationControl    `protobuf:"varint,3,opt,name=illumination_control,json=illuminationControl,proto3,enum=openits.dms.v1.IlluminationControl" json:"illumination_control,omitempty"`
+	BrightnessSetpoint  *uint32                `protobuf:"varint,6,opt,name=brightness_setpoint,json=brightnessSetpoint,proto3,oneof" json:"brightness_setpoint,omitempty"`
+	ControlMode         *string                `protobuf:"bytes,11,opt,name=control_mode,json=controlMode,proto3,oneof" json:"control_mode,omitempty"`
+	DefaultPageOffTimeS *string                `protobuf:"bytes,1,opt,name=default_page_off_time_s,json=defaultPageOffTimeS,proto3,oneof" json:"default_page_off_time_s,omitempty"`
+	DefaultPageOnTimeS  *string                `protobuf:"bytes,2,opt,name=default_page_on_time_s,json=defaultPageOnTimeS,proto3,oneof" json:"default_page_on_time_s,omitempty"`
+	IlluminationControl *IlluminationControl   `protobuf:"varint,3,opt,name=illumination_control,json=illuminationControl,proto3,enum=openits.dms.v1.IlluminationControl,oneof" json:"illumination_control,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -2403,8 +1563,8 @@ func (*ControlConfig) Descriptor() ([]byte, []int) {
 }
 
 func (x *ControlConfig) GetRequestSelfTest() RequestSelfTest {
-	if x != nil {
-		return x.RequestSelfTest
+	if x != nil && x.RequestSelfTest != nil {
+		return *x.RequestSelfTest
 	}
 	return RequestSelfTest_REQUEST_SELF_TEST_NONE
 }
@@ -2424,49 +1584,49 @@ func (x *ControlConfig) GetFallback() *ControlConfigFallback {
 }
 
 func (x *ControlConfig) GetBrightnessSetpoint() uint32 {
-	if x != nil {
-		return x.BrightnessSetpoint
+	if x != nil && x.BrightnessSetpoint != nil {
+		return *x.BrightnessSetpoint
 	}
 	return 0
 }
 
 func (x *ControlConfig) GetControlMode() string {
-	if x != nil {
-		return x.ControlMode
+	if x != nil && x.ControlMode != nil {
+		return *x.ControlMode
 	}
 	return ""
 }
 
 func (x *ControlConfig) GetDefaultPageOffTimeS() string {
-	if x != nil {
-		return x.DefaultPageOffTimeS
+	if x != nil && x.DefaultPageOffTimeS != nil {
+		return *x.DefaultPageOffTimeS
 	}
 	return ""
 }
 
 func (x *ControlConfig) GetDefaultPageOnTimeS() string {
-	if x != nil {
-		return x.DefaultPageOnTimeS
+	if x != nil && x.DefaultPageOnTimeS != nil {
+		return *x.DefaultPageOnTimeS
 	}
 	return ""
 }
 
 func (x *ControlConfig) GetIlluminationControl() IlluminationControl {
-	if x != nil {
-		return x.IlluminationControl
+	if x != nil && x.IlluminationControl != nil {
+		return *x.IlluminationControl
 	}
 	return IlluminationControl_ILLUMINATION_CONTROL_PHOTOCELL
 }
 
 type ActiveMessage struct {
-	state              protoimpl.MessageState      `protogen:"open.v1"`
-	DurationS          uint32                      `protobuf:"varint,3,opt,name=duration_s,json=durationS,proto3" json:"duration_s,omitempty"`
-	Indefinite         bool                        `protobuf:"varint,7,opt,name=indefinite,proto3" json:"indefinite,omitempty"`
-	ActivationPriority uint32                      `protobuf:"varint,4,opt,name=activation_priority,json=activationPriority,proto3" json:"activation_priority,omitempty"`
-	Crc                uint32                      `protobuf:"varint,5,opt,name=crc,proto3" json:"crc,omitempty"`
-	Owner              string                      `protobuf:"bytes,6,opt,name=owner,proto3" json:"owner,omitempty"`
-	MemoryType         OpenitsDmsMessageMemoryType `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.OpenitsDmsMessageMemoryType" json:"memory_type,omitempty"`
-	SlotNumber         uint32                      `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty"`
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	DurationS          *uint32                `protobuf:"varint,3,opt,name=duration_s,json=durationS,proto3,oneof" json:"duration_s,omitempty"`
+	Indefinite         *bool                  `protobuf:"varint,7,opt,name=indefinite,proto3,oneof" json:"indefinite,omitempty"`
+	ActivationPriority *uint32                `protobuf:"varint,4,opt,name=activation_priority,json=activationPriority,proto3,oneof" json:"activation_priority,omitempty"`
+	Crc                *uint32                `protobuf:"varint,5,opt,name=crc,proto3,oneof" json:"crc,omitempty"`
+	Owner              *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	MemoryType         *MessageMemoryType     `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.MessageMemoryType,oneof" json:"memory_type,omitempty"`
+	SlotNumber         *uint32                `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3,oneof" json:"slot_number,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -2502,50 +1662,50 @@ func (*ActiveMessage) Descriptor() ([]byte, []int) {
 }
 
 func (x *ActiveMessage) GetDurationS() uint32 {
-	if x != nil {
-		return x.DurationS
+	if x != nil && x.DurationS != nil {
+		return *x.DurationS
 	}
 	return 0
 }
 
 func (x *ActiveMessage) GetIndefinite() bool {
-	if x != nil {
-		return x.Indefinite
+	if x != nil && x.Indefinite != nil {
+		return *x.Indefinite
 	}
 	return false
 }
 
 func (x *ActiveMessage) GetActivationPriority() uint32 {
-	if x != nil {
-		return x.ActivationPriority
+	if x != nil && x.ActivationPriority != nil {
+		return *x.ActivationPriority
 	}
 	return 0
 }
 
 func (x *ActiveMessage) GetCrc() uint32 {
-	if x != nil {
-		return x.Crc
+	if x != nil && x.Crc != nil {
+		return *x.Crc
 	}
 	return 0
 }
 
 func (x *ActiveMessage) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
 
-func (x *ActiveMessage) GetMemoryType() OpenitsDmsMessageMemoryType {
-	if x != nil {
-		return x.MemoryType
+func (x *ActiveMessage) GetMemoryType() MessageMemoryType {
+	if x != nil && x.MemoryType != nil {
+		return *x.MemoryType
 	}
-	return OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED
+	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *ActiveMessage) GetSlotNumber() uint32 {
-	if x != nil {
-		return x.SlotNumber
+	if x != nil && x.SlotNumber != nil {
+		return *x.SlotNumber
 	}
 	return 0
 }
@@ -2619,10 +1779,10 @@ func (x *ControlConfigFallback) GetReset_() *ControlConfigFallbackReset {
 }
 
 type ControlConfigFallbackCommLoss struct {
-	state            protoimpl.MessageState      `protogen:"open.v1"`
-	CommLossTimeoutS uint32                      `protobuf:"varint,1,opt,name=comm_loss_timeout_s,json=commLossTimeoutS,proto3" json:"comm_loss_timeout_s,omitempty"`
-	MemoryType       OpenitsDmsMessageMemoryType `protobuf:"varint,2,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.OpenitsDmsMessageMemoryType" json:"memory_type,omitempty"`
-	SlotNumber       uint32                      `protobuf:"varint,3,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty"`
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	CommLossTimeoutS *uint32                `protobuf:"varint,1,opt,name=comm_loss_timeout_s,json=commLossTimeoutS,proto3,oneof" json:"comm_loss_timeout_s,omitempty"`
+	MemoryType       *MessageMemoryType     `protobuf:"varint,2,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.MessageMemoryType,oneof" json:"memory_type,omitempty"`
+	SlotNumber       *uint32                `protobuf:"varint,3,opt,name=slot_number,json=slotNumber,proto3,oneof" json:"slot_number,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -2658,30 +1818,30 @@ func (*ControlConfigFallbackCommLoss) Descriptor() ([]byte, []int) {
 }
 
 func (x *ControlConfigFallbackCommLoss) GetCommLossTimeoutS() uint32 {
-	if x != nil {
-		return x.CommLossTimeoutS
+	if x != nil && x.CommLossTimeoutS != nil {
+		return *x.CommLossTimeoutS
 	}
 	return 0
 }
 
-func (x *ControlConfigFallbackCommLoss) GetMemoryType() OpenitsDmsMessageMemoryType {
-	if x != nil {
-		return x.MemoryType
+func (x *ControlConfigFallbackCommLoss) GetMemoryType() MessageMemoryType {
+	if x != nil && x.MemoryType != nil {
+		return *x.MemoryType
 	}
-	return OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED
+	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *ControlConfigFallbackCommLoss) GetSlotNumber() uint32 {
-	if x != nil {
-		return x.SlotNumber
+	if x != nil && x.SlotNumber != nil {
+		return *x.SlotNumber
 	}
 	return 0
 }
 
 type ControlConfigFallbackEndOfDuration struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	MemoryType    OpenitsDmsMessageMemoryType `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.OpenitsDmsMessageMemoryType" json:"memory_type,omitempty"`
-	SlotNumber    uint32                      `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MemoryType    *MessageMemoryType     `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.MessageMemoryType,oneof" json:"memory_type,omitempty"`
+	SlotNumber    *uint32                `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3,oneof" json:"slot_number,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2716,23 +1876,23 @@ func (*ControlConfigFallbackEndOfDuration) Descriptor() ([]byte, []int) {
 	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{22}
 }
 
-func (x *ControlConfigFallbackEndOfDuration) GetMemoryType() OpenitsDmsMessageMemoryType {
-	if x != nil {
-		return x.MemoryType
+func (x *ControlConfigFallbackEndOfDuration) GetMemoryType() MessageMemoryType {
+	if x != nil && x.MemoryType != nil {
+		return *x.MemoryType
 	}
-	return OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED
+	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *ControlConfigFallbackEndOfDuration) GetSlotNumber() uint32 {
-	if x != nil {
-		return x.SlotNumber
+	if x != nil && x.SlotNumber != nil {
+		return *x.SlotNumber
 	}
 	return 0
 }
 
 type ControlConfigFallbackPowerRecovery struct {
 	state                 protoimpl.MessageState                         `protogen:"open.v1"`
-	ShortOutageThresholdS uint32                                         `protobuf:"varint,1,opt,name=short_outage_threshold_s,json=shortOutageThresholdS,proto3" json:"short_outage_threshold_s,omitempty"`
+	ShortOutageThresholdS *uint32                                        `protobuf:"varint,1,opt,name=short_outage_threshold_s,json=shortOutageThresholdS,proto3,oneof" json:"short_outage_threshold_s,omitempty"`
 	ShortOutage           *ControlConfigFallbackPowerRecoveryShortOutage `protobuf:"bytes,2,opt,name=short_outage,json=shortOutage,proto3" json:"short_outage,omitempty"`
 	LongOutage            *ControlConfigFallbackPowerRecoveryLongOutage  `protobuf:"bytes,3,opt,name=long_outage,json=longOutage,proto3" json:"long_outage,omitempty"`
 	unknownFields         protoimpl.UnknownFields
@@ -2770,8 +1930,8 @@ func (*ControlConfigFallbackPowerRecovery) Descriptor() ([]byte, []int) {
 }
 
 func (x *ControlConfigFallbackPowerRecovery) GetShortOutageThresholdS() uint32 {
-	if x != nil {
-		return x.ShortOutageThresholdS
+	if x != nil && x.ShortOutageThresholdS != nil {
+		return *x.ShortOutageThresholdS
 	}
 	return 0
 }
@@ -2791,9 +1951,9 @@ func (x *ControlConfigFallbackPowerRecovery) GetLongOutage() *ControlConfigFallb
 }
 
 type ControlConfigFallbackPowerRecoveryShortOutage struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	MemoryType    OpenitsDmsMessageMemoryType `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.OpenitsDmsMessageMemoryType" json:"memory_type,omitempty"`
-	SlotNumber    uint32                      `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MemoryType    *MessageMemoryType     `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.MessageMemoryType,oneof" json:"memory_type,omitempty"`
+	SlotNumber    *uint32                `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3,oneof" json:"slot_number,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2828,24 +1988,24 @@ func (*ControlConfigFallbackPowerRecoveryShortOutage) Descriptor() ([]byte, []in
 	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{24}
 }
 
-func (x *ControlConfigFallbackPowerRecoveryShortOutage) GetMemoryType() OpenitsDmsMessageMemoryType {
-	if x != nil {
-		return x.MemoryType
+func (x *ControlConfigFallbackPowerRecoveryShortOutage) GetMemoryType() MessageMemoryType {
+	if x != nil && x.MemoryType != nil {
+		return *x.MemoryType
 	}
-	return OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED
+	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *ControlConfigFallbackPowerRecoveryShortOutage) GetSlotNumber() uint32 {
-	if x != nil {
-		return x.SlotNumber
+	if x != nil && x.SlotNumber != nil {
+		return *x.SlotNumber
 	}
 	return 0
 }
 
 type ControlConfigFallbackPowerRecoveryLongOutage struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	MemoryType    OpenitsDmsMessageMemoryType `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.OpenitsDmsMessageMemoryType" json:"memory_type,omitempty"`
-	SlotNumber    uint32                      `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MemoryType    *MessageMemoryType     `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.MessageMemoryType,oneof" json:"memory_type,omitempty"`
+	SlotNumber    *uint32                `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3,oneof" json:"slot_number,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2880,24 +2040,24 @@ func (*ControlConfigFallbackPowerRecoveryLongOutage) Descriptor() ([]byte, []int
 	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{25}
 }
 
-func (x *ControlConfigFallbackPowerRecoveryLongOutage) GetMemoryType() OpenitsDmsMessageMemoryType {
-	if x != nil {
-		return x.MemoryType
+func (x *ControlConfigFallbackPowerRecoveryLongOutage) GetMemoryType() MessageMemoryType {
+	if x != nil && x.MemoryType != nil {
+		return *x.MemoryType
 	}
-	return OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED
+	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *ControlConfigFallbackPowerRecoveryLongOutage) GetSlotNumber() uint32 {
-	if x != nil {
-		return x.SlotNumber
+	if x != nil && x.SlotNumber != nil {
+		return *x.SlotNumber
 	}
 	return 0
 }
 
 type ControlConfigFallbackReset struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	MemoryType    OpenitsDmsMessageMemoryType `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.OpenitsDmsMessageMemoryType" json:"memory_type,omitempty"`
-	SlotNumber    uint32                      `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MemoryType    *MessageMemoryType     `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.MessageMemoryType,oneof" json:"memory_type,omitempty"`
+	SlotNumber    *uint32                `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3,oneof" json:"slot_number,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2932,36 +2092,36 @@ func (*ControlConfigFallbackReset) Descriptor() ([]byte, []int) {
 	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{26}
 }
 
-func (x *ControlConfigFallbackReset) GetMemoryType() OpenitsDmsMessageMemoryType {
-	if x != nil {
-		return x.MemoryType
+func (x *ControlConfigFallbackReset) GetMemoryType() MessageMemoryType {
+	if x != nil && x.MemoryType != nil {
+		return *x.MemoryType
 	}
-	return OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED
+	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *ControlConfigFallbackReset) GetSlotNumber() uint32 {
-	if x != nil {
-		return x.SlotNumber
+	if x != nil && x.SlotNumber != nil {
+		return *x.SlotNumber
 	}
 	return 0
 }
 
 type ControlState struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
-	DisplayState        string                 `protobuf:"bytes,21,opt,name=display_state,json=displayState,proto3" json:"display_state,omitempty"`
-	BeaconState         BeaconState            `protobuf:"varint,6,opt,name=beacon_state,json=beaconState,proto3,enum=openits.dms.v1.BeaconState" json:"beacon_state,omitempty"`
+	DisplayState        *string                `protobuf:"bytes,21,opt,name=display_state,json=displayState,proto3,oneof" json:"display_state,omitempty"`
+	BeaconState         *BeaconState           `protobuf:"varint,6,opt,name=beacon_state,json=beaconState,proto3,enum=openits.dms.v1.BeaconState,oneof" json:"beacon_state,omitempty"`
 	LastModeChange      *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=last_mode_change,json=lastModeChange,proto3" json:"last_mode_change,omitempty"`
-	BrightnessCurrent   uint32                 `protobuf:"varint,8,opt,name=brightness_current,json=brightnessCurrent,proto3" json:"brightness_current,omitempty"`
+	BrightnessCurrent   *uint32                `protobuf:"varint,8,opt,name=brightness_current,json=brightnessCurrent,proto3,oneof" json:"brightness_current,omitempty"`
 	Active              *Active                `protobuf:"bytes,9,opt,name=active,proto3" json:"active,omitempty"`
 	Preempted           *Preempted             `protobuf:"bytes,5,opt,name=preempted,proto3" json:"preempted,omitempty"`
 	Fallback            *ControlStateFallback  `protobuf:"bytes,7,opt,name=fallback,proto3" json:"fallback,omitempty"`
-	CommLossActive      bool                   `protobuf:"varint,10,opt,name=comm_loss_active,json=commLossActive,proto3" json:"comm_loss_active,omitempty"`
-	PowerLossActive     bool                   `protobuf:"varint,22,opt,name=power_loss_active,json=powerLossActive,proto3" json:"power_loss_active,omitempty"`
-	BrightnessSetpoint  uint32                 `protobuf:"varint,12,opt,name=brightness_setpoint,json=brightnessSetpoint,proto3" json:"brightness_setpoint,omitempty"`
-	ControlMode         string                 `protobuf:"bytes,23,opt,name=control_mode,json=controlMode,proto3" json:"control_mode,omitempty"`
-	DefaultPageOffTimeS string                 `protobuf:"bytes,1,opt,name=default_page_off_time_s,json=defaultPageOffTimeS,proto3" json:"default_page_off_time_s,omitempty"`
-	DefaultPageOnTimeS  string                 `protobuf:"bytes,3,opt,name=default_page_on_time_s,json=defaultPageOnTimeS,proto3" json:"default_page_on_time_s,omitempty"`
-	IlluminationControl IlluminationControl    `protobuf:"varint,4,opt,name=illumination_control,json=illuminationControl,proto3,enum=openits.dms.v1.IlluminationControl" json:"illumination_control,omitempty"`
+	CommLossActive      *bool                  `protobuf:"varint,10,opt,name=comm_loss_active,json=commLossActive,proto3,oneof" json:"comm_loss_active,omitempty"`
+	PowerLossActive     *bool                  `protobuf:"varint,22,opt,name=power_loss_active,json=powerLossActive,proto3,oneof" json:"power_loss_active,omitempty"`
+	BrightnessSetpoint  *uint32                `protobuf:"varint,12,opt,name=brightness_setpoint,json=brightnessSetpoint,proto3,oneof" json:"brightness_setpoint,omitempty"`
+	ControlMode         *string                `protobuf:"bytes,23,opt,name=control_mode,json=controlMode,proto3,oneof" json:"control_mode,omitempty"`
+	DefaultPageOffTimeS *string                `protobuf:"bytes,1,opt,name=default_page_off_time_s,json=defaultPageOffTimeS,proto3,oneof" json:"default_page_off_time_s,omitempty"`
+	DefaultPageOnTimeS  *string                `protobuf:"bytes,3,opt,name=default_page_on_time_s,json=defaultPageOnTimeS,proto3,oneof" json:"default_page_on_time_s,omitempty"`
+	IlluminationControl *IlluminationControl   `protobuf:"varint,4,opt,name=illumination_control,json=illuminationControl,proto3,enum=openits.dms.v1.IlluminationControl,oneof" json:"illumination_control,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -2997,15 +2157,15 @@ func (*ControlState) Descriptor() ([]byte, []int) {
 }
 
 func (x *ControlState) GetDisplayState() string {
-	if x != nil {
-		return x.DisplayState
+	if x != nil && x.DisplayState != nil {
+		return *x.DisplayState
 	}
 	return ""
 }
 
 func (x *ControlState) GetBeaconState() BeaconState {
-	if x != nil {
-		return x.BeaconState
+	if x != nil && x.BeaconState != nil {
+		return *x.BeaconState
 	}
 	return BeaconState_BEACON_STATE_NONE
 }
@@ -3018,8 +2178,8 @@ func (x *ControlState) GetLastModeChange() *timestamppb.Timestamp {
 }
 
 func (x *ControlState) GetBrightnessCurrent() uint32 {
-	if x != nil {
-		return x.BrightnessCurrent
+	if x != nil && x.BrightnessCurrent != nil {
+		return *x.BrightnessCurrent
 	}
 	return 0
 }
@@ -3046,67 +2206,67 @@ func (x *ControlState) GetFallback() *ControlStateFallback {
 }
 
 func (x *ControlState) GetCommLossActive() bool {
-	if x != nil {
-		return x.CommLossActive
+	if x != nil && x.CommLossActive != nil {
+		return *x.CommLossActive
 	}
 	return false
 }
 
 func (x *ControlState) GetPowerLossActive() bool {
-	if x != nil {
-		return x.PowerLossActive
+	if x != nil && x.PowerLossActive != nil {
+		return *x.PowerLossActive
 	}
 	return false
 }
 
 func (x *ControlState) GetBrightnessSetpoint() uint32 {
-	if x != nil {
-		return x.BrightnessSetpoint
+	if x != nil && x.BrightnessSetpoint != nil {
+		return *x.BrightnessSetpoint
 	}
 	return 0
 }
 
 func (x *ControlState) GetControlMode() string {
-	if x != nil {
-		return x.ControlMode
+	if x != nil && x.ControlMode != nil {
+		return *x.ControlMode
 	}
 	return ""
 }
 
 func (x *ControlState) GetDefaultPageOffTimeS() string {
-	if x != nil {
-		return x.DefaultPageOffTimeS
+	if x != nil && x.DefaultPageOffTimeS != nil {
+		return *x.DefaultPageOffTimeS
 	}
 	return ""
 }
 
 func (x *ControlState) GetDefaultPageOnTimeS() string {
-	if x != nil {
-		return x.DefaultPageOnTimeS
+	if x != nil && x.DefaultPageOnTimeS != nil {
+		return *x.DefaultPageOnTimeS
 	}
 	return ""
 }
 
 func (x *ControlState) GetIlluminationControl() IlluminationControl {
-	if x != nil {
-		return x.IlluminationControl
+	if x != nil && x.IlluminationControl != nil {
+		return *x.IlluminationControl
 	}
 	return IlluminationControl_ILLUMINATION_CONTROL_PHOTOCELL
 }
 
 type Active struct {
-	state             protoimpl.MessageState      `protogen:"open.v1"`
-	ActivatedAt       *timestamppb.Timestamp      `protobuf:"bytes,3,opt,name=activated_at,json=activatedAt,proto3" json:"activated_at,omitempty"`
-	ExpiresAt         *timestamppb.Timestamp      `protobuf:"bytes,4,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
-	Source            string                      `protobuf:"bytes,5,opt,name=source,proto3" json:"source,omitempty"`
-	ActivationTrigger string                      `protobuf:"bytes,10,opt,name=activation_trigger,json=activationTrigger,proto3" json:"activation_trigger,omitempty"`
-	Beacon            Beacon                      `protobuf:"varint,11,opt,name=beacon,proto3,enum=openits.dms.v1.Beacon" json:"beacon,omitempty"`
-	Crc               uint32                      `protobuf:"varint,6,opt,name=crc,proto3" json:"crc,omitempty"`
-	MemoryType        OpenitsDmsMessageMemoryType `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.OpenitsDmsMessageMemoryType" json:"memory_type,omitempty"`
-	MultiString       string                      `protobuf:"bytes,7,opt,name=multi_string,json=multiString,proto3" json:"multi_string,omitempty"`
-	Owner             string                      `protobuf:"bytes,8,opt,name=owner,proto3" json:"owner,omitempty"`
-	Priority          uint32                      `protobuf:"varint,9,opt,name=priority,proto3" json:"priority,omitempty"`
-	SlotNumber        uint32                      `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty"`
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	ActivatedAt       *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=activated_at,json=activatedAt,proto3" json:"activated_at,omitempty"`
+	ExpiresAt         *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
+	Source            *string                `protobuf:"bytes,5,opt,name=source,proto3,oneof" json:"source,omitempty"`
+	ActivationTrigger *string                `protobuf:"bytes,10,opt,name=activation_trigger,json=activationTrigger,proto3,oneof" json:"activation_trigger,omitempty"`
+	Beacon            *Beacon                `protobuf:"varint,11,opt,name=beacon,proto3,enum=openits.dms.v1.Beacon,oneof" json:"beacon,omitempty"`
+	Crc               *uint32                `protobuf:"varint,6,opt,name=crc,proto3,oneof" json:"crc,omitempty"`
+	MemoryType        *MessageMemoryType     `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.MessageMemoryType,oneof" json:"memory_type,omitempty"`
+	MultiString       *string                `protobuf:"bytes,7,opt,name=multi_string,json=multiString,proto3,oneof" json:"multi_string,omitempty"`
+	Owner             *string                `protobuf:"bytes,8,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	Priority          *uint32                `protobuf:"varint,9,opt,name=priority,proto3,oneof" json:"priority,omitempty"`
+	SlotNumber        *uint32                `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3,oneof" json:"slot_number,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -3156,73 +2316,73 @@ func (x *Active) GetExpiresAt() *timestamppb.Timestamp {
 }
 
 func (x *Active) GetSource() string {
-	if x != nil {
-		return x.Source
+	if x != nil && x.Source != nil {
+		return *x.Source
 	}
 	return ""
 }
 
 func (x *Active) GetActivationTrigger() string {
-	if x != nil {
-		return x.ActivationTrigger
+	if x != nil && x.ActivationTrigger != nil {
+		return *x.ActivationTrigger
 	}
 	return ""
 }
 
 func (x *Active) GetBeacon() Beacon {
-	if x != nil {
-		return x.Beacon
+	if x != nil && x.Beacon != nil {
+		return *x.Beacon
 	}
 	return Beacon_BEACON_NONE
 }
 
 func (x *Active) GetCrc() uint32 {
-	if x != nil {
-		return x.Crc
+	if x != nil && x.Crc != nil {
+		return *x.Crc
 	}
 	return 0
 }
 
-func (x *Active) GetMemoryType() OpenitsDmsMessageMemoryType {
-	if x != nil {
-		return x.MemoryType
+func (x *Active) GetMemoryType() MessageMemoryType {
+	if x != nil && x.MemoryType != nil {
+		return *x.MemoryType
 	}
-	return OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED
+	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *Active) GetMultiString() string {
-	if x != nil {
-		return x.MultiString
+	if x != nil && x.MultiString != nil {
+		return *x.MultiString
 	}
 	return ""
 }
 
 func (x *Active) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
 
 func (x *Active) GetPriority() uint32 {
-	if x != nil {
-		return x.Priority
+	if x != nil && x.Priority != nil {
+		return *x.Priority
 	}
 	return 0
 }
 
 func (x *Active) GetSlotNumber() uint32 {
-	if x != nil {
-		return x.SlotNumber
+	if x != nil && x.SlotNumber != nil {
+		return *x.SlotNumber
 	}
 	return 0
 }
 
 type Preempted struct {
-	state              protoimpl.MessageState      `protogen:"open.v1"`
-	RemainingDurationS uint32                      `protobuf:"varint,3,opt,name=remaining_duration_s,json=remainingDurationS,proto3" json:"remaining_duration_s,omitempty"`
-	MemoryType         OpenitsDmsMessageMemoryType `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.OpenitsDmsMessageMemoryType" json:"memory_type,omitempty"`
-	SlotNumber         uint32                      `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty"`
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	RemainingDurationS *uint32                `protobuf:"varint,3,opt,name=remaining_duration_s,json=remainingDurationS,proto3,oneof" json:"remaining_duration_s,omitempty"`
+	MemoryType         *MessageMemoryType     `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.MessageMemoryType,oneof" json:"memory_type,omitempty"`
+	SlotNumber         *uint32                `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3,oneof" json:"slot_number,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -3258,22 +2418,22 @@ func (*Preempted) Descriptor() ([]byte, []int) {
 }
 
 func (x *Preempted) GetRemainingDurationS() uint32 {
-	if x != nil {
-		return x.RemainingDurationS
+	if x != nil && x.RemainingDurationS != nil {
+		return *x.RemainingDurationS
 	}
 	return 0
 }
 
-func (x *Preempted) GetMemoryType() OpenitsDmsMessageMemoryType {
-	if x != nil {
-		return x.MemoryType
+func (x *Preempted) GetMemoryType() MessageMemoryType {
+	if x != nil && x.MemoryType != nil {
+		return *x.MemoryType
 	}
-	return OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED
+	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *Preempted) GetSlotNumber() uint32 {
-	if x != nil {
-		return x.SlotNumber
+	if x != nil && x.SlotNumber != nil {
+		return *x.SlotNumber
 	}
 	return 0
 }
@@ -3347,10 +2507,10 @@ func (x *ControlStateFallback) GetReset_() *ControlStateFallbackReset {
 }
 
 type ControlStateFallbackCommLoss struct {
-	state            protoimpl.MessageState      `protogen:"open.v1"`
-	CommLossTimeoutS uint32                      `protobuf:"varint,1,opt,name=comm_loss_timeout_s,json=commLossTimeoutS,proto3" json:"comm_loss_timeout_s,omitempty"`
-	MemoryType       OpenitsDmsMessageMemoryType `protobuf:"varint,2,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.OpenitsDmsMessageMemoryType" json:"memory_type,omitempty"`
-	SlotNumber       uint32                      `protobuf:"varint,3,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty"`
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	CommLossTimeoutS *uint32                `protobuf:"varint,1,opt,name=comm_loss_timeout_s,json=commLossTimeoutS,proto3,oneof" json:"comm_loss_timeout_s,omitempty"`
+	MemoryType       *MessageMemoryType     `protobuf:"varint,2,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.MessageMemoryType,oneof" json:"memory_type,omitempty"`
+	SlotNumber       *uint32                `protobuf:"varint,3,opt,name=slot_number,json=slotNumber,proto3,oneof" json:"slot_number,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -3386,30 +2546,30 @@ func (*ControlStateFallbackCommLoss) Descriptor() ([]byte, []int) {
 }
 
 func (x *ControlStateFallbackCommLoss) GetCommLossTimeoutS() uint32 {
-	if x != nil {
-		return x.CommLossTimeoutS
+	if x != nil && x.CommLossTimeoutS != nil {
+		return *x.CommLossTimeoutS
 	}
 	return 0
 }
 
-func (x *ControlStateFallbackCommLoss) GetMemoryType() OpenitsDmsMessageMemoryType {
-	if x != nil {
-		return x.MemoryType
+func (x *ControlStateFallbackCommLoss) GetMemoryType() MessageMemoryType {
+	if x != nil && x.MemoryType != nil {
+		return *x.MemoryType
 	}
-	return OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED
+	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *ControlStateFallbackCommLoss) GetSlotNumber() uint32 {
-	if x != nil {
-		return x.SlotNumber
+	if x != nil && x.SlotNumber != nil {
+		return *x.SlotNumber
 	}
 	return 0
 }
 
 type ControlStateFallbackEndOfDuration struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	MemoryType    OpenitsDmsMessageMemoryType `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.OpenitsDmsMessageMemoryType" json:"memory_type,omitempty"`
-	SlotNumber    uint32                      `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MemoryType    *MessageMemoryType     `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.MessageMemoryType,oneof" json:"memory_type,omitempty"`
+	SlotNumber    *uint32                `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3,oneof" json:"slot_number,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3444,23 +2604,23 @@ func (*ControlStateFallbackEndOfDuration) Descriptor() ([]byte, []int) {
 	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{32}
 }
 
-func (x *ControlStateFallbackEndOfDuration) GetMemoryType() OpenitsDmsMessageMemoryType {
-	if x != nil {
-		return x.MemoryType
+func (x *ControlStateFallbackEndOfDuration) GetMemoryType() MessageMemoryType {
+	if x != nil && x.MemoryType != nil {
+		return *x.MemoryType
 	}
-	return OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED
+	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *ControlStateFallbackEndOfDuration) GetSlotNumber() uint32 {
-	if x != nil {
-		return x.SlotNumber
+	if x != nil && x.SlotNumber != nil {
+		return *x.SlotNumber
 	}
 	return 0
 }
 
 type ControlStateFallbackPowerRecovery struct {
 	state                 protoimpl.MessageState                        `protogen:"open.v1"`
-	ShortOutageThresholdS uint32                                        `protobuf:"varint,1,opt,name=short_outage_threshold_s,json=shortOutageThresholdS,proto3" json:"short_outage_threshold_s,omitempty"`
+	ShortOutageThresholdS *uint32                                       `protobuf:"varint,1,opt,name=short_outage_threshold_s,json=shortOutageThresholdS,proto3,oneof" json:"short_outage_threshold_s,omitempty"`
 	ShortOutage           *ControlStateFallbackPowerRecoveryShortOutage `protobuf:"bytes,2,opt,name=short_outage,json=shortOutage,proto3" json:"short_outage,omitempty"`
 	LongOutage            *ControlStateFallbackPowerRecoveryLongOutage  `protobuf:"bytes,3,opt,name=long_outage,json=longOutage,proto3" json:"long_outage,omitempty"`
 	unknownFields         protoimpl.UnknownFields
@@ -3498,8 +2658,8 @@ func (*ControlStateFallbackPowerRecovery) Descriptor() ([]byte, []int) {
 }
 
 func (x *ControlStateFallbackPowerRecovery) GetShortOutageThresholdS() uint32 {
-	if x != nil {
-		return x.ShortOutageThresholdS
+	if x != nil && x.ShortOutageThresholdS != nil {
+		return *x.ShortOutageThresholdS
 	}
 	return 0
 }
@@ -3519,9 +2679,9 @@ func (x *ControlStateFallbackPowerRecovery) GetLongOutage() *ControlStateFallbac
 }
 
 type ControlStateFallbackPowerRecoveryShortOutage struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	MemoryType    OpenitsDmsMessageMemoryType `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.OpenitsDmsMessageMemoryType" json:"memory_type,omitempty"`
-	SlotNumber    uint32                      `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MemoryType    *MessageMemoryType     `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.MessageMemoryType,oneof" json:"memory_type,omitempty"`
+	SlotNumber    *uint32                `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3,oneof" json:"slot_number,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3556,24 +2716,24 @@ func (*ControlStateFallbackPowerRecoveryShortOutage) Descriptor() ([]byte, []int
 	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{34}
 }
 
-func (x *ControlStateFallbackPowerRecoveryShortOutage) GetMemoryType() OpenitsDmsMessageMemoryType {
-	if x != nil {
-		return x.MemoryType
+func (x *ControlStateFallbackPowerRecoveryShortOutage) GetMemoryType() MessageMemoryType {
+	if x != nil && x.MemoryType != nil {
+		return *x.MemoryType
 	}
-	return OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED
+	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *ControlStateFallbackPowerRecoveryShortOutage) GetSlotNumber() uint32 {
-	if x != nil {
-		return x.SlotNumber
+	if x != nil && x.SlotNumber != nil {
+		return *x.SlotNumber
 	}
 	return 0
 }
 
 type ControlStateFallbackPowerRecoveryLongOutage struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	MemoryType    OpenitsDmsMessageMemoryType `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.OpenitsDmsMessageMemoryType" json:"memory_type,omitempty"`
-	SlotNumber    uint32                      `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MemoryType    *MessageMemoryType     `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.MessageMemoryType,oneof" json:"memory_type,omitempty"`
+	SlotNumber    *uint32                `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3,oneof" json:"slot_number,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3608,24 +2768,24 @@ func (*ControlStateFallbackPowerRecoveryLongOutage) Descriptor() ([]byte, []int)
 	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{35}
 }
 
-func (x *ControlStateFallbackPowerRecoveryLongOutage) GetMemoryType() OpenitsDmsMessageMemoryType {
-	if x != nil {
-		return x.MemoryType
+func (x *ControlStateFallbackPowerRecoveryLongOutage) GetMemoryType() MessageMemoryType {
+	if x != nil && x.MemoryType != nil {
+		return *x.MemoryType
 	}
-	return OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED
+	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *ControlStateFallbackPowerRecoveryLongOutage) GetSlotNumber() uint32 {
-	if x != nil {
-		return x.SlotNumber
+	if x != nil && x.SlotNumber != nil {
+		return *x.SlotNumber
 	}
 	return 0
 }
 
 type ControlStateFallbackReset struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	MemoryType    OpenitsDmsMessageMemoryType `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.OpenitsDmsMessageMemoryType" json:"memory_type,omitempty"`
-	SlotNumber    uint32                      `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MemoryType    *MessageMemoryType     `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.MessageMemoryType,oneof" json:"memory_type,omitempty"`
+	SlotNumber    *uint32                `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3,oneof" json:"slot_number,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3660,30 +2820,30 @@ func (*ControlStateFallbackReset) Descriptor() ([]byte, []int) {
 	return file_openits_dms_v1_state_proto_rawDescGZIP(), []int{36}
 }
 
-func (x *ControlStateFallbackReset) GetMemoryType() OpenitsDmsMessageMemoryType {
-	if x != nil {
-		return x.MemoryType
+func (x *ControlStateFallbackReset) GetMemoryType() MessageMemoryType {
+	if x != nil && x.MemoryType != nil {
+		return *x.MemoryType
 	}
-	return OpenitsDmsMessageMemoryType_OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED
+	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *ControlStateFallbackReset) GetSlotNumber() uint32 {
-	if x != nil {
-		return x.SlotNumber
+	if x != nil && x.SlotNumber != nil {
+		return *x.SlotNumber
 	}
 	return 0
 }
 
 type Environment struct {
 	state                 protoimpl.MessageState `protogen:"open.v1"`
-	AmbientLightLevel     uint32                 `protobuf:"varint,8,opt,name=ambient_light_level,json=ambientLightLevel,proto3" json:"ambient_light_level,omitempty"`
-	AmbientIlluminanceLux uint32                 `protobuf:"varint,9,opt,name=ambient_illuminance_lux,json=ambientIlluminanceLux,proto3" json:"ambient_illuminance_lux,omitempty"`
-	CabinetTemperatureC   string                 `protobuf:"bytes,2,opt,name=cabinet_temperature_c,json=cabinetTemperatureC,proto3" json:"cabinet_temperature_c,omitempty"`
-	HumidityPercent       uint32                 `protobuf:"varint,3,opt,name=humidity_percent,json=humidityPercent,proto3" json:"humidity_percent,omitempty"`
-	DoorOpen              bool                   `protobuf:"varint,4,opt,name=door_open,json=doorOpen,proto3" json:"door_open,omitempty"`
-	SignFaceTemperatureC  string                 `protobuf:"bytes,5,opt,name=sign_face_temperature_c,json=signFaceTemperatureC,proto3" json:"sign_face_temperature_c,omitempty"`
-	FanActive             bool                   `protobuf:"varint,6,opt,name=fan_active,json=fanActive,proto3" json:"fan_active,omitempty"`
-	HeaterActive          bool                   `protobuf:"varint,7,opt,name=heater_active,json=heaterActive,proto3" json:"heater_active,omitempty"`
+	AmbientLightLevel     *uint32                `protobuf:"varint,8,opt,name=ambient_light_level,json=ambientLightLevel,proto3,oneof" json:"ambient_light_level,omitempty"`
+	AmbientIlluminanceLux *uint32                `protobuf:"varint,9,opt,name=ambient_illuminance_lux,json=ambientIlluminanceLux,proto3,oneof" json:"ambient_illuminance_lux,omitempty"`
+	CabinetTemperatureC   *string                `protobuf:"bytes,2,opt,name=cabinet_temperature_c,json=cabinetTemperatureC,proto3,oneof" json:"cabinet_temperature_c,omitempty"`
+	HumidityPercent       *uint32                `protobuf:"varint,3,opt,name=humidity_percent,json=humidityPercent,proto3,oneof" json:"humidity_percent,omitempty"`
+	DoorOpen              *bool                  `protobuf:"varint,4,opt,name=door_open,json=doorOpen,proto3,oneof" json:"door_open,omitempty"`
+	SignFaceTemperatureC  *string                `protobuf:"bytes,5,opt,name=sign_face_temperature_c,json=signFaceTemperatureC,proto3,oneof" json:"sign_face_temperature_c,omitempty"`
+	FanActive             *bool                  `protobuf:"varint,6,opt,name=fan_active,json=fanActive,proto3,oneof" json:"fan_active,omitempty"`
+	HeaterActive          *bool                  `protobuf:"varint,7,opt,name=heater_active,json=heaterActive,proto3,oneof" json:"heater_active,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -3719,57 +2879,57 @@ func (*Environment) Descriptor() ([]byte, []int) {
 }
 
 func (x *Environment) GetAmbientLightLevel() uint32 {
-	if x != nil {
-		return x.AmbientLightLevel
+	if x != nil && x.AmbientLightLevel != nil {
+		return *x.AmbientLightLevel
 	}
 	return 0
 }
 
 func (x *Environment) GetAmbientIlluminanceLux() uint32 {
-	if x != nil {
-		return x.AmbientIlluminanceLux
+	if x != nil && x.AmbientIlluminanceLux != nil {
+		return *x.AmbientIlluminanceLux
 	}
 	return 0
 }
 
 func (x *Environment) GetCabinetTemperatureC() string {
-	if x != nil {
-		return x.CabinetTemperatureC
+	if x != nil && x.CabinetTemperatureC != nil {
+		return *x.CabinetTemperatureC
 	}
 	return ""
 }
 
 func (x *Environment) GetHumidityPercent() uint32 {
-	if x != nil {
-		return x.HumidityPercent
+	if x != nil && x.HumidityPercent != nil {
+		return *x.HumidityPercent
 	}
 	return 0
 }
 
 func (x *Environment) GetDoorOpen() bool {
-	if x != nil {
-		return x.DoorOpen
+	if x != nil && x.DoorOpen != nil {
+		return *x.DoorOpen
 	}
 	return false
 }
 
 func (x *Environment) GetSignFaceTemperatureC() string {
-	if x != nil {
-		return x.SignFaceTemperatureC
+	if x != nil && x.SignFaceTemperatureC != nil {
+		return *x.SignFaceTemperatureC
 	}
 	return ""
 }
 
 func (x *Environment) GetFanActive() bool {
-	if x != nil {
-		return x.FanActive
+	if x != nil && x.FanActive != nil {
+		return *x.FanActive
 	}
 	return false
 }
 
 func (x *Environment) GetHeaterActive() bool {
-	if x != nil {
-		return x.HeaterActive
+	if x != nil && x.HeaterActive != nil {
+		return *x.HeaterActive
 	}
 	return false
 }
@@ -3821,12 +2981,12 @@ func (x *CabinetPower) GetState() *CabinetPowerState {
 type CabinetPowerState struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	Battery         *Battery               `protobuf:"bytes,1,opt,name=battery,proto3" json:"battery,omitempty"`
-	DoorOpen        bool                   `protobuf:"varint,2,opt,name=door_open,json=doorOpen,proto3" json:"door_open,omitempty"`
+	DoorOpen        *bool                  `protobuf:"varint,2,opt,name=door_open,json=doorOpen,proto3,oneof" json:"door_open,omitempty"`
 	Generator       *Generator             `protobuf:"bytes,3,opt,name=generator,proto3" json:"generator,omitempty"`
-	LineFrequencyHz string                 `protobuf:"bytes,4,opt,name=line_frequency_hz,json=lineFrequencyHz,proto3" json:"line_frequency_hz,omitempty"`
-	LineVoltageV    string                 `protobuf:"bytes,5,opt,name=line_voltage_v,json=lineVoltageV,proto3" json:"line_voltage_v,omitempty"`
-	PowerSource     PowerSource            `protobuf:"varint,8,opt,name=power_source,json=powerSource,proto3,enum=openits.dms.v1.PowerSource" json:"power_source,omitempty"`
-	TransferCount   uint32                 `protobuf:"varint,10,opt,name=transfer_count,json=transferCount,proto3" json:"transfer_count,omitempty"`
+	LineFrequencyHz *string                `protobuf:"bytes,4,opt,name=line_frequency_hz,json=lineFrequencyHz,proto3,oneof" json:"line_frequency_hz,omitempty"`
+	LineVoltageV    *string                `protobuf:"bytes,5,opt,name=line_voltage_v,json=lineVoltageV,proto3,oneof" json:"line_voltage_v,omitempty"`
+	PowerSource     *PowerSource           `protobuf:"varint,8,opt,name=power_source,json=powerSource,proto3,enum=openits.dms.v1.PowerSource,oneof" json:"power_source,omitempty"`
+	TransferCount   *uint32                `protobuf:"varint,10,opt,name=transfer_count,json=transferCount,proto3,oneof" json:"transfer_count,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -3869,8 +3029,8 @@ func (x *CabinetPowerState) GetBattery() *Battery {
 }
 
 func (x *CabinetPowerState) GetDoorOpen() bool {
-	if x != nil {
-		return x.DoorOpen
+	if x != nil && x.DoorOpen != nil {
+		return *x.DoorOpen
 	}
 	return false
 }
@@ -3883,41 +3043,41 @@ func (x *CabinetPowerState) GetGenerator() *Generator {
 }
 
 func (x *CabinetPowerState) GetLineFrequencyHz() string {
-	if x != nil {
-		return x.LineFrequencyHz
+	if x != nil && x.LineFrequencyHz != nil {
+		return *x.LineFrequencyHz
 	}
 	return ""
 }
 
 func (x *CabinetPowerState) GetLineVoltageV() string {
-	if x != nil {
-		return x.LineVoltageV
+	if x != nil && x.LineVoltageV != nil {
+		return *x.LineVoltageV
 	}
 	return ""
 }
 
 func (x *CabinetPowerState) GetPowerSource() PowerSource {
-	if x != nil {
-		return x.PowerSource
+	if x != nil && x.PowerSource != nil {
+		return *x.PowerSource
 	}
 	return PowerSource_POWER_SOURCE_ON_LINE
 }
 
 func (x *CabinetPowerState) GetTransferCount() uint32 {
-	if x != nil {
-		return x.TransferCount
+	if x != nil && x.TransferCount != nil {
+		return *x.TransferCount
 	}
 	return 0
 }
 
 type Battery struct {
 	state                   protoimpl.MessageState `protogen:"open.v1"`
-	StateOfChargePct        uint32                 `protobuf:"varint,1,opt,name=state_of_charge_pct,json=stateOfChargePct,proto3" json:"state_of_charge_pct,omitempty"`
-	RuntimeRemainingMinutes uint32                 `protobuf:"varint,2,opt,name=runtime_remaining_minutes,json=runtimeRemainingMinutes,proto3" json:"runtime_remaining_minutes,omitempty"`
-	VoltageV                string                 `protobuf:"bytes,3,opt,name=voltage_v,json=voltageV,proto3" json:"voltage_v,omitempty"`
-	TemperatureC            string                 `protobuf:"bytes,4,opt,name=temperature_c,json=temperatureC,proto3" json:"temperature_c,omitempty"`
-	ChargerFault            bool                   `protobuf:"varint,5,opt,name=charger_fault,json=chargerFault,proto3" json:"charger_fault,omitempty"`
-	TestState               BatteryTestState       `protobuf:"varint,6,opt,name=test_state,json=testState,proto3,enum=openits.dms.v1.BatteryTestState" json:"test_state,omitempty"`
+	StateOfChargePct        *uint32                `protobuf:"varint,1,opt,name=state_of_charge_pct,json=stateOfChargePct,proto3,oneof" json:"state_of_charge_pct,omitempty"`
+	RuntimeRemainingMinutes *uint32                `protobuf:"varint,2,opt,name=runtime_remaining_minutes,json=runtimeRemainingMinutes,proto3,oneof" json:"runtime_remaining_minutes,omitempty"`
+	VoltageV                *string                `protobuf:"bytes,3,opt,name=voltage_v,json=voltageV,proto3,oneof" json:"voltage_v,omitempty"`
+	TemperatureC            *string                `protobuf:"bytes,4,opt,name=temperature_c,json=temperatureC,proto3,oneof" json:"temperature_c,omitempty"`
+	ChargerFault            *bool                  `protobuf:"varint,5,opt,name=charger_fault,json=chargerFault,proto3,oneof" json:"charger_fault,omitempty"`
+	TestState               *BatteryTestState      `protobuf:"varint,6,opt,name=test_state,json=testState,proto3,enum=openits.dms.v1.BatteryTestState,oneof" json:"test_state,omitempty"`
 	LastTest                *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=last_test,json=lastTest,proto3" json:"last_test,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
@@ -3954,43 +3114,43 @@ func (*Battery) Descriptor() ([]byte, []int) {
 }
 
 func (x *Battery) GetStateOfChargePct() uint32 {
-	if x != nil {
-		return x.StateOfChargePct
+	if x != nil && x.StateOfChargePct != nil {
+		return *x.StateOfChargePct
 	}
 	return 0
 }
 
 func (x *Battery) GetRuntimeRemainingMinutes() uint32 {
-	if x != nil {
-		return x.RuntimeRemainingMinutes
+	if x != nil && x.RuntimeRemainingMinutes != nil {
+		return *x.RuntimeRemainingMinutes
 	}
 	return 0
 }
 
 func (x *Battery) GetVoltageV() string {
-	if x != nil {
-		return x.VoltageV
+	if x != nil && x.VoltageV != nil {
+		return *x.VoltageV
 	}
 	return ""
 }
 
 func (x *Battery) GetTemperatureC() string {
-	if x != nil {
-		return x.TemperatureC
+	if x != nil && x.TemperatureC != nil {
+		return *x.TemperatureC
 	}
 	return ""
 }
 
 func (x *Battery) GetChargerFault() bool {
-	if x != nil {
-		return x.ChargerFault
+	if x != nil && x.ChargerFault != nil {
+		return *x.ChargerFault
 	}
 	return false
 }
 
 func (x *Battery) GetTestState() BatteryTestState {
-	if x != nil {
-		return x.TestState
+	if x != nil && x.TestState != nil {
+		return *x.TestState
 	}
 	return BatteryTestState_BATTERY_TEST_STATE_IDLE
 }
@@ -4004,8 +3164,8 @@ func (x *Battery) GetLastTest() *timestamppb.Timestamp {
 
 type Generator struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Running       bool                   `protobuf:"varint,1,opt,name=running,proto3" json:"running,omitempty"`
-	FuelLevelPct  uint32                 `protobuf:"varint,2,opt,name=fuel_level_pct,json=fuelLevelPct,proto3" json:"fuel_level_pct,omitempty"`
+	Running       *bool                  `protobuf:"varint,1,opt,name=running,proto3,oneof" json:"running,omitempty"`
+	FuelLevelPct  *uint32                `protobuf:"varint,2,opt,name=fuel_level_pct,json=fuelLevelPct,proto3,oneof" json:"fuel_level_pct,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4041,30 +3201,30 @@ func (*Generator) Descriptor() ([]byte, []int) {
 }
 
 func (x *Generator) GetRunning() bool {
-	if x != nil {
-		return x.Running
+	if x != nil && x.Running != nil {
+		return *x.Running
 	}
 	return false
 }
 
 func (x *Generator) GetFuelLevelPct() uint32 {
-	if x != nil {
-		return x.FuelLevelPct
+	if x != nil && x.FuelLevelPct != nil {
+		return *x.FuelLevelPct
 	}
 	return 0
 }
 
 type Diagnostics struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
-	PixelsTotal       uint32                 `protobuf:"varint,11,opt,name=pixels_total,json=pixelsTotal,proto3" json:"pixels_total,omitempty"`
-	PixelsStuckOn     uint32                 `protobuf:"varint,1,opt,name=pixels_stuck_on,json=pixelsStuckOn,proto3" json:"pixels_stuck_on,omitempty"`
-	PixelsStuckOff    uint32                 `protobuf:"varint,2,opt,name=pixels_stuck_off,json=pixelsStuckOff,proto3" json:"pixels_stuck_off,omitempty"`
-	PixelsFailed      uint32                 `protobuf:"varint,12,opt,name=pixels_failed,json=pixelsFailed,proto3" json:"pixels_failed,omitempty"`
-	LampsTotal        uint32                 `protobuf:"varint,13,opt,name=lamps_total,json=lampsTotal,proto3" json:"lamps_total,omitempty"`
-	LampsFailed       uint32                 `protobuf:"varint,14,opt,name=lamps_failed,json=lampsFailed,proto3" json:"lamps_failed,omitempty"`
-	BeaconsTotal      uint32                 `protobuf:"varint,4,opt,name=beacons_total,json=beaconsTotal,proto3" json:"beacons_total,omitempty"`
-	BeaconsFailed     uint32                 `protobuf:"varint,5,opt,name=beacons_failed,json=beaconsFailed,proto3" json:"beacons_failed,omitempty"`
-	ControllerUptimeS uint32                 `protobuf:"varint,6,opt,name=controller_uptime_s,json=controllerUptimeS,proto3" json:"controller_uptime_s,omitempty"`
+	PixelsTotal       *uint32                `protobuf:"varint,11,opt,name=pixels_total,json=pixelsTotal,proto3,oneof" json:"pixels_total,omitempty"`
+	PixelsStuckOn     *uint32                `protobuf:"varint,1,opt,name=pixels_stuck_on,json=pixelsStuckOn,proto3,oneof" json:"pixels_stuck_on,omitempty"`
+	PixelsStuckOff    *uint32                `protobuf:"varint,2,opt,name=pixels_stuck_off,json=pixelsStuckOff,proto3,oneof" json:"pixels_stuck_off,omitempty"`
+	PixelsFailed      *uint32                `protobuf:"varint,12,opt,name=pixels_failed,json=pixelsFailed,proto3,oneof" json:"pixels_failed,omitempty"`
+	LampsTotal        *uint32                `protobuf:"varint,13,opt,name=lamps_total,json=lampsTotal,proto3,oneof" json:"lamps_total,omitempty"`
+	LampsFailed       *uint32                `protobuf:"varint,14,opt,name=lamps_failed,json=lampsFailed,proto3,oneof" json:"lamps_failed,omitempty"`
+	BeaconsTotal      *uint32                `protobuf:"varint,4,opt,name=beacons_total,json=beaconsTotal,proto3,oneof" json:"beacons_total,omitempty"`
+	BeaconsFailed     *uint32                `protobuf:"varint,5,opt,name=beacons_failed,json=beaconsFailed,proto3,oneof" json:"beacons_failed,omitempty"`
+	ControllerUptimeS *uint32                `protobuf:"varint,6,opt,name=controller_uptime_s,json=controllerUptimeS,proto3,oneof" json:"controller_uptime_s,omitempty"`
 	LastSelfTest      *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=last_self_test,json=lastSelfTest,proto3" json:"last_self_test,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
@@ -4101,64 +3261,64 @@ func (*Diagnostics) Descriptor() ([]byte, []int) {
 }
 
 func (x *Diagnostics) GetPixelsTotal() uint32 {
-	if x != nil {
-		return x.PixelsTotal
+	if x != nil && x.PixelsTotal != nil {
+		return *x.PixelsTotal
 	}
 	return 0
 }
 
 func (x *Diagnostics) GetPixelsStuckOn() uint32 {
-	if x != nil {
-		return x.PixelsStuckOn
+	if x != nil && x.PixelsStuckOn != nil {
+		return *x.PixelsStuckOn
 	}
 	return 0
 }
 
 func (x *Diagnostics) GetPixelsStuckOff() uint32 {
-	if x != nil {
-		return x.PixelsStuckOff
+	if x != nil && x.PixelsStuckOff != nil {
+		return *x.PixelsStuckOff
 	}
 	return 0
 }
 
 func (x *Diagnostics) GetPixelsFailed() uint32 {
-	if x != nil {
-		return x.PixelsFailed
+	if x != nil && x.PixelsFailed != nil {
+		return *x.PixelsFailed
 	}
 	return 0
 }
 
 func (x *Diagnostics) GetLampsTotal() uint32 {
-	if x != nil {
-		return x.LampsTotal
+	if x != nil && x.LampsTotal != nil {
+		return *x.LampsTotal
 	}
 	return 0
 }
 
 func (x *Diagnostics) GetLampsFailed() uint32 {
-	if x != nil {
-		return x.LampsFailed
+	if x != nil && x.LampsFailed != nil {
+		return *x.LampsFailed
 	}
 	return 0
 }
 
 func (x *Diagnostics) GetBeaconsTotal() uint32 {
-	if x != nil {
-		return x.BeaconsTotal
+	if x != nil && x.BeaconsTotal != nil {
+		return *x.BeaconsTotal
 	}
 	return 0
 }
 
 func (x *Diagnostics) GetBeaconsFailed() uint32 {
-	if x != nil {
-		return x.BeaconsFailed
+	if x != nil && x.BeaconsFailed != nil {
+		return *x.BeaconsFailed
 	}
 	return 0
 }
 
 func (x *Diagnostics) GetControllerUptimeS() uint32 {
-	if x != nil {
-		return x.ControllerUptimeS
+	if x != nil && x.ControllerUptimeS != nil {
+		return *x.ControllerUptimeS
 	}
 	return 0
 }
@@ -4216,12 +3376,12 @@ func (x *Faults) GetFault() []*Fault {
 
 type Fault struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Category       string                 `protobuf:"bytes,1,opt,name=category,proto3" json:"category,omitempty"`
-	CorrelatesWith string                 `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3" json:"correlates_with,omitempty"`
-	Description    string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	FaultId        string                 `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3" json:"fault_id,omitempty"`
+	Category       *string                `protobuf:"bytes,1,opt,name=category,proto3,oneof" json:"category,omitempty"`
+	CorrelatesWith *string                `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3,oneof" json:"correlates_with,omitempty"`
+	Description    *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	FaultId        *string                `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3,oneof" json:"fault_id,omitempty"`
 	FirstObserved  *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=first_observed,json=firstObserved,proto3" json:"first_observed,omitempty"`
-	Severity       FaultSeverity          `protobuf:"varint,5,opt,name=severity,proto3,enum=openits.dms.v1.FaultSeverity" json:"severity,omitempty"`
+	Severity       *FaultSeverity         `protobuf:"varint,5,opt,name=severity,proto3,enum=openits.dms.v1.FaultSeverity,oneof" json:"severity,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -4257,29 +3417,29 @@ func (*Fault) Descriptor() ([]byte, []int) {
 }
 
 func (x *Fault) GetCategory() string {
-	if x != nil {
-		return x.Category
+	if x != nil && x.Category != nil {
+		return *x.Category
 	}
 	return ""
 }
 
 func (x *Fault) GetCorrelatesWith() string {
-	if x != nil {
-		return x.CorrelatesWith
+	if x != nil && x.CorrelatesWith != nil {
+		return *x.CorrelatesWith
 	}
 	return ""
 }
 
 func (x *Fault) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
 
 func (x *Fault) GetFaultId() string {
-	if x != nil {
-		return x.FaultId
+	if x != nil && x.FaultId != nil {
+		return *x.FaultId
 	}
 	return ""
 }
@@ -4292,8 +3452,8 @@ func (x *Fault) GetFirstObserved() *timestamppb.Timestamp {
 }
 
 func (x *Fault) GetSeverity() FaultSeverity {
-	if x != nil {
-		return x.Severity
+	if x != nil && x.Severity != nil {
+		return *x.Severity
 	}
 	return FaultSeverity_FAULT_SEVERITY_INFO
 }
@@ -4302,7 +3462,7 @@ var File_openits_dms_v1_state_proto protoreflect.FileDescriptor
 
 const file_openits_dms_v1_state_proto_rawDesc = "" +
 	"\n" +
-	"\x1aopenits/dms/v1/state.proto\x12\x0eopenits.dms.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xfb\x03\n" +
+	"\x1aopenits/dms/v1/state.proto\x12\x0eopenits.dms.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1aopenits/dms/v1/types.proto\"\xfb\x03\n" +
 	"\x04Sign\x122\n" +
 	"\x06config\x18\x01 \x01(\v2\x1a.openits.dms.v1.SignConfigR\x06config\x12/\n" +
 	"\x05state\x18\x02 \x01(\v2\x19.openits.dms.v1.SignStateR\x05state\x124\n" +
@@ -4312,428 +3472,517 @@ const file_openits_dms_v1_state_proto_rawDesc = "" +
 	"\venvironment\x18\x05 \x01(\v2\x1b.openits.dms.v1.EnvironmentR\venvironment\x12A\n" +
 	"\rcabinet_power\x18\t \x01(\v2\x1c.openits.dms.v1.CabinetPowerR\fcabinetPower\x12=\n" +
 	"\vdiagnostics\x18\x06 \x01(\v2\x1b.openits.dms.v1.DiagnosticsR\vdiagnostics\x12.\n" +
-	"\x06faults\x18\a \x01(\v2\x16.openits.dms.v1.FaultsR\x06faults\"\xb2\x03\n" +
+	"\x06faults\x18\a \x01(\v2\x16.openits.dms.v1.FaultsR\x06faults\"\xe4\x04\n" +
 	"\n" +
-	"SignConfig\x12\x1c\n" +
-	"\televation\x18\x05 \x01(\tR\televation\x12\x18\n" +
-	"\aheading\x18\x06 \x01(\rR\aheading\x12\x0e\n" +
-	"\x02id\x18\a \x01(\tR\x02id\x12=\n" +
-	"\finstall_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1a\n" +
-	"\blatitude\x18\x02 \x01(\tR\blatitude\x12T\n" +
-	"\x10linear_reference\x18\x04 \x01(\v2).openits.dms.v1.SignConfigLinearReferenceR\x0flinearReference\x12\x1c\n" +
-	"\tlongitude\x18\x03 \x01(\tR\tlongitude\x12#\n" +
+	"SignConfig\x12!\n" +
+	"\televation\x18\x05 \x01(\tH\x00R\televation\x88\x01\x01\x12\x1d\n" +
+	"\aheading\x18\x06 \x01(\rH\x01R\aheading\x88\x01\x01\x12\x13\n" +
+	"\x02id\x18\a \x01(\tH\x02R\x02id\x88\x01\x01\x12=\n" +
+	"\finstall_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	"\blatitude\x18\x02 \x01(\tH\x03R\blatitude\x88\x01\x01\x12T\n" +
+	"\x10linear_reference\x18\x04 \x01(\v2).openits.dms.v1.SignConfigLinearReferenceR\x0flinearReference\x12!\n" +
+	"\tlongitude\x18\x03 \x01(\tH\x04R\tlongitude\x88\x01\x01\x12(\n" +
 	"\rmaintained_by\x18\n" +
-	" \x01(\tR\fmaintainedBy\x12\x12\n" +
-	"\x04name\x18\b \x01(\tR\x04name\x12\x14\n" +
-	"\x05owner\x18\v \x01(\tR\x05owner\x12%\n" +
-	"\x0eroad_reference\x18\t \x01(\tR\rroadReference\x12\x17\n" +
-	"\asite_id\x18\f \x01(\tR\x06siteId\"\x9d\x01\n" +
-	"\x19SignConfigLinearReference\x12)\n" +
-	"\x10route_designator\x18\x01 \x01(\tR\x0frouteDesignator\x12\x1c\n" +
-	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
-	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
+	" \x01(\tH\x05R\fmaintainedBy\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\b \x01(\tH\x06R\x04name\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\v \x01(\tH\aR\x05owner\x88\x01\x01\x12*\n" +
+	"\x0eroad_reference\x18\t \x01(\tH\bR\rroadReference\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\f \x01(\tH\tR\x06siteId\x88\x01\x01B\f\n" +
 	"\n" +
-	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"\xb8\x06\n" +
-	"\tSignState\x12:\n" +
+	"_elevationB\n" +
 	"\n" +
-	"technology\x18\x01 \x01(\x0e2\x1a.openits.dms.v1.TechnologyR\n" +
-	"technology\x12*\n" +
-	"\x11sign_width_pixels\x18\x02 \x01(\rR\x0fsignWidthPixels\x12,\n" +
-	"\x12sign_height_pixels\x18\x03 \x01(\rR\x10signHeightPixels\x12@\n" +
-	"\fcapabilities\x18\x05 \x01(\v2\x1c.openits.dms.v1.CapabilitiesR\fcapabilities\x12\x1c\n" +
-	"\televation\x18\f \x01(\tR\televation\x12\x1a\n" +
-	"\bfirmware\x18\x04 \x01(\tR\bfirmware\x12%\n" +
-	"\x0efirmware_build\x18\x11 \x01(\tR\rfirmwareBuild\x12)\n" +
-	"\x10hardware_version\x18\x12 \x01(\tR\x0fhardwareVersion\x12\x18\n" +
-	"\aheading\x18\r \x01(\rR\aheading\x12\x0e\n" +
-	"\x02id\x18\x0e \x01(\tR\x02id\x12=\n" +
-	"\finstall_date\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1a\n" +
-	"\blatitude\x18\x06 \x01(\tR\blatitude\x12S\n" +
-	"\x10linear_reference\x18\x13 \x01(\v2(.openits.dms.v1.SignStateLinearReferenceR\x0flinearReference\x12\x1c\n" +
-	"\tlongitude\x18\a \x01(\tR\tlongitude\x12#\n" +
-	"\rmaintained_by\x18\x14 \x01(\tR\fmaintainedBy\x12\x12\n" +
-	"\x04make\x18\b \x01(\tR\x04make\x12\x14\n" +
-	"\x05model\x18\t \x01(\tR\x05model\x12\x12\n" +
-	"\x04name\x18\x0f \x01(\tR\x04name\x12\x14\n" +
-	"\x05owner\x18\x15 \x01(\tR\x05owner\x12%\n" +
-	"\x0eroad_reference\x18\x10 \x01(\tR\rroadReference\x12\x16\n" +
+	"\b_headingB\x05\n" +
+	"\x03_idB\v\n" +
+	"\t_latitudeB\f\n" +
+	"\n" +
+	"_longitudeB\x10\n" +
+	"\x0e_maintained_byB\a\n" +
+	"\x05_nameB\b\n" +
+	"\x06_ownerB\x11\n" +
+	"\x0f_road_referenceB\n" +
+	"\n" +
+	"\b_site_id\"\xef\x01\n" +
+	"\x19SignConfigLinearReference\x12.\n" +
+	"\x10route_designator\x18\x01 \x01(\tH\x00R\x0frouteDesignator\x88\x01\x01\x12!\n" +
+	"\tdirection\x18\x02 \x01(\tH\x01R\tdirection\x88\x01\x01\x12\x1d\n" +
+	"\ameasure\x18\x03 \x01(\tH\x02R\ameasure\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"lrs_method\x18\x04 \x01(\tH\x03R\tlrsMethod\x88\x01\x01B\x13\n" +
+	"\x11_route_designatorB\f\n" +
+	"\n" +
+	"_directionB\n" +
+	"\n" +
+	"\b_measureB\r\n" +
+	"\v_lrs_method\"\x8a\t\n" +
+	"\tSignState\x12#\n" +
+	"\n" +
+	"technology\x18\x01 \x01(\tH\x00R\n" +
+	"technology\x88\x01\x01\x12/\n" +
+	"\x11sign_width_pixels\x18\x02 \x01(\rH\x01R\x0fsignWidthPixels\x88\x01\x01\x121\n" +
+	"\x12sign_height_pixels\x18\x03 \x01(\rH\x02R\x10signHeightPixels\x88\x01\x01\x12@\n" +
+	"\fcapabilities\x18\x05 \x01(\v2\x1c.openits.dms.v1.CapabilitiesR\fcapabilities\x12!\n" +
+	"\televation\x18\f \x01(\tH\x03R\televation\x88\x01\x01\x12\x1f\n" +
+	"\bfirmware\x18\x04 \x01(\tH\x04R\bfirmware\x88\x01\x01\x12*\n" +
+	"\x0efirmware_build\x18\x11 \x01(\tH\x05R\rfirmwareBuild\x88\x01\x01\x12.\n" +
+	"\x10hardware_version\x18\x12 \x01(\tH\x06R\x0fhardwareVersion\x88\x01\x01\x12\x1d\n" +
+	"\aheading\x18\r \x01(\rH\aR\aheading\x88\x01\x01\x12\x13\n" +
+	"\x02id\x18\x0e \x01(\tH\bR\x02id\x88\x01\x01\x12=\n" +
+	"\finstall_date\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	"\blatitude\x18\x06 \x01(\tH\tR\blatitude\x88\x01\x01\x12S\n" +
+	"\x10linear_reference\x18\x13 \x01(\v2(.openits.dms.v1.SignStateLinearReferenceR\x0flinearReference\x12!\n" +
+	"\tlongitude\x18\a \x01(\tH\n" +
+	"R\tlongitude\x88\x01\x01\x12(\n" +
+	"\rmaintained_by\x18\x14 \x01(\tH\vR\fmaintainedBy\x88\x01\x01\x12\x17\n" +
+	"\x04make\x18\b \x01(\tH\fR\x04make\x88\x01\x01\x12\x19\n" +
+	"\x05model\x18\t \x01(\tH\rR\x05model\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x0f \x01(\tH\x0eR\x04name\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\x15 \x01(\tH\x0fR\x05owner\x88\x01\x01\x12*\n" +
+	"\x0eroad_reference\x18\x10 \x01(\tH\x10R\rroadReference\x88\x01\x01\x12\x1b\n" +
 	"\x06serial\x18\n" +
-	" \x01(\tR\x06serial\x12\x17\n" +
-	"\asite_id\x18\x16 \x01(\tR\x06siteId\"\xef\x05\n" +
-	"\fCapabilities\x125\n" +
-	"\tsign_type\x18\x01 \x01(\x0e2\x18.openits.dms.v1.SignTypeR\bsignType\x126\n" +
-	"\x17character_height_pixels\x18\x02 \x01(\rR\x15characterHeightPixels\x124\n" +
-	"\x16character_width_pixels\x18\x03 \x01(\rR\x14characterWidthPixels\x12-\n" +
-	"\x13sign_face_height_mm\x18\t \x01(\rR\x10signFaceHeightMm\x12+\n" +
+	" \x01(\tH\x11R\x06serial\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\x16 \x01(\tH\x12R\x06siteId\x88\x01\x01B\r\n" +
+	"\v_technologyB\x14\n" +
+	"\x12_sign_width_pixelsB\x15\n" +
+	"\x13_sign_height_pixelsB\f\n" +
+	"\n" +
+	"_elevationB\v\n" +
+	"\t_firmwareB\x11\n" +
+	"\x0f_firmware_buildB\x13\n" +
+	"\x11_hardware_versionB\n" +
+	"\n" +
+	"\b_headingB\x05\n" +
+	"\x03_idB\v\n" +
+	"\t_latitudeB\f\n" +
+	"\n" +
+	"_longitudeB\x10\n" +
+	"\x0e_maintained_byB\a\n" +
+	"\x05_makeB\b\n" +
+	"\x06_modelB\a\n" +
+	"\x05_nameB\b\n" +
+	"\x06_ownerB\x11\n" +
+	"\x0f_road_referenceB\t\n" +
+	"\a_serialB\n" +
+	"\n" +
+	"\b_site_id\"\xa7\b\n" +
+	"\fCapabilities\x12:\n" +
+	"\tsign_type\x18\x01 \x01(\x0e2\x18.openits.dms.v1.SignTypeH\x00R\bsignType\x88\x01\x01\x12;\n" +
+	"\x17character_height_pixels\x18\x02 \x01(\rH\x01R\x15characterHeightPixels\x88\x01\x01\x129\n" +
+	"\x16character_width_pixels\x18\x03 \x01(\rH\x02R\x14characterWidthPixels\x88\x01\x01\x122\n" +
+	"\x13sign_face_height_mm\x18\t \x01(\rH\x03R\x10signFaceHeightMm\x88\x01\x01\x120\n" +
 	"\x12sign_face_width_mm\x18\n" +
-	" \x01(\rR\x0fsignFaceWidthMm\x12$\n" +
-	"\x0epixel_pitch_mm\x18\x0e \x01(\tR\fpixelPitchMm\x12.\n" +
-	"\x13character_height_mm\x18\v \x01(\rR\x11characterHeightMm\x12,\n" +
-	"\x12character_width_mm\x18\f \x01(\rR\x10characterWidthMm\x12;\n" +
-	"\vbeacon_type\x18\r \x01(\x0e2\x1a.openits.dms.v1.BeaconTypeR\n" +
-	"beaconType\x12J\n" +
-	"\x10color_capability\x18\x04 \x01(\x0e2\x1f.openits.dms.v1.ColorCapabilityR\x0fcolorCapability\x12\x1b\n" +
-	"\tmax_pages\x18\x05 \x01(\rR\bmaxPages\x12%\n" +
-	"\x0ebeacon_capable\x18\x06 \x01(\bR\rbeaconCapable\x120\n" +
+	" \x01(\rH\x04R\x0fsignFaceWidthMm\x88\x01\x01\x12)\n" +
+	"\x0epixel_pitch_mm\x18\x0e \x01(\tH\x05R\fpixelPitchMm\x88\x01\x01\x123\n" +
+	"\x13character_height_mm\x18\v \x01(\rH\x06R\x11characterHeightMm\x88\x01\x01\x121\n" +
+	"\x12character_width_mm\x18\f \x01(\rH\aR\x10characterWidthMm\x88\x01\x01\x12@\n" +
+	"\vbeacon_type\x18\r \x01(\x0e2\x1a.openits.dms.v1.BeaconTypeH\bR\n" +
+	"beaconType\x88\x01\x01\x12O\n" +
+	"\x10color_capability\x18\x04 \x01(\x0e2\x1f.openits.dms.v1.ColorCapabilityH\tR\x0fcolorCapability\x88\x01\x01\x12 \n" +
+	"\tmax_pages\x18\x05 \x01(\rH\n" +
+	"R\bmaxPages\x88\x01\x01\x12*\n" +
+	"\x0ebeacon_capable\x18\x06 \x01(\bH\vR\rbeaconCapable\x88\x01\x01\x120\n" +
 	"\x14supported_multi_tags\x18\a \x03(\tR\x12supportedMultiTags\x12(\n" +
 	"\x04font\x18\b \x03(\v2\x14.openits.dms.v1.FontR\x04font\x121\n" +
-	"\agraphic\x18\x0f \x03(\v2\x17.openits.dms.v1.GraphicR\agraphic\"\xa9\x01\n" +
-	"\x04Font\x12\x1f\n" +
-	"\vfont_number\x18\x01 \x01(\rR\n" +
-	"fontNumber\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x126\n" +
-	"\x17character_height_pixels\x18\x03 \x01(\rR\x15characterHeightPixels\x124\n" +
-	"\x16character_width_pixels\x18\x04 \x01(\rR\x14characterWidthPixels\"\x8c\x01\n" +
-	"\aGraphic\x12%\n" +
-	"\x0egraphic_number\x18\x01 \x01(\rR\rgraphicNumber\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12#\n" +
-	"\rheight_pixels\x18\x03 \x01(\rR\fheightPixels\x12!\n" +
-	"\fwidth_pixels\x18\x04 \x01(\rR\vwidthPixels\"\x9c\x01\n" +
-	"\x18SignStateLinearReference\x12)\n" +
-	"\x10route_designator\x18\x01 \x01(\tR\x0frouteDesignator\x12\x1c\n" +
-	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
-	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
+	"\agraphic\x18\x0f \x03(\v2\x17.openits.dms.v1.GraphicR\agraphicB\f\n" +
 	"\n" +
-	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"4\n" +
+	"_sign_typeB\x1a\n" +
+	"\x18_character_height_pixelsB\x19\n" +
+	"\x17_character_width_pixelsB\x16\n" +
+	"\x14_sign_face_height_mmB\x15\n" +
+	"\x13_sign_face_width_mmB\x11\n" +
+	"\x0f_pixel_pitch_mmB\x16\n" +
+	"\x14_character_height_mmB\x15\n" +
+	"\x13_character_width_mmB\x0e\n" +
+	"\f_beacon_typeB\x13\n" +
+	"\x11_color_capabilityB\f\n" +
+	"\n" +
+	"_max_pagesB\x11\n" +
+	"\x0f_beacon_capable\"\x8d\x02\n" +
+	"\x04Font\x12$\n" +
+	"\vfont_number\x18\x01 \x01(\rH\x00R\n" +
+	"fontNumber\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12;\n" +
+	"\x17character_height_pixels\x18\x03 \x01(\rH\x02R\x15characterHeightPixels\x88\x01\x01\x129\n" +
+	"\x16character_width_pixels\x18\x04 \x01(\rH\x03R\x14characterWidthPixels\x88\x01\x01B\x0e\n" +
+	"\f_font_numberB\a\n" +
+	"\x05_nameB\x1a\n" +
+	"\x18_character_height_pixelsB\x19\n" +
+	"\x17_character_width_pixels\"\xdf\x01\n" +
+	"\aGraphic\x12*\n" +
+	"\x0egraphic_number\x18\x01 \x01(\rH\x00R\rgraphicNumber\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12(\n" +
+	"\rheight_pixels\x18\x03 \x01(\rH\x02R\fheightPixels\x88\x01\x01\x12&\n" +
+	"\fwidth_pixels\x18\x04 \x01(\rH\x03R\vwidthPixels\x88\x01\x01B\x11\n" +
+	"\x0f_graphic_numberB\a\n" +
+	"\x05_nameB\x10\n" +
+	"\x0e_height_pixelsB\x0f\n" +
+	"\r_width_pixels\"\xee\x01\n" +
+	"\x18SignStateLinearReference\x12.\n" +
+	"\x10route_designator\x18\x01 \x01(\tH\x00R\x0frouteDesignator\x88\x01\x01\x12!\n" +
+	"\tdirection\x18\x02 \x01(\tH\x01R\tdirection\x88\x01\x01\x12\x1d\n" +
+	"\ameasure\x18\x03 \x01(\tH\x02R\ameasure\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"lrs_method\x18\x04 \x01(\tH\x03R\tlrsMethod\x88\x01\x01B\x13\n" +
+	"\x11_route_designatorB\f\n" +
+	"\n" +
+	"_directionB\n" +
+	"\n" +
+	"\b_measureB\r\n" +
+	"\v_lrs_method\"4\n" +
 	"\bMessages\x12(\n" +
-	"\x04slot\x18\x01 \x03(\v2\x14.openits.dms.v1.SlotR\x04slot\"\xda\x01\n" +
-	"\x04Slot\x12L\n" +
-	"\vmemory_type\x18\x01 \x01(\x0e2+.openits.dms.v1.OpenitsDmsMessageMemoryTypeR\n" +
-	"memoryType\x12\x1f\n" +
-	"\vslot_number\x18\x02 \x01(\rR\n" +
-	"slotNumber\x122\n" +
+	"\x04slot\x18\x01 \x03(\v2\x14.openits.dms.v1.SlotR\x04slot\"\xfa\x01\n" +
+	"\x04Slot\x12G\n" +
+	"\vmemory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x00R\n" +
+	"memoryType\x88\x01\x01\x12$\n" +
+	"\vslot_number\x18\x02 \x01(\rH\x01R\n" +
+	"slotNumber\x88\x01\x01\x122\n" +
 	"\x06config\x18\a \x01(\v2\x1a.openits.dms.v1.SlotConfigR\x06config\x12/\n" +
-	"\x05state\x18\b \x01(\v2\x19.openits.dms.v1.SlotStateR\x05state\"\x92\x02\n" +
+	"\x05state\x18\b \x01(\v2\x19.openits.dms.v1.SlotStateR\x05stateB\x0e\n" +
+	"\f_memory_typeB\x0e\n" +
+	"\f_slot_number\"\x86\x03\n" +
 	"\n" +
-	"SlotConfig\x12L\n" +
-	"\vmemory_type\x18\x01 \x01(\x0e2+.openits.dms.v1.OpenitsDmsMessageMemoryTypeR\n" +
-	"memoryType\x12\x1f\n" +
-	"\vslot_number\x18\x02 \x01(\rR\n" +
-	"slotNumber\x12.\n" +
-	"\x06beacon\x18\x03 \x01(\x0e2\x16.openits.dms.v1.BeaconR\x06beacon\x12\x10\n" +
-	"\x03crc\x18\x04 \x01(\rR\x03crc\x12!\n" +
-	"\fmulti_string\x18\x05 \x01(\tR\vmultiString\x12\x14\n" +
-	"\x05owner\x18\x06 \x01(\tR\x05owner\x12\x1a\n" +
-	"\bpriority\x18\a \x01(\rR\bpriority\"W\n" +
-	"\tSlotState\x12\x10\n" +
-	"\x03crc\x18\x02 \x01(\rR\x03crc\x128\n" +
-	"\x06status\x18\x01 \x01(\x0e2 .openits.dms.v1.DmsMessageStatusR\x06status\"\xb9\x01\n" +
+	"SlotConfig\x12G\n" +
+	"\vmemory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x00R\n" +
+	"memoryType\x88\x01\x01\x12$\n" +
+	"\vslot_number\x18\x02 \x01(\rH\x01R\n" +
+	"slotNumber\x88\x01\x01\x123\n" +
+	"\x06beacon\x18\x03 \x01(\x0e2\x16.openits.dms.v1.BeaconH\x02R\x06beacon\x88\x01\x01\x12\x15\n" +
+	"\x03crc\x18\x04 \x01(\rH\x03R\x03crc\x88\x01\x01\x12&\n" +
+	"\fmulti_string\x18\x05 \x01(\tH\x04R\vmultiString\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\x06 \x01(\tH\x05R\x05owner\x88\x01\x01\x12\x1f\n" +
+	"\bpriority\x18\a \x01(\rH\x06R\bpriority\x88\x01\x01B\x0e\n" +
+	"\f_memory_typeB\x0e\n" +
+	"\f_slot_numberB\t\n" +
+	"\a_beaconB\x06\n" +
+	"\x04_crcB\x0f\n" +
+	"\r_multi_stringB\b\n" +
+	"\x06_ownerB\v\n" +
+	"\t_priority\"t\n" +
+	"\tSlotState\x12\x15\n" +
+	"\x03crc\x18\x02 \x01(\rH\x00R\x03crc\x88\x01\x01\x12=\n" +
+	"\x06status\x18\x01 \x01(\x0e2 .openits.dms.v1.DmsMessageStatusH\x01R\x06status\x88\x01\x01B\x06\n" +
+	"\x04_crcB\t\n" +
+	"\a_status\"\xb9\x01\n" +
 	"\bSchedule\x122\n" +
 	"\bday_plan\x18\x01 \x03(\v2\x17.openits.dms.v1.DayPlanR\adayPlan\x12D\n" +
 	"\x0eschedule_entry\x18\x02 \x03(\v2\x1d.openits.dms.v1.ScheduleEntryR\rscheduleEntry\x123\n" +
-	"\x05state\x18\x03 \x01(\v2\x1d.openits.dms.v1.ScheduleStateR\x05state\"m\n" +
-	"\aDayPlan\x12\x1e\n" +
-	"\vday_plan_id\x18\x01 \x01(\rR\tdayPlanId\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12.\n" +
-	"\x06action\x18\x03 \x03(\v2\x16.openits.dms.v1.ActionR\x06action\"\x96\x01\n" +
-	"\x06Action\x12\x1d\n" +
+	"\x05state\x18\x03 \x01(\v2\x1d.openits.dms.v1.ScheduleStateR\x05state\"\x90\x01\n" +
+	"\aDayPlan\x12#\n" +
+	"\vday_plan_id\x18\x01 \x01(\rH\x00R\tdayPlanId\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12.\n" +
+	"\x06action\x18\x03 \x03(\v2\x16.openits.dms.v1.ActionR\x06actionB\x0e\n" +
+	"\f_day_plan_idB\a\n" +
+	"\x05_name\"\xb5\x01\n" +
+	"\x06Action\x12\"\n" +
 	"\n" +
-	"start_time\x18\x01 \x01(\tR\tstartTime\x12L\n" +
-	"\vmemory_type\x18\x02 \x01(\x0e2+.openits.dms.v1.OpenitsDmsMessageMemoryTypeR\n" +
-	"memoryType\x12\x1f\n" +
-	"\vslot_number\x18\x03 \x01(\rR\n" +
-	"slotNumber\"\xdb\x01\n" +
-	"\rScheduleEntry\x12\x1f\n" +
-	"\vschedule_id\x18\x01 \x01(\rR\n" +
-	"scheduleId\x12\x19\n" +
-	"\bday_plan\x18\x05 \x01(\rR\adayPlan\x12\"\n" +
+	"start_time\x18\x01 \x01(\tH\x00R\tstartTime\x88\x01\x01\x12B\n" +
+	"\vmemory_type\x18\x02 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeR\n" +
+	"memoryType\x12$\n" +
+	"\vslot_number\x18\x03 \x01(\rH\x01R\n" +
+	"slotNumber\x88\x01\x01B\r\n" +
+	"\v_start_timeB\x0e\n" +
+	"\f_slot_number\"\x82\x02\n" +
+	"\rScheduleEntry\x12$\n" +
+	"\vschedule_id\x18\x01 \x01(\rH\x00R\n" +
+	"scheduleId\x88\x01\x01\x12\x1e\n" +
+	"\bday_plan\x18\x05 \x01(\rH\x01R\adayPlan\x88\x01\x01\x12\"\n" +
 	"\rdays_of_month\x18\x04 \x03(\rR\vdaysOfMonth\x12;\n" +
 	"\fdays_of_week\x18\x03 \x03(\x0e2\x19.openits.dms.v1.DayOfWeekR\n" +
 	"daysOfWeek\x12-\n" +
-	"\x06months\x18\x02 \x03(\x0e2\x15.openits.dms.v1.MonthR\x06months\"~\n" +
-	"\rScheduleState\x12+\n" +
-	"\x12active_day_plan_id\x18\x01 \x01(\rR\x0factiveDayPlanId\x12@\n" +
-	"\x0enext_action_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\fnextActionAt\"t\n" +
+	"\x06months\x18\x02 \x03(\x0e2\x15.openits.dms.v1.MonthR\x06monthsB\x0e\n" +
+	"\f_schedule_idB\v\n" +
+	"\t_day_plan\"\x9a\x01\n" +
+	"\rScheduleState\x120\n" +
+	"\x12active_day_plan_id\x18\x01 \x01(\rH\x00R\x0factiveDayPlanId\x88\x01\x01\x12@\n" +
+	"\x0enext_action_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\fnextActionAtB\x15\n" +
+	"\x13_active_day_plan_id\"t\n" +
 	"\aControl\x125\n" +
 	"\x06config\x18\x01 \x01(\v2\x1d.openits.dms.v1.ControlConfigR\x06config\x122\n" +
-	"\x05state\x18\x02 \x01(\v2\x1c.openits.dms.v1.ControlStateR\x05state\"\xfb\x03\n" +
-	"\rControlConfig\x12K\n" +
-	"\x11request_self_test\x18\a \x01(\x0e2\x1f.openits.dms.v1.RequestSelfTestR\x0frequestSelfTest\x12D\n" +
+	"\x05state\x18\x02 \x01(\v2\x1c.openits.dms.v1.ControlStateR\x05state\"\xa8\x05\n" +
+	"\rControlConfig\x12P\n" +
+	"\x11request_self_test\x18\a \x01(\x0e2\x1f.openits.dms.v1.RequestSelfTestH\x00R\x0frequestSelfTest\x88\x01\x01\x12D\n" +
 	"\x0eactive_message\x18\x04 \x01(\v2\x1d.openits.dms.v1.ActiveMessageR\ractiveMessage\x12A\n" +
-	"\bfallback\x18\x05 \x01(\v2%.openits.dms.v1.ControlConfigFallbackR\bfallback\x12/\n" +
-	"\x13brightness_setpoint\x18\x06 \x01(\rR\x12brightnessSetpoint\x12!\n" +
-	"\fcontrol_mode\x18\v \x01(\tR\vcontrolMode\x124\n" +
-	"\x17default_page_off_time_s\x18\x01 \x01(\tR\x13defaultPageOffTimeS\x122\n" +
-	"\x16default_page_on_time_s\x18\x02 \x01(\tR\x12defaultPageOnTimeS\x12V\n" +
-	"\x14illumination_control\x18\x03 \x01(\x0e2#.openits.dms.v1.IlluminationControlR\x13illuminationControl\"\x96\x02\n" +
-	"\rActiveMessage\x12\x1d\n" +
+	"\bfallback\x18\x05 \x01(\v2%.openits.dms.v1.ControlConfigFallbackR\bfallback\x124\n" +
+	"\x13brightness_setpoint\x18\x06 \x01(\rH\x01R\x12brightnessSetpoint\x88\x01\x01\x12&\n" +
+	"\fcontrol_mode\x18\v \x01(\tH\x02R\vcontrolMode\x88\x01\x01\x129\n" +
+	"\x17default_page_off_time_s\x18\x01 \x01(\tH\x03R\x13defaultPageOffTimeS\x88\x01\x01\x127\n" +
+	"\x16default_page_on_time_s\x18\x02 \x01(\tH\x04R\x12defaultPageOnTimeS\x88\x01\x01\x12[\n" +
+	"\x14illumination_control\x18\x03 \x01(\x0e2#.openits.dms.v1.IlluminationControlH\x05R\x13illuminationControl\x88\x01\x01B\x14\n" +
+	"\x12_request_self_testB\x16\n" +
+	"\x14_brightness_setpointB\x0f\n" +
+	"\r_control_modeB\x1a\n" +
+	"\x18_default_page_off_time_sB\x19\n" +
+	"\x17_default_page_on_time_sB\x17\n" +
+	"\x15_illumination_control\"\x97\x03\n" +
+	"\rActiveMessage\x12\"\n" +
 	"\n" +
-	"duration_s\x18\x03 \x01(\rR\tdurationS\x12\x1e\n" +
+	"duration_s\x18\x03 \x01(\rH\x00R\tdurationS\x88\x01\x01\x12#\n" +
 	"\n" +
-	"indefinite\x18\a \x01(\bR\n" +
-	"indefinite\x12/\n" +
-	"\x13activation_priority\x18\x04 \x01(\rR\x12activationPriority\x12\x10\n" +
-	"\x03crc\x18\x05 \x01(\rR\x03crc\x12\x14\n" +
-	"\x05owner\x18\x06 \x01(\tR\x05owner\x12L\n" +
-	"\vmemory_type\x18\x01 \x01(\x0e2+.openits.dms.v1.OpenitsDmsMessageMemoryTypeR\n" +
-	"memoryType\x12\x1f\n" +
-	"\vslot_number\x18\x02 \x01(\rR\n" +
-	"slotNumber\"\xdc\x02\n" +
+	"indefinite\x18\a \x01(\bH\x01R\n" +
+	"indefinite\x88\x01\x01\x124\n" +
+	"\x13activation_priority\x18\x04 \x01(\rH\x02R\x12activationPriority\x88\x01\x01\x12\x15\n" +
+	"\x03crc\x18\x05 \x01(\rH\x03R\x03crc\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\x06 \x01(\tH\x04R\x05owner\x88\x01\x01\x12G\n" +
+	"\vmemory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x05R\n" +
+	"memoryType\x88\x01\x01\x12$\n" +
+	"\vslot_number\x18\x02 \x01(\rH\x06R\n" +
+	"slotNumber\x88\x01\x01B\r\n" +
+	"\v_duration_sB\r\n" +
+	"\v_indefiniteB\x16\n" +
+	"\x14_activation_priorityB\x06\n" +
+	"\x04_crcB\b\n" +
+	"\x06_ownerB\x0e\n" +
+	"\f_memory_typeB\x0e\n" +
+	"\f_slot_number\"\xdc\x02\n" +
 	"\x15ControlConfigFallback\x12J\n" +
 	"\tcomm_loss\x18\x01 \x01(\v2-.openits.dms.v1.ControlConfigFallbackCommLossR\bcommLoss\x12Z\n" +
 	"\x0fend_of_duration\x18\x02 \x01(\v22.openits.dms.v1.ControlConfigFallbackEndOfDurationR\rendOfDuration\x12Y\n" +
 	"\x0epower_recovery\x18\x03 \x01(\v22.openits.dms.v1.ControlConfigFallbackPowerRecoveryR\rpowerRecovery\x12@\n" +
-	"\x05reset\x18\x04 \x01(\v2*.openits.dms.v1.ControlConfigFallbackResetR\x05reset\"\xbd\x01\n" +
-	"\x1dControlConfigFallbackCommLoss\x12-\n" +
-	"\x13comm_loss_timeout_s\x18\x01 \x01(\rR\x10commLossTimeoutS\x12L\n" +
-	"\vmemory_type\x18\x02 \x01(\x0e2+.openits.dms.v1.OpenitsDmsMessageMemoryTypeR\n" +
-	"memoryType\x12\x1f\n" +
-	"\vslot_number\x18\x03 \x01(\rR\n" +
-	"slotNumber\"\x93\x01\n" +
-	"\"ControlConfigFallbackEndOfDuration\x12L\n" +
-	"\vmemory_type\x18\x01 \x01(\x0e2+.openits.dms.v1.OpenitsDmsMessageMemoryTypeR\n" +
-	"memoryType\x12\x1f\n" +
-	"\vslot_number\x18\x02 \x01(\rR\n" +
-	"slotNumber\"\x9e\x02\n" +
-	"\"ControlConfigFallbackPowerRecovery\x127\n" +
-	"\x18short_outage_threshold_s\x18\x01 \x01(\rR\x15shortOutageThresholdS\x12`\n" +
+	"\x05reset\x18\x04 \x01(\v2*.openits.dms.v1.ControlConfigFallbackResetR\x05reset\"\xfa\x01\n" +
+	"\x1dControlConfigFallbackCommLoss\x122\n" +
+	"\x13comm_loss_timeout_s\x18\x01 \x01(\rH\x00R\x10commLossTimeoutS\x88\x01\x01\x12G\n" +
+	"\vmemory_type\x18\x02 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x01R\n" +
+	"memoryType\x88\x01\x01\x12$\n" +
+	"\vslot_number\x18\x03 \x01(\rH\x02R\n" +
+	"slotNumber\x88\x01\x01B\x16\n" +
+	"\x14_comm_loss_timeout_sB\x0e\n" +
+	"\f_memory_typeB\x0e\n" +
+	"\f_slot_number\"\xb3\x01\n" +
+	"\"ControlConfigFallbackEndOfDuration\x12G\n" +
+	"\vmemory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x00R\n" +
+	"memoryType\x88\x01\x01\x12$\n" +
+	"\vslot_number\x18\x02 \x01(\rH\x01R\n" +
+	"slotNumber\x88\x01\x01B\x0e\n" +
+	"\f_memory_typeB\x0e\n" +
+	"\f_slot_number\"\xc0\x02\n" +
+	"\"ControlConfigFallbackPowerRecovery\x12<\n" +
+	"\x18short_outage_threshold_s\x18\x01 \x01(\rH\x00R\x15shortOutageThresholdS\x88\x01\x01\x12`\n" +
 	"\fshort_outage\x18\x02 \x01(\v2=.openits.dms.v1.ControlConfigFallbackPowerRecoveryShortOutageR\vshortOutage\x12]\n" +
 	"\vlong_outage\x18\x03 \x01(\v2<.openits.dms.v1.ControlConfigFallbackPowerRecoveryLongOutageR\n" +
-	"longOutage\"\x9e\x01\n" +
-	"-ControlConfigFallbackPowerRecoveryShortOutage\x12L\n" +
-	"\vmemory_type\x18\x01 \x01(\x0e2+.openits.dms.v1.OpenitsDmsMessageMemoryTypeR\n" +
-	"memoryType\x12\x1f\n" +
-	"\vslot_number\x18\x02 \x01(\rR\n" +
-	"slotNumber\"\x9d\x01\n" +
-	",ControlConfigFallbackPowerRecoveryLongOutage\x12L\n" +
-	"\vmemory_type\x18\x01 \x01(\x0e2+.openits.dms.v1.OpenitsDmsMessageMemoryTypeR\n" +
-	"memoryType\x12\x1f\n" +
-	"\vslot_number\x18\x02 \x01(\rR\n" +
-	"slotNumber\"\x8b\x01\n" +
-	"\x1aControlConfigFallbackReset\x12L\n" +
-	"\vmemory_type\x18\x01 \x01(\x0e2+.openits.dms.v1.OpenitsDmsMessageMemoryTypeR\n" +
-	"memoryType\x12\x1f\n" +
-	"\vslot_number\x18\x02 \x01(\rR\n" +
-	"slotNumber\"\x9a\x06\n" +
-	"\fControlState\x12#\n" +
-	"\rdisplay_state\x18\x15 \x01(\tR\fdisplayState\x12>\n" +
-	"\fbeacon_state\x18\x06 \x01(\x0e2\x1b.openits.dms.v1.BeaconStateR\vbeaconState\x12D\n" +
-	"\x10last_mode_change\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x0elastModeChange\x12-\n" +
-	"\x12brightness_current\x18\b \x01(\rR\x11brightnessCurrent\x12.\n" +
+	"longOutageB\x1b\n" +
+	"\x19_short_outage_threshold_s\"\xbe\x01\n" +
+	"-ControlConfigFallbackPowerRecoveryShortOutage\x12G\n" +
+	"\vmemory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x00R\n" +
+	"memoryType\x88\x01\x01\x12$\n" +
+	"\vslot_number\x18\x02 \x01(\rH\x01R\n" +
+	"slotNumber\x88\x01\x01B\x0e\n" +
+	"\f_memory_typeB\x0e\n" +
+	"\f_slot_number\"\xbd\x01\n" +
+	",ControlConfigFallbackPowerRecoveryLongOutage\x12G\n" +
+	"\vmemory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x00R\n" +
+	"memoryType\x88\x01\x01\x12$\n" +
+	"\vslot_number\x18\x02 \x01(\rH\x01R\n" +
+	"slotNumber\x88\x01\x01B\x0e\n" +
+	"\f_memory_typeB\x0e\n" +
+	"\f_slot_number\"\xab\x01\n" +
+	"\x1aControlConfigFallbackReset\x12G\n" +
+	"\vmemory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x00R\n" +
+	"memoryType\x88\x01\x01\x12$\n" +
+	"\vslot_number\x18\x02 \x01(\rH\x01R\n" +
+	"slotNumber\x88\x01\x01B\x0e\n" +
+	"\f_memory_typeB\x0e\n" +
+	"\f_slot_number\"\xaa\b\n" +
+	"\fControlState\x12(\n" +
+	"\rdisplay_state\x18\x15 \x01(\tH\x00R\fdisplayState\x88\x01\x01\x12C\n" +
+	"\fbeacon_state\x18\x06 \x01(\x0e2\x1b.openits.dms.v1.BeaconStateH\x01R\vbeaconState\x88\x01\x01\x12D\n" +
+	"\x10last_mode_change\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x0elastModeChange\x122\n" +
+	"\x12brightness_current\x18\b \x01(\rH\x02R\x11brightnessCurrent\x88\x01\x01\x12.\n" +
 	"\x06active\x18\t \x01(\v2\x16.openits.dms.v1.ActiveR\x06active\x127\n" +
 	"\tpreempted\x18\x05 \x01(\v2\x19.openits.dms.v1.PreemptedR\tpreempted\x12@\n" +
-	"\bfallback\x18\a \x01(\v2$.openits.dms.v1.ControlStateFallbackR\bfallback\x12(\n" +
+	"\bfallback\x18\a \x01(\v2$.openits.dms.v1.ControlStateFallbackR\bfallback\x12-\n" +
 	"\x10comm_loss_active\x18\n" +
-	" \x01(\bR\x0ecommLossActive\x12*\n" +
-	"\x11power_loss_active\x18\x16 \x01(\bR\x0fpowerLossActive\x12/\n" +
-	"\x13brightness_setpoint\x18\f \x01(\rR\x12brightnessSetpoint\x12!\n" +
-	"\fcontrol_mode\x18\x17 \x01(\tR\vcontrolMode\x124\n" +
-	"\x17default_page_off_time_s\x18\x01 \x01(\tR\x13defaultPageOffTimeS\x122\n" +
-	"\x16default_page_on_time_s\x18\x03 \x01(\tR\x12defaultPageOnTimeS\x12V\n" +
-	"\x14illumination_control\x18\x04 \x01(\x0e2#.openits.dms.v1.IlluminationControlR\x13illuminationControlJ\x04\b\v\x10\fR\x13controller_uptime_s\"\xcf\x03\n" +
+	" \x01(\bH\x03R\x0ecommLossActive\x88\x01\x01\x12/\n" +
+	"\x11power_loss_active\x18\x16 \x01(\bH\x04R\x0fpowerLossActive\x88\x01\x01\x124\n" +
+	"\x13brightness_setpoint\x18\f \x01(\rH\x05R\x12brightnessSetpoint\x88\x01\x01\x12&\n" +
+	"\fcontrol_mode\x18\x17 \x01(\tH\x06R\vcontrolMode\x88\x01\x01\x129\n" +
+	"\x17default_page_off_time_s\x18\x01 \x01(\tH\aR\x13defaultPageOffTimeS\x88\x01\x01\x127\n" +
+	"\x16default_page_on_time_s\x18\x03 \x01(\tH\bR\x12defaultPageOnTimeS\x88\x01\x01\x12[\n" +
+	"\x14illumination_control\x18\x04 \x01(\x0e2#.openits.dms.v1.IlluminationControlH\tR\x13illuminationControl\x88\x01\x01B\x10\n" +
+	"\x0e_display_stateB\x0f\n" +
+	"\r_beacon_stateB\x15\n" +
+	"\x13_brightness_currentB\x13\n" +
+	"\x11_comm_loss_activeB\x14\n" +
+	"\x12_power_loss_activeB\x16\n" +
+	"\x14_brightness_setpointB\x0f\n" +
+	"\r_control_modeB\x1a\n" +
+	"\x18_default_page_off_time_sB\x19\n" +
+	"\x17_default_page_on_time_sB\x17\n" +
+	"\x15_illumination_controlJ\x04\b\v\x10\fR\x13controller_uptime_s\"\xef\x04\n" +
 	"\x06Active\x12=\n" +
 	"\factivated_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\vactivatedAt\x129\n" +
 	"\n" +
-	"expires_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x12\x16\n" +
-	"\x06source\x18\x05 \x01(\tR\x06source\x12-\n" +
+	"expires_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x12\x1b\n" +
+	"\x06source\x18\x05 \x01(\tH\x00R\x06source\x88\x01\x01\x122\n" +
 	"\x12activation_trigger\x18\n" +
-	" \x01(\tR\x11activationTrigger\x12.\n" +
-	"\x06beacon\x18\v \x01(\x0e2\x16.openits.dms.v1.BeaconR\x06beacon\x12\x10\n" +
-	"\x03crc\x18\x06 \x01(\rR\x03crc\x12L\n" +
-	"\vmemory_type\x18\x01 \x01(\x0e2+.openits.dms.v1.OpenitsDmsMessageMemoryTypeR\n" +
-	"memoryType\x12!\n" +
-	"\fmulti_string\x18\a \x01(\tR\vmultiString\x12\x14\n" +
-	"\x05owner\x18\b \x01(\tR\x05owner\x12\x1a\n" +
-	"\bpriority\x18\t \x01(\rR\bpriority\x12\x1f\n" +
-	"\vslot_number\x18\x02 \x01(\rR\n" +
-	"slotNumber\"\xac\x01\n" +
-	"\tPreempted\x120\n" +
-	"\x14remaining_duration_s\x18\x03 \x01(\rR\x12remainingDurationS\x12L\n" +
-	"\vmemory_type\x18\x01 \x01(\x0e2+.openits.dms.v1.OpenitsDmsMessageMemoryTypeR\n" +
-	"memoryType\x12\x1f\n" +
-	"\vslot_number\x18\x02 \x01(\rR\n" +
-	"slotNumber\"\xd7\x02\n" +
+	" \x01(\tH\x01R\x11activationTrigger\x88\x01\x01\x123\n" +
+	"\x06beacon\x18\v \x01(\x0e2\x16.openits.dms.v1.BeaconH\x02R\x06beacon\x88\x01\x01\x12\x15\n" +
+	"\x03crc\x18\x06 \x01(\rH\x03R\x03crc\x88\x01\x01\x12G\n" +
+	"\vmemory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x04R\n" +
+	"memoryType\x88\x01\x01\x12&\n" +
+	"\fmulti_string\x18\a \x01(\tH\x05R\vmultiString\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\b \x01(\tH\x06R\x05owner\x88\x01\x01\x12\x1f\n" +
+	"\bpriority\x18\t \x01(\rH\aR\bpriority\x88\x01\x01\x12$\n" +
+	"\vslot_number\x18\x02 \x01(\rH\bR\n" +
+	"slotNumber\x88\x01\x01B\t\n" +
+	"\a_sourceB\x15\n" +
+	"\x13_activation_triggerB\t\n" +
+	"\a_beaconB\x06\n" +
+	"\x04_crcB\x0e\n" +
+	"\f_memory_typeB\x0f\n" +
+	"\r_multi_stringB\b\n" +
+	"\x06_ownerB\v\n" +
+	"\t_priorityB\x0e\n" +
+	"\f_slot_number\"\xea\x01\n" +
+	"\tPreempted\x125\n" +
+	"\x14remaining_duration_s\x18\x03 \x01(\rH\x00R\x12remainingDurationS\x88\x01\x01\x12G\n" +
+	"\vmemory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x01R\n" +
+	"memoryType\x88\x01\x01\x12$\n" +
+	"\vslot_number\x18\x02 \x01(\rH\x02R\n" +
+	"slotNumber\x88\x01\x01B\x17\n" +
+	"\x15_remaining_duration_sB\x0e\n" +
+	"\f_memory_typeB\x0e\n" +
+	"\f_slot_number\"\xd7\x02\n" +
 	"\x14ControlStateFallback\x12I\n" +
 	"\tcomm_loss\x18\x01 \x01(\v2,.openits.dms.v1.ControlStateFallbackCommLossR\bcommLoss\x12Y\n" +
 	"\x0fend_of_duration\x18\x02 \x01(\v21.openits.dms.v1.ControlStateFallbackEndOfDurationR\rendOfDuration\x12X\n" +
 	"\x0epower_recovery\x18\x03 \x01(\v21.openits.dms.v1.ControlStateFallbackPowerRecoveryR\rpowerRecovery\x12?\n" +
-	"\x05reset\x18\x04 \x01(\v2).openits.dms.v1.ControlStateFallbackResetR\x05reset\"\xbc\x01\n" +
-	"\x1cControlStateFallbackCommLoss\x12-\n" +
-	"\x13comm_loss_timeout_s\x18\x01 \x01(\rR\x10commLossTimeoutS\x12L\n" +
-	"\vmemory_type\x18\x02 \x01(\x0e2+.openits.dms.v1.OpenitsDmsMessageMemoryTypeR\n" +
-	"memoryType\x12\x1f\n" +
-	"\vslot_number\x18\x03 \x01(\rR\n" +
-	"slotNumber\"\x92\x01\n" +
-	"!ControlStateFallbackEndOfDuration\x12L\n" +
-	"\vmemory_type\x18\x01 \x01(\x0e2+.openits.dms.v1.OpenitsDmsMessageMemoryTypeR\n" +
-	"memoryType\x12\x1f\n" +
-	"\vslot_number\x18\x02 \x01(\rR\n" +
-	"slotNumber\"\x9b\x02\n" +
-	"!ControlStateFallbackPowerRecovery\x127\n" +
-	"\x18short_outage_threshold_s\x18\x01 \x01(\rR\x15shortOutageThresholdS\x12_\n" +
+	"\x05reset\x18\x04 \x01(\v2).openits.dms.v1.ControlStateFallbackResetR\x05reset\"\xf9\x01\n" +
+	"\x1cControlStateFallbackCommLoss\x122\n" +
+	"\x13comm_loss_timeout_s\x18\x01 \x01(\rH\x00R\x10commLossTimeoutS\x88\x01\x01\x12G\n" +
+	"\vmemory_type\x18\x02 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x01R\n" +
+	"memoryType\x88\x01\x01\x12$\n" +
+	"\vslot_number\x18\x03 \x01(\rH\x02R\n" +
+	"slotNumber\x88\x01\x01B\x16\n" +
+	"\x14_comm_loss_timeout_sB\x0e\n" +
+	"\f_memory_typeB\x0e\n" +
+	"\f_slot_number\"\xb2\x01\n" +
+	"!ControlStateFallbackEndOfDuration\x12G\n" +
+	"\vmemory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x00R\n" +
+	"memoryType\x88\x01\x01\x12$\n" +
+	"\vslot_number\x18\x02 \x01(\rH\x01R\n" +
+	"slotNumber\x88\x01\x01B\x0e\n" +
+	"\f_memory_typeB\x0e\n" +
+	"\f_slot_number\"\xbd\x02\n" +
+	"!ControlStateFallbackPowerRecovery\x12<\n" +
+	"\x18short_outage_threshold_s\x18\x01 \x01(\rH\x00R\x15shortOutageThresholdS\x88\x01\x01\x12_\n" +
 	"\fshort_outage\x18\x02 \x01(\v2<.openits.dms.v1.ControlStateFallbackPowerRecoveryShortOutageR\vshortOutage\x12\\\n" +
 	"\vlong_outage\x18\x03 \x01(\v2;.openits.dms.v1.ControlStateFallbackPowerRecoveryLongOutageR\n" +
-	"longOutage\"\x9d\x01\n" +
-	",ControlStateFallbackPowerRecoveryShortOutage\x12L\n" +
-	"\vmemory_type\x18\x01 \x01(\x0e2+.openits.dms.v1.OpenitsDmsMessageMemoryTypeR\n" +
-	"memoryType\x12\x1f\n" +
-	"\vslot_number\x18\x02 \x01(\rR\n" +
-	"slotNumber\"\x9c\x01\n" +
-	"+ControlStateFallbackPowerRecoveryLongOutage\x12L\n" +
-	"\vmemory_type\x18\x01 \x01(\x0e2+.openits.dms.v1.OpenitsDmsMessageMemoryTypeR\n" +
-	"memoryType\x12\x1f\n" +
-	"\vslot_number\x18\x02 \x01(\rR\n" +
-	"slotNumber\"\x8a\x01\n" +
-	"\x19ControlStateFallbackReset\x12L\n" +
-	"\vmemory_type\x18\x01 \x01(\x0e2+.openits.dms.v1.OpenitsDmsMessageMemoryTypeR\n" +
-	"memoryType\x12\x1f\n" +
-	"\vslot_number\x18\x02 \x01(\rR\n" +
-	"slotNumber\"\x85\x03\n" +
-	"\vEnvironment\x12.\n" +
-	"\x13ambient_light_level\x18\b \x01(\rR\x11ambientLightLevel\x126\n" +
-	"\x17ambient_illuminance_lux\x18\t \x01(\rR\x15ambientIlluminanceLux\x122\n" +
-	"\x15cabinet_temperature_c\x18\x02 \x01(\tR\x13cabinetTemperatureC\x12)\n" +
-	"\x10humidity_percent\x18\x03 \x01(\rR\x0fhumidityPercent\x12\x1b\n" +
-	"\tdoor_open\x18\x04 \x01(\bR\bdoorOpen\x125\n" +
-	"\x17sign_face_temperature_c\x18\x05 \x01(\tR\x14signFaceTemperatureC\x12\x1d\n" +
+	"longOutageB\x1b\n" +
+	"\x19_short_outage_threshold_s\"\xbd\x01\n" +
+	",ControlStateFallbackPowerRecoveryShortOutage\x12G\n" +
+	"\vmemory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x00R\n" +
+	"memoryType\x88\x01\x01\x12$\n" +
+	"\vslot_number\x18\x02 \x01(\rH\x01R\n" +
+	"slotNumber\x88\x01\x01B\x0e\n" +
+	"\f_memory_typeB\x0e\n" +
+	"\f_slot_number\"\xbc\x01\n" +
+	"+ControlStateFallbackPowerRecoveryLongOutage\x12G\n" +
+	"\vmemory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x00R\n" +
+	"memoryType\x88\x01\x01\x12$\n" +
+	"\vslot_number\x18\x02 \x01(\rH\x01R\n" +
+	"slotNumber\x88\x01\x01B\x0e\n" +
+	"\f_memory_typeB\x0e\n" +
+	"\f_slot_number\"\xaa\x01\n" +
+	"\x19ControlStateFallbackReset\x12G\n" +
+	"\vmemory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x00R\n" +
+	"memoryType\x88\x01\x01\x12$\n" +
+	"\vslot_number\x18\x02 \x01(\rH\x01R\n" +
+	"slotNumber\x88\x01\x01B\x0e\n" +
+	"\f_memory_typeB\x0e\n" +
+	"\f_slot_number\"\xdb\x04\n" +
+	"\vEnvironment\x123\n" +
+	"\x13ambient_light_level\x18\b \x01(\rH\x00R\x11ambientLightLevel\x88\x01\x01\x12;\n" +
+	"\x17ambient_illuminance_lux\x18\t \x01(\rH\x01R\x15ambientIlluminanceLux\x88\x01\x01\x127\n" +
+	"\x15cabinet_temperature_c\x18\x02 \x01(\tH\x02R\x13cabinetTemperatureC\x88\x01\x01\x12.\n" +
+	"\x10humidity_percent\x18\x03 \x01(\rH\x03R\x0fhumidityPercent\x88\x01\x01\x12 \n" +
+	"\tdoor_open\x18\x04 \x01(\bH\x04R\bdoorOpen\x88\x01\x01\x12:\n" +
+	"\x17sign_face_temperature_c\x18\x05 \x01(\tH\x05R\x14signFaceTemperatureC\x88\x01\x01\x12\"\n" +
 	"\n" +
-	"fan_active\x18\x06 \x01(\bR\tfanActive\x12#\n" +
-	"\rheater_active\x18\a \x01(\bR\fheaterActiveJ\x04\b\x01\x10\x02R\x11ambient_light_lux\"U\n" +
+	"fan_active\x18\x06 \x01(\bH\x06R\tfanActive\x88\x01\x01\x12(\n" +
+	"\rheater_active\x18\a \x01(\bH\aR\fheaterActive\x88\x01\x01B\x16\n" +
+	"\x14_ambient_light_levelB\x1a\n" +
+	"\x18_ambient_illuminance_luxB\x18\n" +
+	"\x16_cabinet_temperature_cB\x13\n" +
+	"\x11_humidity_percentB\f\n" +
+	"\n" +
+	"_door_openB\x1a\n" +
+	"\x18_sign_face_temperature_cB\r\n" +
+	"\v_fan_activeB\x10\n" +
+	"\x0e_heater_activeJ\x04\b\x01\x10\x02R\x11ambient_light_lux\"U\n" +
 	"\fCabinetPower\x127\n" +
-	"\x05state\x18\x02 \x01(\v2!.openits.dms.v1.CabinetPowerStateR\x05stateJ\x04\b\x01\x10\x02R\x06config\"\xaa\x03\n" +
+	"\x05state\x18\x02 \x01(\v2!.openits.dms.v1.CabinetPowerStateR\x05stateJ\x04\b\x01\x10\x02R\x06config\"\x9e\x04\n" +
 	"\x11CabinetPowerState\x121\n" +
-	"\abattery\x18\x01 \x01(\v2\x17.openits.dms.v1.BatteryR\abattery\x12\x1b\n" +
-	"\tdoor_open\x18\x02 \x01(\bR\bdoorOpen\x127\n" +
-	"\tgenerator\x18\x03 \x01(\v2\x19.openits.dms.v1.GeneratorR\tgenerator\x12*\n" +
-	"\x11line_frequency_hz\x18\x04 \x01(\tR\x0flineFrequencyHz\x12$\n" +
-	"\x0eline_voltage_v\x18\x05 \x01(\tR\flineVoltageV\x12>\n" +
-	"\fpower_source\x18\b \x01(\x0e2\x1b.openits.dms.v1.PowerSourceR\vpowerSource\x12%\n" +
+	"\abattery\x18\x01 \x01(\v2\x17.openits.dms.v1.BatteryR\abattery\x12 \n" +
+	"\tdoor_open\x18\x02 \x01(\bH\x00R\bdoorOpen\x88\x01\x01\x127\n" +
+	"\tgenerator\x18\x03 \x01(\v2\x19.openits.dms.v1.GeneratorR\tgenerator\x12/\n" +
+	"\x11line_frequency_hz\x18\x04 \x01(\tH\x01R\x0flineFrequencyHz\x88\x01\x01\x12)\n" +
+	"\x0eline_voltage_v\x18\x05 \x01(\tH\x02R\flineVoltageV\x88\x01\x01\x12C\n" +
+	"\fpower_source\x18\b \x01(\x0e2\x1b.openits.dms.v1.PowerSourceH\x03R\vpowerSource\x88\x01\x01\x12*\n" +
 	"\x0etransfer_count\x18\n" +
-	" \x01(\rR\rtransferCountJ\x04\b\x06\x10\aJ\x04\b\a\x10\bJ\x04\b\t\x10\n" +
-	"R\x11on_battery_policyR\x11police_panel_openR\x1bsignal_operation_on_battery\"\xd5\x02\n" +
-	"\aBattery\x12-\n" +
-	"\x13state_of_charge_pct\x18\x01 \x01(\rR\x10stateOfChargePct\x12:\n" +
-	"\x19runtime_remaining_minutes\x18\x02 \x01(\rR\x17runtimeRemainingMinutes\x12\x1b\n" +
-	"\tvoltage_v\x18\x03 \x01(\tR\bvoltageV\x12#\n" +
-	"\rtemperature_c\x18\x04 \x01(\tR\ftemperatureC\x12#\n" +
-	"\rcharger_fault\x18\x05 \x01(\bR\fchargerFault\x12?\n" +
+	" \x01(\rH\x04R\rtransferCount\x88\x01\x01B\f\n" +
 	"\n" +
-	"test_state\x18\x06 \x01(\x0e2 .openits.dms.v1.BatteryTestStateR\ttestState\x127\n" +
-	"\tlast_test\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\blastTest\"K\n" +
-	"\tGenerator\x12\x18\n" +
-	"\arunning\x18\x01 \x01(\bR\arunning\x12$\n" +
-	"\x0efuel_level_pct\x18\x02 \x01(\rR\ffuelLevelPct\"\xa9\x03\n" +
-	"\vDiagnostics\x12!\n" +
-	"\fpixels_total\x18\v \x01(\rR\vpixelsTotal\x12&\n" +
-	"\x0fpixels_stuck_on\x18\x01 \x01(\rR\rpixelsStuckOn\x12(\n" +
-	"\x10pixels_stuck_off\x18\x02 \x01(\rR\x0epixelsStuckOff\x12#\n" +
-	"\rpixels_failed\x18\f \x01(\rR\fpixelsFailed\x12\x1f\n" +
-	"\vlamps_total\x18\r \x01(\rR\n" +
-	"lampsTotal\x12!\n" +
-	"\flamps_failed\x18\x0e \x01(\rR\vlampsFailed\x12#\n" +
-	"\rbeacons_total\x18\x04 \x01(\rR\fbeaconsTotal\x12%\n" +
-	"\x0ebeacons_failed\x18\x05 \x01(\rR\rbeaconsFailed\x12.\n" +
-	"\x13controller_uptime_s\x18\x06 \x01(\rR\x11controllerUptimeS\x12@\n" +
-	"\x0elast_self_test\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\flastSelfTest\"5\n" +
+	"_door_openB\x14\n" +
+	"\x12_line_frequency_hzB\x11\n" +
+	"\x0f_line_voltage_vB\x0f\n" +
+	"\r_power_sourceB\x11\n" +
+	"\x0f_transfer_countJ\x04\b\x06\x10\aJ\x04\b\a\x10\bJ\x04\b\t\x10\n" +
+	"R\x11on_battery_policyR\x11police_panel_openR\x1bsignal_operation_on_battery\"\xea\x03\n" +
+	"\aBattery\x122\n" +
+	"\x13state_of_charge_pct\x18\x01 \x01(\rH\x00R\x10stateOfChargePct\x88\x01\x01\x12?\n" +
+	"\x19runtime_remaining_minutes\x18\x02 \x01(\rH\x01R\x17runtimeRemainingMinutes\x88\x01\x01\x12 \n" +
+	"\tvoltage_v\x18\x03 \x01(\tH\x02R\bvoltageV\x88\x01\x01\x12(\n" +
+	"\rtemperature_c\x18\x04 \x01(\tH\x03R\ftemperatureC\x88\x01\x01\x12(\n" +
+	"\rcharger_fault\x18\x05 \x01(\bH\x04R\fchargerFault\x88\x01\x01\x12D\n" +
+	"\n" +
+	"test_state\x18\x06 \x01(\x0e2 .openits.dms.v1.BatteryTestStateH\x05R\ttestState\x88\x01\x01\x127\n" +
+	"\tlast_test\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\blastTestB\x16\n" +
+	"\x14_state_of_charge_pctB\x1c\n" +
+	"\x1a_runtime_remaining_minutesB\f\n" +
+	"\n" +
+	"_voltage_vB\x10\n" +
+	"\x0e_temperature_cB\x10\n" +
+	"\x0e_charger_faultB\r\n" +
+	"\v_test_state\"t\n" +
+	"\tGenerator\x12\x1d\n" +
+	"\arunning\x18\x01 \x01(\bH\x00R\arunning\x88\x01\x01\x12)\n" +
+	"\x0efuel_level_pct\x18\x02 \x01(\rH\x01R\ffuelLevelPct\x88\x01\x01B\n" +
+	"\n" +
+	"\b_runningB\x11\n" +
+	"\x0f_fuel_level_pct\"\x80\x05\n" +
+	"\vDiagnostics\x12&\n" +
+	"\fpixels_total\x18\v \x01(\rH\x00R\vpixelsTotal\x88\x01\x01\x12+\n" +
+	"\x0fpixels_stuck_on\x18\x01 \x01(\rH\x01R\rpixelsStuckOn\x88\x01\x01\x12-\n" +
+	"\x10pixels_stuck_off\x18\x02 \x01(\rH\x02R\x0epixelsStuckOff\x88\x01\x01\x12(\n" +
+	"\rpixels_failed\x18\f \x01(\rH\x03R\fpixelsFailed\x88\x01\x01\x12$\n" +
+	"\vlamps_total\x18\r \x01(\rH\x04R\n" +
+	"lampsTotal\x88\x01\x01\x12&\n" +
+	"\flamps_failed\x18\x0e \x01(\rH\x05R\vlampsFailed\x88\x01\x01\x12(\n" +
+	"\rbeacons_total\x18\x04 \x01(\rH\x06R\fbeaconsTotal\x88\x01\x01\x12*\n" +
+	"\x0ebeacons_failed\x18\x05 \x01(\rH\aR\rbeaconsFailed\x88\x01\x01\x123\n" +
+	"\x13controller_uptime_s\x18\x06 \x01(\rH\bR\x11controllerUptimeS\x88\x01\x01\x12@\n" +
+	"\x0elast_self_test\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\flastSelfTestB\x0f\n" +
+	"\r_pixels_totalB\x12\n" +
+	"\x10_pixels_stuck_onB\x13\n" +
+	"\x11_pixels_stuck_offB\x10\n" +
+	"\x0e_pixels_failedB\x0e\n" +
+	"\f_lamps_totalB\x0f\n" +
+	"\r_lamps_failedB\x10\n" +
+	"\x0e_beacons_totalB\x11\n" +
+	"\x0f_beacons_failedB\x16\n" +
+	"\x14_controller_uptime_s\"5\n" +
 	"\x06Faults\x12+\n" +
-	"\x05fault\x18\x01 \x03(\v2\x15.openits.dms.v1.FaultR\x05fault\"\x87\x02\n" +
-	"\x05Fault\x12\x1a\n" +
-	"\bcategory\x18\x01 \x01(\tR\bcategory\x12'\n" +
-	"\x0fcorrelates_with\x18\x06 \x01(\tR\x0ecorrelatesWith\x12 \n" +
-	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x19\n" +
-	"\bfault_id\x18\x03 \x01(\tR\afaultId\x12A\n" +
-	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x129\n" +
-	"\bseverity\x18\x05 \x01(\x0e2\x1d.openits.dms.v1.FaultSeverityR\bseverity*\xc9\x01\n" +
-	"\n" +
-	"Technology\x12\x16\n" +
-	"\x12TECHNOLOGY_UNKNOWN\x10\x00\x12\x12\n" +
-	"\x0eTECHNOLOGY_LED\x10\x01\x12\x18\n" +
-	"\x14TECHNOLOGY_FLIP_DISK\x10\x02\x12\x15\n" +
-	"\x11TECHNOLOGY_HYBRID\x10\x03\x12\x1a\n" +
-	"\x16TECHNOLOGY_FIBER_OPTIC\x10\x04\x12\x18\n" +
-	"\x14TECHNOLOGY_SHUTTERED\x10\x05\x12\x13\n" +
-	"\x0fTECHNOLOGY_LAMP\x10\x06\x12\x13\n" +
-	"\x0fTECHNOLOGY_DRUM\x10\a*p\n" +
-	"\bSignType\x12\x19\n" +
-	"\x15SIGN_TYPE_FULL_MATRIX\x10\x00\x12\x19\n" +
-	"\x15SIGN_TYPE_CHAR_MATRIX\x10\x01\x12\x19\n" +
-	"\x15SIGN_TYPE_LINE_MATRIX\x10\x02\x12\x13\n" +
-	"\x0fSIGN_TYPE_OTHER\x10\x03*\x8e\x01\n" +
-	"\n" +
-	"BeaconType\x12\x14\n" +
-	"\x10BEACON_TYPE_NONE\x10\x00\x12\x1a\n" +
-	"\x16BEACON_TYPE_ONE_BEACON\x10\x01\x12\x1a\n" +
-	"\x16BEACON_TYPE_TWO_BEACON\x10\x02\x12\x1b\n" +
-	"\x17BEACON_TYPE_FOUR_BEACON\x10\x03\x12\x15\n" +
-	"\x11BEACON_TYPE_OTHER\x10\x04*z\n" +
-	"\x0fColorCapability\x12$\n" +
-	" COLOR_CAPABILITY_MONOCHROME_1BIT\x10\x00\x12%\n" +
-	"!COLOR_CAPABILITY_MONOCHROME_MULTI\x10\x01\x12\x1a\n" +
-	"\x16COLOR_CAPABILITY_COLOR\x10\x02*\xb4\x02\n" +
-	"\x1bOpenitsDmsMessageMemoryType\x12/\n" +
-	"+OPENITS_DMS_MESSAGE_MEMORY_TYPE_UNSPECIFIED\x10\x00\x12-\n" +
-	")OPENITS_DMS_MESSAGE_MEMORY_TYPE_PERMANENT\x10\x01\x12.\n" +
-	"*OPENITS_DMS_MESSAGE_MEMORY_TYPE_CHANGEABLE\x10\x02\x12,\n" +
-	"(OPENITS_DMS_MESSAGE_MEMORY_TYPE_VOLATILE\x10\x03\x12,\n" +
-	"(OPENITS_DMS_MESSAGE_MEMORY_TYPE_SCHEDULE\x10\x04\x12)\n" +
-	"%OPENITS_DMS_MESSAGE_MEMORY_TYPE_BLANK\x10\x05*.\n" +
-	"\x06Beacon\x12\x0f\n" +
-	"\vBEACON_NONE\x10\x00\x12\x13\n" +
-	"\x0fBEACON_FLASHING\x10\x01*\xb4\x01\n" +
-	"\x10DmsMessageStatus\x12\x1f\n" +
-	"\x1bDMS_MESSAGE_STATUS_NOT_USED\x10\x00\x12 \n" +
-	"\x1cDMS_MESSAGE_STATUS_MODIFYING\x10\x01\x12!\n" +
-	"\x1dDMS_MESSAGE_STATUS_VALIDATING\x10\x02\x12\x1c\n" +
-	"\x18DMS_MESSAGE_STATUS_VALID\x10\x03\x12\x1c\n" +
-	"\x18DMS_MESSAGE_STATUS_ERROR\x10\x04*\xd8\x01\n" +
-	"\tDayOfWeek\x12\x1b\n" +
-	"\x17DAY_OF_WEEK_UNSPECIFIED\x10\x00\x12\x16\n" +
-	"\x12DAY_OF_WEEK_MONDAY\x10\x01\x12\x17\n" +
-	"\x13DAY_OF_WEEK_TUESDAY\x10\x02\x12\x19\n" +
-	"\x15DAY_OF_WEEK_WEDNESDAY\x10\x03\x12\x18\n" +
-	"\x14DAY_OF_WEEK_THURSDAY\x10\x04\x12\x16\n" +
-	"\x12DAY_OF_WEEK_FRIDAY\x10\x05\x12\x18\n" +
-	"\x14DAY_OF_WEEK_SATURDAY\x10\x06\x12\x16\n" +
-	"\x12DAY_OF_WEEK_SUNDAY\x10\a*\xf8\x01\n" +
-	"\x05Month\x12\x15\n" +
-	"\x11MONTH_UNSPECIFIED\x10\x00\x12\x11\n" +
-	"\rMONTH_JANUARY\x10\x01\x12\x12\n" +
-	"\x0eMONTH_FEBRUARY\x10\x02\x12\x0f\n" +
-	"\vMONTH_MARCH\x10\x03\x12\x0f\n" +
-	"\vMONTH_APRIL\x10\x04\x12\r\n" +
-	"\tMONTH_MAY\x10\x05\x12\x0e\n" +
-	"\n" +
-	"MONTH_JUNE\x10\x06\x12\x0e\n" +
-	"\n" +
-	"MONTH_JULY\x10\a\x12\x10\n" +
-	"\fMONTH_AUGUST\x10\b\x12\x13\n" +
-	"\x0fMONTH_SEPTEMBER\x10\t\x12\x11\n" +
-	"\rMONTH_OCTOBER\x10\n" +
-	"\x12\x12\n" +
-	"\x0eMONTH_NOVEMBER\x10\v\x12\x12\n" +
-	"\x0eMONTH_DECEMBER\x10\f*p\n" +
-	"\x0fRequestSelfTest\x12\x1a\n" +
-	"\x16REQUEST_SELF_TEST_NONE\x10\x00\x12 \n" +
-	"\x1cREQUEST_SELF_TEST_PIXEL_TEST\x10\x01\x12\x1f\n" +
-	"\x1bREQUEST_SELF_TEST_LAMP_TEST\x10\x02*z\n" +
-	"\x13IlluminationControl\x12\"\n" +
-	"\x1eILLUMINATION_CONTROL_PHOTOCELL\x10\x00\x12\x1e\n" +
-	"\x1aILLUMINATION_CONTROL_TIMER\x10\x01\x12\x1f\n" +
-	"\x1bILLUMINATION_CONTROL_MANUAL\x10\x02*\x87\x01\n" +
-	"\vBeaconState\x12\x15\n" +
-	"\x11BEACON_STATE_NONE\x10\x00\x12\x15\n" +
-	"\x11BEACON_STATE_DARK\x10\x01\x12\x19\n" +
-	"\x15BEACON_STATE_FLASHING\x10\x02\x12\x17\n" +
-	"\x13BEACON_STATE_STEADY\x10\x03\x12\x16\n" +
-	"\x12BEACON_STATE_FAULT\x10\x04*\x91\x01\n" +
-	"\x10BatteryTestState\x12\x1b\n" +
-	"\x17BATTERY_TEST_STATE_IDLE\x10\x00\x12\"\n" +
-	"\x1eBATTERY_TEST_STATE_IN_PROGRESS\x10\x01\x12\x1d\n" +
-	"\x19BATTERY_TEST_STATE_PASSED\x10\x02\x12\x1d\n" +
-	"\x19BATTERY_TEST_STATE_FAILED\x10\x03*\xa7\x01\n" +
-	"\vPowerSource\x12\x18\n" +
-	"\x14POWER_SOURCE_ON_LINE\x10\x00\x12\x1b\n" +
-	"\x17POWER_SOURCE_ON_BATTERY\x10\x01\x12\x17\n" +
-	"\x13POWER_SOURCE_BYPASS\x10\x02\x12\x14\n" +
-	"\x10POWER_SOURCE_OFF\x10\x03\x12\x16\n" +
-	"\x12POWER_SOURCE_SOLAR\x10\x04\x12\x1a\n" +
-	"\x16POWER_SOURCE_GENERATOR\x10\x05*\x95\x01\n" +
-	"\rFaultSeverity\x12\x17\n" +
-	"\x13FAULT_SEVERITY_INFO\x10\x00\x12\x1a\n" +
-	"\x16FAULT_SEVERITY_WARNING\x10\x01\x12\x18\n" +
-	"\x14FAULT_SEVERITY_MINOR\x10\x02\x12\x18\n" +
-	"\x14FAULT_SEVERITY_MAJOR\x10\x03\x12\x1b\n" +
-	"\x17FAULT_SEVERITY_CRITICAL\x10\x04BCZAgithub.com/Vikasa2M/openits-models/pkg/proto/openits/dms/v1;dmsv1b\x06proto3"
+	"\x05fault\x18\x01 \x03(\v2\x15.openits.dms.v1.FaultR\x05fault\"\xeb\x02\n" +
+	"\x05Fault\x12\x1f\n" +
+	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12,\n" +
+	"\x0fcorrelates_with\x18\x06 \x01(\tH\x01R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x02R\vdescription\x88\x01\x01\x12\x1e\n" +
+	"\bfault_id\x18\x03 \x01(\tH\x03R\afaultId\x88\x01\x01\x12A\n" +
+	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12>\n" +
+	"\bseverity\x18\x05 \x01(\x0e2\x1d.openits.dms.v1.FaultSeverityH\x04R\bseverity\x88\x01\x01B\v\n" +
+	"\t_categoryB\x12\n" +
+	"\x10_correlates_withB\x0e\n" +
+	"\f_descriptionB\v\n" +
+	"\t_fault_idB\v\n" +
+	"\t_severityBCZAgithub.com/Vikasa2M/openits-models/pkg/proto/openits/dms/v1;dmsv1b\x06proto3"
 
 var (
 	file_openits_dms_v1_state_proto_rawDescOnce sync.Once
@@ -4747,162 +3996,159 @@ func file_openits_dms_v1_state_proto_rawDescGZIP() []byte {
 	return file_openits_dms_v1_state_proto_rawDescData
 }
 
-var file_openits_dms_v1_state_proto_enumTypes = make([]protoimpl.EnumInfo, 15)
 var file_openits_dms_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 45)
 var file_openits_dms_v1_state_proto_goTypes = []any{
-	(Technology)(0),                            // 0: openits.dms.v1.Technology
-	(SignType)(0),                              // 1: openits.dms.v1.SignType
-	(BeaconType)(0),                            // 2: openits.dms.v1.BeaconType
-	(ColorCapability)(0),                       // 3: openits.dms.v1.ColorCapability
-	(OpenitsDmsMessageMemoryType)(0),           // 4: openits.dms.v1.OpenitsDmsMessageMemoryType
-	(Beacon)(0),                                // 5: openits.dms.v1.Beacon
-	(DmsMessageStatus)(0),                      // 6: openits.dms.v1.DmsMessageStatus
-	(DayOfWeek)(0),                             // 7: openits.dms.v1.DayOfWeek
-	(Month)(0),                                 // 8: openits.dms.v1.Month
-	(RequestSelfTest)(0),                       // 9: openits.dms.v1.RequestSelfTest
-	(IlluminationControl)(0),                   // 10: openits.dms.v1.IlluminationControl
-	(BeaconState)(0),                           // 11: openits.dms.v1.BeaconState
-	(BatteryTestState)(0),                      // 12: openits.dms.v1.BatteryTestState
-	(PowerSource)(0),                           // 13: openits.dms.v1.PowerSource
-	(FaultSeverity)(0),                         // 14: openits.dms.v1.FaultSeverity
-	(*Sign)(nil),                               // 15: openits.dms.v1.Sign
-	(*SignConfig)(nil),                         // 16: openits.dms.v1.SignConfig
-	(*SignConfigLinearReference)(nil),          // 17: openits.dms.v1.SignConfigLinearReference
-	(*SignState)(nil),                          // 18: openits.dms.v1.SignState
-	(*Capabilities)(nil),                       // 19: openits.dms.v1.Capabilities
-	(*Font)(nil),                               // 20: openits.dms.v1.Font
-	(*Graphic)(nil),                            // 21: openits.dms.v1.Graphic
-	(*SignStateLinearReference)(nil),           // 22: openits.dms.v1.SignStateLinearReference
-	(*Messages)(nil),                           // 23: openits.dms.v1.Messages
-	(*Slot)(nil),                               // 24: openits.dms.v1.Slot
-	(*SlotConfig)(nil),                         // 25: openits.dms.v1.SlotConfig
-	(*SlotState)(nil),                          // 26: openits.dms.v1.SlotState
-	(*Schedule)(nil),                           // 27: openits.dms.v1.Schedule
-	(*DayPlan)(nil),                            // 28: openits.dms.v1.DayPlan
-	(*Action)(nil),                             // 29: openits.dms.v1.Action
-	(*ScheduleEntry)(nil),                      // 30: openits.dms.v1.ScheduleEntry
-	(*ScheduleState)(nil),                      // 31: openits.dms.v1.ScheduleState
-	(*Control)(nil),                            // 32: openits.dms.v1.Control
-	(*ControlConfig)(nil),                      // 33: openits.dms.v1.ControlConfig
-	(*ActiveMessage)(nil),                      // 34: openits.dms.v1.ActiveMessage
-	(*ControlConfigFallback)(nil),              // 35: openits.dms.v1.ControlConfigFallback
-	(*ControlConfigFallbackCommLoss)(nil),      // 36: openits.dms.v1.ControlConfigFallbackCommLoss
-	(*ControlConfigFallbackEndOfDuration)(nil), // 37: openits.dms.v1.ControlConfigFallbackEndOfDuration
-	(*ControlConfigFallbackPowerRecovery)(nil), // 38: openits.dms.v1.ControlConfigFallbackPowerRecovery
-	(*ControlConfigFallbackPowerRecoveryShortOutage)(nil), // 39: openits.dms.v1.ControlConfigFallbackPowerRecoveryShortOutage
-	(*ControlConfigFallbackPowerRecoveryLongOutage)(nil),  // 40: openits.dms.v1.ControlConfigFallbackPowerRecoveryLongOutage
-	(*ControlConfigFallbackReset)(nil),                    // 41: openits.dms.v1.ControlConfigFallbackReset
-	(*ControlState)(nil),                                  // 42: openits.dms.v1.ControlState
-	(*Active)(nil),                                        // 43: openits.dms.v1.Active
-	(*Preempted)(nil),                                     // 44: openits.dms.v1.Preempted
-	(*ControlStateFallback)(nil),                          // 45: openits.dms.v1.ControlStateFallback
-	(*ControlStateFallbackCommLoss)(nil),                  // 46: openits.dms.v1.ControlStateFallbackCommLoss
-	(*ControlStateFallbackEndOfDuration)(nil),             // 47: openits.dms.v1.ControlStateFallbackEndOfDuration
-	(*ControlStateFallbackPowerRecovery)(nil),             // 48: openits.dms.v1.ControlStateFallbackPowerRecovery
-	(*ControlStateFallbackPowerRecoveryShortOutage)(nil),  // 49: openits.dms.v1.ControlStateFallbackPowerRecoveryShortOutage
-	(*ControlStateFallbackPowerRecoveryLongOutage)(nil),   // 50: openits.dms.v1.ControlStateFallbackPowerRecoveryLongOutage
-	(*ControlStateFallbackReset)(nil),                     // 51: openits.dms.v1.ControlStateFallbackReset
-	(*Environment)(nil),                                   // 52: openits.dms.v1.Environment
-	(*CabinetPower)(nil),                                  // 53: openits.dms.v1.CabinetPower
-	(*CabinetPowerState)(nil),                             // 54: openits.dms.v1.CabinetPowerState
-	(*Battery)(nil),                                       // 55: openits.dms.v1.Battery
-	(*Generator)(nil),                                     // 56: openits.dms.v1.Generator
-	(*Diagnostics)(nil),                                   // 57: openits.dms.v1.Diagnostics
-	(*Faults)(nil),                                        // 58: openits.dms.v1.Faults
-	(*Fault)(nil),                                         // 59: openits.dms.v1.Fault
-	(*timestamppb.Timestamp)(nil),                         // 60: google.protobuf.Timestamp
+	(*Sign)(nil),                               // 0: openits.dms.v1.Sign
+	(*SignConfig)(nil),                         // 1: openits.dms.v1.SignConfig
+	(*SignConfigLinearReference)(nil),          // 2: openits.dms.v1.SignConfigLinearReference
+	(*SignState)(nil),                          // 3: openits.dms.v1.SignState
+	(*Capabilities)(nil),                       // 4: openits.dms.v1.Capabilities
+	(*Font)(nil),                               // 5: openits.dms.v1.Font
+	(*Graphic)(nil),                            // 6: openits.dms.v1.Graphic
+	(*SignStateLinearReference)(nil),           // 7: openits.dms.v1.SignStateLinearReference
+	(*Messages)(nil),                           // 8: openits.dms.v1.Messages
+	(*Slot)(nil),                               // 9: openits.dms.v1.Slot
+	(*SlotConfig)(nil),                         // 10: openits.dms.v1.SlotConfig
+	(*SlotState)(nil),                          // 11: openits.dms.v1.SlotState
+	(*Schedule)(nil),                           // 12: openits.dms.v1.Schedule
+	(*DayPlan)(nil),                            // 13: openits.dms.v1.DayPlan
+	(*Action)(nil),                             // 14: openits.dms.v1.Action
+	(*ScheduleEntry)(nil),                      // 15: openits.dms.v1.ScheduleEntry
+	(*ScheduleState)(nil),                      // 16: openits.dms.v1.ScheduleState
+	(*Control)(nil),                            // 17: openits.dms.v1.Control
+	(*ControlConfig)(nil),                      // 18: openits.dms.v1.ControlConfig
+	(*ActiveMessage)(nil),                      // 19: openits.dms.v1.ActiveMessage
+	(*ControlConfigFallback)(nil),              // 20: openits.dms.v1.ControlConfigFallback
+	(*ControlConfigFallbackCommLoss)(nil),      // 21: openits.dms.v1.ControlConfigFallbackCommLoss
+	(*ControlConfigFallbackEndOfDuration)(nil), // 22: openits.dms.v1.ControlConfigFallbackEndOfDuration
+	(*ControlConfigFallbackPowerRecovery)(nil), // 23: openits.dms.v1.ControlConfigFallbackPowerRecovery
+	(*ControlConfigFallbackPowerRecoveryShortOutage)(nil), // 24: openits.dms.v1.ControlConfigFallbackPowerRecoveryShortOutage
+	(*ControlConfigFallbackPowerRecoveryLongOutage)(nil),  // 25: openits.dms.v1.ControlConfigFallbackPowerRecoveryLongOutage
+	(*ControlConfigFallbackReset)(nil),                    // 26: openits.dms.v1.ControlConfigFallbackReset
+	(*ControlState)(nil),                                  // 27: openits.dms.v1.ControlState
+	(*Active)(nil),                                        // 28: openits.dms.v1.Active
+	(*Preempted)(nil),                                     // 29: openits.dms.v1.Preempted
+	(*ControlStateFallback)(nil),                          // 30: openits.dms.v1.ControlStateFallback
+	(*ControlStateFallbackCommLoss)(nil),                  // 31: openits.dms.v1.ControlStateFallbackCommLoss
+	(*ControlStateFallbackEndOfDuration)(nil),             // 32: openits.dms.v1.ControlStateFallbackEndOfDuration
+	(*ControlStateFallbackPowerRecovery)(nil),             // 33: openits.dms.v1.ControlStateFallbackPowerRecovery
+	(*ControlStateFallbackPowerRecoveryShortOutage)(nil),  // 34: openits.dms.v1.ControlStateFallbackPowerRecoveryShortOutage
+	(*ControlStateFallbackPowerRecoveryLongOutage)(nil),   // 35: openits.dms.v1.ControlStateFallbackPowerRecoveryLongOutage
+	(*ControlStateFallbackReset)(nil),                     // 36: openits.dms.v1.ControlStateFallbackReset
+	(*Environment)(nil),                                   // 37: openits.dms.v1.Environment
+	(*CabinetPower)(nil),                                  // 38: openits.dms.v1.CabinetPower
+	(*CabinetPowerState)(nil),                             // 39: openits.dms.v1.CabinetPowerState
+	(*Battery)(nil),                                       // 40: openits.dms.v1.Battery
+	(*Generator)(nil),                                     // 41: openits.dms.v1.Generator
+	(*Diagnostics)(nil),                                   // 42: openits.dms.v1.Diagnostics
+	(*Faults)(nil),                                        // 43: openits.dms.v1.Faults
+	(*Fault)(nil),                                         // 44: openits.dms.v1.Fault
+	(*timestamppb.Timestamp)(nil),                         // 45: google.protobuf.Timestamp
+	(SignType)(0),                                         // 46: openits.dms.v1.SignType
+	(BeaconType)(0),                                       // 47: openits.dms.v1.BeaconType
+	(ColorCapability)(0),                                  // 48: openits.dms.v1.ColorCapability
+	(MessageMemoryType)(0),                                // 49: openits.dms.v1.MessageMemoryType
+	(Beacon)(0),                                           // 50: openits.dms.v1.Beacon
+	(DmsMessageStatus)(0),                                 // 51: openits.dms.v1.DmsMessageStatus
+	(DayOfWeek)(0),                                        // 52: openits.dms.v1.DayOfWeek
+	(Month)(0),                                            // 53: openits.dms.v1.Month
+	(RequestSelfTest)(0),                                  // 54: openits.dms.v1.RequestSelfTest
+	(IlluminationControl)(0),                              // 55: openits.dms.v1.IlluminationControl
+	(BeaconState)(0),                                      // 56: openits.dms.v1.BeaconState
+	(PowerSource)(0),                                      // 57: openits.dms.v1.PowerSource
+	(BatteryTestState)(0),                                 // 58: openits.dms.v1.BatteryTestState
+	(FaultSeverity)(0),                                    // 59: openits.dms.v1.FaultSeverity
 }
 var file_openits_dms_v1_state_proto_depIdxs = []int32{
-	16, // 0: openits.dms.v1.Sign.config:type_name -> openits.dms.v1.SignConfig
-	18, // 1: openits.dms.v1.Sign.state:type_name -> openits.dms.v1.SignState
-	23, // 2: openits.dms.v1.Sign.messages:type_name -> openits.dms.v1.Messages
-	27, // 3: openits.dms.v1.Sign.schedule:type_name -> openits.dms.v1.Schedule
-	32, // 4: openits.dms.v1.Sign.control:type_name -> openits.dms.v1.Control
-	52, // 5: openits.dms.v1.Sign.environment:type_name -> openits.dms.v1.Environment
-	53, // 6: openits.dms.v1.Sign.cabinet_power:type_name -> openits.dms.v1.CabinetPower
-	57, // 7: openits.dms.v1.Sign.diagnostics:type_name -> openits.dms.v1.Diagnostics
-	58, // 8: openits.dms.v1.Sign.faults:type_name -> openits.dms.v1.Faults
-	60, // 9: openits.dms.v1.SignConfig.install_date:type_name -> google.protobuf.Timestamp
-	17, // 10: openits.dms.v1.SignConfig.linear_reference:type_name -> openits.dms.v1.SignConfigLinearReference
-	0,  // 11: openits.dms.v1.SignState.technology:type_name -> openits.dms.v1.Technology
-	19, // 12: openits.dms.v1.SignState.capabilities:type_name -> openits.dms.v1.Capabilities
-	60, // 13: openits.dms.v1.SignState.install_date:type_name -> google.protobuf.Timestamp
-	22, // 14: openits.dms.v1.SignState.linear_reference:type_name -> openits.dms.v1.SignStateLinearReference
-	1,  // 15: openits.dms.v1.Capabilities.sign_type:type_name -> openits.dms.v1.SignType
-	2,  // 16: openits.dms.v1.Capabilities.beacon_type:type_name -> openits.dms.v1.BeaconType
-	3,  // 17: openits.dms.v1.Capabilities.color_capability:type_name -> openits.dms.v1.ColorCapability
-	20, // 18: openits.dms.v1.Capabilities.font:type_name -> openits.dms.v1.Font
-	21, // 19: openits.dms.v1.Capabilities.graphic:type_name -> openits.dms.v1.Graphic
-	24, // 20: openits.dms.v1.Messages.slot:type_name -> openits.dms.v1.Slot
-	4,  // 21: openits.dms.v1.Slot.memory_type:type_name -> openits.dms.v1.OpenitsDmsMessageMemoryType
-	25, // 22: openits.dms.v1.Slot.config:type_name -> openits.dms.v1.SlotConfig
-	26, // 23: openits.dms.v1.Slot.state:type_name -> openits.dms.v1.SlotState
-	4,  // 24: openits.dms.v1.SlotConfig.memory_type:type_name -> openits.dms.v1.OpenitsDmsMessageMemoryType
-	5,  // 25: openits.dms.v1.SlotConfig.beacon:type_name -> openits.dms.v1.Beacon
-	6,  // 26: openits.dms.v1.SlotState.status:type_name -> openits.dms.v1.DmsMessageStatus
-	28, // 27: openits.dms.v1.Schedule.day_plan:type_name -> openits.dms.v1.DayPlan
-	30, // 28: openits.dms.v1.Schedule.schedule_entry:type_name -> openits.dms.v1.ScheduleEntry
-	31, // 29: openits.dms.v1.Schedule.state:type_name -> openits.dms.v1.ScheduleState
-	29, // 30: openits.dms.v1.DayPlan.action:type_name -> openits.dms.v1.Action
-	4,  // 31: openits.dms.v1.Action.memory_type:type_name -> openits.dms.v1.OpenitsDmsMessageMemoryType
-	7,  // 32: openits.dms.v1.ScheduleEntry.days_of_week:type_name -> openits.dms.v1.DayOfWeek
-	8,  // 33: openits.dms.v1.ScheduleEntry.months:type_name -> openits.dms.v1.Month
-	60, // 34: openits.dms.v1.ScheduleState.next_action_at:type_name -> google.protobuf.Timestamp
-	33, // 35: openits.dms.v1.Control.config:type_name -> openits.dms.v1.ControlConfig
-	42, // 36: openits.dms.v1.Control.state:type_name -> openits.dms.v1.ControlState
-	9,  // 37: openits.dms.v1.ControlConfig.request_self_test:type_name -> openits.dms.v1.RequestSelfTest
-	34, // 38: openits.dms.v1.ControlConfig.active_message:type_name -> openits.dms.v1.ActiveMessage
-	35, // 39: openits.dms.v1.ControlConfig.fallback:type_name -> openits.dms.v1.ControlConfigFallback
-	10, // 40: openits.dms.v1.ControlConfig.illumination_control:type_name -> openits.dms.v1.IlluminationControl
-	4,  // 41: openits.dms.v1.ActiveMessage.memory_type:type_name -> openits.dms.v1.OpenitsDmsMessageMemoryType
-	36, // 42: openits.dms.v1.ControlConfigFallback.comm_loss:type_name -> openits.dms.v1.ControlConfigFallbackCommLoss
-	37, // 43: openits.dms.v1.ControlConfigFallback.end_of_duration:type_name -> openits.dms.v1.ControlConfigFallbackEndOfDuration
-	38, // 44: openits.dms.v1.ControlConfigFallback.power_recovery:type_name -> openits.dms.v1.ControlConfigFallbackPowerRecovery
-	41, // 45: openits.dms.v1.ControlConfigFallback.reset:type_name -> openits.dms.v1.ControlConfigFallbackReset
-	4,  // 46: openits.dms.v1.ControlConfigFallbackCommLoss.memory_type:type_name -> openits.dms.v1.OpenitsDmsMessageMemoryType
-	4,  // 47: openits.dms.v1.ControlConfigFallbackEndOfDuration.memory_type:type_name -> openits.dms.v1.OpenitsDmsMessageMemoryType
-	39, // 48: openits.dms.v1.ControlConfigFallbackPowerRecovery.short_outage:type_name -> openits.dms.v1.ControlConfigFallbackPowerRecoveryShortOutage
-	40, // 49: openits.dms.v1.ControlConfigFallbackPowerRecovery.long_outage:type_name -> openits.dms.v1.ControlConfigFallbackPowerRecoveryLongOutage
-	4,  // 50: openits.dms.v1.ControlConfigFallbackPowerRecoveryShortOutage.memory_type:type_name -> openits.dms.v1.OpenitsDmsMessageMemoryType
-	4,  // 51: openits.dms.v1.ControlConfigFallbackPowerRecoveryLongOutage.memory_type:type_name -> openits.dms.v1.OpenitsDmsMessageMemoryType
-	4,  // 52: openits.dms.v1.ControlConfigFallbackReset.memory_type:type_name -> openits.dms.v1.OpenitsDmsMessageMemoryType
-	11, // 53: openits.dms.v1.ControlState.beacon_state:type_name -> openits.dms.v1.BeaconState
-	60, // 54: openits.dms.v1.ControlState.last_mode_change:type_name -> google.protobuf.Timestamp
-	43, // 55: openits.dms.v1.ControlState.active:type_name -> openits.dms.v1.Active
-	44, // 56: openits.dms.v1.ControlState.preempted:type_name -> openits.dms.v1.Preempted
-	45, // 57: openits.dms.v1.ControlState.fallback:type_name -> openits.dms.v1.ControlStateFallback
-	10, // 58: openits.dms.v1.ControlState.illumination_control:type_name -> openits.dms.v1.IlluminationControl
-	60, // 59: openits.dms.v1.Active.activated_at:type_name -> google.protobuf.Timestamp
-	60, // 60: openits.dms.v1.Active.expires_at:type_name -> google.protobuf.Timestamp
-	5,  // 61: openits.dms.v1.Active.beacon:type_name -> openits.dms.v1.Beacon
-	4,  // 62: openits.dms.v1.Active.memory_type:type_name -> openits.dms.v1.OpenitsDmsMessageMemoryType
-	4,  // 63: openits.dms.v1.Preempted.memory_type:type_name -> openits.dms.v1.OpenitsDmsMessageMemoryType
-	46, // 64: openits.dms.v1.ControlStateFallback.comm_loss:type_name -> openits.dms.v1.ControlStateFallbackCommLoss
-	47, // 65: openits.dms.v1.ControlStateFallback.end_of_duration:type_name -> openits.dms.v1.ControlStateFallbackEndOfDuration
-	48, // 66: openits.dms.v1.ControlStateFallback.power_recovery:type_name -> openits.dms.v1.ControlStateFallbackPowerRecovery
-	51, // 67: openits.dms.v1.ControlStateFallback.reset:type_name -> openits.dms.v1.ControlStateFallbackReset
-	4,  // 68: openits.dms.v1.ControlStateFallbackCommLoss.memory_type:type_name -> openits.dms.v1.OpenitsDmsMessageMemoryType
-	4,  // 69: openits.dms.v1.ControlStateFallbackEndOfDuration.memory_type:type_name -> openits.dms.v1.OpenitsDmsMessageMemoryType
-	49, // 70: openits.dms.v1.ControlStateFallbackPowerRecovery.short_outage:type_name -> openits.dms.v1.ControlStateFallbackPowerRecoveryShortOutage
-	50, // 71: openits.dms.v1.ControlStateFallbackPowerRecovery.long_outage:type_name -> openits.dms.v1.ControlStateFallbackPowerRecoveryLongOutage
-	4,  // 72: openits.dms.v1.ControlStateFallbackPowerRecoveryShortOutage.memory_type:type_name -> openits.dms.v1.OpenitsDmsMessageMemoryType
-	4,  // 73: openits.dms.v1.ControlStateFallbackPowerRecoveryLongOutage.memory_type:type_name -> openits.dms.v1.OpenitsDmsMessageMemoryType
-	4,  // 74: openits.dms.v1.ControlStateFallbackReset.memory_type:type_name -> openits.dms.v1.OpenitsDmsMessageMemoryType
-	54, // 75: openits.dms.v1.CabinetPower.state:type_name -> openits.dms.v1.CabinetPowerState
-	55, // 76: openits.dms.v1.CabinetPowerState.battery:type_name -> openits.dms.v1.Battery
-	56, // 77: openits.dms.v1.CabinetPowerState.generator:type_name -> openits.dms.v1.Generator
-	13, // 78: openits.dms.v1.CabinetPowerState.power_source:type_name -> openits.dms.v1.PowerSource
-	12, // 79: openits.dms.v1.Battery.test_state:type_name -> openits.dms.v1.BatteryTestState
-	60, // 80: openits.dms.v1.Battery.last_test:type_name -> google.protobuf.Timestamp
-	60, // 81: openits.dms.v1.Diagnostics.last_self_test:type_name -> google.protobuf.Timestamp
-	59, // 82: openits.dms.v1.Faults.fault:type_name -> openits.dms.v1.Fault
-	60, // 83: openits.dms.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	14, // 84: openits.dms.v1.Fault.severity:type_name -> openits.dms.v1.FaultSeverity
-	85, // [85:85] is the sub-list for method output_type
-	85, // [85:85] is the sub-list for method input_type
-	85, // [85:85] is the sub-list for extension type_name
-	85, // [85:85] is the sub-list for extension extendee
-	0,  // [0:85] is the sub-list for field type_name
+	1,  // 0: openits.dms.v1.Sign.config:type_name -> openits.dms.v1.SignConfig
+	3,  // 1: openits.dms.v1.Sign.state:type_name -> openits.dms.v1.SignState
+	8,  // 2: openits.dms.v1.Sign.messages:type_name -> openits.dms.v1.Messages
+	12, // 3: openits.dms.v1.Sign.schedule:type_name -> openits.dms.v1.Schedule
+	17, // 4: openits.dms.v1.Sign.control:type_name -> openits.dms.v1.Control
+	37, // 5: openits.dms.v1.Sign.environment:type_name -> openits.dms.v1.Environment
+	38, // 6: openits.dms.v1.Sign.cabinet_power:type_name -> openits.dms.v1.CabinetPower
+	42, // 7: openits.dms.v1.Sign.diagnostics:type_name -> openits.dms.v1.Diagnostics
+	43, // 8: openits.dms.v1.Sign.faults:type_name -> openits.dms.v1.Faults
+	45, // 9: openits.dms.v1.SignConfig.install_date:type_name -> google.protobuf.Timestamp
+	2,  // 10: openits.dms.v1.SignConfig.linear_reference:type_name -> openits.dms.v1.SignConfigLinearReference
+	4,  // 11: openits.dms.v1.SignState.capabilities:type_name -> openits.dms.v1.Capabilities
+	45, // 12: openits.dms.v1.SignState.install_date:type_name -> google.protobuf.Timestamp
+	7,  // 13: openits.dms.v1.SignState.linear_reference:type_name -> openits.dms.v1.SignStateLinearReference
+	46, // 14: openits.dms.v1.Capabilities.sign_type:type_name -> openits.dms.v1.SignType
+	47, // 15: openits.dms.v1.Capabilities.beacon_type:type_name -> openits.dms.v1.BeaconType
+	48, // 16: openits.dms.v1.Capabilities.color_capability:type_name -> openits.dms.v1.ColorCapability
+	5,  // 17: openits.dms.v1.Capabilities.font:type_name -> openits.dms.v1.Font
+	6,  // 18: openits.dms.v1.Capabilities.graphic:type_name -> openits.dms.v1.Graphic
+	9,  // 19: openits.dms.v1.Messages.slot:type_name -> openits.dms.v1.Slot
+	49, // 20: openits.dms.v1.Slot.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	10, // 21: openits.dms.v1.Slot.config:type_name -> openits.dms.v1.SlotConfig
+	11, // 22: openits.dms.v1.Slot.state:type_name -> openits.dms.v1.SlotState
+	49, // 23: openits.dms.v1.SlotConfig.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	50, // 24: openits.dms.v1.SlotConfig.beacon:type_name -> openits.dms.v1.Beacon
+	51, // 25: openits.dms.v1.SlotState.status:type_name -> openits.dms.v1.DmsMessageStatus
+	13, // 26: openits.dms.v1.Schedule.day_plan:type_name -> openits.dms.v1.DayPlan
+	15, // 27: openits.dms.v1.Schedule.schedule_entry:type_name -> openits.dms.v1.ScheduleEntry
+	16, // 28: openits.dms.v1.Schedule.state:type_name -> openits.dms.v1.ScheduleState
+	14, // 29: openits.dms.v1.DayPlan.action:type_name -> openits.dms.v1.Action
+	49, // 30: openits.dms.v1.Action.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	52, // 31: openits.dms.v1.ScheduleEntry.days_of_week:type_name -> openits.dms.v1.DayOfWeek
+	53, // 32: openits.dms.v1.ScheduleEntry.months:type_name -> openits.dms.v1.Month
+	45, // 33: openits.dms.v1.ScheduleState.next_action_at:type_name -> google.protobuf.Timestamp
+	18, // 34: openits.dms.v1.Control.config:type_name -> openits.dms.v1.ControlConfig
+	27, // 35: openits.dms.v1.Control.state:type_name -> openits.dms.v1.ControlState
+	54, // 36: openits.dms.v1.ControlConfig.request_self_test:type_name -> openits.dms.v1.RequestSelfTest
+	19, // 37: openits.dms.v1.ControlConfig.active_message:type_name -> openits.dms.v1.ActiveMessage
+	20, // 38: openits.dms.v1.ControlConfig.fallback:type_name -> openits.dms.v1.ControlConfigFallback
+	55, // 39: openits.dms.v1.ControlConfig.illumination_control:type_name -> openits.dms.v1.IlluminationControl
+	49, // 40: openits.dms.v1.ActiveMessage.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	21, // 41: openits.dms.v1.ControlConfigFallback.comm_loss:type_name -> openits.dms.v1.ControlConfigFallbackCommLoss
+	22, // 42: openits.dms.v1.ControlConfigFallback.end_of_duration:type_name -> openits.dms.v1.ControlConfigFallbackEndOfDuration
+	23, // 43: openits.dms.v1.ControlConfigFallback.power_recovery:type_name -> openits.dms.v1.ControlConfigFallbackPowerRecovery
+	26, // 44: openits.dms.v1.ControlConfigFallback.reset:type_name -> openits.dms.v1.ControlConfigFallbackReset
+	49, // 45: openits.dms.v1.ControlConfigFallbackCommLoss.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	49, // 46: openits.dms.v1.ControlConfigFallbackEndOfDuration.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	24, // 47: openits.dms.v1.ControlConfigFallbackPowerRecovery.short_outage:type_name -> openits.dms.v1.ControlConfigFallbackPowerRecoveryShortOutage
+	25, // 48: openits.dms.v1.ControlConfigFallbackPowerRecovery.long_outage:type_name -> openits.dms.v1.ControlConfigFallbackPowerRecoveryLongOutage
+	49, // 49: openits.dms.v1.ControlConfigFallbackPowerRecoveryShortOutage.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	49, // 50: openits.dms.v1.ControlConfigFallbackPowerRecoveryLongOutage.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	49, // 51: openits.dms.v1.ControlConfigFallbackReset.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	56, // 52: openits.dms.v1.ControlState.beacon_state:type_name -> openits.dms.v1.BeaconState
+	45, // 53: openits.dms.v1.ControlState.last_mode_change:type_name -> google.protobuf.Timestamp
+	28, // 54: openits.dms.v1.ControlState.active:type_name -> openits.dms.v1.Active
+	29, // 55: openits.dms.v1.ControlState.preempted:type_name -> openits.dms.v1.Preempted
+	30, // 56: openits.dms.v1.ControlState.fallback:type_name -> openits.dms.v1.ControlStateFallback
+	55, // 57: openits.dms.v1.ControlState.illumination_control:type_name -> openits.dms.v1.IlluminationControl
+	45, // 58: openits.dms.v1.Active.activated_at:type_name -> google.protobuf.Timestamp
+	45, // 59: openits.dms.v1.Active.expires_at:type_name -> google.protobuf.Timestamp
+	50, // 60: openits.dms.v1.Active.beacon:type_name -> openits.dms.v1.Beacon
+	49, // 61: openits.dms.v1.Active.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	49, // 62: openits.dms.v1.Preempted.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	31, // 63: openits.dms.v1.ControlStateFallback.comm_loss:type_name -> openits.dms.v1.ControlStateFallbackCommLoss
+	32, // 64: openits.dms.v1.ControlStateFallback.end_of_duration:type_name -> openits.dms.v1.ControlStateFallbackEndOfDuration
+	33, // 65: openits.dms.v1.ControlStateFallback.power_recovery:type_name -> openits.dms.v1.ControlStateFallbackPowerRecovery
+	36, // 66: openits.dms.v1.ControlStateFallback.reset:type_name -> openits.dms.v1.ControlStateFallbackReset
+	49, // 67: openits.dms.v1.ControlStateFallbackCommLoss.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	49, // 68: openits.dms.v1.ControlStateFallbackEndOfDuration.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	34, // 69: openits.dms.v1.ControlStateFallbackPowerRecovery.short_outage:type_name -> openits.dms.v1.ControlStateFallbackPowerRecoveryShortOutage
+	35, // 70: openits.dms.v1.ControlStateFallbackPowerRecovery.long_outage:type_name -> openits.dms.v1.ControlStateFallbackPowerRecoveryLongOutage
+	49, // 71: openits.dms.v1.ControlStateFallbackPowerRecoveryShortOutage.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	49, // 72: openits.dms.v1.ControlStateFallbackPowerRecoveryLongOutage.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	49, // 73: openits.dms.v1.ControlStateFallbackReset.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	39, // 74: openits.dms.v1.CabinetPower.state:type_name -> openits.dms.v1.CabinetPowerState
+	40, // 75: openits.dms.v1.CabinetPowerState.battery:type_name -> openits.dms.v1.Battery
+	41, // 76: openits.dms.v1.CabinetPowerState.generator:type_name -> openits.dms.v1.Generator
+	57, // 77: openits.dms.v1.CabinetPowerState.power_source:type_name -> openits.dms.v1.PowerSource
+	58, // 78: openits.dms.v1.Battery.test_state:type_name -> openits.dms.v1.BatteryTestState
+	45, // 79: openits.dms.v1.Battery.last_test:type_name -> google.protobuf.Timestamp
+	45, // 80: openits.dms.v1.Diagnostics.last_self_test:type_name -> google.protobuf.Timestamp
+	44, // 81: openits.dms.v1.Faults.fault:type_name -> openits.dms.v1.Fault
+	45, // 82: openits.dms.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	59, // 83: openits.dms.v1.Fault.severity:type_name -> openits.dms.v1.FaultSeverity
+	84, // [84:84] is the sub-list for method output_type
+	84, // [84:84] is the sub-list for method input_type
+	84, // [84:84] is the sub-list for extension type_name
+	84, // [84:84] is the sub-list for extension extendee
+	0,  // [0:84] is the sub-list for field type_name
 }
 
 func init() { file_openits_dms_v1_state_proto_init() }
@@ -4910,19 +4156,56 @@ func file_openits_dms_v1_state_proto_init() {
 	if File_openits_dms_v1_state_proto != nil {
 		return
 	}
+	file_openits_dms_v1_types_proto_init()
+	file_openits_dms_v1_state_proto_msgTypes[1].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[2].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[3].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[4].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[5].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[6].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[7].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[9].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[10].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[11].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[13].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[14].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[15].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[16].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[18].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[19].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[21].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[22].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[23].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[24].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[25].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[26].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[27].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[28].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[29].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[31].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[32].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[33].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[34].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[35].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[36].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[37].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[39].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[40].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[41].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[42].OneofWrappers = []any{}
+	file_openits_dms_v1_state_proto_msgTypes[44].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_dms_v1_state_proto_rawDesc), len(file_openits_dms_v1_state_proto_rawDesc)),
-			NumEnums:      15,
+			NumEnums:      0,
 			NumMessages:   45,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_openits_dms_v1_state_proto_goTypes,
 		DependencyIndexes: file_openits_dms_v1_state_proto_depIdxs,
-		EnumInfos:         file_openits_dms_v1_state_proto_enumTypes,
 		MessageInfos:      file_openits_dms_v1_state_proto_msgTypes,
 	}.Build()
 	File_openits_dms_v1_state_proto = out.File

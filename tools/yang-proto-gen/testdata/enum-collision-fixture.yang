@@ -1,0 +1,19 @@
+module enum-collision-fixture {
+  namespace "urn:test:enum-collision-fixture";
+  prefix ecf;
+
+  // Deliberately shares the base name `severity` with enum-fixture.yang
+  // while carrying a disjoint value set. Two unrelated modules doing this is
+  // legal YANG, and the emitter must keep them distinct rather than letting
+  // the second silently adopt the first's declaration.
+  typedef severity {
+    type enumeration {
+      enum low;
+      enum high;
+    }
+  }
+
+  notification gadget-event {
+    leaf severity { type severity; }
+  }
+}

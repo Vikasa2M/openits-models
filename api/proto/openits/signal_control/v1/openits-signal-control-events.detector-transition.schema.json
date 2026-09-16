@@ -43,18 +43,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
-    "approach": {
-      "type": "string"
-    },
     "channel": {
       "maximum": 65535,
       "minimum": 1,
       "type": "integer"
     },
     "kind": {
-      "type": "string"
-    },
-    "lane": {
       "type": "string"
     },
     "observed-by": {

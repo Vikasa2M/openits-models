@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"google.golang.org/protobuf/proto"
 	"time"
 
 	commonv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/common/v1"
@@ -176,15 +177,15 @@ func subscribeTrafficSensor(ctx context.Context, out chan<- tests.EventEnvelope,
 				Kind: "openits-traffic-sensor-types:ts-traffic-interval-report",
 				Lane: []*trafficsensorv1.TrafficIntervalReportLane{
 					{
-						LaneId:            1,
-						Name:              "northbound-inside",
-						Carriageway:       "northbound",
-						Volume:            42,
-						Occupancy:         "12.4",
-						SpeedAverageKmh:   "98.4",
-						SpeedSpaceMeanKmh: "97.6",
-						DataQuality:       trafficsensorv1.DataQuality_DATA_QUALITY_VALID,
-						UptimePercent:     "100.0",
+						LaneId:            proto.Uint32(1),
+						Name:              proto.String("northbound-inside"),
+						Carriageway:       proto.String("northbound"),
+						Volume:            proto.Uint32(42),
+						Occupancy:         proto.String("12.4"),
+						SpeedAverageKmh:   proto.String("98.4"),
+						SpeedSpaceMeanKmh: proto.String("97.6"),
+						DataQuality:       trafficsensorv1.DataQuality_DATA_QUALITY_VALID.Enum(),
+						UptimePercent:     proto.String("100.0"),
 					},
 				},
 			},
@@ -197,9 +198,9 @@ func subscribeTrafficSensor(ctx context.Context, out chan<- tests.EventEnvelope,
 			CETime:   time.Now().UTC(),
 			Data: &trafficsensorv1.QueueStateChanged{
 				Kind:           "openits-traffic-sensor-types:ts-queue-state-changed",
-				ZoneId:         "qz-1",
-				Queueing:       true,
-				QueueDurationS: 45,
+				ZoneId:         proto.String("qz-1"),
+				Queueing:       proto.Bool(true),
+				QueueDurationS: proto.Uint32(45),
 			},
 		},
 		{
@@ -210,10 +211,10 @@ func subscribeTrafficSensor(ctx context.Context, out chan<- tests.EventEnvelope,
 			CETime:   time.Now().UTC(),
 			Data: &trafficsensorv1.TrafficSensorStatusReport{
 				Kind:              "openits-traffic-sensor-types:ts-status-report",
-				Name:              "I-35 NB @ MM 214 Traffic Sensor",
-				OperationalStatus: trafficsensorv1.OperationalStatus_OPERATIONAL_STATUS_ACTIVE,
-				Latitude:          "30.2672",
-				Longitude:         "-97.7431",
+				Name:              proto.String("I-35 NB @ MM 214 Traffic Sensor"),
+				OperationalStatus: trafficsensorv1.OperationalStatus_OPERATIONAL_STATUS_ACTIVE.Enum(),
+				Latitude:          proto.String("30.2672"),
+				Longitude:         proto.String("-97.7431"),
 			},
 		},
 		{

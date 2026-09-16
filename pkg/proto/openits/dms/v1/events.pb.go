@@ -23,183 +23,18 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type MessageMemoryType int32
-
-const (
-	MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED MessageMemoryType = 0
-	MessageMemoryType_MESSAGE_MEMORY_TYPE_PERMANENT   MessageMemoryType = 1
-	MessageMemoryType_MESSAGE_MEMORY_TYPE_CHANGEABLE  MessageMemoryType = 2
-	MessageMemoryType_MESSAGE_MEMORY_TYPE_VOLATILE    MessageMemoryType = 3
-	MessageMemoryType_MESSAGE_MEMORY_TYPE_SCHEDULE    MessageMemoryType = 4
-	MessageMemoryType_MESSAGE_MEMORY_TYPE_BLANK       MessageMemoryType = 5
-)
-
-// Enum value maps for MessageMemoryType.
-var (
-	MessageMemoryType_name = map[int32]string{
-		0: "MESSAGE_MEMORY_TYPE_UNSPECIFIED",
-		1: "MESSAGE_MEMORY_TYPE_PERMANENT",
-		2: "MESSAGE_MEMORY_TYPE_CHANGEABLE",
-		3: "MESSAGE_MEMORY_TYPE_VOLATILE",
-		4: "MESSAGE_MEMORY_TYPE_SCHEDULE",
-		5: "MESSAGE_MEMORY_TYPE_BLANK",
-	}
-	MessageMemoryType_value = map[string]int32{
-		"MESSAGE_MEMORY_TYPE_UNSPECIFIED": 0,
-		"MESSAGE_MEMORY_TYPE_PERMANENT":   1,
-		"MESSAGE_MEMORY_TYPE_CHANGEABLE":  2,
-		"MESSAGE_MEMORY_TYPE_VOLATILE":    3,
-		"MESSAGE_MEMORY_TYPE_SCHEDULE":    4,
-		"MESSAGE_MEMORY_TYPE_BLANK":       5,
-	}
-)
-
-func (x MessageMemoryType) Enum() *MessageMemoryType {
-	p := new(MessageMemoryType)
-	*p = x
-	return p
-}
-
-func (x MessageMemoryType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (MessageMemoryType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_events_proto_enumTypes[0].Descriptor()
-}
-
-func (MessageMemoryType) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_events_proto_enumTypes[0]
-}
-
-func (x MessageMemoryType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use MessageMemoryType.Descriptor instead.
-func (MessageMemoryType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_events_proto_rawDescGZIP(), []int{0}
-}
-
-type ErrorType int32
-
-const (
-	ErrorType_ERROR_TYPE_SYNTAX            ErrorType = 0
-	ErrorType_ERROR_TYPE_UNSUPPORTED_TAG   ErrorType = 1
-	ErrorType_ERROR_TYPE_FONT_NOT_FOUND    ErrorType = 2
-	ErrorType_ERROR_TYPE_GRAPHIC_NOT_FOUND ErrorType = 3
-	ErrorType_ERROR_TYPE_TOO_LONG          ErrorType = 4
-	ErrorType_ERROR_TYPE_HARDWARE          ErrorType = 5
-	ErrorType_ERROR_TYPE_OTHER             ErrorType = 6
-)
-
-// Enum value maps for ErrorType.
-var (
-	ErrorType_name = map[int32]string{
-		0: "ERROR_TYPE_SYNTAX",
-		1: "ERROR_TYPE_UNSUPPORTED_TAG",
-		2: "ERROR_TYPE_FONT_NOT_FOUND",
-		3: "ERROR_TYPE_GRAPHIC_NOT_FOUND",
-		4: "ERROR_TYPE_TOO_LONG",
-		5: "ERROR_TYPE_HARDWARE",
-		6: "ERROR_TYPE_OTHER",
-	}
-	ErrorType_value = map[string]int32{
-		"ERROR_TYPE_SYNTAX":            0,
-		"ERROR_TYPE_UNSUPPORTED_TAG":   1,
-		"ERROR_TYPE_FONT_NOT_FOUND":    2,
-		"ERROR_TYPE_GRAPHIC_NOT_FOUND": 3,
-		"ERROR_TYPE_TOO_LONG":          4,
-		"ERROR_TYPE_HARDWARE":          5,
-		"ERROR_TYPE_OTHER":             6,
-	}
-)
-
-func (x ErrorType) Enum() *ErrorType {
-	p := new(ErrorType)
-	*p = x
-	return p
-}
-
-func (x ErrorType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (ErrorType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_events_proto_enumTypes[1].Descriptor()
-}
-
-func (ErrorType) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_events_proto_enumTypes[1]
-}
-
-func (x ErrorType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use ErrorType.Descriptor instead.
-func (ErrorType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_events_proto_rawDescGZIP(), []int{1}
-}
-
-type Phase int32
-
-const (
-	Phase_PHASE_ACTIVATE Phase = 0
-	Phase_PHASE_VALIDATE Phase = 1
-)
-
-// Enum value maps for Phase.
-var (
-	Phase_name = map[int32]string{
-		0: "PHASE_ACTIVATE",
-		1: "PHASE_VALIDATE",
-	}
-	Phase_value = map[string]int32{
-		"PHASE_ACTIVATE": 0,
-		"PHASE_VALIDATE": 1,
-	}
-)
-
-func (x Phase) Enum() *Phase {
-	p := new(Phase)
-	*p = x
-	return p
-}
-
-func (x Phase) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Phase) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_dms_v1_events_proto_enumTypes[2].Descriptor()
-}
-
-func (Phase) Type() protoreflect.EnumType {
-	return &file_openits_dms_v1_events_proto_enumTypes[2]
-}
-
-func (x Phase) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Phase.Descriptor instead.
-func (Phase) EnumDescriptor() ([]byte, []int) {
-	return file_openits_dms_v1_events_proto_rawDescGZIP(), []int{2}
-}
-
 type MessageActivationFailed struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	Kind                string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	AttemptedMemoryType MessageMemoryType      `protobuf:"varint,1,opt,name=attempted_memory_type,json=attemptedMemoryType,proto3,enum=openits.dms.v1.MessageMemoryType" json:"attempted_memory_type,omitempty"`
-	AttemptedSlotNumber uint32                 `protobuf:"varint,2,opt,name=attempted_slot_number,json=attemptedSlotNumber,proto3" json:"attempted_slot_number,omitempty"`
-	Reason              string                 `protobuf:"bytes,3,opt,name=reason,proto3" json:"reason,omitempty"`
-	ErrorType           ErrorType              `protobuf:"varint,9,opt,name=error_type,json=errorType,proto3,enum=openits.dms.v1.ErrorType" json:"error_type,omitempty"`
-	ErrorPosition       uint32                 `protobuf:"varint,10,opt,name=error_position,json=errorPosition,proto3" json:"error_position,omitempty"`
-	Phase               Phase                  `protobuf:"varint,11,opt,name=phase,proto3,enum=openits.dms.v1.Phase" json:"phase,omitempty"`
-	ObservedBy          string                 `protobuf:"bytes,4,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	AttemptedMemoryType *MessageMemoryType     `protobuf:"varint,1,opt,name=attempted_memory_type,json=attemptedMemoryType,proto3,enum=openits.dms.v1.MessageMemoryType,oneof" json:"attempted_memory_type,omitempty"`
+	AttemptedSlotNumber *uint32                `protobuf:"varint,2,opt,name=attempted_slot_number,json=attemptedSlotNumber,proto3,oneof" json:"attempted_slot_number,omitempty"`
+	Reason              *string                `protobuf:"bytes,3,opt,name=reason,proto3,oneof" json:"reason,omitempty"`
+	ErrorType           *string                `protobuf:"bytes,9,opt,name=error_type,json=errorType,proto3,oneof" json:"error_type,omitempty"`
+	ErrorPosition       *uint32                `protobuf:"varint,10,opt,name=error_position,json=errorPosition,proto3,oneof" json:"error_position,omitempty"`
+	Phase               *Phase                 `protobuf:"varint,11,opt,name=phase,proto3,enum=openits.dms.v1.Phase,oneof" json:"phase,omitempty"`
+	ObservedBy          *string                `protobuf:"bytes,4,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt          *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner               string                 `protobuf:"bytes,6,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner               *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence            uint64                 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	Source              *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId      string                 `protobuf:"bytes,8,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -245,50 +80,50 @@ func (x *MessageActivationFailed) GetKind() string {
 }
 
 func (x *MessageActivationFailed) GetAttemptedMemoryType() MessageMemoryType {
-	if x != nil {
-		return x.AttemptedMemoryType
+	if x != nil && x.AttemptedMemoryType != nil {
+		return *x.AttemptedMemoryType
 	}
 	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *MessageActivationFailed) GetAttemptedSlotNumber() uint32 {
-	if x != nil {
-		return x.AttemptedSlotNumber
+	if x != nil && x.AttemptedSlotNumber != nil {
+		return *x.AttemptedSlotNumber
 	}
 	return 0
 }
 
 func (x *MessageActivationFailed) GetReason() string {
-	if x != nil {
-		return x.Reason
+	if x != nil && x.Reason != nil {
+		return *x.Reason
 	}
 	return ""
 }
 
-func (x *MessageActivationFailed) GetErrorType() ErrorType {
-	if x != nil {
-		return x.ErrorType
+func (x *MessageActivationFailed) GetErrorType() string {
+	if x != nil && x.ErrorType != nil {
+		return *x.ErrorType
 	}
-	return ErrorType_ERROR_TYPE_SYNTAX
+	return ""
 }
 
 func (x *MessageActivationFailed) GetErrorPosition() uint32 {
-	if x != nil {
-		return x.ErrorPosition
+	if x != nil && x.ErrorPosition != nil {
+		return *x.ErrorPosition
 	}
 	return 0
 }
 
 func (x *MessageActivationFailed) GetPhase() Phase {
-	if x != nil {
-		return x.Phase
+	if x != nil && x.Phase != nil {
+		return *x.Phase
 	}
 	return Phase_PHASE_ACTIVATE
 }
 
 func (x *MessageActivationFailed) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -301,8 +136,8 @@ func (x *MessageActivationFailed) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *MessageActivationFailed) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -331,17 +166,17 @@ func (x *MessageActivationFailed) GetSourceDeviceId() string {
 type MessageChanged struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	Kind              string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	MemoryType        MessageMemoryType      `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.MessageMemoryType" json:"memory_type,omitempty"`
-	SlotNumber        uint32                 `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3" json:"slot_number,omitempty"`
-	MultiString       string                 `protobuf:"bytes,3,opt,name=multi_string,json=multiString,proto3" json:"multi_string,omitempty"`
-	Crc               uint32                 `protobuf:"varint,4,opt,name=crc,proto3" json:"crc,omitempty"`
-	ActivationTrigger string                 `protobuf:"bytes,5,opt,name=activation_trigger,json=activationTrigger,proto3" json:"activation_trigger,omitempty"`
-	PriorMemoryType   MessageMemoryType      `protobuf:"varint,6,opt,name=prior_memory_type,json=priorMemoryType,proto3,enum=openits.dms.v1.MessageMemoryType" json:"prior_memory_type,omitempty"`
-	PriorSlotNumber   uint32                 `protobuf:"varint,7,opt,name=prior_slot_number,json=priorSlotNumber,proto3" json:"prior_slot_number,omitempty"`
-	PriorMultiString  string                 `protobuf:"bytes,8,opt,name=prior_multi_string,json=priorMultiString,proto3" json:"prior_multi_string,omitempty"`
-	ObservedBy        string                 `protobuf:"bytes,9,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	MemoryType        *MessageMemoryType     `protobuf:"varint,1,opt,name=memory_type,json=memoryType,proto3,enum=openits.dms.v1.MessageMemoryType,oneof" json:"memory_type,omitempty"`
+	SlotNumber        *uint32                `protobuf:"varint,2,opt,name=slot_number,json=slotNumber,proto3,oneof" json:"slot_number,omitempty"`
+	MultiString       *string                `protobuf:"bytes,3,opt,name=multi_string,json=multiString,proto3,oneof" json:"multi_string,omitempty"`
+	Crc               *uint32                `protobuf:"varint,4,opt,name=crc,proto3,oneof" json:"crc,omitempty"`
+	ActivationTrigger *string                `protobuf:"bytes,5,opt,name=activation_trigger,json=activationTrigger,proto3,oneof" json:"activation_trigger,omitempty"`
+	PriorMemoryType   *MessageMemoryType     `protobuf:"varint,6,opt,name=prior_memory_type,json=priorMemoryType,proto3,enum=openits.dms.v1.MessageMemoryType,oneof" json:"prior_memory_type,omitempty"`
+	PriorSlotNumber   *uint32                `protobuf:"varint,7,opt,name=prior_slot_number,json=priorSlotNumber,proto3,oneof" json:"prior_slot_number,omitempty"`
+	PriorMultiString  *string                `protobuf:"bytes,8,opt,name=prior_multi_string,json=priorMultiString,proto3,oneof" json:"prior_multi_string,omitempty"`
+	ObservedBy        *string                `protobuf:"bytes,9,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner             string                 `protobuf:"bytes,11,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner             *string                `protobuf:"bytes,11,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence          uint64                 `protobuf:"varint,12,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	Source            *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId    string                 `protobuf:"bytes,13,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -387,64 +222,64 @@ func (x *MessageChanged) GetKind() string {
 }
 
 func (x *MessageChanged) GetMemoryType() MessageMemoryType {
-	if x != nil {
-		return x.MemoryType
+	if x != nil && x.MemoryType != nil {
+		return *x.MemoryType
 	}
 	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *MessageChanged) GetSlotNumber() uint32 {
-	if x != nil {
-		return x.SlotNumber
+	if x != nil && x.SlotNumber != nil {
+		return *x.SlotNumber
 	}
 	return 0
 }
 
 func (x *MessageChanged) GetMultiString() string {
-	if x != nil {
-		return x.MultiString
+	if x != nil && x.MultiString != nil {
+		return *x.MultiString
 	}
 	return ""
 }
 
 func (x *MessageChanged) GetCrc() uint32 {
-	if x != nil {
-		return x.Crc
+	if x != nil && x.Crc != nil {
+		return *x.Crc
 	}
 	return 0
 }
 
 func (x *MessageChanged) GetActivationTrigger() string {
-	if x != nil {
-		return x.ActivationTrigger
+	if x != nil && x.ActivationTrigger != nil {
+		return *x.ActivationTrigger
 	}
 	return ""
 }
 
 func (x *MessageChanged) GetPriorMemoryType() MessageMemoryType {
-	if x != nil {
-		return x.PriorMemoryType
+	if x != nil && x.PriorMemoryType != nil {
+		return *x.PriorMemoryType
 	}
 	return MessageMemoryType_MESSAGE_MEMORY_TYPE_UNSPECIFIED
 }
 
 func (x *MessageChanged) GetPriorSlotNumber() uint32 {
-	if x != nil {
-		return x.PriorSlotNumber
+	if x != nil && x.PriorSlotNumber != nil {
+		return *x.PriorSlotNumber
 	}
 	return 0
 }
 
 func (x *MessageChanged) GetPriorMultiString() string {
-	if x != nil {
-		return x.PriorMultiString
+	if x != nil && x.PriorMultiString != nil {
+		return *x.PriorMultiString
 	}
 	return ""
 }
 
 func (x *MessageChanged) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -457,8 +292,8 @@ func (x *MessageChanged) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *MessageChanged) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -487,19 +322,19 @@ func (x *MessageChanged) GetSourceDeviceId() string {
 type SignStatusReport struct {
 	state                 protoimpl.MessageState `protogen:"open.v1"`
 	Kind                  string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	DisplayState          string                 `protobuf:"bytes,1,opt,name=display_state,json=displayState,proto3" json:"display_state,omitempty"`
-	BrightnessCurrent     uint32                 `protobuf:"varint,2,opt,name=brightness_current,json=brightnessCurrent,proto3" json:"brightness_current,omitempty"`
-	AmbientLightLevel     uint32                 `protobuf:"varint,3,opt,name=ambient_light_level,json=ambientLightLevel,proto3" json:"ambient_light_level,omitempty"`
-	AmbientIlluminanceLux uint32                 `protobuf:"varint,4,opt,name=ambient_illuminance_lux,json=ambientIlluminanceLux,proto3" json:"ambient_illuminance_lux,omitempty"`
-	CabinetTemperatureC   string                 `protobuf:"bytes,5,opt,name=cabinet_temperature_c,json=cabinetTemperatureC,proto3" json:"cabinet_temperature_c,omitempty"`
-	SignFaceTemperatureC  string                 `protobuf:"bytes,6,opt,name=sign_face_temperature_c,json=signFaceTemperatureC,proto3" json:"sign_face_temperature_c,omitempty"`
-	HumidityPercent       uint32                 `protobuf:"varint,7,opt,name=humidity_percent,json=humidityPercent,proto3" json:"humidity_percent,omitempty"`
-	DoorOpen              bool                   `protobuf:"varint,8,opt,name=door_open,json=doorOpen,proto3" json:"door_open,omitempty"`
-	FanActive             bool                   `protobuf:"varint,9,opt,name=fan_active,json=fanActive,proto3" json:"fan_active,omitempty"`
-	HeaterActive          bool                   `protobuf:"varint,10,opt,name=heater_active,json=heaterActive,proto3" json:"heater_active,omitempty"`
-	ObservedBy            string                 `protobuf:"bytes,11,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	DisplayState          *string                `protobuf:"bytes,1,opt,name=display_state,json=displayState,proto3,oneof" json:"display_state,omitempty"`
+	BrightnessCurrent     *uint32                `protobuf:"varint,2,opt,name=brightness_current,json=brightnessCurrent,proto3,oneof" json:"brightness_current,omitempty"`
+	AmbientLightLevel     *uint32                `protobuf:"varint,3,opt,name=ambient_light_level,json=ambientLightLevel,proto3,oneof" json:"ambient_light_level,omitempty"`
+	AmbientIlluminanceLux *uint32                `protobuf:"varint,4,opt,name=ambient_illuminance_lux,json=ambientIlluminanceLux,proto3,oneof" json:"ambient_illuminance_lux,omitempty"`
+	CabinetTemperatureC   *string                `protobuf:"bytes,5,opt,name=cabinet_temperature_c,json=cabinetTemperatureC,proto3,oneof" json:"cabinet_temperature_c,omitempty"`
+	SignFaceTemperatureC  *string                `protobuf:"bytes,6,opt,name=sign_face_temperature_c,json=signFaceTemperatureC,proto3,oneof" json:"sign_face_temperature_c,omitempty"`
+	HumidityPercent       *uint32                `protobuf:"varint,7,opt,name=humidity_percent,json=humidityPercent,proto3,oneof" json:"humidity_percent,omitempty"`
+	DoorOpen              *bool                  `protobuf:"varint,8,opt,name=door_open,json=doorOpen,proto3,oneof" json:"door_open,omitempty"`
+	FanActive             *bool                  `protobuf:"varint,9,opt,name=fan_active,json=fanActive,proto3,oneof" json:"fan_active,omitempty"`
+	HeaterActive          *bool                  `protobuf:"varint,10,opt,name=heater_active,json=heaterActive,proto3,oneof" json:"heater_active,omitempty"`
+	ObservedBy            *string                `protobuf:"bytes,11,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt            *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner                 string                 `protobuf:"bytes,13,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner                 *string                `protobuf:"bytes,13,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence              uint64                 `protobuf:"varint,14,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId        string                 `protobuf:"bytes,15,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields         protoimpl.UnknownFields
@@ -544,78 +379,78 @@ func (x *SignStatusReport) GetKind() string {
 }
 
 func (x *SignStatusReport) GetDisplayState() string {
-	if x != nil {
-		return x.DisplayState
+	if x != nil && x.DisplayState != nil {
+		return *x.DisplayState
 	}
 	return ""
 }
 
 func (x *SignStatusReport) GetBrightnessCurrent() uint32 {
-	if x != nil {
-		return x.BrightnessCurrent
+	if x != nil && x.BrightnessCurrent != nil {
+		return *x.BrightnessCurrent
 	}
 	return 0
 }
 
 func (x *SignStatusReport) GetAmbientLightLevel() uint32 {
-	if x != nil {
-		return x.AmbientLightLevel
+	if x != nil && x.AmbientLightLevel != nil {
+		return *x.AmbientLightLevel
 	}
 	return 0
 }
 
 func (x *SignStatusReport) GetAmbientIlluminanceLux() uint32 {
-	if x != nil {
-		return x.AmbientIlluminanceLux
+	if x != nil && x.AmbientIlluminanceLux != nil {
+		return *x.AmbientIlluminanceLux
 	}
 	return 0
 }
 
 func (x *SignStatusReport) GetCabinetTemperatureC() string {
-	if x != nil {
-		return x.CabinetTemperatureC
+	if x != nil && x.CabinetTemperatureC != nil {
+		return *x.CabinetTemperatureC
 	}
 	return ""
 }
 
 func (x *SignStatusReport) GetSignFaceTemperatureC() string {
-	if x != nil {
-		return x.SignFaceTemperatureC
+	if x != nil && x.SignFaceTemperatureC != nil {
+		return *x.SignFaceTemperatureC
 	}
 	return ""
 }
 
 func (x *SignStatusReport) GetHumidityPercent() uint32 {
-	if x != nil {
-		return x.HumidityPercent
+	if x != nil && x.HumidityPercent != nil {
+		return *x.HumidityPercent
 	}
 	return 0
 }
 
 func (x *SignStatusReport) GetDoorOpen() bool {
-	if x != nil {
-		return x.DoorOpen
+	if x != nil && x.DoorOpen != nil {
+		return *x.DoorOpen
 	}
 	return false
 }
 
 func (x *SignStatusReport) GetFanActive() bool {
-	if x != nil {
-		return x.FanActive
+	if x != nil && x.FanActive != nil {
+		return *x.FanActive
 	}
 	return false
 }
 
 func (x *SignStatusReport) GetHeaterActive() bool {
-	if x != nil {
-		return x.HeaterActive
+	if x != nil && x.HeaterActive != nil {
+		return *x.HeaterActive
 	}
 	return false
 }
 
 func (x *SignStatusReport) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -628,8 +463,8 @@ func (x *SignStatusReport) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *SignStatusReport) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -652,85 +487,99 @@ var File_openits_dms_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_dms_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"\x1bopenits/dms/v1/events.proto\x12\x0eopenits.dms.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1copenits/types/v1/types.proto\"\xce\x04\n" +
+	"\x1bopenits/dms/v1/events.proto\x12\x0eopenits.dms.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1aopenits/dms/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\xe0\x05\n" +
 	"\x17MessageActivationFailed\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12U\n" +
-	"\x15attempted_memory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeR\x13attemptedMemoryType\x122\n" +
-	"\x15attempted_slot_number\x18\x02 \x01(\rR\x13attemptedSlotNumber\x12\x16\n" +
-	"\x06reason\x18\x03 \x01(\tR\x06reason\x128\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12Z\n" +
+	"\x15attempted_memory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x00R\x13attemptedMemoryType\x88\x01\x01\x127\n" +
+	"\x15attempted_slot_number\x18\x02 \x01(\rH\x01R\x13attemptedSlotNumber\x88\x01\x01\x12\x1b\n" +
+	"\x06reason\x18\x03 \x01(\tH\x02R\x06reason\x88\x01\x01\x12\"\n" +
 	"\n" +
-	"error_type\x18\t \x01(\x0e2\x19.openits.dms.v1.ErrorTypeR\terrorType\x12%\n" +
+	"error_type\x18\t \x01(\tH\x03R\terrorType\x88\x01\x01\x12*\n" +
 	"\x0eerror_position\x18\n" +
-	" \x01(\rR\rerrorPosition\x12+\n" +
-	"\x05phase\x18\v \x01(\x0e2\x15.openits.dms.v1.PhaseR\x05phase\x12\x1f\n" +
-	"\vobserved_by\x18\x04 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	" \x01(\rH\x04R\rerrorPosition\x88\x01\x01\x120\n" +
+	"\x05phase\x18\v \x01(\x0e2\x15.openits.dms.v1.PhaseH\x05R\x05phase\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x04 \x01(\tH\x06R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\x06 \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\x06 \x01(\tH\aR\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\a \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceId\"\x86\x05\n" +
+	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceIdB\x18\n" +
+	"\x16_attempted_memory_typeB\x18\n" +
+	"\x16_attempted_slot_numberB\t\n" +
+	"\a_reasonB\r\n" +
+	"\v_error_typeB\x11\n" +
+	"\x0f_error_positionB\b\n" +
+	"\x06_phaseB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xe5\x06\n" +
 	"\x0eMessageChanged\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12B\n" +
-	"\vmemory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeR\n" +
-	"memoryType\x12\x1f\n" +
-	"\vslot_number\x18\x02 \x01(\rR\n" +
-	"slotNumber\x12!\n" +
-	"\fmulti_string\x18\x03 \x01(\tR\vmultiString\x12\x10\n" +
-	"\x03crc\x18\x04 \x01(\rR\x03crc\x12-\n" +
-	"\x12activation_trigger\x18\x05 \x01(\tR\x11activationTrigger\x12M\n" +
-	"\x11prior_memory_type\x18\x06 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeR\x0fpriorMemoryType\x12*\n" +
-	"\x11prior_slot_number\x18\a \x01(\rR\x0fpriorSlotNumber\x12,\n" +
-	"\x12prior_multi_string\x18\b \x01(\tR\x10priorMultiString\x12\x1f\n" +
-	"\vobserved_by\x18\t \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12G\n" +
+	"\vmemory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x00R\n" +
+	"memoryType\x88\x01\x01\x12$\n" +
+	"\vslot_number\x18\x02 \x01(\rH\x01R\n" +
+	"slotNumber\x88\x01\x01\x12&\n" +
+	"\fmulti_string\x18\x03 \x01(\tH\x02R\vmultiString\x88\x01\x01\x12\x15\n" +
+	"\x03crc\x18\x04 \x01(\rH\x03R\x03crc\x88\x01\x01\x122\n" +
+	"\x12activation_trigger\x18\x05 \x01(\tH\x04R\x11activationTrigger\x88\x01\x01\x12R\n" +
+	"\x11prior_memory_type\x18\x06 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x05R\x0fpriorMemoryType\x88\x01\x01\x12/\n" +
+	"\x11prior_slot_number\x18\a \x01(\rH\x06R\x0fpriorSlotNumber\x88\x01\x01\x121\n" +
+	"\x12prior_multi_string\x18\b \x01(\tH\aR\x10priorMultiString\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\t \x01(\tH\bR\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\v \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\v \x01(\tH\tR\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\f \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\r \x01(\tR\x0esourceDeviceId\"\x93\x05\n" +
+	"\x10source_device_id\x18\r \x01(\tR\x0esourceDeviceIdB\x0e\n" +
+	"\f_memory_typeB\x0e\n" +
+	"\f_slot_numberB\x0f\n" +
+	"\r_multi_stringB\x06\n" +
+	"\x04_crcB\x15\n" +
+	"\x13_activation_triggerB\x14\n" +
+	"\x12_prior_memory_typeB\x14\n" +
+	"\x12_prior_slot_numberB\x15\n" +
+	"\x13_prior_multi_stringB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xc0\a\n" +
 	"\x10SignStatusReport\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12#\n" +
-	"\rdisplay_state\x18\x01 \x01(\tR\fdisplayState\x12-\n" +
-	"\x12brightness_current\x18\x02 \x01(\rR\x11brightnessCurrent\x12.\n" +
-	"\x13ambient_light_level\x18\x03 \x01(\rR\x11ambientLightLevel\x126\n" +
-	"\x17ambient_illuminance_lux\x18\x04 \x01(\rR\x15ambientIlluminanceLux\x122\n" +
-	"\x15cabinet_temperature_c\x18\x05 \x01(\tR\x13cabinetTemperatureC\x125\n" +
-	"\x17sign_face_temperature_c\x18\x06 \x01(\tR\x14signFaceTemperatureC\x12)\n" +
-	"\x10humidity_percent\x18\a \x01(\rR\x0fhumidityPercent\x12\x1b\n" +
-	"\tdoor_open\x18\b \x01(\bR\bdoorOpen\x12\x1d\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12(\n" +
+	"\rdisplay_state\x18\x01 \x01(\tH\x00R\fdisplayState\x88\x01\x01\x122\n" +
+	"\x12brightness_current\x18\x02 \x01(\rH\x01R\x11brightnessCurrent\x88\x01\x01\x123\n" +
+	"\x13ambient_light_level\x18\x03 \x01(\rH\x02R\x11ambientLightLevel\x88\x01\x01\x12;\n" +
+	"\x17ambient_illuminance_lux\x18\x04 \x01(\rH\x03R\x15ambientIlluminanceLux\x88\x01\x01\x127\n" +
+	"\x15cabinet_temperature_c\x18\x05 \x01(\tH\x04R\x13cabinetTemperatureC\x88\x01\x01\x12:\n" +
+	"\x17sign_face_temperature_c\x18\x06 \x01(\tH\x05R\x14signFaceTemperatureC\x88\x01\x01\x12.\n" +
+	"\x10humidity_percent\x18\a \x01(\rH\x06R\x0fhumidityPercent\x88\x01\x01\x12 \n" +
+	"\tdoor_open\x18\b \x01(\bH\aR\bdoorOpen\x88\x01\x01\x12\"\n" +
 	"\n" +
-	"fan_active\x18\t \x01(\bR\tfanActive\x12#\n" +
+	"fan_active\x18\t \x01(\bH\bR\tfanActive\x88\x01\x01\x12(\n" +
 	"\rheater_active\x18\n" +
-	" \x01(\bR\fheaterActive\x12\x1f\n" +
-	"\vobserved_by\x18\v \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	" \x01(\bH\tR\fheaterActive\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\v \x01(\tH\n" +
+	"R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\r \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\r \x01(\tH\vR\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\x0e \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\x0f \x01(\tR\x0esourceDeviceId*\xe2\x01\n" +
-	"\x11MessageMemoryType\x12#\n" +
-	"\x1fMESSAGE_MEMORY_TYPE_UNSPECIFIED\x10\x00\x12!\n" +
-	"\x1dMESSAGE_MEMORY_TYPE_PERMANENT\x10\x01\x12\"\n" +
-	"\x1eMESSAGE_MEMORY_TYPE_CHANGEABLE\x10\x02\x12 \n" +
-	"\x1cMESSAGE_MEMORY_TYPE_VOLATILE\x10\x03\x12 \n" +
-	"\x1cMESSAGE_MEMORY_TYPE_SCHEDULE\x10\x04\x12\x1d\n" +
-	"\x19MESSAGE_MEMORY_TYPE_BLANK\x10\x05*\xcb\x01\n" +
-	"\tErrorType\x12\x15\n" +
-	"\x11ERROR_TYPE_SYNTAX\x10\x00\x12\x1e\n" +
-	"\x1aERROR_TYPE_UNSUPPORTED_TAG\x10\x01\x12\x1d\n" +
-	"\x19ERROR_TYPE_FONT_NOT_FOUND\x10\x02\x12 \n" +
-	"\x1cERROR_TYPE_GRAPHIC_NOT_FOUND\x10\x03\x12\x17\n" +
-	"\x13ERROR_TYPE_TOO_LONG\x10\x04\x12\x17\n" +
-	"\x13ERROR_TYPE_HARDWARE\x10\x05\x12\x14\n" +
-	"\x10ERROR_TYPE_OTHER\x10\x06*/\n" +
-	"\x05Phase\x12\x12\n" +
-	"\x0ePHASE_ACTIVATE\x10\x00\x12\x12\n" +
-	"\x0ePHASE_VALIDATE\x10\x01BCZAgithub.com/Vikasa2M/openits-models/pkg/proto/openits/dms/v1;dmsv1b\x06proto3"
+	"\x10source_device_id\x18\x0f \x01(\tR\x0esourceDeviceIdB\x10\n" +
+	"\x0e_display_stateB\x15\n" +
+	"\x13_brightness_currentB\x16\n" +
+	"\x14_ambient_light_levelB\x1a\n" +
+	"\x18_ambient_illuminance_luxB\x18\n" +
+	"\x16_cabinet_temperature_cB\x1a\n" +
+	"\x18_sign_face_temperature_cB\x13\n" +
+	"\x11_humidity_percentB\f\n" +
+	"\n" +
+	"_door_openB\r\n" +
+	"\v_fan_activeB\x10\n" +
+	"\x0e_heater_activeB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_ownerBCZAgithub.com/Vikasa2M/openits-models/pkg/proto/openits/dms/v1;dmsv1b\x06proto3"
 
 var (
 	file_openits_dms_v1_events_proto_rawDescOnce sync.Once
@@ -744,34 +593,31 @@ func file_openits_dms_v1_events_proto_rawDescGZIP() []byte {
 	return file_openits_dms_v1_events_proto_rawDescData
 }
 
-var file_openits_dms_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
 var file_openits_dms_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_openits_dms_v1_events_proto_goTypes = []any{
-	(MessageMemoryType)(0),          // 0: openits.dms.v1.MessageMemoryType
-	(ErrorType)(0),                  // 1: openits.dms.v1.ErrorType
-	(Phase)(0),                      // 2: openits.dms.v1.Phase
-	(*MessageActivationFailed)(nil), // 3: openits.dms.v1.MessageActivationFailed
-	(*MessageChanged)(nil),          // 4: openits.dms.v1.MessageChanged
-	(*SignStatusReport)(nil),        // 5: openits.dms.v1.SignStatusReport
-	(*timestamppb.Timestamp)(nil),   // 6: google.protobuf.Timestamp
-	(*v1.WireSource)(nil),           // 7: openits.types.v1.WireSource
+	(*MessageActivationFailed)(nil), // 0: openits.dms.v1.MessageActivationFailed
+	(*MessageChanged)(nil),          // 1: openits.dms.v1.MessageChanged
+	(*SignStatusReport)(nil),        // 2: openits.dms.v1.SignStatusReport
+	(MessageMemoryType)(0),          // 3: openits.dms.v1.MessageMemoryType
+	(Phase)(0),                      // 4: openits.dms.v1.Phase
+	(*timestamppb.Timestamp)(nil),   // 5: google.protobuf.Timestamp
+	(*v1.WireSource)(nil),           // 6: openits.types.v1.WireSource
 }
 var file_openits_dms_v1_events_proto_depIdxs = []int32{
-	0,  // 0: openits.dms.v1.MessageActivationFailed.attempted_memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	1,  // 1: openits.dms.v1.MessageActivationFailed.error_type:type_name -> openits.dms.v1.ErrorType
-	2,  // 2: openits.dms.v1.MessageActivationFailed.phase:type_name -> openits.dms.v1.Phase
-	6,  // 3: openits.dms.v1.MessageActivationFailed.occurred_at:type_name -> google.protobuf.Timestamp
-	7,  // 4: openits.dms.v1.MessageActivationFailed.source:type_name -> openits.types.v1.WireSource
-	0,  // 5: openits.dms.v1.MessageChanged.memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	0,  // 6: openits.dms.v1.MessageChanged.prior_memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	6,  // 7: openits.dms.v1.MessageChanged.occurred_at:type_name -> google.protobuf.Timestamp
-	7,  // 8: openits.dms.v1.MessageChanged.source:type_name -> openits.types.v1.WireSource
-	6,  // 9: openits.dms.v1.SignStatusReport.occurred_at:type_name -> google.protobuf.Timestamp
-	10, // [10:10] is the sub-list for method output_type
-	10, // [10:10] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	3, // 0: openits.dms.v1.MessageActivationFailed.attempted_memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	4, // 1: openits.dms.v1.MessageActivationFailed.phase:type_name -> openits.dms.v1.Phase
+	5, // 2: openits.dms.v1.MessageActivationFailed.occurred_at:type_name -> google.protobuf.Timestamp
+	6, // 3: openits.dms.v1.MessageActivationFailed.source:type_name -> openits.types.v1.WireSource
+	3, // 4: openits.dms.v1.MessageChanged.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	3, // 5: openits.dms.v1.MessageChanged.prior_memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	5, // 6: openits.dms.v1.MessageChanged.occurred_at:type_name -> google.protobuf.Timestamp
+	6, // 7: openits.dms.v1.MessageChanged.source:type_name -> openits.types.v1.WireSource
+	5, // 8: openits.dms.v1.SignStatusReport.occurred_at:type_name -> google.protobuf.Timestamp
+	9, // [9:9] is the sub-list for method output_type
+	9, // [9:9] is the sub-list for method input_type
+	9, // [9:9] is the sub-list for extension type_name
+	9, // [9:9] is the sub-list for extension extendee
+	0, // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_openits_dms_v1_events_proto_init() }
@@ -779,19 +625,22 @@ func file_openits_dms_v1_events_proto_init() {
 	if File_openits_dms_v1_events_proto != nil {
 		return
 	}
+	file_openits_dms_v1_types_proto_init()
+	file_openits_dms_v1_events_proto_msgTypes[0].OneofWrappers = []any{}
+	file_openits_dms_v1_events_proto_msgTypes[1].OneofWrappers = []any{}
+	file_openits_dms_v1_events_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_dms_v1_events_proto_rawDesc), len(file_openits_dms_v1_events_proto_rawDesc)),
-			NumEnums:      3,
+			NumEnums:      0,
 			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_openits_dms_v1_events_proto_goTypes,
 		DependencyIndexes: file_openits_dms_v1_events_proto_depIdxs,
-		EnumInfos:         file_openits_dms_v1_events_proto_enumTypes,
 		MessageInfos:      file_openits_dms_v1_events_proto_msgTypes,
 	}.Build()
 	File_openits_dms_v1_events_proto = out.File

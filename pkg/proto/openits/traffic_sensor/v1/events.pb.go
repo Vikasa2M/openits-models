@@ -22,116 +22,18 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type DataQuality int32
-
-const (
-	DataQuality_DATA_QUALITY_VALID   DataQuality = 0
-	DataQuality_DATA_QUALITY_SUSPECT DataQuality = 1
-	DataQuality_DATA_QUALITY_INVALID DataQuality = 2
-)
-
-// Enum value maps for DataQuality.
-var (
-	DataQuality_name = map[int32]string{
-		0: "DATA_QUALITY_VALID",
-		1: "DATA_QUALITY_SUSPECT",
-		2: "DATA_QUALITY_INVALID",
-	}
-	DataQuality_value = map[string]int32{
-		"DATA_QUALITY_VALID":   0,
-		"DATA_QUALITY_SUSPECT": 1,
-		"DATA_QUALITY_INVALID": 2,
-	}
-)
-
-func (x DataQuality) Enum() *DataQuality {
-	p := new(DataQuality)
-	*p = x
-	return p
-}
-
-func (x DataQuality) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (DataQuality) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_traffic_sensor_v1_events_proto_enumTypes[0].Descriptor()
-}
-
-func (DataQuality) Type() protoreflect.EnumType {
-	return &file_openits_traffic_sensor_v1_events_proto_enumTypes[0]
-}
-
-func (x DataQuality) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use DataQuality.Descriptor instead.
-func (DataQuality) EnumDescriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_events_proto_rawDescGZIP(), []int{0}
-}
-
-type OperationalStatus int32
-
-const (
-	OperationalStatus_OPERATIONAL_STATUS_ACTIVE   OperationalStatus = 0
-	OperationalStatus_OPERATIONAL_STATUS_INACTIVE OperationalStatus = 1
-	OperationalStatus_OPERATIONAL_STATUS_DEGRADED OperationalStatus = 2
-)
-
-// Enum value maps for OperationalStatus.
-var (
-	OperationalStatus_name = map[int32]string{
-		0: "OPERATIONAL_STATUS_ACTIVE",
-		1: "OPERATIONAL_STATUS_INACTIVE",
-		2: "OPERATIONAL_STATUS_DEGRADED",
-	}
-	OperationalStatus_value = map[string]int32{
-		"OPERATIONAL_STATUS_ACTIVE":   0,
-		"OPERATIONAL_STATUS_INACTIVE": 1,
-		"OPERATIONAL_STATUS_DEGRADED": 2,
-	}
-)
-
-func (x OperationalStatus) Enum() *OperationalStatus {
-	p := new(OperationalStatus)
-	*p = x
-	return p
-}
-
-func (x OperationalStatus) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (OperationalStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_traffic_sensor_v1_events_proto_enumTypes[1].Descriptor()
-}
-
-func (OperationalStatus) Type() protoreflect.EnumType {
-	return &file_openits_traffic_sensor_v1_events_proto_enumTypes[1]
-}
-
-func (x OperationalStatus) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use OperationalStatus.Descriptor instead.
-func (OperationalStatus) EnumDescriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_events_proto_rawDescGZIP(), []int{1}
-}
-
 type QueueStateChanged struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	ZoneId         string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	BackOfQueueM   uint32                 `protobuf:"varint,10,opt,name=back_of_queue_m,json=backOfQueueM,proto3" json:"back_of_queue_m,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	ZoneId         *string                `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3,oneof" json:"zone_id,omitempty"`
+	BackOfQueueM   *uint32                `protobuf:"varint,10,opt,name=back_of_queue_m,json=backOfQueueM,proto3,oneof" json:"back_of_queue_m,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,7,opt,name=owner,proto3" json:"owner,omitempty"`
-	QueueDurationS uint32                 `protobuf:"varint,3,opt,name=queue_duration_s,json=queueDurationS,proto3" json:"queue_duration_s,omitempty"`
-	QueueLengthM   uint32                 `protobuf:"varint,11,opt,name=queue_length_m,json=queueLengthM,proto3" json:"queue_length_m,omitempty"`
+	Owner          *string                `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	QueueDurationS *uint32                `protobuf:"varint,3,opt,name=queue_duration_s,json=queueDurationS,proto3,oneof" json:"queue_duration_s,omitempty"`
+	QueueLengthM   *uint32                `protobuf:"varint,11,opt,name=queue_length_m,json=queueLengthM,proto3,oneof" json:"queue_length_m,omitempty"`
 	QueueStart     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=queue_start,json=queueStart,proto3" json:"queue_start,omitempty"`
-	Queueing       bool                   `protobuf:"varint,2,opt,name=queueing,proto3" json:"queueing,omitempty"`
+	Queueing       *bool                  `protobuf:"varint,2,opt,name=queueing,proto3,oneof" json:"queueing,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,9,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -176,22 +78,22 @@ func (x *QueueStateChanged) GetKind() string {
 }
 
 func (x *QueueStateChanged) GetZoneId() string {
-	if x != nil {
-		return x.ZoneId
+	if x != nil && x.ZoneId != nil {
+		return *x.ZoneId
 	}
 	return ""
 }
 
 func (x *QueueStateChanged) GetBackOfQueueM() uint32 {
-	if x != nil {
-		return x.BackOfQueueM
+	if x != nil && x.BackOfQueueM != nil {
+		return *x.BackOfQueueM
 	}
 	return 0
 }
 
 func (x *QueueStateChanged) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -204,22 +106,22 @@ func (x *QueueStateChanged) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *QueueStateChanged) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
 
 func (x *QueueStateChanged) GetQueueDurationS() uint32 {
-	if x != nil {
-		return x.QueueDurationS
+	if x != nil && x.QueueDurationS != nil {
+		return *x.QueueDurationS
 	}
 	return 0
 }
 
 func (x *QueueStateChanged) GetQueueLengthM() uint32 {
-	if x != nil {
-		return x.QueueLengthM
+	if x != nil && x.QueueLengthM != nil {
+		return *x.QueueLengthM
 	}
 	return 0
 }
@@ -232,8 +134,8 @@ func (x *QueueStateChanged) GetQueueStart() *timestamppb.Timestamp {
 }
 
 func (x *QueueStateChanged) GetQueueing() bool {
-	if x != nil {
-		return x.Queueing
+	if x != nil && x.Queueing != nil {
+		return *x.Queueing
 	}
 	return false
 }
@@ -256,9 +158,9 @@ type TrafficIntervalReport struct {
 	state          protoimpl.MessageState       `protogen:"open.v1"`
 	Kind           string                       `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	Lane           []*TrafficIntervalReportLane `protobuf:"bytes,1,rep,name=lane,proto3" json:"lane,omitempty"`
-	ObservedBy     string                       `protobuf:"bytes,2,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	ObservedBy     *string                      `protobuf:"bytes,2,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp       `protobuf:"bytes,3,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                       `protobuf:"bytes,4,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                      `protobuf:"bytes,4,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                       `protobuf:"varint,5,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId string                       `protobuf:"bytes,6,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -310,8 +212,8 @@ func (x *TrafficIntervalReport) GetLane() []*TrafficIntervalReportLane {
 }
 
 func (x *TrafficIntervalReport) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -324,8 +226,8 @@ func (x *TrafficIntervalReport) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *TrafficIntervalReport) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -346,27 +248,27 @@ func (x *TrafficIntervalReport) GetSourceDeviceId() string {
 
 type TrafficIntervalReportLane struct {
 	state                   protoimpl.MessageState                  `protogen:"open.v1"`
-	LaneId                  uint32                                  `protobuf:"varint,1,opt,name=lane_id,json=laneId,proto3" json:"lane_id,omitempty"`
-	Name                    string                                  `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Carriageway             string                                  `protobuf:"bytes,3,opt,name=carriageway,proto3" json:"carriageway,omitempty"`
+	LaneId                  *uint32                                 `protobuf:"varint,1,opt,name=lane_id,json=laneId,proto3,oneof" json:"lane_id,omitempty"`
+	Name                    *string                                 `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Carriageway             *string                                 `protobuf:"bytes,3,opt,name=carriageway,proto3,oneof" json:"carriageway,omitempty"`
 	ClassVolume             []*TrafficIntervalReportLaneClassVolume `protobuf:"bytes,4,rep,name=class_volume,json=classVolume,proto3" json:"class_volume,omitempty"`
-	DataQuality             DataQuality                             `protobuf:"varint,15,opt,name=data_quality,json=dataQuality,proto3,enum=openits.traffic_sensor.v1.DataQuality" json:"data_quality,omitempty"`
-	Density                 string                                  `protobuf:"bytes,5,opt,name=density,proto3" json:"density,omitempty"`
-	FlowRateVph             uint32                                  `protobuf:"varint,6,opt,name=flow_rate_vph,json=flowRateVph,proto3" json:"flow_rate_vph,omitempty"`
-	GapAverageS             string                                  `protobuf:"bytes,7,opt,name=gap_average_s,json=gapAverageS,proto3" json:"gap_average_s,omitempty"`
-	HeadwayAverageS         string                                  `protobuf:"bytes,8,opt,name=headway_average_s,json=headwayAverageS,proto3" json:"headway_average_s,omitempty"`
-	IntervalDurationS       uint32                                  `protobuf:"varint,9,opt,name=interval_duration_s,json=intervalDurationS,proto3" json:"interval_duration_s,omitempty"`
+	DataQuality             *DataQuality                            `protobuf:"varint,15,opt,name=data_quality,json=dataQuality,proto3,enum=openits.traffic_sensor.v1.DataQuality,oneof" json:"data_quality,omitempty"`
+	Density                 *string                                 `protobuf:"bytes,5,opt,name=density,proto3,oneof" json:"density,omitempty"`
+	FlowRateVph             *uint32                                 `protobuf:"varint,6,opt,name=flow_rate_vph,json=flowRateVph,proto3,oneof" json:"flow_rate_vph,omitempty"`
+	GapAverageS             *string                                 `protobuf:"bytes,7,opt,name=gap_average_s,json=gapAverageS,proto3,oneof" json:"gap_average_s,omitempty"`
+	HeadwayAverageS         *string                                 `protobuf:"bytes,8,opt,name=headway_average_s,json=headwayAverageS,proto3,oneof" json:"headway_average_s,omitempty"`
+	IntervalDurationS       *uint32                                 `protobuf:"varint,9,opt,name=interval_duration_s,json=intervalDurationS,proto3,oneof" json:"interval_duration_s,omitempty"`
 	IntervalStart           *timestamppb.Timestamp                  `protobuf:"bytes,10,opt,name=interval_start,json=intervalStart,proto3" json:"interval_start,omitempty"`
-	MeanVehicleLengthM      string                                  `protobuf:"bytes,19,opt,name=mean_vehicle_length_m,json=meanVehicleLengthM,proto3" json:"mean_vehicle_length_m,omitempty"`
-	Occupancy               string                                  `protobuf:"bytes,11,opt,name=occupancy,proto3" json:"occupancy,omitempty"`
-	Speed_85ThPercentileKmh string                                  `protobuf:"bytes,12,opt,name=speed_85th_percentile_kmh,json=speed85thPercentileKmh,proto3" json:"speed_85th_percentile_kmh,omitempty"`
-	SpeedAverageKmh         string                                  `protobuf:"bytes,13,opt,name=speed_average_kmh,json=speedAverageKmh,proto3" json:"speed_average_kmh,omitempty"`
-	SpeedSpaceMeanKmh       string                                  `protobuf:"bytes,16,opt,name=speed_space_mean_kmh,json=speedSpaceMeanKmh,proto3" json:"speed_space_mean_kmh,omitempty"`
-	SpeedStdDevKmh          string                                  `protobuf:"bytes,20,opt,name=speed_std_dev_kmh,json=speedStdDevKmh,proto3" json:"speed_std_dev_kmh,omitempty"`
-	UnclassifiedVolume      uint32                                  `protobuf:"varint,18,opt,name=unclassified_volume,json=unclassifiedVolume,proto3" json:"unclassified_volume,omitempty"`
-	UptimePercent           string                                  `protobuf:"bytes,17,opt,name=uptime_percent,json=uptimePercent,proto3" json:"uptime_percent,omitempty"`
-	Volume                  uint32                                  `protobuf:"varint,14,opt,name=volume,proto3" json:"volume,omitempty"`
-	WrongWayVolume          uint32                                  `protobuf:"varint,21,opt,name=wrong_way_volume,json=wrongWayVolume,proto3" json:"wrong_way_volume,omitempty"`
+	MeanVehicleLengthM      *string                                 `protobuf:"bytes,19,opt,name=mean_vehicle_length_m,json=meanVehicleLengthM,proto3,oneof" json:"mean_vehicle_length_m,omitempty"`
+	Occupancy               *string                                 `protobuf:"bytes,11,opt,name=occupancy,proto3,oneof" json:"occupancy,omitempty"`
+	Speed_85ThPercentileKmh *string                                 `protobuf:"bytes,12,opt,name=speed_85th_percentile_kmh,json=speed85thPercentileKmh,proto3,oneof" json:"speed_85th_percentile_kmh,omitempty"`
+	SpeedAverageKmh         *string                                 `protobuf:"bytes,13,opt,name=speed_average_kmh,json=speedAverageKmh,proto3,oneof" json:"speed_average_kmh,omitempty"`
+	SpeedSpaceMeanKmh       *string                                 `protobuf:"bytes,16,opt,name=speed_space_mean_kmh,json=speedSpaceMeanKmh,proto3,oneof" json:"speed_space_mean_kmh,omitempty"`
+	SpeedStdDevKmh          *string                                 `protobuf:"bytes,20,opt,name=speed_std_dev_kmh,json=speedStdDevKmh,proto3,oneof" json:"speed_std_dev_kmh,omitempty"`
+	UnclassifiedVolume      *uint32                                 `protobuf:"varint,18,opt,name=unclassified_volume,json=unclassifiedVolume,proto3,oneof" json:"unclassified_volume,omitempty"`
+	UptimePercent           *string                                 `protobuf:"bytes,17,opt,name=uptime_percent,json=uptimePercent,proto3,oneof" json:"uptime_percent,omitempty"`
+	Volume                  *uint32                                 `protobuf:"varint,14,opt,name=volume,proto3,oneof" json:"volume,omitempty"`
+	WrongWayVolume          *uint32                                 `protobuf:"varint,21,opt,name=wrong_way_volume,json=wrongWayVolume,proto3,oneof" json:"wrong_way_volume,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -402,22 +304,22 @@ func (*TrafficIntervalReportLane) Descriptor() ([]byte, []int) {
 }
 
 func (x *TrafficIntervalReportLane) GetLaneId() uint32 {
-	if x != nil {
-		return x.LaneId
+	if x != nil && x.LaneId != nil {
+		return *x.LaneId
 	}
 	return 0
 }
 
 func (x *TrafficIntervalReportLane) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *TrafficIntervalReportLane) GetCarriageway() string {
-	if x != nil {
-		return x.Carriageway
+	if x != nil && x.Carriageway != nil {
+		return *x.Carriageway
 	}
 	return ""
 }
@@ -430,43 +332,43 @@ func (x *TrafficIntervalReportLane) GetClassVolume() []*TrafficIntervalReportLan
 }
 
 func (x *TrafficIntervalReportLane) GetDataQuality() DataQuality {
-	if x != nil {
-		return x.DataQuality
+	if x != nil && x.DataQuality != nil {
+		return *x.DataQuality
 	}
 	return DataQuality_DATA_QUALITY_VALID
 }
 
 func (x *TrafficIntervalReportLane) GetDensity() string {
-	if x != nil {
-		return x.Density
+	if x != nil && x.Density != nil {
+		return *x.Density
 	}
 	return ""
 }
 
 func (x *TrafficIntervalReportLane) GetFlowRateVph() uint32 {
-	if x != nil {
-		return x.FlowRateVph
+	if x != nil && x.FlowRateVph != nil {
+		return *x.FlowRateVph
 	}
 	return 0
 }
 
 func (x *TrafficIntervalReportLane) GetGapAverageS() string {
-	if x != nil {
-		return x.GapAverageS
+	if x != nil && x.GapAverageS != nil {
+		return *x.GapAverageS
 	}
 	return ""
 }
 
 func (x *TrafficIntervalReportLane) GetHeadwayAverageS() string {
-	if x != nil {
-		return x.HeadwayAverageS
+	if x != nil && x.HeadwayAverageS != nil {
+		return *x.HeadwayAverageS
 	}
 	return ""
 }
 
 func (x *TrafficIntervalReportLane) GetIntervalDurationS() uint32 {
-	if x != nil {
-		return x.IntervalDurationS
+	if x != nil && x.IntervalDurationS != nil {
+		return *x.IntervalDurationS
 	}
 	return 0
 }
@@ -479,79 +381,79 @@ func (x *TrafficIntervalReportLane) GetIntervalStart() *timestamppb.Timestamp {
 }
 
 func (x *TrafficIntervalReportLane) GetMeanVehicleLengthM() string {
-	if x != nil {
-		return x.MeanVehicleLengthM
+	if x != nil && x.MeanVehicleLengthM != nil {
+		return *x.MeanVehicleLengthM
 	}
 	return ""
 }
 
 func (x *TrafficIntervalReportLane) GetOccupancy() string {
-	if x != nil {
-		return x.Occupancy
+	if x != nil && x.Occupancy != nil {
+		return *x.Occupancy
 	}
 	return ""
 }
 
 func (x *TrafficIntervalReportLane) GetSpeed_85ThPercentileKmh() string {
-	if x != nil {
-		return x.Speed_85ThPercentileKmh
+	if x != nil && x.Speed_85ThPercentileKmh != nil {
+		return *x.Speed_85ThPercentileKmh
 	}
 	return ""
 }
 
 func (x *TrafficIntervalReportLane) GetSpeedAverageKmh() string {
-	if x != nil {
-		return x.SpeedAverageKmh
+	if x != nil && x.SpeedAverageKmh != nil {
+		return *x.SpeedAverageKmh
 	}
 	return ""
 }
 
 func (x *TrafficIntervalReportLane) GetSpeedSpaceMeanKmh() string {
-	if x != nil {
-		return x.SpeedSpaceMeanKmh
+	if x != nil && x.SpeedSpaceMeanKmh != nil {
+		return *x.SpeedSpaceMeanKmh
 	}
 	return ""
 }
 
 func (x *TrafficIntervalReportLane) GetSpeedStdDevKmh() string {
-	if x != nil {
-		return x.SpeedStdDevKmh
+	if x != nil && x.SpeedStdDevKmh != nil {
+		return *x.SpeedStdDevKmh
 	}
 	return ""
 }
 
 func (x *TrafficIntervalReportLane) GetUnclassifiedVolume() uint32 {
-	if x != nil {
-		return x.UnclassifiedVolume
+	if x != nil && x.UnclassifiedVolume != nil {
+		return *x.UnclassifiedVolume
 	}
 	return 0
 }
 
 func (x *TrafficIntervalReportLane) GetUptimePercent() string {
-	if x != nil {
-		return x.UptimePercent
+	if x != nil && x.UptimePercent != nil {
+		return *x.UptimePercent
 	}
 	return ""
 }
 
 func (x *TrafficIntervalReportLane) GetVolume() uint32 {
-	if x != nil {
-		return x.Volume
+	if x != nil && x.Volume != nil {
+		return *x.Volume
 	}
 	return 0
 }
 
 func (x *TrafficIntervalReportLane) GetWrongWayVolume() uint32 {
-	if x != nil {
-		return x.WrongWayVolume
+	if x != nil && x.WrongWayVolume != nil {
+		return *x.WrongWayVolume
 	}
 	return 0
 }
 
 type TrafficIntervalReportLaneClassVolume struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ClassId       uint32                 `protobuf:"varint,1,opt,name=class_id,json=classId,proto3" json:"class_id,omitempty"`
-	Volume        uint32                 `protobuf:"varint,2,opt,name=volume,proto3" json:"volume,omitempty"`
+	ClassId       *uint32                `protobuf:"varint,1,opt,name=class_id,json=classId,proto3,oneof" json:"class_id,omitempty"`
+	Volume        *uint32                `protobuf:"varint,2,opt,name=volume,proto3,oneof" json:"volume,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -587,15 +489,15 @@ func (*TrafficIntervalReportLaneClassVolume) Descriptor() ([]byte, []int) {
 }
 
 func (x *TrafficIntervalReportLaneClassVolume) GetClassId() uint32 {
-	if x != nil {
-		return x.ClassId
+	if x != nil && x.ClassId != nil {
+		return *x.ClassId
 	}
 	return 0
 }
 
 func (x *TrafficIntervalReportLaneClassVolume) GetVolume() uint32 {
-	if x != nil {
-		return x.Volume
+	if x != nil && x.Volume != nil {
+		return *x.Volume
 	}
 	return 0
 }
@@ -603,14 +505,14 @@ func (x *TrafficIntervalReportLaneClassVolume) GetVolume() uint32 {
 type TrafficSensorStatusReport struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	Kind              string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	Name              string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	OperationalStatus OperationalStatus      `protobuf:"varint,4,opt,name=operational_status,json=operationalStatus,proto3,enum=openits.traffic_sensor.v1.OperationalStatus" json:"operational_status,omitempty"`
-	InactiveReason    string                 `protobuf:"bytes,5,opt,name=inactive_reason,json=inactiveReason,proto3" json:"inactive_reason,omitempty"`
-	Latitude          string                 `protobuf:"bytes,2,opt,name=latitude,proto3" json:"latitude,omitempty"`
-	Longitude         string                 `protobuf:"bytes,3,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	ObservedBy        string                 `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	Name              *string                `protobuf:"bytes,1,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	OperationalStatus *OperationalStatus     `protobuf:"varint,4,opt,name=operational_status,json=operationalStatus,proto3,enum=openits.traffic_sensor.v1.OperationalStatus,oneof" json:"operational_status,omitempty"`
+	InactiveReason    *string                `protobuf:"bytes,5,opt,name=inactive_reason,json=inactiveReason,proto3,oneof" json:"inactive_reason,omitempty"`
+	Latitude          *string                `protobuf:"bytes,2,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
+	Longitude         *string                `protobuf:"bytes,3,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
+	ObservedBy        *string                `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner             string                 `protobuf:"bytes,8,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner             *string                `protobuf:"bytes,8,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence          uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId    string                 `protobuf:"bytes,10,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields     protoimpl.UnknownFields
@@ -655,43 +557,43 @@ func (x *TrafficSensorStatusReport) GetKind() string {
 }
 
 func (x *TrafficSensorStatusReport) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *TrafficSensorStatusReport) GetOperationalStatus() OperationalStatus {
-	if x != nil {
-		return x.OperationalStatus
+	if x != nil && x.OperationalStatus != nil {
+		return *x.OperationalStatus
 	}
 	return OperationalStatus_OPERATIONAL_STATUS_ACTIVE
 }
 
 func (x *TrafficSensorStatusReport) GetInactiveReason() string {
-	if x != nil {
-		return x.InactiveReason
+	if x != nil && x.InactiveReason != nil {
+		return *x.InactiveReason
 	}
 	return ""
 }
 
 func (x *TrafficSensorStatusReport) GetLatitude() string {
-	if x != nil {
-		return x.Latitude
+	if x != nil && x.Latitude != nil {
+		return *x.Latitude
 	}
 	return ""
 }
 
 func (x *TrafficSensorStatusReport) GetLongitude() string {
-	if x != nil {
-		return x.Longitude
+	if x != nil && x.Longitude != nil {
+		return *x.Longitude
 	}
 	return ""
 }
 
 func (x *TrafficSensorStatusReport) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -704,8 +606,8 @@ func (x *TrafficSensorStatusReport) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *TrafficSensorStatusReport) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -728,83 +630,118 @@ var File_openits_traffic_sensor_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_traffic_sensor_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"&openits/traffic_sensor/v1/events.proto\x12\x19openits.traffic_sensor.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xca\x03\n" +
+	"&openits/traffic_sensor/v1/events.proto\x12\x19openits.traffic_sensor.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%openits/traffic_sensor/v1/types.proto\"\xdc\x04\n" +
 	"\x11QueueStateChanged\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12\x17\n" +
-	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12%\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12\x1c\n" +
+	"\azone_id\x18\x01 \x01(\tH\x00R\x06zoneId\x88\x01\x01\x12*\n" +
 	"\x0fback_of_queue_m\x18\n" +
-	" \x01(\rR\fbackOfQueueM\x12\x1f\n" +
-	"\vobserved_by\x18\x05 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	" \x01(\rH\x01R\fbackOfQueueM\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x05 \x01(\tH\x02R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\a \x01(\tR\x05owner\x12(\n" +
-	"\x10queue_duration_s\x18\x03 \x01(\rR\x0equeueDurationS\x12$\n" +
-	"\x0equeue_length_m\x18\v \x01(\rR\fqueueLengthM\x12;\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\a \x01(\tH\x03R\x05owner\x88\x01\x01\x12-\n" +
+	"\x10queue_duration_s\x18\x03 \x01(\rH\x04R\x0equeueDurationS\x88\x01\x01\x12)\n" +
+	"\x0equeue_length_m\x18\v \x01(\rH\x05R\fqueueLengthM\x88\x01\x01\x12;\n" +
 	"\vqueue_start\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"queueStart\x12\x1a\n" +
-	"\bqueueing\x18\x02 \x01(\bR\bqueueing\x12\x1a\n" +
+	"queueStart\x12\x1f\n" +
+	"\bqueueing\x18\x02 \x01(\bH\x06R\bqueueing\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\b \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceId\"\xaf\x02\n" +
+	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceIdB\n" +
+	"\n" +
+	"\b_zone_idB\x12\n" +
+	"\x10_back_of_queue_mB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_ownerB\x13\n" +
+	"\x11_queue_duration_sB\x11\n" +
+	"\x0f_queue_length_mB\v\n" +
+	"\t_queueing\"\xd3\x02\n" +
 	"\x15TrafficIntervalReport\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12H\n" +
-	"\x04lane\x18\x01 \x03(\v24.openits.traffic_sensor.v1.TrafficIntervalReportLaneR\x04lane\x12\x1f\n" +
-	"\vobserved_by\x18\x02 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04lane\x18\x01 \x03(\v24.openits.traffic_sensor.v1.TrafficIntervalReportLaneR\x04lane\x12$\n" +
+	"\vobserved_by\x18\x02 \x01(\tH\x00R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\x04 \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\x04 \x01(\tH\x01R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\x05 \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\x06 \x01(\tR\x0esourceDeviceId\"\xc8\a\n" +
-	"\x19TrafficIntervalReportLane\x12\x17\n" +
-	"\alane_id\x18\x01 \x01(\rR\x06laneId\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
-	"\vcarriageway\x18\x03 \x01(\tR\vcarriageway\x12b\n" +
-	"\fclass_volume\x18\x04 \x03(\v2?.openits.traffic_sensor.v1.TrafficIntervalReportLaneClassVolumeR\vclassVolume\x12I\n" +
-	"\fdata_quality\x18\x0f \x01(\x0e2&.openits.traffic_sensor.v1.DataQualityR\vdataQuality\x12\x18\n" +
-	"\adensity\x18\x05 \x01(\tR\adensity\x12\"\n" +
-	"\rflow_rate_vph\x18\x06 \x01(\rR\vflowRateVph\x12\"\n" +
-	"\rgap_average_s\x18\a \x01(\tR\vgapAverageS\x12*\n" +
-	"\x11headway_average_s\x18\b \x01(\tR\x0fheadwayAverageS\x12.\n" +
-	"\x13interval_duration_s\x18\t \x01(\rR\x11intervalDurationS\x12A\n" +
+	"\x10source_device_id\x18\x06 \x01(\tR\x0esourceDeviceIdB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\x91\v\n" +
+	"\x19TrafficIntervalReportLane\x12\x1c\n" +
+	"\alane_id\x18\x01 \x01(\rH\x00R\x06laneId\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12%\n" +
+	"\vcarriageway\x18\x03 \x01(\tH\x02R\vcarriageway\x88\x01\x01\x12b\n" +
+	"\fclass_volume\x18\x04 \x03(\v2?.openits.traffic_sensor.v1.TrafficIntervalReportLaneClassVolumeR\vclassVolume\x12N\n" +
+	"\fdata_quality\x18\x0f \x01(\x0e2&.openits.traffic_sensor.v1.DataQualityH\x03R\vdataQuality\x88\x01\x01\x12\x1d\n" +
+	"\adensity\x18\x05 \x01(\tH\x04R\adensity\x88\x01\x01\x12'\n" +
+	"\rflow_rate_vph\x18\x06 \x01(\rH\x05R\vflowRateVph\x88\x01\x01\x12'\n" +
+	"\rgap_average_s\x18\a \x01(\tH\x06R\vgapAverageS\x88\x01\x01\x12/\n" +
+	"\x11headway_average_s\x18\b \x01(\tH\aR\x0fheadwayAverageS\x88\x01\x01\x123\n" +
+	"\x13interval_duration_s\x18\t \x01(\rH\bR\x11intervalDurationS\x88\x01\x01\x12A\n" +
 	"\x0einterval_start\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.TimestampR\rintervalStart\x121\n" +
-	"\x15mean_vehicle_length_m\x18\x13 \x01(\tR\x12meanVehicleLengthM\x12\x1c\n" +
-	"\toccupancy\x18\v \x01(\tR\toccupancy\x129\n" +
-	"\x19speed_85th_percentile_kmh\x18\f \x01(\tR\x16speed85thPercentileKmh\x12*\n" +
-	"\x11speed_average_kmh\x18\r \x01(\tR\x0fspeedAverageKmh\x12/\n" +
-	"\x14speed_space_mean_kmh\x18\x10 \x01(\tR\x11speedSpaceMeanKmh\x12)\n" +
-	"\x11speed_std_dev_kmh\x18\x14 \x01(\tR\x0espeedStdDevKmh\x12/\n" +
-	"\x13unclassified_volume\x18\x12 \x01(\rR\x12unclassifiedVolume\x12%\n" +
-	"\x0euptime_percent\x18\x11 \x01(\tR\ruptimePercent\x12\x16\n" +
-	"\x06volume\x18\x0e \x01(\rR\x06volume\x12(\n" +
-	"\x10wrong_way_volume\x18\x15 \x01(\rR\x0ewrongWayVolume\"Y\n" +
-	"$TrafficIntervalReportLaneClassVolume\x12\x19\n" +
-	"\bclass_id\x18\x01 \x01(\rR\aclassId\x12\x16\n" +
-	"\x06volume\x18\x02 \x01(\rR\x06volume\"\xbd\x03\n" +
+	" \x01(\v2\x1a.google.protobuf.TimestampR\rintervalStart\x126\n" +
+	"\x15mean_vehicle_length_m\x18\x13 \x01(\tH\tR\x12meanVehicleLengthM\x88\x01\x01\x12!\n" +
+	"\toccupancy\x18\v \x01(\tH\n" +
+	"R\toccupancy\x88\x01\x01\x12>\n" +
+	"\x19speed_85th_percentile_kmh\x18\f \x01(\tH\vR\x16speed85thPercentileKmh\x88\x01\x01\x12/\n" +
+	"\x11speed_average_kmh\x18\r \x01(\tH\fR\x0fspeedAverageKmh\x88\x01\x01\x124\n" +
+	"\x14speed_space_mean_kmh\x18\x10 \x01(\tH\rR\x11speedSpaceMeanKmh\x88\x01\x01\x12.\n" +
+	"\x11speed_std_dev_kmh\x18\x14 \x01(\tH\x0eR\x0espeedStdDevKmh\x88\x01\x01\x124\n" +
+	"\x13unclassified_volume\x18\x12 \x01(\rH\x0fR\x12unclassifiedVolume\x88\x01\x01\x12*\n" +
+	"\x0euptime_percent\x18\x11 \x01(\tH\x10R\ruptimePercent\x88\x01\x01\x12\x1b\n" +
+	"\x06volume\x18\x0e \x01(\rH\x11R\x06volume\x88\x01\x01\x12-\n" +
+	"\x10wrong_way_volume\x18\x15 \x01(\rH\x12R\x0ewrongWayVolume\x88\x01\x01B\n" +
+	"\n" +
+	"\b_lane_idB\a\n" +
+	"\x05_nameB\x0e\n" +
+	"\f_carriagewayB\x0f\n" +
+	"\r_data_qualityB\n" +
+	"\n" +
+	"\b_densityB\x10\n" +
+	"\x0e_flow_rate_vphB\x10\n" +
+	"\x0e_gap_average_sB\x14\n" +
+	"\x12_headway_average_sB\x16\n" +
+	"\x14_interval_duration_sB\x18\n" +
+	"\x16_mean_vehicle_length_mB\f\n" +
+	"\n" +
+	"_occupancyB\x1c\n" +
+	"\x1a_speed_85th_percentile_kmhB\x14\n" +
+	"\x12_speed_average_kmhB\x17\n" +
+	"\x15_speed_space_mean_kmhB\x14\n" +
+	"\x12_speed_std_dev_kmhB\x16\n" +
+	"\x14_unclassified_volumeB\x11\n" +
+	"\x0f_uptime_percentB\t\n" +
+	"\a_volumeB\x13\n" +
+	"\x11_wrong_way_volume\"{\n" +
+	"$TrafficIntervalReportLaneClassVolume\x12\x1e\n" +
+	"\bclass_id\x18\x01 \x01(\rH\x00R\aclassId\x88\x01\x01\x12\x1b\n" +
+	"\x06volume\x18\x02 \x01(\rH\x01R\x06volume\x88\x01\x01B\v\n" +
+	"\t_class_idB\t\n" +
+	"\a_volume\"\xc9\x04\n" +
 	"\x19TrafficSensorStatusReport\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12[\n" +
-	"\x12operational_status\x18\x04 \x01(\x0e2,.openits.traffic_sensor.v1.OperationalStatusR\x11operationalStatus\x12'\n" +
-	"\x0finactive_reason\x18\x05 \x01(\tR\x0einactiveReason\x12\x1a\n" +
-	"\blatitude\x18\x02 \x01(\tR\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\x03 \x01(\tR\tlongitude\x12\x1f\n" +
-	"\vobserved_by\x18\x06 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12\x17\n" +
+	"\x04name\x18\x01 \x01(\tH\x00R\x04name\x88\x01\x01\x12`\n" +
+	"\x12operational_status\x18\x04 \x01(\x0e2,.openits.traffic_sensor.v1.OperationalStatusH\x01R\x11operationalStatus\x88\x01\x01\x12,\n" +
+	"\x0finactive_reason\x18\x05 \x01(\tH\x02R\x0einactiveReason\x88\x01\x01\x12\x1f\n" +
+	"\blatitude\x18\x02 \x01(\tH\x03R\blatitude\x88\x01\x01\x12!\n" +
+	"\tlongitude\x18\x03 \x01(\tH\x04R\tlongitude\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x06 \x01(\tH\x05R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\b \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\b \x01(\tH\x06R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\t \x01(\x04R\bsequence\x12(\n" +
 	"\x10source_device_id\x18\n" +
-	" \x01(\tR\x0esourceDeviceId*Y\n" +
-	"\vDataQuality\x12\x16\n" +
-	"\x12DATA_QUALITY_VALID\x10\x00\x12\x18\n" +
-	"\x14DATA_QUALITY_SUSPECT\x10\x01\x12\x18\n" +
-	"\x14DATA_QUALITY_INVALID\x10\x02*t\n" +
-	"\x11OperationalStatus\x12\x1d\n" +
-	"\x19OPERATIONAL_STATUS_ACTIVE\x10\x00\x12\x1f\n" +
-	"\x1bOPERATIONAL_STATUS_INACTIVE\x10\x01\x12\x1f\n" +
-	"\x1bOPERATIONAL_STATUS_DEGRADED\x10\x02BXZVgithub.com/Vikasa2M/openits-models/pkg/proto/openits/traffic_sensor/v1;trafficsensorv1b\x06proto3"
+	" \x01(\tR\x0esourceDeviceIdB\a\n" +
+	"\x05_nameB\x15\n" +
+	"\x13_operational_statusB\x12\n" +
+	"\x10_inactive_reasonB\v\n" +
+	"\t_latitudeB\f\n" +
+	"\n" +
+	"_longitudeB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_ownerBXZVgithub.com/Vikasa2M/openits-models/pkg/proto/openits/traffic_sensor/v1;trafficsensorv1b\x06proto3"
 
 var (
 	file_openits_traffic_sensor_v1_events_proto_rawDescOnce sync.Once
@@ -818,28 +755,27 @@ func file_openits_traffic_sensor_v1_events_proto_rawDescGZIP() []byte {
 	return file_openits_traffic_sensor_v1_events_proto_rawDescData
 }
 
-var file_openits_traffic_sensor_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_openits_traffic_sensor_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_openits_traffic_sensor_v1_events_proto_goTypes = []any{
-	(DataQuality)(0),                             // 0: openits.traffic_sensor.v1.DataQuality
-	(OperationalStatus)(0),                       // 1: openits.traffic_sensor.v1.OperationalStatus
-	(*QueueStateChanged)(nil),                    // 2: openits.traffic_sensor.v1.QueueStateChanged
-	(*TrafficIntervalReport)(nil),                // 3: openits.traffic_sensor.v1.TrafficIntervalReport
-	(*TrafficIntervalReportLane)(nil),            // 4: openits.traffic_sensor.v1.TrafficIntervalReportLane
-	(*TrafficIntervalReportLaneClassVolume)(nil), // 5: openits.traffic_sensor.v1.TrafficIntervalReportLaneClassVolume
-	(*TrafficSensorStatusReport)(nil),            // 6: openits.traffic_sensor.v1.TrafficSensorStatusReport
-	(*timestamppb.Timestamp)(nil),                // 7: google.protobuf.Timestamp
+	(*QueueStateChanged)(nil),                    // 0: openits.traffic_sensor.v1.QueueStateChanged
+	(*TrafficIntervalReport)(nil),                // 1: openits.traffic_sensor.v1.TrafficIntervalReport
+	(*TrafficIntervalReportLane)(nil),            // 2: openits.traffic_sensor.v1.TrafficIntervalReportLane
+	(*TrafficIntervalReportLaneClassVolume)(nil), // 3: openits.traffic_sensor.v1.TrafficIntervalReportLaneClassVolume
+	(*TrafficSensorStatusReport)(nil),            // 4: openits.traffic_sensor.v1.TrafficSensorStatusReport
+	(*timestamppb.Timestamp)(nil),                // 5: google.protobuf.Timestamp
+	(DataQuality)(0),                             // 6: openits.traffic_sensor.v1.DataQuality
+	(OperationalStatus)(0),                       // 7: openits.traffic_sensor.v1.OperationalStatus
 }
 var file_openits_traffic_sensor_v1_events_proto_depIdxs = []int32{
-	7, // 0: openits.traffic_sensor.v1.QueueStateChanged.occurred_at:type_name -> google.protobuf.Timestamp
-	7, // 1: openits.traffic_sensor.v1.QueueStateChanged.queue_start:type_name -> google.protobuf.Timestamp
-	4, // 2: openits.traffic_sensor.v1.TrafficIntervalReport.lane:type_name -> openits.traffic_sensor.v1.TrafficIntervalReportLane
-	7, // 3: openits.traffic_sensor.v1.TrafficIntervalReport.occurred_at:type_name -> google.protobuf.Timestamp
-	5, // 4: openits.traffic_sensor.v1.TrafficIntervalReportLane.class_volume:type_name -> openits.traffic_sensor.v1.TrafficIntervalReportLaneClassVolume
-	0, // 5: openits.traffic_sensor.v1.TrafficIntervalReportLane.data_quality:type_name -> openits.traffic_sensor.v1.DataQuality
-	7, // 6: openits.traffic_sensor.v1.TrafficIntervalReportLane.interval_start:type_name -> google.protobuf.Timestamp
-	1, // 7: openits.traffic_sensor.v1.TrafficSensorStatusReport.operational_status:type_name -> openits.traffic_sensor.v1.OperationalStatus
-	7, // 8: openits.traffic_sensor.v1.TrafficSensorStatusReport.occurred_at:type_name -> google.protobuf.Timestamp
+	5, // 0: openits.traffic_sensor.v1.QueueStateChanged.occurred_at:type_name -> google.protobuf.Timestamp
+	5, // 1: openits.traffic_sensor.v1.QueueStateChanged.queue_start:type_name -> google.protobuf.Timestamp
+	2, // 2: openits.traffic_sensor.v1.TrafficIntervalReport.lane:type_name -> openits.traffic_sensor.v1.TrafficIntervalReportLane
+	5, // 3: openits.traffic_sensor.v1.TrafficIntervalReport.occurred_at:type_name -> google.protobuf.Timestamp
+	3, // 4: openits.traffic_sensor.v1.TrafficIntervalReportLane.class_volume:type_name -> openits.traffic_sensor.v1.TrafficIntervalReportLaneClassVolume
+	6, // 5: openits.traffic_sensor.v1.TrafficIntervalReportLane.data_quality:type_name -> openits.traffic_sensor.v1.DataQuality
+	5, // 6: openits.traffic_sensor.v1.TrafficIntervalReportLane.interval_start:type_name -> google.protobuf.Timestamp
+	7, // 7: openits.traffic_sensor.v1.TrafficSensorStatusReport.operational_status:type_name -> openits.traffic_sensor.v1.OperationalStatus
+	5, // 8: openits.traffic_sensor.v1.TrafficSensorStatusReport.occurred_at:type_name -> google.protobuf.Timestamp
 	9, // [9:9] is the sub-list for method output_type
 	9, // [9:9] is the sub-list for method input_type
 	9, // [9:9] is the sub-list for extension type_name
@@ -852,19 +788,24 @@ func file_openits_traffic_sensor_v1_events_proto_init() {
 	if File_openits_traffic_sensor_v1_events_proto != nil {
 		return
 	}
+	file_openits_traffic_sensor_v1_types_proto_init()
+	file_openits_traffic_sensor_v1_events_proto_msgTypes[0].OneofWrappers = []any{}
+	file_openits_traffic_sensor_v1_events_proto_msgTypes[1].OneofWrappers = []any{}
+	file_openits_traffic_sensor_v1_events_proto_msgTypes[2].OneofWrappers = []any{}
+	file_openits_traffic_sensor_v1_events_proto_msgTypes[3].OneofWrappers = []any{}
+	file_openits_traffic_sensor_v1_events_proto_msgTypes[4].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_traffic_sensor_v1_events_proto_rawDesc), len(file_openits_traffic_sensor_v1_events_proto_rawDesc)),
-			NumEnums:      2,
+			NumEnums:      0,
 			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_openits_traffic_sensor_v1_events_proto_goTypes,
 		DependencyIndexes: file_openits_traffic_sensor_v1_events_proto_depIdxs,
-		EnumInfos:         file_openits_traffic_sensor_v1_events_proto_enumTypes,
 		MessageInfos:      file_openits_traffic_sensor_v1_events_proto_msgTypes,
 	}.Build()
 	File_openits_traffic_sensor_v1_events_proto = out.File

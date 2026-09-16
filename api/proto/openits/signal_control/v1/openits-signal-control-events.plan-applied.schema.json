@@ -36,16 +36,6 @@
     "sequence": {
       "type": "string"
     },
-    "source": {
-      "enum": [
-        "adaptive",
-        "operator",
-        "preemption",
-        "schedule",
-        "unspecified"
-      ],
-      "type": "string"
-    },
     "source-device-id": {
       "maxLength": 64,
       "minLength": 1,
@@ -56,6 +46,9 @@
       "maximum": 255,
       "minimum": 0,
       "type": "integer"
+    },
+    "trigger": {
+      "type": "string"
     }
   },
   "required": [

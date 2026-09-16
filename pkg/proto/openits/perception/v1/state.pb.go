@@ -22,266 +22,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type ZoneFunction int32
-
-const (
-	ZoneFunction_ZONE_FUNCTION_UNSPECIFIED ZoneFunction = 0
-	ZoneFunction_ZONE_FUNCTION_COUNT       ZoneFunction = 1
-	ZoneFunction_ZONE_FUNCTION_PRESENCE    ZoneFunction = 2
-	ZoneFunction_ZONE_FUNCTION_SPEED       ZoneFunction = 3
-	ZoneFunction_ZONE_FUNCTION_INCIDENT    ZoneFunction = 4
-	ZoneFunction_ZONE_FUNCTION_WRONG_WAY   ZoneFunction = 5
-)
-
-// Enum value maps for ZoneFunction.
-var (
-	ZoneFunction_name = map[int32]string{
-		0: "ZONE_FUNCTION_UNSPECIFIED",
-		1: "ZONE_FUNCTION_COUNT",
-		2: "ZONE_FUNCTION_PRESENCE",
-		3: "ZONE_FUNCTION_SPEED",
-		4: "ZONE_FUNCTION_INCIDENT",
-		5: "ZONE_FUNCTION_WRONG_WAY",
-	}
-	ZoneFunction_value = map[string]int32{
-		"ZONE_FUNCTION_UNSPECIFIED": 0,
-		"ZONE_FUNCTION_COUNT":       1,
-		"ZONE_FUNCTION_PRESENCE":    2,
-		"ZONE_FUNCTION_SPEED":       3,
-		"ZONE_FUNCTION_INCIDENT":    4,
-		"ZONE_FUNCTION_WRONG_WAY":   5,
-	}
-)
-
-func (x ZoneFunction) Enum() *ZoneFunction {
-	p := new(ZoneFunction)
-	*p = x
-	return p
-}
-
-func (x ZoneFunction) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (ZoneFunction) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_perception_v1_state_proto_enumTypes[0].Descriptor()
-}
-
-func (ZoneFunction) Type() protoreflect.EnumType {
-	return &file_openits_perception_v1_state_proto_enumTypes[0]
-}
-
-func (x ZoneFunction) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use ZoneFunction.Descriptor instead.
-func (ZoneFunction) EnumDescriptor() ([]byte, []int) {
-	return file_openits_perception_v1_state_proto_rawDescGZIP(), []int{0}
-}
-
-type Lifecycle int32
-
-const (
-	Lifecycle_LIFECYCLE_TENTATIVE Lifecycle = 0
-	Lifecycle_LIFECYCLE_CONFIRMED Lifecycle = 1
-	Lifecycle_LIFECYCLE_COASTING  Lifecycle = 2
-)
-
-// Enum value maps for Lifecycle.
-var (
-	Lifecycle_name = map[int32]string{
-		0: "LIFECYCLE_TENTATIVE",
-		1: "LIFECYCLE_CONFIRMED",
-		2: "LIFECYCLE_COASTING",
-	}
-	Lifecycle_value = map[string]int32{
-		"LIFECYCLE_TENTATIVE": 0,
-		"LIFECYCLE_CONFIRMED": 1,
-		"LIFECYCLE_COASTING":  2,
-	}
-)
-
-func (x Lifecycle) Enum() *Lifecycle {
-	p := new(Lifecycle)
-	*p = x
-	return p
-}
-
-func (x Lifecycle) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Lifecycle) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_perception_v1_state_proto_enumTypes[1].Descriptor()
-}
-
-func (Lifecycle) Type() protoreflect.EnumType {
-	return &file_openits_perception_v1_state_proto_enumTypes[1]
-}
-
-func (x Lifecycle) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Lifecycle.Descriptor instead.
-func (Lifecycle) EnumDescriptor() ([]byte, []int) {
-	return file_openits_perception_v1_state_proto_rawDescGZIP(), []int{1}
-}
-
-type OpenitsPerceptionIncidentSeverity int32
-
-const (
-	OpenitsPerceptionIncidentSeverity_OPENITS_PERCEPTION_INCIDENT_SEVERITY_MINOR        OpenitsPerceptionIncidentSeverity = 0
-	OpenitsPerceptionIncidentSeverity_OPENITS_PERCEPTION_INCIDENT_SEVERITY_INTERMEDIATE OpenitsPerceptionIncidentSeverity = 1
-	OpenitsPerceptionIncidentSeverity_OPENITS_PERCEPTION_INCIDENT_SEVERITY_MAJOR        OpenitsPerceptionIncidentSeverity = 2
-)
-
-// Enum value maps for OpenitsPerceptionIncidentSeverity.
-var (
-	OpenitsPerceptionIncidentSeverity_name = map[int32]string{
-		0: "OPENITS_PERCEPTION_INCIDENT_SEVERITY_MINOR",
-		1: "OPENITS_PERCEPTION_INCIDENT_SEVERITY_INTERMEDIATE",
-		2: "OPENITS_PERCEPTION_INCIDENT_SEVERITY_MAJOR",
-	}
-	OpenitsPerceptionIncidentSeverity_value = map[string]int32{
-		"OPENITS_PERCEPTION_INCIDENT_SEVERITY_MINOR":        0,
-		"OPENITS_PERCEPTION_INCIDENT_SEVERITY_INTERMEDIATE": 1,
-		"OPENITS_PERCEPTION_INCIDENT_SEVERITY_MAJOR":        2,
-	}
-)
-
-func (x OpenitsPerceptionIncidentSeverity) Enum() *OpenitsPerceptionIncidentSeverity {
-	p := new(OpenitsPerceptionIncidentSeverity)
-	*p = x
-	return p
-}
-
-func (x OpenitsPerceptionIncidentSeverity) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (OpenitsPerceptionIncidentSeverity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_perception_v1_state_proto_enumTypes[2].Descriptor()
-}
-
-func (OpenitsPerceptionIncidentSeverity) Type() protoreflect.EnumType {
-	return &file_openits_perception_v1_state_proto_enumTypes[2]
-}
-
-func (x OpenitsPerceptionIncidentSeverity) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use OpenitsPerceptionIncidentSeverity.Descriptor instead.
-func (OpenitsPerceptionIncidentSeverity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_perception_v1_state_proto_rawDescGZIP(), []int{2}
-}
-
-type IncidentDisposition int32
-
-const (
-	IncidentDisposition_INCIDENT_DISPOSITION_PENDING     IncidentDisposition = 0
-	IncidentDisposition_INCIDENT_DISPOSITION_CONFIRMED   IncidentDisposition = 1
-	IncidentDisposition_INCIDENT_DISPOSITION_FALSE_ALARM IncidentDisposition = 2
-)
-
-// Enum value maps for IncidentDisposition.
-var (
-	IncidentDisposition_name = map[int32]string{
-		0: "INCIDENT_DISPOSITION_PENDING",
-		1: "INCIDENT_DISPOSITION_CONFIRMED",
-		2: "INCIDENT_DISPOSITION_FALSE_ALARM",
-	}
-	IncidentDisposition_value = map[string]int32{
-		"INCIDENT_DISPOSITION_PENDING":     0,
-		"INCIDENT_DISPOSITION_CONFIRMED":   1,
-		"INCIDENT_DISPOSITION_FALSE_ALARM": 2,
-	}
-)
-
-func (x IncidentDisposition) Enum() *IncidentDisposition {
-	p := new(IncidentDisposition)
-	*p = x
-	return p
-}
-
-func (x IncidentDisposition) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (IncidentDisposition) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_perception_v1_state_proto_enumTypes[3].Descriptor()
-}
-
-func (IncidentDisposition) Type() protoreflect.EnumType {
-	return &file_openits_perception_v1_state_proto_enumTypes[3]
-}
-
-func (x IncidentDisposition) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use IncidentDisposition.Descriptor instead.
-func (IncidentDisposition) EnumDescriptor() ([]byte, []int) {
-	return file_openits_perception_v1_state_proto_rawDescGZIP(), []int{3}
-}
-
-type FaultSeverity int32
-
-const (
-	FaultSeverity_FAULT_SEVERITY_INFO     FaultSeverity = 0
-	FaultSeverity_FAULT_SEVERITY_WARNING  FaultSeverity = 1
-	FaultSeverity_FAULT_SEVERITY_MINOR    FaultSeverity = 2
-	FaultSeverity_FAULT_SEVERITY_MAJOR    FaultSeverity = 3
-	FaultSeverity_FAULT_SEVERITY_CRITICAL FaultSeverity = 4
-)
-
-// Enum value maps for FaultSeverity.
-var (
-	FaultSeverity_name = map[int32]string{
-		0: "FAULT_SEVERITY_INFO",
-		1: "FAULT_SEVERITY_WARNING",
-		2: "FAULT_SEVERITY_MINOR",
-		3: "FAULT_SEVERITY_MAJOR",
-		4: "FAULT_SEVERITY_CRITICAL",
-	}
-	FaultSeverity_value = map[string]int32{
-		"FAULT_SEVERITY_INFO":     0,
-		"FAULT_SEVERITY_WARNING":  1,
-		"FAULT_SEVERITY_MINOR":    2,
-		"FAULT_SEVERITY_MAJOR":    3,
-		"FAULT_SEVERITY_CRITICAL": 4,
-	}
-)
-
-func (x FaultSeverity) Enum() *FaultSeverity {
-	p := new(FaultSeverity)
-	*p = x
-	return p
-}
-
-func (x FaultSeverity) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (FaultSeverity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_perception_v1_state_proto_enumTypes[4].Descriptor()
-}
-
-func (FaultSeverity) Type() protoreflect.EnumType {
-	return &file_openits_perception_v1_state_proto_enumTypes[4]
-}
-
-func (x FaultSeverity) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use FaultSeverity.Descriptor instead.
-func (FaultSeverity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_perception_v1_state_proto_rawDescGZIP(), []int{4}
-}
-
 type PerceptionSensor struct {
 	state          protoimpl.MessageState         `protogen:"open.v1"`
 	Config         *PerceptionSensorConfig        `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
@@ -408,18 +148,18 @@ func (x *PerceptionSensor) GetZoneOccupancy() *ZoneOccupancy {
 
 type PerceptionSensorConfig struct {
 	state           protoimpl.MessageState                 `protogen:"open.v1"`
-	Elevation       string                                 `protobuf:"bytes,1,opt,name=elevation,proto3" json:"elevation,omitempty"`
-	Heading         uint32                                 `protobuf:"varint,2,opt,name=heading,proto3" json:"heading,omitempty"`
-	Id              string                                 `protobuf:"bytes,8,opt,name=id,proto3" json:"id,omitempty"`
+	Elevation       *string                                `protobuf:"bytes,1,opt,name=elevation,proto3,oneof" json:"elevation,omitempty"`
+	Heading         *uint32                                `protobuf:"varint,2,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
+	Id              *string                                `protobuf:"bytes,8,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate     *timestamppb.Timestamp                 `protobuf:"bytes,7,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
-	Latitude        string                                 `protobuf:"bytes,3,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	Latitude        *string                                `protobuf:"bytes,3,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference *PerceptionSensorConfigLinearReference `protobuf:"bytes,9,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
-	Longitude       string                                 `protobuf:"bytes,4,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	MaintainedBy    string                                 `protobuf:"bytes,10,opt,name=maintained_by,json=maintainedBy,proto3" json:"maintained_by,omitempty"`
-	Name            string                                 `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
-	Owner           string                                 `protobuf:"bytes,11,opt,name=owner,proto3" json:"owner,omitempty"`
-	RoadReference   string                                 `protobuf:"bytes,6,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
-	SiteId          string                                 `protobuf:"bytes,12,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
+	Longitude       *string                                `protobuf:"bytes,4,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
+	MaintainedBy    *string                                `protobuf:"bytes,10,opt,name=maintained_by,json=maintainedBy,proto3,oneof" json:"maintained_by,omitempty"`
+	Name            *string                                `protobuf:"bytes,5,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Owner           *string                                `protobuf:"bytes,11,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	RoadReference   *string                                `protobuf:"bytes,6,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
+	SiteId          *string                                `protobuf:"bytes,12,opt,name=site_id,json=siteId,proto3,oneof" json:"site_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -455,22 +195,22 @@ func (*PerceptionSensorConfig) Descriptor() ([]byte, []int) {
 }
 
 func (x *PerceptionSensorConfig) GetElevation() string {
-	if x != nil {
-		return x.Elevation
+	if x != nil && x.Elevation != nil {
+		return *x.Elevation
 	}
 	return ""
 }
 
 func (x *PerceptionSensorConfig) GetHeading() uint32 {
-	if x != nil {
-		return x.Heading
+	if x != nil && x.Heading != nil {
+		return *x.Heading
 	}
 	return 0
 }
 
 func (x *PerceptionSensorConfig) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
@@ -483,8 +223,8 @@ func (x *PerceptionSensorConfig) GetInstallDate() *timestamppb.Timestamp {
 }
 
 func (x *PerceptionSensorConfig) GetLatitude() string {
-	if x != nil {
-		return x.Latitude
+	if x != nil && x.Latitude != nil {
+		return *x.Latitude
 	}
 	return ""
 }
@@ -497,53 +237,53 @@ func (x *PerceptionSensorConfig) GetLinearReference() *PerceptionSensorConfigLin
 }
 
 func (x *PerceptionSensorConfig) GetLongitude() string {
-	if x != nil {
-		return x.Longitude
+	if x != nil && x.Longitude != nil {
+		return *x.Longitude
 	}
 	return ""
 }
 
 func (x *PerceptionSensorConfig) GetMaintainedBy() string {
-	if x != nil {
-		return x.MaintainedBy
+	if x != nil && x.MaintainedBy != nil {
+		return *x.MaintainedBy
 	}
 	return ""
 }
 
 func (x *PerceptionSensorConfig) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *PerceptionSensorConfig) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
 
 func (x *PerceptionSensorConfig) GetRoadReference() string {
-	if x != nil {
-		return x.RoadReference
+	if x != nil && x.RoadReference != nil {
+		return *x.RoadReference
 	}
 	return ""
 }
 
 func (x *PerceptionSensorConfig) GetSiteId() string {
-	if x != nil {
-		return x.SiteId
+	if x != nil && x.SiteId != nil {
+		return *x.SiteId
 	}
 	return ""
 }
 
 type PerceptionSensorConfigLinearReference struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	RouteDesignator string                 `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3" json:"route_designator,omitempty"`
-	Direction       string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"`
-	Measure         string                 `protobuf:"bytes,3,opt,name=measure,proto3" json:"measure,omitempty"`
-	LrsMethod       string                 `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3" json:"lrs_method,omitempty"`
+	RouteDesignator *string                `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3,oneof" json:"route_designator,omitempty"`
+	Direction       *string                `protobuf:"bytes,2,opt,name=direction,proto3,oneof" json:"direction,omitempty"`
+	Measure         *string                `protobuf:"bytes,3,opt,name=measure,proto3,oneof" json:"measure,omitempty"`
+	LrsMethod       *string                `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3,oneof" json:"lrs_method,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -579,53 +319,53 @@ func (*PerceptionSensorConfigLinearReference) Descriptor() ([]byte, []int) {
 }
 
 func (x *PerceptionSensorConfigLinearReference) GetRouteDesignator() string {
-	if x != nil {
-		return x.RouteDesignator
+	if x != nil && x.RouteDesignator != nil {
+		return *x.RouteDesignator
 	}
 	return ""
 }
 
 func (x *PerceptionSensorConfigLinearReference) GetDirection() string {
-	if x != nil {
-		return x.Direction
+	if x != nil && x.Direction != nil {
+		return *x.Direction
 	}
 	return ""
 }
 
 func (x *PerceptionSensorConfigLinearReference) GetMeasure() string {
-	if x != nil {
-		return x.Measure
+	if x != nil && x.Measure != nil {
+		return *x.Measure
 	}
 	return ""
 }
 
 func (x *PerceptionSensorConfigLinearReference) GetLrsMethod() string {
-	if x != nil {
-		return x.LrsMethod
+	if x != nil && x.LrsMethod != nil {
+		return *x.LrsMethod
 	}
 	return ""
 }
 
 type PerceptionSensorState struct {
 	state           protoimpl.MessageState                `protogen:"open.v1"`
-	Elevation       string                                `protobuf:"bytes,1,opt,name=elevation,proto3" json:"elevation,omitempty"`
-	Firmware        string                                `protobuf:"bytes,2,opt,name=firmware,proto3" json:"firmware,omitempty"`
-	FirmwareBuild   string                                `protobuf:"bytes,13,opt,name=firmware_build,json=firmwareBuild,proto3" json:"firmware_build,omitempty"`
-	HardwareVersion string                                `protobuf:"bytes,14,opt,name=hardware_version,json=hardwareVersion,proto3" json:"hardware_version,omitempty"`
-	Heading         uint32                                `protobuf:"varint,3,opt,name=heading,proto3" json:"heading,omitempty"`
-	Id              string                                `protobuf:"bytes,12,opt,name=id,proto3" json:"id,omitempty"`
+	Elevation       *string                               `protobuf:"bytes,1,opt,name=elevation,proto3,oneof" json:"elevation,omitempty"`
+	Firmware        *string                               `protobuf:"bytes,2,opt,name=firmware,proto3,oneof" json:"firmware,omitempty"`
+	FirmwareBuild   *string                               `protobuf:"bytes,13,opt,name=firmware_build,json=firmwareBuild,proto3,oneof" json:"firmware_build,omitempty"`
+	HardwareVersion *string                               `protobuf:"bytes,14,opt,name=hardware_version,json=hardwareVersion,proto3,oneof" json:"hardware_version,omitempty"`
+	Heading         *uint32                               `protobuf:"varint,3,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
+	Id              *string                               `protobuf:"bytes,12,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate     *timestamppb.Timestamp                `protobuf:"bytes,10,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
-	Latitude        string                                `protobuf:"bytes,4,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	Latitude        *string                               `protobuf:"bytes,4,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference *PerceptionSensorStateLinearReference `protobuf:"bytes,15,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
-	Longitude       string                                `protobuf:"bytes,5,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	MaintainedBy    string                                `protobuf:"bytes,16,opt,name=maintained_by,json=maintainedBy,proto3" json:"maintained_by,omitempty"`
-	Make            string                                `protobuf:"bytes,6,opt,name=make,proto3" json:"make,omitempty"`
-	Model           string                                `protobuf:"bytes,7,opt,name=model,proto3" json:"model,omitempty"`
-	Name            string                                `protobuf:"bytes,8,opt,name=name,proto3" json:"name,omitempty"`
-	Owner           string                                `protobuf:"bytes,17,opt,name=owner,proto3" json:"owner,omitempty"`
-	RoadReference   string                                `protobuf:"bytes,9,opt,name=road_reference,json=roadReference,proto3" json:"road_reference,omitempty"`
-	Serial          string                                `protobuf:"bytes,11,opt,name=serial,proto3" json:"serial,omitempty"`
-	SiteId          string                                `protobuf:"bytes,18,opt,name=site_id,json=siteId,proto3" json:"site_id,omitempty"`
+	Longitude       *string                               `protobuf:"bytes,5,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
+	MaintainedBy    *string                               `protobuf:"bytes,16,opt,name=maintained_by,json=maintainedBy,proto3,oneof" json:"maintained_by,omitempty"`
+	Make            *string                               `protobuf:"bytes,6,opt,name=make,proto3,oneof" json:"make,omitempty"`
+	Model           *string                               `protobuf:"bytes,7,opt,name=model,proto3,oneof" json:"model,omitempty"`
+	Name            *string                               `protobuf:"bytes,8,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Owner           *string                               `protobuf:"bytes,17,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	RoadReference   *string                               `protobuf:"bytes,9,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
+	Serial          *string                               `protobuf:"bytes,11,opt,name=serial,proto3,oneof" json:"serial,omitempty"`
+	SiteId          *string                               `protobuf:"bytes,18,opt,name=site_id,json=siteId,proto3,oneof" json:"site_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -661,43 +401,43 @@ func (*PerceptionSensorState) Descriptor() ([]byte, []int) {
 }
 
 func (x *PerceptionSensorState) GetElevation() string {
-	if x != nil {
-		return x.Elevation
+	if x != nil && x.Elevation != nil {
+		return *x.Elevation
 	}
 	return ""
 }
 
 func (x *PerceptionSensorState) GetFirmware() string {
-	if x != nil {
-		return x.Firmware
+	if x != nil && x.Firmware != nil {
+		return *x.Firmware
 	}
 	return ""
 }
 
 func (x *PerceptionSensorState) GetFirmwareBuild() string {
-	if x != nil {
-		return x.FirmwareBuild
+	if x != nil && x.FirmwareBuild != nil {
+		return *x.FirmwareBuild
 	}
 	return ""
 }
 
 func (x *PerceptionSensorState) GetHardwareVersion() string {
-	if x != nil {
-		return x.HardwareVersion
+	if x != nil && x.HardwareVersion != nil {
+		return *x.HardwareVersion
 	}
 	return ""
 }
 
 func (x *PerceptionSensorState) GetHeading() uint32 {
-	if x != nil {
-		return x.Heading
+	if x != nil && x.Heading != nil {
+		return *x.Heading
 	}
 	return 0
 }
 
 func (x *PerceptionSensorState) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
@@ -710,8 +450,8 @@ func (x *PerceptionSensorState) GetInstallDate() *timestamppb.Timestamp {
 }
 
 func (x *PerceptionSensorState) GetLatitude() string {
-	if x != nil {
-		return x.Latitude
+	if x != nil && x.Latitude != nil {
+		return *x.Latitude
 	}
 	return ""
 }
@@ -724,74 +464,74 @@ func (x *PerceptionSensorState) GetLinearReference() *PerceptionSensorStateLinea
 }
 
 func (x *PerceptionSensorState) GetLongitude() string {
-	if x != nil {
-		return x.Longitude
+	if x != nil && x.Longitude != nil {
+		return *x.Longitude
 	}
 	return ""
 }
 
 func (x *PerceptionSensorState) GetMaintainedBy() string {
-	if x != nil {
-		return x.MaintainedBy
+	if x != nil && x.MaintainedBy != nil {
+		return *x.MaintainedBy
 	}
 	return ""
 }
 
 func (x *PerceptionSensorState) GetMake() string {
-	if x != nil {
-		return x.Make
+	if x != nil && x.Make != nil {
+		return *x.Make
 	}
 	return ""
 }
 
 func (x *PerceptionSensorState) GetModel() string {
-	if x != nil {
-		return x.Model
+	if x != nil && x.Model != nil {
+		return *x.Model
 	}
 	return ""
 }
 
 func (x *PerceptionSensorState) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *PerceptionSensorState) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
 
 func (x *PerceptionSensorState) GetRoadReference() string {
-	if x != nil {
-		return x.RoadReference
+	if x != nil && x.RoadReference != nil {
+		return *x.RoadReference
 	}
 	return ""
 }
 
 func (x *PerceptionSensorState) GetSerial() string {
-	if x != nil {
-		return x.Serial
+	if x != nil && x.Serial != nil {
+		return *x.Serial
 	}
 	return ""
 }
 
 func (x *PerceptionSensorState) GetSiteId() string {
-	if x != nil {
-		return x.SiteId
+	if x != nil && x.SiteId != nil {
+		return *x.SiteId
 	}
 	return ""
 }
 
 type PerceptionSensorStateLinearReference struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	RouteDesignator string                 `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3" json:"route_designator,omitempty"`
-	Direction       string                 `protobuf:"bytes,2,opt,name=direction,proto3" json:"direction,omitempty"`
-	Measure         string                 `protobuf:"bytes,3,opt,name=measure,proto3" json:"measure,omitempty"`
-	LrsMethod       string                 `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3" json:"lrs_method,omitempty"`
+	RouteDesignator *string                `protobuf:"bytes,1,opt,name=route_designator,json=routeDesignator,proto3,oneof" json:"route_designator,omitempty"`
+	Direction       *string                `protobuf:"bytes,2,opt,name=direction,proto3,oneof" json:"direction,omitempty"`
+	Measure         *string                `protobuf:"bytes,3,opt,name=measure,proto3,oneof" json:"measure,omitempty"`
+	LrsMethod       *string                `protobuf:"bytes,4,opt,name=lrs_method,json=lrsMethod,proto3,oneof" json:"lrs_method,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -827,29 +567,29 @@ func (*PerceptionSensorStateLinearReference) Descriptor() ([]byte, []int) {
 }
 
 func (x *PerceptionSensorStateLinearReference) GetRouteDesignator() string {
-	if x != nil {
-		return x.RouteDesignator
+	if x != nil && x.RouteDesignator != nil {
+		return *x.RouteDesignator
 	}
 	return ""
 }
 
 func (x *PerceptionSensorStateLinearReference) GetDirection() string {
-	if x != nil {
-		return x.Direction
+	if x != nil && x.Direction != nil {
+		return *x.Direction
 	}
 	return ""
 }
 
 func (x *PerceptionSensorStateLinearReference) GetMeasure() string {
-	if x != nil {
-		return x.Measure
+	if x != nil && x.Measure != nil {
+		return *x.Measure
 	}
 	return ""
 }
 
 func (x *PerceptionSensorStateLinearReference) GetLrsMethod() string {
-	if x != nil {
-		return x.LrsMethod
+	if x != nil && x.LrsMethod != nil {
+		return *x.LrsMethod
 	}
 	return ""
 }
@@ -900,9 +640,9 @@ func (x *Associations) GetAssociatedDevice() []*AssociatedDevice {
 
 type AssociatedDevice struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Role          string                 `protobuf:"bytes,2,opt,name=role,proto3" json:"role,omitempty"`
-	Note          string                 `protobuf:"bytes,3,opt,name=note,proto3" json:"note,omitempty"`
+	DeviceId      *string                `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3,oneof" json:"device_id,omitempty"`
+	Role          *string                `protobuf:"bytes,2,opt,name=role,proto3,oneof" json:"role,omitempty"`
+	Note          *string                `protobuf:"bytes,3,opt,name=note,proto3,oneof" json:"note,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -938,29 +678,29 @@ func (*AssociatedDevice) Descriptor() ([]byte, []int) {
 }
 
 func (x *AssociatedDevice) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
+	if x != nil && x.DeviceId != nil {
+		return *x.DeviceId
 	}
 	return ""
 }
 
 func (x *AssociatedDevice) GetRole() string {
-	if x != nil {
-		return x.Role
+	if x != nil && x.Role != nil {
+		return *x.Role
 	}
 	return ""
 }
 
 func (x *AssociatedDevice) GetNote() string {
-	if x != nil {
-		return x.Note
+	if x != nil && x.Note != nil {
+		return *x.Note
 	}
 	return ""
 }
 
 type PerceptionSensorConfiguration struct {
 	state         protoimpl.MessageState               `protogen:"open.v1"`
-	DataIntervalS uint32                               `protobuf:"varint,1,opt,name=data_interval_s,json=dataIntervalS,proto3" json:"data_interval_s,omitempty"`
+	DataIntervalS *uint32                              `protobuf:"varint,1,opt,name=data_interval_s,json=dataIntervalS,proto3,oneof" json:"data_interval_s,omitempty"`
 	Zone          []*PerceptionSensorConfigurationZone `protobuf:"bytes,2,rep,name=zone,proto3" json:"zone,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -997,8 +737,8 @@ func (*PerceptionSensorConfiguration) Descriptor() ([]byte, []int) {
 }
 
 func (x *PerceptionSensorConfiguration) GetDataIntervalS() uint32 {
-	if x != nil {
-		return x.DataIntervalS
+	if x != nil && x.DataIntervalS != nil {
+		return *x.DataIntervalS
 	}
 	return 0
 }
@@ -1012,15 +752,15 @@ func (x *PerceptionSensorConfiguration) GetZone() []*PerceptionSensorConfigurati
 
 type PerceptionSensorConfigurationZone struct {
 	state                       protoimpl.MessageState `protogen:"open.v1"`
-	ZoneId                      string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Name                        string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Function                    ZoneFunction           `protobuf:"varint,3,opt,name=function,proto3,enum=openits.perception.v1.ZoneFunction" json:"function,omitempty"`
-	LegalHeading                uint32                 `protobuf:"varint,4,opt,name=legal_heading,json=legalHeading,proto3" json:"legal_heading,omitempty"`
-	DwellS                      uint32                 `protobuf:"varint,5,opt,name=dwell_s,json=dwellS,proto3" json:"dwell_s,omitempty"`
-	PersistenceS                uint32                 `protobuf:"varint,6,opt,name=persistence_s,json=persistenceS,proto3" json:"persistence_s,omitempty"`
-	MinConfidence               uint32                 `protobuf:"varint,7,opt,name=min_confidence,json=minConfidence,proto3" json:"min_confidence,omitempty"`
-	CongestionSpeedThresholdKmh string                 `protobuf:"bytes,8,opt,name=congestion_speed_threshold_kmh,json=congestionSpeedThresholdKmh,proto3" json:"congestion_speed_threshold_kmh,omitempty"`
-	CongestionDensityThreshold  string                 `protobuf:"bytes,9,opt,name=congestion_density_threshold,json=congestionDensityThreshold,proto3" json:"congestion_density_threshold,omitempty"`
+	ZoneId                      *string                `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3,oneof" json:"zone_id,omitempty"`
+	Name                        *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Function                    *string                `protobuf:"bytes,3,opt,name=function,proto3,oneof" json:"function,omitempty"`
+	LegalHeading                *uint32                `protobuf:"varint,4,opt,name=legal_heading,json=legalHeading,proto3,oneof" json:"legal_heading,omitempty"`
+	DwellS                      *uint32                `protobuf:"varint,5,opt,name=dwell_s,json=dwellS,proto3,oneof" json:"dwell_s,omitempty"`
+	PersistenceS                *uint32                `protobuf:"varint,6,opt,name=persistence_s,json=persistenceS,proto3,oneof" json:"persistence_s,omitempty"`
+	MinConfidence               *uint32                `protobuf:"varint,7,opt,name=min_confidence,json=minConfidence,proto3,oneof" json:"min_confidence,omitempty"`
+	CongestionSpeedThresholdKmh *string                `protobuf:"bytes,8,opt,name=congestion_speed_threshold_kmh,json=congestionSpeedThresholdKmh,proto3,oneof" json:"congestion_speed_threshold_kmh,omitempty"`
+	CongestionDensityThreshold  *string                `protobuf:"bytes,9,opt,name=congestion_density_threshold,json=congestionDensityThreshold,proto3,oneof" json:"congestion_density_threshold,omitempty"`
 	Vertex                      []*Vertex              `protobuf:"bytes,10,rep,name=vertex,proto3" json:"vertex,omitempty"`
 	unknownFields               protoimpl.UnknownFields
 	sizeCache                   protoimpl.SizeCache
@@ -1057,64 +797,64 @@ func (*PerceptionSensorConfigurationZone) Descriptor() ([]byte, []int) {
 }
 
 func (x *PerceptionSensorConfigurationZone) GetZoneId() string {
-	if x != nil {
-		return x.ZoneId
+	if x != nil && x.ZoneId != nil {
+		return *x.ZoneId
 	}
 	return ""
 }
 
 func (x *PerceptionSensorConfigurationZone) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
-func (x *PerceptionSensorConfigurationZone) GetFunction() ZoneFunction {
-	if x != nil {
-		return x.Function
+func (x *PerceptionSensorConfigurationZone) GetFunction() string {
+	if x != nil && x.Function != nil {
+		return *x.Function
 	}
-	return ZoneFunction_ZONE_FUNCTION_UNSPECIFIED
+	return ""
 }
 
 func (x *PerceptionSensorConfigurationZone) GetLegalHeading() uint32 {
-	if x != nil {
-		return x.LegalHeading
+	if x != nil && x.LegalHeading != nil {
+		return *x.LegalHeading
 	}
 	return 0
 }
 
 func (x *PerceptionSensorConfigurationZone) GetDwellS() uint32 {
-	if x != nil {
-		return x.DwellS
+	if x != nil && x.DwellS != nil {
+		return *x.DwellS
 	}
 	return 0
 }
 
 func (x *PerceptionSensorConfigurationZone) GetPersistenceS() uint32 {
-	if x != nil {
-		return x.PersistenceS
+	if x != nil && x.PersistenceS != nil {
+		return *x.PersistenceS
 	}
 	return 0
 }
 
 func (x *PerceptionSensorConfigurationZone) GetMinConfidence() uint32 {
-	if x != nil {
-		return x.MinConfidence
+	if x != nil && x.MinConfidence != nil {
+		return *x.MinConfidence
 	}
 	return 0
 }
 
 func (x *PerceptionSensorConfigurationZone) GetCongestionSpeedThresholdKmh() string {
-	if x != nil {
-		return x.CongestionSpeedThresholdKmh
+	if x != nil && x.CongestionSpeedThresholdKmh != nil {
+		return *x.CongestionSpeedThresholdKmh
 	}
 	return ""
 }
 
 func (x *PerceptionSensorConfigurationZone) GetCongestionDensityThreshold() string {
-	if x != nil {
-		return x.CongestionDensityThreshold
+	if x != nil && x.CongestionDensityThreshold != nil {
+		return *x.CongestionDensityThreshold
 	}
 	return ""
 }
@@ -1128,9 +868,9 @@ func (x *PerceptionSensorConfigurationZone) GetVertex() []*Vertex {
 
 type Vertex struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	VertexIndex   uint32                 `protobuf:"varint,1,opt,name=vertex_index,json=vertexIndex,proto3" json:"vertex_index,omitempty"`
-	Latitude      string                 `protobuf:"bytes,2,opt,name=latitude,proto3" json:"latitude,omitempty"`
-	Longitude     string                 `protobuf:"bytes,3,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	VertexIndex   *uint32                `protobuf:"varint,1,opt,name=vertex_index,json=vertexIndex,proto3,oneof" json:"vertex_index,omitempty"`
+	Latitude      *string                `protobuf:"bytes,2,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
+	Longitude     *string                `protobuf:"bytes,3,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1166,30 +906,30 @@ func (*Vertex) Descriptor() ([]byte, []int) {
 }
 
 func (x *Vertex) GetVertexIndex() uint32 {
-	if x != nil {
-		return x.VertexIndex
+	if x != nil && x.VertexIndex != nil {
+		return *x.VertexIndex
 	}
 	return 0
 }
 
 func (x *Vertex) GetLatitude() string {
-	if x != nil {
-		return x.Latitude
+	if x != nil && x.Latitude != nil {
+		return *x.Latitude
 	}
 	return ""
 }
 
 func (x *Vertex) GetLongitude() string {
-	if x != nil {
-		return x.Longitude
+	if x != nil && x.Longitude != nil {
+		return *x.Longitude
 	}
 	return ""
 }
 
 type Objects struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	TrackCount    uint32                 `protobuf:"varint,1,opt,name=track_count,json=trackCount,proto3" json:"track_count,omitempty"`
-	TrackEpoch    uint32                 `protobuf:"varint,3,opt,name=track_epoch,json=trackEpoch,proto3" json:"track_epoch,omitempty"`
+	TrackCount    *uint32                `protobuf:"varint,1,opt,name=track_count,json=trackCount,proto3,oneof" json:"track_count,omitempty"`
+	TrackEpoch    *uint32                `protobuf:"varint,3,opt,name=track_epoch,json=trackEpoch,proto3,oneof" json:"track_epoch,omitempty"`
 	Track         []*Track               `protobuf:"bytes,2,rep,name=track,proto3" json:"track,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1226,15 +966,15 @@ func (*Objects) Descriptor() ([]byte, []int) {
 }
 
 func (x *Objects) GetTrackCount() uint32 {
-	if x != nil {
-		return x.TrackCount
+	if x != nil && x.TrackCount != nil {
+		return *x.TrackCount
 	}
 	return 0
 }
 
 func (x *Objects) GetTrackEpoch() uint32 {
-	if x != nil {
-		return x.TrackEpoch
+	if x != nil && x.TrackEpoch != nil {
+		return *x.TrackEpoch
 	}
 	return 0
 }
@@ -1248,16 +988,16 @@ func (x *Objects) GetTrack() []*Track {
 
 type Track struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	TrackId         uint32                 `protobuf:"varint,1,opt,name=track_id,json=trackId,proto3" json:"track_id,omitempty"`
-	Lifecycle       Lifecycle              `protobuf:"varint,10,opt,name=lifecycle,proto3,enum=openits.perception.v1.Lifecycle" json:"lifecycle,omitempty"`
-	Class           string                 `protobuf:"bytes,2,opt,name=class,proto3" json:"class,omitempty"`
-	ClassConfidence uint32                 `protobuf:"varint,3,opt,name=class_confidence,json=classConfidence,proto3" json:"class_confidence,omitempty"`
-	SpeedKmh        string                 `protobuf:"bytes,4,opt,name=speed_kmh,json=speedKmh,proto3" json:"speed_kmh,omitempty"`
+	TrackId         *uint32                `protobuf:"varint,1,opt,name=track_id,json=trackId,proto3,oneof" json:"track_id,omitempty"`
+	Lifecycle       *Lifecycle             `protobuf:"varint,10,opt,name=lifecycle,proto3,enum=openits.perception.v1.Lifecycle,oneof" json:"lifecycle,omitempty"`
+	Class           *string                `protobuf:"bytes,2,opt,name=class,proto3,oneof" json:"class,omitempty"`
+	ClassConfidence *uint32                `protobuf:"varint,3,opt,name=class_confidence,json=classConfidence,proto3,oneof" json:"class_confidence,omitempty"`
+	SpeedKmh        *string                `protobuf:"bytes,4,opt,name=speed_kmh,json=speedKmh,proto3,oneof" json:"speed_kmh,omitempty"`
 	ObservedAt      *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
-	Elevation       string                 `protobuf:"bytes,6,opt,name=elevation,proto3" json:"elevation,omitempty"`
-	Heading         uint32                 `protobuf:"varint,7,opt,name=heading,proto3" json:"heading,omitempty"`
-	Latitude        string                 `protobuf:"bytes,8,opt,name=latitude,proto3" json:"latitude,omitempty"`
-	Longitude       string                 `protobuf:"bytes,9,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	Elevation       *string                `protobuf:"bytes,6,opt,name=elevation,proto3,oneof" json:"elevation,omitempty"`
+	Heading         *uint32                `protobuf:"varint,7,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
+	Latitude        *string                `protobuf:"bytes,8,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
+	Longitude       *string                `protobuf:"bytes,9,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1293,36 +1033,36 @@ func (*Track) Descriptor() ([]byte, []int) {
 }
 
 func (x *Track) GetTrackId() uint32 {
-	if x != nil {
-		return x.TrackId
+	if x != nil && x.TrackId != nil {
+		return *x.TrackId
 	}
 	return 0
 }
 
 func (x *Track) GetLifecycle() Lifecycle {
-	if x != nil {
-		return x.Lifecycle
+	if x != nil && x.Lifecycle != nil {
+		return *x.Lifecycle
 	}
 	return Lifecycle_LIFECYCLE_TENTATIVE
 }
 
 func (x *Track) GetClass() string {
-	if x != nil {
-		return x.Class
+	if x != nil && x.Class != nil {
+		return *x.Class
 	}
 	return ""
 }
 
 func (x *Track) GetClassConfidence() uint32 {
-	if x != nil {
-		return x.ClassConfidence
+	if x != nil && x.ClassConfidence != nil {
+		return *x.ClassConfidence
 	}
 	return 0
 }
 
 func (x *Track) GetSpeedKmh() string {
-	if x != nil {
-		return x.SpeedKmh
+	if x != nil && x.SpeedKmh != nil {
+		return *x.SpeedKmh
 	}
 	return ""
 }
@@ -1335,29 +1075,29 @@ func (x *Track) GetObservedAt() *timestamppb.Timestamp {
 }
 
 func (x *Track) GetElevation() string {
-	if x != nil {
-		return x.Elevation
+	if x != nil && x.Elevation != nil {
+		return *x.Elevation
 	}
 	return ""
 }
 
 func (x *Track) GetHeading() uint32 {
-	if x != nil {
-		return x.Heading
+	if x != nil && x.Heading != nil {
+		return *x.Heading
 	}
 	return 0
 }
 
 func (x *Track) GetLatitude() string {
-	if x != nil {
-		return x.Latitude
+	if x != nil && x.Latitude != nil {
+		return *x.Latitude
 	}
 	return ""
 }
 
 func (x *Track) GetLongitude() string {
-	if x != nil {
-		return x.Longitude
+	if x != nil && x.Longitude != nil {
+		return *x.Longitude
 	}
 	return ""
 }
@@ -1408,10 +1148,8 @@ func (x *PerceptionSensorZones) GetZone() []*PerceptionSensorZonesZone {
 
 type PerceptionSensorZonesZone struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	ZoneId          string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	OccupancyCount  uint32                 `protobuf:"varint,2,opt,name=occupancy_count,json=occupancyCount,proto3" json:"occupancy_count,omitempty"`
-	Presence        bool                   `protobuf:"varint,3,opt,name=presence,proto3" json:"presence,omitempty"`
-	AverageSpeedKmh string                 `protobuf:"bytes,4,opt,name=average_speed_kmh,json=averageSpeedKmh,proto3" json:"average_speed_kmh,omitempty"`
+	ZoneId          *string                `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3,oneof" json:"zone_id,omitempty"`
+	AverageSpeedKmh *string                `protobuf:"bytes,4,opt,name=average_speed_kmh,json=averageSpeedKmh,proto3,oneof" json:"average_speed_kmh,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1447,40 +1185,26 @@ func (*PerceptionSensorZonesZone) Descriptor() ([]byte, []int) {
 }
 
 func (x *PerceptionSensorZonesZone) GetZoneId() string {
-	if x != nil {
-		return x.ZoneId
+	if x != nil && x.ZoneId != nil {
+		return *x.ZoneId
 	}
 	return ""
 }
 
-func (x *PerceptionSensorZonesZone) GetOccupancyCount() uint32 {
-	if x != nil {
-		return x.OccupancyCount
-	}
-	return 0
-}
-
-func (x *PerceptionSensorZonesZone) GetPresence() bool {
-	if x != nil {
-		return x.Presence
-	}
-	return false
-}
-
 func (x *PerceptionSensorZonesZone) GetAverageSpeedKmh() string {
-	if x != nil {
-		return x.AverageSpeedKmh
+	if x != nil && x.AverageSpeedKmh != nil {
+		return *x.AverageSpeedKmh
 	}
 	return ""
 }
 
 type Diagnostics struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
-	PointsPerSecond      uint32                 `protobuf:"varint,8,opt,name=points_per_second,json=pointsPerSecond,proto3" json:"points_per_second,omitempty"`
-	BlockagePercent      uint32                 `protobuf:"varint,9,opt,name=blockage_percent,json=blockagePercent,proto3" json:"blockage_percent,omitempty"`
-	InternalTemperatureC string                 `protobuf:"bytes,6,opt,name=internal_temperature_c,json=internalTemperatureC,proto3" json:"internal_temperature_c,omitempty"`
-	PoseDriftDeg         string                 `protobuf:"bytes,10,opt,name=pose_drift_deg,json=poseDriftDeg,proto3" json:"pose_drift_deg,omitempty"`
-	UptimeS              uint64                 `protobuf:"varint,7,opt,name=uptime_s,json=uptimeS,proto3" json:"uptime_s,omitempty"`
+	PointsPerSecond      *uint32                `protobuf:"varint,8,opt,name=points_per_second,json=pointsPerSecond,proto3,oneof" json:"points_per_second,omitempty"`
+	BlockagePercent      *uint32                `protobuf:"varint,9,opt,name=blockage_percent,json=blockagePercent,proto3,oneof" json:"blockage_percent,omitempty"`
+	InternalTemperatureC *string                `protobuf:"bytes,6,opt,name=internal_temperature_c,json=internalTemperatureC,proto3,oneof" json:"internal_temperature_c,omitempty"`
+	PoseDriftDeg         *string                `protobuf:"bytes,10,opt,name=pose_drift_deg,json=poseDriftDeg,proto3,oneof" json:"pose_drift_deg,omitempty"`
+	UptimeS              *uint64                `protobuf:"varint,7,opt,name=uptime_s,json=uptimeS,proto3,oneof" json:"uptime_s,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -1516,36 +1240,36 @@ func (*Diagnostics) Descriptor() ([]byte, []int) {
 }
 
 func (x *Diagnostics) GetPointsPerSecond() uint32 {
-	if x != nil {
-		return x.PointsPerSecond
+	if x != nil && x.PointsPerSecond != nil {
+		return *x.PointsPerSecond
 	}
 	return 0
 }
 
 func (x *Diagnostics) GetBlockagePercent() uint32 {
-	if x != nil {
-		return x.BlockagePercent
+	if x != nil && x.BlockagePercent != nil {
+		return *x.BlockagePercent
 	}
 	return 0
 }
 
 func (x *Diagnostics) GetInternalTemperatureC() string {
-	if x != nil {
-		return x.InternalTemperatureC
+	if x != nil && x.InternalTemperatureC != nil {
+		return *x.InternalTemperatureC
 	}
 	return ""
 }
 
 func (x *Diagnostics) GetPoseDriftDeg() string {
-	if x != nil {
-		return x.PoseDriftDeg
+	if x != nil && x.PoseDriftDeg != nil {
+		return *x.PoseDriftDeg
 	}
 	return ""
 }
 
 func (x *Diagnostics) GetUptimeS() uint64 {
-	if x != nil {
-		return x.UptimeS
+	if x != nil && x.UptimeS != nil {
+		return *x.UptimeS
 	}
 	return 0
 }
@@ -1595,20 +1319,20 @@ func (x *Incidents) GetIncident() []*Incident {
 }
 
 type Incident struct {
-	state         protoimpl.MessageState            `protogen:"open.v1"`
-	IncidentId    string                            `protobuf:"bytes,1,opt,name=incident_id,json=incidentId,proto3" json:"incident_id,omitempty"`
-	ZoneId        string                            `protobuf:"bytes,2,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Type          string                            `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
-	Severity      OpenitsPerceptionIncidentSeverity `protobuf:"varint,4,opt,name=severity,proto3,enum=openits.perception.v1.OpenitsPerceptionIncidentSeverity" json:"severity,omitempty"`
-	TrackId       uint32                            `protobuf:"varint,8,opt,name=track_id,json=trackId,proto3" json:"track_id,omitempty"`
-	TrackEpoch    uint32                            `protobuf:"varint,12,opt,name=track_epoch,json=trackEpoch,proto3" json:"track_epoch,omitempty"`
-	ObjectClass   string                            `protobuf:"bytes,9,opt,name=object_class,json=objectClass,proto3" json:"object_class,omitempty"`
-	SpeedKmh      string                            `protobuf:"bytes,10,opt,name=speed_kmh,json=speedKmh,proto3" json:"speed_kmh,omitempty"`
-	Confidence    uint32                            `protobuf:"varint,11,opt,name=confidence,proto3" json:"confidence,omitempty"`
-	FirstObserved *timestamppb.Timestamp            `protobuf:"bytes,5,opt,name=first_observed,json=firstObserved,proto3" json:"first_observed,omitempty"`
-	Disposition   IncidentDisposition               `protobuf:"varint,13,opt,name=disposition,proto3,enum=openits.perception.v1.IncidentDisposition" json:"disposition,omitempty"`
-	Latitude      string                            `protobuf:"bytes,6,opt,name=latitude,proto3" json:"latitude,omitempty"`
-	Longitude     string                            `protobuf:"bytes,7,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	IncidentId    *string                `protobuf:"bytes,1,opt,name=incident_id,json=incidentId,proto3,oneof" json:"incident_id,omitempty"`
+	ZoneId        *string                `protobuf:"bytes,2,opt,name=zone_id,json=zoneId,proto3,oneof" json:"zone_id,omitempty"`
+	Type          *string                `protobuf:"bytes,3,opt,name=type,proto3,oneof" json:"type,omitempty"`
+	Severity      *IncidentSeverity      `protobuf:"varint,4,opt,name=severity,proto3,enum=openits.perception.v1.IncidentSeverity,oneof" json:"severity,omitempty"`
+	TrackId       *uint32                `protobuf:"varint,8,opt,name=track_id,json=trackId,proto3,oneof" json:"track_id,omitempty"`
+	TrackEpoch    *uint32                `protobuf:"varint,12,opt,name=track_epoch,json=trackEpoch,proto3,oneof" json:"track_epoch,omitempty"`
+	ObjectClass   *string                `protobuf:"bytes,9,opt,name=object_class,json=objectClass,proto3,oneof" json:"object_class,omitempty"`
+	SpeedKmh      *string                `protobuf:"bytes,10,opt,name=speed_kmh,json=speedKmh,proto3,oneof" json:"speed_kmh,omitempty"`
+	Confidence    *uint32                `protobuf:"varint,11,opt,name=confidence,proto3,oneof" json:"confidence,omitempty"`
+	FirstObserved *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=first_observed,json=firstObserved,proto3" json:"first_observed,omitempty"`
+	Disposition   *IncidentDisposition   `protobuf:"varint,13,opt,name=disposition,proto3,enum=openits.perception.v1.IncidentDisposition,oneof" json:"disposition,omitempty"`
+	Latitude      *string                `protobuf:"bytes,6,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
+	Longitude     *string                `protobuf:"bytes,7,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1644,64 +1368,64 @@ func (*Incident) Descriptor() ([]byte, []int) {
 }
 
 func (x *Incident) GetIncidentId() string {
-	if x != nil {
-		return x.IncidentId
+	if x != nil && x.IncidentId != nil {
+		return *x.IncidentId
 	}
 	return ""
 }
 
 func (x *Incident) GetZoneId() string {
-	if x != nil {
-		return x.ZoneId
+	if x != nil && x.ZoneId != nil {
+		return *x.ZoneId
 	}
 	return ""
 }
 
 func (x *Incident) GetType() string {
-	if x != nil {
-		return x.Type
+	if x != nil && x.Type != nil {
+		return *x.Type
 	}
 	return ""
 }
 
-func (x *Incident) GetSeverity() OpenitsPerceptionIncidentSeverity {
-	if x != nil {
-		return x.Severity
+func (x *Incident) GetSeverity() IncidentSeverity {
+	if x != nil && x.Severity != nil {
+		return *x.Severity
 	}
-	return OpenitsPerceptionIncidentSeverity_OPENITS_PERCEPTION_INCIDENT_SEVERITY_MINOR
+	return IncidentSeverity_INCIDENT_SEVERITY_MINOR
 }
 
 func (x *Incident) GetTrackId() uint32 {
-	if x != nil {
-		return x.TrackId
+	if x != nil && x.TrackId != nil {
+		return *x.TrackId
 	}
 	return 0
 }
 
 func (x *Incident) GetTrackEpoch() uint32 {
-	if x != nil {
-		return x.TrackEpoch
+	if x != nil && x.TrackEpoch != nil {
+		return *x.TrackEpoch
 	}
 	return 0
 }
 
 func (x *Incident) GetObjectClass() string {
-	if x != nil {
-		return x.ObjectClass
+	if x != nil && x.ObjectClass != nil {
+		return *x.ObjectClass
 	}
 	return ""
 }
 
 func (x *Incident) GetSpeedKmh() string {
-	if x != nil {
-		return x.SpeedKmh
+	if x != nil && x.SpeedKmh != nil {
+		return *x.SpeedKmh
 	}
 	return ""
 }
 
 func (x *Incident) GetConfidence() uint32 {
-	if x != nil {
-		return x.Confidence
+	if x != nil && x.Confidence != nil {
+		return *x.Confidence
 	}
 	return 0
 }
@@ -1714,22 +1438,22 @@ func (x *Incident) GetFirstObserved() *timestamppb.Timestamp {
 }
 
 func (x *Incident) GetDisposition() IncidentDisposition {
-	if x != nil {
-		return x.Disposition
+	if x != nil && x.Disposition != nil {
+		return *x.Disposition
 	}
 	return IncidentDisposition_INCIDENT_DISPOSITION_PENDING
 }
 
 func (x *Incident) GetLatitude() string {
-	if x != nil {
-		return x.Latitude
+	if x != nil && x.Latitude != nil {
+		return *x.Latitude
 	}
 	return ""
 }
 
 func (x *Incident) GetLongitude() string {
-	if x != nil {
-		return x.Longitude
+	if x != nil && x.Longitude != nil {
+		return *x.Longitude
 	}
 	return ""
 }
@@ -1780,9 +1504,9 @@ func (x *IncidentReview) GetReview() []*Review {
 
 type Review struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	IncidentId    string                 `protobuf:"bytes,1,opt,name=incident_id,json=incidentId,proto3" json:"incident_id,omitempty"`
-	Disposition   IncidentDisposition    `protobuf:"varint,2,opt,name=disposition,proto3,enum=openits.perception.v1.IncidentDisposition" json:"disposition,omitempty"`
-	ReviewedBy    string                 `protobuf:"bytes,3,opt,name=reviewed_by,json=reviewedBy,proto3" json:"reviewed_by,omitempty"`
+	IncidentId    *string                `protobuf:"bytes,1,opt,name=incident_id,json=incidentId,proto3,oneof" json:"incident_id,omitempty"`
+	Disposition   *IncidentDisposition   `protobuf:"varint,2,opt,name=disposition,proto3,enum=openits.perception.v1.IncidentDisposition,oneof" json:"disposition,omitempty"`
+	ReviewedBy    *string                `protobuf:"bytes,3,opt,name=reviewed_by,json=reviewedBy,proto3,oneof" json:"reviewed_by,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1818,22 +1542,22 @@ func (*Review) Descriptor() ([]byte, []int) {
 }
 
 func (x *Review) GetIncidentId() string {
-	if x != nil {
-		return x.IncidentId
+	if x != nil && x.IncidentId != nil {
+		return *x.IncidentId
 	}
 	return ""
 }
 
 func (x *Review) GetDisposition() IncidentDisposition {
-	if x != nil {
-		return x.Disposition
+	if x != nil && x.Disposition != nil {
+		return *x.Disposition
 	}
 	return IncidentDisposition_INCIDENT_DISPOSITION_PENDING
 }
 
 func (x *Review) GetReviewedBy() string {
-	if x != nil {
-		return x.ReviewedBy
+	if x != nil && x.ReviewedBy != nil {
+		return *x.ReviewedBy
 	}
 	return ""
 }
@@ -1884,12 +1608,12 @@ func (x *Faults) GetFault() []*Fault {
 
 type Fault struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Category       string                 `protobuf:"bytes,1,opt,name=category,proto3" json:"category,omitempty"`
-	CorrelatesWith string                 `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3" json:"correlates_with,omitempty"`
-	Description    string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	FaultId        string                 `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3" json:"fault_id,omitempty"`
+	Category       *string                `protobuf:"bytes,1,opt,name=category,proto3,oneof" json:"category,omitempty"`
+	CorrelatesWith *string                `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3,oneof" json:"correlates_with,omitempty"`
+	Description    *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	FaultId        *string                `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3,oneof" json:"fault_id,omitempty"`
 	FirstObserved  *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=first_observed,json=firstObserved,proto3" json:"first_observed,omitempty"`
-	Severity       FaultSeverity          `protobuf:"varint,5,opt,name=severity,proto3,enum=openits.perception.v1.FaultSeverity" json:"severity,omitempty"`
+	Severity       *FaultSeverity         `protobuf:"varint,5,opt,name=severity,proto3,enum=openits.perception.v1.FaultSeverity,oneof" json:"severity,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -1925,29 +1649,29 @@ func (*Fault) Descriptor() ([]byte, []int) {
 }
 
 func (x *Fault) GetCategory() string {
-	if x != nil {
-		return x.Category
+	if x != nil && x.Category != nil {
+		return *x.Category
 	}
 	return ""
 }
 
 func (x *Fault) GetCorrelatesWith() string {
-	if x != nil {
-		return x.CorrelatesWith
+	if x != nil && x.CorrelatesWith != nil {
+		return *x.CorrelatesWith
 	}
 	return ""
 }
 
 func (x *Fault) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
 
 func (x *Fault) GetFaultId() string {
-	if x != nil {
-		return x.FaultId
+	if x != nil && x.FaultId != nil {
+		return *x.FaultId
 	}
 	return ""
 }
@@ -1960,8 +1684,8 @@ func (x *Fault) GetFirstObserved() *timestamppb.Timestamp {
 }
 
 func (x *Fault) GetSeverity() FaultSeverity {
-	if x != nil {
-		return x.Severity
+	if x != nil && x.Severity != nil {
+		return *x.Severity
 	}
 	return FaultSeverity_FAULT_SEVERITY_INFO
 }
@@ -2064,10 +1788,10 @@ func (x *ZoneOccupancyConfiguration) GetZone() []*ZoneOccupancyConfigurationZone
 
 type ZoneOccupancyConfigurationZone struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ZoneId        string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	SensingMethod string                 `protobuf:"bytes,4,opt,name=sensing_method,json=sensingMethod,proto3" json:"sensing_method,omitempty"`
-	Classifies    bool                   `protobuf:"varint,5,opt,name=classifies,proto3" json:"classifies,omitempty"`
+	ZoneId        *string                `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3,oneof" json:"zone_id,omitempty"`
+	Name          *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	SensingMethod *string                `protobuf:"bytes,4,opt,name=sensing_method,json=sensingMethod,proto3,oneof" json:"sensing_method,omitempty"`
+	Classifies    *bool                  `protobuf:"varint,5,opt,name=classifies,proto3,oneof" json:"classifies,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2103,29 +1827,29 @@ func (*ZoneOccupancyConfigurationZone) Descriptor() ([]byte, []int) {
 }
 
 func (x *ZoneOccupancyConfigurationZone) GetZoneId() string {
-	if x != nil {
-		return x.ZoneId
+	if x != nil && x.ZoneId != nil {
+		return *x.ZoneId
 	}
 	return ""
 }
 
 func (x *ZoneOccupancyConfigurationZone) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *ZoneOccupancyConfigurationZone) GetSensingMethod() string {
-	if x != nil {
-		return x.SensingMethod
+	if x != nil && x.SensingMethod != nil {
+		return *x.SensingMethod
 	}
 	return ""
 }
 
 func (x *ZoneOccupancyConfigurationZone) GetClassifies() bool {
-	if x != nil {
-		return x.Classifies
+	if x != nil && x.Classifies != nil {
+		return *x.Classifies
 	}
 	return false
 }
@@ -2176,12 +1900,12 @@ func (x *ZoneOccupancyZones) GetZone() []*ZoneOccupancyZonesZone {
 
 type ZoneOccupancyZonesZone struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
-	ZoneId             string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	ZoneId             *string                `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3,oneof" json:"zone_id,omitempty"`
 	MeasuredAt         *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=measured_at,json=measuredAt,proto3" json:"measured_at,omitempty"`
-	OccupancyCount     uint32                 `protobuf:"varint,3,opt,name=occupancy_count,json=occupancyCount,proto3" json:"occupancy_count,omitempty"`
+	OccupancyCount     *uint32                `protobuf:"varint,3,opt,name=occupancy_count,json=occupancyCount,proto3,oneof" json:"occupancy_count,omitempty"`
 	OccupiedSince      *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=occupied_since,json=occupiedSince,proto3" json:"occupied_since,omitempty"`
-	Presence           bool                   `protobuf:"varint,2,opt,name=presence,proto3" json:"presence,omitempty"`
-	PresenceConfidence uint32                 `protobuf:"varint,5,opt,name=presence_confidence,json=presenceConfidence,proto3" json:"presence_confidence,omitempty"`
+	Presence           *bool                  `protobuf:"varint,2,opt,name=presence,proto3,oneof" json:"presence,omitempty"`
+	PresenceConfidence *uint32                `protobuf:"varint,5,opt,name=presence_confidence,json=presenceConfidence,proto3,oneof" json:"presence_confidence,omitempty"`
 	PresentClass       []*PresentClass        `protobuf:"bytes,7,rep,name=present_class,json=presentClass,proto3" json:"present_class,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
@@ -2218,8 +1942,8 @@ func (*ZoneOccupancyZonesZone) Descriptor() ([]byte, []int) {
 }
 
 func (x *ZoneOccupancyZonesZone) GetZoneId() string {
-	if x != nil {
-		return x.ZoneId
+	if x != nil && x.ZoneId != nil {
+		return *x.ZoneId
 	}
 	return ""
 }
@@ -2232,8 +1956,8 @@ func (x *ZoneOccupancyZonesZone) GetMeasuredAt() *timestamppb.Timestamp {
 }
 
 func (x *ZoneOccupancyZonesZone) GetOccupancyCount() uint32 {
-	if x != nil {
-		return x.OccupancyCount
+	if x != nil && x.OccupancyCount != nil {
+		return *x.OccupancyCount
 	}
 	return 0
 }
@@ -2246,15 +1970,15 @@ func (x *ZoneOccupancyZonesZone) GetOccupiedSince() *timestamppb.Timestamp {
 }
 
 func (x *ZoneOccupancyZonesZone) GetPresence() bool {
-	if x != nil {
-		return x.Presence
+	if x != nil && x.Presence != nil {
+		return *x.Presence
 	}
 	return false
 }
 
 func (x *ZoneOccupancyZonesZone) GetPresenceConfidence() uint32 {
-	if x != nil {
-		return x.PresenceConfidence
+	if x != nil && x.PresenceConfidence != nil {
+		return *x.PresenceConfidence
 	}
 	return 0
 }
@@ -2268,9 +1992,9 @@ func (x *ZoneOccupancyZonesZone) GetPresentClass() []*PresentClass {
 
 type PresentClass struct {
 	state                    protoimpl.MessageState `protogen:"open.v1"`
-	Class                    string                 `protobuf:"bytes,1,opt,name=class,proto3" json:"class,omitempty"`
-	Count                    uint32                 `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
-	ClassificationConfidence uint32                 `protobuf:"varint,3,opt,name=classification_confidence,json=classificationConfidence,proto3" json:"classification_confidence,omitempty"`
+	Class                    *string                `protobuf:"bytes,1,opt,name=class,proto3,oneof" json:"class,omitempty"`
+	Count                    *uint32                `protobuf:"varint,2,opt,name=count,proto3,oneof" json:"count,omitempty"`
+	ClassificationConfidence *uint32                `protobuf:"varint,3,opt,name=classification_confidence,json=classificationConfidence,proto3,oneof" json:"classification_confidence,omitempty"`
 	unknownFields            protoimpl.UnknownFields
 	sizeCache                protoimpl.SizeCache
 }
@@ -2306,22 +2030,22 @@ func (*PresentClass) Descriptor() ([]byte, []int) {
 }
 
 func (x *PresentClass) GetClass() string {
-	if x != nil {
-		return x.Class
+	if x != nil && x.Class != nil {
+		return *x.Class
 	}
 	return ""
 }
 
 func (x *PresentClass) GetCount() uint32 {
-	if x != nil {
-		return x.Count
+	if x != nil && x.Count != nil {
+		return *x.Count
 	}
 	return 0
 }
 
 func (x *PresentClass) GetClassificationConfidence() uint32 {
-	if x != nil {
-		return x.ClassificationConfidence
+	if x != nil && x.ClassificationConfidence != nil {
+		return *x.ClassificationConfidence
 	}
 	return 0
 }
@@ -2330,7 +2054,7 @@ var File_openits_perception_v1_state_proto protoreflect.FileDescriptor
 
 const file_openits_perception_v1_state_proto_rawDesc = "" +
 	"\n" +
-	"!openits/perception/v1/state.proto\x12\x15openits.perception.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x9a\x06\n" +
+	"!openits/perception/v1/state.proto\x12\x15openits.perception.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a!openits/perception/v1/types.proto\"\x9a\x06\n" +
 	"\x10PerceptionSensor\x12E\n" +
 	"\x06config\x18\x01 \x01(\v2-.openits.perception.v1.PerceptionSensorConfigR\x06config\x12B\n" +
 	"\x05state\x18\x02 \x01(\v2,.openits.perception.v1.PerceptionSensorStateR\x05state\x12G\n" +
@@ -2343,201 +2067,302 @@ const file_openits_perception_v1_state_proto_rawDesc = "" +
 	"\x0fincident_review\x18\n" +
 	" \x01(\v2%.openits.perception.v1.IncidentReviewR\x0eincidentReview\x125\n" +
 	"\x06faults\x18\b \x01(\v2\x1d.openits.perception.v1.FaultsR\x06faults\x12K\n" +
-	"\x0ezone_occupancy\x18\v \x01(\v2$.openits.perception.v1.ZoneOccupancyR\rzoneOccupancy\"\xd1\x03\n" +
-	"\x16PerceptionSensorConfig\x12\x1c\n" +
-	"\televation\x18\x01 \x01(\tR\televation\x12\x18\n" +
-	"\aheading\x18\x02 \x01(\rR\aheading\x12\x0e\n" +
-	"\x02id\x18\b \x01(\tR\x02id\x12=\n" +
-	"\finstall_date\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1a\n" +
-	"\blatitude\x18\x03 \x01(\tR\blatitude\x12g\n" +
-	"\x10linear_reference\x18\t \x01(\v2<.openits.perception.v1.PerceptionSensorConfigLinearReferenceR\x0flinearReference\x12\x1c\n" +
-	"\tlongitude\x18\x04 \x01(\tR\tlongitude\x12#\n" +
+	"\x0ezone_occupancy\x18\v \x01(\v2$.openits.perception.v1.ZoneOccupancyR\rzoneOccupancy\"\x83\x05\n" +
+	"\x16PerceptionSensorConfig\x12!\n" +
+	"\televation\x18\x01 \x01(\tH\x00R\televation\x88\x01\x01\x12\x1d\n" +
+	"\aheading\x18\x02 \x01(\rH\x01R\aheading\x88\x01\x01\x12\x13\n" +
+	"\x02id\x18\b \x01(\tH\x02R\x02id\x88\x01\x01\x12=\n" +
+	"\finstall_date\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	"\blatitude\x18\x03 \x01(\tH\x03R\blatitude\x88\x01\x01\x12g\n" +
+	"\x10linear_reference\x18\t \x01(\v2<.openits.perception.v1.PerceptionSensorConfigLinearReferenceR\x0flinearReference\x12!\n" +
+	"\tlongitude\x18\x04 \x01(\tH\x04R\tlongitude\x88\x01\x01\x12(\n" +
 	"\rmaintained_by\x18\n" +
-	" \x01(\tR\fmaintainedBy\x12\x12\n" +
-	"\x04name\x18\x05 \x01(\tR\x04name\x12\x14\n" +
-	"\x05owner\x18\v \x01(\tR\x05owner\x12%\n" +
-	"\x0eroad_reference\x18\x06 \x01(\tR\rroadReference\x12\x17\n" +
-	"\asite_id\x18\f \x01(\tR\x06siteId\"\xa9\x01\n" +
-	"%PerceptionSensorConfigLinearReference\x12)\n" +
-	"\x10route_designator\x18\x01 \x01(\tR\x0frouteDesignator\x12\x1c\n" +
-	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
-	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
+	" \x01(\tH\x05R\fmaintainedBy\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x05 \x01(\tH\x06R\x04name\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\v \x01(\tH\aR\x05owner\x88\x01\x01\x12*\n" +
+	"\x0eroad_reference\x18\x06 \x01(\tH\bR\rroadReference\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\f \x01(\tH\tR\x06siteId\x88\x01\x01B\f\n" +
 	"\n" +
-	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"\xff\x04\n" +
-	"\x15PerceptionSensorState\x12\x1c\n" +
-	"\televation\x18\x01 \x01(\tR\televation\x12\x1a\n" +
-	"\bfirmware\x18\x02 \x01(\tR\bfirmware\x12%\n" +
-	"\x0efirmware_build\x18\r \x01(\tR\rfirmwareBuild\x12)\n" +
-	"\x10hardware_version\x18\x0e \x01(\tR\x0fhardwareVersion\x12\x18\n" +
-	"\aheading\x18\x03 \x01(\rR\aheading\x12\x0e\n" +
-	"\x02id\x18\f \x01(\tR\x02id\x12=\n" +
+	"_elevationB\n" +
+	"\n" +
+	"\b_headingB\x05\n" +
+	"\x03_idB\v\n" +
+	"\t_latitudeB\f\n" +
+	"\n" +
+	"_longitudeB\x10\n" +
+	"\x0e_maintained_byB\a\n" +
+	"\x05_nameB\b\n" +
+	"\x06_ownerB\x11\n" +
+	"\x0f_road_referenceB\n" +
+	"\n" +
+	"\b_site_id\"\xfb\x01\n" +
+	"%PerceptionSensorConfigLinearReference\x12.\n" +
+	"\x10route_designator\x18\x01 \x01(\tH\x00R\x0frouteDesignator\x88\x01\x01\x12!\n" +
+	"\tdirection\x18\x02 \x01(\tH\x01R\tdirection\x88\x01\x01\x12\x1d\n" +
+	"\ameasure\x18\x03 \x01(\tH\x02R\ameasure\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"lrs_method\x18\x04 \x01(\tH\x03R\tlrsMethod\x88\x01\x01B\x13\n" +
+	"\x11_route_designatorB\f\n" +
+	"\n" +
+	"_directionB\n" +
+	"\n" +
+	"\b_measureB\r\n" +
+	"\v_lrs_method\"\xa2\a\n" +
+	"\x15PerceptionSensorState\x12!\n" +
+	"\televation\x18\x01 \x01(\tH\x00R\televation\x88\x01\x01\x12\x1f\n" +
+	"\bfirmware\x18\x02 \x01(\tH\x01R\bfirmware\x88\x01\x01\x12*\n" +
+	"\x0efirmware_build\x18\r \x01(\tH\x02R\rfirmwareBuild\x88\x01\x01\x12.\n" +
+	"\x10hardware_version\x18\x0e \x01(\tH\x03R\x0fhardwareVersion\x88\x01\x01\x12\x1d\n" +
+	"\aheading\x18\x03 \x01(\rH\x04R\aheading\x88\x01\x01\x12\x13\n" +
+	"\x02id\x18\f \x01(\tH\x05R\x02id\x88\x01\x01\x12=\n" +
 	"\finstall_date\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1a\n" +
-	"\blatitude\x18\x04 \x01(\tR\blatitude\x12f\n" +
-	"\x10linear_reference\x18\x0f \x01(\v2;.openits.perception.v1.PerceptionSensorStateLinearReferenceR\x0flinearReference\x12\x1c\n" +
-	"\tlongitude\x18\x05 \x01(\tR\tlongitude\x12#\n" +
-	"\rmaintained_by\x18\x10 \x01(\tR\fmaintainedBy\x12\x12\n" +
-	"\x04make\x18\x06 \x01(\tR\x04make\x12\x14\n" +
-	"\x05model\x18\a \x01(\tR\x05model\x12\x12\n" +
-	"\x04name\x18\b \x01(\tR\x04name\x12\x14\n" +
-	"\x05owner\x18\x11 \x01(\tR\x05owner\x12%\n" +
-	"\x0eroad_reference\x18\t \x01(\tR\rroadReference\x12\x16\n" +
-	"\x06serial\x18\v \x01(\tR\x06serial\x12\x17\n" +
-	"\asite_id\x18\x12 \x01(\tR\x06siteId\"\xa8\x01\n" +
-	"$PerceptionSensorStateLinearReference\x12)\n" +
-	"\x10route_designator\x18\x01 \x01(\tR\x0frouteDesignator\x12\x1c\n" +
-	"\tdirection\x18\x02 \x01(\tR\tdirection\x12\x18\n" +
-	"\ameasure\x18\x03 \x01(\tR\ameasure\x12\x1d\n" +
+	" \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	"\blatitude\x18\x04 \x01(\tH\x06R\blatitude\x88\x01\x01\x12f\n" +
+	"\x10linear_reference\x18\x0f \x01(\v2;.openits.perception.v1.PerceptionSensorStateLinearReferenceR\x0flinearReference\x12!\n" +
+	"\tlongitude\x18\x05 \x01(\tH\aR\tlongitude\x88\x01\x01\x12(\n" +
+	"\rmaintained_by\x18\x10 \x01(\tH\bR\fmaintainedBy\x88\x01\x01\x12\x17\n" +
+	"\x04make\x18\x06 \x01(\tH\tR\x04make\x88\x01\x01\x12\x19\n" +
+	"\x05model\x18\a \x01(\tH\n" +
+	"R\x05model\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\b \x01(\tH\vR\x04name\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\x11 \x01(\tH\fR\x05owner\x88\x01\x01\x12*\n" +
+	"\x0eroad_reference\x18\t \x01(\tH\rR\rroadReference\x88\x01\x01\x12\x1b\n" +
+	"\x06serial\x18\v \x01(\tH\x0eR\x06serial\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\x12 \x01(\tH\x0fR\x06siteId\x88\x01\x01B\f\n" +
 	"\n" +
-	"lrs_method\x18\x04 \x01(\tR\tlrsMethod\"d\n" +
+	"_elevationB\v\n" +
+	"\t_firmwareB\x11\n" +
+	"\x0f_firmware_buildB\x13\n" +
+	"\x11_hardware_versionB\n" +
+	"\n" +
+	"\b_headingB\x05\n" +
+	"\x03_idB\v\n" +
+	"\t_latitudeB\f\n" +
+	"\n" +
+	"_longitudeB\x10\n" +
+	"\x0e_maintained_byB\a\n" +
+	"\x05_makeB\b\n" +
+	"\x06_modelB\a\n" +
+	"\x05_nameB\b\n" +
+	"\x06_ownerB\x11\n" +
+	"\x0f_road_referenceB\t\n" +
+	"\a_serialB\n" +
+	"\n" +
+	"\b_site_id\"\xfa\x01\n" +
+	"$PerceptionSensorStateLinearReference\x12.\n" +
+	"\x10route_designator\x18\x01 \x01(\tH\x00R\x0frouteDesignator\x88\x01\x01\x12!\n" +
+	"\tdirection\x18\x02 \x01(\tH\x01R\tdirection\x88\x01\x01\x12\x1d\n" +
+	"\ameasure\x18\x03 \x01(\tH\x02R\ameasure\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"lrs_method\x18\x04 \x01(\tH\x03R\tlrsMethod\x88\x01\x01B\x13\n" +
+	"\x11_route_designatorB\f\n" +
+	"\n" +
+	"_directionB\n" +
+	"\n" +
+	"\b_measureB\r\n" +
+	"\v_lrs_method\"d\n" +
 	"\fAssociations\x12T\n" +
-	"\x11associated_device\x18\x01 \x03(\v2'.openits.perception.v1.AssociatedDeviceR\x10associatedDevice\"W\n" +
-	"\x10AssociatedDevice\x12\x1b\n" +
-	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x12\n" +
-	"\x04role\x18\x02 \x01(\tR\x04role\x12\x12\n" +
-	"\x04note\x18\x03 \x01(\tR\x04note\"\x95\x01\n" +
-	"\x1dPerceptionSensorConfiguration\x12&\n" +
-	"\x0fdata_interval_s\x18\x01 \x01(\rR\rdataIntervalS\x12L\n" +
-	"\x04zone\x18\x02 \x03(\v28.openits.perception.v1.PerceptionSensorConfigurationZoneR\x04zone\"\xd9\x03\n" +
-	"!PerceptionSensorConfigurationZone\x12\x17\n" +
-	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12?\n" +
-	"\bfunction\x18\x03 \x01(\x0e2#.openits.perception.v1.ZoneFunctionR\bfunction\x12#\n" +
-	"\rlegal_heading\x18\x04 \x01(\rR\flegalHeading\x12\x17\n" +
-	"\adwell_s\x18\x05 \x01(\rR\x06dwellS\x12#\n" +
-	"\rpersistence_s\x18\x06 \x01(\rR\fpersistenceS\x12%\n" +
-	"\x0emin_confidence\x18\a \x01(\rR\rminConfidence\x12C\n" +
-	"\x1econgestion_speed_threshold_kmh\x18\b \x01(\tR\x1bcongestionSpeedThresholdKmh\x12@\n" +
-	"\x1ccongestion_density_threshold\x18\t \x01(\tR\x1acongestionDensityThreshold\x125\n" +
-	"\x06vertex\x18\n" +
-	" \x03(\v2\x1d.openits.perception.v1.VertexR\x06vertex\"e\n" +
-	"\x06Vertex\x12!\n" +
-	"\fvertex_index\x18\x01 \x01(\rR\vvertexIndex\x12\x1a\n" +
-	"\blatitude\x18\x02 \x01(\tR\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\x03 \x01(\tR\tlongitude\"\x7f\n" +
-	"\aObjects\x12\x1f\n" +
-	"\vtrack_count\x18\x01 \x01(\rR\n" +
-	"trackCount\x12\x1f\n" +
-	"\vtrack_epoch\x18\x03 \x01(\rR\n" +
-	"trackEpoch\x122\n" +
-	"\x05track\x18\x02 \x03(\v2\x1c.openits.perception.v1.TrackR\x05track\"\xef\x02\n" +
-	"\x05Track\x12\x19\n" +
-	"\btrack_id\x18\x01 \x01(\rR\atrackId\x12>\n" +
-	"\tlifecycle\x18\n" +
-	" \x01(\x0e2 .openits.perception.v1.LifecycleR\tlifecycle\x12\x14\n" +
-	"\x05class\x18\x02 \x01(\tR\x05class\x12)\n" +
-	"\x10class_confidence\x18\x03 \x01(\rR\x0fclassConfidence\x12\x1b\n" +
-	"\tspeed_kmh\x18\x04 \x01(\tR\bspeedKmh\x12;\n" +
-	"\vobserved_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"observedAt\x12\x1c\n" +
-	"\televation\x18\x06 \x01(\tR\televation\x12\x18\n" +
-	"\aheading\x18\a \x01(\rR\aheading\x12\x1a\n" +
-	"\blatitude\x18\b \x01(\tR\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\t \x01(\tR\tlongitude\"]\n" +
-	"\x15PerceptionSensorZones\x12D\n" +
-	"\x04zone\x18\x01 \x03(\v20.openits.perception.v1.PerceptionSensorZonesZoneR\x04zone\"\xa5\x01\n" +
-	"\x19PerceptionSensorZonesZone\x12\x17\n" +
-	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12'\n" +
-	"\x0foccupancy_count\x18\x02 \x01(\rR\x0eoccupancyCount\x12\x1a\n" +
-	"\bpresence\x18\x03 \x01(\bR\bpresence\x12*\n" +
-	"\x11average_speed_kmh\x18\x04 \x01(\tR\x0faverageSpeedKmh\"\xdb\x01\n" +
-	"\vDiagnostics\x12*\n" +
-	"\x11points_per_second\x18\b \x01(\rR\x0fpointsPerSecond\x12)\n" +
-	"\x10blockage_percent\x18\t \x01(\rR\x0fblockagePercent\x124\n" +
-	"\x16internal_temperature_c\x18\x06 \x01(\tR\x14internalTemperatureC\x12$\n" +
-	"\x0epose_drift_deg\x18\n" +
-	" \x01(\tR\fposeDriftDeg\x12\x19\n" +
-	"\buptime_s\x18\a \x01(\x04R\auptimeS\"H\n" +
-	"\tIncidents\x12;\n" +
-	"\bincident\x18\x01 \x03(\v2\x1f.openits.perception.v1.IncidentR\bincident\"\x95\x04\n" +
-	"\bIncident\x12\x1f\n" +
-	"\vincident_id\x18\x01 \x01(\tR\n" +
-	"incidentId\x12\x17\n" +
-	"\azone_id\x18\x02 \x01(\tR\x06zoneId\x12\x12\n" +
-	"\x04type\x18\x03 \x01(\tR\x04type\x12T\n" +
-	"\bseverity\x18\x04 \x01(\x0e28.openits.perception.v1.OpenitsPerceptionIncidentSeverityR\bseverity\x12\x19\n" +
-	"\btrack_id\x18\b \x01(\rR\atrackId\x12\x1f\n" +
-	"\vtrack_epoch\x18\f \x01(\rR\n" +
-	"trackEpoch\x12!\n" +
-	"\fobject_class\x18\t \x01(\tR\vobjectClass\x12\x1b\n" +
-	"\tspeed_kmh\x18\n" +
-	" \x01(\tR\bspeedKmh\x12\x1e\n" +
+	"\x11associated_device\x18\x01 \x03(\v2'.openits.perception.v1.AssociatedDeviceR\x10associatedDevice\"\x86\x01\n" +
+	"\x10AssociatedDevice\x12 \n" +
+	"\tdevice_id\x18\x01 \x01(\tH\x00R\bdeviceId\x88\x01\x01\x12\x17\n" +
+	"\x04role\x18\x02 \x01(\tH\x01R\x04role\x88\x01\x01\x12\x17\n" +
+	"\x04note\x18\x03 \x01(\tH\x02R\x04note\x88\x01\x01B\f\n" +
 	"\n" +
-	"confidence\x18\v \x01(\rR\n" +
-	"confidence\x12A\n" +
-	"\x0efirst_observed\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12L\n" +
-	"\vdisposition\x18\r \x01(\x0e2*.openits.perception.v1.IncidentDispositionR\vdisposition\x12\x1a\n" +
-	"\blatitude\x18\x06 \x01(\tR\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\a \x01(\tR\tlongitude\"G\n" +
+	"_device_idB\a\n" +
+	"\x05_roleB\a\n" +
+	"\x05_note\"\xae\x01\n" +
+	"\x1dPerceptionSensorConfiguration\x12+\n" +
+	"\x0fdata_interval_s\x18\x01 \x01(\rH\x00R\rdataIntervalS\x88\x01\x01\x12L\n" +
+	"\x04zone\x18\x02 \x03(\v28.openits.perception.v1.PerceptionSensorConfigurationZoneR\x04zoneB\x12\n" +
+	"\x10_data_interval_s\"\x8a\x05\n" +
+	"!PerceptionSensorConfigurationZone\x12\x1c\n" +
+	"\azone_id\x18\x01 \x01(\tH\x00R\x06zoneId\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x1f\n" +
+	"\bfunction\x18\x03 \x01(\tH\x02R\bfunction\x88\x01\x01\x12(\n" +
+	"\rlegal_heading\x18\x04 \x01(\rH\x03R\flegalHeading\x88\x01\x01\x12\x1c\n" +
+	"\adwell_s\x18\x05 \x01(\rH\x04R\x06dwellS\x88\x01\x01\x12(\n" +
+	"\rpersistence_s\x18\x06 \x01(\rH\x05R\fpersistenceS\x88\x01\x01\x12*\n" +
+	"\x0emin_confidence\x18\a \x01(\rH\x06R\rminConfidence\x88\x01\x01\x12H\n" +
+	"\x1econgestion_speed_threshold_kmh\x18\b \x01(\tH\aR\x1bcongestionSpeedThresholdKmh\x88\x01\x01\x12E\n" +
+	"\x1ccongestion_density_threshold\x18\t \x01(\tH\bR\x1acongestionDensityThreshold\x88\x01\x01\x125\n" +
+	"\x06vertex\x18\n" +
+	" \x03(\v2\x1d.openits.perception.v1.VertexR\x06vertexB\n" +
+	"\n" +
+	"\b_zone_idB\a\n" +
+	"\x05_nameB\v\n" +
+	"\t_functionB\x10\n" +
+	"\x0e_legal_headingB\n" +
+	"\n" +
+	"\b_dwell_sB\x10\n" +
+	"\x0e_persistence_sB\x11\n" +
+	"\x0f_min_confidenceB!\n" +
+	"\x1f_congestion_speed_threshold_kmhB\x1f\n" +
+	"\x1d_congestion_density_threshold\"\xa0\x01\n" +
+	"\x06Vertex\x12&\n" +
+	"\fvertex_index\x18\x01 \x01(\rH\x00R\vvertexIndex\x88\x01\x01\x12\x1f\n" +
+	"\blatitude\x18\x02 \x01(\tH\x01R\blatitude\x88\x01\x01\x12!\n" +
+	"\tlongitude\x18\x03 \x01(\tH\x02R\tlongitude\x88\x01\x01B\x0f\n" +
+	"\r_vertex_indexB\v\n" +
+	"\t_latitudeB\f\n" +
+	"\n" +
+	"_longitude\"\xa9\x01\n" +
+	"\aObjects\x12$\n" +
+	"\vtrack_count\x18\x01 \x01(\rH\x00R\n" +
+	"trackCount\x88\x01\x01\x12$\n" +
+	"\vtrack_epoch\x18\x03 \x01(\rH\x01R\n" +
+	"trackEpoch\x88\x01\x01\x122\n" +
+	"\x05track\x18\x02 \x03(\v2\x1c.openits.perception.v1.TrackR\x05trackB\x0e\n" +
+	"\f_track_countB\x0e\n" +
+	"\f_track_epoch\"\x99\x04\n" +
+	"\x05Track\x12\x1e\n" +
+	"\btrack_id\x18\x01 \x01(\rH\x00R\atrackId\x88\x01\x01\x12C\n" +
+	"\tlifecycle\x18\n" +
+	" \x01(\x0e2 .openits.perception.v1.LifecycleH\x01R\tlifecycle\x88\x01\x01\x12\x19\n" +
+	"\x05class\x18\x02 \x01(\tH\x02R\x05class\x88\x01\x01\x12.\n" +
+	"\x10class_confidence\x18\x03 \x01(\rH\x03R\x0fclassConfidence\x88\x01\x01\x12 \n" +
+	"\tspeed_kmh\x18\x04 \x01(\tH\x04R\bspeedKmh\x88\x01\x01\x12;\n" +
+	"\vobserved_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x12!\n" +
+	"\televation\x18\x06 \x01(\tH\x05R\televation\x88\x01\x01\x12\x1d\n" +
+	"\aheading\x18\a \x01(\rH\x06R\aheading\x88\x01\x01\x12\x1f\n" +
+	"\blatitude\x18\b \x01(\tH\aR\blatitude\x88\x01\x01\x12!\n" +
+	"\tlongitude\x18\t \x01(\tH\bR\tlongitude\x88\x01\x01B\v\n" +
+	"\t_track_idB\f\n" +
+	"\n" +
+	"_lifecycleB\b\n" +
+	"\x06_classB\x13\n" +
+	"\x11_class_confidenceB\f\n" +
+	"\n" +
+	"_speed_kmhB\f\n" +
+	"\n" +
+	"_elevationB\n" +
+	"\n" +
+	"\b_headingB\v\n" +
+	"\t_latitudeB\f\n" +
+	"\n" +
+	"_longitude\"]\n" +
+	"\x15PerceptionSensorZones\x12D\n" +
+	"\x04zone\x18\x01 \x03(\v20.openits.perception.v1.PerceptionSensorZonesZoneR\x04zone\"\xb3\x01\n" +
+	"\x19PerceptionSensorZonesZone\x12\x1c\n" +
+	"\azone_id\x18\x01 \x01(\tH\x00R\x06zoneId\x88\x01\x01\x12/\n" +
+	"\x11average_speed_kmh\x18\x04 \x01(\tH\x01R\x0faverageSpeedKmh\x88\x01\x01B\n" +
+	"\n" +
+	"\b_zone_idB\x14\n" +
+	"\x12_average_speed_kmhJ\x04\b\x02\x10\x03J\x04\b\x03\x10\x04R\x0foccupancy_countR\bpresence\"\xda\x02\n" +
+	"\vDiagnostics\x12/\n" +
+	"\x11points_per_second\x18\b \x01(\rH\x00R\x0fpointsPerSecond\x88\x01\x01\x12.\n" +
+	"\x10blockage_percent\x18\t \x01(\rH\x01R\x0fblockagePercent\x88\x01\x01\x129\n" +
+	"\x16internal_temperature_c\x18\x06 \x01(\tH\x02R\x14internalTemperatureC\x88\x01\x01\x12)\n" +
+	"\x0epose_drift_deg\x18\n" +
+	" \x01(\tH\x03R\fposeDriftDeg\x88\x01\x01\x12\x1e\n" +
+	"\buptime_s\x18\a \x01(\x04H\x04R\auptimeS\x88\x01\x01B\x14\n" +
+	"\x12_points_per_secondB\x13\n" +
+	"\x11_blockage_percentB\x19\n" +
+	"\x17_internal_temperature_cB\x11\n" +
+	"\x0f_pose_drift_degB\v\n" +
+	"\t_uptime_s\"H\n" +
+	"\tIncidents\x12;\n" +
+	"\bincident\x18\x01 \x03(\v2\x1f.openits.perception.v1.IncidentR\bincident\"\xe8\x05\n" +
+	"\bIncident\x12$\n" +
+	"\vincident_id\x18\x01 \x01(\tH\x00R\n" +
+	"incidentId\x88\x01\x01\x12\x1c\n" +
+	"\azone_id\x18\x02 \x01(\tH\x01R\x06zoneId\x88\x01\x01\x12\x17\n" +
+	"\x04type\x18\x03 \x01(\tH\x02R\x04type\x88\x01\x01\x12H\n" +
+	"\bseverity\x18\x04 \x01(\x0e2'.openits.perception.v1.IncidentSeverityH\x03R\bseverity\x88\x01\x01\x12\x1e\n" +
+	"\btrack_id\x18\b \x01(\rH\x04R\atrackId\x88\x01\x01\x12$\n" +
+	"\vtrack_epoch\x18\f \x01(\rH\x05R\n" +
+	"trackEpoch\x88\x01\x01\x12&\n" +
+	"\fobject_class\x18\t \x01(\tH\x06R\vobjectClass\x88\x01\x01\x12 \n" +
+	"\tspeed_kmh\x18\n" +
+	" \x01(\tH\aR\bspeedKmh\x88\x01\x01\x12#\n" +
+	"\n" +
+	"confidence\x18\v \x01(\rH\bR\n" +
+	"confidence\x88\x01\x01\x12A\n" +
+	"\x0efirst_observed\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12Q\n" +
+	"\vdisposition\x18\r \x01(\x0e2*.openits.perception.v1.IncidentDispositionH\tR\vdisposition\x88\x01\x01\x12\x1f\n" +
+	"\blatitude\x18\x06 \x01(\tH\n" +
+	"R\blatitude\x88\x01\x01\x12!\n" +
+	"\tlongitude\x18\a \x01(\tH\vR\tlongitude\x88\x01\x01B\x0e\n" +
+	"\f_incident_idB\n" +
+	"\n" +
+	"\b_zone_idB\a\n" +
+	"\x05_typeB\v\n" +
+	"\t_severityB\v\n" +
+	"\t_track_idB\x0e\n" +
+	"\f_track_epochB\x0f\n" +
+	"\r_object_classB\f\n" +
+	"\n" +
+	"_speed_kmhB\r\n" +
+	"\v_confidenceB\x0e\n" +
+	"\f_dispositionB\v\n" +
+	"\t_latitudeB\f\n" +
+	"\n" +
+	"_longitude\"G\n" +
 	"\x0eIncidentReview\x125\n" +
-	"\x06review\x18\x01 \x03(\v2\x1d.openits.perception.v1.ReviewR\x06review\"\x98\x01\n" +
-	"\x06Review\x12\x1f\n" +
-	"\vincident_id\x18\x01 \x01(\tR\n" +
-	"incidentId\x12L\n" +
-	"\vdisposition\x18\x02 \x01(\x0e2*.openits.perception.v1.IncidentDispositionR\vdisposition\x12\x1f\n" +
-	"\vreviewed_by\x18\x03 \x01(\tR\n" +
-	"reviewedBy\"<\n" +
+	"\x06review\x18\x01 \x03(\v2\x1d.openits.perception.v1.ReviewR\x06review\"\xd7\x01\n" +
+	"\x06Review\x12$\n" +
+	"\vincident_id\x18\x01 \x01(\tH\x00R\n" +
+	"incidentId\x88\x01\x01\x12Q\n" +
+	"\vdisposition\x18\x02 \x01(\x0e2*.openits.perception.v1.IncidentDispositionH\x01R\vdisposition\x88\x01\x01\x12$\n" +
+	"\vreviewed_by\x18\x03 \x01(\tH\x02R\n" +
+	"reviewedBy\x88\x01\x01B\x0e\n" +
+	"\f_incident_idB\x0e\n" +
+	"\f_dispositionB\x0e\n" +
+	"\f_reviewed_by\"<\n" +
 	"\x06Faults\x122\n" +
-	"\x05fault\x18\x01 \x03(\v2\x1c.openits.perception.v1.FaultR\x05fault\"\x8e\x02\n" +
-	"\x05Fault\x12\x1a\n" +
-	"\bcategory\x18\x01 \x01(\tR\bcategory\x12'\n" +
-	"\x0fcorrelates_with\x18\x06 \x01(\tR\x0ecorrelatesWith\x12 \n" +
-	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x19\n" +
-	"\bfault_id\x18\x03 \x01(\tR\afaultId\x12A\n" +
-	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12@\n" +
-	"\bseverity\x18\x05 \x01(\x0e2$.openits.perception.v1.FaultSeverityR\bseverity\"\xa9\x01\n" +
+	"\x05fault\x18\x01 \x03(\v2\x1c.openits.perception.v1.FaultR\x05fault\"\xf2\x02\n" +
+	"\x05Fault\x12\x1f\n" +
+	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12,\n" +
+	"\x0fcorrelates_with\x18\x06 \x01(\tH\x01R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x02R\vdescription\x88\x01\x01\x12\x1e\n" +
+	"\bfault_id\x18\x03 \x01(\tH\x03R\afaultId\x88\x01\x01\x12A\n" +
+	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12E\n" +
+	"\bseverity\x18\x05 \x01(\x0e2$.openits.perception.v1.FaultSeverityH\x04R\bseverity\x88\x01\x01B\v\n" +
+	"\t_categoryB\x12\n" +
+	"\x10_correlates_withB\x0e\n" +
+	"\f_descriptionB\v\n" +
+	"\t_fault_idB\v\n" +
+	"\t_severity\"\xa9\x01\n" +
 	"\rZoneOccupancy\x12W\n" +
 	"\rconfiguration\x18\x01 \x01(\v21.openits.perception.v1.ZoneOccupancyConfigurationR\rconfiguration\x12?\n" +
 	"\x05zones\x18\x02 \x01(\v2).openits.perception.v1.ZoneOccupancyZonesR\x05zones\"g\n" +
 	"\x1aZoneOccupancyConfiguration\x12I\n" +
-	"\x04zone\x18\x01 \x03(\v25.openits.perception.v1.ZoneOccupancyConfigurationZoneR\x04zone\"\xa4\x01\n" +
-	"\x1eZoneOccupancyConfigurationZone\x12\x17\n" +
-	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12%\n" +
-	"\x0esensing_method\x18\x04 \x01(\tR\rsensingMethod\x12\x1e\n" +
+	"\x04zone\x18\x01 \x03(\v25.openits.perception.v1.ZoneOccupancyConfigurationZoneR\x04zone\"\xef\x01\n" +
+	"\x1eZoneOccupancyConfigurationZone\x12\x1c\n" +
+	"\azone_id\x18\x01 \x01(\tH\x00R\x06zoneId\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12*\n" +
+	"\x0esensing_method\x18\x04 \x01(\tH\x02R\rsensingMethod\x88\x01\x01\x12#\n" +
 	"\n" +
-	"classifies\x18\x05 \x01(\bR\n" +
-	"classifiesJ\x04\b\x03\x10\x04R\bcapacity\"W\n" +
+	"classifies\x18\x05 \x01(\bH\x03R\n" +
+	"classifies\x88\x01\x01B\n" +
+	"\n" +
+	"\b_zone_idB\a\n" +
+	"\x05_nameB\x11\n" +
+	"\x0f_sensing_methodB\r\n" +
+	"\v_classifiesJ\x04\b\x03\x10\x04R\bcapacity\"W\n" +
 	"\x12ZoneOccupancyZones\x12A\n" +
-	"\x04zone\x18\x01 \x03(\v2-.openits.perception.v1.ZoneOccupancyZonesZoneR\x04zone\"\xf1\x02\n" +
-	"\x16ZoneOccupancyZonesZone\x12\x17\n" +
-	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12;\n" +
+	"\x04zone\x18\x01 \x03(\v2-.openits.perception.v1.ZoneOccupancyZonesZoneR\x04zone\"\xca\x03\n" +
+	"\x16ZoneOccupancyZonesZone\x12\x1c\n" +
+	"\azone_id\x18\x01 \x01(\tH\x00R\x06zoneId\x88\x01\x01\x12;\n" +
 	"\vmeasured_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"measuredAt\x12'\n" +
-	"\x0foccupancy_count\x18\x03 \x01(\rR\x0eoccupancyCount\x12A\n" +
-	"\x0eoccupied_since\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\roccupiedSince\x12\x1a\n" +
-	"\bpresence\x18\x02 \x01(\bR\bpresence\x12/\n" +
-	"\x13presence_confidence\x18\x05 \x01(\rR\x12presenceConfidence\x12H\n" +
-	"\rpresent_class\x18\a \x03(\v2#.openits.perception.v1.PresentClassR\fpresentClass\"w\n" +
-	"\fPresentClass\x12\x14\n" +
-	"\x05class\x18\x01 \x01(\tR\x05class\x12\x14\n" +
-	"\x05count\x18\x02 \x01(\rR\x05count\x12;\n" +
-	"\x19classification_confidence\x18\x03 \x01(\rR\x18classificationConfidence*\xb4\x01\n" +
-	"\fZoneFunction\x12\x1d\n" +
-	"\x19ZONE_FUNCTION_UNSPECIFIED\x10\x00\x12\x17\n" +
-	"\x13ZONE_FUNCTION_COUNT\x10\x01\x12\x1a\n" +
-	"\x16ZONE_FUNCTION_PRESENCE\x10\x02\x12\x17\n" +
-	"\x13ZONE_FUNCTION_SPEED\x10\x03\x12\x1a\n" +
-	"\x16ZONE_FUNCTION_INCIDENT\x10\x04\x12\x1b\n" +
-	"\x17ZONE_FUNCTION_WRONG_WAY\x10\x05*U\n" +
-	"\tLifecycle\x12\x17\n" +
-	"\x13LIFECYCLE_TENTATIVE\x10\x00\x12\x17\n" +
-	"\x13LIFECYCLE_CONFIRMED\x10\x01\x12\x16\n" +
-	"\x12LIFECYCLE_COASTING\x10\x02*\xba\x01\n" +
-	"!OpenitsPerceptionIncidentSeverity\x12.\n" +
-	"*OPENITS_PERCEPTION_INCIDENT_SEVERITY_MINOR\x10\x00\x125\n" +
-	"1OPENITS_PERCEPTION_INCIDENT_SEVERITY_INTERMEDIATE\x10\x01\x12.\n" +
-	"*OPENITS_PERCEPTION_INCIDENT_SEVERITY_MAJOR\x10\x02*\x81\x01\n" +
-	"\x13IncidentDisposition\x12 \n" +
-	"\x1cINCIDENT_DISPOSITION_PENDING\x10\x00\x12\"\n" +
-	"\x1eINCIDENT_DISPOSITION_CONFIRMED\x10\x01\x12$\n" +
-	" INCIDENT_DISPOSITION_FALSE_ALARM\x10\x02*\x95\x01\n" +
-	"\rFaultSeverity\x12\x17\n" +
-	"\x13FAULT_SEVERITY_INFO\x10\x00\x12\x1a\n" +
-	"\x16FAULT_SEVERITY_WARNING\x10\x01\x12\x18\n" +
-	"\x14FAULT_SEVERITY_MINOR\x10\x02\x12\x18\n" +
-	"\x14FAULT_SEVERITY_MAJOR\x10\x03\x12\x1b\n" +
-	"\x17FAULT_SEVERITY_CRITICAL\x10\x04BQZOgithub.com/Vikasa2M/openits-models/pkg/proto/openits/perception/v1;perceptionv1b\x06proto3"
+	"measuredAt\x12,\n" +
+	"\x0foccupancy_count\x18\x03 \x01(\rH\x01R\x0eoccupancyCount\x88\x01\x01\x12A\n" +
+	"\x0eoccupied_since\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\roccupiedSince\x12\x1f\n" +
+	"\bpresence\x18\x02 \x01(\bH\x02R\bpresence\x88\x01\x01\x124\n" +
+	"\x13presence_confidence\x18\x05 \x01(\rH\x03R\x12presenceConfidence\x88\x01\x01\x12H\n" +
+	"\rpresent_class\x18\a \x03(\v2#.openits.perception.v1.PresentClassR\fpresentClassB\n" +
+	"\n" +
+	"\b_zone_idB\x12\n" +
+	"\x10_occupancy_countB\v\n" +
+	"\t_presenceB\x16\n" +
+	"\x14_presence_confidence\"\xb8\x01\n" +
+	"\fPresentClass\x12\x19\n" +
+	"\x05class\x18\x01 \x01(\tH\x00R\x05class\x88\x01\x01\x12\x19\n" +
+	"\x05count\x18\x02 \x01(\rH\x01R\x05count\x88\x01\x01\x12@\n" +
+	"\x19classification_confidence\x18\x03 \x01(\rH\x02R\x18classificationConfidence\x88\x01\x01B\b\n" +
+	"\x06_classB\b\n" +
+	"\x06_countB\x1c\n" +
+	"\x1a_classification_confidenceBQZOgithub.com/Vikasa2M/openits-models/pkg/proto/openits/perception/v1;perceptionv1b\x06proto3"
 
 var (
 	file_openits_perception_v1_state_proto_rawDescOnce sync.Once
@@ -2551,88 +2376,85 @@ func file_openits_perception_v1_state_proto_rawDescGZIP() []byte {
 	return file_openits_perception_v1_state_proto_rawDescData
 }
 
-var file_openits_perception_v1_state_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
 var file_openits_perception_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_openits_perception_v1_state_proto_goTypes = []any{
-	(ZoneFunction)(0),                             // 0: openits.perception.v1.ZoneFunction
-	(Lifecycle)(0),                                // 1: openits.perception.v1.Lifecycle
-	(OpenitsPerceptionIncidentSeverity)(0),        // 2: openits.perception.v1.OpenitsPerceptionIncidentSeverity
-	(IncidentDisposition)(0),                      // 3: openits.perception.v1.IncidentDisposition
-	(FaultSeverity)(0),                            // 4: openits.perception.v1.FaultSeverity
-	(*PerceptionSensor)(nil),                      // 5: openits.perception.v1.PerceptionSensor
-	(*PerceptionSensorConfig)(nil),                // 6: openits.perception.v1.PerceptionSensorConfig
-	(*PerceptionSensorConfigLinearReference)(nil), // 7: openits.perception.v1.PerceptionSensorConfigLinearReference
-	(*PerceptionSensorState)(nil),                 // 8: openits.perception.v1.PerceptionSensorState
-	(*PerceptionSensorStateLinearReference)(nil),  // 9: openits.perception.v1.PerceptionSensorStateLinearReference
-	(*Associations)(nil),                          // 10: openits.perception.v1.Associations
-	(*AssociatedDevice)(nil),                      // 11: openits.perception.v1.AssociatedDevice
-	(*PerceptionSensorConfiguration)(nil),         // 12: openits.perception.v1.PerceptionSensorConfiguration
-	(*PerceptionSensorConfigurationZone)(nil),     // 13: openits.perception.v1.PerceptionSensorConfigurationZone
-	(*Vertex)(nil),                                // 14: openits.perception.v1.Vertex
-	(*Objects)(nil),                               // 15: openits.perception.v1.Objects
-	(*Track)(nil),                                 // 16: openits.perception.v1.Track
-	(*PerceptionSensorZones)(nil),                 // 17: openits.perception.v1.PerceptionSensorZones
-	(*PerceptionSensorZonesZone)(nil),             // 18: openits.perception.v1.PerceptionSensorZonesZone
-	(*Diagnostics)(nil),                           // 19: openits.perception.v1.Diagnostics
-	(*Incidents)(nil),                             // 20: openits.perception.v1.Incidents
-	(*Incident)(nil),                              // 21: openits.perception.v1.Incident
-	(*IncidentReview)(nil),                        // 22: openits.perception.v1.IncidentReview
-	(*Review)(nil),                                // 23: openits.perception.v1.Review
-	(*Faults)(nil),                                // 24: openits.perception.v1.Faults
-	(*Fault)(nil),                                 // 25: openits.perception.v1.Fault
-	(*ZoneOccupancy)(nil),                         // 26: openits.perception.v1.ZoneOccupancy
-	(*ZoneOccupancyConfiguration)(nil),            // 27: openits.perception.v1.ZoneOccupancyConfiguration
-	(*ZoneOccupancyConfigurationZone)(nil),        // 28: openits.perception.v1.ZoneOccupancyConfigurationZone
-	(*ZoneOccupancyZones)(nil),                    // 29: openits.perception.v1.ZoneOccupancyZones
-	(*ZoneOccupancyZonesZone)(nil),                // 30: openits.perception.v1.ZoneOccupancyZonesZone
-	(*PresentClass)(nil),                          // 31: openits.perception.v1.PresentClass
-	(*timestamppb.Timestamp)(nil),                 // 32: google.protobuf.Timestamp
+	(*PerceptionSensor)(nil),                      // 0: openits.perception.v1.PerceptionSensor
+	(*PerceptionSensorConfig)(nil),                // 1: openits.perception.v1.PerceptionSensorConfig
+	(*PerceptionSensorConfigLinearReference)(nil), // 2: openits.perception.v1.PerceptionSensorConfigLinearReference
+	(*PerceptionSensorState)(nil),                 // 3: openits.perception.v1.PerceptionSensorState
+	(*PerceptionSensorStateLinearReference)(nil),  // 4: openits.perception.v1.PerceptionSensorStateLinearReference
+	(*Associations)(nil),                          // 5: openits.perception.v1.Associations
+	(*AssociatedDevice)(nil),                      // 6: openits.perception.v1.AssociatedDevice
+	(*PerceptionSensorConfiguration)(nil),         // 7: openits.perception.v1.PerceptionSensorConfiguration
+	(*PerceptionSensorConfigurationZone)(nil),     // 8: openits.perception.v1.PerceptionSensorConfigurationZone
+	(*Vertex)(nil),                                // 9: openits.perception.v1.Vertex
+	(*Objects)(nil),                               // 10: openits.perception.v1.Objects
+	(*Track)(nil),                                 // 11: openits.perception.v1.Track
+	(*PerceptionSensorZones)(nil),                 // 12: openits.perception.v1.PerceptionSensorZones
+	(*PerceptionSensorZonesZone)(nil),             // 13: openits.perception.v1.PerceptionSensorZonesZone
+	(*Diagnostics)(nil),                           // 14: openits.perception.v1.Diagnostics
+	(*Incidents)(nil),                             // 15: openits.perception.v1.Incidents
+	(*Incident)(nil),                              // 16: openits.perception.v1.Incident
+	(*IncidentReview)(nil),                        // 17: openits.perception.v1.IncidentReview
+	(*Review)(nil),                                // 18: openits.perception.v1.Review
+	(*Faults)(nil),                                // 19: openits.perception.v1.Faults
+	(*Fault)(nil),                                 // 20: openits.perception.v1.Fault
+	(*ZoneOccupancy)(nil),                         // 21: openits.perception.v1.ZoneOccupancy
+	(*ZoneOccupancyConfiguration)(nil),            // 22: openits.perception.v1.ZoneOccupancyConfiguration
+	(*ZoneOccupancyConfigurationZone)(nil),        // 23: openits.perception.v1.ZoneOccupancyConfigurationZone
+	(*ZoneOccupancyZones)(nil),                    // 24: openits.perception.v1.ZoneOccupancyZones
+	(*ZoneOccupancyZonesZone)(nil),                // 25: openits.perception.v1.ZoneOccupancyZonesZone
+	(*PresentClass)(nil),                          // 26: openits.perception.v1.PresentClass
+	(*timestamppb.Timestamp)(nil),                 // 27: google.protobuf.Timestamp
+	(Lifecycle)(0),                                // 28: openits.perception.v1.Lifecycle
+	(IncidentSeverity)(0),                         // 29: openits.perception.v1.IncidentSeverity
+	(IncidentDisposition)(0),                      // 30: openits.perception.v1.IncidentDisposition
+	(FaultSeverity)(0),                            // 31: openits.perception.v1.FaultSeverity
 }
 var file_openits_perception_v1_state_proto_depIdxs = []int32{
-	6,  // 0: openits.perception.v1.PerceptionSensor.config:type_name -> openits.perception.v1.PerceptionSensorConfig
-	8,  // 1: openits.perception.v1.PerceptionSensor.state:type_name -> openits.perception.v1.PerceptionSensorState
-	10, // 2: openits.perception.v1.PerceptionSensor.associations:type_name -> openits.perception.v1.Associations
-	12, // 3: openits.perception.v1.PerceptionSensor.configuration:type_name -> openits.perception.v1.PerceptionSensorConfiguration
-	15, // 4: openits.perception.v1.PerceptionSensor.objects:type_name -> openits.perception.v1.Objects
-	17, // 5: openits.perception.v1.PerceptionSensor.zones:type_name -> openits.perception.v1.PerceptionSensorZones
-	19, // 6: openits.perception.v1.PerceptionSensor.diagnostics:type_name -> openits.perception.v1.Diagnostics
-	20, // 7: openits.perception.v1.PerceptionSensor.incidents:type_name -> openits.perception.v1.Incidents
-	22, // 8: openits.perception.v1.PerceptionSensor.incident_review:type_name -> openits.perception.v1.IncidentReview
-	24, // 9: openits.perception.v1.PerceptionSensor.faults:type_name -> openits.perception.v1.Faults
-	26, // 10: openits.perception.v1.PerceptionSensor.zone_occupancy:type_name -> openits.perception.v1.ZoneOccupancy
-	32, // 11: openits.perception.v1.PerceptionSensorConfig.install_date:type_name -> google.protobuf.Timestamp
-	7,  // 12: openits.perception.v1.PerceptionSensorConfig.linear_reference:type_name -> openits.perception.v1.PerceptionSensorConfigLinearReference
-	32, // 13: openits.perception.v1.PerceptionSensorState.install_date:type_name -> google.protobuf.Timestamp
-	9,  // 14: openits.perception.v1.PerceptionSensorState.linear_reference:type_name -> openits.perception.v1.PerceptionSensorStateLinearReference
-	11, // 15: openits.perception.v1.Associations.associated_device:type_name -> openits.perception.v1.AssociatedDevice
-	13, // 16: openits.perception.v1.PerceptionSensorConfiguration.zone:type_name -> openits.perception.v1.PerceptionSensorConfigurationZone
-	0,  // 17: openits.perception.v1.PerceptionSensorConfigurationZone.function:type_name -> openits.perception.v1.ZoneFunction
-	14, // 18: openits.perception.v1.PerceptionSensorConfigurationZone.vertex:type_name -> openits.perception.v1.Vertex
-	16, // 19: openits.perception.v1.Objects.track:type_name -> openits.perception.v1.Track
-	1,  // 20: openits.perception.v1.Track.lifecycle:type_name -> openits.perception.v1.Lifecycle
-	32, // 21: openits.perception.v1.Track.observed_at:type_name -> google.protobuf.Timestamp
-	18, // 22: openits.perception.v1.PerceptionSensorZones.zone:type_name -> openits.perception.v1.PerceptionSensorZonesZone
-	21, // 23: openits.perception.v1.Incidents.incident:type_name -> openits.perception.v1.Incident
-	2,  // 24: openits.perception.v1.Incident.severity:type_name -> openits.perception.v1.OpenitsPerceptionIncidentSeverity
-	32, // 25: openits.perception.v1.Incident.first_observed:type_name -> google.protobuf.Timestamp
-	3,  // 26: openits.perception.v1.Incident.disposition:type_name -> openits.perception.v1.IncidentDisposition
-	23, // 27: openits.perception.v1.IncidentReview.review:type_name -> openits.perception.v1.Review
-	3,  // 28: openits.perception.v1.Review.disposition:type_name -> openits.perception.v1.IncidentDisposition
-	25, // 29: openits.perception.v1.Faults.fault:type_name -> openits.perception.v1.Fault
-	32, // 30: openits.perception.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	4,  // 31: openits.perception.v1.Fault.severity:type_name -> openits.perception.v1.FaultSeverity
-	27, // 32: openits.perception.v1.ZoneOccupancy.configuration:type_name -> openits.perception.v1.ZoneOccupancyConfiguration
-	29, // 33: openits.perception.v1.ZoneOccupancy.zones:type_name -> openits.perception.v1.ZoneOccupancyZones
-	28, // 34: openits.perception.v1.ZoneOccupancyConfiguration.zone:type_name -> openits.perception.v1.ZoneOccupancyConfigurationZone
-	30, // 35: openits.perception.v1.ZoneOccupancyZones.zone:type_name -> openits.perception.v1.ZoneOccupancyZonesZone
-	32, // 36: openits.perception.v1.ZoneOccupancyZonesZone.measured_at:type_name -> google.protobuf.Timestamp
-	32, // 37: openits.perception.v1.ZoneOccupancyZonesZone.occupied_since:type_name -> google.protobuf.Timestamp
-	31, // 38: openits.perception.v1.ZoneOccupancyZonesZone.present_class:type_name -> openits.perception.v1.PresentClass
-	39, // [39:39] is the sub-list for method output_type
-	39, // [39:39] is the sub-list for method input_type
-	39, // [39:39] is the sub-list for extension type_name
-	39, // [39:39] is the sub-list for extension extendee
-	0,  // [0:39] is the sub-list for field type_name
+	1,  // 0: openits.perception.v1.PerceptionSensor.config:type_name -> openits.perception.v1.PerceptionSensorConfig
+	3,  // 1: openits.perception.v1.PerceptionSensor.state:type_name -> openits.perception.v1.PerceptionSensorState
+	5,  // 2: openits.perception.v1.PerceptionSensor.associations:type_name -> openits.perception.v1.Associations
+	7,  // 3: openits.perception.v1.PerceptionSensor.configuration:type_name -> openits.perception.v1.PerceptionSensorConfiguration
+	10, // 4: openits.perception.v1.PerceptionSensor.objects:type_name -> openits.perception.v1.Objects
+	12, // 5: openits.perception.v1.PerceptionSensor.zones:type_name -> openits.perception.v1.PerceptionSensorZones
+	14, // 6: openits.perception.v1.PerceptionSensor.diagnostics:type_name -> openits.perception.v1.Diagnostics
+	15, // 7: openits.perception.v1.PerceptionSensor.incidents:type_name -> openits.perception.v1.Incidents
+	17, // 8: openits.perception.v1.PerceptionSensor.incident_review:type_name -> openits.perception.v1.IncidentReview
+	19, // 9: openits.perception.v1.PerceptionSensor.faults:type_name -> openits.perception.v1.Faults
+	21, // 10: openits.perception.v1.PerceptionSensor.zone_occupancy:type_name -> openits.perception.v1.ZoneOccupancy
+	27, // 11: openits.perception.v1.PerceptionSensorConfig.install_date:type_name -> google.protobuf.Timestamp
+	2,  // 12: openits.perception.v1.PerceptionSensorConfig.linear_reference:type_name -> openits.perception.v1.PerceptionSensorConfigLinearReference
+	27, // 13: openits.perception.v1.PerceptionSensorState.install_date:type_name -> google.protobuf.Timestamp
+	4,  // 14: openits.perception.v1.PerceptionSensorState.linear_reference:type_name -> openits.perception.v1.PerceptionSensorStateLinearReference
+	6,  // 15: openits.perception.v1.Associations.associated_device:type_name -> openits.perception.v1.AssociatedDevice
+	8,  // 16: openits.perception.v1.PerceptionSensorConfiguration.zone:type_name -> openits.perception.v1.PerceptionSensorConfigurationZone
+	9,  // 17: openits.perception.v1.PerceptionSensorConfigurationZone.vertex:type_name -> openits.perception.v1.Vertex
+	11, // 18: openits.perception.v1.Objects.track:type_name -> openits.perception.v1.Track
+	28, // 19: openits.perception.v1.Track.lifecycle:type_name -> openits.perception.v1.Lifecycle
+	27, // 20: openits.perception.v1.Track.observed_at:type_name -> google.protobuf.Timestamp
+	13, // 21: openits.perception.v1.PerceptionSensorZones.zone:type_name -> openits.perception.v1.PerceptionSensorZonesZone
+	16, // 22: openits.perception.v1.Incidents.incident:type_name -> openits.perception.v1.Incident
+	29, // 23: openits.perception.v1.Incident.severity:type_name -> openits.perception.v1.IncidentSeverity
+	27, // 24: openits.perception.v1.Incident.first_observed:type_name -> google.protobuf.Timestamp
+	30, // 25: openits.perception.v1.Incident.disposition:type_name -> openits.perception.v1.IncidentDisposition
+	18, // 26: openits.perception.v1.IncidentReview.review:type_name -> openits.perception.v1.Review
+	30, // 27: openits.perception.v1.Review.disposition:type_name -> openits.perception.v1.IncidentDisposition
+	20, // 28: openits.perception.v1.Faults.fault:type_name -> openits.perception.v1.Fault
+	27, // 29: openits.perception.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	31, // 30: openits.perception.v1.Fault.severity:type_name -> openits.perception.v1.FaultSeverity
+	22, // 31: openits.perception.v1.ZoneOccupancy.configuration:type_name -> openits.perception.v1.ZoneOccupancyConfiguration
+	24, // 32: openits.perception.v1.ZoneOccupancy.zones:type_name -> openits.perception.v1.ZoneOccupancyZones
+	23, // 33: openits.perception.v1.ZoneOccupancyConfiguration.zone:type_name -> openits.perception.v1.ZoneOccupancyConfigurationZone
+	25, // 34: openits.perception.v1.ZoneOccupancyZones.zone:type_name -> openits.perception.v1.ZoneOccupancyZonesZone
+	27, // 35: openits.perception.v1.ZoneOccupancyZonesZone.measured_at:type_name -> google.protobuf.Timestamp
+	27, // 36: openits.perception.v1.ZoneOccupancyZonesZone.occupied_since:type_name -> google.protobuf.Timestamp
+	26, // 37: openits.perception.v1.ZoneOccupancyZonesZone.present_class:type_name -> openits.perception.v1.PresentClass
+	38, // [38:38] is the sub-list for method output_type
+	38, // [38:38] is the sub-list for method input_type
+	38, // [38:38] is the sub-list for extension type_name
+	38, // [38:38] is the sub-list for extension extendee
+	0,  // [0:38] is the sub-list for field type_name
 }
 
 func init() { file_openits_perception_v1_state_proto_init() }
@@ -2640,19 +2462,37 @@ func file_openits_perception_v1_state_proto_init() {
 	if File_openits_perception_v1_state_proto != nil {
 		return
 	}
+	file_openits_perception_v1_types_proto_init()
+	file_openits_perception_v1_state_proto_msgTypes[1].OneofWrappers = []any{}
+	file_openits_perception_v1_state_proto_msgTypes[2].OneofWrappers = []any{}
+	file_openits_perception_v1_state_proto_msgTypes[3].OneofWrappers = []any{}
+	file_openits_perception_v1_state_proto_msgTypes[4].OneofWrappers = []any{}
+	file_openits_perception_v1_state_proto_msgTypes[6].OneofWrappers = []any{}
+	file_openits_perception_v1_state_proto_msgTypes[7].OneofWrappers = []any{}
+	file_openits_perception_v1_state_proto_msgTypes[8].OneofWrappers = []any{}
+	file_openits_perception_v1_state_proto_msgTypes[9].OneofWrappers = []any{}
+	file_openits_perception_v1_state_proto_msgTypes[10].OneofWrappers = []any{}
+	file_openits_perception_v1_state_proto_msgTypes[11].OneofWrappers = []any{}
+	file_openits_perception_v1_state_proto_msgTypes[13].OneofWrappers = []any{}
+	file_openits_perception_v1_state_proto_msgTypes[14].OneofWrappers = []any{}
+	file_openits_perception_v1_state_proto_msgTypes[16].OneofWrappers = []any{}
+	file_openits_perception_v1_state_proto_msgTypes[18].OneofWrappers = []any{}
+	file_openits_perception_v1_state_proto_msgTypes[20].OneofWrappers = []any{}
+	file_openits_perception_v1_state_proto_msgTypes[23].OneofWrappers = []any{}
+	file_openits_perception_v1_state_proto_msgTypes[25].OneofWrappers = []any{}
+	file_openits_perception_v1_state_proto_msgTypes[26].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_perception_v1_state_proto_rawDesc), len(file_openits_perception_v1_state_proto_rawDesc)),
-			NumEnums:      5,
+			NumEnums:      0,
 			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_openits_perception_v1_state_proto_goTypes,
 		DependencyIndexes: file_openits_perception_v1_state_proto_depIdxs,
-		EnumInfos:         file_openits_perception_v1_state_proto_enumTypes,
 		MessageInfos:      file_openits_perception_v1_state_proto_msgTypes,
 	}.Build()
 	File_openits_perception_v1_state_proto = out.File

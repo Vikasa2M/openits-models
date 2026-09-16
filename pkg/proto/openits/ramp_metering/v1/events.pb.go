@@ -22,121 +22,17 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type Trigger int32
-
-const (
-	Trigger_TRIGGER_VEHICLE_COUNT Trigger = 0
-	Trigger_TRIGGER_OCCUPANCY     Trigger = 1
-)
-
-// Enum value maps for Trigger.
-var (
-	Trigger_name = map[int32]string{
-		0: "TRIGGER_VEHICLE_COUNT",
-		1: "TRIGGER_OCCUPANCY",
-	}
-	Trigger_value = map[string]int32{
-		"TRIGGER_VEHICLE_COUNT": 0,
-		"TRIGGER_OCCUPANCY":     1,
-	}
-)
-
-func (x Trigger) Enum() *Trigger {
-	p := new(Trigger)
-	*p = x
-	return p
-}
-
-func (x Trigger) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Trigger) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_events_proto_enumTypes[0].Descriptor()
-}
-
-func (Trigger) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_events_proto_enumTypes[0]
-}
-
-func (x Trigger) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Trigger.Descriptor instead.
-func (Trigger) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_events_proto_rawDescGZIP(), []int{0}
-}
-
-type RateChangeCause int32
-
-const (
-	RateChangeCause_RATE_CHANGE_CAUSE_PLAN_SWITCH        RateChangeCause = 0
-	RateChangeCause_RATE_CHANGE_CAUSE_TRAFFIC_RESPONSIVE RateChangeCause = 1
-	RateChangeCause_RATE_CHANGE_CAUSE_QUEUE_OVERRIDE     RateChangeCause = 2
-	RateChangeCause_RATE_CHANGE_CAUSE_OPERATOR_OVERRIDE  RateChangeCause = 3
-	RateChangeCause_RATE_CHANGE_CAUSE_SCHEDULE           RateChangeCause = 4
-	RateChangeCause_RATE_CHANGE_CAUSE_OTHER              RateChangeCause = 5
-)
-
-// Enum value maps for RateChangeCause.
-var (
-	RateChangeCause_name = map[int32]string{
-		0: "RATE_CHANGE_CAUSE_PLAN_SWITCH",
-		1: "RATE_CHANGE_CAUSE_TRAFFIC_RESPONSIVE",
-		2: "RATE_CHANGE_CAUSE_QUEUE_OVERRIDE",
-		3: "RATE_CHANGE_CAUSE_OPERATOR_OVERRIDE",
-		4: "RATE_CHANGE_CAUSE_SCHEDULE",
-		5: "RATE_CHANGE_CAUSE_OTHER",
-	}
-	RateChangeCause_value = map[string]int32{
-		"RATE_CHANGE_CAUSE_PLAN_SWITCH":        0,
-		"RATE_CHANGE_CAUSE_TRAFFIC_RESPONSIVE": 1,
-		"RATE_CHANGE_CAUSE_QUEUE_OVERRIDE":     2,
-		"RATE_CHANGE_CAUSE_OPERATOR_OVERRIDE":  3,
-		"RATE_CHANGE_CAUSE_SCHEDULE":           4,
-		"RATE_CHANGE_CAUSE_OTHER":              5,
-	}
-)
-
-func (x RateChangeCause) Enum() *RateChangeCause {
-	p := new(RateChangeCause)
-	*p = x
-	return p
-}
-
-func (x RateChangeCause) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (RateChangeCause) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_events_proto_enumTypes[1].Descriptor()
-}
-
-func (RateChangeCause) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_events_proto_enumTypes[1]
-}
-
-func (x RateChangeCause) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use RateChangeCause.Descriptor instead.
-func (RateChangeCause) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_events_proto_rawDescGZIP(), []int{1}
-}
-
 type QueueOverrideActivated struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	Kind                string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	QueueLengthVehicles uint32                 `protobuf:"varint,1,opt,name=queue_length_vehicles,json=queueLengthVehicles,proto3" json:"queue_length_vehicles,omitempty"`
-	ThresholdVehicles   uint32                 `protobuf:"varint,2,opt,name=threshold_vehicles,json=thresholdVehicles,proto3" json:"threshold_vehicles,omitempty"`
-	PlanId              uint32                 `protobuf:"varint,3,opt,name=plan_id,json=planId,proto3" json:"plan_id,omitempty"`
-	Trigger             Trigger                `protobuf:"varint,9,opt,name=trigger,proto3,enum=openits.ramp_metering.v1.Trigger" json:"trigger,omitempty"`
-	OccupancyPct        uint32                 `protobuf:"varint,10,opt,name=occupancy_pct,json=occupancyPct,proto3" json:"occupancy_pct,omitempty"`
-	ObservedBy          string                 `protobuf:"bytes,4,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	QueueLengthVehicles *uint32                `protobuf:"varint,1,opt,name=queue_length_vehicles,json=queueLengthVehicles,proto3,oneof" json:"queue_length_vehicles,omitempty"`
+	ThresholdVehicles   *uint32                `protobuf:"varint,2,opt,name=threshold_vehicles,json=thresholdVehicles,proto3,oneof" json:"threshold_vehicles,omitempty"`
+	PlanId              *uint32                `protobuf:"varint,3,opt,name=plan_id,json=planId,proto3,oneof" json:"plan_id,omitempty"`
+	Trigger             *Trigger               `protobuf:"varint,9,opt,name=trigger,proto3,enum=openits.ramp_metering.v1.Trigger,oneof" json:"trigger,omitempty"`
+	OccupancyPct        *uint32                `protobuf:"varint,10,opt,name=occupancy_pct,json=occupancyPct,proto3,oneof" json:"occupancy_pct,omitempty"`
+	ObservedBy          *string                `protobuf:"bytes,4,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt          *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner               string                 `protobuf:"bytes,6,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner               *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence            uint64                 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId      string                 `protobuf:"bytes,8,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields       protoimpl.UnknownFields
@@ -181,43 +77,43 @@ func (x *QueueOverrideActivated) GetKind() string {
 }
 
 func (x *QueueOverrideActivated) GetQueueLengthVehicles() uint32 {
-	if x != nil {
-		return x.QueueLengthVehicles
+	if x != nil && x.QueueLengthVehicles != nil {
+		return *x.QueueLengthVehicles
 	}
 	return 0
 }
 
 func (x *QueueOverrideActivated) GetThresholdVehicles() uint32 {
-	if x != nil {
-		return x.ThresholdVehicles
+	if x != nil && x.ThresholdVehicles != nil {
+		return *x.ThresholdVehicles
 	}
 	return 0
 }
 
 func (x *QueueOverrideActivated) GetPlanId() uint32 {
-	if x != nil {
-		return x.PlanId
+	if x != nil && x.PlanId != nil {
+		return *x.PlanId
 	}
 	return 0
 }
 
 func (x *QueueOverrideActivated) GetTrigger() Trigger {
-	if x != nil {
-		return x.Trigger
+	if x != nil && x.Trigger != nil {
+		return *x.Trigger
 	}
 	return Trigger_TRIGGER_VEHICLE_COUNT
 }
 
 func (x *QueueOverrideActivated) GetOccupancyPct() uint32 {
-	if x != nil {
-		return x.OccupancyPct
+	if x != nil && x.OccupancyPct != nil {
+		return *x.OccupancyPct
 	}
 	return 0
 }
 
 func (x *QueueOverrideActivated) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -230,8 +126,8 @@ func (x *QueueOverrideActivated) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *QueueOverrideActivated) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -253,11 +149,11 @@ func (x *QueueOverrideActivated) GetSourceDeviceId() string {
 type QueueOverrideCleared struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	Kind                string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	QueueLengthVehicles uint32                 `protobuf:"varint,1,opt,name=queue_length_vehicles,json=queueLengthVehicles,proto3" json:"queue_length_vehicles,omitempty"`
-	PlanId              uint32                 `protobuf:"varint,2,opt,name=plan_id,json=planId,proto3" json:"plan_id,omitempty"`
-	ObservedBy          string                 `protobuf:"bytes,3,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	QueueLengthVehicles *uint32                `protobuf:"varint,1,opt,name=queue_length_vehicles,json=queueLengthVehicles,proto3,oneof" json:"queue_length_vehicles,omitempty"`
+	PlanId              *uint32                `protobuf:"varint,2,opt,name=plan_id,json=planId,proto3,oneof" json:"plan_id,omitempty"`
+	ObservedBy          *string                `protobuf:"bytes,3,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt          *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner               string                 `protobuf:"bytes,5,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner               *string                `protobuf:"bytes,5,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence            uint64                 `protobuf:"varint,6,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId      string                 `protobuf:"bytes,7,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields       protoimpl.UnknownFields
@@ -302,22 +198,22 @@ func (x *QueueOverrideCleared) GetKind() string {
 }
 
 func (x *QueueOverrideCleared) GetQueueLengthVehicles() uint32 {
-	if x != nil {
-		return x.QueueLengthVehicles
+	if x != nil && x.QueueLengthVehicles != nil {
+		return *x.QueueLengthVehicles
 	}
 	return 0
 }
 
 func (x *QueueOverrideCleared) GetPlanId() uint32 {
-	if x != nil {
-		return x.PlanId
+	if x != nil && x.PlanId != nil {
+		return *x.PlanId
 	}
 	return 0
 }
 
 func (x *QueueOverrideCleared) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -330,8 +226,8 @@ func (x *QueueOverrideCleared) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *QueueOverrideCleared) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -353,13 +249,13 @@ func (x *QueueOverrideCleared) GetSourceDeviceId() string {
 type ReleaseRateChanged struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	Kind            string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	PreviousRateVph uint32                 `protobuf:"varint,1,opt,name=previous_rate_vph,json=previousRateVph,proto3" json:"previous_rate_vph,omitempty"`
-	NewRateVph      uint32                 `protobuf:"varint,2,opt,name=new_rate_vph,json=newRateVph,proto3" json:"new_rate_vph,omitempty"`
-	PlanId          uint32                 `protobuf:"varint,3,opt,name=plan_id,json=planId,proto3" json:"plan_id,omitempty"`
-	Cause           RateChangeCause        `protobuf:"varint,10,opt,name=cause,proto3,enum=openits.ramp_metering.v1.RateChangeCause" json:"cause,omitempty"`
-	ObservedBy      string                 `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	PreviousRateVph *uint32                `protobuf:"varint,1,opt,name=previous_rate_vph,json=previousRateVph,proto3,oneof" json:"previous_rate_vph,omitempty"`
+	NewRateVph      *uint32                `protobuf:"varint,2,opt,name=new_rate_vph,json=newRateVph,proto3,oneof" json:"new_rate_vph,omitempty"`
+	PlanId          *uint32                `protobuf:"varint,3,opt,name=plan_id,json=planId,proto3,oneof" json:"plan_id,omitempty"`
+	Cause           *RateChangeCause       `protobuf:"varint,10,opt,name=cause,proto3,enum=openits.ramp_metering.v1.RateChangeCause,oneof" json:"cause,omitempty"`
+	ObservedBy      *string                `protobuf:"bytes,5,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt      *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner           string                 `protobuf:"bytes,7,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner           *string                `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence        uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId  string                 `protobuf:"bytes,9,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
@@ -404,36 +300,36 @@ func (x *ReleaseRateChanged) GetKind() string {
 }
 
 func (x *ReleaseRateChanged) GetPreviousRateVph() uint32 {
-	if x != nil {
-		return x.PreviousRateVph
+	if x != nil && x.PreviousRateVph != nil {
+		return *x.PreviousRateVph
 	}
 	return 0
 }
 
 func (x *ReleaseRateChanged) GetNewRateVph() uint32 {
-	if x != nil {
-		return x.NewRateVph
+	if x != nil && x.NewRateVph != nil {
+		return *x.NewRateVph
 	}
 	return 0
 }
 
 func (x *ReleaseRateChanged) GetPlanId() uint32 {
-	if x != nil {
-		return x.PlanId
+	if x != nil && x.PlanId != nil {
+		return *x.PlanId
 	}
 	return 0
 }
 
 func (x *ReleaseRateChanged) GetCause() RateChangeCause {
-	if x != nil {
-		return x.Cause
+	if x != nil && x.Cause != nil {
+		return *x.Cause
 	}
 	return RateChangeCause_RATE_CHANGE_CAUSE_PLAN_SWITCH
 }
 
 func (x *ReleaseRateChanged) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -446,8 +342,8 @@ func (x *ReleaseRateChanged) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *ReleaseRateChanged) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -470,58 +366,69 @@ var File_openits_ramp_metering_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_ramp_metering_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"%openits/ramp_metering/v1/events.proto\x12\x18openits.ramp_metering.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc4\x03\n" +
+	"%openits/ramp_metering/v1/events.proto\x12\x18openits.ramp_metering.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a$openits/ramp_metering/v1/types.proto\"\xdc\x04\n" +
 	"\x16QueueOverrideActivated\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x122\n" +
-	"\x15queue_length_vehicles\x18\x01 \x01(\rR\x13queueLengthVehicles\x12-\n" +
-	"\x12threshold_vehicles\x18\x02 \x01(\rR\x11thresholdVehicles\x12\x17\n" +
-	"\aplan_id\x18\x03 \x01(\rR\x06planId\x12;\n" +
-	"\atrigger\x18\t \x01(\x0e2!.openits.ramp_metering.v1.TriggerR\atrigger\x12#\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x127\n" +
+	"\x15queue_length_vehicles\x18\x01 \x01(\rH\x00R\x13queueLengthVehicles\x88\x01\x01\x122\n" +
+	"\x12threshold_vehicles\x18\x02 \x01(\rH\x01R\x11thresholdVehicles\x88\x01\x01\x12\x1c\n" +
+	"\aplan_id\x18\x03 \x01(\rH\x02R\x06planId\x88\x01\x01\x12@\n" +
+	"\atrigger\x18\t \x01(\x0e2!.openits.ramp_metering.v1.TriggerH\x03R\atrigger\x88\x01\x01\x12(\n" +
 	"\roccupancy_pct\x18\n" +
-	" \x01(\rR\foccupancyPct\x12\x1f\n" +
-	"\vobserved_by\x18\x04 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	" \x01(\rH\x04R\foccupancyPct\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x04 \x01(\tH\x05R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\x06 \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\x06 \x01(\tH\x06R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\a \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceId\"\xb1\x02\n" +
+	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceIdB\x18\n" +
+	"\x16_queue_length_vehiclesB\x15\n" +
+	"\x13_threshold_vehiclesB\n" +
+	"\n" +
+	"\b_plan_idB\n" +
+	"\n" +
+	"\b_triggerB\x10\n" +
+	"\x0e_occupancy_pctB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\x85\x03\n" +
 	"\x14QueueOverrideCleared\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x122\n" +
-	"\x15queue_length_vehicles\x18\x01 \x01(\rR\x13queueLengthVehicles\x12\x17\n" +
-	"\aplan_id\x18\x02 \x01(\rR\x06planId\x12\x1f\n" +
-	"\vobserved_by\x18\x03 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x127\n" +
+	"\x15queue_length_vehicles\x18\x01 \x01(\rH\x00R\x13queueLengthVehicles\x88\x01\x01\x12\x1c\n" +
+	"\aplan_id\x18\x02 \x01(\rH\x01R\x06planId\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x03 \x01(\tH\x02R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\x05 \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\x05 \x01(\tH\x03R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\x06 \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\a \x01(\tR\x0esourceDeviceId\"\x98\x03\n" +
+	"\x10source_device_id\x18\a \x01(\tR\x0esourceDeviceIdB\x18\n" +
+	"\x16_queue_length_vehiclesB\n" +
+	"\n" +
+	"\b_plan_idB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\x8d\x04\n" +
 	"\x12ReleaseRateChanged\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12*\n" +
-	"\x11previous_rate_vph\x18\x01 \x01(\rR\x0fpreviousRateVph\x12 \n" +
-	"\fnew_rate_vph\x18\x02 \x01(\rR\n" +
-	"newRateVph\x12\x17\n" +
-	"\aplan_id\x18\x03 \x01(\rR\x06planId\x12?\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12/\n" +
+	"\x11previous_rate_vph\x18\x01 \x01(\rH\x00R\x0fpreviousRateVph\x88\x01\x01\x12%\n" +
+	"\fnew_rate_vph\x18\x02 \x01(\rH\x01R\n" +
+	"newRateVph\x88\x01\x01\x12\x1c\n" +
+	"\aplan_id\x18\x03 \x01(\rH\x02R\x06planId\x88\x01\x01\x12D\n" +
 	"\x05cause\x18\n" +
-	" \x01(\x0e2).openits.ramp_metering.v1.RateChangeCauseR\x05cause\x12\x1f\n" +
-	"\vobserved_by\x18\x05 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	" \x01(\x0e2).openits.ramp_metering.v1.RateChangeCauseH\x03R\x05cause\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x05 \x01(\tH\x04R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\a \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\a \x01(\tH\x05R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\b \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceIdJ\x04\b\x04\x10\x05R\x06reason*;\n" +
-	"\aTrigger\x12\x19\n" +
-	"\x15TRIGGER_VEHICLE_COUNT\x10\x00\x12\x15\n" +
-	"\x11TRIGGER_OCCUPANCY\x10\x01*\xea\x01\n" +
-	"\x0fRateChangeCause\x12!\n" +
-	"\x1dRATE_CHANGE_CAUSE_PLAN_SWITCH\x10\x00\x12(\n" +
-	"$RATE_CHANGE_CAUSE_TRAFFIC_RESPONSIVE\x10\x01\x12$\n" +
-	" RATE_CHANGE_CAUSE_QUEUE_OVERRIDE\x10\x02\x12'\n" +
-	"#RATE_CHANGE_CAUSE_OPERATOR_OVERRIDE\x10\x03\x12\x1e\n" +
-	"\x1aRATE_CHANGE_CAUSE_SCHEDULE\x10\x04\x12\x1b\n" +
-	"\x17RATE_CHANGE_CAUSE_OTHER\x10\x05BVZTgithub.com/Vikasa2M/openits-models/pkg/proto/openits/ramp_metering/v1;rampmeteringv1b\x06proto3"
+	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceIdB\x14\n" +
+	"\x12_previous_rate_vphB\x0f\n" +
+	"\r_new_rate_vphB\n" +
+	"\n" +
+	"\b_plan_idB\b\n" +
+	"\x06_causeB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_ownerJ\x04\b\x04\x10\x05R\x06reasonBVZTgithub.com/Vikasa2M/openits-models/pkg/proto/openits/ramp_metering/v1;rampmeteringv1b\x06proto3"
 
 var (
 	file_openits_ramp_metering_v1_events_proto_rawDescOnce sync.Once
@@ -535,22 +442,21 @@ func file_openits_ramp_metering_v1_events_proto_rawDescGZIP() []byte {
 	return file_openits_ramp_metering_v1_events_proto_rawDescData
 }
 
-var file_openits_ramp_metering_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_openits_ramp_metering_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_openits_ramp_metering_v1_events_proto_goTypes = []any{
-	(Trigger)(0),                   // 0: openits.ramp_metering.v1.Trigger
-	(RateChangeCause)(0),           // 1: openits.ramp_metering.v1.RateChangeCause
-	(*QueueOverrideActivated)(nil), // 2: openits.ramp_metering.v1.QueueOverrideActivated
-	(*QueueOverrideCleared)(nil),   // 3: openits.ramp_metering.v1.QueueOverrideCleared
-	(*ReleaseRateChanged)(nil),     // 4: openits.ramp_metering.v1.ReleaseRateChanged
-	(*timestamppb.Timestamp)(nil),  // 5: google.protobuf.Timestamp
+	(*QueueOverrideActivated)(nil), // 0: openits.ramp_metering.v1.QueueOverrideActivated
+	(*QueueOverrideCleared)(nil),   // 1: openits.ramp_metering.v1.QueueOverrideCleared
+	(*ReleaseRateChanged)(nil),     // 2: openits.ramp_metering.v1.ReleaseRateChanged
+	(Trigger)(0),                   // 3: openits.ramp_metering.v1.Trigger
+	(*timestamppb.Timestamp)(nil),  // 4: google.protobuf.Timestamp
+	(RateChangeCause)(0),           // 5: openits.ramp_metering.v1.RateChangeCause
 }
 var file_openits_ramp_metering_v1_events_proto_depIdxs = []int32{
-	0, // 0: openits.ramp_metering.v1.QueueOverrideActivated.trigger:type_name -> openits.ramp_metering.v1.Trigger
-	5, // 1: openits.ramp_metering.v1.QueueOverrideActivated.occurred_at:type_name -> google.protobuf.Timestamp
-	5, // 2: openits.ramp_metering.v1.QueueOverrideCleared.occurred_at:type_name -> google.protobuf.Timestamp
-	1, // 3: openits.ramp_metering.v1.ReleaseRateChanged.cause:type_name -> openits.ramp_metering.v1.RateChangeCause
-	5, // 4: openits.ramp_metering.v1.ReleaseRateChanged.occurred_at:type_name -> google.protobuf.Timestamp
+	3, // 0: openits.ramp_metering.v1.QueueOverrideActivated.trigger:type_name -> openits.ramp_metering.v1.Trigger
+	4, // 1: openits.ramp_metering.v1.QueueOverrideActivated.occurred_at:type_name -> google.protobuf.Timestamp
+	4, // 2: openits.ramp_metering.v1.QueueOverrideCleared.occurred_at:type_name -> google.protobuf.Timestamp
+	5, // 3: openits.ramp_metering.v1.ReleaseRateChanged.cause:type_name -> openits.ramp_metering.v1.RateChangeCause
+	4, // 4: openits.ramp_metering.v1.ReleaseRateChanged.occurred_at:type_name -> google.protobuf.Timestamp
 	5, // [5:5] is the sub-list for method output_type
 	5, // [5:5] is the sub-list for method input_type
 	5, // [5:5] is the sub-list for extension type_name
@@ -563,19 +469,22 @@ func file_openits_ramp_metering_v1_events_proto_init() {
 	if File_openits_ramp_metering_v1_events_proto != nil {
 		return
 	}
+	file_openits_ramp_metering_v1_types_proto_init()
+	file_openits_ramp_metering_v1_events_proto_msgTypes[0].OneofWrappers = []any{}
+	file_openits_ramp_metering_v1_events_proto_msgTypes[1].OneofWrappers = []any{}
+	file_openits_ramp_metering_v1_events_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_ramp_metering_v1_events_proto_rawDesc), len(file_openits_ramp_metering_v1_events_proto_rawDesc)),
-			NumEnums:      2,
+			NumEnums:      0,
 			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_openits_ramp_metering_v1_events_proto_goTypes,
 		DependencyIndexes: file_openits_ramp_metering_v1_events_proto_depIdxs,
-		EnumInfos:         file_openits_ramp_metering_v1_events_proto_enumTypes,
 		MessageInfos:      file_openits_ramp_metering_v1_events_proto_msgTypes,
 	}.Build()
 	File_openits_ramp_metering_v1_events_proto = out.File

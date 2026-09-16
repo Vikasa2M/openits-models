@@ -533,12 +533,43 @@ unrelated module's Go build breaking. Protobuf is unaffected (the proto
 backend emits a per-package enum), so the wire is safe — but every Go
 consumer of the first composer breaks.
 
-A named typedef makes the generated name module-scoped and composer-
-independent:
+A named typedef keeps the generated name stable against the *use-site path*,
+which is what the inline case gets wrong:
 
 ```
 OpenitsCabinetPower_PowerSource     # stable no matter who composes it
 ```
+
+**A named typedef is not automatically stable across output FILES, though.**
+Proto has no nesting to hang the name on, so the proto emitter names an enum
+after the typedef alone — and two files in one proto package that each
+declare it would be a duplicate symbol. Until 2026-09-07 the emitter resolved
+that by renaming whichever file asked second, which meant adding a leaf to an
+events module could rename an enum in the same service's state tree, taking
+its value identifiers with it (protojson serializes enum values by name).
+Thirteen enums across six services were already sitting in that state.
+
+Every enum a service declares now lives in that service's own generated
+`types.proto`, in the same proto package as its `state.proto` and
+`events.proto`, and both import it. A proto type is identified by package
+plus name rather than by the file declaring it, so relocating a declaration
+inside one package changes no fully-qualified name, no wire bytes and no Go
+symbol — protoc-gen-go writes one `.go` per `.proto` but flattens them into
+the one `go_package`.
+
+Two properties are worth naming, because both are lessons rather than
+conveniences. First, the rule always applies: an enum's home does not depend
+on how many files happen to use it or which is emitted first. Placement that
+emerges from emission order is what produced the rename described above.
+Second, the generated import graph now mirrors the YANG one — state and
+events each depend on types, neither on the other — instead of inverting the
+core/events separation that `check-events-layering` exists to enforce. This
+is the shape OpenConfig settled on with its `openconfig-*-types` modules, and
+the one this emitter already used for shared *messages* via `TypesTarget`;
+enums follow the existing precedent rather than a second mechanism beside it.
+
+Genuinely different enums that share a base name still get module-qualified,
+since the registry keys on the value set as well as the name.
 
 Rule of thumb: **the moment a grouping is intended for reuse, its enums are
 typedefs.** Platform-layer groupings (`openits-cabinet-power`,

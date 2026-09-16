@@ -1,0 +1,11 @@
+{
+  "openits-signal-control-events:coordination-change": {
+    "kind": "openits-signal-control-types:coord-programmed-split-change",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence": "2",
+    "occurred-at": "2026-07-11T14:05:00Z",
+    "phase-number": 2,
+    "split-s": 34,
+    "previous-split-s": 30
+  }
+}

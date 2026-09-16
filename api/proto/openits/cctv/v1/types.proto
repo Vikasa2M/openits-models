@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package openits.cctv.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/cctv/v1;cctvv1";
+
+enum PtzMoveMode {
+  PTZ_MOVE_MODE_ABSOLUTE = 0;
+  PTZ_MOVE_MODE_VELOCITY = 1;
+  PTZ_MOVE_MODE_PRESET = 2;
+  PTZ_MOVE_MODE_TOUR = 3;
+  PTZ_MOVE_MODE_IDLE = 4;
+}
+
+enum TourRunState {
+  TOUR_RUN_STATE_STOPPED = 0;
+  TOUR_RUN_STATE_RUNNING = 1;
+  TOUR_RUN_STATE_PAUSED = 2;
+}
+
+enum OperationalStatus {
+  OPERATIONAL_STATUS_ONLINE = 0;
+  OPERATIONAL_STATUS_DEGRADED = 1;
+  OPERATIONAL_STATUS_OFFLINE = 2;
+  OPERATIONAL_STATUS_UNKNOWN = 3;
+}
+
+enum MountingStructure {
+  MOUNTING_STRUCTURE_POLE = 0;
+  MOUNTING_STRUCTURE_MAST_ARM = 1;
+  MOUNTING_STRUCTURE_SPAN_WIRE = 2;
+  MOUNTING_STRUCTURE_STRUCTURE = 3;
+  MOUNTING_STRUCTURE_BUILDING = 4;
+  MOUNTING_STRUCTURE_OTHER = 5;
+}
+
+enum LensMode {
+  LENS_MODE_AUTO = 0;
+  LENS_MODE_MANUAL = 1;
+}
+
+enum VideoCodec {
+  VIDEO_CODEC_H264 = 0;
+  VIDEO_CODEC_H265 = 1;
+  VIDEO_CODEC_MJPEG = 2;
+  VIDEO_CODEC_MPEG4 = 3;
+  VIDEO_CODEC_OTHER = 4;
+}
+
+enum StreamHealth {
+  STREAM_HEALTH_OK = 0;
+  STREAM_HEALTH_DEGRADED = 1;
+  STREAM_HEALTH_DOWN = 2;
+}
+
+enum HeaterMode {
+  HEATER_MODE_OFF = 0;
+  HEATER_MODE_ON = 1;
+  HEATER_MODE_AUTO = 2;
+}
+
+enum FaultSeverity {
+  FAULT_SEVERITY_INFO = 0;
+  FAULT_SEVERITY_WARNING = 1;
+  FAULT_SEVERITY_MINOR = 2;
+  FAULT_SEVERITY_MAJOR = 3;
+  FAULT_SEVERITY_CRITICAL = 4;
+}
+

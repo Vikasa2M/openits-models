@@ -1,0 +1,12 @@
+{
+  "openits-dms-events:message-activation-failed": {
+    "kind": "openits-dms-types:dms-message-activation-failed",
+    "source-device-id": "us40-dms-014",
+    "occurred-at": "2026-07-11T14:11:52Z",
+    "sequence": "2",
+    "attempted-memory-type": "changeable",
+    "attempted-slot-number": 42,
+    "reason": "run-time priority 3 did not outrank the displayed message",
+    "error-type": "openits-dms-types:activation-error-priority"
+  }
+}

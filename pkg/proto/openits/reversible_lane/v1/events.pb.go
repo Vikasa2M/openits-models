@@ -23,182 +23,17 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type LaneFlowState int32
-
-const (
-	LaneFlowState_LANE_FLOW_STATE_UNKNOWN       LaneFlowState = 0
-	LaneFlowState_LANE_FLOW_STATE_CLOSED        LaneFlowState = 1
-	LaneFlowState_LANE_FLOW_STATE_OPEN          LaneFlowState = 2
-	LaneFlowState_LANE_FLOW_STATE_IN_TRANSITION LaneFlowState = 3
-)
-
-// Enum value maps for LaneFlowState.
-var (
-	LaneFlowState_name = map[int32]string{
-		0: "LANE_FLOW_STATE_UNKNOWN",
-		1: "LANE_FLOW_STATE_CLOSED",
-		2: "LANE_FLOW_STATE_OPEN",
-		3: "LANE_FLOW_STATE_IN_TRANSITION",
-	}
-	LaneFlowState_value = map[string]int32{
-		"LANE_FLOW_STATE_UNKNOWN":       0,
-		"LANE_FLOW_STATE_CLOSED":        1,
-		"LANE_FLOW_STATE_OPEN":          2,
-		"LANE_FLOW_STATE_IN_TRANSITION": 3,
-	}
-)
-
-func (x LaneFlowState) Enum() *LaneFlowState {
-	p := new(LaneFlowState)
-	*p = x
-	return p
-}
-
-func (x LaneFlowState) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (LaneFlowState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_reversible_lane_v1_events_proto_enumTypes[0].Descriptor()
-}
-
-func (LaneFlowState) Type() protoreflect.EnumType {
-	return &file_openits_reversible_lane_v1_events_proto_enumTypes[0]
-}
-
-func (x LaneFlowState) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use LaneFlowState.Descriptor instead.
-func (LaneFlowState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_reversible_lane_v1_events_proto_rawDescGZIP(), []int{0}
-}
-
-type TravelDirection int32
-
-const (
-	TravelDirection_TRAVEL_DIRECTION_UNKNOWN    TravelDirection = 0
-	TravelDirection_TRAVEL_DIRECTION_NORTHBOUND TravelDirection = 1
-	TravelDirection_TRAVEL_DIRECTION_SOUTHBOUND TravelDirection = 2
-	TravelDirection_TRAVEL_DIRECTION_EASTBOUND  TravelDirection = 3
-	TravelDirection_TRAVEL_DIRECTION_WESTBOUND  TravelDirection = 4
-)
-
-// Enum value maps for TravelDirection.
-var (
-	TravelDirection_name = map[int32]string{
-		0: "TRAVEL_DIRECTION_UNKNOWN",
-		1: "TRAVEL_DIRECTION_NORTHBOUND",
-		2: "TRAVEL_DIRECTION_SOUTHBOUND",
-		3: "TRAVEL_DIRECTION_EASTBOUND",
-		4: "TRAVEL_DIRECTION_WESTBOUND",
-	}
-	TravelDirection_value = map[string]int32{
-		"TRAVEL_DIRECTION_UNKNOWN":    0,
-		"TRAVEL_DIRECTION_NORTHBOUND": 1,
-		"TRAVEL_DIRECTION_SOUTHBOUND": 2,
-		"TRAVEL_DIRECTION_EASTBOUND":  3,
-		"TRAVEL_DIRECTION_WESTBOUND":  4,
-	}
-)
-
-func (x TravelDirection) Enum() *TravelDirection {
-	p := new(TravelDirection)
-	*p = x
-	return p
-}
-
-func (x TravelDirection) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (TravelDirection) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_reversible_lane_v1_events_proto_enumTypes[1].Descriptor()
-}
-
-func (TravelDirection) Type() protoreflect.EnumType {
-	return &file_openits_reversible_lane_v1_events_proto_enumTypes[1]
-}
-
-func (x TravelDirection) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use TravelDirection.Descriptor instead.
-func (TravelDirection) EnumDescriptor() ([]byte, []int) {
-	return file_openits_reversible_lane_v1_events_proto_rawDescGZIP(), []int{1}
-}
-
-type LcsIndication int32
-
-const (
-	LcsIndication_LCS_INDICATION_UNKNOWN           LcsIndication = 0
-	LcsIndication_LCS_INDICATION_DARK              LcsIndication = 1
-	LcsIndication_LCS_INDICATION_RED_X             LcsIndication = 2
-	LcsIndication_LCS_INDICATION_YELLOW_X          LcsIndication = 3
-	LcsIndication_LCS_INDICATION_FLASHING_YELLOW_X LcsIndication = 4
-	LcsIndication_LCS_INDICATION_GREEN_ARROW       LcsIndication = 5
-)
-
-// Enum value maps for LcsIndication.
-var (
-	LcsIndication_name = map[int32]string{
-		0: "LCS_INDICATION_UNKNOWN",
-		1: "LCS_INDICATION_DARK",
-		2: "LCS_INDICATION_RED_X",
-		3: "LCS_INDICATION_YELLOW_X",
-		4: "LCS_INDICATION_FLASHING_YELLOW_X",
-		5: "LCS_INDICATION_GREEN_ARROW",
-	}
-	LcsIndication_value = map[string]int32{
-		"LCS_INDICATION_UNKNOWN":           0,
-		"LCS_INDICATION_DARK":              1,
-		"LCS_INDICATION_RED_X":             2,
-		"LCS_INDICATION_YELLOW_X":          3,
-		"LCS_INDICATION_FLASHING_YELLOW_X": 4,
-		"LCS_INDICATION_GREEN_ARROW":       5,
-	}
-)
-
-func (x LcsIndication) Enum() *LcsIndication {
-	p := new(LcsIndication)
-	*p = x
-	return p
-}
-
-func (x LcsIndication) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (LcsIndication) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_reversible_lane_v1_events_proto_enumTypes[2].Descriptor()
-}
-
-func (LcsIndication) Type() protoreflect.EnumType {
-	return &file_openits_reversible_lane_v1_events_proto_enumTypes[2]
-}
-
-func (x LcsIndication) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use LcsIndication.Descriptor instead.
-func (LcsIndication) EnumDescriptor() ([]byte, []int) {
-	return file_openits_reversible_lane_v1_events_proto_rawDescGZIP(), []int{2}
-}
-
 type LaneStateChanged struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	Kind              string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	PreviousState     LaneFlowState          `protobuf:"varint,1,opt,name=previous_state,json=previousState,proto3,enum=openits.reversible_lane.v1.LaneFlowState" json:"previous_state,omitempty"`
-	PreviousDirection TravelDirection        `protobuf:"varint,2,opt,name=previous_direction,json=previousDirection,proto3,enum=openits.reversible_lane.v1.TravelDirection" json:"previous_direction,omitempty"`
-	NewState          LaneFlowState          `protobuf:"varint,3,opt,name=new_state,json=newState,proto3,enum=openits.reversible_lane.v1.LaneFlowState" json:"new_state,omitempty"`
-	NewDirection      TravelDirection        `protobuf:"varint,4,opt,name=new_direction,json=newDirection,proto3,enum=openits.reversible_lane.v1.TravelDirection" json:"new_direction,omitempty"`
-	InitiatedBy       string                 `protobuf:"bytes,5,opt,name=initiated_by,json=initiatedBy,proto3" json:"initiated_by,omitempty"`
-	ObservedBy        string                 `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	PreviousState     *LaneFlowState         `protobuf:"varint,1,opt,name=previous_state,json=previousState,proto3,enum=openits.reversible_lane.v1.LaneFlowState,oneof" json:"previous_state,omitempty"`
+	PreviousDirection *string                `protobuf:"bytes,2,opt,name=previous_direction,json=previousDirection,proto3,oneof" json:"previous_direction,omitempty"`
+	NewState          *LaneFlowState         `protobuf:"varint,3,opt,name=new_state,json=newState,proto3,enum=openits.reversible_lane.v1.LaneFlowState,oneof" json:"new_state,omitempty"`
+	NewDirection      *string                `protobuf:"bytes,4,opt,name=new_direction,json=newDirection,proto3,oneof" json:"new_direction,omitempty"`
+	InitiatedBy       *string                `protobuf:"bytes,5,opt,name=initiated_by,json=initiatedBy,proto3,oneof" json:"initiated_by,omitempty"`
+	ObservedBy        *string                `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner             string                 `protobuf:"bytes,9,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner             *string                `protobuf:"bytes,9,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence          uint64                 `protobuf:"varint,10,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	Source            *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId    string                 `protobuf:"bytes,11,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -244,43 +79,43 @@ func (x *LaneStateChanged) GetKind() string {
 }
 
 func (x *LaneStateChanged) GetPreviousState() LaneFlowState {
-	if x != nil {
-		return x.PreviousState
+	if x != nil && x.PreviousState != nil {
+		return *x.PreviousState
 	}
 	return LaneFlowState_LANE_FLOW_STATE_UNKNOWN
 }
 
-func (x *LaneStateChanged) GetPreviousDirection() TravelDirection {
-	if x != nil {
-		return x.PreviousDirection
+func (x *LaneStateChanged) GetPreviousDirection() string {
+	if x != nil && x.PreviousDirection != nil {
+		return *x.PreviousDirection
 	}
-	return TravelDirection_TRAVEL_DIRECTION_UNKNOWN
+	return ""
 }
 
 func (x *LaneStateChanged) GetNewState() LaneFlowState {
-	if x != nil {
-		return x.NewState
+	if x != nil && x.NewState != nil {
+		return *x.NewState
 	}
 	return LaneFlowState_LANE_FLOW_STATE_UNKNOWN
 }
 
-func (x *LaneStateChanged) GetNewDirection() TravelDirection {
-	if x != nil {
-		return x.NewDirection
+func (x *LaneStateChanged) GetNewDirection() string {
+	if x != nil && x.NewDirection != nil {
+		return *x.NewDirection
 	}
-	return TravelDirection_TRAVEL_DIRECTION_UNKNOWN
+	return ""
 }
 
 func (x *LaneStateChanged) GetInitiatedBy() string {
-	if x != nil {
-		return x.InitiatedBy
+	if x != nil && x.InitiatedBy != nil {
+		return *x.InitiatedBy
 	}
 	return ""
 }
 
 func (x *LaneStateChanged) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -293,8 +128,8 @@ func (x *LaneStateChanged) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *LaneStateChanged) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -323,13 +158,13 @@ func (x *LaneStateChanged) GetSourceDeviceId() string {
 type LcsConflictDetected struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	SegmentId      string                 `protobuf:"bytes,1,opt,name=segment_id,json=segmentId,proto3" json:"segment_id,omitempty"`
-	LaneId         string                 `protobuf:"bytes,9,opt,name=lane_id,json=laneId,proto3" json:"lane_id,omitempty"`
-	LcsDirectionA  LcsIndication          `protobuf:"varint,2,opt,name=lcs_direction_a,json=lcsDirectionA,proto3,enum=openits.reversible_lane.v1.LcsIndication" json:"lcs_direction_a,omitempty"`
-	LcsDirectionB  LcsIndication          `protobuf:"varint,3,opt,name=lcs_direction_b,json=lcsDirectionB,proto3,enum=openits.reversible_lane.v1.LcsIndication" json:"lcs_direction_b,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,4,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	SegmentId      *string                `protobuf:"bytes,1,opt,name=segment_id,json=segmentId,proto3,oneof" json:"segment_id,omitempty"`
+	LaneId         *string                `protobuf:"bytes,9,opt,name=lane_id,json=laneId,proto3,oneof" json:"lane_id,omitempty"`
+	LcsDirectionA  *LcsIndication         `protobuf:"varint,2,opt,name=lcs_direction_a,json=lcsDirectionA,proto3,enum=openits.reversible_lane.v1.LcsIndication,oneof" json:"lcs_direction_a,omitempty"`
+	LcsDirectionB  *LcsIndication         `protobuf:"varint,3,opt,name=lcs_direction_b,json=lcsDirectionB,proto3,enum=openits.reversible_lane.v1.LcsIndication,oneof" json:"lcs_direction_b,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,4,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,6,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,8,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
@@ -375,36 +210,36 @@ func (x *LcsConflictDetected) GetKind() string {
 }
 
 func (x *LcsConflictDetected) GetSegmentId() string {
-	if x != nil {
-		return x.SegmentId
+	if x != nil && x.SegmentId != nil {
+		return *x.SegmentId
 	}
 	return ""
 }
 
 func (x *LcsConflictDetected) GetLaneId() string {
-	if x != nil {
-		return x.LaneId
+	if x != nil && x.LaneId != nil {
+		return *x.LaneId
 	}
 	return ""
 }
 
 func (x *LcsConflictDetected) GetLcsDirectionA() LcsIndication {
-	if x != nil {
-		return x.LcsDirectionA
+	if x != nil && x.LcsDirectionA != nil {
+		return *x.LcsDirectionA
 	}
 	return LcsIndication_LCS_INDICATION_UNKNOWN
 }
 
 func (x *LcsConflictDetected) GetLcsDirectionB() LcsIndication {
-	if x != nil {
-		return x.LcsDirectionB
+	if x != nil && x.LcsDirectionB != nil {
+		return *x.LcsDirectionB
 	}
 	return LcsIndication_LCS_INDICATION_UNKNOWN
 }
 
 func (x *LcsConflictDetected) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -417,8 +252,8 @@ func (x *LcsConflictDetected) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *LcsConflictDetected) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -447,14 +282,14 @@ func (x *LcsConflictDetected) GetSourceDeviceId() string {
 type TransitionTimeout struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	FromDirection  TravelDirection        `protobuf:"varint,1,opt,name=from_direction,json=fromDirection,proto3,enum=openits.reversible_lane.v1.TravelDirection" json:"from_direction,omitempty"`
-	ToDirection    TravelDirection        `protobuf:"varint,2,opt,name=to_direction,json=toDirection,proto3,enum=openits.reversible_lane.v1.TravelDirection" json:"to_direction,omitempty"`
+	FromDirection  *string                `protobuf:"bytes,1,opt,name=from_direction,json=fromDirection,proto3,oneof" json:"from_direction,omitempty"`
+	ToDirection    *string                `protobuf:"bytes,2,opt,name=to_direction,json=toDirection,proto3,oneof" json:"to_direction,omitempty"`
 	StartedAt      *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=started_at,json=startedAt,proto3" json:"started_at,omitempty"`
-	TimeoutS       uint32                 `protobuf:"varint,4,opt,name=timeout_s,json=timeoutS,proto3" json:"timeout_s,omitempty"`
-	SequenceStep   string                 `protobuf:"bytes,5,opt,name=sequence_step,json=sequenceStep,proto3" json:"sequence_step,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	TimeoutS       *uint32                `protobuf:"varint,4,opt,name=timeout_s,json=timeoutS,proto3,oneof" json:"timeout_s,omitempty"`
+	SequenceStep   *string                `protobuf:"bytes,5,opt,name=sequence_step,json=sequenceStep,proto3,oneof" json:"sequence_step,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,8,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,8,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,10,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -498,18 +333,18 @@ func (x *TransitionTimeout) GetKind() string {
 	return ""
 }
 
-func (x *TransitionTimeout) GetFromDirection() TravelDirection {
-	if x != nil {
-		return x.FromDirection
+func (x *TransitionTimeout) GetFromDirection() string {
+	if x != nil && x.FromDirection != nil {
+		return *x.FromDirection
 	}
-	return TravelDirection_TRAVEL_DIRECTION_UNKNOWN
+	return ""
 }
 
-func (x *TransitionTimeout) GetToDirection() TravelDirection {
-	if x != nil {
-		return x.ToDirection
+func (x *TransitionTimeout) GetToDirection() string {
+	if x != nil && x.ToDirection != nil {
+		return *x.ToDirection
 	}
-	return TravelDirection_TRAVEL_DIRECTION_UNKNOWN
+	return ""
 }
 
 func (x *TransitionTimeout) GetStartedAt() *timestamppb.Timestamp {
@@ -520,22 +355,22 @@ func (x *TransitionTimeout) GetStartedAt() *timestamppb.Timestamp {
 }
 
 func (x *TransitionTimeout) GetTimeoutS() uint32 {
-	if x != nil {
-		return x.TimeoutS
+	if x != nil && x.TimeoutS != nil {
+		return *x.TimeoutS
 	}
 	return 0
 }
 
 func (x *TransitionTimeout) GetSequenceStep() string {
-	if x != nil {
-		return x.SequenceStep
+	if x != nil && x.SequenceStep != nil {
+		return *x.SequenceStep
 	}
 	return ""
 }
 
 func (x *TransitionTimeout) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -548,8 +383,8 @@ func (x *TransitionTimeout) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *TransitionTimeout) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -572,72 +407,76 @@ var File_openits_reversible_lane_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_reversible_lane_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"'openits/reversible_lane/v1/events.proto\x12\x1aopenits.reversible_lane.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1copenits/types/v1/types.proto\"\x81\x05\n" +
+	"'openits/reversible_lane/v1/events.proto\x12\x1aopenits.reversible_lane.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a&openits/reversible_lane/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\xbf\x05\n" +
 	"\x10LaneStateChanged\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12P\n" +
-	"\x0eprevious_state\x18\x01 \x01(\x0e2).openits.reversible_lane.v1.LaneFlowStateR\rpreviousState\x12Z\n" +
-	"\x12previous_direction\x18\x02 \x01(\x0e2+.openits.reversible_lane.v1.TravelDirectionR\x11previousDirection\x12F\n" +
-	"\tnew_state\x18\x03 \x01(\x0e2).openits.reversible_lane.v1.LaneFlowStateR\bnewState\x12P\n" +
-	"\rnew_direction\x18\x04 \x01(\x0e2+.openits.reversible_lane.v1.TravelDirectionR\fnewDirection\x12!\n" +
-	"\finitiated_by\x18\x05 \x01(\tR\vinitiatedBy\x12\x1f\n" +
-	"\vobserved_by\x18\a \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12U\n" +
+	"\x0eprevious_state\x18\x01 \x01(\x0e2).openits.reversible_lane.v1.LaneFlowStateH\x00R\rpreviousState\x88\x01\x01\x122\n" +
+	"\x12previous_direction\x18\x02 \x01(\tH\x01R\x11previousDirection\x88\x01\x01\x12K\n" +
+	"\tnew_state\x18\x03 \x01(\x0e2).openits.reversible_lane.v1.LaneFlowStateH\x02R\bnewState\x88\x01\x01\x12(\n" +
+	"\rnew_direction\x18\x04 \x01(\tH\x03R\fnewDirection\x88\x01\x01\x12&\n" +
+	"\finitiated_by\x18\x05 \x01(\tH\x04R\vinitiatedBy\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\a \x01(\tH\x05R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\t \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\t \x01(\tH\x06R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\n" +
 	" \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\v \x01(\tR\x0esourceDeviceId\"\xf7\x03\n" +
-	"\x13LcsConflictDetected\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12\x1d\n" +
+	"\x10source_device_id\x18\v \x01(\tR\x0esourceDeviceIdB\x11\n" +
+	"\x0f_previous_stateB\x15\n" +
+	"\x13_previous_directionB\f\n" +
 	"\n" +
-	"segment_id\x18\x01 \x01(\tR\tsegmentId\x12\x17\n" +
-	"\alane_id\x18\t \x01(\tR\x06laneId\x12Q\n" +
-	"\x0flcs_direction_a\x18\x02 \x01(\x0e2).openits.reversible_lane.v1.LcsIndicationR\rlcsDirectionA\x12Q\n" +
-	"\x0flcs_direction_b\x18\x03 \x01(\x0e2).openits.reversible_lane.v1.LcsIndicationR\rlcsDirectionB\x12\x1f\n" +
-	"\vobserved_by\x18\x04 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"_new_stateB\x10\n" +
+	"\x0e_new_directionB\x0f\n" +
+	"\r_initiated_byB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xf2\x04\n" +
+	"\x13LcsConflictDetected\x12\x12\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12\"\n" +
+	"\n" +
+	"segment_id\x18\x01 \x01(\tH\x00R\tsegmentId\x88\x01\x01\x12\x1c\n" +
+	"\alane_id\x18\t \x01(\tH\x01R\x06laneId\x88\x01\x01\x12V\n" +
+	"\x0flcs_direction_a\x18\x02 \x01(\x0e2).openits.reversible_lane.v1.LcsIndicationH\x02R\rlcsDirectionA\x88\x01\x01\x12V\n" +
+	"\x0flcs_direction_b\x18\x03 \x01(\x0e2).openits.reversible_lane.v1.LcsIndicationH\x03R\rlcsDirectionB\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x04 \x01(\tH\x04R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\x06 \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\x06 \x01(\tH\x05R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\a \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceId\"\x82\x04\n" +
-	"\x11TransitionTimeout\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12R\n" +
-	"\x0efrom_direction\x18\x01 \x01(\x0e2+.openits.reversible_lane.v1.TravelDirectionR\rfromDirection\x12N\n" +
-	"\fto_direction\x18\x02 \x01(\x0e2+.openits.reversible_lane.v1.TravelDirectionR\vtoDirection\x129\n" +
+	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceIdB\r\n" +
+	"\v_segment_idB\n" +
 	"\n" +
-	"started_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tstartedAt\x12\x1b\n" +
-	"\ttimeout_s\x18\x04 \x01(\rR\btimeoutS\x12#\n" +
-	"\rsequence_step\x18\x05 \x01(\tR\fsequenceStep\x12\x1f\n" +
-	"\vobserved_by\x18\x06 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\b_lane_idB\x12\n" +
+	"\x10_lcs_direction_aB\x12\n" +
+	"\x10_lcs_direction_bB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xa4\x04\n" +
+	"\x11TransitionTimeout\x12\x12\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12*\n" +
+	"\x0efrom_direction\x18\x01 \x01(\tH\x00R\rfromDirection\x88\x01\x01\x12&\n" +
+	"\fto_direction\x18\x02 \x01(\tH\x01R\vtoDirection\x88\x01\x01\x129\n" +
+	"\n" +
+	"started_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tstartedAt\x12 \n" +
+	"\ttimeout_s\x18\x04 \x01(\rH\x02R\btimeoutS\x88\x01\x01\x12(\n" +
+	"\rsequence_step\x18\x05 \x01(\tH\x03R\fsequenceStep\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x06 \x01(\tH\x04R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\b \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\b \x01(\tH\x05R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\t \x01(\x04R\bsequence\x12(\n" +
 	"\x10source_device_id\x18\n" +
-	" \x01(\tR\x0esourceDeviceId*\x85\x01\n" +
-	"\rLaneFlowState\x12\x1b\n" +
-	"\x17LANE_FLOW_STATE_UNKNOWN\x10\x00\x12\x1a\n" +
-	"\x16LANE_FLOW_STATE_CLOSED\x10\x01\x12\x18\n" +
-	"\x14LANE_FLOW_STATE_OPEN\x10\x02\x12!\n" +
-	"\x1dLANE_FLOW_STATE_IN_TRANSITION\x10\x03*\xb1\x01\n" +
-	"\x0fTravelDirection\x12\x1c\n" +
-	"\x18TRAVEL_DIRECTION_UNKNOWN\x10\x00\x12\x1f\n" +
-	"\x1bTRAVEL_DIRECTION_NORTHBOUND\x10\x01\x12\x1f\n" +
-	"\x1bTRAVEL_DIRECTION_SOUTHBOUND\x10\x02\x12\x1e\n" +
-	"\x1aTRAVEL_DIRECTION_EASTBOUND\x10\x03\x12\x1e\n" +
-	"\x1aTRAVEL_DIRECTION_WESTBOUND\x10\x04*\xc1\x01\n" +
-	"\rLcsIndication\x12\x1a\n" +
-	"\x16LCS_INDICATION_UNKNOWN\x10\x00\x12\x17\n" +
-	"\x13LCS_INDICATION_DARK\x10\x01\x12\x18\n" +
-	"\x14LCS_INDICATION_RED_X\x10\x02\x12\x1b\n" +
-	"\x17LCS_INDICATION_YELLOW_X\x10\x03\x12$\n" +
-	" LCS_INDICATION_FLASHING_YELLOW_X\x10\x04\x12\x1e\n" +
-	"\x1aLCS_INDICATION_GREEN_ARROW\x10\x05BZZXgithub.com/Vikasa2M/openits-models/pkg/proto/openits/reversible_lane/v1;reversiblelanev1b\x06proto3"
+	" \x01(\tR\x0esourceDeviceIdB\x11\n" +
+	"\x0f_from_directionB\x0f\n" +
+	"\r_to_directionB\f\n" +
+	"\n" +
+	"_timeout_sB\x10\n" +
+	"\x0e_sequence_stepB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_ownerBZZXgithub.com/Vikasa2M/openits-models/pkg/proto/openits/reversible_lane/v1;reversiblelanev1b\x06proto3"
 
 var (
 	file_openits_reversible_lane_v1_events_proto_rawDescOnce sync.Once
@@ -651,38 +490,32 @@ func file_openits_reversible_lane_v1_events_proto_rawDescGZIP() []byte {
 	return file_openits_reversible_lane_v1_events_proto_rawDescData
 }
 
-var file_openits_reversible_lane_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
 var file_openits_reversible_lane_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_openits_reversible_lane_v1_events_proto_goTypes = []any{
-	(LaneFlowState)(0),            // 0: openits.reversible_lane.v1.LaneFlowState
-	(TravelDirection)(0),          // 1: openits.reversible_lane.v1.TravelDirection
-	(LcsIndication)(0),            // 2: openits.reversible_lane.v1.LcsIndication
-	(*LaneStateChanged)(nil),      // 3: openits.reversible_lane.v1.LaneStateChanged
-	(*LcsConflictDetected)(nil),   // 4: openits.reversible_lane.v1.LcsConflictDetected
-	(*TransitionTimeout)(nil),     // 5: openits.reversible_lane.v1.TransitionTimeout
-	(*timestamppb.Timestamp)(nil), // 6: google.protobuf.Timestamp
-	(*v1.WireSource)(nil),         // 7: openits.types.v1.WireSource
+	(*LaneStateChanged)(nil),      // 0: openits.reversible_lane.v1.LaneStateChanged
+	(*LcsConflictDetected)(nil),   // 1: openits.reversible_lane.v1.LcsConflictDetected
+	(*TransitionTimeout)(nil),     // 2: openits.reversible_lane.v1.TransitionTimeout
+	(LaneFlowState)(0),            // 3: openits.reversible_lane.v1.LaneFlowState
+	(*timestamppb.Timestamp)(nil), // 4: google.protobuf.Timestamp
+	(*v1.WireSource)(nil),         // 5: openits.types.v1.WireSource
+	(LcsIndication)(0),            // 6: openits.reversible_lane.v1.LcsIndication
 }
 var file_openits_reversible_lane_v1_events_proto_depIdxs = []int32{
-	0,  // 0: openits.reversible_lane.v1.LaneStateChanged.previous_state:type_name -> openits.reversible_lane.v1.LaneFlowState
-	1,  // 1: openits.reversible_lane.v1.LaneStateChanged.previous_direction:type_name -> openits.reversible_lane.v1.TravelDirection
-	0,  // 2: openits.reversible_lane.v1.LaneStateChanged.new_state:type_name -> openits.reversible_lane.v1.LaneFlowState
-	1,  // 3: openits.reversible_lane.v1.LaneStateChanged.new_direction:type_name -> openits.reversible_lane.v1.TravelDirection
-	6,  // 4: openits.reversible_lane.v1.LaneStateChanged.occurred_at:type_name -> google.protobuf.Timestamp
-	7,  // 5: openits.reversible_lane.v1.LaneStateChanged.source:type_name -> openits.types.v1.WireSource
-	2,  // 6: openits.reversible_lane.v1.LcsConflictDetected.lcs_direction_a:type_name -> openits.reversible_lane.v1.LcsIndication
-	2,  // 7: openits.reversible_lane.v1.LcsConflictDetected.lcs_direction_b:type_name -> openits.reversible_lane.v1.LcsIndication
-	6,  // 8: openits.reversible_lane.v1.LcsConflictDetected.occurred_at:type_name -> google.protobuf.Timestamp
-	7,  // 9: openits.reversible_lane.v1.LcsConflictDetected.source:type_name -> openits.types.v1.WireSource
-	1,  // 10: openits.reversible_lane.v1.TransitionTimeout.from_direction:type_name -> openits.reversible_lane.v1.TravelDirection
-	1,  // 11: openits.reversible_lane.v1.TransitionTimeout.to_direction:type_name -> openits.reversible_lane.v1.TravelDirection
-	6,  // 12: openits.reversible_lane.v1.TransitionTimeout.started_at:type_name -> google.protobuf.Timestamp
-	6,  // 13: openits.reversible_lane.v1.TransitionTimeout.occurred_at:type_name -> google.protobuf.Timestamp
-	14, // [14:14] is the sub-list for method output_type
-	14, // [14:14] is the sub-list for method input_type
-	14, // [14:14] is the sub-list for extension type_name
-	14, // [14:14] is the sub-list for extension extendee
-	0,  // [0:14] is the sub-list for field type_name
+	3,  // 0: openits.reversible_lane.v1.LaneStateChanged.previous_state:type_name -> openits.reversible_lane.v1.LaneFlowState
+	3,  // 1: openits.reversible_lane.v1.LaneStateChanged.new_state:type_name -> openits.reversible_lane.v1.LaneFlowState
+	4,  // 2: openits.reversible_lane.v1.LaneStateChanged.occurred_at:type_name -> google.protobuf.Timestamp
+	5,  // 3: openits.reversible_lane.v1.LaneStateChanged.source:type_name -> openits.types.v1.WireSource
+	6,  // 4: openits.reversible_lane.v1.LcsConflictDetected.lcs_direction_a:type_name -> openits.reversible_lane.v1.LcsIndication
+	6,  // 5: openits.reversible_lane.v1.LcsConflictDetected.lcs_direction_b:type_name -> openits.reversible_lane.v1.LcsIndication
+	4,  // 6: openits.reversible_lane.v1.LcsConflictDetected.occurred_at:type_name -> google.protobuf.Timestamp
+	5,  // 7: openits.reversible_lane.v1.LcsConflictDetected.source:type_name -> openits.types.v1.WireSource
+	4,  // 8: openits.reversible_lane.v1.TransitionTimeout.started_at:type_name -> google.protobuf.Timestamp
+	4,  // 9: openits.reversible_lane.v1.TransitionTimeout.occurred_at:type_name -> google.protobuf.Timestamp
+	10, // [10:10] is the sub-list for method output_type
+	10, // [10:10] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_openits_reversible_lane_v1_events_proto_init() }
@@ -690,19 +523,22 @@ func file_openits_reversible_lane_v1_events_proto_init() {
 	if File_openits_reversible_lane_v1_events_proto != nil {
 		return
 	}
+	file_openits_reversible_lane_v1_types_proto_init()
+	file_openits_reversible_lane_v1_events_proto_msgTypes[0].OneofWrappers = []any{}
+	file_openits_reversible_lane_v1_events_proto_msgTypes[1].OneofWrappers = []any{}
+	file_openits_reversible_lane_v1_events_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_reversible_lane_v1_events_proto_rawDesc), len(file_openits_reversible_lane_v1_events_proto_rawDesc)),
-			NumEnums:      3,
+			NumEnums:      0,
 			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_openits_reversible_lane_v1_events_proto_goTypes,
 		DependencyIndexes: file_openits_reversible_lane_v1_events_proto_depIdxs,
-		EnumInfos:         file_openits_reversible_lane_v1_events_proto_enumTypes,
 		MessageInfos:      file_openits_reversible_lane_v1_events_proto_msgTypes,
 	}.Build()
 	File_openits_reversible_lane_v1_events_proto = out.File

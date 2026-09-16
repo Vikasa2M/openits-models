@@ -12,6 +12,7 @@ import (
 	signalcontrolv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/signal_control/v1"
 	yangpkg "github.com/Vikasa2M/openits-models/pkg/yang/openits"
 	"github.com/Vikasa2M/openits-models/tools/conformance/tests"
+	"google.golang.org/protobuf/proto"
 )
 
 // mockDriver produces a fully-populated, spec-compliant observation so
@@ -111,7 +112,7 @@ func collectASC() (*yangpkg.Device, error) {
 	}
 	coordSt := coord.GetOrCreateState()
 	coordSt.ActivePlan = u8Ptr(3)
-	coordSt.CycleState = yangpkg.OpenitsSignalControl_SignalController_Coordination_State_CycleState_in_step
+	coordSt.CycleState = yangpkg.OpenitsSignalControlTypes_CycleStatePersistent_cycle_in_step
 
 	// Timebase (NTCIP 1201): the "weekday" day-plan activates coordination
 	// plan 3 at 06:00 and drops to flash at 23:00 (exercising both arms of
@@ -152,7 +153,7 @@ func collectASC() (*yangpkg.Device, error) {
 
 	clk := tb.GetOrCreateClock()
 	clk.CurrentTime = strPtr("2026-07-14T12:00:00Z")
-	clk.TimeSource = yangpkg.OpenitsSignalControlTypes_TimeSource_time_source_gnss
+	clk.TimeSource = yangpkg.OpenitsTypes_TimeSource_time_source_gnss
 	clk.SyncStatus = yangpkg.OpenitsSignalControl_SignalController_Timebase_Clock_SyncStatus_synced
 	clk.OffsetMs = i32Ptr(12)
 
@@ -193,7 +194,7 @@ func collectASC() (*yangpkg.Device, error) {
 	detCfg.Type = yangpkg.OpenitsSignalControlTypes_DetectorType_detector_inductive_loop
 	detCfg.AssignedPhases = []uint8{2}
 	detCfg.Enabled = boolPtr(true)
-	detCfg.Delay = u16Ptr(3)
+	detCfg.Delay = f64Ptr(3.0)
 	detCfg.Extend = f64Ptr(1.5)
 	detCfg.Mode = yangpkg.OpenitsSignalControl_DetectorMode_presence
 	detCfg.FailAction = yangpkg.OpenitsSignalControl_DetectorFailAction_max_recall
@@ -203,7 +204,7 @@ func collectASC() (*yangpkg.Device, error) {
 	detSt.ActuationCount = u64Ptr(1421)
 	detSt.Fault = boolPtr(false)
 	meas := detSt.GetOrCreateMeasurement()
-	meas.Volume = u64Ptr(842)
+	meas.Volume = u32Ptr(842)
 	meas.Occupancy = f64Ptr(12.5)
 	meas.SpeedKmh = f64Ptr(61)
 
@@ -412,7 +413,7 @@ func collectDMS() (*yangpkg.Device, error) {
 	st.Model = strPtr("Vanguard VF-2320")
 	st.Firmware = strPtr("VX-4.3.2")
 	st.Serial = strPtr("VF2320-2419-0088")
-	st.Technology = yangpkg.OpenitsDms_Sign_State_Technology_led
+	st.Technology = yangpkg.OpenitsDmsTypes_DisplayTechnology_display_led
 	st.SignWidthPixels = u32Ptr(144)
 	st.SignHeightPixels = u32Ptr(27)
 	// Capability advertisement so central can validate message fit/markup.
@@ -622,7 +623,7 @@ func subscribeDMS(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VAB",
 			CETime:   time.Now().UTC(),
 			Data: &commonv1.ModeChanged{
-				Prior:   "blank",
+				Prior:   proto.String("blank"),
 				Current: "normal",
 				Kind:    "openits-dms-types:dms-mode-event-kind",
 			},
@@ -634,11 +635,11 @@ func subscribeDMS(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VAC",
 			CETime:   time.Now().UTC(),
 			Data: &dmsv1.MessageActivationFailed{
-				AttemptedMemoryType: dmsv1.MessageMemoryType_MESSAGE_MEMORY_TYPE_CHANGEABLE,
-				AttemptedSlotNumber: 2,
-				Reason:              "unsupported MULTI tag",
-				ErrorType:           dmsv1.ErrorType_ERROR_TYPE_UNSUPPORTED_TAG,
-				ErrorPosition:       17,
+				AttemptedMemoryType: dmsv1.MessageMemoryType_MESSAGE_MEMORY_TYPE_CHANGEABLE.Enum(),
+				AttemptedSlotNumber: proto.Uint32(2),
+				Reason:              proto.String("unsupported MULTI tag"),
+				ErrorType:           proto.String("openits-dms-types:activation-error-unsupported-tag"),
+				ErrorPosition:       proto.Uint32(17),
 			},
 		},
 	}
@@ -781,12 +782,12 @@ func subscribeESS(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VBB",
 			CETime:   time.Now().UTC(),
 			Data: &essv1.WeatherAlert{
-				ThresholdId:    "ice-warning",
-				ObservedValue:  "-2.3",
-				ThresholdValue: "0.0",
-				Unit:           essv1.Unit_UNIT_CELSIUS,
-				Direction:      essv1.Direction_DIRECTION_ENTERED,
-				SensorId:       "surface-1",
+				ThresholdId:    proto.String("ice-warning"),
+				ObservedValue:  proto.String("-2.3"),
+				ThresholdValue: proto.String("0.0"),
+				Unit:           essv1.Unit_UNIT_CELSIUS.Enum(),
+				Direction:      essv1.Direction_DIRECTION_ENTERED.Enum(),
+				SensorId:       proto.String("surface-1"),
 			},
 		},
 		{
@@ -796,8 +797,8 @@ func subscribeESS(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VBC",
 			CETime:   time.Now().UTC(),
 			Data: &essv1.SensorRecalibrated{
-				SensorId:     "atmos-1",
-				CalibratedBy: "field-tech-42",
+				SensorId:     proto.String("atmos-1"),
+				CalibratedBy: proto.String("field-tech-42"),
 			},
 		},
 	}
@@ -910,7 +911,7 @@ func collectRSU() (*yangpkg.Device, error) {
 	diag.Hdop = f64Ptr(0.9)
 	diag.PpsPresent = boolPtr(true)
 	diag.PositionDeviationM = f64Ptr(0.35)
-	diag.TimeSource = yangpkg.OpenitsRsuTypes_TimeSource_gps
+	diag.TimeSource = yangpkg.OpenitsTypes_TimeSource_time_source_gnss
 	diag.UptimeSeconds = u64Ptr(864_000)
 	diag.RestartCount = u32Ptr(3)
 	diag.LastRestartReason = yangpkg.OpenitsTypes_RestartReason_restart_upgrade
@@ -1043,12 +1044,12 @@ func subscribeRSU(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VCA",
 			CETime:   time.Now().UTC(),
 			Data: &rsuv1.RsuSrmReceived{
-				RequestId:    "srm-001",
-				VehicleId:    "ev-austin-42",
-				RequestType:  "openits-v2x-messaging-types:srm-preemption-request",
-				Approach:     2,
-				EtaSeconds:   12,
-				VehicleClass: "emergency",
+				RequestId:    proto.String("srm-001"),
+				VehicleId:    proto.String("ev-austin-42"),
+				RequestType:  proto.String("openits-v2x-messaging-types:srm-preemption-request"),
+				Approach:     proto.Uint32(2),
+				EtaSeconds:   proto.Uint32(12),
+				VehicleClass: proto.String("emergency"),
 			},
 		},
 		{
@@ -1058,9 +1059,9 @@ func subscribeRSU(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VCB",
 			CETime:   time.Now().UTC(),
 			Data: &rsuv1.RsuCertificateExpiring{
-				CertificateId:   "cert-abc-123",
-				CertificateType: "pseudonym",
-				DaysUntilExpiry: 3,
+				CertificateId:   proto.String("cert-abc-123"),
+				CertificateType: proto.String("pseudonym"),
+				DaysUntilExpiry: proto.Uint32(3),
 			},
 		},
 		{
@@ -1070,10 +1071,10 @@ func subscribeRSU(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VCC",
 			CETime:   time.Now().UTC(),
 			Data: &rsuv1.RsuChannelFault{
-				ChannelId:         "184",
-				DsrcChannelNumber: 184,
-				FaultType:         "openits-v2x-radio-types:channel-fault-interference",
-				Message:           "elevated BER on adjacent channel 184",
+				ChannelId:         proto.String("184"),
+				DsrcChannelNumber: proto.Uint32(184),
+				FaultType:         proto.String("openits-v2x-radio-types:channel-fault-interference"),
+				Message:           proto.String("elevated BER on adjacent channel 184"),
 			},
 		},
 		{
@@ -1083,9 +1084,9 @@ func subscribeRSU(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VCD",
 			CETime:   time.Now().UTC(),
 			Data: &rsuv1.RsuGpsStatusChange{
-				PreviousStatus: rsuv1.GpsFixStatus_GPS_FIX_STATUS_FIX_2D,
-				NewStatus:      rsuv1.GpsFixStatus_GPS_FIX_STATUS_FIX_3D,
-				Satellites:     9,
+				PreviousStatus: rsuv1.GpsFixStatus_GPS_FIX_STATUS_FIX_2D.Enum(),
+				NewStatus:      rsuv1.GpsFixStatus_GPS_FIX_STATUS_FIX_3D.Enum(),
+				Satellites:     proto.Uint32(9),
 			},
 		},
 		{
@@ -1095,9 +1096,9 @@ func subscribeRSU(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VCE",
 			CETime:   time.Now().UTC(),
 			Data: &rsuv1.RsuSecurityEvent{
-				EventType: "openits-rsu-types:sec-invalid-signature",
-				Source:    "misbehavior-detector",
-				Message:   "ECDSA verify failed on BSM from vehicle pseudonym-abc",
+				EventType: proto.String("openits-rsu-types:sec-invalid-signature"),
+				Source:    proto.String("misbehavior-detector"),
+				Message:   proto.String("ECDSA verify failed on BSM from vehicle pseudonym-abc"),
 			},
 		},
 	}
@@ -1238,9 +1239,9 @@ func subscribeRM(ctx context.Context, out chan<- tests.EventEnvelope, window tim
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VDA",
 			CETime:   time.Now().UTC(),
 			Data: &commonv1.ModeChanged{
-				Prior:   "on-standby",
+				Prior:   proto.String("on-standby"),
 				Current: "active",
-				Reason:  "schedule",
+				Reason:  proto.String("schedule"),
 				Kind:    "openits-ramp-metering-types:ramp-meter-mode-event-kind",
 			},
 		},
@@ -1251,10 +1252,10 @@ func subscribeRM(ctx context.Context, out chan<- tests.EventEnvelope, window tim
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VDB",
 			CETime:   time.Now().UTC(),
 			Data: &rampmeteringv1.ReleaseRateChanged{
-				PreviousRateVph: 600,
-				NewRateVph:      720,
-				PlanId:          2,
-				Cause:           rampmeteringv1.RateChangeCause_RATE_CHANGE_CAUSE_TRAFFIC_RESPONSIVE,
+				PreviousRateVph: proto.Uint32(600),
+				NewRateVph:      proto.Uint32(720),
+				PlanId:          proto.Uint32(2),
+				Cause:           rampmeteringv1.RateChangeCause_RATE_CHANGE_CAUSE_TRAFFIC_RESPONSIVE.Enum(),
 			},
 		},
 		{
@@ -1264,9 +1265,9 @@ func subscribeRM(ctx context.Context, out chan<- tests.EventEnvelope, window tim
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VDC",
 			CETime:   time.Now().UTC(),
 			Data: &rampmeteringv1.QueueOverrideActivated{
-				QueueLengthVehicles: 27,
-				ThresholdVehicles:   25,
-				PlanId:              2,
+				QueueLengthVehicles: proto.Uint32(27),
+				ThresholdVehicles:   proto.Uint32(25),
+				PlanId:              proto.Uint32(2),
 			},
 		},
 	}

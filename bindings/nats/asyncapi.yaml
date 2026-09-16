@@ -1373,14 +1373,6 @@ components:
                             minimum: 0
                             type: integer
                         error-type:
-                            enum:
-                                - font-not-found
-                                - graphic-not-found
-                                - hardware
-                                - other
-                                - syntax
-                                - too-long
-                                - unsupported-tag
                             type: string
                         kind:
                             type: string
@@ -2323,6 +2315,8 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        clear-reason:
+                            type: string
                         incident-id:
                             type: string
                         kind:
@@ -2394,6 +2388,9 @@ components:
                             maximum: 100
                             minimum: 0
                             type: integer
+                        first-observed:
+                            format: date-time
+                            type: string
                         incident-id:
                             type: string
                         kind:
@@ -2489,6 +2486,12 @@ components:
                             maximum: 100
                             minimum: 0
                             type: integer
+                        disposition:
+                            enum:
+                                - confirmed
+                                - false-alarm
+                                - pending
+                            type: string
                         incident-id:
                             type: string
                         kind:
@@ -2502,6 +2505,8 @@ components:
                             format: date-time
                             type: string
                         owner:
+                            type: string
+                        reviewed-by:
                             type: string
                         sequence:
                             type: string
@@ -3428,12 +3433,6 @@ components:
                         kind:
                             type: string
                         new-direction:
-                            enum:
-                                - eastbound
-                                - northbound
-                                - southbound
-                                - unknown
-                                - westbound
                             type: string
                         new-state:
                             enum:
@@ -3453,12 +3452,6 @@ components:
                         owner:
                             type: string
                         previous-direction:
-                            enum:
-                                - eastbound
-                                - northbound
-                                - southbound
-                                - unknown
-                                - westbound
                             type: string
                         previous-state:
                             enum:
@@ -3631,12 +3624,6 @@ components:
                     additionalProperties: false
                     properties:
                         from-direction:
-                            enum:
-                                - eastbound
-                                - northbound
-                                - southbound
-                                - unknown
-                                - westbound
                             type: string
                         kind:
                             type: string
@@ -3667,12 +3654,6 @@ components:
                             minimum: 0
                             type: integer
                         to-direction:
-                            enum:
-                                - eastbound
-                                - northbound
-                                - southbound
-                                - unknown
-                                - westbound
                             type: string
                     required:
                         - kind
@@ -5295,12 +5276,14 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        cycle-length-s:
+                            maximum: 65535
+                            minimum: 0
+                            type: integer
+                        cycle-state:
+                            type: string
                         kind:
                             type: string
-                        new-value:
-                            maximum: 2147483647
-                            minimum: -2147483648
-                            type: integer
                         observed-by:
                             maxLength: 64
                             minLength: 1
@@ -5309,11 +5292,37 @@ components:
                         occurred-at:
                             format: date-time
                             type: string
+                        offset-s:
+                            maximum: 65535
+                            minimum: 0
+                            type: integer
                         owner:
                             type: string
-                        previous-value:
-                            maximum: 2147483647
-                            minimum: -2147483648
+                        pattern:
+                            maximum: 255
+                            minimum: 1
+                            type: integer
+                        phase-number:
+                            maximum: 40
+                            minimum: 1
+                            type: integer
+                        previous-cycle-length-s:
+                            maximum: 65535
+                            minimum: 0
+                            type: integer
+                        previous-cycle-state:
+                            type: string
+                        previous-offset-s:
+                            maximum: 65535
+                            minimum: 0
+                            type: integer
+                        previous-pattern:
+                            maximum: 255
+                            minimum: 1
+                            type: integer
+                        previous-split-s:
+                            maximum: 65535
+                            minimum: 0
                             type: integer
                         sequence:
                             type: string
@@ -5324,9 +5333,9 @@ components:
                             minLength: 1
                             pattern: ^([a-zA-Z0-9_-]+)$
                             type: string
-                        split-number:
-                            maximum: 40
-                            minimum: 1
+                        split-s:
+                            maximum: 65535
+                            minimum: 0
                             type: integer
                     required:
                         - kind
@@ -5485,15 +5494,11 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
-                        approach:
-                            type: string
                         channel:
                             maximum: 65535
                             minimum: 1
                             type: integer
                         kind:
-                            type: string
-                        lane:
                             type: string
                         observed-by:
                             maxLength: 64
@@ -6255,14 +6260,6 @@ components:
                             type: integer
                         sequence:
                             type: string
-                        source:
-                            enum:
-                                - adaptive
-                                - operator
-                                - preemption
-                                - schedule
-                                - unspecified
-                            type: string
                         source-device-id:
                             maxLength: 64
                             minLength: 1
@@ -6272,6 +6269,8 @@ components:
                             maximum: 255
                             minimum: 0
                             type: integer
+                        trigger:
+                            type: string
                     required:
                         - kind
                         - occurred-at
@@ -6609,35 +6608,6 @@ components:
             name: openits.signal-control.tsam-mode-changed.v1
             payload:
                 schema:
-                    $defs:
-                        WireSource:
-                            additionalProperties: false
-                            properties:
-                                decoder:
-                                    type: string
-                                indiana-code:
-                                    maximum: 65535
-                                    minimum: 0
-                                    type: integer
-                                indiana-param:
-                                    maximum: 65535
-                                    minimum: 0
-                                    type: integer
-                                message-id:
-                                    maximum: 65535
-                                    minimum: 0
-                                    type: integer
-                                oid:
-                                    type: string
-                                oid-value:
-                                    type: string
-                                register:
-                                    type: string
-                                register-value:
-                                    type: string
-                            required:
-                                - decoder
-                            type: object
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
@@ -6671,8 +6641,6 @@ components:
                             type: string
                         sequence:
                             type: string
-                        source:
-                            $ref: '#/$defs/WireSource'
                         source-device-id:
                             maxLength: 64
                             minLength: 1
@@ -6717,35 +6685,6 @@ components:
             name: openits.signal-control.tsam-recommendation-applied.v1
             payload:
                 schema:
-                    $defs:
-                        WireSource:
-                            additionalProperties: false
-                            properties:
-                                decoder:
-                                    type: string
-                                indiana-code:
-                                    maximum: 65535
-                                    minimum: 0
-                                    type: integer
-                                indiana-param:
-                                    maximum: 65535
-                                    minimum: 0
-                                    type: integer
-                                message-id:
-                                    maximum: 65535
-                                    minimum: 0
-                                    type: integer
-                                oid:
-                                    type: string
-                                oid-value:
-                                    type: string
-                                register:
-                                    type: string
-                                register-value:
-                                    type: string
-                            required:
-                                - decoder
-                            type: object
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
@@ -6783,8 +6722,6 @@ components:
                             type: string
                         sequence:
                             type: string
-                        source:
-                            $ref: '#/$defs/WireSource'
                         source-device-id:
                             maxLength: 64
                             minLength: 1
@@ -7643,6 +7580,8 @@ components:
                     properties:
                         direction:
                             type: string
+                        end-verified:
+                            type: boolean
                         kind:
                             type: string
                         lane-impact:
@@ -7674,6 +7613,8 @@ components:
                                 type: object
                             minItems: 1
                             type: array
+                        reduced-speed-limit-kmh:
+                            type: string
                         sequence:
                             type: string
                         source-device-id:
@@ -7681,6 +7622,8 @@ components:
                             minLength: 1
                             pattern: ^([a-zA-Z0-9_-]+)$
                             type: string
+                        start-verified:
+                            type: boolean
                         temporary-signal:
                             type: boolean
                         window-end:
@@ -7689,6 +7632,21 @@ components:
                         window-start:
                             format: date-time
                             type: string
+                        work-zone-type:
+                            type: string
+                        worker-presence:
+                            additionalProperties: false
+                            properties:
+                                last-confirmed-at:
+                                    format: date-time
+                                    type: string
+                                method:
+                                    type: string
+                                workers-present:
+                                    type: boolean
+                            required:
+                                - workers-present
+                            type: object
                         zone-id:
                             maxLength: 128
                             minLength: 1

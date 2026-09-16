@@ -64,15 +64,6 @@
       "type": "integer"
     },
     "error-type": {
-      "enum": [
-        "font-not-found",
-        "graphic-not-found",
-        "hardware",
-        "other",
-        "syntax",
-        "too-long",
-        "unsupported-tag"
-      ],
       "type": "string"
     },
     "kind": {

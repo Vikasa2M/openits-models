@@ -2,11 +2,11 @@
   "openits-reversible-lane:reversible-lane": {
     "config": {
       "id": "rl-blocked-01",
-      "direction-a": "northbound",
-      "direction-b": "southbound"
+      "direction-a": "openits-types:direction-northbound",
+      "direction-b": "openits-types:direction-southbound"
     },
     "control": {
-      "config": { "target-state": "open", "target-direction": "northbound" },
+      "config": { "target-state": "open", "target-direction": "openits-types:direction-northbound" },
       "state": {
         "current-state": "closed",
         "changeover-permitted": false,

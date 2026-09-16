@@ -22,63 +22,15 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type IncidentSeverity int32
-
-const (
-	IncidentSeverity_INCIDENT_SEVERITY_MINOR        IncidentSeverity = 0
-	IncidentSeverity_INCIDENT_SEVERITY_INTERMEDIATE IncidentSeverity = 1
-	IncidentSeverity_INCIDENT_SEVERITY_MAJOR        IncidentSeverity = 2
-)
-
-// Enum value maps for IncidentSeverity.
-var (
-	IncidentSeverity_name = map[int32]string{
-		0: "INCIDENT_SEVERITY_MINOR",
-		1: "INCIDENT_SEVERITY_INTERMEDIATE",
-		2: "INCIDENT_SEVERITY_MAJOR",
-	}
-	IncidentSeverity_value = map[string]int32{
-		"INCIDENT_SEVERITY_MINOR":        0,
-		"INCIDENT_SEVERITY_INTERMEDIATE": 1,
-		"INCIDENT_SEVERITY_MAJOR":        2,
-	}
-)
-
-func (x IncidentSeverity) Enum() *IncidentSeverity {
-	p := new(IncidentSeverity)
-	*p = x
-	return p
-}
-
-func (x IncidentSeverity) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (IncidentSeverity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_perception_v1_events_proto_enumTypes[0].Descriptor()
-}
-
-func (IncidentSeverity) Type() protoreflect.EnumType {
-	return &file_openits_perception_v1_events_proto_enumTypes[0]
-}
-
-func (x IncidentSeverity) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use IncidentSeverity.Descriptor instead.
-func (IncidentSeverity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_perception_v1_events_proto_rawDescGZIP(), []int{0}
-}
-
 type ZoneIncidentCleared struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	IncidentId     string                 `protobuf:"bytes,1,opt,name=incident_id,json=incidentId,proto3" json:"incident_id,omitempty"`
-	ZoneId         string                 `protobuf:"bytes,2,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,4,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	IncidentId     *string                `protobuf:"bytes,1,opt,name=incident_id,json=incidentId,proto3,oneof" json:"incident_id,omitempty"`
+	ZoneId         *string                `protobuf:"bytes,2,opt,name=zone_id,json=zoneId,proto3,oneof" json:"zone_id,omitempty"`
+	ClearReason    *string                `protobuf:"bytes,3,opt,name=clear_reason,json=clearReason,proto3,oneof" json:"clear_reason,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,4,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,6,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,8,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -123,22 +75,29 @@ func (x *ZoneIncidentCleared) GetKind() string {
 }
 
 func (x *ZoneIncidentCleared) GetIncidentId() string {
-	if x != nil {
-		return x.IncidentId
+	if x != nil && x.IncidentId != nil {
+		return *x.IncidentId
 	}
 	return ""
 }
 
 func (x *ZoneIncidentCleared) GetZoneId() string {
-	if x != nil {
-		return x.ZoneId
+	if x != nil && x.ZoneId != nil {
+		return *x.ZoneId
+	}
+	return ""
+}
+
+func (x *ZoneIncidentCleared) GetClearReason() string {
+	if x != nil && x.ClearReason != nil {
+		return *x.ClearReason
 	}
 	return ""
 }
 
 func (x *ZoneIncidentCleared) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -151,8 +110,8 @@ func (x *ZoneIncidentCleared) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *ZoneIncidentCleared) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -174,20 +133,21 @@ func (x *ZoneIncidentCleared) GetSourceDeviceId() string {
 type ZoneIncidentDetected struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	IncidentId     string                 `protobuf:"bytes,1,opt,name=incident_id,json=incidentId,proto3" json:"incident_id,omitempty"`
-	ZoneId         string                 `protobuf:"bytes,2,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Type           string                 `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
-	Severity       IncidentSeverity       `protobuf:"varint,4,opt,name=severity,proto3,enum=openits.perception.v1.IncidentSeverity" json:"severity,omitempty"`
-	TrackId        uint32                 `protobuf:"varint,5,opt,name=track_id,json=trackId,proto3" json:"track_id,omitempty"`
-	TrackEpoch     uint32                 `protobuf:"varint,16,opt,name=track_epoch,json=trackEpoch,proto3" json:"track_epoch,omitempty"`
-	ObjectClass    string                 `protobuf:"bytes,6,opt,name=object_class,json=objectClass,proto3" json:"object_class,omitempty"`
-	SpeedKmh       string                 `protobuf:"bytes,9,opt,name=speed_kmh,json=speedKmh,proto3" json:"speed_kmh,omitempty"`
-	Confidence     uint32                 `protobuf:"varint,10,opt,name=confidence,proto3" json:"confidence,omitempty"`
-	Latitude       string                 `protobuf:"bytes,7,opt,name=latitude,proto3" json:"latitude,omitempty"`
-	Longitude      string                 `protobuf:"bytes,8,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,11,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	IncidentId     *string                `protobuf:"bytes,1,opt,name=incident_id,json=incidentId,proto3,oneof" json:"incident_id,omitempty"`
+	ZoneId         *string                `protobuf:"bytes,2,opt,name=zone_id,json=zoneId,proto3,oneof" json:"zone_id,omitempty"`
+	Type           *string                `protobuf:"bytes,3,opt,name=type,proto3,oneof" json:"type,omitempty"`
+	Severity       *IncidentSeverity      `protobuf:"varint,4,opt,name=severity,proto3,enum=openits.perception.v1.IncidentSeverity,oneof" json:"severity,omitempty"`
+	TrackId        *uint32                `protobuf:"varint,5,opt,name=track_id,json=trackId,proto3,oneof" json:"track_id,omitempty"`
+	TrackEpoch     *uint32                `protobuf:"varint,16,opt,name=track_epoch,json=trackEpoch,proto3,oneof" json:"track_epoch,omitempty"`
+	ObjectClass    *string                `protobuf:"bytes,6,opt,name=object_class,json=objectClass,proto3,oneof" json:"object_class,omitempty"`
+	SpeedKmh       *string                `protobuf:"bytes,9,opt,name=speed_kmh,json=speedKmh,proto3,oneof" json:"speed_kmh,omitempty"`
+	FirstObserved  *timestamppb.Timestamp `protobuf:"bytes,17,opt,name=first_observed,json=firstObserved,proto3" json:"first_observed,omitempty"`
+	Confidence     *uint32                `protobuf:"varint,10,opt,name=confidence,proto3,oneof" json:"confidence,omitempty"`
+	Latitude       *string                `protobuf:"bytes,7,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
+	Longitude      *string                `protobuf:"bytes,8,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,11,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,13,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,13,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,14,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,15,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -232,85 +192,92 @@ func (x *ZoneIncidentDetected) GetKind() string {
 }
 
 func (x *ZoneIncidentDetected) GetIncidentId() string {
-	if x != nil {
-		return x.IncidentId
+	if x != nil && x.IncidentId != nil {
+		return *x.IncidentId
 	}
 	return ""
 }
 
 func (x *ZoneIncidentDetected) GetZoneId() string {
-	if x != nil {
-		return x.ZoneId
+	if x != nil && x.ZoneId != nil {
+		return *x.ZoneId
 	}
 	return ""
 }
 
 func (x *ZoneIncidentDetected) GetType() string {
-	if x != nil {
-		return x.Type
+	if x != nil && x.Type != nil {
+		return *x.Type
 	}
 	return ""
 }
 
 func (x *ZoneIncidentDetected) GetSeverity() IncidentSeverity {
-	if x != nil {
-		return x.Severity
+	if x != nil && x.Severity != nil {
+		return *x.Severity
 	}
 	return IncidentSeverity_INCIDENT_SEVERITY_MINOR
 }
 
 func (x *ZoneIncidentDetected) GetTrackId() uint32 {
-	if x != nil {
-		return x.TrackId
+	if x != nil && x.TrackId != nil {
+		return *x.TrackId
 	}
 	return 0
 }
 
 func (x *ZoneIncidentDetected) GetTrackEpoch() uint32 {
-	if x != nil {
-		return x.TrackEpoch
+	if x != nil && x.TrackEpoch != nil {
+		return *x.TrackEpoch
 	}
 	return 0
 }
 
 func (x *ZoneIncidentDetected) GetObjectClass() string {
-	if x != nil {
-		return x.ObjectClass
+	if x != nil && x.ObjectClass != nil {
+		return *x.ObjectClass
 	}
 	return ""
 }
 
 func (x *ZoneIncidentDetected) GetSpeedKmh() string {
-	if x != nil {
-		return x.SpeedKmh
+	if x != nil && x.SpeedKmh != nil {
+		return *x.SpeedKmh
 	}
 	return ""
 }
 
-func (x *ZoneIncidentDetected) GetConfidence() uint32 {
+func (x *ZoneIncidentDetected) GetFirstObserved() *timestamppb.Timestamp {
 	if x != nil {
-		return x.Confidence
+		return x.FirstObserved
+	}
+	return nil
+}
+
+func (x *ZoneIncidentDetected) GetConfidence() uint32 {
+	if x != nil && x.Confidence != nil {
+		return *x.Confidence
 	}
 	return 0
 }
 
 func (x *ZoneIncidentDetected) GetLatitude() string {
-	if x != nil {
-		return x.Latitude
+	if x != nil && x.Latitude != nil {
+		return *x.Latitude
 	}
 	return ""
 }
 
 func (x *ZoneIncidentDetected) GetLongitude() string {
-	if x != nil {
-		return x.Longitude
+	if x != nil && x.Longitude != nil {
+		return *x.Longitude
 	}
 	return ""
 }
 
 func (x *ZoneIncidentDetected) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -323,8 +290,8 @@ func (x *ZoneIncidentDetected) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *ZoneIncidentDetected) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -346,14 +313,16 @@ func (x *ZoneIncidentDetected) GetSourceDeviceId() string {
 type ZoneIncidentUpdated struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	IncidentId     string                 `protobuf:"bytes,1,opt,name=incident_id,json=incidentId,proto3" json:"incident_id,omitempty"`
-	ZoneId         string                 `protobuf:"bytes,2,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Severity       IncidentSeverity       `protobuf:"varint,3,opt,name=severity,proto3,enum=openits.perception.v1.IncidentSeverity" json:"severity,omitempty"`
-	SpeedKmh       string                 `protobuf:"bytes,4,opt,name=speed_kmh,json=speedKmh,proto3" json:"speed_kmh,omitempty"`
-	Confidence     uint32                 `protobuf:"varint,5,opt,name=confidence,proto3" json:"confidence,omitempty"`
-	ObservedBy     string                 `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	IncidentId     *string                `protobuf:"bytes,1,opt,name=incident_id,json=incidentId,proto3,oneof" json:"incident_id,omitempty"`
+	ZoneId         *string                `protobuf:"bytes,2,opt,name=zone_id,json=zoneId,proto3,oneof" json:"zone_id,omitempty"`
+	Severity       *IncidentSeverity      `protobuf:"varint,3,opt,name=severity,proto3,enum=openits.perception.v1.IncidentSeverity,oneof" json:"severity,omitempty"`
+	SpeedKmh       *string                `protobuf:"bytes,4,opt,name=speed_kmh,json=speedKmh,proto3,oneof" json:"speed_kmh,omitempty"`
+	Confidence     *uint32                `protobuf:"varint,5,opt,name=confidence,proto3,oneof" json:"confidence,omitempty"`
+	Disposition    *IncidentDisposition   `protobuf:"varint,11,opt,name=disposition,proto3,enum=openits.perception.v1.IncidentDisposition,oneof" json:"disposition,omitempty"`
+	ReviewedBy     *string                `protobuf:"bytes,12,opt,name=reviewed_by,json=reviewedBy,proto3,oneof" json:"reviewed_by,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                 `protobuf:"bytes,8,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                `protobuf:"bytes,8,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,10,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -398,43 +367,57 @@ func (x *ZoneIncidentUpdated) GetKind() string {
 }
 
 func (x *ZoneIncidentUpdated) GetIncidentId() string {
-	if x != nil {
-		return x.IncidentId
+	if x != nil && x.IncidentId != nil {
+		return *x.IncidentId
 	}
 	return ""
 }
 
 func (x *ZoneIncidentUpdated) GetZoneId() string {
-	if x != nil {
-		return x.ZoneId
+	if x != nil && x.ZoneId != nil {
+		return *x.ZoneId
 	}
 	return ""
 }
 
 func (x *ZoneIncidentUpdated) GetSeverity() IncidentSeverity {
-	if x != nil {
-		return x.Severity
+	if x != nil && x.Severity != nil {
+		return *x.Severity
 	}
 	return IncidentSeverity_INCIDENT_SEVERITY_MINOR
 }
 
 func (x *ZoneIncidentUpdated) GetSpeedKmh() string {
-	if x != nil {
-		return x.SpeedKmh
+	if x != nil && x.SpeedKmh != nil {
+		return *x.SpeedKmh
 	}
 	return ""
 }
 
 func (x *ZoneIncidentUpdated) GetConfidence() uint32 {
-	if x != nil {
-		return x.Confidence
+	if x != nil && x.Confidence != nil {
+		return *x.Confidence
 	}
 	return 0
 }
 
+func (x *ZoneIncidentUpdated) GetDisposition() IncidentDisposition {
+	if x != nil && x.Disposition != nil {
+		return *x.Disposition
+	}
+	return IncidentDisposition_INCIDENT_DISPOSITION_PENDING
+}
+
+func (x *ZoneIncidentUpdated) GetReviewedBy() string {
+	if x != nil && x.ReviewedBy != nil {
+		return *x.ReviewedBy
+	}
+	return ""
+}
+
 func (x *ZoneIncidentUpdated) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -447,8 +430,8 @@ func (x *ZoneIncidentUpdated) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *ZoneIncidentUpdated) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -471,9 +454,9 @@ type ZoneIntervalReport struct {
 	state          protoimpl.MessageState    `protogen:"open.v1"`
 	Kind           string                    `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	Zone           []*ZoneIntervalReportZone `protobuf:"bytes,1,rep,name=zone,proto3" json:"zone,omitempty"`
-	ObservedBy     string                    `protobuf:"bytes,2,opt,name=observed_by,json=observedBy,proto3" json:"observed_by,omitempty"`
+	ObservedBy     *string                   `protobuf:"bytes,2,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp    `protobuf:"bytes,3,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner          string                    `protobuf:"bytes,4,opt,name=owner,proto3" json:"owner,omitempty"`
+	Owner          *string                   `protobuf:"bytes,4,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                    `protobuf:"varint,5,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	SourceDeviceId string                    `protobuf:"bytes,6,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -525,8 +508,8 @@ func (x *ZoneIntervalReport) GetZone() []*ZoneIntervalReportZone {
 }
 
 func (x *ZoneIntervalReport) GetObservedBy() string {
-	if x != nil {
-		return x.ObservedBy
+	if x != nil && x.ObservedBy != nil {
+		return *x.ObservedBy
 	}
 	return ""
 }
@@ -539,8 +522,8 @@ func (x *ZoneIntervalReport) GetOccurredAt() *timestamppb.Timestamp {
 }
 
 func (x *ZoneIntervalReport) GetOwner() string {
-	if x != nil {
-		return x.Owner
+	if x != nil && x.Owner != nil {
+		return *x.Owner
 	}
 	return ""
 }
@@ -561,11 +544,11 @@ func (x *ZoneIntervalReport) GetSourceDeviceId() string {
 
 type ZoneIntervalReportZone struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
-	ZoneId            string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	ZoneId            *string                `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3,oneof" json:"zone_id,omitempty"`
 	IntervalStart     *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=interval_start,json=intervalStart,proto3" json:"interval_start,omitempty"`
-	IntervalDurationS uint32                 `protobuf:"varint,3,opt,name=interval_duration_s,json=intervalDurationS,proto3" json:"interval_duration_s,omitempty"`
-	CrossedVolume     uint32                 `protobuf:"varint,6,opt,name=crossed_volume,json=crossedVolume,proto3" json:"crossed_volume,omitempty"`
-	AverageSpeedKmh   string                 `protobuf:"bytes,4,opt,name=average_speed_kmh,json=averageSpeedKmh,proto3" json:"average_speed_kmh,omitempty"`
+	IntervalDurationS *uint32                `protobuf:"varint,3,opt,name=interval_duration_s,json=intervalDurationS,proto3,oneof" json:"interval_duration_s,omitempty"`
+	CrossedVolume     *uint32                `protobuf:"varint,6,opt,name=crossed_volume,json=crossedVolume,proto3,oneof" json:"crossed_volume,omitempty"`
+	AverageSpeedKmh   *string                `protobuf:"bytes,4,opt,name=average_speed_kmh,json=averageSpeedKmh,proto3,oneof" json:"average_speed_kmh,omitempty"`
 	ClassCount        []*ClassCount          `protobuf:"bytes,5,rep,name=class_count,json=classCount,proto3" json:"class_count,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
@@ -602,8 +585,8 @@ func (*ZoneIntervalReportZone) Descriptor() ([]byte, []int) {
 }
 
 func (x *ZoneIntervalReportZone) GetZoneId() string {
-	if x != nil {
-		return x.ZoneId
+	if x != nil && x.ZoneId != nil {
+		return *x.ZoneId
 	}
 	return ""
 }
@@ -616,22 +599,22 @@ func (x *ZoneIntervalReportZone) GetIntervalStart() *timestamppb.Timestamp {
 }
 
 func (x *ZoneIntervalReportZone) GetIntervalDurationS() uint32 {
-	if x != nil {
-		return x.IntervalDurationS
+	if x != nil && x.IntervalDurationS != nil {
+		return *x.IntervalDurationS
 	}
 	return 0
 }
 
 func (x *ZoneIntervalReportZone) GetCrossedVolume() uint32 {
-	if x != nil {
-		return x.CrossedVolume
+	if x != nil && x.CrossedVolume != nil {
+		return *x.CrossedVolume
 	}
 	return 0
 }
 
 func (x *ZoneIntervalReportZone) GetAverageSpeedKmh() string {
-	if x != nil {
-		return x.AverageSpeedKmh
+	if x != nil && x.AverageSpeedKmh != nil {
+		return *x.AverageSpeedKmh
 	}
 	return ""
 }
@@ -645,8 +628,8 @@ func (x *ZoneIntervalReportZone) GetClassCount() []*ClassCount {
 
 type ClassCount struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Class         string                 `protobuf:"bytes,1,opt,name=class,proto3" json:"class,omitempty"`
-	Count         uint32                 `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	Class         *string                `protobuf:"bytes,1,opt,name=class,proto3,oneof" json:"class,omitempty"`
+	Count         *uint32                `protobuf:"varint,2,opt,name=count,proto3,oneof" json:"count,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -682,15 +665,15 @@ func (*ClassCount) Descriptor() ([]byte, []int) {
 }
 
 func (x *ClassCount) GetClass() string {
-	if x != nil {
-		return x.Class
+	if x != nil && x.Class != nil {
+		return *x.Class
 	}
 	return ""
 }
 
 func (x *ClassCount) GetCount() uint32 {
-	if x != nil {
-		return x.Count
+	if x != nil && x.Count != nil {
+		return *x.Count
 	}
 	return 0
 }
@@ -699,88 +682,132 @@ var File_openits_perception_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_perception_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"\"openits/perception/v1/events.proto\x12\x15openits.perception.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x9d\x02\n" +
+	"\"openits/perception/v1/events.proto\x12\x15openits.perception.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a!openits/perception/v1/types.proto\"\xa0\x03\n" +
 	"\x13ZoneIncidentCleared\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12\x1f\n" +
-	"\vincident_id\x18\x01 \x01(\tR\n" +
-	"incidentId\x12\x17\n" +
-	"\azone_id\x18\x02 \x01(\tR\x06zoneId\x12\x1f\n" +
-	"\vobserved_by\x18\x04 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12$\n" +
+	"\vincident_id\x18\x01 \x01(\tH\x00R\n" +
+	"incidentId\x88\x01\x01\x12\x1c\n" +
+	"\azone_id\x18\x02 \x01(\tH\x01R\x06zoneId\x88\x01\x01\x12&\n" +
+	"\fclear_reason\x18\x03 \x01(\tH\x02R\vclearReason\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x04 \x01(\tH\x03R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\x06 \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\x06 \x01(\tH\x04R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\a \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceId\"\xcd\x04\n" +
+	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceIdB\x0e\n" +
+	"\f_incident_idB\n" +
+	"\n" +
+	"\b_zone_idB\x0f\n" +
+	"\r_clear_reasonB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\x83\a\n" +
 	"\x14ZoneIncidentDetected\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12\x1f\n" +
-	"\vincident_id\x18\x01 \x01(\tR\n" +
-	"incidentId\x12\x17\n" +
-	"\azone_id\x18\x02 \x01(\tR\x06zoneId\x12\x12\n" +
-	"\x04type\x18\x03 \x01(\tR\x04type\x12C\n" +
-	"\bseverity\x18\x04 \x01(\x0e2'.openits.perception.v1.IncidentSeverityR\bseverity\x12\x19\n" +
-	"\btrack_id\x18\x05 \x01(\rR\atrackId\x12\x1f\n" +
-	"\vtrack_epoch\x18\x10 \x01(\rR\n" +
-	"trackEpoch\x12!\n" +
-	"\fobject_class\x18\x06 \x01(\tR\vobjectClass\x12\x1b\n" +
-	"\tspeed_kmh\x18\t \x01(\tR\bspeedKmh\x12\x1e\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12$\n" +
+	"\vincident_id\x18\x01 \x01(\tH\x00R\n" +
+	"incidentId\x88\x01\x01\x12\x1c\n" +
+	"\azone_id\x18\x02 \x01(\tH\x01R\x06zoneId\x88\x01\x01\x12\x17\n" +
+	"\x04type\x18\x03 \x01(\tH\x02R\x04type\x88\x01\x01\x12H\n" +
+	"\bseverity\x18\x04 \x01(\x0e2'.openits.perception.v1.IncidentSeverityH\x03R\bseverity\x88\x01\x01\x12\x1e\n" +
+	"\btrack_id\x18\x05 \x01(\rH\x04R\atrackId\x88\x01\x01\x12$\n" +
+	"\vtrack_epoch\x18\x10 \x01(\rH\x05R\n" +
+	"trackEpoch\x88\x01\x01\x12&\n" +
+	"\fobject_class\x18\x06 \x01(\tH\x06R\vobjectClass\x88\x01\x01\x12 \n" +
+	"\tspeed_kmh\x18\t \x01(\tH\aR\bspeedKmh\x88\x01\x01\x12A\n" +
+	"\x0efirst_observed\x18\x11 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12#\n" +
 	"\n" +
 	"confidence\x18\n" +
-	" \x01(\rR\n" +
-	"confidence\x12\x1a\n" +
-	"\blatitude\x18\a \x01(\tR\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\b \x01(\tR\tlongitude\x12\x1f\n" +
-	"\vobserved_by\x18\v \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	" \x01(\rH\bR\n" +
+	"confidence\x88\x01\x01\x12\x1f\n" +
+	"\blatitude\x18\a \x01(\tH\tR\blatitude\x88\x01\x01\x12!\n" +
+	"\tlongitude\x18\b \x01(\tH\n" +
+	"R\tlongitude\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\v \x01(\tH\vR\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\r \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\r \x01(\tH\fR\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\x0e \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\x0f \x01(\tR\x0esourceDeviceId\"\x9f\x03\n" +
-	"\x13ZoneIncidentUpdated\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12\x1f\n" +
-	"\vincident_id\x18\x01 \x01(\tR\n" +
-	"incidentId\x12\x17\n" +
-	"\azone_id\x18\x02 \x01(\tR\x06zoneId\x12C\n" +
-	"\bseverity\x18\x03 \x01(\x0e2'.openits.perception.v1.IncidentSeverityR\bseverity\x12\x1b\n" +
-	"\tspeed_kmh\x18\x04 \x01(\tR\bspeedKmh\x12\x1e\n" +
+	"\x10source_device_id\x18\x0f \x01(\tR\x0esourceDeviceIdB\x0e\n" +
+	"\f_incident_idB\n" +
 	"\n" +
-	"confidence\x18\x05 \x01(\rR\n" +
-	"confidence\x12\x1f\n" +
-	"\vobserved_by\x18\x06 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\b_zone_idB\a\n" +
+	"\x05_typeB\v\n" +
+	"\t_severityB\v\n" +
+	"\t_track_idB\x0e\n" +
+	"\f_track_epochB\x0f\n" +
+	"\r_object_classB\f\n" +
+	"\n" +
+	"_speed_kmhB\r\n" +
+	"\v_confidenceB\v\n" +
+	"\t_latitudeB\f\n" +
+	"\n" +
+	"_longitudeB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xbb\x05\n" +
+	"\x13ZoneIncidentUpdated\x12\x12\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12$\n" +
+	"\vincident_id\x18\x01 \x01(\tH\x00R\n" +
+	"incidentId\x88\x01\x01\x12\x1c\n" +
+	"\azone_id\x18\x02 \x01(\tH\x01R\x06zoneId\x88\x01\x01\x12H\n" +
+	"\bseverity\x18\x03 \x01(\x0e2'.openits.perception.v1.IncidentSeverityH\x02R\bseverity\x88\x01\x01\x12 \n" +
+	"\tspeed_kmh\x18\x04 \x01(\tH\x03R\bspeedKmh\x88\x01\x01\x12#\n" +
+	"\n" +
+	"confidence\x18\x05 \x01(\rH\x04R\n" +
+	"confidence\x88\x01\x01\x12Q\n" +
+	"\vdisposition\x18\v \x01(\x0e2*.openits.perception.v1.IncidentDispositionH\x05R\vdisposition\x88\x01\x01\x12$\n" +
+	"\vreviewed_by\x18\f \x01(\tH\x06R\n" +
+	"reviewedBy\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x06 \x01(\tH\aR\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\b \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\b \x01(\tH\bR\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\t \x01(\x04R\bsequence\x12(\n" +
 	"\x10source_device_id\x18\n" +
-	" \x01(\tR\x0esourceDeviceId\"\xa5\x02\n" +
+	" \x01(\tR\x0esourceDeviceIdB\x0e\n" +
+	"\f_incident_idB\n" +
+	"\n" +
+	"\b_zone_idB\v\n" +
+	"\t_severityB\f\n" +
+	"\n" +
+	"_speed_kmhB\r\n" +
+	"\v_confidenceB\x0e\n" +
+	"\f_dispositionB\x0e\n" +
+	"\f_reviewed_byB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xc9\x02\n" +
 	"\x12ZoneIntervalReport\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12A\n" +
-	"\x04zone\x18\x01 \x03(\v2-.openits.perception.v1.ZoneIntervalReportZoneR\x04zone\x12\x1f\n" +
-	"\vobserved_by\x18\x02 \x01(\tR\n" +
-	"observedBy\x12;\n" +
+	"\x04zone\x18\x01 \x03(\v2-.openits.perception.v1.ZoneIntervalReportZoneR\x04zone\x12$\n" +
+	"\vobserved_by\x18\x02 \x01(\tH\x00R\n" +
+	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"occurredAt\x12\x14\n" +
-	"\x05owner\x18\x04 \x01(\tR\x05owner\x12\x1a\n" +
+	"occurredAt\x12\x19\n" +
+	"\x05owner\x18\x04 \x01(\tH\x01R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\x05 \x01(\x04R\bsequence\x12(\n" +
-	"\x10source_device_id\x18\x06 \x01(\tR\x0esourceDeviceId\"\xea\x02\n" +
-	"\x16ZoneIntervalReportZone\x12\x17\n" +
-	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12A\n" +
-	"\x0einterval_start\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\rintervalStart\x12.\n" +
-	"\x13interval_duration_s\x18\x03 \x01(\rR\x11intervalDurationS\x12%\n" +
-	"\x0ecrossed_volume\x18\x06 \x01(\rR\rcrossedVolume\x12*\n" +
-	"\x11average_speed_kmh\x18\x04 \x01(\tR\x0faverageSpeedKmh\x12B\n" +
+	"\x10source_device_id\x18\x06 \x01(\tR\x0esourceDeviceIdB\x0e\n" +
+	"\f_observed_byB\b\n" +
+	"\x06_owner\"\xcb\x03\n" +
+	"\x16ZoneIntervalReportZone\x12\x1c\n" +
+	"\azone_id\x18\x01 \x01(\tH\x00R\x06zoneId\x88\x01\x01\x12A\n" +
+	"\x0einterval_start\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\rintervalStart\x123\n" +
+	"\x13interval_duration_s\x18\x03 \x01(\rH\x01R\x11intervalDurationS\x88\x01\x01\x12*\n" +
+	"\x0ecrossed_volume\x18\x06 \x01(\rH\x02R\rcrossedVolume\x88\x01\x01\x12/\n" +
+	"\x11average_speed_kmh\x18\x04 \x01(\tH\x03R\x0faverageSpeedKmh\x88\x01\x01\x12B\n" +
 	"\vclass_count\x18\x05 \x03(\v2!.openits.perception.v1.ClassCountR\n" +
-	"classCountJ\x04\b\a\x10\bJ\x04\b\b\x10\tR\x0eobserved_countR\x11occupancy_percent\"8\n" +
+	"classCountB\n" +
 	"\n" +
-	"ClassCount\x12\x14\n" +
-	"\x05class\x18\x01 \x01(\tR\x05class\x12\x14\n" +
-	"\x05count\x18\x02 \x01(\rR\x05count*p\n" +
-	"\x10IncidentSeverity\x12\x1b\n" +
-	"\x17INCIDENT_SEVERITY_MINOR\x10\x00\x12\"\n" +
-	"\x1eINCIDENT_SEVERITY_INTERMEDIATE\x10\x01\x12\x1b\n" +
-	"\x17INCIDENT_SEVERITY_MAJOR\x10\x02BQZOgithub.com/Vikasa2M/openits-models/pkg/proto/openits/perception/v1;perceptionv1b\x06proto3"
+	"\b_zone_idB\x16\n" +
+	"\x14_interval_duration_sB\x11\n" +
+	"\x0f_crossed_volumeB\x14\n" +
+	"\x12_average_speed_kmhJ\x04\b\a\x10\bJ\x04\b\b\x10\tR\x0eobserved_countR\x11occupancy_percent\"V\n" +
+	"\n" +
+	"ClassCount\x12\x19\n" +
+	"\x05class\x18\x01 \x01(\tH\x00R\x05class\x88\x01\x01\x12\x19\n" +
+	"\x05count\x18\x02 \x01(\rH\x01R\x05count\x88\x01\x01B\b\n" +
+	"\x06_classB\b\n" +
+	"\x06_countBQZOgithub.com/Vikasa2M/openits-models/pkg/proto/openits/perception/v1;perceptionv1b\x06proto3"
 
 var (
 	file_openits_perception_v1_events_proto_rawDescOnce sync.Once
@@ -794,33 +821,35 @@ func file_openits_perception_v1_events_proto_rawDescGZIP() []byte {
 	return file_openits_perception_v1_events_proto_rawDescData
 }
 
-var file_openits_perception_v1_events_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_openits_perception_v1_events_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_openits_perception_v1_events_proto_goTypes = []any{
-	(IncidentSeverity)(0),          // 0: openits.perception.v1.IncidentSeverity
-	(*ZoneIncidentCleared)(nil),    // 1: openits.perception.v1.ZoneIncidentCleared
-	(*ZoneIncidentDetected)(nil),   // 2: openits.perception.v1.ZoneIncidentDetected
-	(*ZoneIncidentUpdated)(nil),    // 3: openits.perception.v1.ZoneIncidentUpdated
-	(*ZoneIntervalReport)(nil),     // 4: openits.perception.v1.ZoneIntervalReport
-	(*ZoneIntervalReportZone)(nil), // 5: openits.perception.v1.ZoneIntervalReportZone
-	(*ClassCount)(nil),             // 6: openits.perception.v1.ClassCount
-	(*timestamppb.Timestamp)(nil),  // 7: google.protobuf.Timestamp
+	(*ZoneIncidentCleared)(nil),    // 0: openits.perception.v1.ZoneIncidentCleared
+	(*ZoneIncidentDetected)(nil),   // 1: openits.perception.v1.ZoneIncidentDetected
+	(*ZoneIncidentUpdated)(nil),    // 2: openits.perception.v1.ZoneIncidentUpdated
+	(*ZoneIntervalReport)(nil),     // 3: openits.perception.v1.ZoneIntervalReport
+	(*ZoneIntervalReportZone)(nil), // 4: openits.perception.v1.ZoneIntervalReportZone
+	(*ClassCount)(nil),             // 5: openits.perception.v1.ClassCount
+	(*timestamppb.Timestamp)(nil),  // 6: google.protobuf.Timestamp
+	(IncidentSeverity)(0),          // 7: openits.perception.v1.IncidentSeverity
+	(IncidentDisposition)(0),       // 8: openits.perception.v1.IncidentDisposition
 }
 var file_openits_perception_v1_events_proto_depIdxs = []int32{
-	7, // 0: openits.perception.v1.ZoneIncidentCleared.occurred_at:type_name -> google.protobuf.Timestamp
-	0, // 1: openits.perception.v1.ZoneIncidentDetected.severity:type_name -> openits.perception.v1.IncidentSeverity
-	7, // 2: openits.perception.v1.ZoneIncidentDetected.occurred_at:type_name -> google.protobuf.Timestamp
-	0, // 3: openits.perception.v1.ZoneIncidentUpdated.severity:type_name -> openits.perception.v1.IncidentSeverity
-	7, // 4: openits.perception.v1.ZoneIncidentUpdated.occurred_at:type_name -> google.protobuf.Timestamp
-	5, // 5: openits.perception.v1.ZoneIntervalReport.zone:type_name -> openits.perception.v1.ZoneIntervalReportZone
-	7, // 6: openits.perception.v1.ZoneIntervalReport.occurred_at:type_name -> google.protobuf.Timestamp
-	7, // 7: openits.perception.v1.ZoneIntervalReportZone.interval_start:type_name -> google.protobuf.Timestamp
-	6, // 8: openits.perception.v1.ZoneIntervalReportZone.class_count:type_name -> openits.perception.v1.ClassCount
-	9, // [9:9] is the sub-list for method output_type
-	9, // [9:9] is the sub-list for method input_type
-	9, // [9:9] is the sub-list for extension type_name
-	9, // [9:9] is the sub-list for extension extendee
-	0, // [0:9] is the sub-list for field type_name
+	6,  // 0: openits.perception.v1.ZoneIncidentCleared.occurred_at:type_name -> google.protobuf.Timestamp
+	7,  // 1: openits.perception.v1.ZoneIncidentDetected.severity:type_name -> openits.perception.v1.IncidentSeverity
+	6,  // 2: openits.perception.v1.ZoneIncidentDetected.first_observed:type_name -> google.protobuf.Timestamp
+	6,  // 3: openits.perception.v1.ZoneIncidentDetected.occurred_at:type_name -> google.protobuf.Timestamp
+	7,  // 4: openits.perception.v1.ZoneIncidentUpdated.severity:type_name -> openits.perception.v1.IncidentSeverity
+	8,  // 5: openits.perception.v1.ZoneIncidentUpdated.disposition:type_name -> openits.perception.v1.IncidentDisposition
+	6,  // 6: openits.perception.v1.ZoneIncidentUpdated.occurred_at:type_name -> google.protobuf.Timestamp
+	4,  // 7: openits.perception.v1.ZoneIntervalReport.zone:type_name -> openits.perception.v1.ZoneIntervalReportZone
+	6,  // 8: openits.perception.v1.ZoneIntervalReport.occurred_at:type_name -> google.protobuf.Timestamp
+	6,  // 9: openits.perception.v1.ZoneIntervalReportZone.interval_start:type_name -> google.protobuf.Timestamp
+	5,  // 10: openits.perception.v1.ZoneIntervalReportZone.class_count:type_name -> openits.perception.v1.ClassCount
+	11, // [11:11] is the sub-list for method output_type
+	11, // [11:11] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_openits_perception_v1_events_proto_init() }
@@ -828,19 +857,25 @@ func file_openits_perception_v1_events_proto_init() {
 	if File_openits_perception_v1_events_proto != nil {
 		return
 	}
+	file_openits_perception_v1_types_proto_init()
+	file_openits_perception_v1_events_proto_msgTypes[0].OneofWrappers = []any{}
+	file_openits_perception_v1_events_proto_msgTypes[1].OneofWrappers = []any{}
+	file_openits_perception_v1_events_proto_msgTypes[2].OneofWrappers = []any{}
+	file_openits_perception_v1_events_proto_msgTypes[3].OneofWrappers = []any{}
+	file_openits_perception_v1_events_proto_msgTypes[4].OneofWrappers = []any{}
+	file_openits_perception_v1_events_proto_msgTypes[5].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_perception_v1_events_proto_rawDesc), len(file_openits_perception_v1_events_proto_rawDesc)),
-			NumEnums:      1,
+			NumEnums:      0,
 			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_openits_perception_v1_events_proto_goTypes,
 		DependencyIndexes: file_openits_perception_v1_events_proto_depIdxs,
-		EnumInfos:         file_openits_perception_v1_events_proto_enumTypes,
 		MessageInfos:      file_openits_perception_v1_events_proto_msgTypes,
 	}.Build()
 	File_openits_perception_v1_events_proto = out.File
