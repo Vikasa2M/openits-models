@@ -1478,6 +1478,28 @@ messages:
         severity: 5
     openits.reversible_lane.v1.Faults:
         fault: 1
+    openits.reversible_lane.v1.GateModeChanged:
+        gate_id: 1
+        kind: 99
+        new_mode: 3
+        observed_by: 4
+        occurred_at: 5
+        owner: 6
+        previous_mode: 2
+        sequence: 7
+        source: 100
+        source_device_id: 8
+    openits.reversible_lane.v1.GatePositionChanged:
+        gate_id: 1
+        kind: 99
+        new_position: 3
+        observed_by: 4
+        occurred_at: 5
+        owner: 6
+        previous_position: 2
+        sequence: 7
+        source: 100
+        source_device_id: 8
     openits.reversible_lane.v1.Interlock:
         config: 4
         interlock_id: 1

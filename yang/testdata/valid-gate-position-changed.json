@@ -1,0 +1,16 @@
+{
+  "openits-reversible-lane-events:gate-position-changed": {
+    "kind": "openits-reversible-lane-types:rl-gate-position-changed",
+    "source-device-id": "acs-demo-1",
+    "occurred-at": "2026-09-14T16:00:00Z",
+    "sequence": "1",
+    "gate-id": "WG-111",
+    "previous-position": "closed",
+    "new-position": "opening",
+    "source": {
+      "decoder": "srtp",
+      "register": "%R00101",
+      "register-value": "0x0031"
+    }
+  }
+}

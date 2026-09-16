@@ -1,0 +1,9 @@
+{
+  "module": "openits-reversible-lane-events",
+  "revision": "2026-09-14",
+  "files": [
+    "schema.yang",
+    "schema.proto",
+    "schema.json"
+  ]
+}
