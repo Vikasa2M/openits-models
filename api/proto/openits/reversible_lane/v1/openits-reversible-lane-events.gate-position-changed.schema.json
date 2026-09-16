@@ -44,19 +44,11 @@
   "additionalProperties": false,
   "properties": {
     "gate-id": {
+      "maxLength": 64,
+      "minLength": 1,
       "type": "string"
     },
     "kind": {
-      "type": "string"
-    },
-    "new-position": {
-      "enum": [
-        "closed",
-        "closing",
-        "opened",
-        "opening",
-        "unknown"
-      ],
       "type": "string"
     },
     "observed-by": {
@@ -69,14 +61,29 @@
       "format": "date-time",
       "type": "string"
     },
+    "operating-mode": {
+      "type": "string"
+    },
     "owner": {
+      "type": "string"
+    },
+    "position": {
+      "enum": [
+        "closed",
+        "closing",
+        "obstructed",
+        "open",
+        "opening",
+        "unknown"
+      ],
       "type": "string"
     },
     "previous-position": {
       "enum": [
         "closed",
         "closing",
-        "opened",
+        "obstructed",
+        "open",
         "opening",
         "unknown"
       ],
@@ -98,8 +105,8 @@
   "required": [
     "gate-id",
     "kind",
-    "new-position",
     "occurred-at",
+    "position",
     "sequence",
     "source-device-id"
   ],

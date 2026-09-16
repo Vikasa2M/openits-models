@@ -1,109 +1,4 @@
 {
-  "gate-mode-changed": {
-  "$defs": {
-    "WireSource": {
-      "additionalProperties": false,
-      "properties": {
-        "decoder": {
-          "type": "string"
-        },
-        "indiana-code": {
-          "maximum": 65535,
-          "minimum": 0,
-          "type": "integer"
-        },
-        "indiana-param": {
-          "maximum": 65535,
-          "minimum": 0,
-          "type": "integer"
-        },
-        "message-id": {
-          "maximum": 65535,
-          "minimum": 0,
-          "type": "integer"
-        },
-        "oid": {
-          "type": "string"
-        },
-        "oid-value": {
-          "type": "string"
-        },
-        "register": {
-          "type": "string"
-        },
-        "register-value": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "decoder"
-      ],
-      "type": "object"
-    }
-  },
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "additionalProperties": false,
-  "properties": {
-    "gate-id": {
-      "type": "string"
-    },
-    "kind": {
-      "type": "string"
-    },
-    "new-mode": {
-      "enum": [
-        "auto",
-        "manual",
-        "offline",
-        "unknown"
-      ],
-      "type": "string"
-    },
-    "observed-by": {
-      "maxLength": 64,
-      "minLength": 1,
-      "pattern": "^([a-zA-Z0-9_-]+)$",
-      "type": "string"
-    },
-    "occurred-at": {
-      "format": "date-time",
-      "type": "string"
-    },
-    "owner": {
-      "type": "string"
-    },
-    "previous-mode": {
-      "enum": [
-        "auto",
-        "manual",
-        "offline",
-        "unknown"
-      ],
-      "type": "string"
-    },
-    "sequence": {
-      "type": "string"
-    },
-    "source": {
-      "$ref": "#/$defs/WireSource"
-    },
-    "source-device-id": {
-      "maxLength": 64,
-      "minLength": 1,
-      "pattern": "^([a-zA-Z0-9_-]+)$",
-      "type": "string"
-    }
-  },
-  "required": [
-    "gate-id",
-    "kind",
-    "new-mode",
-    "occurred-at",
-    "sequence",
-    "source-device-id"
-  ],
-  "type": "object"
-},
   "gate-position-changed": {
   "$defs": {
     "WireSource": {
@@ -150,19 +45,11 @@
   "additionalProperties": false,
   "properties": {
     "gate-id": {
+      "maxLength": 64,
+      "minLength": 1,
       "type": "string"
     },
     "kind": {
-      "type": "string"
-    },
-    "new-position": {
-      "enum": [
-        "closed",
-        "closing",
-        "opened",
-        "opening",
-        "unknown"
-      ],
       "type": "string"
     },
     "observed-by": {
@@ -175,14 +62,29 @@
       "format": "date-time",
       "type": "string"
     },
+    "operating-mode": {
+      "type": "string"
+    },
     "owner": {
+      "type": "string"
+    },
+    "position": {
+      "enum": [
+        "closed",
+        "closing",
+        "obstructed",
+        "open",
+        "opening",
+        "unknown"
+      ],
       "type": "string"
     },
     "previous-position": {
       "enum": [
         "closed",
         "closing",
-        "opened",
+        "obstructed",
+        "open",
         "opening",
         "unknown"
       ],
@@ -204,8 +106,8 @@
   "required": [
     "gate-id",
     "kind",
-    "new-position",
     "occurred-at",
+    "position",
     "sequence",
     "source-device-id"
   ],

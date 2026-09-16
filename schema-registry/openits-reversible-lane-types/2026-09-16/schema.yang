@@ -33,15 +33,17 @@ module openits-reversible-lane-types {
 
   openits-types:openits-version "0.6.0";
 
-  revision 2026-09-14 {
+  revision 2026-09-16 {
     description
-      "Add gate-position and gate-operating-mode typedefs for a facility
-       PLC status word, notification-kind identities
-       rl-gate-position-changed and rl-gate-mode-changed, and leaf fault
-       identities for per-gate alarms (failed-to-close/open, estop,
-       cmd-refused, invalid-inputs) and cabinet DI faults (lf, sp, door,
-       cabinet-estop). Additive — identityref and new typedefs; no
-       existing enum values moved.";
+      "Model a gate as a facility object, not a status-word event.
+       Add gate-position (including obstructed), the gate-position-state
+       grouping, gate-type and per-gate mode identities based on
+       operational-mode, and a position-change kind sub-base. Per-gate
+       alarm identities stay (failed-to-close/open, estop, cmd-refused,
+       invalid-inputs). Cabinet door / LF / SP / cabinet e-stop are not
+       reversible-lane concepts and are not added. Unpublished
+       2026-09-14 gate typedefs are replaced here; nothing from that
+       date shipped.";
     reference "RFC 7950 §11.";
   }
 
@@ -147,34 +149,81 @@ module openits-reversible-lane-types {
 
   typedef gate-position {
     type enumeration {
-      enum unknown { value 0; }
-      enum closing { value 1; }
-      enum closed  { value 2; }
-      enum opening { value 3; }
-      enum opened  { value 4; }
+      enum unknown {
+        value 0;
+        description "Position has not been read, or the reading is not yet classifiable.";
+      }
+      enum closing {
+        value 1;
+        description "In motion toward closed, and not jammed.";
+      }
+      enum closed {
+        value 2;
+        description "At the closed rest position.";
+      }
+      enum opening {
+        value 3;
+        description "In motion toward open, and not jammed.";
+      }
+      enum open {
+        value 4;
+        description
+          "At the open rest position. Named open, not opened, so it
+           matches openits-reversible-lane:gate-state and reads as a
+           state rather than an event.";
+      }
+      enum obstructed {
+        value 5;
+        description
+          "Stuck mid-travel. Not closing and not opening: a barrier
+           at 40 degrees is an intrusion path, and reporting closing
+           forever would hide it. Distinct from a communications
+           fault, which leaves this leaf absent rather than inventing
+           an offline mode.";
+      }
     }
     description
-      "Physical barrier / warning-gate motion or rest state as reported
-       by a facility PLC status word. Distinct from the coarser
-       openits-reversible-lane:gate-state used on the facility tree:
-       this typedef keeps closing/opening separate so a poller does not
-       collapse in-motion readings.";
+      "Physical motion or rest of one warning or barrier gate.
+       Orthogonal to operating mode. Authoritative position lives on
+       the facility gates list, which shares the gate-position-state
+       grouping with gate-position-changed. The per-lane
+       openits-reversible-lane:gate-state leaf is a coarse rollup
+       only and must not disagree with this typedef.";
     reference
       "ARC-IT 9.1 Service Package TM16 (Reversible Lane Management).";
   }
 
-  typedef gate-operating-mode {
-    type enumeration {
-      enum unknown { value 0; }
-      enum auto    { value 1; }
-      enum manual  { value 2; }
-      enum offline { value 3; }
-    }
+  grouping gate-position-state {
     description
-      "Gate operating mode as reported by a facility PLC status word.
-       Orthogonal to gate-position.";
-    reference
-      "ARC-IT 9.1 Service Package TM16 (Reversible Lane Management).";
+      "Live condition of one gate: where the leaf is, and how it is
+       being commanded. Composed by openits-reversible-lane
+       gates/gate/readback and by gate-position-changed so the container
+       is the digital-twin rollup of the stream.
+
+       The grouping holds the observation only. The list and the
+       notification each declare gate-id; the list also declares
+       measured-at, and the notification takes its time from
+       event-header. previous-position is a transition fact and stays
+       on the notification only.
+
+       No must constrains these leaves. A gate can be obstructed in
+       automatic mode, or open under manual-local control. Hiding
+       either would make the dangerous reading unrepresentable.";
+
+    leaf position {
+      type gate-position;
+      description "Where the gate leaf is right now.";
+    }
+    leaf operating-mode {
+      type identityref {
+        base reversible-lane-gate-mode;
+      }
+      description
+        "How the gate is being commanded. Absent when the reading
+         did not include mode. Not a communications fault — that is
+         reversible-lane-fault-plc-communication, and an unread gate
+         stays absent rather than claiming an offline mode.";
+    }
   }
 
   /* --------------------------------------------------------------
@@ -249,26 +298,6 @@ module openits-reversible-lane-types {
     description
       "A gate reported invalid inputs.";
   }
-  identity reversible-lane-fault-cabinet-lf {
-    base reversible-lane-fault-event-kind;
-    description
-      "Access-control cabinet LF fault DI is active.";
-  }
-  identity reversible-lane-fault-cabinet-sp {
-    base reversible-lane-fault-event-kind;
-    description
-      "Access-control cabinet SP fault DI is active.";
-  }
-  identity reversible-lane-fault-cabinet-door {
-    base reversible-lane-fault-event-kind;
-    description
-      "Access-control cabinet door switch is active.";
-  }
-  identity reversible-lane-fault-cabinet-estop {
-    base reversible-lane-fault-event-kind;
-    description
-      "Cabinet-wide gate emergency stop DI is active.";
-  }
   identity reversible-lane-fault-lcs-head {
     base reversible-lane-fault-event-kind;
     description
@@ -297,7 +326,7 @@ module openits-reversible-lane-types {
        named safety gate the PLC evaluates before honouring a changeover.";
   }
   identity sweep-confirmed  { base interlock-kind; description "A physical sweep has confirmed the section is clear of traffic."; }
-  identity gate-agreement   { base interlock-kind; description "Barrier-gate positions agree with the commanded facility state."; }
+  identity gate-agreement   { base interlock-kind; description "Barrier-gate positions agree with the commanded facility state. Evaluated against gates/gate/readback, not the event stream and not the coarse per-lane gate-state rollup."; }
   identity red-x-confirmed  { base interlock-kind; description "A steady red-X is confirmed on every lane facing the direction being closed."; }
   identity lockout-clear    { base interlock-kind; description "No manual lockout is engaged — the facility is not locally locked out of a changeover."; }
   identity ingress-secured  { base interlock-kind; description "The ingress control point for the direction being closed is secured."; }
@@ -322,14 +351,75 @@ module openits-reversible-lane-types {
     base reversible-lane-event-kind;
     description "Conflicting LCS indications detected.";
   }
-  identity rl-gate-position-changed {
+  identity reversible-lane-gate-position-change-event-kind {
     base reversible-lane-event-kind;
     description
-      "One barrier or warning gate's motion/rest position changed.";
+      "Sub-base for gate-position-changed. The notification constrains
+       kind to this base, so the identities derived from it are the
+       definition of a gate-position change. A lane-state or
+       LCS-conflict kind is not a valid value here.";
   }
-  identity rl-gate-mode-changed {
-    base reversible-lane-event-kind;
+  identity reversible-lane-gate-position-changed {
+    base reversible-lane-gate-position-change-event-kind;
     description
-      "One barrier or warning gate's operating mode changed.";
+      "The gate's position changed, including into obstructed.
+       previous-position and the shared gate-position-state grouping
+       carry the from and to. A measured-at tick with no position
+       change is not an event.";
+  }
+
+  /* --------------------------------------------------------------
+   * Gate identity: type and per-gate mode. Facility-level mode
+   * (control/state/mode on the shared mode-changed notification)
+   * is a separate follow-up; a gate is a sub-component and today's
+   * mode-changed keys only on source-device-id.
+   * -------------------------------------------------------------- */
+
+  identity reversible-lane-gate-type {
+    description
+      "Physical class of a gate on a reversible facility. A warning
+       gate and a barrier gate are different devices.";
+  }
+  identity reversible-lane-gate-type-warning {
+    base reversible-lane-gate-type;
+    description
+      "Drop-arm or flasher advising of a closure ahead. Not a
+       vehicle-arresting structure.";
+    reference "MUTCD 11th ed. Chapter 4M.";
+  }
+  identity reversible-lane-gate-type-barrier {
+    base reversible-lane-gate-type;
+    description
+      "Vehicle-arresting barrier. Failure to close is an intrusion
+       path into oncoming traffic.";
+    reference
+      "ARC-IT 9.1 Service Package TM16 (Reversible Lane Management).";
+  }
+
+  identity reversible-lane-gate-mode {
+    base openits-types:operational-mode;
+    description
+      "Per-gate operating-mode value, so a reading can dual-class
+       with the cross-service operational-mode axis. Lives on the
+       gate list, not on openits-common-mode-events:mode-changed,
+       which cannot name a sub-component. Does not include a
+       communications-loss value; that is
+       reversible-lane-fault-plc-communication.";
+  }
+  identity reversible-lane-gate-mode-automatic {
+    base reversible-lane-gate-mode;
+    description "The gate accepts remote commands.";
+  }
+  identity reversible-lane-gate-mode-manual-local {
+    base reversible-lane-gate-mode;
+    description
+      "At-cabinet hand control. Distinct from a remote operator
+       commanding the gate manually.";
+  }
+  identity reversible-lane-gate-mode-manual-remote {
+    base reversible-lane-gate-mode;
+    description
+      "Manual commands from a remote operator, not at-cabinet
+       hand control.";
   }
 }

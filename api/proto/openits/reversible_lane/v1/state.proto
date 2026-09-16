@@ -11,6 +11,7 @@ message ReversibleLane {
   ReversibleLaneConfig config = 1;
   ReversibleLaneState state = 2;
   Control control = 3;
+  Gates gates = 7;
   Segments segments = 4;
   Interlocks interlocks = 5;
   Faults faults = 6;
@@ -98,6 +99,33 @@ message Transition {
   optional string to_direction = 3;
   google.protobuf.Timestamp started_at = 4;
   optional string sequence_step = 5;
+}
+
+message Gates {
+  repeated Gate gate = 1;
+}
+
+message Gate {
+  reserved 3;
+  reserved "state";
+  optional string gate_id = 1;
+  GateConfig config = 2;
+  Readback readback = 4;
+}
+
+message GateConfig {
+  optional string gate_id = 1;
+  optional string name = 2;
+  optional string gate_type = 3;
+  optional string segment_id = 4;
+  optional string protects_direction = 5;
+  optional string interlock_role = 6;
+}
+
+message Readback {
+  google.protobuf.Timestamp measured_at = 1;
+  optional string operating_mode = 2;
+  optional GatePosition position = 3;
 }
 
 message Segments {

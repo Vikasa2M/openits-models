@@ -29,13 +29,15 @@ module openits-reversible-lane-events {
 
   openits-types:openits-version "0.6.0";
 
-  revision 2026-09-14 {
+  revision 2026-09-16 {
     description
-      "Add gate-position-changed and gate-mode-changed notifications for
-       per-gate readbacks of a facility PLC status word. Each carries
-       gate-id, from/to on the gate-position and gate-operating-mode
-       typedefs in openits-reversible-lane-types, and wire-source
-       (srtp/modbus/dnp3). Additive.";
+      "Add gate-position-changed for a modelled gate, not a status
+       word. Payload uses the shared gate-position-state grouping,
+       kind is constrained to the position-change sub-base, and
+       arc-it-flow cites TM16 reversible lane status. No
+       gate-mode-changed: per-gate mode is a leaf on that grouping,
+       not a private notification beside mode-changed. gate-id is a
+       plain identifier the consumer resolves against the gates list.";
     reference "RFC 7950 §11.";
   }
 
@@ -265,75 +267,65 @@ module openits-reversible-lane-events {
 
   notification gate-position-changed {
     openits-types:arc-it-flow
-      "ITS Roadway Equipment -> TMC : lane management status";
+      "ITS Roadway Equipment -> TMC : reversible lane status";
     description
-      "One barrier or warning gate's motion/rest state changed. Emitters
-       SHOULD send one notification per gate that moved in a poll cycle.
-       Decoded from the facility PLC register map.";
+      "One gate's position changed. What counts as a change is exactly
+       the identities under
+       openits-reversible-lane-types:reversible-lane-gate-position-change-event-kind.
+       A measured-at tick with the same position is not an event.
+
+       Payload leaves come from the shared gate-position-state
+       grouping, so this event and openits-reversible-lane
+       gates/gate/readback mirror each other: that container is the
+       digital-twin rollup of this stream, and gate-agreement
+       evaluates against the container, not this bus. previous-position
+       is the transition fact and is not on the grouping.
+       gate-id names an entry in that list; a consumer that starts
+       mid-stream recovers current condition from the list, not by
+       replaying events.
+
+       Decoded from a facility PLC register map, so wire-source is
+       present. One gate per event. Per-gate mode is a leaf of the
+       grouping, not a separate notification: today's
+       openits-common-mode-events:mode-changed cannot name a
+       sub-component, and a private mode event would be a seventh
+       mode mechanism.";
 
     leaf kind {
       type identityref {
-        base openits-reversible-lane-types:reversible-lane-event-kind;
+        base openits-reversible-lane-types:reversible-lane-gate-position-change-event-kind;
       }
       mandatory true;
       description
-        "Event classifier; openits-reversible-lane-types:rl-gate-position-changed
-         for this notification.";
+        "Which transition this is. Constrained to the change sub-base
+         so a lane-state or LCS-conflict kind is rejected.";
     }
     uses openits-types:event-header;
 
     leaf gate-id {
-      type string;
+      type string {
+        length "1..64";
+      }
       mandatory true;
       description
-        "Stable site-local gate identifier (e.g. WG-111).";
+        "The configured gate whose position changed. A plain
+         identifier rather than a leafref: an event is
+         self-contained, and a consumer resolves it against
+         gates/gate/config (or its own inventory) out of band.";
     }
     leaf previous-position {
       type openits-reversible-lane-types:gate-position;
-      description "Position before the change.";
+      description
+        "Position before the change. Absent on a first report.";
     }
-    leaf new-position {
-      type openits-reversible-lane-types:gate-position;
-      mandatory true;
-      description "Position after the change.";
-    }
-
-    uses openits-types:wire-source;
-  }
-
-  notification gate-mode-changed {
-    openits-types:arc-it-flow
-      "ITS Roadway Equipment -> TMC : lane management status";
-    description
-      "One barrier or warning gate's operating mode changed (auto /
-       manual / offline). Orthogonal to gate-position-changed.
-       Decoded from the facility PLC register map.";
-
-    leaf kind {
-      type identityref {
-        base openits-reversible-lane-types:reversible-lane-event-kind;
+    uses openits-reversible-lane-types:gate-position-state {
+      refine "position" {
+        mandatory true;
+        description
+          "Position after the change. Mandatory here, though optional
+           in the live state the same grouping describes, because a
+           position-change event that omits it has no meaning.";
       }
-      mandatory true;
-      description
-        "Event classifier; openits-reversible-lane-types:rl-gate-mode-changed
-         for this notification.";
-    }
-    uses openits-types:event-header;
-
-    leaf gate-id {
-      type string;
-      mandatory true;
-      description
-        "Stable site-local gate identifier (e.g. WG-111).";
-    }
-    leaf previous-mode {
-      type openits-reversible-lane-types:gate-operating-mode;
-      description "Mode before the change.";
-    }
-    leaf new-mode {
-      type openits-reversible-lane-types:gate-operating-mode;
-      mandatory true;
-      description "Mode after the change.";
     }
 
     uses openits-types:wire-source;

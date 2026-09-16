@@ -84,6 +84,40 @@
         }
       ]
     },
+    "gates": {
+      "gate": [
+        {
+          "gate-id": "BG-114",
+          "config": {
+            "gate-id": "BG-114",
+            "name": "MP 3.1 barrier",
+            "gate-type": "openits-reversible-lane-types:reversible-lane-gate-type-barrier",
+            "segment-id": "seg-1",
+            "protects-direction": "openits-types:direction-southbound",
+            "interlock-role": "openits-reversible-lane-types:gate-agreement"
+          },
+          "readback": {
+            "position": "open",
+            "operating-mode": "openits-reversible-lane-types:reversible-lane-gate-mode-automatic",
+            "measured-at": "2026-09-16T16:00:00Z"
+          }
+        },
+        {
+          "gate-id": "WG-111",
+          "config": {
+            "gate-id": "WG-111",
+            "name": "MP 3.1 warning",
+            "gate-type": "openits-reversible-lane-types:reversible-lane-gate-type-warning",
+            "protects-direction": "openits-types:direction-southbound"
+          },
+          "readback": {
+            "position": "closed",
+            "operating-mode": "openits-reversible-lane-types:reversible-lane-gate-mode-manual-local",
+            "measured-at": "2026-09-16T16:00:00Z"
+          }
+        }
+      ]
+    },
     "interlocks": {
       "interlock": [
         {
