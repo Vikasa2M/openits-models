@@ -84,6 +84,97 @@
         }
       ]
     },
+    "gates": {
+      "gate": [
+        {
+          "gate-id": "BG-1",
+          "config": {
+            "gate-id": "BG-1",
+            "name": "Segment 1 barrier",
+            "gate-type": "openits-reversible-lane-types:reversible-lane-gate-type-barrier",
+            "segment-id": "seg-1",
+            "protects-direction": "openits-types:direction-southbound",
+            "interlock-role": "openits-reversible-lane-types:gate-agreement"
+          },
+          "operation": {
+            "position": "closed",
+            "operating-mode": "openits-reversible-lane-types:reversible-lane-gate-mode-automatic",
+            "open-inhibited": true,
+            "close-inhibited": true,
+            "measured-at": "2026-09-16T16:00:00Z"
+          }
+        },
+        {
+          "gate-id": "BG-2",
+          "config": {
+            "gate-id": "BG-2",
+            "name": "Segment 1 secondary barrier",
+            "gate-type": "openits-reversible-lane-types:reversible-lane-gate-type-barrier",
+            "segment-id": "seg-1",
+            "protects-direction": "openits-types:direction-southbound",
+            "interlock-role": "openits-reversible-lane-types:gate-agreement"
+          },
+          "operation": {
+            "position": "closed",
+            "operating-mode": "openits-reversible-lane-types:reversible-lane-gate-mode-automatic",
+            "open-inhibited": false,
+            "close-inhibited": true,
+            "measured-at": "2026-09-16T16:00:00Z"
+          }
+        },
+        {
+          "gate-id": "WG-1",
+          "config": {
+            "gate-id": "WG-1",
+            "name": "Approach warning",
+            "gate-type": "openits-reversible-lane-types:reversible-lane-gate-type-warning",
+            "protects-direction": "openits-types:direction-southbound"
+          },
+          "operation": {
+            "position": "open",
+            "operating-mode": "openits-reversible-lane-types:reversible-lane-gate-mode-automatic",
+            "open-inhibited": false,
+            "close-inhibited": false,
+            "measured-at": "2026-09-16T16:00:00Z"
+          }
+        },
+        {
+          "gate-id": "WG-2",
+          "config": {
+            "gate-id": "WG-2",
+            "name": "Maintenance warning",
+            "gate-type": "openits-reversible-lane-types:reversible-lane-gate-type-warning",
+            "protects-direction": "openits-types:direction-northbound"
+          },
+          "operation": {
+            "position": "intermediate",
+            "operating-mode": "openits-reversible-lane-types:reversible-lane-gate-mode-manual-non-interlocked",
+            "control-source": "openits-types:control-local-backup",
+            "open-inhibited": false,
+            "close-inhibited": false,
+            "measured-at": "2026-09-16T16:00:00Z"
+          }
+        },
+        {
+          "gate-id": "BG-3",
+          "config": {
+            "gate-id": "BG-3",
+            "name": "Out-of-service barrier",
+            "gate-type": "openits-reversible-lane-types:reversible-lane-gate-type-barrier",
+            "segment-id": "seg-2",
+            "protects-direction": "openits-types:direction-northbound",
+            "interlock-role": "openits-reversible-lane-types:gate-agreement"
+          },
+          "operation": {
+            "position": "closed",
+            "operating-mode": "openits-reversible-lane-types:reversible-lane-gate-mode-offline",
+            "open-inhibited": false,
+            "close-inhibited": false,
+            "measured-at": "2026-09-16T16:00:00Z"
+          }
+        }
+      ]
+    },
     "interlocks": {
       "interlock": [
         {

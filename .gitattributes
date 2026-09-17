@@ -1,0 +1,4 @@
+# Force LF in the repo and on checkout. Windows autocrlf otherwise embeds
+# CR into generated catalogs and ygot headers, which fails make check-gen
+# on Linux CI.
+* text=auto eol=lf

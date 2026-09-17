@@ -1,0 +1,7 @@
+{
+  "module": "openits-reversible-lane-types",
+  "revision": "2026-09-16",
+  "files": [
+    "schema.yang"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "openits-reversible-lane-events:gate-position-changed": {
+    "kind": "openits-reversible-lane-types:rl-lcs-conflict-detected",
+    "source-device-id": "acs-demo-1",
+    "occurred-at": "2026-09-16T16:00:00Z",
+    "sequence": "1",
+    "gate-id": "BG-114",
+    "position": "closed"
+  }
+}

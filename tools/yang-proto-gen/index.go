@@ -296,8 +296,13 @@ func moduleNamespace(m *yang.Entry) string {
 }
 
 // moduleDescription returns the module's description text, or "".
+// CRLF from Windows/autocrlf YANG checkouts is normalized to LF so
+// schema-registry/index.json matches Linux CI (`make check-gen`).
 func moduleDescription(m *yang.Entry) string {
-	return m.Description
+	d := m.Description
+	d = strings.ReplaceAll(d, "\r\n", "\n")
+	d = strings.ReplaceAll(d, "\r", "")
+	return d
 }
 
 // moduleRevisions returns the module's declared revision dates, sorted
@@ -310,7 +315,7 @@ func moduleRevisions(m *yang.Entry) []string {
 	}
 	revs := make([]string, 0, len(mod.Revision))
 	for _, r := range mod.Revision {
-		revs = append(revs, r.Name)
+		revs = append(revs, strings.TrimRight(r.Name, "\r"))
 	}
 	sort.Strings(revs)
 	return revs
