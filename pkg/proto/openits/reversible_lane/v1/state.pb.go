@@ -930,7 +930,7 @@ type Gate struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	GateId        *string                `protobuf:"bytes,1,opt,name=gate_id,json=gateId,proto3,oneof" json:"gate_id,omitempty"`
 	Config        *GateConfig            `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
-	Readback      *Readback              `protobuf:"bytes,4,opt,name=readback,proto3" json:"readback,omitempty"`
+	Operation     *Operation             `protobuf:"bytes,5,opt,name=operation,proto3" json:"operation,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -979,9 +979,9 @@ func (x *Gate) GetConfig() *GateConfig {
 	return nil
 }
 
-func (x *Gate) GetReadback() *Readback {
+func (x *Gate) GetOperation() *Operation {
 	if x != nil {
-		return x.Readback
+		return x.Operation
 	}
 	return nil
 }
@@ -1070,29 +1070,32 @@ func (x *GateConfig) GetInterlockRole() string {
 	return ""
 }
 
-type Readback struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	MeasuredAt    *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=measured_at,json=measuredAt,proto3" json:"measured_at,omitempty"`
-	OperatingMode *string                `protobuf:"bytes,2,opt,name=operating_mode,json=operatingMode,proto3,oneof" json:"operating_mode,omitempty"`
-	Position      *GatePosition          `protobuf:"varint,3,opt,name=position,proto3,enum=openits.reversible_lane.v1.GatePosition,oneof" json:"position,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+type Operation struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	OpenInhibited  *bool                  `protobuf:"varint,1,opt,name=open_inhibited,json=openInhibited,proto3,oneof" json:"open_inhibited,omitempty"`
+	CloseInhibited *bool                  `protobuf:"varint,2,opt,name=close_inhibited,json=closeInhibited,proto3,oneof" json:"close_inhibited,omitempty"`
+	MeasuredAt     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=measured_at,json=measuredAt,proto3" json:"measured_at,omitempty"`
+	ControlSource  *string                `protobuf:"bytes,4,opt,name=control_source,json=controlSource,proto3,oneof" json:"control_source,omitempty"`
+	OperatingMode  *string                `protobuf:"bytes,5,opt,name=operating_mode,json=operatingMode,proto3,oneof" json:"operating_mode,omitempty"`
+	Position       *GatePosition          `protobuf:"varint,6,opt,name=position,proto3,enum=openits.reversible_lane.v1.GatePosition,oneof" json:"position,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
-func (x *Readback) Reset() {
-	*x = Readback{}
+func (x *Operation) Reset() {
+	*x = Operation{}
 	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *Readback) String() string {
+func (x *Operation) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Readback) ProtoMessage() {}
+func (*Operation) ProtoMessage() {}
 
-func (x *Readback) ProtoReflect() protoreflect.Message {
+func (x *Operation) ProtoReflect() protoreflect.Message {
 	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1104,26 +1107,47 @@ func (x *Readback) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Readback.ProtoReflect.Descriptor instead.
-func (*Readback) Descriptor() ([]byte, []int) {
+// Deprecated: Use Operation.ProtoReflect.Descriptor instead.
+func (*Operation) Descriptor() ([]byte, []int) {
 	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *Readback) GetMeasuredAt() *timestamppb.Timestamp {
+func (x *Operation) GetOpenInhibited() bool {
+	if x != nil && x.OpenInhibited != nil {
+		return *x.OpenInhibited
+	}
+	return false
+}
+
+func (x *Operation) GetCloseInhibited() bool {
+	if x != nil && x.CloseInhibited != nil {
+		return *x.CloseInhibited
+	}
+	return false
+}
+
+func (x *Operation) GetMeasuredAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.MeasuredAt
 	}
 	return nil
 }
 
-func (x *Readback) GetOperatingMode() string {
+func (x *Operation) GetControlSource() string {
+	if x != nil && x.ControlSource != nil {
+		return *x.ControlSource
+	}
+	return ""
+}
+
+func (x *Operation) GetOperatingMode() string {
 	if x != nil && x.OperatingMode != nil {
 		return *x.OperatingMode
 	}
 	return ""
 }
 
-func (x *Readback) GetPosition() GatePosition {
+func (x *Operation) GetPosition() GatePosition {
 	if x != nil && x.Position != nil {
 		return *x.Position
 	}
@@ -1737,6 +1761,7 @@ func (x *Faults) GetFault() []*Fault {
 type Fault struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Category       *string                `protobuf:"bytes,1,opt,name=category,proto3,oneof" json:"category,omitempty"`
+	GateId         *string                `protobuf:"bytes,7,opt,name=gate_id,json=gateId,proto3,oneof" json:"gate_id,omitempty"`
 	CorrelatesWith *string                `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3,oneof" json:"correlates_with,omitempty"`
 	Description    *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
 	FaultId        *string                `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3,oneof" json:"fault_id,omitempty"`
@@ -1779,6 +1804,13 @@ func (*Fault) Descriptor() ([]byte, []int) {
 func (x *Fault) GetCategory() string {
 	if x != nil && x.Category != nil {
 		return *x.Category
+	}
+	return ""
+}
+
+func (x *Fault) GetGateId() string {
+	if x != nil && x.GateId != nil {
+		return *x.GateId
 	}
 	return ""
 }
@@ -1976,13 +2008,13 @@ const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"\r_to_directionB\x10\n" +
 	"\x0e_sequence_step\"=\n" +
 	"\x05Gates\x124\n" +
-	"\x04gate\x18\x01 \x03(\v2 .openits.reversible_lane.v1.GateR\x04gate\"\xbf\x01\n" +
+	"\x04gate\x18\x01 \x03(\v2 .openits.reversible_lane.v1.GateR\x04gate\"\xd2\x01\n" +
 	"\x04Gate\x12\x1c\n" +
 	"\agate_id\x18\x01 \x01(\tH\x00R\x06gateId\x88\x01\x01\x12>\n" +
-	"\x06config\x18\x02 \x01(\v2&.openits.reversible_lane.v1.GateConfigR\x06config\x12@\n" +
-	"\breadback\x18\x04 \x01(\v2$.openits.reversible_lane.v1.ReadbackR\breadbackB\n" +
+	"\x06config\x18\x02 \x01(\v2&.openits.reversible_lane.v1.GateConfigR\x06config\x12C\n" +
+	"\toperation\x18\x05 \x01(\v2%.openits.reversible_lane.v1.OperationR\toperationB\n" +
 	"\n" +
-	"\b_gate_idJ\x04\b\x03\x10\x04R\x05state\"\xc5\x02\n" +
+	"\b_gate_idJ\x04\b\x03\x10\x04J\x04\b\x04\x10\x05R\x05stateR\breadback\"\xc5\x02\n" +
 	"\n" +
 	"GateConfig\x12\x1c\n" +
 	"\agate_id\x18\x01 \x01(\tH\x00R\x06gateId\x88\x01\x01\x12\x17\n" +
@@ -1999,12 +2031,18 @@ const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"_gate_typeB\r\n" +
 	"\v_segment_idB\x15\n" +
 	"\x13_protects_directionB\x11\n" +
-	"\x0f_interlock_role\"\xde\x01\n" +
-	"\bReadback\x12;\n" +
-	"\vmeasured_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"\x0f_interlock_role\"\x9f\x03\n" +
+	"\tOperation\x12*\n" +
+	"\x0eopen_inhibited\x18\x01 \x01(\bH\x00R\ropenInhibited\x88\x01\x01\x12,\n" +
+	"\x0fclose_inhibited\x18\x02 \x01(\bH\x01R\x0ecloseInhibited\x88\x01\x01\x12;\n" +
+	"\vmeasured_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"measuredAt\x12*\n" +
-	"\x0eoperating_mode\x18\x02 \x01(\tH\x00R\roperatingMode\x88\x01\x01\x12I\n" +
-	"\bposition\x18\x03 \x01(\x0e2(.openits.reversible_lane.v1.GatePositionH\x01R\bposition\x88\x01\x01B\x11\n" +
+	"\x0econtrol_source\x18\x04 \x01(\tH\x02R\rcontrolSource\x88\x01\x01\x12*\n" +
+	"\x0eoperating_mode\x18\x05 \x01(\tH\x03R\roperatingMode\x88\x01\x01\x12I\n" +
+	"\bposition\x18\x06 \x01(\x0e2(.openits.reversible_lane.v1.GatePositionH\x04R\bposition\x88\x01\x01B\x11\n" +
+	"\x0f_open_inhibitedB\x12\n" +
+	"\x10_close_inhibitedB\x11\n" +
+	"\x0f_control_sourceB\x11\n" +
 	"\x0f_operating_modeB\v\n" +
 	"\t_position\"I\n" +
 	"\bSegments\x12=\n" +
@@ -2066,15 +2104,18 @@ const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"\n" +
 	"_satisfied\"A\n" +
 	"\x06Faults\x127\n" +
-	"\x05fault\x18\x01 \x03(\v2!.openits.reversible_lane.v1.FaultR\x05fault\"\xf7\x02\n" +
+	"\x05fault\x18\x01 \x03(\v2!.openits.reversible_lane.v1.FaultR\x05fault\"\xa1\x03\n" +
 	"\x05Fault\x12\x1f\n" +
-	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12,\n" +
-	"\x0fcorrelates_with\x18\x06 \x01(\tH\x01R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
-	"\vdescription\x18\x02 \x01(\tH\x02R\vdescription\x88\x01\x01\x12\x1e\n" +
-	"\bfault_id\x18\x03 \x01(\tH\x03R\afaultId\x88\x01\x01\x12A\n" +
+	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12\x1c\n" +
+	"\agate_id\x18\a \x01(\tH\x01R\x06gateId\x88\x01\x01\x12,\n" +
+	"\x0fcorrelates_with\x18\x06 \x01(\tH\x02R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x03R\vdescription\x88\x01\x01\x12\x1e\n" +
+	"\bfault_id\x18\x03 \x01(\tH\x04R\afaultId\x88\x01\x01\x12A\n" +
 	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12J\n" +
-	"\bseverity\x18\x05 \x01(\x0e2).openits.reversible_lane.v1.FaultSeverityH\x04R\bseverity\x88\x01\x01B\v\n" +
-	"\t_categoryB\x12\n" +
+	"\bseverity\x18\x05 \x01(\x0e2).openits.reversible_lane.v1.FaultSeverityH\x05R\bseverity\x88\x01\x01B\v\n" +
+	"\t_categoryB\n" +
+	"\n" +
+	"\b_gate_idB\x12\n" +
 	"\x10_correlates_withB\x0e\n" +
 	"\f_descriptionB\v\n" +
 	"\t_fault_idB\v\n" +
@@ -2106,7 +2147,7 @@ var file_openits_reversible_lane_v1_state_proto_goTypes = []any{
 	(*Gates)(nil),                               // 9: openits.reversible_lane.v1.Gates
 	(*Gate)(nil),                                // 10: openits.reversible_lane.v1.Gate
 	(*GateConfig)(nil),                          // 11: openits.reversible_lane.v1.GateConfig
-	(*Readback)(nil),                            // 12: openits.reversible_lane.v1.Readback
+	(*Operation)(nil),                           // 12: openits.reversible_lane.v1.Operation
 	(*Segments)(nil),                            // 13: openits.reversible_lane.v1.Segments
 	(*Segment)(nil),                             // 14: openits.reversible_lane.v1.Segment
 	(*SegmentConfig)(nil),                       // 15: openits.reversible_lane.v1.SegmentConfig
@@ -2151,9 +2192,9 @@ var file_openits_reversible_lane_v1_state_proto_depIdxs = []int32{
 	25, // 18: openits.reversible_lane.v1.Transition.started_at:type_name -> google.protobuf.Timestamp
 	10, // 19: openits.reversible_lane.v1.Gates.gate:type_name -> openits.reversible_lane.v1.Gate
 	11, // 20: openits.reversible_lane.v1.Gate.config:type_name -> openits.reversible_lane.v1.GateConfig
-	12, // 21: openits.reversible_lane.v1.Gate.readback:type_name -> openits.reversible_lane.v1.Readback
-	25, // 22: openits.reversible_lane.v1.Readback.measured_at:type_name -> google.protobuf.Timestamp
-	29, // 23: openits.reversible_lane.v1.Readback.position:type_name -> openits.reversible_lane.v1.GatePosition
+	12, // 21: openits.reversible_lane.v1.Gate.operation:type_name -> openits.reversible_lane.v1.Operation
+	25, // 22: openits.reversible_lane.v1.Operation.measured_at:type_name -> google.protobuf.Timestamp
+	29, // 23: openits.reversible_lane.v1.Operation.position:type_name -> openits.reversible_lane.v1.GatePosition
 	14, // 24: openits.reversible_lane.v1.Segments.segment:type_name -> openits.reversible_lane.v1.Segment
 	15, // 25: openits.reversible_lane.v1.Segment.config:type_name -> openits.reversible_lane.v1.SegmentConfig
 	16, // 26: openits.reversible_lane.v1.Segment.lane:type_name -> openits.reversible_lane.v1.Lane

@@ -1475,12 +1475,14 @@ messages:
         description: 2
         fault_id: 3
         first_observed: 4
+        gate_id: 7
         severity: 5
     openits.reversible_lane.v1.Faults:
         fault: 1
     openits.reversible_lane.v1.Gate:
         config: 2
         gate_id: 1
+        operation: 5
         readback: 4
         state: 3
     openits.reversible_lane.v1.GateConfig:
@@ -1502,6 +1504,7 @@ messages:
         source: 100
         source_device_id: 8
     openits.reversible_lane.v1.GatePositionChanged:
+        control_source: 11
         gate_id: 1
         kind: 99
         new_position: 3
@@ -1571,6 +1574,13 @@ messages:
         sequence: 7
         source: 100
         source_device_id: 8
+    openits.reversible_lane.v1.Operation:
+        close_inhibited: 2
+        control_source: 4
+        measured_at: 3
+        open_inhibited: 1
+        operating_mode: 5
+        position: 6
     openits.reversible_lane.v1.Readback:
         measured_at: 1
         operating_mode: 2

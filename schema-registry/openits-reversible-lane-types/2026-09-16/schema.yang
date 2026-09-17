@@ -36,15 +36,18 @@ module openits-reversible-lane-types {
   revision 2026-09-16 {
     description
       "Model a gate as a facility object, not a status-word event.
-       Add gate-position (including obstructed), the gate-position-state
-       grouping, gate-type and per-gate mode identities based on
-       operational-mode, and a position-change kind sub-base. Per-gate
-       alarm identities stay (failed-to-close/open, estop, cmd-refused,
-       invalid-inputs). Cabinet door / LF / SP / cabinet e-stop are not
-       reversible-lane concepts and are not added. Unpublished
-       2026-09-14 gate typedefs are replaced here; nothing from that
-       date shipped.";
-    reference "RFC 7950 §11.";
+       Add gate-position (including intermediate for mid-travel rest),
+       the gate-position-state grouping with control-source beside
+       operating-mode, gate-type identities, and a position-change
+       kind sub-base. Per-gate mode identities are offline, automatic,
+       manual, and manual-non-interlocked (open base; local/remote is
+       control-source). Gate fault identities re-base under
+       reversible-lane-fault-gate. Cabinet door / LF / SP / cabinet
+       e-stop are not reversible-lane concepts and are not added.
+       Unpublished 2026-09-14 gate typedefs are replaced here; nothing
+       from that date shipped.";
+    reference
+      "docs/06-extension-model.md; docs/reference/yang-reference-conventions.md.";
   }
 
   revision 2026-09-08 {
@@ -155,7 +158,7 @@ module openits-reversible-lane-types {
       }
       enum closing {
         value 1;
-        description "In motion toward closed, and not jammed.";
+        description "In motion toward the closed rest position.";
       }
       enum closed {
         value 2;
@@ -163,7 +166,7 @@ module openits-reversible-lane-types {
       }
       enum opening {
         value 3;
-        description "In motion toward open, and not jammed.";
+        description "In motion toward the open rest position.";
       }
       enum open {
         value 4;
@@ -172,14 +175,25 @@ module openits-reversible-lane-types {
            matches openits-reversible-lane:gate-state and reads as a
            state rather than an event.";
       }
-      enum obstructed {
+      enum intermediate {
         value 5;
         description
-          "Stuck mid-travel. Not closing and not opening: a barrier
-           at 40 degrees is an intrusion path, and reporting closing
-           forever would hide it. Distinct from a communications
-           fault, which leaves this leaf absent rather than inventing
-           an offline mode.";
+          "Read successfully, and the gate is at neither rest position
+           and not in motion: mid-travel and stationary. A barrier
+           standing at 40 degrees is an intrusion path, so it must be
+           reportable as a position rather than hidden behind a
+           motion value that never resolves.
+
+           Asserts no cause. Why the gate stopped — obstruction, drive
+           failure, an operator halting it — is carried by the gate
+           fault identities, not by this value. Distinct from
+           'unknown', which means the position could not be read or
+           classified at all; 'intermediate' is a successful reading.
+
+           A device whose interface cannot distinguish mid-travel from
+           in-motion simply never emits this value. Its absence from
+           one implementation's vocabulary is not a reason for the
+           model to lack the concept.";
       }
     }
     description
@@ -195,20 +209,21 @@ module openits-reversible-lane-types {
 
   grouping gate-position-state {
     description
-      "Live condition of one gate: where the leaf is, and how it is
-       being commanded. Composed by openits-reversible-lane
-       gates/gate/readback and by gate-position-changed so the container
-       is the digital-twin rollup of the stream.
+      "Observation shared by openits-reversible-lane
+       gates/gate/operation and by gate-position-changed: position,
+       operating-mode, and control-source.
 
        The grouping holds the observation only. The list and the
        notification each declare gate-id; the list also declares
        measured-at, and the notification takes its time from
        event-header. previous-position is a transition fact and stays
-       on the notification only.
+       on the notification only. Per-gate interlock inhibits live on
+       the operation container, not here, so an inhibit change does
+       not appear on gate-position-changed.
 
-       No must constrains these leaves. A gate can be obstructed in
-       automatic mode, or open under manual-local control. Hiding
-       either would make the dangerous reading unrepresentable.";
+       No must constrains these leaves. A gate can be intermediate in
+       automatic mode, or open under manual control. Hiding either
+       would make the dangerous reading unrepresentable.";
 
     leaf position {
       type gate-position;
@@ -220,9 +235,22 @@ module openits-reversible-lane-types {
       }
       description
         "How the gate is being commanded. Absent when the reading
-         did not include mode. Not a communications fault — that is
-         reversible-lane-fault-plc-communication, and an unread gate
-         stays absent rather than claiming an offline mode.";
+         did not include mode. Reports a property of the gate, not
+         of the link to it: an unread gate leaves this absent rather
+         than claiming offline.";
+    }
+    leaf control-source {
+      type identityref {
+        base openits-types:control-source;
+      }
+      description
+        "Which authority is driving this gate, orthogonal to
+         operating-mode: mode says what the gate is doing, this says who
+         is doing it. Absent when the producer cannot distinguish: an
+         interface that reports only that a gate is under manual control,
+         without saying whether the operator is at the cabinet or at a
+         remote console, leaves this absent rather than guessing.";
+      reference "openits-types:control-source.";
     }
   }
 
@@ -271,30 +299,42 @@ module openits-reversible-lane-types {
   identity reversible-lane-fault-gate {
     base reversible-lane-fault-event-kind;
     description
-      "Barrier gate failed to reach its commanded position.";
+      "Gate-scope fault class: a fault attributable to one specific
+       warning or barrier gate rather than to the facility. Consumers
+       select every gate fault with
+       derived-from-or-self(category, 'reversible-lane-fault-gate');
+       the gate itself is named by the sibling 'gate-id' leaf.";
   }
   identity reversible-lane-fault-gate-failed-to-close {
-    base reversible-lane-fault-event-kind;
+    base reversible-lane-fault-gate;
     description
-      "A barrier or warning gate reported failed-to-close.";
+      "A barrier or warning gate reported failed-to-close. Together
+       with failed-to-open, this is how a jammed or otherwise stalled
+       gate is reported as a command outcome; mid-travel rest without
+       a command fault is gate-position 'intermediate'.";
   }
   identity reversible-lane-fault-gate-failed-to-open {
-    base reversible-lane-fault-event-kind;
+    base reversible-lane-fault-gate;
     description
-      "A barrier or warning gate reported failed-to-open.";
+      "A barrier or warning gate reported failed-to-open. Together
+       with failed-to-close, this is how a jammed or otherwise stalled
+       gate is reported as a command outcome; mid-travel rest without
+       a command fault is gate-position 'intermediate'.";
   }
   identity reversible-lane-fault-gate-estop {
-    base reversible-lane-fault-event-kind;
+    base reversible-lane-fault-gate;
     description
       "A gate-local emergency stop is active.";
   }
   identity reversible-lane-fault-gate-cmd-refused {
-    base reversible-lane-fault-event-kind;
+    base reversible-lane-fault-gate;
     description
-      "The PLC refused a gate command.";
+      "The controller refused a gate command. Typical causes include
+       an active interlock, the gate being offline, or an invalid
+       cabinet identity — distinct from a communications loss.";
   }
   identity reversible-lane-fault-gate-invalid-inputs {
-    base reversible-lane-fault-event-kind;
+    base reversible-lane-fault-gate;
     description
       "A gate reported invalid inputs.";
   }
@@ -326,7 +366,7 @@ module openits-reversible-lane-types {
        named safety gate the PLC evaluates before honouring a changeover.";
   }
   identity sweep-confirmed  { base interlock-kind; description "A physical sweep has confirmed the section is clear of traffic."; }
-  identity gate-agreement   { base interlock-kind; description "Barrier-gate positions agree with the commanded facility state. Evaluated against gates/gate/readback, not the event stream and not the coarse per-lane gate-state rollup."; }
+  identity gate-agreement   { base interlock-kind; description "Barrier-gate positions agree with the commanded facility state. Evaluated against gates/gate/operation, not the event stream and not the coarse per-lane gate-state rollup. A gate reporting close-inhibited true cannot be counted as agreeing."; }
   identity red-x-confirmed  { base interlock-kind; description "A steady red-X is confirmed on every lane facing the direction being closed."; }
   identity lockout-clear    { base interlock-kind; description "No manual lockout is engaged — the facility is not locally locked out of a changeover."; }
   identity ingress-secured  { base interlock-kind; description "The ingress control point for the direction being closed is secured."; }
@@ -362,7 +402,7 @@ module openits-reversible-lane-types {
   identity reversible-lane-gate-position-changed {
     base reversible-lane-gate-position-change-event-kind;
     description
-      "The gate's position changed, including into obstructed.
+      "The gate's position changed, including into intermediate.
        previous-position and the shared gate-position-state grouping
        carry the from and to. A measured-at tick with no position
        change is not an event.";
@@ -402,24 +442,44 @@ module openits-reversible-lane-types {
       "Per-gate operating-mode value, so a reading can dual-class
        with the cross-service operational-mode axis. Lives on the
        gate list, not on openits-common-mode-events:mode-changed,
-       which cannot name a sub-component. Does not include a
-       communications-loss value; that is
+       which cannot name a sub-component. This base is open: an
+       implementation with a mode outside the core set derives its
+       own identity rather than mapping onto the nearest core value.
+       Local versus remote operator location is not a mode — see
+       control-source. Communications loss is not a mode — that is
        reversible-lane-fault-plc-communication.";
+  }
+  identity reversible-lane-gate-mode-offline {
+    base reversible-lane-gate-mode;
+    description
+      "Gate is out of service and cannot be commanded. A gate in this
+       mode does not participate in safety interlocks, so an interlock
+       evaluation MUST NOT treat it as satisfied.
+
+       Reports a property of the gate, not of the link to it: the gate
+       declared itself out of service. A gate that could not be read at
+       all leaves operating-mode absent instead, and the two MUST NOT be
+       collapsed — an unreachable barrier may still be protecting the
+       lane, while an offline one is known not to be.";
   }
   identity reversible-lane-gate-mode-automatic {
     base reversible-lane-gate-mode;
-    description "The gate accepts remote commands.";
+    description "The gate accepts automatic or scheduled commands.";
   }
-  identity reversible-lane-gate-mode-manual-local {
+  identity reversible-lane-gate-mode-manual {
     base reversible-lane-gate-mode;
     description
-      "At-cabinet hand control. Distinct from a remote operator
-       commanding the gate manually.";
+      "Under manual operator control, with interlocks still enforced:
+       a commanded movement is refused while an interlock blocks it.
+       Whether the operator is at the cabinet or remote is a separate
+       axis — see the control-source leaf.";
   }
-  identity reversible-lane-gate-mode-manual-remote {
+  identity reversible-lane-gate-mode-manual-non-interlocked {
     base reversible-lane-gate-mode;
     description
-      "Manual commands from a remote operator, not at-cabinet
-       hand control.";
+      "Under manual operator control with interlock enforcement
+       bypassed: the gate moves even where an interlock would normally
+       block it. The most permissive mode a gate can report and a
+       mandatory annunciation for any consumer presenting gate state.";
   }
 }

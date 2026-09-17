@@ -106,11 +106,11 @@ message Gates {
 }
 
 message Gate {
-  reserved 3;
-  reserved "state";
+  reserved 3, 4;
+  reserved "state", "readback";
   optional string gate_id = 1;
   GateConfig config = 2;
-  Readback readback = 4;
+  Operation operation = 5;
 }
 
 message GateConfig {
@@ -122,10 +122,13 @@ message GateConfig {
   optional string interlock_role = 6;
 }
 
-message Readback {
-  google.protobuf.Timestamp measured_at = 1;
-  optional string operating_mode = 2;
-  optional GatePosition position = 3;
+message Operation {
+  optional bool open_inhibited = 1;
+  optional bool close_inhibited = 2;
+  google.protobuf.Timestamp measured_at = 3;
+  optional string control_source = 4;
+  optional string operating_mode = 5;
+  optional GatePosition position = 6;
 }
 
 message Segments {
@@ -189,6 +192,7 @@ message Faults {
 
 message Fault {
   optional string category = 1;
+  optional string gate_id = 7;
   optional string correlates_with = 6;
   optional string description = 2;
   optional string fault_id = 3;

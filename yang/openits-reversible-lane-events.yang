@@ -32,13 +32,16 @@ module openits-reversible-lane-events {
   revision 2026-09-16 {
     description
       "Add gate-position-changed for a modelled gate, not a status
-       word. Payload uses the shared gate-position-state grouping,
-       kind is constrained to the position-change sub-base, and
-       arc-it-flow cites TM16 reversible lane status. No
-       gate-mode-changed: per-gate mode is a leaf on that grouping,
-       not a private notification beside mode-changed. gate-id is a
-       plain identifier the consumer resolves against the gates list.";
-    reference "RFC 7950 §11.";
+       word. Payload uses the shared gate-position-state grouping
+       (position, operating-mode, control-source), kind is constrained
+       to the position-change sub-base, and arc-it-flow cites TM16
+       reversible lane status. No gate-mode-changed: per-gate mode is
+       a leaf on that grouping, not a private notification beside
+       mode-changed. gate-id is a plain identifier the consumer
+       resolves against the gates list. The live container path is
+       gates/gate/operation.";
+    reference
+      "docs/06-extension-model.md; docs/reference/yang-reference-conventions.md.";
   }
 
   revision 2026-09-08 {
@@ -275,21 +278,19 @@ module openits-reversible-lane-events {
        A measured-at tick with the same position is not an event.
 
        Payload leaves come from the shared gate-position-state
-       grouping, so this event and openits-reversible-lane
-       gates/gate/readback mirror each other: that container is the
-       digital-twin rollup of this stream, and gate-agreement
-       evaluates against the container, not this bus. previous-position
-       is the transition fact and is not on the grouping.
-       gate-id names an entry in that list; a consumer that starts
-       mid-stream recovers current condition from the list, not by
-       replaying events.
+       grouping (position, operating-mode, control-source). The live
+       container at openits-reversible-lane gates/gate/operation is a
+       strict superset of this payload: it also carries open-inhibited
+       and close-inhibited, which are deliberately not on this
+       notification. gate-agreement evaluates against that container,
+       not this bus. previous-position is the transition fact and is
+       not on the grouping. gate-id names an entry in that list; a
+       consumer that starts mid-stream recovers current condition from
+       the list, not by replaying events.
 
-       Decoded from a facility PLC register map, so wire-source is
-       present. One gate per event. Per-gate mode is a leaf of the
-       grouping, not a separate notification: today's
-       openits-common-mode-events:mode-changed cannot name a
-       sub-component, and a private mode event would be a seventh
-       mode mechanism.";
+       Wire-source is present when the reading was decoded from a
+       facility register map. One gate per event. Per-gate mode is a
+       leaf of the grouping, not a separate notification.";
 
     leaf kind {
       type identityref {

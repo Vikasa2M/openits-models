@@ -28,6 +28,7 @@ type GatePositionChanged struct {
 	Kind             string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	GateId           string                 `protobuf:"bytes,1,opt,name=gate_id,json=gateId,proto3" json:"gate_id,omitempty"`
 	PreviousPosition *GatePosition          `protobuf:"varint,2,opt,name=previous_position,json=previousPosition,proto3,enum=openits.reversible_lane.v1.GatePosition,oneof" json:"previous_position,omitempty"`
+	ControlSource    *string                `protobuf:"bytes,11,opt,name=control_source,json=controlSource,proto3,oneof" json:"control_source,omitempty"`
 	ObservedBy       *string                `protobuf:"bytes,4,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt       *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	OperatingMode    *string                `protobuf:"bytes,9,opt,name=operating_mode,json=operatingMode,proto3,oneof" json:"operating_mode,omitempty"`
@@ -89,6 +90,13 @@ func (x *GatePositionChanged) GetPreviousPosition() GatePosition {
 		return *x.PreviousPosition
 	}
 	return GatePosition_GATE_POSITION_UNKNOWN
+}
+
+func (x *GatePositionChanged) GetControlSource() string {
+	if x != nil && x.ControlSource != nil {
+		return *x.ControlSource
+	}
+	return ""
 }
 
 func (x *GatePositionChanged) GetObservedBy() string {
@@ -531,23 +539,25 @@ var File_openits_reversible_lane_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_reversible_lane_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"'openits/reversible_lane/v1/events.proto\x12\x1aopenits.reversible_lane.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a&openits/reversible_lane/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\xe1\x04\n" +
+	"'openits/reversible_lane/v1/events.proto\x12\x1aopenits.reversible_lane.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a&openits/reversible_lane/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\xa0\x05\n" +
 	"\x13GatePositionChanged\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x17\n" +
 	"\agate_id\x18\x01 \x01(\tR\x06gateId\x12Z\n" +
-	"\x11previous_position\x18\x02 \x01(\x0e2(.openits.reversible_lane.v1.GatePositionH\x00R\x10previousPosition\x88\x01\x01\x12$\n" +
-	"\vobserved_by\x18\x04 \x01(\tH\x01R\n" +
+	"\x11previous_position\x18\x02 \x01(\x0e2(.openits.reversible_lane.v1.GatePositionH\x00R\x10previousPosition\x88\x01\x01\x12*\n" +
+	"\x0econtrol_source\x18\v \x01(\tH\x01R\rcontrolSource\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x04 \x01(\tH\x02R\n" +
 	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12*\n" +
-	"\x0eoperating_mode\x18\t \x01(\tH\x02R\roperatingMode\x88\x01\x01\x12\x19\n" +
-	"\x05owner\x18\x06 \x01(\tH\x03R\x05owner\x88\x01\x01\x12D\n" +
+	"\x0eoperating_mode\x18\t \x01(\tH\x03R\roperatingMode\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\x06 \x01(\tH\x04R\x05owner\x88\x01\x01\x12D\n" +
 	"\bposition\x18\n" +
 	" \x01(\x0e2(.openits.reversible_lane.v1.GatePositionR\bposition\x12\x1a\n" +
 	"\bsequence\x18\a \x01(\x04R\bsequence\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceIdB\x14\n" +
-	"\x12_previous_positionB\x0e\n" +
+	"\x12_previous_positionB\x11\n" +
+	"\x0f_control_sourceB\x0e\n" +
 	"\f_observed_byB\x11\n" +
 	"\x0f_operating_modeB\b\n" +
 	"\x06_ownerJ\x04\b\x03\x10\x04R\fnew_position\"\xbf\x05\n" +

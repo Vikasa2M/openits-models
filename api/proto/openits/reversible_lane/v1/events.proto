@@ -14,6 +14,7 @@ message GatePositionChanged {
   string kind = 99;
   string gate_id = 1;
   optional GatePosition previous_position = 2;
+  optional string control_source = 11;
   optional string observed_by = 4;
   google.protobuf.Timestamp occurred_at = 5;
   optional string operating_mode = 9;

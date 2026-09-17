@@ -551,7 +551,9 @@
         "RFC 7950 section 11",
         "RFC 7950 section 11 (additive YANG evolution)",
         "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
-        "RFC 7950 §11"
+        "RFC 7950 §11",
+        "docs/06-extension-model.md",
+        "docs/reference/yang-reference-conventions.md"
       ],
       "modules": [
         {
@@ -577,7 +579,9 @@
             "RFC 7950 9.6.4.2",
             "RFC 7950 section 11 (additive YANG evolution)",
             "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
-            "RFC 7950 §11"
+            "RFC 7950 §11",
+            "docs/06-extension-model.md",
+            "docs/reference/yang-reference-conventions.md"
           ]
         },
         {
@@ -599,7 +603,9 @@
             "MUTCD 11th ed. Chapter 4M",
             "RFC 7950 section 11",
             "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
-            "RFC 7950 §11"
+            "RFC 7950 §11",
+            "docs/06-extension-model.md",
+            "docs/reference/yang-reference-conventions.md"
           ]
         },
         {
@@ -620,7 +626,9 @@
             "MUTCD 11th Ed. Chapter 4M (Lane-Use Control Signals)",
             "MUTCD 11th ed. Chapter 4M",
             "RFC 7950 section 11",
-            "RFC 7950 §11"
+            "RFC 7950 §11",
+            "docs/06-extension-model.md",
+            "docs/reference/yang-reference-conventions.md"
           ]
         }
       ]

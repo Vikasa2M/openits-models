@@ -73,17 +73,20 @@ module openits-reversible-lane {
 
      Copyright (c) 2026.  Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.5.0";
+  openits-types:openits-version "0.6.0";
 
   revision 2026-09-16 {
     description
       "Add the facility gates list: configured type, segment,
-       direction, and interlock role, plus a live state that uses
-       the shared gate-position-state grouping. That list is the
+       direction, and interlock role, plus a state-only operation
+       container that uses the shared gate-position-state grouping
+       and carries open-inhibited / close-inhibited. That list is the
        object gate-id names and the tree gate-agreement evaluates.
+       faults/fault gains an optional gate-id for gate-scope faults.
        Per-lane gate-state stays as a coarse non-authoritative
        rollup. Additive.";
-    reference "RFC 7950 §11.";
+    reference
+      "docs/06-extension-model.md; docs/reference/yang-reference-conventions.md.";
   }
 
   revision 2026-09-08 {
@@ -243,14 +246,14 @@ module openits-reversible-lane {
       enum manual-release { value 6; description "Gate under manual release / local control."; }
     }
     description
-      "Coarse per-lane rollup. Not authoritative. Position, a gate
-       stuck mid-travel, and operating mode live on the facility
-       gates list (openits-reversible-lane-types:gate-position-state).
-       This typedef conflates those axes (moving covers closing and
-       opening; locked and manual-release are modes; fault covers
-       obstructed). A consumer that needs current gate condition, and
-       the gate-agreement interlock, read gates/gate/readback. This leaf
-       MUST NOT disagree with that list.";
+      "Coarse per-lane rollup. Not authoritative. Position, mid-travel
+       rest, operating mode, and interlock inhibits live on the facility
+       gates list (openits-reversible-lane-types:gate-position-state and
+       gates/gate/operation). This typedef conflates those axes (moving
+       covers closing and opening; locked and manual-release are modes;
+       fault covers intermediate and gate faults). A consumer that needs
+       current gate condition, and the gate-agreement interlock, read
+       gates/gate/operation. This leaf MUST NOT disagree with that list.";
   }
 
   /* --------------------------------------------------------------
@@ -493,9 +496,12 @@ module openits-reversible-lane {
             require-instance false;
           }
           description
-            "Configured gate this entry reports. require-instance
-             false: a readback for a just-removed gate is a
-             reportable anomaly, not invalid data.";
+            "Configured gate this entry reports. The key follows the
+             config/state list-key idiom (leafref into ../config/gate-id)
+             used elsewhere in this module. require-instance false is
+             retained for that idiom; the target is a sibling inside the
+             same config-true entry, so a dangling key cannot arise from
+             ordinary de-provisioning the way a cross-subtree leafref can.";
         }
         container config {
           description
@@ -547,23 +553,44 @@ module openits-reversible-lane {
                gate-agreement; a warning gate may have none.";
           }
         }
-        container readback {
+        container operation {
           config false;
           openits-types:arc-it-flow
             "ITS Roadway Equipment -> TMC : reversible lane status";
           description
-            "Live gate condition. Named readback rather than state so
-             the generated protobuf message does not collide with the
-             coarse gate-state typedef. Each entry mirrors the most
-             recent gate-position-changed notification for this gate
-             and is the digital-twin rollup of that stream.
+            "State-only operational rollup for this gate: live position,
+             operating mode, control source, and interlock inhibits.
              gate-agreement evaluates against this container, not the
-             event bus and not the per-lane gate-state rollup. Both
-             sides carry the observation through
-             openits-reversible-lane-types:gate-position-state.
-             gate-id and measured-at stay declared here.";
+             event bus and not the per-lane gate-state rollup.
+
+             This container is a strict superset of what
+             gate-position-changed carries. Position, operating-mode,
+             and control-source come from the shared
+             gate-position-state grouping; open-inhibited and
+             close-inhibited live only here, so an inhibit change does
+             not appear on the position-change stream. A consumer that
+             only subscribes to gate-position-changed therefore sees
+             position changes and nothing else — no inhibit or
+             mode-only transitions. gate-id and measured-at stay
+             declared on the list entry / here respectively.";
 
           uses openits-reversible-lane-types:gate-position-state;
+          leaf open-inhibited {
+            type boolean;
+            description
+              "An interlock is currently preventing this gate from opening. A
+               conforming consumer MUST NOT infer that an open command would
+               succeed while this is true. Orthogonal to position: a closed
+               gate that may not open and a closed gate that may open are
+               different operational facts.";
+          }
+          leaf close-inhibited {
+            type boolean;
+            description
+              "An interlock is currently preventing this gate from closing.
+               Safety-significant on a barrier gate, whose closure is what
+               makes a changeover safe.";
+          }
           leaf measured-at {
             type yang:date-and-time;
             description "When this reading was taken.";
@@ -744,7 +771,18 @@ module openits-reversible-lane {
         "Live fault inventory.  Each entry mirrors a
          openits-common-fault-events:fault-raised notification
          (discriminated by this service's fault-event-kind identities) and clears when
-         the condition resolves.";
+         the condition resolves.
+
+         Sub-component addressing: gate-scope faults (category derived
+         from reversible-lane-fault-gate) name their gate in the
+         'gate-id' leaf. The corresponding fault-raised notification
+         has no sub-component field, so on the event stream a
+         gate-scope fault MUST encode the gate in its fault-id per
+         openits-types:fault-entry — distinct simultaneous instances of
+         one condition take distinct fault-ids, stable across
+         raise/clear for the same gate. That is a string convention,
+         pending structured sub-component addressing on the shared
+         fault event.";
 
       list fault {
         key "fault-id";
@@ -755,7 +793,21 @@ module openits-reversible-lane {
           type identityref {
             base openits-reversible-lane-types:reversible-lane-fault-event-kind;
           }
-          description "Fault class (plc-communication / interlock / conflict / gate / lcs-head / power).";
+          description
+            "Fault class. Facility-scope classes are plc-communication,
+             interlock, conflict, lcs-head and power; gate-scope classes
+             derive from reversible-lane-fault-gate (failed-to-close,
+             failed-to-open, estop, cmd-refused, invalid-inputs) and
+             additionally set gate-id.";
+        }
+        leaf gate-id {
+          type leafref { path "../../../gates/gate/gate-id"; require-instance false; }
+          description
+            "Gate this fault is attributable to. Present when category
+             derives from reversible-lane-fault-gate; absent for
+             facility-scope faults. require-instance false: a fault
+             outliving the de-provisioning of its gate is a reportable
+             anomaly, not invalid data.";
         }
       }
     }

@@ -3434,6 +3434,8 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        control-source:
+                            type: string
                         gate-id:
                             maxLength: 64
                             minLength: 1
@@ -3456,7 +3458,7 @@ components:
                             enum:
                                 - closed
                                 - closing
-                                - obstructed
+                                - intermediate
                                 - open
                                 - opening
                                 - unknown
@@ -3465,7 +3467,7 @@ components:
                             enum:
                                 - closed
                                 - closing
-                                - obstructed
+                                - intermediate
                                 - open
                                 - opening
                                 - unknown

@@ -24,12 +24,12 @@ const (
 type GatePosition int32
 
 const (
-	GatePosition_GATE_POSITION_UNKNOWN    GatePosition = 0
-	GatePosition_GATE_POSITION_CLOSING    GatePosition = 1
-	GatePosition_GATE_POSITION_CLOSED     GatePosition = 2
-	GatePosition_GATE_POSITION_OPENING    GatePosition = 3
-	GatePosition_GATE_POSITION_OPEN       GatePosition = 4
-	GatePosition_GATE_POSITION_OBSTRUCTED GatePosition = 5
+	GatePosition_GATE_POSITION_UNKNOWN      GatePosition = 0
+	GatePosition_GATE_POSITION_CLOSING      GatePosition = 1
+	GatePosition_GATE_POSITION_CLOSED       GatePosition = 2
+	GatePosition_GATE_POSITION_OPENING      GatePosition = 3
+	GatePosition_GATE_POSITION_OPEN         GatePosition = 4
+	GatePosition_GATE_POSITION_INTERMEDIATE GatePosition = 5
 )
 
 // Enum value maps for GatePosition.
@@ -40,15 +40,15 @@ var (
 		2: "GATE_POSITION_CLOSED",
 		3: "GATE_POSITION_OPENING",
 		4: "GATE_POSITION_OPEN",
-		5: "GATE_POSITION_OBSTRUCTED",
+		5: "GATE_POSITION_INTERMEDIATE",
 	}
 	GatePosition_value = map[string]int32{
-		"GATE_POSITION_UNKNOWN":    0,
-		"GATE_POSITION_CLOSING":    1,
-		"GATE_POSITION_CLOSED":     2,
-		"GATE_POSITION_OPENING":    3,
-		"GATE_POSITION_OPEN":       4,
-		"GATE_POSITION_OBSTRUCTED": 5,
+		"GATE_POSITION_UNKNOWN":      0,
+		"GATE_POSITION_CLOSING":      1,
+		"GATE_POSITION_CLOSED":       2,
+		"GATE_POSITION_OPENING":      3,
+		"GATE_POSITION_OPEN":         4,
+		"GATE_POSITION_INTERMEDIATE": 5,
 	}
 )
 
@@ -462,14 +462,14 @@ var File_openits_reversible_lane_v1_types_proto protoreflect.FileDescriptor
 
 const file_openits_reversible_lane_v1_types_proto_rawDesc = "" +
 	"\n" +
-	"&openits/reversible_lane/v1/types.proto\x12\x1aopenits.reversible_lane.v1*\xaf\x01\n" +
+	"&openits/reversible_lane/v1/types.proto\x12\x1aopenits.reversible_lane.v1*\xb1\x01\n" +
 	"\fGatePosition\x12\x19\n" +
 	"\x15GATE_POSITION_UNKNOWN\x10\x00\x12\x19\n" +
 	"\x15GATE_POSITION_CLOSING\x10\x01\x12\x18\n" +
 	"\x14GATE_POSITION_CLOSED\x10\x02\x12\x19\n" +
 	"\x15GATE_POSITION_OPENING\x10\x03\x12\x16\n" +
-	"\x12GATE_POSITION_OPEN\x10\x04\x12\x1c\n" +
-	"\x18GATE_POSITION_OBSTRUCTED\x10\x05*\x85\x01\n" +
+	"\x12GATE_POSITION_OPEN\x10\x04\x12\x1e\n" +
+	"\x1aGATE_POSITION_INTERMEDIATE\x10\x05*\x85\x01\n" +
 	"\rLaneFlowState\x12\x1b\n" +
 	"\x17LANE_FLOW_STATE_UNKNOWN\x10\x00\x12\x1a\n" +
 	"\x16LANE_FLOW_STATE_CLOSED\x10\x01\x12\x18\n" +
