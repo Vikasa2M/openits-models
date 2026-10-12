@@ -1517,6 +1517,11 @@
         "ledstar-dms-travel-time/2026-08-05/MANIFEST.json",
         "ledstar-dms-travel-time/2026-08-05/README.md",
         "ledstar-dms-travel-time/2026-08-05/schema.yang"
+      ],
+      "2026-10-12": [
+        "ledstar-dms-travel-time/2026-10-12/MANIFEST.json",
+        "ledstar-dms-travel-time/2026-10-12/README.md",
+        "ledstar-dms-travel-time/2026-10-12/schema.yang"
       ]
     },
     "openits-cabinet-power": {
@@ -2586,6 +2591,11 @@
         "openits-vendor-econolite-signal-control-types/2026-07-21/MANIFEST.json",
         "openits-vendor-econolite-signal-control-types/2026-07-21/README.md",
         "openits-vendor-econolite-signal-control-types/2026-07-21/schema.yang"
+      ],
+      "2026-10-12": [
+        "openits-vendor-econolite-signal-control-types/2026-10-12/MANIFEST.json",
+        "openits-vendor-econolite-signal-control-types/2026-10-12/README.md",
+        "openits-vendor-econolite-signal-control-types/2026-10-12/schema.yang"
       ]
     },
     "openits-vendor-trafficvision-perception-types": {
@@ -2603,6 +2613,11 @@
         "openits-vendor-trafficvision-perception-types/2026-08-05/MANIFEST.json",
         "openits-vendor-trafficvision-perception-types/2026-08-05/README.md",
         "openits-vendor-trafficvision-perception-types/2026-08-05/schema.yang"
+      ],
+      "2026-10-12": [
+        "openits-vendor-trafficvision-perception-types/2026-10-12/MANIFEST.json",
+        "openits-vendor-trafficvision-perception-types/2026-10-12/README.md",
+        "openits-vendor-trafficvision-perception-types/2026-10-12/schema.yang"
       ]
     },
     "openits-vendor-trafficvision-traffic-sensor-types": {
@@ -2620,6 +2635,11 @@
         "openits-vendor-trafficvision-traffic-sensor-types/2026-08-05/MANIFEST.json",
         "openits-vendor-trafficvision-traffic-sensor-types/2026-08-05/README.md",
         "openits-vendor-trafficvision-traffic-sensor-types/2026-08-05/schema.yang"
+      ],
+      "2026-10-12": [
+        "openits-vendor-trafficvision-traffic-sensor-types/2026-10-12/MANIFEST.json",
+        "openits-vendor-trafficvision-traffic-sensor-types/2026-10-12/README.md",
+        "openits-vendor-trafficvision-traffic-sensor-types/2026-10-12/schema.yang"
       ]
     },
     "openits-work-zone-events": {
@@ -2722,6 +2742,11 @@
         "trafficvision-perception-incident-media/2026-07-21/MANIFEST.json",
         "trafficvision-perception-incident-media/2026-07-21/README.md",
         "trafficvision-perception-incident-media/2026-07-21/schema.yang"
+      ],
+      "2026-10-12": [
+        "trafficvision-perception-incident-media/2026-10-12/MANIFEST.json",
+        "trafficvision-perception-incident-media/2026-10-12/README.md",
+        "trafficvision-perception-incident-media/2026-10-12/schema.yang"
       ]
     },
     "trafficvision-traffic-sensor-camera": {
@@ -2744,6 +2769,11 @@
         "trafficvision-traffic-sensor-camera/2026-08-05/MANIFEST.json",
         "trafficvision-traffic-sensor-camera/2026-08-05/README.md",
         "trafficvision-traffic-sensor-camera/2026-08-05/schema.yang"
+      ],
+      "2026-10-12": [
+        "trafficvision-traffic-sensor-camera/2026-10-12/MANIFEST.json",
+        "trafficvision-traffic-sensor-camera/2026-10-12/README.md",
+        "trafficvision-traffic-sensor-camera/2026-10-12/schema.yang"
       ]
     }
   }

@@ -49,7 +49,9 @@ module openits-signal-control-types {
          here should send flash-mmu-conflict.
        - monitor-red-fail is the absence of any indication on a channel,
          not a conflict; monitor-dual-indication covers any two of green,
-         yellow and red on one channel.";
+         yellow and red on one channel.
+       - controller-fault-event-kind cites the Indiana enumeration codes
+         rather than an internal decoder name.";
     reference "NTCIP 1202:2019 §5 (unitFlashStatus); NTCIP 1202 v04 §5.4.6; NEMA TS2-2021 section 4.";
   }
   revision 2026-09-08 {
@@ -1024,8 +1026,8 @@ module openits-signal-control-types {
   identity controller-fault-event-kind {
     base sc-fault-event-kind;
     description
-      "High-resolution controller fault event from indianamap codes
-       173-185. Used by the controller-fault-event notification
+      "High-resolution controller fault event from Indiana
+       enumeration codes 173-185. Used by the controller-fault-event notification
        (openits-signal-control-events) to discriminate this HR
        fault class from cabinet-level faults emitted via fault-raised.";
   }
