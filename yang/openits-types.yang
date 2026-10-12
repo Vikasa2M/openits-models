@@ -18,8 +18,19 @@ module openits-types {
      for the openits YANG module family. Service-neutral content only;
      service-specific typedefs live in their respective modules.";
 
-  openits-types:openits-version "0.11.0";
+  openits-types:openits-version "0.11.1";
 
+  revision 2026-10-12 {
+    description
+      "Make the fault-severity order normative. The previous caveat said
+       the enum inverted the X.733 warning<minor convention and told
+       consumers not to compare values across warning and minor; it did
+       not invert anything, and the advice pushed every consumer to keep
+       a private ranking table. The values are now defined as totally
+       ordered, info < warning < minor < major < critical, matching X.733.
+       Wire-neutral.";
+    reference "ITU-T X.733 §8.1.2.3.";
+  }
   revision 2026-09-08 {
     description
       "Hoist the time-source axis into the foundation as an identity.
@@ -401,7 +412,7 @@ module openits-types {
   typedef fault-severity {
     type enumeration {
       enum info { value 0; description "Informational only; no operator action required."; }
-      enum warning { value 1; description "Monitor / threshold-approach: watch, may raise a low-priority work order. A peer triage tier to 'minor', not a strict step below it — see the ordinal caveat."; }
+      enum warning { value 1; description "Monitor / threshold-approach: watch, may raise a low-priority work order. Less severe than minor."; }
       enum minor { value 2; description "Confirmed single-component fault (one detector, one pixel); raises a work order."; }
       enum major { value 3; description "Degraded service across the device."; }
       enum critical { value 4; description "Safety-relevant; dispatch now."; }
@@ -413,13 +424,13 @@ module openits-types {
        service; critical = safety-relevant, dispatch now.
        Normative floors: a monitor/conflict-flash (MMU) fault MUST be
        reported critical. Vendors MUST NOT down-rate below these floors.
-       ORDINAL CAVEAT: the enum member order is a wire-frozen catalog
-       order, NOT a monotonic severity ranking across the warning/minor
-       boundary. 'warning' (threshold-approach) and 'minor' (a confirmed
-       single-component fault) are peer tiers; this deliberately inverts
-       the X.733 warning<minor convention for catalog stability. Do not
-       compare ordinals to rank severity across that pair — branch on the
-       enum value.";
+       ORDERING: the values are totally ordered by severity,
+       info < warning < minor < major < critical, and the enum values
+       follow that order, so a consumer MAY sort, threshold or compare
+       on the value. This matches the ITU-T X.733 perceived-severity
+       order (warning < minor < major < critical); info sits below
+       warning for notices that need no action.";
+    reference "ITU-T X.733 §8.1.2.3 (perceived severity).";
   }
 
   /* --------------------------------------------------------------

@@ -1340,11 +1340,13 @@
         "2026-08-05",
         "2026-08-15",
         "2026-09-02",
-        "2026-09-08"
+        "2026-09-08",
+        "2026-10-12"
       ],
       "refStd": [
         "ATSPM Indiana enumeration",
         "ATSPM Indiana enumeration (wire-source 'indiana' case)",
+        "ITU-T X.733 §8.1.2.3",
         "NTCIP 1201 (global time / time-base)",
         "NTCIP 1202/1203/1204 ('ntcip-oid' case)",
         "OpenConfig openconfig-extensions (openconfig-version precedent)",
@@ -2394,6 +2396,11 @@
         "openits-signal-control-types/2026-09-08/MANIFEST.json",
         "openits-signal-control-types/2026-09-08/README.md",
         "openits-signal-control-types/2026-09-08/schema.yang"
+      ],
+      "2026-10-12": [
+        "openits-signal-control-types/2026-10-12/MANIFEST.json",
+        "openits-signal-control-types/2026-10-12/README.md",
+        "openits-signal-control-types/2026-10-12/schema.yang"
       ]
     },
     "openits-traffic-sensor": {
