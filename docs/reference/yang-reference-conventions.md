@@ -18,6 +18,8 @@ Authoring doctrine — the load-bearing rules for writing a module:
 - [counter64 vs uint64](#counter64-vs-uint64)
 - [Module placement: the ≥3-service rule](#module-placement-the-3-service-rule)
 - [Config/state idiom](#configstate-idiom)
+- [The pre-1.0 house contract](#the-pre-10-house-contract): the eight
+  rules every family converges on before 1.0
 
 Citation conventions — how modules cite normative sources:
 
@@ -676,10 +678,11 @@ rather than a datastore subscription — is recorded in
   module beside the grouping, and let an invalid fixture prove the
   restriction: the periodic report's kind must be rejected on the change
   notification.
-  Traffic-sensor predates this part of the rule and keeps its single
-  root-based `ts-queue-state-changed` kind: rebasing an identity changes
-  the string every producer emits, which is wire-breaking. New change
-  notifications follow the zone-occupancy shape.
+  Traffic-sensor predates this part of the rule with its single
+  root-based `ts-queue-state-changed` kind. Rebasing it changes the string
+  every producer emits, which is wire-breaking; under the
+  [pre-1.0 house contract](#the-pre-10-house-contract) it converges in the
+  traffic-sensor cut rather than staying as an exception.
 - **Conformance closes the loop.** The harness asserts that the latest
   change event per region and a live reading taken at or after it agree
   (`TestZoneOccupancyEvent_ChangedMirrorsLiveState`). A device that
@@ -703,10 +706,13 @@ how large the value can get:
   plain unsigned integer typedefs even when the value happens to only ever
   increase in practice.
 
-New counters follow this rule going forward. Existing leaves are not
-renamed or retyped to conform to it retroactively — that would be a
-wire-breaking change to a frozen revision for a naming-convention cleanup,
-which is not worth the churn.
+New counters follow this rule. Before 1.0, existing monotonic counters
+held in plain `uint32`/`uint64` are retyped to `yang:counter64` in their
+family's cut (see [the pre-1.0 house contract](#the-pre-10-house-contract),
+rule 6): the change is wire-breaking, and that is cheap now and expensive
+after 1.0. Every device that carries counters also carries a
+discontinuity marker, so a consumer computing a rate can tell a wrap or a
+reset from real traffic.
 
 ## Module placement: the ≥3-service rule
 
@@ -819,6 +825,169 @@ question, not a stylistic one:
 Do not use `geo-point` for a device identity as a way to save two
 optional leaves — the identity is still a physical thing sitting at an
 elevation, even if that value is usually absent on the wire.
+
+## The pre-1.0 house contract
+
+A review of every family before 1.0 found that most serious defects were
+not family-specific. The same few contracts were missing in most families,
+and each family had copied whichever neighbour it was closest to. These
+eight rules are the contract every family converges on. They were adopted
+on 2026-10-12.
+
+**Status.** New work follows these rules now. Existing modules converge
+family by family, each in a cut that may be wire-breaking (the project is
+pre-1.0). Until a family's cut lands, **its current shape is not
+precedent**: copy the exemplar each rule names, not the nearest
+neighbour. Pieces that need new foundation definitions (marked
+*foundation*) land in `openits-types` first, and families adopt them in
+their cuts.
+
+### 1. Every change event has a live-state mirror
+
+A notification that reports a change to a condition that persists (a
+position, a mode, a health status, an active alert, an open incident) has
+a matching `config false` entry for the thing that changed, so a consumer
+that reconnects can rebuild current state without waiting for the next
+transition. Following the rule in
+[A live-state container and its change notification share one grouping](#a-live-state-container-and-its-change-notification-share-one-grouping):
+
+- the entry and the notification are built from **one grouping** in the
+  family's `-types` module;
+- the notification's description says **"an emitter MAY re-report an
+  unchanged condition"**, and a re-report is idempotent for a consumer
+  keeping a digital twin;
+- the family's conformance kind has a `…MirrorsLiveState` test.
+
+The exemplar is zone-occupancy (`zone-occupancy-state`,
+`zone-occupancy-changed`, `TestZoneOccupancyEvent_ChangedMirrorsLiveState`).
+
+Occurrence events report something that happened rather than a condition
+that holds (a message received, a move commanded, a security event). They
+are exempt. If a feed only ever delivers changes, the family still keeps a
+live-state list. Re-reporting cannot say that a condition has ended, so
+without the list a missed "cleared" event leaves the condition showing
+forever.
+
+### 2. Absent never means good
+
+- **Health.** Every device root `state` carries an operational status from
+  one *foundation* typedef with `unknown` at value 0, plus `last-change`.
+  A sub-component that can fail on its own (a monitor, a radio, a lane
+  sensor, a zone) carries its own status from the same typedef.
+- **Absence.** An absent health, fault or status leaf means *not known*.
+  It never means *ok*. A description must not say "absent means no fault".
+  Where the device can report "read, nothing wrong", that is an explicit
+  value.
+- **Freshness.** Every `config false` observation container carries one
+  timestamp of when it was read, under one *foundation* name, instead of
+  the four variants in use today.
+- **Comm loss.** After `comm-lost`, all live state for that
+  `source-device-id` is stale as of the last contact, until `comm-restored`
+  and a resync. Consumers MUST NOT present it as current.
+- **Status report.** Every service has one periodic status report with a
+  shared *foundation* shape: health, mode, control source, uptime and
+  active-fault count.
+
+### 3. One axis per value
+
+A value answers one question. Today several families fold two or three
+questions into one enum or identity, which forces a producer to drop
+information whenever the axes disagree. A TS2 cabinet held in flash by its
+monitor while the controller keeps cycling is one example.
+
+- **Mode** is what the device is doing. **Who is driving it** is a
+  separate leaf typed `openits-types:control-source`, in live state as
+  well as on `mode-changed`. Exemplar: ramp metering (`meter-mode` plus
+  `command-source`).
+- **What the field equipment shows** (cabinet output, sign face, head
+  display) is separate from mode.
+- **Overrides** (preemption, priority) are derived from their own lists,
+  not encoded as mode values.
+- Every mode base has an explicit unknown value. Family mode values
+  dual-base onto the canonical cross-service modes (`mode-maintenance`,
+  `mode-standby-generic`, `mode-failed-generic`, and a canonical
+  *foundation* `mode-unknown`) wherever they mean the same thing, so a
+  fleet-wide filter works across services.
+- A `mode-changed` value MUST derive from the mode base of the family
+  that its `kind` names.
+
+### 4. Sub-components are addressed by type, not by string
+
+- Every sub-component that an event or fault names (phase, detector,
+  lane, gate, zone, radio, preset) has an **id typedef** in the family's
+  `-types` module. The config key and every event use it. Exemplar:
+  `occupancy-zone-id`.
+- Faults and mode changes name a sub-component through a *foundation*
+  **component reference**: a component-class identity, which each service
+  derives, plus the id. They never encode it inside `fault-id`.
+- **One fault grouping** backs the live fault inventory, `fault-raised`
+  and `fault-cleared`. Its classifier is `kind`, typed to
+  `openits-types:fault-event-kind` so a platform fault (cabinet power)
+  can sit in any service's inventory. `first-observed` is mandatory and
+  carried on both events, and `fault-raised` MAY be re-emitted with the
+  same `fault-id` as an upsert.
+- A family does not define its own parallel fault notification.
+
+### 5. One meaning for `sequence`
+
+*Foundation.* `sequence` is scoped to (producer, source device, the
+device's full event stream), and the header carries a `sequence-epoch`
+that changes whenever the counter can restart. Gap detection is defined
+only on the full per-device stream: a consumer subscribed to a subset of
+subjects cannot infer loss from gaps. The YANG, `ce-id-spec.md`,
+`07-conformance.md` and the binding README state this one definition.
+
+### 6. Mechanical conventions, enforced by lint
+
+| Convention | Rule |
+|---|---|
+| Before/after in change events | `previous-<x>` and `<x>`, where `<x>` is the live-state leaf name (rule 1) |
+| Unknown | an enumeration has `unknown` at value 0; an identity set has a `<base>-unknown` identity |
+| Units | short suffixes (`-s`, `-ms`, `-pct`, `-deg`, `-kmh`, `-vph`, `-c`, `-m`) **and** a `units` statement on every leaf with a unit |
+| Counters | `yang:counter64` for monotonic counters, plus a per-device discontinuity marker (see [counter64 vs uint64](#counter64-vs-uint64)) |
+| Event `kind` | constrained to the notification's own transition or report sub-base, never the service root, with an `invalid-*` fixture proving it |
+| `wire-source` | on every event decoded from a device wire protocol, including SNMP-decoded NTCIP families |
+| References | `<Standard> <number>:<year> §<clause>`; standards and RFCs, not repo paths |
+
+Each row is checked by `check-naming` or a dedicated gate as its family
+converges, so it cannot drift back.
+
+### 7. Config holds durable intent only
+
+This sharpens [Commands are config-writes](#commands-are-config-writes).
+Every config leaf must be safe to re-assert on reconnect: replaying it
+moves the device to a state the operator still wants. A one-shot action
+fails that test. Examples are a camera goto, a preset recall, or starting
+a tour. Arbitration between competing operators fails it too: a shared
+"holder" written by every client is last-writer-wins. Neither belongs in
+config. Both go through the command path (`command-provenance` plus a
+`command-rejected` outcome). Command feedback is not a latched fault.
+
+### 8. Every vocabulary cites its evidence
+
+Every enumeration and identity set cites a published standard or at least
+two independent implementations. Vocabulary from a single product goes in
+a vendor augment ([Extension model](../06-extension-model.md)), not the
+neutral core. A PR that adds or changes a vocabulary includes a table in
+its description mapping each value to its sources, and says plainly where
+a match is weak. This follows OpenConfig's two-implementations rule for
+vendor-neutral models.
+
+### Tree shapes
+
+Two tree shapes are allowed, and the choice follows the data:
+
+- **Configured sub-components** (phases, lanes, gates, presets, streams)
+  use the per-entry idiom in [Config/state idiom](#configstate-idiom):
+  `list x { key; config; state; }` with the key a leafref to
+  `../config/<key>`.
+- **Observation-only regions** that are configured once and then only
+  read (detection and occupancy zones) use a `configuration` subtree plus
+  a separate `config false` live list keyed by a leafref into it, as in
+  zone-occupancy.
+
+Do not mix the two for one kind of thing, and do not use plain un-paired
+keys for a configured sub-component.
 
 ## Module prefixes
 

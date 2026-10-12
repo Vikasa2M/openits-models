@@ -36,6 +36,24 @@ that are expensive to fix after merge.
 
 ## 3. Modeling quality
 
+Hold the PR to the eight rules in the pre-1.0 house contract
+(`docs/reference/yang-reference-conventions.md#the-pre-10-house-contract`).
+The ones PRs miss most often:
+
+- A change event with no live-state mirror (rule 1). Ask for the shared
+  `-types` grouping, the "MAY re-report" sentence, and a conformance
+  mirror test.
+- A description that says an absent leaf means "ok" or "no fault"
+  (rule 2).
+- A mode value that also says who is driving the device (rule 3).
+- A sub-component named inside a `fault-id` string, or by an inline id
+  type (rule 4).
+- A new enumeration or identity set with no standard or second
+  implementation behind it (rule 8). Ask for the evidence table.
+
+A family that has not converged yet is not precedent. Compare against the
+exemplar each rule names, not the nearest module.
+
 - Placement: intent in `config`, observation in `state`/operational
   containers; `state` mirrors config, rollups live in state-only
   containers.

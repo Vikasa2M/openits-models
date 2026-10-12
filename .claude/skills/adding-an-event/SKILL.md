@@ -47,6 +47,17 @@ Synthesized events (computed intervals/reports, inferred state
 transitions, command acks) must NOT carry it — presence asserts wire
 provenance. When in doubt, leave it off: adding later is non-breaking.
 
+## Live-state mirror (house contract rule 1)
+
+A notification that reports a change to a condition that persists needs
+a matching `config false` entry built from the same `-types` grouping, a
+"MAY re-report an unchanged condition" sentence in its description, and
+a `…MirrorsLiveState` conformance test. Copy zone-occupancy, not the
+nearest service. One-shot occurrence events are exempt. See
+`docs/reference/yang-reference-conventions.md#the-pre-10-house-contract`
+for the full contract, including `previous-<x>`/`<x>` naming and `kind`
+sub-bases.
+
 ## Naming
 
 The notification's last name token becomes the subject's `{event}` token:
