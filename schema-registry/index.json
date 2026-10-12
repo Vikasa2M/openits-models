@@ -81,7 +81,8 @@
         "2026-08-23",
         "2026-08-27",
         "2026-09-07",
-        "2026-09-08"
+        "2026-09-08",
+        "2026-10-12"
       ],
       "events": [
         "openits.dms.fault-cleared.v1",
@@ -111,7 +112,8 @@
         "RFC 7950 section 11",
         "RFC 7950 section 11 (additive YANG evolution)",
         "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
-        "RFC 7950 §11"
+        "RFC 7950 §11",
+        "RFC 7950 §7.13.2"
       ],
       "modules": [
         {
@@ -127,7 +129,8 @@
             "2026-07-21",
             "2026-08-05",
             "2026-08-23",
-            "2026-09-08"
+            "2026-09-08",
+            "2026-10-12"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TI06 (Traffic Information Dissemination)",
@@ -142,7 +145,8 @@
             "RFC 7950 9.6.4.2",
             "RFC 7950 section 11 (additive YANG evolution)",
             "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
-            "RFC 7950 §11"
+            "RFC 7950 §11",
+            "RFC 7950 §7.13.2"
           ]
         },
         {
@@ -2061,6 +2065,11 @@
         "openits-rsu/2026-09-08/MANIFEST.json",
         "openits-rsu/2026-09-08/README.md",
         "openits-rsu/2026-09-08/schema.yang"
+      ],
+      "2026-10-12": [
+        "openits-rsu/2026-10-12/MANIFEST.json",
+        "openits-rsu/2026-10-12/README.md",
+        "openits-rsu/2026-10-12/schema.yang"
       ]
     },
     "openits-rsu-events": {
