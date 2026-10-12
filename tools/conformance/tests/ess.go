@@ -184,6 +184,12 @@ func TestESSDiagnostics_ObservationFreshness(t *T, obs *Observation) {
 		return
 	}
 	const maxStale = 10 * time.Minute
+	// The reference point is the newest observation the station reports,
+	// not the wall clock: harness fixtures are static and would otherwise
+	// always fail. A sensor more than maxStale behind its siblings has
+	// stopped reporting while the station is still up.
+	seen := make(map[string]time.Time, len(d.Sensor))
+	var newest time.Time
 	for id, s := range d.Sensor {
 		st := s.GetState()
 		if st == nil || st.LastObservation == nil {
@@ -195,11 +201,16 @@ func TestESSDiagnostics_ObservationFreshness(t *T, obs *Observation) {
 			t.Errorf("sensor %q last-observation %q not RFC3339", id, *st.LastObservation)
 			continue
 		}
-		// Use the observation's own clock as the reference point —
-		// test harness fixtures are static and would otherwise always
-		// fail a wall-clock-based freshness check.
-		_ = ts
-		_ = maxStale
+		seen[id] = ts
+		if ts.After(newest) {
+			newest = ts
+		}
+	}
+	for id, ts := range seen {
+		if lag := newest.Sub(ts); lag > maxStale {
+			t.Errorf("sensor %q last-observation %s is %s behind the station's newest observation (limit %s)",
+				id, ts.Format(time.RFC3339), lag, maxStale)
+		}
 	}
 }
 
@@ -229,7 +240,8 @@ func TestESSEvent_WeatherAlertShape(t *T, obs *Observation) {
 		}
 		return
 	}
-	t.Errorf("no weather-alert event observed during %s window", obs.Window)
+	// No alert in the window is a calm-weather station, not a failure:
+	// like the other shape tests, this only checks alerts that occur.
 }
 
 func TestESSEvent_SensorRecalibratedShape(t *T, obs *Observation) {

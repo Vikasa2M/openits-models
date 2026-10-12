@@ -209,31 +209,49 @@ func TestReversibleLaneEvent_FaultRaisedShape(t *T, obs *Observation) {
 	t.Errorf("no fault-raised event observed during %s window", obs.Window)
 }
 
-// When the lane group is explicitly not permitted to open toward a direction
-// (a transition / interlock state), no lane may show a proceed (green-arrow)
-// indication in either direction. Guards the open-permit safety interlock.
+// direction-open-permitted gates the lcs-reverse step of a changeover: while
+// it is false, no lane may show a proceed indication (green-arrow or
+// flashing-yellow-X, as the core lane musts define proceed) toward the
+// direction the facility is changing over to. At rest the flag is routinely
+// false (the sweep interlock is not satisfied while traffic is flowing), so
+// the check applies only while a changeover is running, and only to the
+// lcs head facing the new direction. Traffic still flowing in the old
+// direction is not a violation.
 func TestRL_DirectionOpenGateBlocksReverse(t *T, obs *Observation) {
 	rl := obs.Device.GetReversibleLane()
-	if rl == nil || rl.GetControl() == nil || rl.GetControl().GetState() == nil {
+	st := rl.GetControl().GetState()
+	if st == nil || st.DirectionOpenPermitted == nil || *st.DirectionOpenPermitted {
+		return // permitted, or not reported: nothing to gate
+	}
+	if st.CurrentState != yangpkg.OpenitsReversibleLaneTypes_LaneFlowState_in_transition {
 		return
 	}
-	st := rl.GetControl().GetState()
-	if st.DirectionOpenPermitted == nil || *st.DirectionOpenPermitted {
-		return // permitted, or not reported — nothing to gate
+	to := st.GetTransition().GetToDirection()
+	cfg := rl.GetConfig()
+	if to == 0 || cfg == nil {
+		return
 	}
 	segs := rl.GetSegments()
 	if segs == nil {
 		return
 	}
-	green := yangpkg.OpenitsReversibleLaneTypes_LcsIndication_green_arrow
-	for _, seg := range segs.Segment {
-		for _, lane := range seg.Lane {
+	proceed := func(i yangpkg.E_OpenitsReversibleLaneTypes_LcsIndication) bool {
+		return i == yangpkg.OpenitsReversibleLaneTypes_LcsIndication_green_arrow ||
+			i == yangpkg.OpenitsReversibleLaneTypes_LcsIndication_flashing_yellow_x
+	}
+	for segID, seg := range segs.Segment {
+		for laneID, lane := range seg.Lane {
 			ls := lane.GetState()
 			if ls == nil {
 				continue
 			}
-			if ls.GetLcsDirectionA() == green || ls.GetLcsDirectionB() == green {
-				t.Errorf("direction-open-permitted is false but a lane shows a green-arrow indication")
+			switch {
+			case to == cfg.DirectionA && proceed(ls.GetLcsDirectionA()):
+				t.Errorf("segment %q lane %q shows %v toward the new direction (direction-a) while direction-open-permitted is false",
+					segID, laneID, ls.GetLcsDirectionA())
+			case to == cfg.DirectionB && proceed(ls.GetLcsDirectionB()):
+				t.Errorf("segment %q lane %q shows %v toward the new direction (direction-b) while direction-open-permitted is false",
+					segID, laneID, ls.GetLcsDirectionB())
 			}
 		}
 	}
