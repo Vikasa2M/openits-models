@@ -392,7 +392,7 @@ func All(kind string) []TestCase {
 			// phase timing
 			TestCase{"TestPhaseTiming_HasPhases", TestPhaseTiming_HasPhases},
 			TestCase{"TestPhaseTiming_YellowChangeMinimum", TestPhaseTiming_YellowChangeMinimum},
-			TestCase{"TestPhaseTiming_RedClearMinimum", TestPhaseTiming_RedClearMinimum},
+			TestCase{"TestPhaseTiming_RedClearNonNegative", TestPhaseTiming_RedClearNonNegative},
 			TestCase{"TestPhaseTiming_MinGreenMinimum", TestPhaseTiming_MinGreenMinimum},
 			TestCase{"TestPhaseTiming_MaxGreenSane", TestPhaseTiming_MaxGreenSane},
 			TestCase{"TestPhaseTiming_PedClearSane", TestPhaseTiming_PedClearSane},

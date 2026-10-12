@@ -1,0 +1,92 @@
+# Expected rejection reason for every base invalid-* fixture (checked by
+# scripts/validate-yang.sh). Format: <fixture><TAB><substring of the error>.
+# A must: quote the start of its error-message. A type error: include the
+# offending path. A notification missing a mandatory leaf: "MISSING <leaf>".
+# Deviation-tier fixtures (invalid-*-under-*.json) are checked by
+# make check-deviations instead and are not listed here.
+invalid-barrier-out-of-range.json	Unsatisfied range - value "5" is out of the allowed range. (Data location "/openits-signal-control:signal-controller/phases/phase[phase-number='2']/config/barrier"
+invalid-cctv-recall-unknown-preset.json	Invalid leafref value "9" - no target instance "../preset/preset-id" with the same value. (Data location "/openits-cctv:camera/ptz/presets/recall"
+invalid-cctv-velocity-out-of-range.json	Value "150" is out of type int8 min/max bounds. (Data location "/openits-cctv:camera/ptz/config/velocity/pan-speed"
+invalid-channel-no-source.json	Mandatory choice "source" data do not exist.
+invalid-comm-health-contradiction.json	MISSING attempts-total
+invalid-controller-fault-event-inventory-kind.json	Invalid identityref "openits-signal-control-types:sc-fault-lamp" value - identity not derived from the base "openits-signal-control-types:controller-fault-event-kind". (Data location "/openits-signal-control-events:controller-fault-event/kind"
+invalid-day-plan-no-action.json	A day-plan must contain at least one action; an empty day-plan
+invalid-detector-transition-bad-kind.json	Invalid identityref "openits-signal-control-types:coord-pattern-change" value - identity not derived from the base "openits-signal-control-types:sc-detector-event-kind". (Data location "/openits-signal-control-events:detector-transition/kind"
+invalid-dms-activation-error-wrong-base.json	Invalid identityref "openits-dms-types:dms-fault-photocell" value - identity not derived from the base "openits-dms-types:activation-error". (Data location "/openits-dms-events:message-activation-failed/error-type"
+invalid-dms-activation-zero-duration.json	active-message must set a positive duration-s or explicitly set
+invalid-dms-day-plan-no-action.json	A day-plan must contain at least one action; an empty day-plan
+invalid-ess-humidity-out-of-range.json	Unsatisfied range - value "150.0" is out of the allowed range. (Data location "/openits-ess:station/atmospheric/humidity-percent"
+invalid-ess-wind-direction-360.json	Unsatisfied range - value "360.0" is out of the allowed range. (Data location "/openits-ess:station/atmospheric/wind-direction-deg"
+invalid-ess-wind-direction-out-of-range.json	Unsatisfied range - value "400.0" is out of the allowed range. (Data location "/openits-ess:station/atmospheric/wind-direction-deg"
+invalid-fault-raised-missing-severity.json	MISSING severity
+invalid-fault-raised-source-no-decoder.json	MISSING source/decoder
+invalid-fya-on-non-fya-overlap.json	An fya container may only be present on an overlap whose type is
+invalid-fya-same-phase.json	An FYA's protected left-turn phase and opposing through phase must be
+invalid-incident-severity-fault-axis.json	Invalid enumeration value "warning". (Data location "/openits-perception-events:zone-incident-detected/severity"
+invalid-latitude-out-of-range.json	Unsatisfied range - value "95.0" is out of the allowed range. (Data location "/openits-perception:perception-sensor/config/latitude"
+invalid-ledstar-max-below-min.json	max-display-minutes, when min-display-minutes is set, must be >= it
+invalid-map-broadcast-interval-out-of-range.json	Unsatisfied range - value "100" is out of the allowed range. (Data location "/openits-rsu:rsu/messages/map/config/broadcast-interval"
+invalid-max-green-2-without-max-green.json	max-green-2 (dynamic / second maximum green) is meaningful only when
+invalid-max-green-less-than-min.json	Maximum green must be non-zero and, when min-green is present, >=
+invalid-min-gap-exceeds-passage.json	The reducing gap floor (min-gap) must not exceed the passage time it
+invalid-min-green-zero.json	Minimum green must be at least 1 second (operational floor forbidding
+invalid-offset-exceeds-cycle.json	The coordination offset must be less than the cycle length (offset is
+invalid-overlap-trailing-red-clear-negative.json	Overlap trailing-red-clear must be non-negative when specified.
+invalid-overlap-trailing-yellow-zero.json	An overlap that specifies a trailing-yellow interval must make it
+invalid-ped-channel-flashes.json	A pedestrian channel must be dark (flash-state 'none') during cabinet
+invalid-ped-recall-without-walk.json	A phase with pedestrian recall or rest-in-walk must serve a
+invalid-perception-wrongway-no-legal-heading.json	a zone whose function is wrong-way requires legal-heading to detect
+invalid-phase-no-timing-container.json	Every signalized phase requires a yellow-change interval (MUTCD 11th
+invalid-phase-state-change-bad-kind.json	Invalid identityref "openits-signal-control-types:ped-begin-walk" value - identity not derived from the base "openits-signal-control-types:sc-phase-event-kind". (Data location "/openits-signal-control-events:phase-state-change/kind"
+invalid-phase-state-change-missing-phase-number.json	MISSING phase-number
+invalid-preempt-missing-priority-order.json	When more than one preemptor is configured, every preemptor must
+invalid-preempt-rail-not-supreme.json	Every railroad preemptor must outrank (lower priority-order than)
+invalid-queue-override-threshold-zero.json	queue-override-threshold-vehicles must be positive.
+invalid-railroad-preempt-no-track-clearance.json	A railroad preemptor must define track-clearance phases and green
+invalid-ramp-day-plan-no-action.json	A day-plan must contain at least one action.
+invalid-ramp-meter-lane-max-below-min.json	max-release-rate-vph must be >= min-release-rate-vph on the
+invalid-ramp-meter-occupancy-clear-above-activation.json	queue-override-occupancy-clear-threshold-pct (deactivation) must be
+invalid-ramp-meter-timing-exceeds-headway.json	min-green + yellow-change + red-clear must not exceed the feasible
+invalid-ramp-meter-walk-leaf.json	Node "walk" not found as a child of "phase-timing" node. (Data location "/openits-ramp-metering:ramp-meter/plans/plan[plan-id='3']/phase-timing"
+invalid-ramp-meter-zero-rate-plan.json	A metering plan's release-rate-vph must be positive; a meter that
+invalid-red-clear-negative.json	Red clearance must be non-negative.
+invalid-reversible-direction-a-unknown.json	Invalid identityref "openits-types:direction-unknown" value - identity not derived from the base "openits-types:carriageway-direction". (Data location "/openits-reversible-lane:reversible-lane/config/direction-a"
+invalid-reversible-lane-commanded-dual-green.json	A green-arrow or flashing-yellow-X toward direction-a requires a
+invalid-reversible-lane-directions-not-opposing.json	direction-b must be the opposing carriageway of direction-a (NB<->SB,
+invalid-reversible-open-without-direction.json	an open target-state must name target-direction
+invalid-reversible-target-direction-unconfigured.json	target-direction must be one of the facility's configured directions
+invalid-rm-cycle-infeasible.json	min-green + yellow-change + red-clear must not exceed the feasible
+invalid-rm-metering-abstract-base.json	A ramp meter commanded into a metering mode must have its
+invalid-rm-metering-aws-disabled.json	A ramp meter commanded into a metering mode must have its
+invalid-rm-queue-hysteresis.json	queue-override-clear-threshold-vehicles (deactivation) must be below
+invalid-rsu-alternating-on-cv2x.json	alternating (CCH/SCH, IEEE 1609.4) channel access applies only
+invalid-rsu-bsm-forward-no-destination.json	BSM forwarding is enabled but no forward-destination is set —
+invalid-rsu-evp-grant-unsigned.json	Expedited EVP forwarding (evp-auto-grant) requires message signing:
+invalid-rsu-map-enabled-no-intersection.json	MAP is enabled but advertises no intersection geometry.
+invalid-rsu-spat-enabled-local-time.json	SPaT broadcasting requires a UTC-referenced time source;
+invalid-rsu-spat-enabled-manual-time.json	SPaT broadcasting requires a UTC-referenced time source;
+invalid-rsu-spat-enabled-no-intersection.json	SPaT is enabled but advertises no intersection.
+invalid-rsu-spat-unsigned.json	SPaT/MAP broadcasting requires message signing (IEEE 1609.2): enable
+invalid-rsu-tim-broadcast-priority-out-of-range.json	Unsatisfied range - value "12" is out of the allowed range. (Data location "/openits-rsu-events:rsu-tim-broadcast/priority"
+invalid-rsu-tim-window.json	Value "-5" is out of type uint32 min/max bounds. (Data location "/openits-rsu:rsu/messages/tim/active/message[id='tim-bad-window']/config/duration-minutes"
+invalid-spat-broadcast-interval-too-high.json	Unsatisfied range - value "2000" is out of the allowed range. (Data location "/openits-rsu:rsu/messages/spat/config/broadcast-interval"
+invalid-spat-broadcast-interval-too-low.json	Unsatisfied range - value "50" is out of the allowed range. (Data location "/openits-rsu:rsu/messages/spat/config/broadcast-interval"
+invalid-split-below-min-service.json	A phase split must be at least min-green + yellow-change + red-clear
+invalid-split-below-ped-service.json	A phase that runs a pedestrian recall or rests in walk must have a
+invalid-splits-exceed-cycle.json	In each ring, the sum of phase splits must not exceed the cycle
+invalid-timing-no-yellow-change.json	Every signalized phase requires a yellow-change interval (MUTCD 11th
+invalid-traffic-sensor-axle-count-inverted.json	max-axle-count must be >= min-axle-count
+invalid-traffic-sensor-class-empty-bin.json	max-length-m must be > min-length-m (exclusive upper bound)
+invalid-traffic-sensor-class-length-inverted.json	max-length-m must be > min-length-m (exclusive upper bound)
+invalid-traffic-sensor-density-out-of-range.json	Unsatisfied range - value "999.0" is out of the allowed range. (Data location "/openits-traffic-sensor:traffic-sensor/lanes/lane[lane-id='1']/state/interval/density"
+invalid-ts-class-id-out-of-range.json	Unsatisfied range - value "17" is out of the allowed range. (Data location "/openits-traffic-sensor:traffic-sensor/lanes/lane[lane-id='1']/state/interval/class-volume/class-id"
+invalid-tsam-recommendation-applied-bad-adjustment.json	Invalid enumeration value "not-a-real-adjustment". (Data location "/openits-signal-control-events:tsam-recommendation-applied/adjustment-type"
+invalid-tsp-event-bad-priority.json	Unsatisfied range - value "9" is out of the allowed range. (Data location "/openits-signal-control-events:tsp-event/priority-class"
+invalid-walk-without-ped-clear-absent.json	A phase serving a pedestrian walk (walk > 0) requires a pedestrian
+invalid-walk-without-ped-clear.json	A phase serving a pedestrian walk (walk > 0) requires a pedestrian
+invalid-work-zone-empty-geometry.json	MISSING point(min-elements=1
+invalid-yellow-change-zero.json	Yellow change must be a positive interval.
+invalid-zone-incident-type-wrong-base.json	Invalid identityref "openits-types:object-passenger-vehicle" value - identity not derived from the base "openits-perception-types:incident-type". (Data location "/openits-perception-events:zone-incident-detected/type"
+invalid-zone-occupancy-changed-bad-kind.json	Invalid identityref "openits-zone-occupancy-types:zoc-zone-occupancy-interval-report" value - identity not derived from the base "openits-zone-occupancy-types:zoc-occupancy-change-event-kind". (Data location "/openits-zone-occupancy-events:zone-occupancy-changed/kind"
+invalid-zone-occupancy-changed-missing-presence.json	MISSING presence
+invalid-zone-occupancy-changed-missing-zone-id.json	MISSING zone-id

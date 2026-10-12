@@ -65,9 +65,14 @@ Optionality is not a defense against wrong shape; only placement is.
 ### Tier 2 — Augments
 
 **Path.** `yang/augments/<contributor>-<service>-<feature>.yang`
-**Namespace.** `urn:<contributor>:yang:<service>-<feature>`
+**Namespace.** `urn:<contributor>:yang:<service>-<feature>`.
+An augment the project maintains on a vendor's behalf, as a worked
+example the vendor has not ratified, uses
+`urn:openits:yang:vendor-<vendor>-<service>-<feature>` instead: the
+project does not mint a namespace in a vendor's name.
 **Owner.** The contributor (vendor or agency); listed in the
-module's `contact` statement.
+module's `contact` statement. A project-maintained example names the
+OpenITS Working Group as its `organization`, not the vendor.
 **Stability.** The contributor decides; community can fork if the
 contributor abandons.
 **Contents.** Net-new nodes added via YANG 1.1 `augment`
@@ -121,9 +126,9 @@ Filename + namespace conventions match Tier 2:
 | Field | Value |
 |---|---|
 | Path | `yang/openits-vendor-<vendor>-<service>-types.yang` |
-| Namespace | `urn:<vendor>:yang:<service>-types` |
+| Namespace | `urn:<vendor>:yang:<service>-types`; a project-maintained example the vendor has not ratified uses `urn:openits:yang:vendor-<vendor>-<service>-types` |
 | Prefix | Vendor's choice, conventionally `openits-vendor-<vendor>-<service>-types` |
-| Contact | Vendor; the project carries the Econolite example as a conformance-reference under NoI |
+| Organization / contact | The vendor; a project-maintained example (the Econolite and TrafficVision modules in this tree) names the OpenITS Working Group, since the vendor has not ratified it |
 
 Identity-only extension does not require its own NoI graduation
 flow distinct from augments; the same three-implementer rule

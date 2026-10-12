@@ -1,12 +1,14 @@
 package tests
 
-// MUTCD minimums for phase timing.  These are conservative and cover
-// virtually every intersection; non-standard geometries may allow
-// lower values with engineering justification.
+// Phase-timing floors the harness checks. MinYellowChange is the MUTCD
+// minimum. Red clearance has no MUTCD minimum: the interval is optional, and
+// the core model deliberately permits zero (only the strict MUTCD deviation
+// module requires one), so the harness checks only that it is not negative.
+// MinGreenMinimum is a conservative operational floor, not an MUTCD value;
+// non-standard geometries may justify lower.
 const (
 	MinYellowChange = 3.0 // seconds
-	MinRedClear     = 1.0 // seconds
-	MinGreenMinimum = 4   // seconds; pedestrian safety floor
+	MinGreenMinimum = 4   // seconds; operational floor
 	MaxGreenSaneHi  = 300 // seconds; anything above is almost certainly misconfigured
 	PedClearSaneHi  = 120 // seconds
 )
@@ -37,7 +39,7 @@ func TestPhaseTiming_YellowChangeMinimum(t *T, obs *Observation) {
 	}
 }
 
-func TestPhaseTiming_RedClearMinimum(t *T, obs *Observation) {
+func TestPhaseTiming_RedClearNonNegative(t *T, obs *Observation) {
 	ph := obs.Device.GetSignalController().GetPhases()
 	if ph == nil {
 		return
@@ -47,8 +49,8 @@ func TestPhaseTiming_RedClearMinimum(t *T, obs *Observation) {
 			continue
 		}
 		r := p.GetConfig().GetTiming().GetRedClear()
-		if r < MinRedClear {
-			t.Errorf("phase %d red-clear %.2fs < MUTCD minimum %.2fs", n, r, MinRedClear)
+		if r < 0 {
+			t.Errorf("phase %d red-clear %.2fs is negative", n, r)
 		}
 	}
 }
@@ -64,7 +66,7 @@ func TestPhaseTiming_MinGreenMinimum(t *T, obs *Observation) {
 		}
 		g := int(p.GetConfig().GetTiming().GetMinGreen())
 		if g < MinGreenMinimum {
-			t.Errorf("phase %d min-green %ds < pedestrian safety floor %ds", n, g, MinGreenMinimum)
+			t.Errorf("phase %d min-green %ds < operational floor %ds", n, g, MinGreenMinimum)
 		}
 	}
 }

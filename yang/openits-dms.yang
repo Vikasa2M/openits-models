@@ -44,8 +44,19 @@ module openits-dms {
 
      Copyright (c) 2026.  Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.10.0";
+  openits-types:openits-version "0.10.1";
 
+  revision 2026-10-12 {
+    description
+      "Stop config defaults leaking into read-back state. The shared
+       message-body and message-fallback groupings carried defaults
+       (beacon none, comm-loss-timeout-s 300, short-outage-threshold-s
+       60), so control/state/active and control/state/fallback reported
+       those values even when the sign did not. The defaults now apply
+       only on the config side, through refine on the library slot config
+       and control/config/fallback. Wire-neutral.";
+    reference "RFC 7950 §7.13.2.";
+  }
   revision 2026-09-08 {
     description
       "Retype state/technology from a closed enum to an identityref onto
@@ -410,8 +421,12 @@ module openits-dms {
         enum none { value 0; description "No beacons flash with this message."; }
         enum flashing { value 1; description "Beacons flash while this message is displayed."; }
       }
-      default "none";
-      description "Per-message beacon activation (MUTCD ties beacon flashing to message meaning).";
+      description
+        "Per-message beacon activation (MUTCD ties beacon flashing to
+         message meaning). Defaults to none where a message is authored
+         (refined on the library slot config); carries no default here so
+         a read-back message that does not report beacons stays absent
+         rather than reading as a known 'none'.";
     }
   }
 
@@ -442,7 +457,15 @@ module openits-dms {
 
     container comm-loss {
       description "Fallback shown after comm-loss-timeout-s without TMC contact.";
-      leaf comm-loss-timeout-s { type uint32; units "seconds"; default "300"; description "Seconds without TMC contact before reverting to the comm-loss message."; }
+      leaf comm-loss-timeout-s {
+        type uint32;
+        units "seconds";
+        description
+          "Seconds without TMC contact before reverting to the comm-loss
+           message. Defaults to 300 in control/config/fallback only; the
+           read-back copy carries no default, so an unreported value stays
+           absent.";
+      }
       uses message-reference;
     }
     container end-of-duration {
@@ -474,10 +497,11 @@ module openits-dms {
       leaf short-outage-threshold-s {
         type uint32;
         units "seconds";
-        default "60";
         description
           "Outage duration at or below which the short-outage fallback
-           applies; a longer outage uses long-outage.";
+           applies; a longer outage uses long-outage. Defaults to 60 in
+           control/config/fallback only; the read-back copy carries no
+           default.";
       }
       container short-outage {
         description "Fallback after a brief interruption (<= short-outage-threshold-s).";
@@ -684,7 +708,9 @@ module openits-dms {
             type uint16 { range "1..65535"; }
             description "Slot index within the bank.";
           }
-          uses message-body;
+          uses message-body {
+            refine "beacon" { default "none"; }
+          }
         }
         container state {
           config false;
@@ -856,7 +882,10 @@ module openits-dms {
         }
         container fallback {
           description "Commanded fallback policy (see grouping message-fallback).";
-          uses message-fallback;
+          uses message-fallback {
+            refine "comm-loss/comm-loss-timeout-s" { default "300"; }
+            refine "power-recovery/short-outage-threshold-s" { default "60"; }
+          }
         }
       }
       container state {

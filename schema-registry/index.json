@@ -81,7 +81,8 @@
         "2026-08-23",
         "2026-08-27",
         "2026-09-07",
-        "2026-09-08"
+        "2026-09-08",
+        "2026-10-12"
       ],
       "events": [
         "openits.dms.fault-cleared.v1",
@@ -111,7 +112,8 @@
         "RFC 7950 section 11",
         "RFC 7950 section 11 (additive YANG evolution)",
         "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
-        "RFC 7950 §11"
+        "RFC 7950 §11",
+        "RFC 7950 §7.13.2"
       ],
       "modules": [
         {
@@ -127,7 +129,8 @@
             "2026-07-21",
             "2026-08-05",
             "2026-08-23",
-            "2026-09-08"
+            "2026-09-08",
+            "2026-10-12"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TI06 (Traffic Information Dissemination)",
@@ -142,7 +145,8 @@
             "RFC 7950 9.6.4.2",
             "RFC 7950 section 11 (additive YANG evolution)",
             "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
-            "RFC 7950 §11"
+            "RFC 7950 §11",
+            "RFC 7950 §7.13.2"
           ]
         },
         {
@@ -641,7 +645,8 @@
         "2026-07-21",
         "2026-07-23",
         "2026-08-05",
-        "2026-09-08"
+        "2026-09-08",
+        "2026-10-12"
       ],
       "events": [
         "openits.rsu.fault-cleared.v1",
@@ -670,10 +675,12 @@
         "OpenITS house-style device idiom (device-identity-config)",
         "RFC 7950 9.6.4.2",
         "RFC 7950 section 11",
+        "RFC 7950 §10.4.2",
         "RFC 7950 §11",
         "RFC 8407 section 4.3 (identifier naming)",
         "SAE J2735",
         "SAE J2735 (TIM broadcast emission)",
+        "SAE J2735 (TimeMark)",
         "SAE J2735 (V2X message types: BSM, SPaT, MAP, TIM, SRM, SSM, PSM)",
         "SAE J2945"
       ],
@@ -694,7 +701,8 @@
             "2026-07-17",
             "2026-07-21",
             "2026-08-05",
-            "2026-09-08"
+            "2026-09-08",
+            "2026-10-12"
           ],
           "refStd": [
             "IEEE 1609",
@@ -705,8 +713,10 @@
             "NTCIP 1218 (RSU communications)",
             "OpenITS house-style device idiom (device-identity-config)",
             "RFC 7950 9.6.4.2",
+            "RFC 7950 §10.4.2",
             "RFC 7950 §11",
             "RFC 8407 section 4.3 (identifier naming)",
+            "SAE J2735 (TimeMark)",
             "SAE J2735 (V2X message types: BSM, SPaT, MAP, TIM, SRM, SSM, PSM)",
             "SAE J2945"
           ]
@@ -779,7 +789,8 @@
         "2026-08-05",
         "2026-08-23",
         "2026-09-07",
-        "2026-09-08"
+        "2026-09-08",
+        "2026-10-12"
       ],
       "events": [
         "openits.signal-control.comm-health-event.v1",
@@ -837,6 +848,7 @@
         "NTCIP 1202 v03",
         "NTCIP 1202 v03 (controller operating modes)",
         "NTCIP 1202 v03 (preemption-type)",
+        "NTCIP 1202 v04 §5.4.6",
         "NTCIP 1202:2019 §5",
         "NTCIP 1202:2019 §5 (channelTable)",
         "NTCIP 1202:2019 §5 (maxGreen2 / phaseOptions)",
@@ -947,7 +959,8 @@
             "2026-07-21",
             "2026-08-05",
             "2026-09-07",
-            "2026-09-08"
+            "2026-09-08",
+            "2026-10-12"
           ],
           "refStd": [
             "ATC Cabinet Standard (CMU)",
@@ -960,6 +973,7 @@
             "NTCIP 1201 (global time / time-base)",
             "NTCIP 1202 v03 (controller operating modes)",
             "NTCIP 1202 v03 (preemption-type)",
+            "NTCIP 1202 v04 §5.4.6",
             "NTCIP 1202:2019 §5",
             "NTCIP 1202:2019 §5 (overlapTable / channelTable)",
             "NTCIP 1202:2019 §5 (unitFlashStatus)",
@@ -1326,11 +1340,13 @@
         "2026-08-05",
         "2026-08-15",
         "2026-09-02",
-        "2026-09-08"
+        "2026-09-08",
+        "2026-10-12"
       ],
       "refStd": [
         "ATSPM Indiana enumeration",
         "ATSPM Indiana enumeration (wire-source 'indiana' case)",
+        "ITU-T X.733 §8.1.2.3",
         "NTCIP 1201 (global time / time-base)",
         "NTCIP 1202/1203/1204 ('ntcip-oid' case)",
         "OpenConfig openconfig-extensions (openconfig-version precedent)",
@@ -1434,10 +1450,12 @@
       "namespace": "urn:openits:yang:vendor-econolite-signal-control-types",
       "revisions": [
         "2026-05-17",
-        "2026-07-21"
+        "2026-07-21",
+        "2026-10-12"
       ],
       "refStd": [
-        "ATSPM Indiana enumeration code 185 (vendor-specific alarm; param byte 1-8 typical ASC3 firmware)"
+        "ATSPM Indiana enumeration code 185 (vendor-specific alarm; param byte 1-8 typical ASC3 firmware)",
+        "RFC 7950 §7.1.7"
       ]
     },
     {
@@ -1447,9 +1465,11 @@
         "2026-07-07",
         "2026-07-13",
         "2026-07-21",
-        "2026-08-05"
+        "2026-08-05",
+        "2026-10-12"
       ],
       "refStd": [
+        "RFC 7950 §7.1.7",
         "TrafficVision TMC-3.6 realtime API (incident_type vocabulary)"
       ]
     },
@@ -1460,9 +1480,11 @@
         "2026-07-07",
         "2026-07-13",
         "2026-07-21",
-        "2026-08-05"
+        "2026-08-05",
+        "2026-10-12"
       ],
       "refStd": [
+        "RFC 7950 §7.1.7",
         "TrafficVision TMC-3.6 realtime API (inactive_reason values)"
       ]
     }
@@ -1495,6 +1517,11 @@
         "ledstar-dms-travel-time/2026-08-05/MANIFEST.json",
         "ledstar-dms-travel-time/2026-08-05/README.md",
         "ledstar-dms-travel-time/2026-08-05/schema.yang"
+      ],
+      "2026-10-12": [
+        "ledstar-dms-travel-time/2026-10-12/MANIFEST.json",
+        "ledstar-dms-travel-time/2026-10-12/README.md",
+        "ledstar-dms-travel-time/2026-10-12/schema.yang"
       ]
     },
     "openits-cabinet-power": {
@@ -1648,6 +1675,11 @@
         "openits-dms/2026-09-08/MANIFEST.json",
         "openits-dms/2026-09-08/README.md",
         "openits-dms/2026-09-08/schema.yang"
+      ],
+      "2026-10-12": [
+        "openits-dms/2026-10-12/MANIFEST.json",
+        "openits-dms/2026-10-12/README.md",
+        "openits-dms/2026-10-12/schema.yang"
       ]
     },
     "openits-dms-events": {
@@ -2055,6 +2087,11 @@
         "openits-rsu/2026-09-08/MANIFEST.json",
         "openits-rsu/2026-09-08/README.md",
         "openits-rsu/2026-09-08/schema.yang"
+      ],
+      "2026-10-12": [
+        "openits-rsu/2026-10-12/MANIFEST.json",
+        "openits-rsu/2026-10-12/README.md",
+        "openits-rsu/2026-10-12/schema.yang"
       ]
     },
     "openits-rsu-events": {
@@ -2370,6 +2407,11 @@
         "openits-signal-control-types/2026-09-08/MANIFEST.json",
         "openits-signal-control-types/2026-09-08/README.md",
         "openits-signal-control-types/2026-09-08/schema.yang"
+      ],
+      "2026-10-12": [
+        "openits-signal-control-types/2026-10-12/MANIFEST.json",
+        "openits-signal-control-types/2026-10-12/README.md",
+        "openits-signal-control-types/2026-10-12/schema.yang"
       ]
     },
     "openits-traffic-sensor": {
@@ -2462,6 +2504,11 @@
         "openits-types/2026-09-08/MANIFEST.json",
         "openits-types/2026-09-08/README.md",
         "openits-types/2026-09-08/schema.yang"
+      ],
+      "2026-10-12": [
+        "openits-types/2026-10-12/MANIFEST.json",
+        "openits-types/2026-10-12/README.md",
+        "openits-types/2026-10-12/schema.yang"
       ]
     },
     "openits-v2x-messaging": {
@@ -2544,6 +2591,11 @@
         "openits-vendor-econolite-signal-control-types/2026-07-21/MANIFEST.json",
         "openits-vendor-econolite-signal-control-types/2026-07-21/README.md",
         "openits-vendor-econolite-signal-control-types/2026-07-21/schema.yang"
+      ],
+      "2026-10-12": [
+        "openits-vendor-econolite-signal-control-types/2026-10-12/MANIFEST.json",
+        "openits-vendor-econolite-signal-control-types/2026-10-12/README.md",
+        "openits-vendor-econolite-signal-control-types/2026-10-12/schema.yang"
       ]
     },
     "openits-vendor-trafficvision-perception-types": {
@@ -2561,6 +2613,11 @@
         "openits-vendor-trafficvision-perception-types/2026-08-05/MANIFEST.json",
         "openits-vendor-trafficvision-perception-types/2026-08-05/README.md",
         "openits-vendor-trafficvision-perception-types/2026-08-05/schema.yang"
+      ],
+      "2026-10-12": [
+        "openits-vendor-trafficvision-perception-types/2026-10-12/MANIFEST.json",
+        "openits-vendor-trafficvision-perception-types/2026-10-12/README.md",
+        "openits-vendor-trafficvision-perception-types/2026-10-12/schema.yang"
       ]
     },
     "openits-vendor-trafficvision-traffic-sensor-types": {
@@ -2578,6 +2635,11 @@
         "openits-vendor-trafficvision-traffic-sensor-types/2026-08-05/MANIFEST.json",
         "openits-vendor-trafficvision-traffic-sensor-types/2026-08-05/README.md",
         "openits-vendor-trafficvision-traffic-sensor-types/2026-08-05/schema.yang"
+      ],
+      "2026-10-12": [
+        "openits-vendor-trafficvision-traffic-sensor-types/2026-10-12/MANIFEST.json",
+        "openits-vendor-trafficvision-traffic-sensor-types/2026-10-12/README.md",
+        "openits-vendor-trafficvision-traffic-sensor-types/2026-10-12/schema.yang"
       ]
     },
     "openits-work-zone-events": {
@@ -2680,6 +2742,11 @@
         "trafficvision-perception-incident-media/2026-07-21/MANIFEST.json",
         "trafficvision-perception-incident-media/2026-07-21/README.md",
         "trafficvision-perception-incident-media/2026-07-21/schema.yang"
+      ],
+      "2026-10-12": [
+        "trafficvision-perception-incident-media/2026-10-12/MANIFEST.json",
+        "trafficvision-perception-incident-media/2026-10-12/README.md",
+        "trafficvision-perception-incident-media/2026-10-12/schema.yang"
       ]
     },
     "trafficvision-traffic-sensor-camera": {
@@ -2702,6 +2769,11 @@
         "trafficvision-traffic-sensor-camera/2026-08-05/MANIFEST.json",
         "trafficvision-traffic-sensor-camera/2026-08-05/README.md",
         "trafficvision-traffic-sensor-camera/2026-08-05/schema.yang"
+      ],
+      "2026-10-12": [
+        "trafficvision-traffic-sensor-camera/2026-10-12/MANIFEST.json",
+        "trafficvision-traffic-sensor-camera/2026-10-12/README.md",
+        "trafficvision-traffic-sensor-camera/2026-10-12/schema.yang"
       ]
     }
   }

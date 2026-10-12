@@ -41,8 +41,12 @@ Examples:
 `urn:<contributor>:yang:<service>-<feature>`
 
 Vendor namespaces use the vendor's domain or short-name. Agency namespaces
-use the agency code. `urn:openits:` is reserved for core modules and
-graduated content.
+use the agency code. `urn:openits:` is reserved for core modules, graduated
+content, and worked examples the project maintains on a vendor's behalf
+before that vendor ratifies them. Those use
+`urn:openits:yang:vendor-<vendor>-<service>-<feature>` and name the OpenITS
+Working Group as `organization`, so the project never mints a namespace or
+claims authorship in a vendor's name.
 
 ## What an augment must contain
 
@@ -60,8 +64,8 @@ graduated content.
 - An `augment` of another augment (chained augmentation is a maintenance
   nightmare; augment the core directly)
 - A YANG 1.1 `notification` statement that lives outside its companion
-  notifications module (split following the
-  `openits-<service>-notifications` pattern)
+  events module (split following the `openits-<service>-events`
+  pattern)
 
 ## How to submit an augment
 

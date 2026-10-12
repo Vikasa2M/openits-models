@@ -11,7 +11,7 @@ module openits-vendor-econolite-signal-control-types {
   }
 
   organization
-    "Econolite Group (vendor)";
+    "OpenITS Working Group (vendor-pattern example)";
 
   contact
     "OpenITS Working Group (proposal)";
@@ -19,7 +19,7 @@ module openits-vendor-econolite-signal-control-types {
   description
     "Vendor identity module for Econolite signal-control HR events.
      Declares specialized identities derived from open vendor-extension
-     slots in openits-signal-control-types. Phase 0e ships the eight
+     slots in openits-signal-control-types. It defines the eight
      vendor-alarm slot identities the ASC3 HR log surfaces under Indiana
      code 185 (vendor-specific alarm); the ASC3 format decoder rewrites
      the open openits-sc-types:fault-vendor-alarm identity to the
@@ -33,8 +33,17 @@ module openits-vendor-econolite-signal-control-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.1.0";
+  openits-types:openits-version "0.1.1";
 
+  revision 2026-10-12 {
+    description
+      "Set organization to the OpenITS Working Group. The module named
+       Econolite Group as its organization although Econolite Group has not ratified
+       it; the project maintains this file as a worked example of the
+       vendor-extension pattern. Also drop an internal milestone name
+       from the module description. Wire-neutral.";
+    reference "RFC 7950 §7.1.7.";
+  }
   revision 2026-07-21 {
     description
       "Model-review remediation (2026-07): add the openits-version extension

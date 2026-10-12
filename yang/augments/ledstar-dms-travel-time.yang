@@ -16,7 +16,7 @@ module ledstar-dms-travel-time {
   }
 
   organization
-    "Ledstar Inc. (vendor)";
+    "OpenITS Working Group (vendor-pattern example)";
 
   contact
     "OpenITS Working Group (proposal)";
@@ -42,8 +42,16 @@ module ledstar-dms-travel-time {
 
      Copyright (c) 2026.  Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.1.0";
+  openits-types:openits-version "0.1.1";
 
+  revision 2026-10-12 {
+    description
+      "Set organization to the OpenITS Working Group. The module named
+       Ledstar Inc. as its organization although Ledstar Inc. has not ratified
+       it; the project maintains this file as a worked example of the
+       vendor-extension pattern. Wire-neutral.";
+    reference "RFC 7950 §7.1.7.";
+  }
   revision 2026-08-05 {
     description
       "Model-review remediation (2026-08): move the namespace from the

@@ -41,8 +41,18 @@ module openits-rsu {
      V2X message broadcasting (SPaT, MAP, TIM; BSM receive/forward), and
      security.";
 
-  openits-types:openits-version "0.10.0";
+  openits-types:openits-version "0.10.1";
 
+  revision 2026-10-12 {
+    description
+      "Fix the SPaT-requires-UTC must, which could never fire: it
+       compared the identityref configured-time-source against the bare
+       string 'local', and an identityref value is always the qualified
+       name. The rule now uses derived-from-or-self() and rejects the
+       manually set clock (time-source-manual) as well as the free-running
+       local clock, since neither is UTC-traceable.";
+    reference "RFC 7950 §10.4.2; SAE J2735 (TimeMark).";
+  }
   revision 2026-09-08 {
     description
       "Retype operating/config/configured-time-source and
@@ -275,11 +285,16 @@ module openits-rsu {
   // =========================================================================
 
   container rsu {
-    must "not(messages/spat/config/enabled = 'true') or operating/config/configured-time-source != 'local'" {
+    must "not(messages/spat/config/enabled = 'true')"
+       + " or not(derived-from-or-self(operating/config/configured-time-source,"
+       + " 'openits-types:time-source-local')"
+       + " or derived-from-or-self(operating/config/configured-time-source,"
+       + " 'openits-types:time-source-manual'))" {
       error-message
         "SPaT broadcasting requires a UTC-referenced time source;
-         configured-time-source must not be 'local' while SPaT is enabled
-         (J2735 TimeMarks are UTC).";
+         configured-time-source must not be time-source-local or
+         time-source-manual while SPaT is enabled (J2735 TimeMarks are
+         UTC).";
     }
     must "not(messages/srm-ssm/config/evp-auto-grant = 'true')"
        + " or security/config/security-enabled = 'true'" {
@@ -340,7 +355,8 @@ module openits-rsu {
             "The disciplining time source the RSU is configured to use. J2735
              TimeMarks are UTC-referenced, so a free-running local clock
              produces skewed phase end-times an OBU cannot detect — SPaT MUST
-             NOT be enabled with a local configured source.";
+             NOT be enabled with time-source-local or time-source-manual
+             (or a source derived from either) configured.";
         }
         leaf mode {
           type identityref { base openits-rsu-types:rsu-mode; }
