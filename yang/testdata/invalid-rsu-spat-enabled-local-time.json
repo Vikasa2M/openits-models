@@ -9,7 +9,7 @@
     "messages": {
       "spat": { "config": {
         "enabled": true, "broadcast-interval": 100, "max-data-age-ms": 300,
-        "source-asc": "asc-01", "intersection": { "region": 1, "id": 42 }
+        "source-asc": "asc-01", "intersection": [{ "region": 1, "id": 42 }]
       } }
     }
   }

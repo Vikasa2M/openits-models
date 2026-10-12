@@ -155,16 +155,21 @@ python3 "$SCRIPT_DIR/check-notif-mandatory.py" --schemas "${SCHEMAS[@]}" -- \
     yang/testdata/valid-*.json yang/testdata/invalid-*.json > "$MANDATORY_OUT"
 
 # Single-container yanglint pass: validate every fixture inside ONE container.
-# Emits "YLPASS <file>" / "YLFAIL <file>" per fixture, read by yl_ok. SCHEMAS
-# is passed via the environment to avoid quoting the module list into sh.
+# Emits "YLPASS <file>" / "YLFAIL <file>" per fixture, read by yl_ok. A
+# rejected fixture also emits "YLMSG <file> <errors>": yanglint's error lines
+# from both the data and the notif attempt, flattened onto one line, so the
+# invalid-fixture loop can check the rejection REASON against
+# $EXPECTED_REJECTIONS. SCHEMAS is passed via the environment to avoid quoting
+# the module list into sh.
 docker run --rm -e "SCHEMAS=${SCHEMAS[*]}" -v "$PWD:/w" -w /w "$IMAGE" sh -c '
     for f in yang/testdata/valid-*.json yang/testdata/invalid-*.json; do
         [ -e "$f" ] || continue
-        if yanglint -f json -p yang $SCHEMAS "$f" >/dev/null 2>&1 \
-           || yanglint -t notif -f json -p yang $SCHEMAS "$f" >/dev/null 2>&1; then
+        if d=$(yanglint -f json -p yang $SCHEMAS "$f" 2>&1 >/dev/null) \
+           || n=$(yanglint -t notif -f json -p yang $SCHEMAS "$f" 2>&1 >/dev/null); then
             echo "YLPASS $f"
         else
             echo "YLFAIL $f"
+            echo "YLMSG $f $(printf "%s %s" "$d" "$n" | grep "err" | tr "\n" " ")"
         fi
     done
 ' > "$YL_OUT" 2>/dev/null
@@ -175,6 +180,27 @@ mandatory_ok() {
 
 mandatory_missing() {
     grep -F "MISSING $1 " "$MANDATORY_OUT" | cut -d' ' -f3-
+}
+
+# Every invalid-* fixture must be rejected for the reason it was written to
+# prove. A fixture that fails on something else -- a JSON shape slip, a leaf
+# that has since been renamed -- would otherwise "pass" while the constraint
+# it names goes untested (a dead must hid behind exactly that). Each base
+# fixture therefore has a line in $EXPECTED_REJECTIONS:
+#   <fixture-basename><TAB><substring>
+# and the substring must occur in the rejection text: yanglint's error lines,
+# or "MISSING <leaves>" from check-notif-mandatory.py for a notification
+# rejected only for an absent mandatory leaf. For a must, quote the start of
+# its error-message; for a type error, include the offending path.
+EXPECTED_REJECTIONS="yang/testdata/expected-rejections.tsv"
+
+expected_reason() {
+    awk -F '\t' -v f="$1" '$1 == f { print $2; exit }' "$EXPECTED_REJECTIONS"
+}
+
+rejection_text() {
+    grep -F "YLMSG $1 " "$YL_OUT" | cut -d' ' -f3-
+    mandatory_ok "$1" || echo "MISSING $(mandatory_missing "$1")"
 }
 
 # Combines the yanglint type/pattern/range check with the mandatory-leaf
@@ -214,17 +240,35 @@ for f in yang/testdata/invalid-*.json; do
         continue
         ;;
     esac
-    if ! check_fixture "$f"; then
-        if ! yl_ok "$f"; then
-            echo "  PASS  $(basename "$f") (rejected as expected)"
-        else
-            echo "  PASS  $(basename "$f") (rejected as expected: missing mandatory leaf: $(mandatory_missing "$f"))"
-        fi
-    else
+    if check_fixture "$f"; then
         echo "  FAIL  $(basename "$f") should have been rejected" >&2
+        FAIL=1
+        continue
+    fi
+    want=$(expected_reason "$(basename "$f")")
+    got=$(rejection_text "$f")
+    if [ -z "$want" ]; then
+        echo "  FAIL  $(basename "$f") has no entry in $EXPECTED_REJECTIONS (add the error it must be rejected with)" >&2
+        echo "        got: $(printf '%s' "$got" | tr '\n' ' ')" >&2
+        FAIL=1
+    elif printf '%s' "$got" | grep -qF -- "$want"; then
+        echo "  PASS  $(basename "$f") (rejected as expected: $want)"
+    else
+        echo "  FAIL  $(basename "$f") was rejected for the wrong reason" >&2
+        echo "        expected: $want" >&2
+        echo "        got:      $(printf '%s' "$got" | tr '\n' ' ')" >&2
         FAIL=1
     fi
 done
+
+# A manifest line for a fixture that no longer exists is stale.
+while IFS=$'\t' read -r name _; do
+    case "$name" in ''|'#'*) continue ;; esac
+    if [ ! -e "yang/testdata/$name" ]; then
+        echo "  FAIL  $EXPECTED_REJECTIONS lists $name, which does not exist" >&2
+        FAIL=1
+    fi
+done < "$EXPECTED_REJECTIONS"
 
 if [ "$FAIL" -ne 0 ]; then
     echo "validate-yang: failures above" >&2

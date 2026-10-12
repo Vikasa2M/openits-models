@@ -641,7 +641,8 @@
         "2026-07-21",
         "2026-07-23",
         "2026-08-05",
-        "2026-09-08"
+        "2026-09-08",
+        "2026-10-12"
       ],
       "events": [
         "openits.rsu.fault-cleared.v1",
@@ -670,10 +671,12 @@
         "OpenITS house-style device idiom (device-identity-config)",
         "RFC 7950 9.6.4.2",
         "RFC 7950 section 11",
+        "RFC 7950 §10.4.2",
         "RFC 7950 §11",
         "RFC 8407 section 4.3 (identifier naming)",
         "SAE J2735",
         "SAE J2735 (TIM broadcast emission)",
+        "SAE J2735 (TimeMark)",
         "SAE J2735 (V2X message types: BSM, SPaT, MAP, TIM, SRM, SSM, PSM)",
         "SAE J2945"
       ],
@@ -694,7 +697,8 @@
             "2026-07-17",
             "2026-07-21",
             "2026-08-05",
-            "2026-09-08"
+            "2026-09-08",
+            "2026-10-12"
           ],
           "refStd": [
             "IEEE 1609",
@@ -705,8 +709,10 @@
             "NTCIP 1218 (RSU communications)",
             "OpenITS house-style device idiom (device-identity-config)",
             "RFC 7950 9.6.4.2",
+            "RFC 7950 §10.4.2",
             "RFC 7950 §11",
             "RFC 8407 section 4.3 (identifier naming)",
+            "SAE J2735 (TimeMark)",
             "SAE J2735 (V2X message types: BSM, SPaT, MAP, TIM, SRM, SSM, PSM)",
             "SAE J2945"
           ]

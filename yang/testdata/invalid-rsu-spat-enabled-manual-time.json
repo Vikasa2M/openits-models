@@ -1,0 +1,16 @@
+{
+  "openits-rsu:rsu": {
+    "config": { "id": "rsu-safety-03", "name": "Safety Test RSU (manual clock)" },
+    "operating": {
+      "config": {
+        "configured-time-source": "openits-types:time-source-manual"
+      }
+    },
+    "messages": {
+      "spat": { "config": {
+        "enabled": true, "broadcast-interval": 100, "max-data-age-ms": 300,
+        "source-asc": "asc-01", "intersection": [{ "region": 1, "id": 42 }]
+      } }
+    }
+  }
+}
