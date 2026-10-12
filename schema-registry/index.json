@@ -1450,10 +1450,12 @@
       "namespace": "urn:openits:yang:vendor-econolite-signal-control-types",
       "revisions": [
         "2026-05-17",
-        "2026-07-21"
+        "2026-07-21",
+        "2026-10-12"
       ],
       "refStd": [
-        "ATSPM Indiana enumeration code 185 (vendor-specific alarm; param byte 1-8 typical ASC3 firmware)"
+        "ATSPM Indiana enumeration code 185 (vendor-specific alarm; param byte 1-8 typical ASC3 firmware)",
+        "RFC 7950 §7.1.7"
       ]
     },
     {
@@ -1463,9 +1465,11 @@
         "2026-07-07",
         "2026-07-13",
         "2026-07-21",
-        "2026-08-05"
+        "2026-08-05",
+        "2026-10-12"
       ],
       "refStd": [
+        "RFC 7950 §7.1.7",
         "TrafficVision TMC-3.6 realtime API (incident_type vocabulary)"
       ]
     },
@@ -1476,9 +1480,11 @@
         "2026-07-07",
         "2026-07-13",
         "2026-07-21",
-        "2026-08-05"
+        "2026-08-05",
+        "2026-10-12"
       ],
       "refStd": [
+        "RFC 7950 §7.1.7",
         "TrafficVision TMC-3.6 realtime API (inactive_reason values)"
       ]
     }
@@ -2493,6 +2499,11 @@
         "openits-types/2026-09-08/MANIFEST.json",
         "openits-types/2026-09-08/README.md",
         "openits-types/2026-09-08/schema.yang"
+      ],
+      "2026-10-12": [
+        "openits-types/2026-10-12/MANIFEST.json",
+        "openits-types/2026-10-12/README.md",
+        "openits-types/2026-10-12/schema.yang"
       ]
     },
     "openits-v2x-messaging": {
