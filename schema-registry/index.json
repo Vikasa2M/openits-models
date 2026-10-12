@@ -789,7 +789,8 @@
         "2026-08-05",
         "2026-08-23",
         "2026-09-07",
-        "2026-09-08"
+        "2026-09-08",
+        "2026-10-12"
       ],
       "events": [
         "openits.signal-control.comm-health-event.v1",
@@ -847,6 +848,7 @@
         "NTCIP 1202 v03",
         "NTCIP 1202 v03 (controller operating modes)",
         "NTCIP 1202 v03 (preemption-type)",
+        "NTCIP 1202 v04 §5.4.6",
         "NTCIP 1202:2019 §5",
         "NTCIP 1202:2019 §5 (channelTable)",
         "NTCIP 1202:2019 §5 (maxGreen2 / phaseOptions)",
@@ -957,7 +959,8 @@
             "2026-07-21",
             "2026-08-05",
             "2026-09-07",
-            "2026-09-08"
+            "2026-09-08",
+            "2026-10-12"
           ],
           "refStd": [
             "ATC Cabinet Standard (CMU)",
@@ -970,6 +973,7 @@
             "NTCIP 1201 (global time / time-base)",
             "NTCIP 1202 v03 (controller operating modes)",
             "NTCIP 1202 v03 (preemption-type)",
+            "NTCIP 1202 v04 §5.4.6",
             "NTCIP 1202:2019 §5",
             "NTCIP 1202:2019 §5 (overlapTable / channelTable)",
             "NTCIP 1202:2019 §5 (unitFlashStatus)",
@@ -1658,6 +1662,11 @@
         "openits-dms/2026-09-08/MANIFEST.json",
         "openits-dms/2026-09-08/README.md",
         "openits-dms/2026-09-08/schema.yang"
+      ],
+      "2026-10-12": [
+        "openits-dms/2026-10-12/MANIFEST.json",
+        "openits-dms/2026-10-12/README.md",
+        "openits-dms/2026-10-12/schema.yang"
       ]
     },
     "openits-dms-events": {

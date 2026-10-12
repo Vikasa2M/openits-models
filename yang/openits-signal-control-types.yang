@@ -26,8 +26,32 @@ module openits-signal-control-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.14.0";
+  openits-types:openits-version "0.15.0";
 
+  revision 2026-10-12 {
+    description
+      "Let detector and monitor faults be raised as what they are, and
+       correct the flash-cause and monitor definitions.
+
+       - vehicle-detector-fault-* now also derive from sc-fault-detector,
+         and monitor-fault-type from sc-fault-event-kind, so fault-raised
+         and faults/fault can carry a stuck-on loop or a red-fail as
+         itself. Previously a red-fail could only be raised as
+         sc-fault-conflict. Additive.
+       - flash-mmu-conflict maps unitFlashStatus mmu(6), which NTCIP 1202
+         v04 renames smu(6): flash forced by ANY cabinet signal monitor
+         (TS2 MMU, TS1 conflict monitor, ITS-cabinet CMU) for any
+         monitored condition, not only a conflict.
+       - flash-fault-monitor maps faultMonitor(5), renamed
+         controllerFaultFlash(5): flash the controller unit started on a
+         fault it detected itself. It no longer claims TS1 and ITS-cabinet
+         monitor flash, which is mmu(6). Producers that sent those cases
+         here should send flash-mmu-conflict.
+       - monitor-red-fail is the absence of any indication on a channel,
+         not a conflict; monitor-dual-indication covers any two of green,
+         yellow and red on one channel.";
+    reference "NTCIP 1202:2019 §5 (unitFlashStatus); NTCIP 1202 v04 §5.4.6; NEMA TS2-2021 section 4.";
+  }
   revision 2026-09-08 {
     description
       "Identity-vs-enum corrections (breaking, pre-1.0).
@@ -1080,6 +1104,7 @@ module openits-signal-control-types {
 
   identity vehicle-detector-fault-no-activity {
     base sc-detector-event-kind;
+    base sc-fault-detector;
     description
       "The detector reported no actuation for longer than its configured
        no-activity interval. The controller diagnoses this itself from
@@ -1090,6 +1115,7 @@ module openits-signal-control-types {
   }
   identity vehicle-detector-fault-max-presence {
     base sc-detector-event-kind;
+    base sc-fault-detector;
     description
       "The detector held a continuous call for longer than its configured
        maximum-presence interval -- the classic stuck-on loop.";
@@ -1097,6 +1123,7 @@ module openits-signal-control-types {
   }
   identity vehicle-detector-fault-erratic-count {
     base sc-detector-event-kind;
+    base sc-fault-detector;
     description
       "The detector's actuation rate exceeded its configured erratic-count
        threshold, indicating electrical noise or a failing card rather
@@ -1105,6 +1132,7 @@ module openits-signal-control-types {
   }
   identity vehicle-detector-fault-communications {
     base sc-detector-event-kind;
+    base sc-fault-detector;
     description
       "The controller lost communication with the detector card or rack,
        so the channel's state is unknown rather than known-idle.";
@@ -1314,23 +1342,32 @@ module openits-signal-control-types {
   identity flash-mmu-conflict {
     base flash-cause;
     description
-      "Flash forced by a TS2 Malfunction Management Unit because it
-       detected conflicting (non-compatible) signal indications. Maps
-       to NTCIP unitFlashStatus mmu(6). A cabinet whose monitor is not
-       a TS2 MMU — a TS1 conflict monitor, or an ITS-cabinet CMU —
-       reports flash-fault-monitor instead, so a technician is not sent
-       to look for hardware the cabinet does not contain.";
-    reference "NEMA TS2-2021 section 4; NTCIP 1202:2019 §5 (unitFlashStatus).";
+      "Flash forced by the cabinet's signal monitor: its flash input to
+       the controller is active. Maps to NTCIP unitFlashStatus mmu(6)
+       (renamed smu(6), Signal Monitoring Unit, in NTCIP 1202 v04).
+
+       Covers every cabinet monitor — a TS2 Malfunction Management
+       Unit, a TS1 conflict monitor, or an ITS-cabinet CMU — and every
+       monitored condition that trips it, not only a conflict: red-fail,
+       dual indication, clearance, CVM, +24V, field check and the rest.
+       The specific condition is reported separately as a
+       monitor-fault-type. The identity name predates this definition;
+       it does not mean the cause was a conflict.";
+    reference "NEMA TS2-2021 section 4; NTCIP 1202:2019 §5 (unitFlashStatus mmu(6)); NTCIP 1202 v04 (unitFlashStatus smu(6)).";
   }
   identity flash-fault-monitor {
     base flash-cause;
     description
-      "Flash forced by a conflict/malfunction monitor that is not a TS2
-       MMU: a TS1 cabinet conflict monitor, or an ITS-cabinet CMU
-       (CMU-212 / CMU-2212). Maps to NTCIP unitFlashStatus
-       faultMonitor(5). The monitored condition itself is reported
-       separately as a monitor-fault-type.";
-    reference "NTCIP 1202:2019 §5 (unitFlashStatus).";
+      "Flash the controller unit initiated itself because it detected
+       a fault of its own, with the cabinet monitor's flash input not
+       the cause. Maps to NTCIP unitFlashStatus faultMonitor(5)
+       (renamed controllerFaultFlash(5) in NTCIP 1202 v04).
+
+       Not a cabinet-monitor flash: a flash forced by any cabinet
+       monitor, including a TS1 conflict monitor or an ITS-cabinet CMU,
+       is flash-mmu-conflict. The identity name predates this
+       definition.";
+    reference "NTCIP 1202:2019 §5 (unitFlashStatus faultMonitor(5)); NTCIP 1202 v04 (unitFlashStatus controllerFaultFlash(5)).";
   }
   identity flash-automatic {
     base flash-cause;
@@ -1384,6 +1421,7 @@ module openits-signal-control-types {
     reference "Indiana 173 (fault-unit-flash-status).";
   }
   identity monitor-fault-type {
+    base sc-fault-event-kind;
     description
       "Cabinet monitor fault classification — the specific monitored
        condition that forced (or would force) the cabinet into flash.
@@ -1392,21 +1430,29 @@ module openits-signal-control-types {
        TS2 Malfunction Management Unit, a TS1 conflict monitor and an
        ITS-cabinet CMU all monitor red-fail, dual-indication, conflict
        and clearance, and all three report them here. Which unit is
-       fitted is a cabinet property, not a property of the fault.";
+       fitted is a cabinet property, not a property of the fault.
+
+       Derives from sc-fault-event-kind, so every monitor-* value is also
+       a signal-control fault kind: fault-raised and faults/fault can carry
+       the specific monitored condition (a red-fail as itself, not as
+       sc-fault-conflict).";
     reference "NEMA TS2-2021 section 4; NEMA TS1 section 6; ATC Cabinet Standard (CMU).";
   }
   identity monitor-red-fail {
     base monitor-fault-type;
     description
-      "Red-fail monitor: a conflicting or missing red indication was
-       detected on a monitored channel.";
+      "Red-fail monitor: no indication at all (no green, yellow or red)
+       was detected on a monitored channel that should be showing one,
+       so the head may be dark. Not a conflict between channels; that
+       is monitor-conflict.";
     reference "NEMA TS2-2021 section 4.";
   }
   identity monitor-dual-indication {
     base monitor-fault-type;
     description
-      "Dual-indication monitor: conflicting green/yellow indications
-       were detected on a monitored channel.";
+      "Dual-indication monitor: two or more of green, yellow and red
+       were detected active at the same time on one monitored
+       channel.";
     reference "NEMA TS2-2021 section 4.";
   }
   identity monitor-conflict {
