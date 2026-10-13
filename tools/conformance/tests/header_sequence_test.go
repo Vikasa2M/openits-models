@@ -60,3 +60,27 @@ func TestSequence_NilDataSkipped(t *testing.T) {
 		t.Fatalf("nil Data not skipped: %s", r.Message)
 	}
 }
+
+func withID(e EventEnvelope, id string) EventEnvelope {
+	e.CEID = id
+	return e
+}
+
+func TestSequence_RedeliveryIsNotAGap(t *testing.T) {
+	r := runSeq(
+		withID(fault("a", "e1", 5), "id5"),
+		withID(fault("a", "e1", 6), "id6"),
+		withID(fault("a", "e1", 5), "id5"), // redelivered
+		withID(fault("a", "e1", 7), "id7"),
+	)
+	if !r.Pass {
+		t.Fatalf("redelivered event read as a gap: %s", r.Message)
+	}
+}
+
+func TestSequence_MissingSourceFails(t *testing.T) {
+	r := runSeq(fault("", "e1", 1))
+	if r.Pass || !strings.Contains(r.Message, "no source-device-id") {
+		t.Fatalf("missing source-device-id not reported: pass=%v msg=%q", r.Pass, r.Message)
+	}
+}
