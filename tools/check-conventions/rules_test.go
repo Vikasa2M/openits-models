@@ -2,6 +2,7 @@ package main
 
 import (
 	"sort"
+	"strings"
 	"testing"
 )
 
@@ -71,6 +72,7 @@ func TestUnits(t *testing.T) {
 		root+"/dev/state/height-m",
 		root+"/dev/state/bad-match-ms",
 		root+"/dev/state/ratio-percent",
+		"grouping position/where/elevation",
 	)
 }
 
@@ -101,5 +103,24 @@ func TestUnknownZero_TypedefReportedAgainstDefiningModule(t *testing.T) {
 	}
 	if n != 1 {
 		t.Fatalf("typedef shared-status reported %d times across modules, want 1", n)
+	}
+}
+
+func TestGroupingLeafReportedOnceAgainstDefiningModule(t *testing.T) {
+	mods, err := loadModules("testdata/schema")
+	if err != nil {
+		t.Fatal(err)
+	}
+	n := 0
+	for _, v := range checkSchema(mods) {
+		if strings.Contains(v.Path, "elevation") {
+			n++
+			if v.Module != "openits-test-conventions" || v.Path != "grouping position/where/elevation" {
+				t.Errorf("got %s %s, want openits-test-conventions grouping position/where/elevation", v.Module, v.Path)
+			}
+		}
+	}
+	if n != 1 {
+		t.Fatalf("grouping leaf elevation reported %d times across two using modules, want 1", n)
 	}
 }

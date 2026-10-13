@@ -15,24 +15,59 @@ import (
 type Violation struct {
 	Rule   string // rule id: before-after, unknown-zero, units, counters, kind-base, references
 	Module string // module name
-	Path   string // schema path, "typedef <name>", or "line <n>"
+	Path   string // schema path, "typedef <name>", "grouping <name>/<path>", or "line <n>"
 	Detail string // what is wrong, for the person fixing it
 }
 
 func (v Violation) key() string { return v.Rule + "\x00" + v.Module + "\x00" + v.Path }
 
-// checkSchema runs every rule that works on the parsed schema.
+// checkSchema runs every rule that works on the parsed schema. A violation
+// on a typedef or on a leaf a grouping defines is attributed to the module
+// that defines it, so it is reported once however many modules use it.
 func checkSchema(mods []*yang.Entry) []Violation {
-	var out []Violation
+	var all []Violation
 	seenEnums := map[string]bool{} // typedef enums are reported once, globally
 	for _, m := range mods {
-		out = append(out, ruleBeforeAfter(m)...)
-		out = append(out, ruleUnknownZero(m, seenEnums)...)
-		out = append(out, ruleUnits(m)...)
-		out = append(out, ruleCounters(m)...)
-		out = append(out, ruleKindBase(m)...)
+		all = append(all, ruleBeforeAfter(m)...)
+		all = append(all, ruleUnknownZero(m, seenEnums)...)
+		all = append(all, ruleUnits(m)...)
+		all = append(all, ruleCounters(m)...)
+		all = append(all, ruleKindBase(m)...)
+	}
+	var out []Violation
+	seen := map[string]bool{}
+	for _, v := range all {
+		if !seen[v.key()] {
+			seen[v.key()] = true
+			out = append(out, v)
+		}
 	}
 	return out
+}
+
+// site is where a violation on leaf e, found while walking module m, is
+// reported. A leaf a grouping defines is reported against the grouping's
+// defining module, at "grouping <name>/<path within the grouping>"; any
+// other leaf is reported against m at its schema path.
+func site(m, e *yang.Entry) (module, path string) {
+	var names []string
+	for n := e.Node; n != nil; n = n.ParentNode() {
+		switch n := n.(type) {
+		case *yang.Grouping:
+			slices.Reverse(names)
+			return moduleName(yang.RootNode(n)), "grouping " + n.Name + "/" + strings.Join(names, "/")
+		case *yang.Module:
+			return m.Name, e.Path()
+		}
+		names = append(names, n.NName())
+	}
+	return m.Name, e.Path()
+}
+
+// at builds a violation of rule on leaf e, placed by site.
+func at(rule string, m, e *yang.Entry, detail string) Violation {
+	module, path := site(m, e)
+	return Violation{rule, module, path, detail}
 }
 
 // walk calls fn for e and every entry below it, depth first, children in
@@ -82,15 +117,15 @@ func ruleBeforeAfter(m *yang.Entry) []Violation {
 		}
 		for _, p := range beforeAfterBad {
 			if e.Name == p || strings.HasPrefix(e.Name, p+"-") {
-				out = append(out, Violation{"before-after", m.Name, e.Path(),
-					fmt.Sprintf("%q: name the earlier value previous-<x> and the later value <x>", e.Name)})
+				out = append(out, at("before-after", m, e,
+					fmt.Sprintf("%q: name the earlier value previous-<x> and the later value <x>", e.Name)))
 				return
 			}
 		}
 		if x, ok := strings.CutPrefix(e.Name, "previous-"); ok {
 			if _, sib := e.Parent.Dir[x]; !sib {
-				out = append(out, Violation{"before-after", m.Name, e.Path(),
-					fmt.Sprintf("%q has no sibling %q carrying the later value", e.Name, x)})
+				out = append(out, at("before-after", m, e,
+					fmt.Sprintf("%q has no sibling %q carrying the later value", e.Name, x)))
 			}
 		}
 	})
@@ -133,7 +168,7 @@ func ruleUnknownZero(m *yang.Entry, seen map[string]bool) []Violation {
 		if !e.ReadOnly() && !inNotification(e) {
 			return
 		}
-		module, where := m.Name, e.Path()
+		module, where := site(m, e)
 		if e.Type.Name != "enumeration" {
 			var td string
 			module, td = typedefModule(e)
@@ -217,21 +252,21 @@ func ruleUnits(m *yang.Entry) []Violation {
 		accepted, isSuffix := shortUnits[suf]
 		switch {
 		case longUnits[suf] != "":
-			out = append(out, Violation{"units", m.Name, e.Path(),
-				fmt.Sprintf("spelled-out unit suffix -%s; use -%s", suf, longUnits[suf])})
+			out = append(out, at("units", m, e,
+				fmt.Sprintf("spelled-out unit suffix -%s; use -%s", suf, longUnits[suf])))
 		case isSuffix && units == "":
 			if !ambiguousSuffixes[suf] {
-				out = append(out, Violation{"units", m.Name, e.Path(),
-					fmt.Sprintf("name ends in unit suffix -%s but there is no units statement", suf)})
+				out = append(out, at("units", m, e,
+					fmt.Sprintf("name ends in unit suffix -%s but there is no units statement", suf)))
 			}
 		case isSuffix:
 			if !slices.Contains(accepted, units) {
-				out = append(out, Violation{"units", m.Name, e.Path(),
-					fmt.Sprintf("suffix -%s but units %q; expected one of %s", suf, units, strings.Join(accepted, ", "))})
+				out = append(out, at("units", m, e,
+					fmt.Sprintf("suffix -%s but units %q; expected one of %s", suf, units, strings.Join(accepted, ", "))))
 			}
 		case units != "" && !countUnits[units]:
-			out = append(out, Violation{"units", m.Name, e.Path(),
-				fmt.Sprintf("has units %q but no unit suffix in its name", units)})
+			out = append(out, at("units", m, e,
+				fmt.Sprintf("has units %q but no unit suffix in its name", units)))
 		}
 	})
 	return out
@@ -250,8 +285,8 @@ func ruleCounters(m *yang.Entry) []Violation {
 			return
 		}
 		if e.Type.Name != "counter64" {
-			out = append(out, Violation{"counters", m.Name, e.Path(),
-				fmt.Sprintf("monotonic counter typed %s; use yang:counter64", e.Type.Name)})
+			out = append(out, at("counters", m, e,
+				fmt.Sprintf("monotonic counter typed %s; use yang:counter64", e.Type.Name)))
 		}
 	})
 	return out

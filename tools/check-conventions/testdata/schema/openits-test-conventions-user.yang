@@ -5,7 +5,7 @@ module openits-test-conventions-user {
 
   import openits-test-conventions { prefix tc; }
 
-  description "Fixture: a second module that uses the first module's typedef.";
+  description "Fixture: a second module that uses the first module's typedef and grouping.";
 
   revision 2026-10-13 {
     description "Initial.";
@@ -14,5 +14,6 @@ module openits-test-conventions-user {
   container user {
     config false;
     leaf uses-shared { type tc:shared-status; }
+    uses tc:position;
   }
 }

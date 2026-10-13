@@ -20,6 +20,11 @@ module openits-test-conventions {
     }
   }
   typedef pct-type { type uint8; units "percent"; }
+  grouping position {
+    container where {
+      leaf elevation { type int32; units "meters"; }
+    }
+  }
   identity device-event-kind;
   identity svc-event-kind { base device-event-kind; }
   identity svc-change-event-kind { base svc-event-kind; }
@@ -59,6 +64,7 @@ module openits-test-conventions {
       leaf ratio-percent { type uint32; }
       leaf count-units { type uint32; units "vehicles"; }
       leaf channel-a { type uint32; }
+      uses position;
     }
     container config {
       leaf commanded {
