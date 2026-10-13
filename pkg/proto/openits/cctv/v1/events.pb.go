@@ -33,6 +33,7 @@ type LockoutDenied struct {
 	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner             *string                `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence          uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch     string                 `protobuf:"bytes,10,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId    string                 `protobuf:"bytes,9,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
@@ -131,6 +132,13 @@ func (x *LockoutDenied) GetSequence() uint64 {
 	return 0
 }
 
+func (x *LockoutDenied) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *LockoutDenied) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -149,6 +157,7 @@ type PtzMoveCommanded struct {
 	OccurredAt     *timestamppb.Timestamp    `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner          *string                   `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                    `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch  string                    `protobuf:"bytes,10,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId string                    `protobuf:"bytes,9,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -245,6 +254,13 @@ func (x *PtzMoveCommanded) GetSequence() uint64 {
 		return x.Sequence
 	}
 	return 0
+}
+
+func (x *PtzMoveCommanded) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
 }
 
 func (x *PtzMoveCommanded) GetSourceDeviceId() string {
@@ -385,6 +401,7 @@ type PtzPresetRecalled struct {
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner          *string                `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch  string                 `protobuf:"bytes,10,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,9,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -483,6 +500,13 @@ func (x *PtzPresetRecalled) GetSequence() uint64 {
 	return 0
 }
 
+func (x *PtzPresetRecalled) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *PtzPresetRecalled) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -500,6 +524,7 @@ type TourStateChanged struct {
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner          *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch  string                 `protobuf:"bytes,9,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,8,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -591,6 +616,13 @@ func (x *TourStateChanged) GetSequence() uint64 {
 	return 0
 }
 
+func (x *TourStateChanged) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *TourStateChanged) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -602,7 +634,7 @@ var File_openits_cctv_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_cctv_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"\x1copenits/cctv/v1/events.proto\x12\x0fopenits.cctv.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bopenits/cctv/v1/types.proto\"\xea\x03\n" +
+	"\x1copenits/cctv/v1/events.proto\x12\x0fopenits.cctv.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bopenits/cctv/v1/types.proto\"\x91\x04\n" +
 	"\rLockoutDenied\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12!\n" +
 	"\frequested_by\x18\x01 \x01(\tR\vrequestedBy\x122\n" +
@@ -614,13 +646,15 @@ const file_openits_cctv_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\a \x01(\tH\x04R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\b \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\b \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\n" +
+	" \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceIdB\x15\n" +
 	"\x13_requested_priorityB\x11\n" +
 	"\x0f_current_holderB\x10\n" +
 	"\x0e_held_priorityB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\x86\x04\n" +
+	"\x06_owner\"\xad\x04\n" +
 	"\x10PtzMoveCommanded\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12&\n" +
 	"\fcommanded_by\x18\x01 \x01(\tH\x00R\vcommandedBy\x88\x01\x01\x129\n" +
@@ -632,7 +666,9 @@ const file_openits_cctv_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\a \x01(\tH\x02R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\b \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\b \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\n" +
+	" \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceIdB\x0f\n" +
 	"\r_commanded_byB\x0e\n" +
 	"\f_observed_byB\b\n" +
@@ -654,7 +690,7 @@ const file_openits_cctv_v1_events_proto_rawDesc = "" +
 	"\n" +
 	"_pan_speedB\r\n" +
 	"\v_tilt_speedB\r\n" +
-	"\v_zoom_speed\"\xbb\x03\n" +
+	"\v_zoom_speed\"\xe2\x03\n" +
 	"\x11PtzPresetRecalled\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x1b\n" +
 	"\tpreset_id\x18\x01 \x01(\rR\bpresetId\x12$\n" +
@@ -668,13 +704,15 @@ const file_openits_cctv_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\a \x01(\tH\x04R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\b \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\b \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\n" +
+	" \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceIdB\x0e\n" +
 	"\f_preset_nameB\x0e\n" +
 	"\f_recalled_byB\v\n" +
 	"\t_via_tourB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xbf\x03\n" +
+	"\x06_owner\"\xe6\x03\n" +
 	"\x10TourStateChanged\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x17\n" +
 	"\atour_id\x18\x01 \x01(\rR\x06tourId\x12I\n" +
@@ -685,7 +723,8 @@ const file_openits_cctv_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\x06 \x01(\tH\x02R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\a \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\a \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\t \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceIdB\x11\n" +
 	"\x0f_previous_stateB\x0e\n" +
 	"\f_observed_byB\b\n" +

@@ -35,6 +35,7 @@ type ZoneOccupancyChanged struct {
 	PresenceConfidence *uint32                `protobuf:"varint,8,opt,name=presence_confidence,json=presenceConfidence,proto3,oneof" json:"presence_confidence,omitempty"`
 	PresentClass       []*PresentClass        `protobuf:"bytes,9,rep,name=present_class,json=presentClass,proto3" json:"present_class,omitempty"`
 	Sequence           uint64                 `protobuf:"varint,10,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch      string                 `protobuf:"bytes,12,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId     string                 `protobuf:"bytes,11,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
@@ -147,6 +148,13 @@ func (x *ZoneOccupancyChanged) GetSequence() uint64 {
 	return 0
 }
 
+func (x *ZoneOccupancyChanged) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *ZoneOccupancyChanged) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -222,6 +230,7 @@ type ZoneOccupancyIntervalReport struct {
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner          *string                `protobuf:"bytes,4,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,5,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch  string                 `protobuf:"bytes,7,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,6,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -297,6 +306,13 @@ func (x *ZoneOccupancyIntervalReport) GetSequence() uint64 {
 		return x.Sequence
 	}
 	return 0
+}
+
+func (x *ZoneOccupancyIntervalReport) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
 }
 
 func (x *ZoneOccupancyIntervalReport) GetSourceDeviceId() string {
@@ -462,7 +478,7 @@ var File_openits_zone_occupancy_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_zone_occupancy_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"&openits/zone_occupancy/v1/events.proto\x12\x19openits.zone_occupancy.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xde\x04\n" +
+	"&openits/zone_occupancy/v1/events.proto\x12\x19openits.zone_occupancy.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x85\x05\n" +
 	"\x14ZoneOccupancyChanged\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x17\n" +
 	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12$\n" +
@@ -477,7 +493,8 @@ const file_openits_zone_occupancy_v1_events_proto_rawDesc = "" +
 	"\x13presence_confidence\x18\b \x01(\rH\x03R\x12presenceConfidence\x88\x01\x01\x12L\n" +
 	"\rpresent_class\x18\t \x03(\v2'.openits.zone_occupancy.v1.PresentClassR\fpresentClass\x12\x1a\n" +
 	"\bsequence\x18\n" +
-	" \x01(\x04R\bsequence\x12(\n" +
+	" \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\f \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\v \x01(\tR\x0esourceDeviceIdB\x0e\n" +
 	"\f_observed_byB\x12\n" +
 	"\x10_occupancy_countB\b\n" +
@@ -489,7 +506,7 @@ const file_openits_zone_occupancy_v1_events_proto_rawDesc = "" +
 	"\x19classification_confidence\x18\x03 \x01(\rH\x02R\x18classificationConfidence\x88\x01\x01B\b\n" +
 	"\x06_classB\b\n" +
 	"\x06_countB\x1c\n" +
-	"\x1a_classification_confidence\"\xc4\x02\n" +
+	"\x1a_classification_confidence\"\xeb\x02\n" +
 	"\x1bZoneOccupancyIntervalReport\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x123\n" +
 	"\x04zone\x18\x01 \x03(\v2\x1f.openits.zone_occupancy.v1.ZoneR\x04zone\x12$\n" +
@@ -498,7 +515,8 @@ const file_openits_zone_occupancy_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\x04 \x01(\tH\x01R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\x05 \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\x05 \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\a \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\x06 \x01(\tR\x0esourceDeviceIdB\x0e\n" +
 	"\f_observed_byB\b\n" +
 	"\x06_owner\"\xe8\x03\n" +

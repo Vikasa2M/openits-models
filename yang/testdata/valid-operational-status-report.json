@@ -2,6 +2,7 @@
   "openits-signal-control-events:operational-status-report": {
     "kind": "openits-signal-control-types:sc-operational-status-report",
     "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence-epoch": "boot-2026-10-13a",
     "sequence": "1",
     "mode": "openits-signal-control-types:mode-coordinated",
     "flash-active": false,

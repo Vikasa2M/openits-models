@@ -1,0 +1,10 @@
+{
+  "openits-common-fault-events:fault-raised": {
+    "kind": "openits-dms-types:dms-fault-lamp",
+    "source-device-id": "us40-dms-014",
+    "sequence": "7",
+    "fault-id": "dms014-lamp-0091",
+    "severity": "major",
+    "occurred-at": "2026-10-13T09:12:33Z"
+  }
+}

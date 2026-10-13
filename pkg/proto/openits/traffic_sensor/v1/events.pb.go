@@ -35,6 +35,7 @@ type QueueStateChanged struct {
 	QueueStart     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=queue_start,json=queueStart,proto3" json:"queue_start,omitempty"`
 	Queueing       *bool                  `protobuf:"varint,2,opt,name=queueing,proto3,oneof" json:"queueing,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch  string                 `protobuf:"bytes,12,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,9,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -147,6 +148,13 @@ func (x *QueueStateChanged) GetSequence() uint64 {
 	return 0
 }
 
+func (x *QueueStateChanged) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *QueueStateChanged) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -162,6 +170,7 @@ type TrafficIntervalReport struct {
 	OccurredAt     *timestamppb.Timestamp       `protobuf:"bytes,3,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner          *string                      `protobuf:"bytes,4,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                       `protobuf:"varint,5,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch  string                       `protobuf:"bytes,7,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId string                       `protobuf:"bytes,6,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -237,6 +246,13 @@ func (x *TrafficIntervalReport) GetSequence() uint64 {
 		return x.Sequence
 	}
 	return 0
+}
+
+func (x *TrafficIntervalReport) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
 }
 
 func (x *TrafficIntervalReport) GetSourceDeviceId() string {
@@ -514,6 +530,7 @@ type TrafficSensorStatusReport struct {
 	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner             *string                `protobuf:"bytes,8,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence          uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch     string                 `protobuf:"bytes,11,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId    string                 `protobuf:"bytes,10,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
@@ -619,6 +636,13 @@ func (x *TrafficSensorStatusReport) GetSequence() uint64 {
 	return 0
 }
 
+func (x *TrafficSensorStatusReport) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *TrafficSensorStatusReport) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -630,7 +654,7 @@ var File_openits_traffic_sensor_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_traffic_sensor_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"&openits/traffic_sensor/v1/events.proto\x12\x19openits.traffic_sensor.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%openits/traffic_sensor/v1/types.proto\"\xdc\x04\n" +
+	"&openits/traffic_sensor/v1/events.proto\x12\x19openits.traffic_sensor.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%openits/traffic_sensor/v1/types.proto\"\x83\x05\n" +
 	"\x11QueueStateChanged\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x1c\n" +
 	"\azone_id\x18\x01 \x01(\tH\x00R\x06zoneId\x88\x01\x01\x12*\n" +
@@ -646,7 +670,8 @@ const file_openits_traffic_sensor_v1_events_proto_rawDesc = "" +
 	"\vqueue_start\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"queueStart\x12\x1f\n" +
 	"\bqueueing\x18\x02 \x01(\bH\x06R\bqueueing\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\b \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\b \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\f \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceIdB\n" +
 	"\n" +
 	"\b_zone_idB\x12\n" +
@@ -655,7 +680,7 @@ const file_openits_traffic_sensor_v1_events_proto_rawDesc = "" +
 	"\x06_ownerB\x13\n" +
 	"\x11_queue_duration_sB\x11\n" +
 	"\x0f_queue_length_mB\v\n" +
-	"\t_queueing\"\xd3\x02\n" +
+	"\t_queueing\"\xfa\x02\n" +
 	"\x15TrafficIntervalReport\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12H\n" +
 	"\x04lane\x18\x01 \x03(\v24.openits.traffic_sensor.v1.TrafficIntervalReportLaneR\x04lane\x12$\n" +
@@ -664,7 +689,8 @@ const file_openits_traffic_sensor_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\x04 \x01(\tH\x01R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\x05 \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\x05 \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\a \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\x06 \x01(\tR\x0esourceDeviceIdB\x0e\n" +
 	"\f_observed_byB\b\n" +
 	"\x06_owner\"\x91\v\n" +
@@ -718,7 +744,7 @@ const file_openits_traffic_sensor_v1_events_proto_rawDesc = "" +
 	"\bclass_id\x18\x01 \x01(\rH\x00R\aclassId\x88\x01\x01\x12\x1b\n" +
 	"\x06volume\x18\x02 \x01(\rH\x01R\x06volume\x88\x01\x01B\v\n" +
 	"\t_class_idB\t\n" +
-	"\a_volume\"\xc9\x04\n" +
+	"\a_volume\"\xf0\x04\n" +
 	"\x19TrafficSensorStatusReport\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x17\n" +
 	"\x04name\x18\x01 \x01(\tH\x00R\x04name\x88\x01\x01\x12`\n" +
@@ -731,7 +757,8 @@ const file_openits_traffic_sensor_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\b \x01(\tH\x06R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\t \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\t \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\v \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\n" +
 	" \x01(\tR\x0esourceDeviceIdB\a\n" +
 	"\x05_nameB\x15\n" +

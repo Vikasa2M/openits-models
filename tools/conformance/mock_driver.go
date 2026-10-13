@@ -375,6 +375,7 @@ func subscribeASC(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			},
 		},
 	}
+	stampHeaders(events, "mock-boot-1")
 	for _, e := range events {
 		select {
 		case <-ctx.Done():
@@ -623,9 +624,9 @@ func subscribeDMS(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VAB",
 			CETime:   time.Now().UTC(),
 			Data: &commonv1.ModeChanged{
-				Prior:   proto.String("blank"),
-				Current: "normal",
-				Kind:    "openits-dms-types:dms-mode-event-kind",
+				PreviousMode: proto.String("blank"),
+				Mode:         "normal",
+				Kind:         "openits-dms-types:dms-mode-event-kind",
 			},
 		},
 		{
@@ -643,6 +644,7 @@ func subscribeDMS(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			},
 		},
 	}
+	stampHeaders(events, "mock-boot-1")
 	for _, e := range events {
 		select {
 		case <-ctx.Done():
@@ -802,6 +804,7 @@ func subscribeESS(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			},
 		},
 	}
+	stampHeaders(events, "mock-boot-1")
 	for _, e := range events {
 		select {
 		case <-ctx.Done():
@@ -1102,6 +1105,7 @@ func subscribeRSU(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			},
 		},
 	}
+	stampHeaders(events, "mock-boot-1")
 	for _, e := range events {
 		select {
 		case <-ctx.Done():
@@ -1239,10 +1243,10 @@ func subscribeRM(ctx context.Context, out chan<- tests.EventEnvelope, window tim
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VDA",
 			CETime:   time.Now().UTC(),
 			Data: &commonv1.ModeChanged{
-				Prior:   proto.String("on-standby"),
-				Current: "active",
-				Reason:  proto.String("schedule"),
-				Kind:    "openits-ramp-metering-types:ramp-meter-mode-event-kind",
+				PreviousMode: proto.String("on-standby"),
+				Mode:         "active",
+				Reason:       proto.String("schedule"),
+				Kind:         "openits-ramp-metering-types:ramp-meter-mode-event-kind",
 			},
 		},
 		{
@@ -1271,6 +1275,7 @@ func subscribeRM(ctx context.Context, out chan<- tests.EventEnvelope, window tim
 			},
 		},
 	}
+	stampHeaders(events, "mock-boot-1")
 	for _, e := range events {
 		select {
 		case <-ctx.Done():

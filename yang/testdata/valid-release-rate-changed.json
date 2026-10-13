@@ -2,6 +2,7 @@
   "openits-ramp-metering-events:release-rate-changed": {
     "kind": "openits-ramp-metering-types:rm-release-rate-changed",
     "source-device-id": "i405-nb-western-ave",
+    "sequence-epoch": "boot-2026-10-13a",
     "occurred-at": "2026-07-13T12:00:00Z",
     "sequence": "1",
     "previous-rate-vph": 480,

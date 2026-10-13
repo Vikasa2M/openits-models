@@ -2,6 +2,7 @@
   "openits-signal-control-events:controller-fault-event": {
     "kind": "openits-signal-control-types:fault-unit-flash-status",
     "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence-epoch": "boot-2026-10-13a",
     "sequence": "1",
     "fault-id": "sc01-hrfault-0173-042",
     "severity": "critical",

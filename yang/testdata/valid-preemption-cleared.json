@@ -2,6 +2,7 @@
   "openits-signal-control-events:preemption-cleared": {
     "kind": "openits-signal-control-types:preempt-exit-interval",
     "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence-epoch": "boot-2026-10-13a",
     "sequence": "2",
     "preempt-number": 1,
     "type": "openits-signal-control-types:preempt-railroad",

@@ -1,0 +1,16 @@
+module openits-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:types";
+  prefix openits-types;
+
+  description
+    "Fixture: a stand-in for openits-types, whose event-kind identities
+     are cross-service bases rather than service roots.";
+
+  revision 2026-10-13 {
+    description "Initial.";
+  }
+
+  identity device-event-kind;
+  identity fault-event-kind { base device-event-kind; }
+}

@@ -2,6 +2,7 @@
   "openits-ess-events:weather-alert": {
     "kind": "openits-ess-types:ess-weather-alert",
     "source-device-id": "ess-us40-014",
+    "sequence-epoch": "boot-2026-10-13a",
     "occurred-at": "2026-07-13T12:00:00Z",
     "sequence": "1",
     "threshold-id": "wind-gust-high",

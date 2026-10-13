@@ -944,13 +944,23 @@ subjects cannot infer loss from gaps. The YANG, `ce-id-spec.md`,
 | Before/after in change events | `previous-<x>` and `<x>`, where `<x>` is the live-state leaf name (rule 1) |
 | Unknown | an enumeration has `unknown` at value 0; an identity set has a `<base>-unknown` identity |
 | Units | short suffixes (`-s`, `-ms`, `-pct`, `-deg`, `-kmh`, `-vph`, `-c`, `-m`) **and** a `units` statement on every leaf with a unit |
-| Counters | `yang:counter64` for monotonic counters, plus a per-device discontinuity marker (see [counter64 vs uint64](#counter64-vs-uint64)) |
+| Counters | a monotonic counter is named `-total` (or `-errors`) and typed `yang:counter64`, plus a per-device discontinuity marker (see [counter64 vs uint64](#counter64-vs-uint64)) |
 | Event `kind` | constrained to the notification's own transition or report sub-base, never the service root, with an `invalid-*` fixture proving it |
 | `wire-source` | on every event decoded from a device wire protocol, including SNMP-decoded NTCIP families |
 | References | `<Standard> <number>:<year> §<clause>`; standards and RFCs, not repo paths |
 
-Each row is checked by `check-naming` or a dedicated gate as its family
-converges, so it cannot drift back.
+`make check-conventions` lints the before/after, unknown, units, counters,
+event `kind` and repository-path parts of these rows, against
+`conventions-exceptions.yaml`, which lists today's violations with the family
+cut that removes each and may only shrink. The lint covers less than the
+table states in three places. The unknown check covers enumerations only;
+whether an identity set has a `<base>-unknown` identity is a review item. The
+counters check runs from name to type only: a leaf named `-total` or
+`-errors` must be `counter64`, but a `counter64` leaf with another name, and
+the discontinuity marker, are not checked. And the lint loads `yang/*.yang`
+only, so augment and deviation modules are not linted. Two further parts
+cannot be linted and stay review items: whether an event is wire-decoded (so
+needs `wire-source`), and the exact standards citation form.
 
 ### 7. Config holds durable intent only
 

@@ -128,6 +128,7 @@ messages:
         requested_by: 1
         requested_priority: 2
         sequence: 8
+        sequence_epoch: 10
         source_device_id: 9
     openits.cctv.v1.Mask:
         enabled: 3
@@ -179,6 +180,7 @@ messages:
         occurred_at: 6
         owner: 7
         sequence: 8
+        sequence_epoch: 10
         source_device_id: 9
         velocity: 4
     openits.cctv.v1.PtzMoveCommandedAbsolute:
@@ -198,6 +200,7 @@ messages:
         preset_name: 2
         recalled_by: 3
         sequence: 8
+        sequence_epoch: 10
         source_device_id: 9
         via_tour: 4
     openits.cctv.v1.PtzState:
@@ -239,6 +242,7 @@ messages:
         owner: 6
         previous_state: 2
         sequence: 7
+        sequence_epoch: 9
         source_device_id: 8
         tour_id: 1
     openits.cctv.v1.Tours:
@@ -266,6 +270,7 @@ messages:
         owner: 10
         percent_loss: 6
         sequence: 11
+        sequence_epoch: 13
         source: 100
         source_device_id: 1
     openits.common.v1.FaultCleared:
@@ -275,6 +280,7 @@ messages:
         occurred_at: 3
         owner: 5
         sequence: 6
+        sequence_epoch: 7
         source: 100
         source_device_id: 1
     openits.common.v1.FaultRaised:
@@ -286,6 +292,7 @@ messages:
         occurred_at: 5
         owner: 7
         sequence: 8
+        sequence_epoch: 10
         severity: 3
         source: 100
         source_device_id: 1
@@ -293,12 +300,15 @@ messages:
         control_source: 9
         current: 3
         kind: 99
+        mode: 13
         observed_by: 6
         occurred_at: 5
         owner: 7
+        previous_mode: 12
         prior: 2
         reason: 4
         sequence: 8
+        sequence_epoch: 11
         source: 100
         source_device_id: 1
         trigger: 10
@@ -623,6 +633,7 @@ messages:
         phase: 11
         reason: 3
         sequence: 7
+        sequence_epoch: 12
         source: 100
         source_device_id: 8
     openits.dms.v1.MessageChanged:
@@ -638,6 +649,7 @@ messages:
         prior_multi_string: 8
         prior_slot_number: 7
         sequence: 12
+        sequence_epoch: 14
         slot_number: 2
         source: 100
         source_device_id: 13
@@ -744,6 +756,7 @@ messages:
         occurred_at: 12
         owner: 13
         sequence: 14
+        sequence_epoch: 16
         sign_face_temperature_c: 6
         source_device_id: 15
     openits.dms.v1.Slot:
@@ -857,6 +870,7 @@ messages:
         owner: 6
         sensor_id: 1
         sequence: 7
+        sequence_epoch: 3
         source_device_id: 8
     openits.ess.v1.Station:
         atmospheric: 3
@@ -927,6 +941,7 @@ messages:
         owner: 9
         sensor_id: 12
         sequence: 10
+        sequence_epoch: 13
         source_device_id: 11
         threshold_id: 1
         threshold_value: 3
@@ -1097,6 +1112,7 @@ messages:
         occurred_at: 5
         owner: 6
         sequence: 7
+        sequence_epoch: 9
         source_device_id: 8
         zone_id: 2
     openits.perception.v1.ZoneIncidentDetected:
@@ -1111,6 +1127,7 @@ messages:
         occurred_at: 12
         owner: 13
         sequence: 14
+        sequence_epoch: 18
         severity: 4
         source_device_id: 15
         speed_kmh: 9
@@ -1128,6 +1145,7 @@ messages:
         owner: 8
         reviewed_by: 12
         sequence: 9
+        sequence_epoch: 13
         severity: 3
         source_device_id: 10
         speed_kmh: 4
@@ -1138,6 +1156,7 @@ messages:
         occurred_at: 3
         owner: 4
         sequence: 5
+        sequence_epoch: 7
         source_device_id: 6
         zone: 1
     openits.perception.v1.ZoneIntervalReportZone:
@@ -1341,6 +1360,7 @@ messages:
         plan_id: 3
         queue_length_vehicles: 1
         sequence: 7
+        sequence_epoch: 11
         source_device_id: 8
         threshold_vehicles: 2
         trigger: 9
@@ -1352,6 +1372,7 @@ messages:
         plan_id: 2
         queue_length_vehicles: 1
         sequence: 6
+        sequence_epoch: 8
         source_device_id: 7
     openits.ramp_metering.v1.RampMeter:
         advance_warning_sign: 9
@@ -1419,6 +1440,7 @@ messages:
         previous_rate_vph: 1
         reason: 4
         sequence: 8
+        sequence_epoch: 11
         source_device_id: 9
     openits.ramp_metering.v1.Schedule:
         day_plan: 1
@@ -1515,6 +1537,7 @@ messages:
         previous_direction: 2
         previous_state: 1
         sequence: 10
+        sequence_epoch: 6
         source: 100
         source_device_id: 11
     openits.reversible_lane.v1.LcsConflictDetected:
@@ -1527,6 +1550,7 @@ messages:
         owner: 6
         segment_id: 1
         sequence: 7
+        sequence_epoch: 10
         source: 100
         source_device_id: 8
     openits.reversible_lane.v1.ReversibleLane:
@@ -1602,6 +1626,7 @@ messages:
         occurred_at: 7
         owner: 8
         sequence: 9
+        sequence_epoch: 11
         sequence_step: 5
         source_device_id: 10
         started_at: 3
@@ -2005,6 +2030,7 @@ messages:
         owner: 6
         sample_window_s: 2
         sequence: 7
+        sequence_epoch: 8
         source: 100
         source_device_id: 1
     openits.rsu.v1.RsuCertificateExpiring:
@@ -2017,6 +2043,7 @@ messages:
         occurred_at: 8
         owner: 9
         sequence: 10
+        sequence_epoch: 1
         source_device_id: 11
     openits.rsu.v1.RsuChannelFault:
         channel_id: 11
@@ -2028,6 +2055,7 @@ messages:
         occurred_at: 7
         owner: 8
         sequence: 9
+        sequence_epoch: 1
         source: 100
         source_device_id: 10
     openits.rsu.v1.RsuConfig:
@@ -2057,6 +2085,7 @@ messages:
         previous_status: 2
         satellites: 4
         sequence: 9
+        sequence_epoch: 1
         source: 100
         source_device_id: 10
     openits.rsu.v1.RsuSecurity:
@@ -2082,6 +2111,7 @@ messages:
         occurred_at: 7
         owner: 8
         sequence: 9
+        sequence_epoch: 1
         source: 3
         source_device_id: 10
     openits.rsu.v1.RsuSecurityState:
@@ -2125,6 +2155,7 @@ messages:
         request_id: 2
         request_type: 4
         sequence: 12
+        sequence_epoch: 1
         source: 100
         source_device_id: 13
         vehicle_class: 7
@@ -2139,6 +2170,7 @@ messages:
         previous_status: 4
         request_id: 2
         sequence: 10
+        sequence_epoch: 6
         source: 100
         source_device_id: 11
         vehicle_id: 3
@@ -2176,6 +2208,7 @@ messages:
         owner: 7
         priority: 3
         sequence: 8
+        sequence_epoch: 2
         source: 100
         source_device_id: 9
     openits.rsu.v1.RsuTimBroadcastStateChanged:
@@ -2187,6 +2220,7 @@ messages:
         owner: 7
         prior: 1
         sequence: 8
+        sequence_epoch: 4
         source_device_id: 9
     openits.rsu.v1.RsuTimCleared:
         kind: 99
@@ -2196,6 +2230,7 @@ messages:
         owner: 6
         reason: 2
         sequence: 7
+        sequence_epoch: 3
         source_device_id: 8
     openits.rsu.v1.RsuTimLoaded:
         content_summary: 6
@@ -2207,6 +2242,7 @@ messages:
         owner: 10
         priority: 3
         sequence: 11
+        sequence_epoch: 7
         source: 2
         source_device_id: 12
         start_time: 5
@@ -2409,6 +2445,7 @@ messages:
         owner: 8
         raised: 5
         sequence: 9
+        sequence_epoch: 11
         severity: 3
         source: 100
         source_device_id: 1
@@ -2433,6 +2470,7 @@ messages:
         previous_split_s: 17
         previous_value: 5
         sequence: 9
+        sequence_epoch: 20
         source: 100
         source_device_id: 1
         split_number: 4
@@ -2453,6 +2491,7 @@ messages:
         occurred_at: 5
         owner: 7
         sequence: 8
+        sequence_epoch: 9
         source_device_id: 1
     openits.signal_control.v1.DetectorReportDetector:
         detector_id: 1
@@ -2469,6 +2508,7 @@ messages:
         owner: 9
         phase_served: 6
         sequence: 10
+        sequence_epoch: 3
         source: 100
         source_device_id: 1
     openits.signal_control.v1.Detectors:
@@ -2549,6 +2589,7 @@ messages:
         occurred_at: 6
         owner: 8
         sequence: 9
+        sequence_epoch: 3
         source_device_id: 1
         uptime_seconds: 5
     openits.signal_control.v1.Options:
@@ -2572,6 +2613,7 @@ messages:
         overlap_number: 2
         owner: 6
         sequence: 7
+        sequence_epoch: 3
         source: 100
         source_device_id: 1
     openits.signal_control.v1.OverlapConfig:
@@ -2598,6 +2640,7 @@ messages:
         owner: 7
         phase_number: 2
         sequence: 8
+        sequence_epoch: 4
         source: 100
         source_device_id: 1
     openits.signal_control.v1.Permissive:
@@ -2634,6 +2677,7 @@ messages:
         owner: 9
         phase_number: 2
         sequence: 10
+        sequence_epoch: 3
         source: 100
         source_device_id: 1
     openits.signal_control.v1.Phases:
@@ -2647,6 +2691,7 @@ messages:
         owner: 9
         plan_id: 2
         sequence: 10
+        sequence_epoch: 12
         source: 6
         source_device_id: 1
         split_set: 5
@@ -2660,6 +2705,7 @@ messages:
         owner: 6
         preempt_number: 8
         sequence: 7
+        sequence_epoch: 9
         source: 100
         source_device_id: 1
         source_id: 3
@@ -2671,6 +2717,7 @@ messages:
         owner: 6
         preempt_number: 8
         sequence: 7
+        sequence_epoch: 9
         source: 100
         source_device_id: 1
         source_id: 3
@@ -2682,6 +2729,7 @@ messages:
         owner: 7
         preempt_number: 2
         sequence: 8
+        sequence_epoch: 3
         source: 100
         source_device_id: 1
         source_id: 4
@@ -2841,6 +2889,7 @@ messages:
         prior: 2
         reason: 4
         sequence: 9
+        sequence_epoch: 5
         source: 100
         source_device_id: 1
     openits.signal_control.v1.TsamRecommendationApplied:
@@ -2854,6 +2903,7 @@ messages:
         rationale: 6
         recommendation_id: 2
         sequence: 11
+        sequence_epoch: 7
         source: 100
         source_device_id: 1
     openits.signal_control.v1.TspEvent:
@@ -2865,6 +2915,7 @@ messages:
         owner: 8
         priority_class: 4
         sequence: 9
+        sequence_epoch: 2
         source: 100
         source_device_id: 1
         tsp_number: 10
@@ -2875,6 +2926,7 @@ messages:
         occurred_at: 1
         owner: 4
         sequence: 5
+        sequence_epoch: 2
         source: 100
         source_device_id: 6
     openits.signal_control.v1.VolumeDensity:
@@ -2978,6 +3030,7 @@ messages:
         queue_start: 4
         queueing: 2
         sequence: 8
+        sequence_epoch: 12
         source_device_id: 9
         zone_id: 1
     openits.traffic_sensor.v1.QueueZone:
@@ -3003,6 +3056,7 @@ messages:
         occurred_at: 3
         owner: 4
         sequence: 5
+        sequence_epoch: 7
         source_device_id: 6
     openits.traffic_sensor.v1.TrafficIntervalReportLane:
         carriageway: 3
@@ -3093,6 +3147,7 @@ messages:
         operational_status: 4
         owner: 8
         sequence: 9
+        sequence_epoch: 11
         source_device_id: 10
     openits.traffic_sensor.v1.VehicleClass:
         class_id: 1
@@ -3144,6 +3199,7 @@ messages:
         point: 11
         reduced_speed_limit_kmh: 16
         sequence: 12
+        sequence_epoch: 19
         source_device_id: 13
         start_verified: 17
         temporary_signal: 6
@@ -3179,6 +3235,7 @@ messages:
         presence_confidence: 8
         present_class: 9
         sequence: 10
+        sequence_epoch: 12
         source_device_id: 11
         zone_id: 1
     openits.zone_occupancy.v1.ZoneOccupancyIntervalReport:
@@ -3187,5 +3244,6 @@ messages:
         occurred_at: 3
         owner: 4
         sequence: 5
+        sequence_epoch: 7
         source_device_id: 6
         zone: 1

@@ -24,8 +24,15 @@ module openits-signal-control-events {
      containing notification statements; collapsed from 11 per-domain modules
      into this one, since they versioned in lockstep.";
 
-  openits-types:openits-version "0.3.0";
+  openits-types:openits-version "0.4.0";
 
+  revision 2026-10-13 {
+    description
+      "Inherit the mandatory sequence-epoch leaf from the openits-types
+       event-header grouping, which changes every notification payload
+       in this module. Breaking: producers must emit sequence-epoch.";
+    reference "RFC 7950 §11.";
+  }
   revision 2026-09-08 {
     description
       "plan-applied: replace the closed 'source' enum with a 'trigger'

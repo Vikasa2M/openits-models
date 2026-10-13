@@ -1,0 +1,1071 @@
+# Known violations of the house-contract conventions, checked by
+# tools/check-conventions (make check-conventions). This list only shrinks:
+# the gate fails on any violation not listed here and on any entry that no
+# longer violates. Each family cut deletes its own entries. "cut: permanent"
+# is for a name a cited standard fixes and must carry a reason.
+exceptions:
+    - rule: before-after
+      module: openits-cctv-events
+      path: /openits-cctv-events/lockout-denied/current-holder
+      cut: permanent
+      reason: names who holds the lock now, not the later value of a transition
+    - rule: before-after
+      module: openits-cctv-events
+      path: /openits-cctv-events/tour-state-changed/current-state
+      cut: cctv
+    - rule: before-after
+      module: openits-cctv-events
+      path: /openits-cctv-events/tour-state-changed/previous-state
+      cut: cctv
+    - rule: before-after
+      module: openits-dms-events
+      path: /openits-dms-events/message-changed/prior-memory-type
+      cut: dms
+    - rule: before-after
+      module: openits-dms-events
+      path: /openits-dms-events/message-changed/prior-multi-string
+      cut: dms
+    - rule: before-after
+      module: openits-dms-events
+      path: /openits-dms-events/message-changed/prior-slot-number
+      cut: dms
+    - rule: before-after
+      module: openits-ramp-metering-events
+      path: /openits-ramp-metering-events/release-rate-changed/new-rate-vph
+      cut: ramp-metering
+    - rule: before-after
+      module: openits-ramp-metering-events
+      path: /openits-ramp-metering-events/release-rate-changed/previous-rate-vph
+      cut: ramp-metering
+    - rule: before-after
+      module: openits-reversible-lane-events
+      path: /openits-reversible-lane-events/lane-state-changed/new-direction
+      cut: reversible-lane
+    - rule: before-after
+      module: openits-reversible-lane-events
+      path: /openits-reversible-lane-events/lane-state-changed/new-state
+      cut: reversible-lane
+    - rule: before-after
+      module: openits-reversible-lane-events
+      path: /openits-reversible-lane-events/lane-state-changed/previous-direction
+      cut: reversible-lane
+    - rule: before-after
+      module: openits-reversible-lane-events
+      path: /openits-reversible-lane-events/lane-state-changed/previous-state
+      cut: reversible-lane
+    - rule: before-after
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-gps-status-change/new-status
+      cut: rsu
+    - rule: before-after
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-gps-status-change/previous-status
+      cut: rsu
+    - rule: before-after
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-srm-status-change/new-status
+      cut: rsu
+    - rule: before-after
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-srm-status-change/previous-status
+      cut: rsu
+    - rule: before-after
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-tim-broadcast-state-changed/current
+      cut: rsu
+    - rule: before-after
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-tim-broadcast-state-changed/prior
+      cut: rsu
+    - rule: before-after
+      module: openits-signal-control-events
+      path: /openits-signal-control-events/tsam-mode-changed/current
+      cut: signal-control
+    - rule: before-after
+      module: openits-signal-control-events
+      path: /openits-signal-control-events/tsam-mode-changed/prior
+      cut: signal-control
+    - rule: counters
+      module: openits-dms
+      path: /openits-dms/sign/diagnostics/beacons-total
+      cut: dms
+    - rule: counters
+      module: openits-dms
+      path: /openits-dms/sign/diagnostics/lamps-total
+      cut: dms
+    - rule: counters
+      module: openits-dms
+      path: /openits-dms/sign/diagnostics/pixels-total
+      cut: dms
+    - rule: counters
+      module: openits-rsu
+      path: /openits-rsu/rsu/diagnostics/radio/crc-errors
+      cut: rsu
+    - rule: counters
+      module: openits-rsu
+      path: /openits-rsu/rsu/diagnostics/spat-sync/phase-gap-errors
+      cut: rsu
+    - rule: counters
+      module: openits-scms
+      path: grouping security/security/state/certs-downloaded-total
+      cut: rsu
+    - rule: counters
+      module: openits-v2x-messaging
+      path: grouping messaging/messages/message-errors/asc-data-errors
+      cut: rsu
+    - rule: counters
+      module: openits-v2x-messaging
+      path: grouping messaging/messages/message-errors/security/cert-errors
+      cut: rsu
+    - rule: counters
+      module: openits-v2x-messaging
+      path: grouping messaging/messages/message-stats/per-message-type/decoding-errors
+      cut: rsu
+    - rule: counters
+      module: openits-v2x-messaging
+      path: grouping messaging/messages/message-stats/per-message-type/encoding-errors
+      cut: rsu
+    - rule: counters
+      module: openits-v2x-radio
+      path: grouping radios/channels/channel/state/rx-decode-errors
+      cut: rsu
+    - rule: counters
+      module: openits-v2x-radio
+      path: grouping radios/channels/channel/state/rx-errors
+      cut: rsu
+    - rule: counters
+      module: openits-v2x-radio
+      path: grouping radios/channels/channel/state/tx-errors
+      cut: rsu
+    - rule: kind-base
+      module: openits-cctv-events
+      path: /openits-cctv-events/lockout-denied/kind
+      cut: cctv
+    - rule: kind-base
+      module: openits-cctv-events
+      path: /openits-cctv-events/ptz-move-commanded/kind
+      cut: cctv
+    - rule: kind-base
+      module: openits-cctv-events
+      path: /openits-cctv-events/ptz-preset-recalled/kind
+      cut: cctv
+    - rule: kind-base
+      module: openits-cctv-events
+      path: /openits-cctv-events/tour-state-changed/kind
+      cut: cctv
+    - rule: kind-base
+      module: openits-dms-events
+      path: /openits-dms-events/message-activation-failed/kind
+      cut: dms
+    - rule: kind-base
+      module: openits-dms-events
+      path: /openits-dms-events/message-changed/kind
+      cut: dms
+    - rule: kind-base
+      module: openits-dms-events
+      path: /openits-dms-events/sign-status-report/kind
+      cut: dms
+    - rule: kind-base
+      module: openits-ess-events
+      path: /openits-ess-events/sensor-recalibrated/kind
+      cut: ess
+    - rule: kind-base
+      module: openits-ess-events
+      path: /openits-ess-events/weather-alert/kind
+      cut: ess
+    - rule: kind-base
+      module: openits-perception-events
+      path: /openits-perception-events/zone-incident-cleared/kind
+      cut: sensing
+    - rule: kind-base
+      module: openits-perception-events
+      path: /openits-perception-events/zone-incident-detected/kind
+      cut: sensing
+    - rule: kind-base
+      module: openits-perception-events
+      path: /openits-perception-events/zone-incident-updated/kind
+      cut: sensing
+    - rule: kind-base
+      module: openits-perception-events
+      path: /openits-perception-events/zone-interval-report/kind
+      cut: sensing
+    - rule: kind-base
+      module: openits-ramp-metering-events
+      path: /openits-ramp-metering-events/queue-override-activated/kind
+      cut: ramp-metering
+    - rule: kind-base
+      module: openits-ramp-metering-events
+      path: /openits-ramp-metering-events/queue-override-cleared/kind
+      cut: ramp-metering
+    - rule: kind-base
+      module: openits-ramp-metering-events
+      path: /openits-ramp-metering-events/release-rate-changed/kind
+      cut: ramp-metering
+    - rule: kind-base
+      module: openits-reversible-lane-events
+      path: /openits-reversible-lane-events/lane-state-changed/kind
+      cut: reversible-lane
+    - rule: kind-base
+      module: openits-reversible-lane-events
+      path: /openits-reversible-lane-events/lcs-conflict-detected/kind
+      cut: reversible-lane
+    - rule: kind-base
+      module: openits-reversible-lane-events
+      path: /openits-reversible-lane-events/transition-timeout/kind
+      cut: reversible-lane
+    - rule: kind-base
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-broadcast-sample/kind
+      cut: rsu
+    - rule: kind-base
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-certificate-expiring/kind
+      cut: rsu
+    - rule: kind-base
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-gps-status-change/kind
+      cut: rsu
+    - rule: kind-base
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-security-event/kind
+      cut: rsu
+    - rule: kind-base
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-srm-received/kind
+      cut: rsu
+    - rule: kind-base
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-srm-status-change/kind
+      cut: rsu
+    - rule: kind-base
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-tim-broadcast-state-changed/kind
+      cut: rsu
+    - rule: kind-base
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-tim-broadcast/kind
+      cut: rsu
+    - rule: kind-base
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-tim-cleared/kind
+      cut: rsu
+    - rule: kind-base
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-tim-loaded/kind
+      cut: rsu
+    - rule: kind-base
+      module: openits-signal-control-events
+      path: /openits-signal-control-events/operational-status-report/kind
+      cut: signal-control
+    - rule: kind-base
+      module: openits-signal-control-events
+      path: /openits-signal-control-events/unmapped-event/kind
+      cut: signal-control
+    - rule: kind-base
+      module: openits-traffic-sensor-events
+      path: /openits-traffic-sensor-events/queue-state-changed/kind
+      cut: sensing
+    - rule: kind-base
+      module: openits-traffic-sensor-events
+      path: /openits-traffic-sensor-events/traffic-interval-report/kind
+      cut: sensing
+    - rule: kind-base
+      module: openits-traffic-sensor-events
+      path: /openits-traffic-sensor-events/traffic-sensor-status-report/kind
+      cut: sensing
+    - rule: kind-base
+      module: openits-work-zone-events
+      path: /openits-work-zone-events/zone-state-changed/kind
+      cut: work-zone
+    - rule: kind-base
+      module: openits-zone-occupancy-events
+      path: /openits-zone-occupancy-events/zone-occupancy-interval-report/kind
+      cut: sensing
+    - rule: units
+      module: openits-cabinet-power
+      path: grouping cabinet-power/battery/runtime-remaining-minutes
+      cut: foundation
+    - rule: units
+      module: openits-cctv
+      path: /openits-cctv/camera/lens/config/focus-position
+      cut: cctv
+    - rule: units
+      module: openits-cctv
+      path: /openits-cctv/camera/lens/config/iris-position
+      cut: cctv
+    - rule: units
+      module: openits-cctv
+      path: /openits-cctv/camera/lens/state/focus-position
+      cut: cctv
+    - rule: units
+      module: openits-cctv
+      path: /openits-cctv/camera/lens/state/iris-position
+      cut: cctv
+    - rule: units
+      module: openits-cctv
+      path: /openits-cctv/camera/ptz/config/absolute/pan-degrees
+      cut: cctv
+    - rule: units
+      module: openits-cctv
+      path: /openits-cctv/camera/ptz/config/absolute/tilt-degrees
+      cut: cctv
+    - rule: units
+      module: openits-cctv
+      path: /openits-cctv/camera/ptz/config/absolute/zoom-percent
+      cut: cctv
+    - rule: units
+      module: openits-cctv
+      path: /openits-cctv/camera/ptz/config/velocity/pan-speed
+      cut: cctv
+    - rule: units
+      module: openits-cctv
+      path: /openits-cctv/camera/ptz/config/velocity/tilt-speed
+      cut: cctv
+    - rule: units
+      module: openits-cctv
+      path: /openits-cctv/camera/ptz/config/velocity/zoom-speed
+      cut: cctv
+    - rule: units
+      module: openits-cctv
+      path: /openits-cctv/camera/ptz/presets/preset/pan-degrees
+      cut: cctv
+    - rule: units
+      module: openits-cctv
+      path: /openits-cctv/camera/ptz/presets/preset/tilt-degrees
+      cut: cctv
+    - rule: units
+      module: openits-cctv
+      path: /openits-cctv/camera/ptz/presets/preset/zoom-percent
+      cut: cctv
+    - rule: units
+      module: openits-cctv
+      path: /openits-cctv/camera/ptz/state/pan-degrees
+      cut: cctv
+    - rule: units
+      module: openits-cctv
+      path: /openits-cctv/camera/ptz/state/tilt-degrees
+      cut: cctv
+    - rule: units
+      module: openits-cctv
+      path: /openits-cctv/camera/ptz/state/zoom-percent
+      cut: cctv
+    - rule: units
+      module: openits-cctv
+      path: /openits-cctv/camera/ptz/tours/tour/stop/dwell-seconds
+      cut: cctv
+    - rule: units
+      module: openits-cctv
+      path: /openits-cctv/camera/streams/stream/state/frame-rate
+      cut: cctv
+    - rule: units
+      module: openits-cctv-events
+      path: /openits-cctv-events/ptz-move-commanded/absolute/pan-degrees
+      cut: cctv
+    - rule: units
+      module: openits-cctv-events
+      path: /openits-cctv-events/ptz-move-commanded/absolute/tilt-degrees
+      cut: cctv
+    - rule: units
+      module: openits-cctv-events
+      path: /openits-cctv-events/ptz-move-commanded/absolute/zoom-percent
+      cut: cctv
+    - rule: units
+      module: openits-cctv-events
+      path: /openits-cctv-events/ptz-move-commanded/velocity/pan-speed
+      cut: cctv
+    - rule: units
+      module: openits-cctv-events
+      path: /openits-cctv-events/ptz-move-commanded/velocity/tilt-speed
+      cut: cctv
+    - rule: units
+      module: openits-cctv-events
+      path: /openits-cctv-events/ptz-move-commanded/velocity/zoom-speed
+      cut: cctv
+    - rule: units
+      module: openits-common-comm-health-events
+      path: /openits-common-comm-health-events/comm-health-event/drift-milliseconds
+      cut: foundation
+    - rule: units
+      module: openits-common-comm-health-events
+      path: /openits-common-comm-health-events/comm-health-event/percent-loss
+      cut: foundation
+    - rule: units
+      module: openits-device-diagnostics
+      path: grouping process-list/process/uptime-seconds
+      cut: foundation
+    - rule: units
+      module: openits-device-diagnostics
+      path: grouping system-runtime/uptime-seconds
+      cut: foundation
+    - rule: units
+      module: openits-device-diagnostics
+      path: grouping temperature-sensor-list/temperature-sensor/threshold-high-c
+      cut: foundation
+    - rule: units
+      module: openits-device-diagnostics
+      path: grouping temperature-sensor-list/temperature-sensor/threshold-low-c
+      cut: foundation
+    - rule: units
+      module: openits-dms
+      path: /openits-dms/sign/control/state/brightness-current
+      cut: dms
+    - rule: units
+      module: openits-dms
+      path: /openits-dms/sign/environment/ambient-light-level
+      cut: dms
+    - rule: units
+      module: openits-dms
+      path: /openits-dms/sign/environment/humidity-percent
+      cut: dms
+    - rule: units
+      module: openits-dms
+      path: grouping sign-control-config/brightness-setpoint
+      cut: dms
+    - rule: units
+      module: openits-dms-events
+      path: /openits-dms-events/sign-status-report/ambient-light-level
+      cut: dms
+    - rule: units
+      module: openits-dms-events
+      path: /openits-dms-events/sign-status-report/brightness-current
+      cut: dms
+    - rule: units
+      module: openits-dms-events
+      path: /openits-dms-events/sign-status-report/humidity-percent
+      cut: dms
+    - rule: units
+      module: openits-ess
+      path: /openits-ess/station/atmospheric/humidity-percent
+      cut: ess
+    - rule: units
+      module: openits-ess
+      path: /openits-ess/station/atmospheric/wind-gust-ms
+      cut: ess
+    - rule: units
+      module: openits-ess
+      path: /openits-ess/station/atmospheric/wind-speed-avg-ms
+      cut: ess
+    - rule: units
+      module: openits-ess
+      path: /openits-ess/station/atmospheric/wind-speed-ms
+      cut: ess
+    - rule: units
+      module: openits-ess
+      path: /openits-ess/station/pavement/sensor/state/chemical-percent
+      cut: ess
+    - rule: units
+      module: openits-ess
+      path: /openits-ess/station/precipitation/rate-mm-h
+      cut: ess
+    - rule: units
+      module: openits-ess
+      path: /openits-ess/station/precipitation/snow-rate-mm-h
+      cut: ess
+    - rule: units
+      module: openits-nema-common
+      path: grouping phase-timing/ped-clear
+      cut: foundation
+    - rule: units
+      module: openits-nema-common
+      path: grouping phase-timing/walk
+      cut: foundation
+    - rule: units
+      module: openits-nema-common
+      path: grouping vehicle-phase-timing/max-green
+      cut: foundation
+    - rule: units
+      module: openits-nema-common
+      path: grouping vehicle-phase-timing/min-green
+      cut: foundation
+    - rule: units
+      module: openits-nema-common
+      path: grouping vehicle-phase-timing/passage
+      cut: foundation
+    - rule: units
+      module: openits-nema-common
+      path: grouping vehicle-phase-timing/red-clear
+      cut: foundation
+    - rule: units
+      module: openits-nema-common
+      path: grouping vehicle-phase-timing/yellow-change
+      cut: foundation
+    - rule: units
+      module: openits-perception
+      path: /openits-perception/perception-sensor/configuration/zone/legal-heading
+      cut: sensing
+    - rule: units
+      module: openits-perception
+      path: /openits-perception/perception-sensor/configuration/zone/min-confidence
+      cut: sensing
+    - rule: units
+      module: openits-perception
+      path: /openits-perception/perception-sensor/diagnostics/blockage-percent
+      cut: sensing
+    - rule: units
+      module: openits-perception
+      path: /openits-perception/perception-sensor/incidents/incident/confidence
+      cut: sensing
+    - rule: units
+      module: openits-perception
+      path: /openits-perception/perception-sensor/objects/track/class-confidence
+      cut: sensing
+    - rule: units
+      module: openits-perception-events
+      path: /openits-perception-events/zone-incident-detected/confidence
+      cut: sensing
+    - rule: units
+      module: openits-perception-events
+      path: /openits-perception-events/zone-incident-updated/confidence
+      cut: sensing
+    - rule: units
+      module: openits-ramp-metering
+      path: /openits-ramp-metering/ramp-meter/sequencing/config/advance-warning-duration
+      cut: ramp-metering
+    - rule: units
+      module: openits-ramp-metering
+      path: /openits-ramp-metering/ramp-meter/sequencing/config/shutdown-flush-max-duration
+      cut: ramp-metering
+    - rule: units
+      module: openits-ramp-metering
+      path: /openits-ramp-metering/ramp-meter/sequencing/config/startup-steady-green-duration
+      cut: ramp-metering
+    - rule: units
+      module: openits-ramp-metering
+      path: /openits-ramp-metering/ramp-meter/traffic-responsive/config/band/max-flow-vph
+      cut: ramp-metering
+    - rule: units
+      module: openits-ramp-metering
+      path: /openits-ramp-metering/ramp-meter/traffic-responsive/config/band/min-flow-vph
+      cut: ramp-metering
+    - rule: units
+      module: openits-ramp-metering
+      path: grouping detector-readings/count-vph
+      cut: ramp-metering
+    - rule: units
+      module: openits-rsu
+      path: /openits-rsu/rsu/diagnostics/spat-sync/asc-poll-interval-ms
+      cut: rsu
+    - rule: units
+      module: openits-rsu
+      path: /openits-rsu/rsu/diagnostics/spat-sync/avg-data-age-ms
+      cut: rsu
+    - rule: units
+      module: openits-rsu
+      path: /openits-rsu/rsu/store-forward/config/max-age
+      cut: rsu
+    - rule: units
+      module: openits-rsu
+      path: /openits-rsu/rsu/store-forward/state/oldest-message-age
+      cut: rsu
+    - rule: units
+      module: openits-rsu
+      path: /openits-rsu/rsu/store-forward/state/storage-used-percent
+      cut: rsu
+    - rule: units
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-srm-received/eta-seconds
+      cut: rsu
+    - rule: units
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-tim-loaded/duration-seconds
+      cut: rsu
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/coordination/timing-plan/cycle-length
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/coordination/timing-plan/offset
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/coordination/timing-plan/split/split-seconds
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/detectors/detector/config/delay
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/detectors/detector/config/diagnostics/max-presence-minutes
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/detectors/detector/config/diagnostics/no-activity-minutes
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/detectors/detector/config/extend
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/detectors/detector/state/measurement/collection-period-seconds
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/detectors/detector/state/measurement/occupancy
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/overlaps/overlap/config/trailing-green
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/overlaps/overlap/config/trailing-red-clear
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/overlaps/overlap/config/trailing-yellow
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/phases/phase/config/leading-ped-interval-seconds
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/phases/phase/config/max-green-2
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/phases/phase/config/red-revert
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/phases/phase/config/volume-density/added-initial
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/phases/phase/config/volume-density/max-initial
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/phases/phase/config/volume-density/min-gap
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/phases/phase/config/volume-density/time-before-reduction
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/phases/phase/config/volume-density/time-to-reduce
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/preemption/preemptor/config/delay-seconds
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/preemption/preemptor/config/flash-dwell-seconds
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/preemption/preemptor/config/max-presence-seconds
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/preemption/preemptor/config/min-dwell-seconds
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/preemption/preemptor/config/min-green-before-entry
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/preemption/preemptor/config/min-ped-clear-before-entry
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/preemption/preemptor/config/min-walk-before-entry
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/preemption/preemptor/config/track-clearance/green-seconds
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/priority/strategy/config/max-early-green-seconds
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/priority/strategy/config/max-green-extension-seconds
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/priority/strategy/config/reservice-interval-seconds
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/startup/all-red-duration-seconds
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/startup/flash-duration-seconds
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control
+      path: grouping sc-on-battery-policy/on-battery-policy/transition-at-runtime-minutes
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control-events
+      path: /openits-signal-control-events/detector-report/detector/occupancy
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control-events
+      path: /openits-signal-control-events/operational-status-report/uptime-seconds
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control-events
+      path: /openits-signal-control-events/tsam-recommendation-applied/magnitude-seconds
+      cut: signal-control
+    - rule: units
+      module: openits-signal-control-events
+      path: /openits-signal-control-events/tsp-event/adjustment-seconds
+      cut: signal-control
+    - rule: units
+      module: openits-traffic-sensor
+      path: /openits-traffic-sensor/traffic-sensor/diagnostics/signal-quality
+      cut: sensing
+    - rule: units
+      module: openits-traffic-sensor
+      path: grouping lane-config/travel-heading
+      cut: sensing
+    - rule: units
+      module: openits-traffic-sensor-types
+      path: grouping lane-interval-data/occupancy
+      cut: sensing
+    - rule: units
+      module: openits-traffic-sensor-types
+      path: grouping lane-interval-data/uptime-percent
+      cut: sensing
+    - rule: units
+      module: openits-types
+      path: grouping device-identity-config/linear-reference/measure
+      cut: foundation
+    - rule: units
+      module: openits-types
+      path: grouping geo-location/elevation
+      cut: foundation
+    - rule: units
+      module: openits-types
+      path: grouping geo-location/heading
+      cut: foundation
+    - rule: units
+      module: openits-v2x-messaging
+      path: grouping messaging/messages/bsm/config/region-radius
+      cut: rsu
+    - rule: units
+      module: openits-v2x-messaging
+      path: grouping messaging/messages/bsm/state/average-speed
+      cut: rsu
+    - rule: units
+      module: openits-v2x-messaging
+      path: grouping messaging/messages/map/config/broadcast-interval
+      cut: rsu
+    - rule: units
+      module: openits-v2x-messaging
+      path: grouping messaging/messages/psm/broadcast-config/broadcast-interval
+      cut: rsu
+    - rule: units
+      module: openits-v2x-messaging
+      path: grouping messaging/messages/rtcm/config/broadcast-interval
+      cut: rsu
+    - rule: units
+      module: openits-v2x-messaging
+      path: grouping messaging/messages/spat/config/broadcast-interval
+      cut: rsu
+    - rule: units
+      module: openits-v2x-messaging
+      path: grouping messaging/messages/srm-ssm/active-requests/request/eta-seconds
+      cut: rsu
+    - rule: units
+      module: openits-v2x-messaging
+      path: grouping messaging/messages/tim/active/message/config/duration-minutes
+      cut: rsu
+    - rule: units
+      module: openits-v2x-messaging
+      path: grouping messaging/messages/tim/active/message/config/region/direction
+      cut: rsu
+    - rule: units
+      module: openits-v2x-messaging
+      path: grouping messaging/messages/tim/active/message/config/region/direction-tolerance
+      cut: rsu
+    - rule: units
+      module: openits-v2x-messaging
+      path: grouping messaging/messages/tim/active/message/config/region/radius
+      cut: rsu
+    - rule: units
+      module: openits-v2x-radio
+      path: grouping radios/channels/channel/config/dcc/cbr-target-percent
+      cut: rsu
+    - rule: units
+      module: openits-v2x-radio
+      path: grouping radios/channels/channel/config/tx-power
+      cut: rsu
+    - rule: units
+      module: openits-v2x-radio
+      path: grouping radios/channels/channel/state/channel-busy-ratio
+      cut: rsu
+    - rule: units
+      module: openits-vehicle-detection
+      path: grouping vehicle-analytics/vehicle-analytics/sample-basis/stats-window-seconds
+      cut: rsu
+    - rule: units
+      module: openits-zone-occupancy-events
+      path: /openits-zone-occupancy-events/zone-occupancy-interval-report/zone/observed-class/mean-confidence
+      cut: sensing
+    - rule: units
+      module: openits-zone-occupancy-events
+      path: /openits-zone-occupancy-events/zone-occupancy-interval-report/zone/occupancy-percent
+      cut: sensing
+    - rule: units
+      module: openits-zone-occupancy-types
+      path: grouping zone-occupancy-state/presence-confidence
+      cut: sensing
+    - rule: units
+      module: openits-zone-occupancy-types
+      path: grouping zone-occupancy-state/present-class/classification-confidence
+      cut: sensing
+    - rule: unknown-zero
+      module: openits-cabinet-power
+      path: typedef battery-test-state
+      cut: foundation
+    - rule: unknown-zero
+      module: openits-cabinet-power
+      path: typedef power-source
+      cut: foundation
+    - rule: unknown-zero
+      module: openits-cctv-types
+      path: typedef lens-mode
+      cut: cctv
+    - rule: unknown-zero
+      module: openits-cctv-types
+      path: typedef operational-status
+      cut: cctv
+    - rule: unknown-zero
+      module: openits-cctv-types
+      path: typedef ptz-move-mode
+      cut: cctv
+    - rule: unknown-zero
+      module: openits-cctv-types
+      path: typedef stream-health
+      cut: cctv
+    - rule: unknown-zero
+      module: openits-cctv-types
+      path: typedef tour-run-state
+      cut: cctv
+    - rule: unknown-zero
+      module: openits-cctv-types
+      path: typedef video-codec
+      cut: cctv
+    - rule: unknown-zero
+      module: openits-dms
+      path: /openits-dms/sign/control/state/beacon-state
+      cut: dms
+    - rule: unknown-zero
+      module: openits-dms
+      path: /openits-dms/sign/state/capabilities/beacon-type
+      cut: dms
+    - rule: unknown-zero
+      module: openits-dms
+      path: /openits-dms/sign/state/capabilities/color-capability
+      cut: dms
+    - rule: unknown-zero
+      module: openits-dms
+      path: /openits-dms/sign/state/capabilities/sign-type
+      cut: dms
+    - rule: unknown-zero
+      module: openits-dms
+      path: grouping message-body/beacon
+      cut: dms
+    - rule: unknown-zero
+      module: openits-dms
+      path: grouping sign-control-config/illumination-control
+      cut: dms
+    - rule: unknown-zero
+      module: openits-dms-events
+      path: /openits-dms-events/message-activation-failed/phase
+      cut: dms
+    - rule: unknown-zero
+      module: openits-dms-types
+      path: typedef dms-message-status
+      cut: dms
+    - rule: unknown-zero
+      module: openits-dms-types
+      path: typedef message-memory-type
+      cut: dms
+    - rule: unknown-zero
+      module: openits-ess
+      path: grouping observation-metadata/quality
+      cut: ess
+    - rule: unknown-zero
+      module: openits-ess
+      path: grouping pavement-sensor-config/sensing-method
+      cut: ess
+    - rule: unknown-zero
+      module: openits-ess
+      path: typedef sensor-health
+      cut: ess
+    - rule: unknown-zero
+      module: openits-ess-events
+      path: /openits-ess-events/weather-alert/direction
+      cut: ess
+    - rule: unknown-zero
+      module: openits-ess-events
+      path: /openits-ess-events/weather-alert/unit
+      cut: ess
+    - rule: unknown-zero
+      module: openits-perception
+      path: /openits-perception/perception-sensor/objects/track/lifecycle
+      cut: sensing
+    - rule: unknown-zero
+      module: openits-perception-types
+      path: typedef incident-disposition
+      cut: sensing
+    - rule: unknown-zero
+      module: openits-perception-types
+      path: typedef incident-severity
+      cut: sensing
+    - rule: unknown-zero
+      module: openits-ramp-metering
+      path: /openits-ramp-metering/ramp-meter/advance-warning-sign/state/lamp-status
+      cut: ramp-metering
+    - rule: unknown-zero
+      module: openits-ramp-metering
+      path: /openits-ramp-metering/ramp-meter/lanes/lane/state/head-state
+      cut: ramp-metering
+    - rule: unknown-zero
+      module: openits-ramp-metering
+      path: /openits-ramp-metering/ramp-meter/lanes/state/release-coordination
+      cut: ramp-metering
+    - rule: unknown-zero
+      module: openits-ramp-metering
+      path: /openits-ramp-metering/ramp-meter/sequencing/state/sequence-phase
+      cut: ramp-metering
+    - rule: unknown-zero
+      module: openits-ramp-metering
+      path: grouping lane-config/bypass-operation
+      cut: ramp-metering
+    - rule: unknown-zero
+      module: openits-ramp-metering
+      path: grouping meter-control-config/non-metering-display
+      cut: ramp-metering
+    - rule: unknown-zero
+      module: openits-ramp-metering-events
+      path: /openits-ramp-metering-events/queue-override-activated/trigger
+      cut: ramp-metering
+    - rule: unknown-zero
+      module: openits-ramp-metering-types
+      path: typedef rate-change-cause
+      cut: ramp-metering
+    - rule: unknown-zero
+      module: openits-reversible-lane
+      path: /openits-reversible-lane/reversible-lane/control/state/transition/phase
+      cut: reversible-lane
+    - rule: unknown-zero
+      module: openits-rsu
+      path: /openits-rsu/rsu/diagnostics/backhaul-cellular/signal-quality
+      cut: rsu
+    - rule: unknown-zero
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-tim-broadcast-state-changed/current
+      cut: rsu
+    - rule: unknown-zero
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-tim-broadcast-state-changed/prior
+      cut: rsu
+    - rule: unknown-zero
+      module: openits-rsu-events
+      path: /openits-rsu-events/rsu-tim-cleared/reason
+      cut: rsu
+    - rule: unknown-zero
+      module: openits-rsu-types
+      path: typedef gps-fix-status
+      cut: rsu
+    - rule: unknown-zero
+      module: openits-scms
+      path: typedef certificate-type
+      cut: rsu
+    - rule: unknown-zero
+      module: openits-scms
+      path: typedef enrollment-status
+      cut: rsu
+    - rule: unknown-zero
+      module: openits-scms
+      path: typedef geographic-region-type
+      cut: rsu
+    - rule: unknown-zero
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/priority/state/active-request/stage
+      cut: signal-control
+    - rule: unknown-zero
+      module: openits-signal-control
+      path: /openits-signal-control/signal-controller/timebase/clock/sync-status
+      cut: signal-control
+    - rule: unknown-zero
+      module: openits-signal-control
+      path: typedef on-battery-mode
+      cut: signal-control
+    - rule: unknown-zero
+      module: openits-signal-control
+      path: typedef overlap-interval-type
+      cut: signal-control
+    - rule: unknown-zero
+      module: openits-signal-control
+      path: typedef ped-interval-type
+      cut: signal-control
+    - rule: unknown-zero
+      module: openits-signal-control
+      path: typedef preempt-stage
+      cut: signal-control
+    - rule: unknown-zero
+      module: openits-signal-control
+      path: typedef signal-operation-on-battery
+      cut: signal-control
+    - rule: unknown-zero
+      module: openits-signal-control
+      path: typedef veh-interval-type
+      cut: signal-control
+    - rule: unknown-zero
+      module: openits-signal-control-events
+      path: /openits-signal-control-events/tsam-recommendation-applied/adjustment-type
+      cut: signal-control
+    - rule: unknown-zero
+      module: openits-signal-control-events
+      path: /openits-signal-control-events/tsp-event/denial-reason
+      cut: signal-control
+    - rule: unknown-zero
+      module: openits-signal-control-types
+      path: typedef tsam-engagement-state
+      cut: signal-control
+    - rule: unknown-zero
+      module: openits-traffic-sensor
+      path: /openits-traffic-sensor/traffic-sensor/diagnostics/calibration/status
+      cut: sensing
+    - rule: unknown-zero
+      module: openits-traffic-sensor-types
+      path: typedef data-quality
+      cut: sensing
+    - rule: unknown-zero
+      module: openits-traffic-sensor-types
+      path: typedef operational-status
+      cut: sensing
+    - rule: unknown-zero
+      module: openits-types
+      path: typedef fault-severity
+      cut: foundation
+    - rule: unknown-zero
+      module: openits-v2x-messaging-types
+      path: typedef decision-authority
+      cut: rsu
+    - rule: unknown-zero
+      module: openits-v2x-messaging-types
+      path: typedef srm-request-status
+      cut: rsu
+    - rule: unknown-zero
+      module: openits-vehicle-detection
+      path: typedef count-basis
+      cut: rsu
+    - rule: unknown-zero
+      module: openits-vehicle-detection
+      path: typedef stats-window-type
+      cut: rsu

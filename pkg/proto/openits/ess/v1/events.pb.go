@@ -31,6 +31,7 @@ type SensorRecalibrated struct {
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner          *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch  string                 `protobuf:"bytes,3,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,8,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -115,6 +116,13 @@ func (x *SensorRecalibrated) GetSequence() uint64 {
 	return 0
 }
 
+func (x *SensorRecalibrated) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *SensorRecalibrated) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -136,6 +144,7 @@ type WeatherAlert struct {
 	OccurredAt       *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner            *string                `protobuf:"bytes,9,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence         uint64                 `protobuf:"varint,10,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch    string                 `protobuf:"bytes,13,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId   string                 `protobuf:"bytes,11,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
@@ -255,6 +264,13 @@ func (x *WeatherAlert) GetSequence() uint64 {
 	return 0
 }
 
+func (x *WeatherAlert) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *WeatherAlert) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -266,7 +282,7 @@ var File_openits_ess_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_ess_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"\x1bopenits/ess/v1/events.proto\x12\x0eopenits.ess.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1aopenits/ess/v1/types.proto\"\xf2\x02\n" +
+	"\x1bopenits/ess/v1/events.proto\x12\x0eopenits.ess.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1aopenits/ess/v1/types.proto\"\x99\x03\n" +
 	"\x12SensorRecalibrated\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12 \n" +
 	"\tsensor_id\x18\x01 \x01(\tH\x00R\bsensorId\x88\x01\x01\x12(\n" +
@@ -276,13 +292,14 @@ const file_openits_ess_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\x06 \x01(\tH\x03R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\a \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\a \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\x03 \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceIdB\f\n" +
 	"\n" +
 	"_sensor_idB\x10\n" +
 	"\x0e_calibrated_byB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xb6\x05\n" +
+	"\x06_owner\"\xdd\x05\n" +
 	"\fWeatherAlert\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12&\n" +
 	"\fthreshold_id\x18\x01 \x01(\tH\x00R\vthresholdId\x88\x01\x01\x12*\n" +
@@ -298,7 +315,8 @@ const file_openits_ess_v1_events_proto_rawDesc = "" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\t \x01(\tH\bR\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\n" +
-	" \x01(\x04R\bsequence\x12(\n" +
+	" \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\r \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\v \x01(\tR\x0esourceDeviceIdB\x0f\n" +
 	"\r_threshold_idB\x11\n" +
 	"\x0f_observed_valueB\x12\n" +

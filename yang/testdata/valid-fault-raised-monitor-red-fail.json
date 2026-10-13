@@ -2,6 +2,7 @@
   "openits-common-fault-events:fault-raised": {
     "kind": "openits-signal-control-types:monitor-red-fail",
     "source-device-id": "sr9-main-st-sc-01",
+    "sequence-epoch": "boot-2026-10-13a",
     "sequence": "42",
     "fault-id": "monitor-red-fail-ch6",
     "severity": "critical",

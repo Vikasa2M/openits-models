@@ -28,8 +28,14 @@ module openits-dms-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.8.0";
+  openits-types:openits-version "0.8.1";
 
+  revision 2026-10-13 {
+    description
+      "Update descriptions that referred to mode-changed's prior/current
+       leaves, now previous-mode and mode. Wire-neutral.";
+    reference "RFC 7950 §11.";
+  }
   revision 2026-09-08 {
     description
       "Add the display-technology identity backing openits-dms's
@@ -250,7 +256,7 @@ module openits-dms-types {
        driving: local / external / central / central-override /
        simulation / other) and the sign-mode display-state (off /
        blank / test / normal). The mode-changed notification's
-       prior/current strings are interpreted in this mode-space.
+       previous-mode/mode strings are interpreted in this mode-space.
        (central and simulation are dms-control-mode values, not
        sign-mode.)";
     reference "NTCIP 1203:2010 (dmsControlMode).";

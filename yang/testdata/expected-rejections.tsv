@@ -90,3 +90,4 @@ invalid-zone-incident-type-wrong-base.json	Invalid identityref "openits-types:ob
 invalid-zone-occupancy-changed-bad-kind.json	Invalid identityref "openits-zone-occupancy-types:zoc-zone-occupancy-interval-report" value - identity not derived from the base "openits-zone-occupancy-types:zoc-occupancy-change-event-kind". (Data location "/openits-zone-occupancy-events:zone-occupancy-changed/kind"
 invalid-zone-occupancy-changed-missing-presence.json	MISSING presence
 invalid-zone-occupancy-changed-missing-zone-id.json	MISSING zone-id
+invalid-fault-raised-missing-sequence-epoch.json	MISSING sequence-epoch

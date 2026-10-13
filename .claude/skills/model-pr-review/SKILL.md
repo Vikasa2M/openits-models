@@ -97,6 +97,8 @@ exemplar each rule names, not the nearest module.
   modules) and fixture module-prefixing.
 - No issue-tracker IDs, personal names, or internal URLs in YANG
   descriptions, fixtures, or docs — this is a public standard.
+- conventions-exceptions.yaml only loses entries; a PR that adds one needs
+  a maintainer's explicit sign-off.
 
 ## 5. Commit/release hygiene
 

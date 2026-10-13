@@ -32,6 +32,7 @@ type RsuBroadcastSample struct {
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner          *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch  string                 `protobuf:"bytes,8,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -115,6 +116,13 @@ func (x *RsuBroadcastSample) GetSequence() uint64 {
 		return x.Sequence
 	}
 	return 0
+}
+
+func (x *RsuBroadcastSample) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
 }
 
 func (x *RsuBroadcastSample) GetSource() *v1.WireSource {
@@ -226,6 +234,7 @@ type RsuCertificateExpiring struct {
 	OccurredAt      *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner           *string                `protobuf:"bytes,9,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence        uint64                 `protobuf:"varint,10,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch   string                 `protobuf:"bytes,1,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId  string                 `protobuf:"bytes,11,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
@@ -324,6 +333,13 @@ func (x *RsuCertificateExpiring) GetSequence() uint64 {
 	return 0
 }
 
+func (x *RsuCertificateExpiring) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *RsuCertificateExpiring) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -342,6 +358,7 @@ type RsuChannelFault struct {
 	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner             *string                `protobuf:"bytes,8,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence          uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch     string                 `protobuf:"bytes,1,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	Source            *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId    string                 `protobuf:"bytes,10,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields     protoimpl.UnknownFields
@@ -441,6 +458,13 @@ func (x *RsuChannelFault) GetSequence() uint64 {
 	return 0
 }
 
+func (x *RsuChannelFault) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *RsuChannelFault) GetSource() *v1.WireSource {
 	if x != nil {
 		return x.Source
@@ -465,6 +489,7 @@ type RsuGpsStatusChange struct {
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner          *string                `protobuf:"bytes,8,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch  string                 `protobuf:"bytes,1,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,10,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -557,6 +582,13 @@ func (x *RsuGpsStatusChange) GetSequence() uint64 {
 	return 0
 }
 
+func (x *RsuGpsStatusChange) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *RsuGpsStatusChange) GetSource() *v1.WireSource {
 	if x != nil {
 		return x.Source
@@ -581,6 +613,7 @@ type RsuSecurityEvent struct {
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner          *string                `protobuf:"bytes,8,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch  string                 `protobuf:"bytes,1,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,10,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -672,6 +705,13 @@ func (x *RsuSecurityEvent) GetSequence() uint64 {
 	return 0
 }
 
+func (x *RsuSecurityEvent) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *RsuSecurityEvent) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -692,6 +732,7 @@ type RsuSrmReceived struct {
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner          *string                `protobuf:"bytes,11,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,12,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch  string                 `protobuf:"bytes,1,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,13,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -805,6 +846,13 @@ func (x *RsuSrmReceived) GetSequence() uint64 {
 	return 0
 }
 
+func (x *RsuSrmReceived) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *RsuSrmReceived) GetSource() *v1.WireSource {
 	if x != nil {
 		return x.Source
@@ -831,6 +879,7 @@ type RsuSrmStatusChange struct {
 	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner             *string                `protobuf:"bytes,9,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence          uint64                 `protobuf:"varint,10,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch     string                 `protobuf:"bytes,6,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	Source            *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId    string                 `protobuf:"bytes,11,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields     protoimpl.UnknownFields
@@ -937,6 +986,13 @@ func (x *RsuSrmStatusChange) GetSequence() uint64 {
 	return 0
 }
 
+func (x *RsuSrmStatusChange) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *RsuSrmStatusChange) GetSource() *v1.WireSource {
 	if x != nil {
 		return x.Source
@@ -962,6 +1018,7 @@ type RsuTimBroadcast struct {
 	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner             *string                `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence          uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch     string                 `protobuf:"bytes,2,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	Source            *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId    string                 `protobuf:"bytes,9,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields     protoimpl.UnknownFields
@@ -1061,6 +1118,13 @@ func (x *RsuTimBroadcast) GetSequence() uint64 {
 	return 0
 }
 
+func (x *RsuTimBroadcast) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *RsuTimBroadcast) GetSource() *v1.WireSource {
 	if x != nil {
 		return x.Source
@@ -1085,6 +1149,7 @@ type RsuTimBroadcastStateChanged struct {
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner          *string                `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch  string                 `protobuf:"bytes,4,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,9,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -1176,6 +1241,13 @@ func (x *RsuTimBroadcastStateChanged) GetSequence() uint64 {
 	return 0
 }
 
+func (x *RsuTimBroadcastStateChanged) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *RsuTimBroadcastStateChanged) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -1192,6 +1264,7 @@ type RsuTimCleared struct {
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner          *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch  string                 `protobuf:"bytes,3,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,8,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -1276,6 +1349,13 @@ func (x *RsuTimCleared) GetSequence() uint64 {
 	return 0
 }
 
+func (x *RsuTimCleared) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *RsuTimCleared) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -1296,6 +1376,7 @@ type RsuTimLoaded struct {
 	OccurredAt      *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner           *string                `protobuf:"bytes,10,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence        uint64                 `protobuf:"varint,11,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch   string                 `protobuf:"bytes,7,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId  string                 `protobuf:"bytes,12,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
@@ -1408,6 +1489,13 @@ func (x *RsuTimLoaded) GetSequence() uint64 {
 	return 0
 }
 
+func (x *RsuTimLoaded) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *RsuTimLoaded) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -1419,7 +1507,7 @@ var File_openits_rsu_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"\x1bopenits/rsu/v1/events.proto\x12\x0eopenits.rsu.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1aopenits/rsu/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\xb6\x03\n" +
+	"\x1bopenits/rsu/v1/events.proto\x12\x0eopenits.rsu.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1aopenits/rsu/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\xdd\x03\n" +
 	"\x12RsuBroadcastSample\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12+\n" +
 	"\x0fsample_window_s\x18\x02 \x01(\rH\x00R\rsampleWindowS\x88\x01\x01\x127\n" +
@@ -1429,7 +1517,8 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\x06 \x01(\tH\x02R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\a \x01(\x04R\bsequence\x124\n" +
+	"\bsequence\x18\a \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\b \x01(\tR\rsequenceEpoch\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x12\n" +
 	"\x10_sample_window_sB\x0e\n" +
@@ -1449,7 +1538,7 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\b_rate_hzB\v\n" +
 	"\t_priorityB\r\n" +
 	"\v_channel_idB\x16\n" +
-	"\x14_dsrc_channel_number\"\x92\x04\n" +
+	"\x14_dsrc_channel_number\"\xb9\x04\n" +
 	"\x16RsuCertificateExpiring\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12*\n" +
 	"\x0ecertificate_id\x18\x02 \x01(\tH\x00R\rcertificateId\x88\x01\x01\x12.\n" +
@@ -1463,13 +1552,14 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\t \x01(\tH\x04R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\n" +
-	" \x01(\x04R\bsequence\x12(\n" +
+	" \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\x01 \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\v \x01(\tR\x0esourceDeviceIdB\x11\n" +
 	"\x0f_certificate_idB\x13\n" +
 	"\x11_certificate_typeB\x14\n" +
 	"\x12_days_until_expiryB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\x97\x04\n" +
+	"\x06_owner\"\xbe\x04\n" +
 	"\x0fRsuChannelFault\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\"\n" +
 	"\n" +
@@ -1483,7 +1573,8 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\b \x01(\tH\x05R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\t \x01(\x04R\bsequence\x124\n" +
+	"\bsequence\x18\t \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\x01 \x01(\tR\rsequenceEpoch\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\n" +
 	" \x01(\tR\x0esourceDeviceIdB\r\n" +
@@ -1493,7 +1584,7 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\v_channel_idB\x16\n" +
 	"\x14_dsrc_channel_numberB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xa1\x04\n" +
+	"\x06_owner\"\xc8\x04\n" +
 	"\x12RsuGpsStatusChange\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12J\n" +
 	"\x0fprevious_status\x18\x02 \x01(\x0e2\x1c.openits.rsu.v1.GpsFixStatusH\x00R\x0epreviousStatus\x88\x01\x01\x12@\n" +
@@ -1507,7 +1598,8 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\b \x01(\tH\x04R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\t \x01(\x04R\bsequence\x124\n" +
+	"\bsequence\x18\t \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\x01 \x01(\tR\rsequenceEpoch\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\n" +
 	" \x01(\tR\x0esourceDeviceIdB\x12\n" +
@@ -1515,7 +1607,7 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\v_new_statusB\r\n" +
 	"\v_satellitesB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\x8a\x03\n" +
+	"\x06_owner\"\xb1\x03\n" +
 	"\x10RsuSecurityEvent\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\"\n" +
 	"\n" +
@@ -1527,7 +1619,8 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\b \x01(\tH\x04R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\t \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\t \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\x01 \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\n" +
 	" \x01(\tR\x0esourceDeviceIdB\r\n" +
 	"\v_event_typeB\t\n" +
@@ -1535,7 +1628,7 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\n" +
 	"\b_messageB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xf7\x04\n" +
+	"\x06_owner\"\x9e\x05\n" +
 	"\x0eRsuSrmReceived\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\"\n" +
 	"\n" +
@@ -1553,7 +1646,8 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	" \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\v \x01(\tH\aR\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\f \x01(\x04R\bsequence\x124\n" +
+	"\bsequence\x18\f \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\x01 \x01(\tR\rsequenceEpoch\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\r \x01(\tR\x0esourceDeviceIdB\r\n" +
 	"\v_request_idB\r\n" +
@@ -1563,7 +1657,7 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\f_eta_secondsB\x10\n" +
 	"\x0e_vehicle_classB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xc9\x05\n" +
+	"\x06_owner\"\xf0\x05\n" +
 	"\x12RsuSrmStatusChange\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\"\n" +
 	"\n" +
@@ -1580,7 +1674,8 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\t \x01(\tH\x06R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\n" +
-	" \x01(\x04R\bsequence\x124\n" +
+	" \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\x06 \x01(\tR\rsequenceEpoch\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\v \x01(\tR\x0esourceDeviceIdB\r\n" +
 	"\v_request_idB\r\n" +
@@ -1589,7 +1684,7 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\v_new_statusB\x15\n" +
 	"\x13_decision_authorityB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xfe\x03\n" +
+	"\x06_owner\"\xa5\x04\n" +
 	"\x0fRsuTimBroadcast\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x15\n" +
 	"\x06msg_id\x18\x01 \x01(\tR\x05msgId\x12\x1f\n" +
@@ -1603,14 +1698,15 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\a \x01(\tH\x04R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\b \x01(\x04R\bsequence\x124\n" +
+	"\bsequence\x18\b \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\x02 \x01(\tR\rsequenceEpoch\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceIdB\v\n" +
 	"\t_priorityB\r\n" +
 	"\v_channel_idB\x16\n" +
 	"\x14_dsrc_channel_numberB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xc2\x03\n" +
+	"\x06_owner\"\xe9\x03\n" +
 	"\x1bRsuTimBroadcastStateChanged\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x120\n" +
 	"\x05prior\x18\x01 \x01(\x0e2\x15.openits.rsu.v1.PriorH\x00R\x05prior\x88\x01\x01\x121\n" +
@@ -1621,12 +1717,13 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\a \x01(\tH\x03R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\b \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\b \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\x04 \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceIdB\b\n" +
 	"\x06_priorB\x13\n" +
 	"\x11_active_tim_countB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xc8\x02\n" +
+	"\x06_owner\"\xef\x02\n" +
 	"\rRsuTimCleared\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x15\n" +
 	"\x06msg_id\x18\x01 \x01(\tR\x05msgId\x12.\n" +
@@ -1636,10 +1733,11 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\x06 \x01(\tH\x01R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\a \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\a \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\x03 \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceIdB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xaf\x04\n" +
+	"\x06_owner\"\xd6\x04\n" +
 	"\fRsuTimLoaded\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x15\n" +
 	"\x06msg_id\x18\x01 \x01(\tR\x05msgId\x12\x1b\n" +
@@ -1655,7 +1753,8 @@ const file_openits_rsu_v1_events_proto_rawDesc = "" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\n" +
 	" \x01(\tH\x05R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\v \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\v \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\a \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\f \x01(\tR\x0esourceDeviceIdB\t\n" +
 	"\a_sourceB\v\n" +
 	"\t_priorityB\x13\n" +

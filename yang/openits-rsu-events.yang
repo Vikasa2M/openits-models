@@ -29,8 +29,15 @@ module openits-rsu-events {
      the base module (ygot's proto generator fails on modules
      containing notification statements).";
 
-  openits-types:openits-version "0.6.0";
+  openits-types:openits-version "0.7.0";
 
+  revision 2026-10-13 {
+    description
+      "Inherit the mandatory sequence-epoch leaf from the openits-types
+       event-header grouping, which changes every notification payload
+       in this module. Breaking: producers must emit sequence-epoch.";
+    reference "RFC 7950 §11.";
+  }
   revision 2026-08-05 {
     description
       "Model-review remediation (2026-08): stamp an explicit value

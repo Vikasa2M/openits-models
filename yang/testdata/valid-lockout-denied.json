@@ -2,6 +2,7 @@
   "openits-cctv-events:lockout-denied": {
     "kind": "openits-cctv-types:cctv-lockout-denied",
     "source-device-id": "cctv-i35-mm214",
+    "sequence-epoch": "boot-2026-10-13a",
     "occurred-at": "2026-07-17T14:07:00Z",
     "sequence": "3",
     "requested-by": "op-tmc-12",

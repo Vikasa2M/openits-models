@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "direction": {
+      "type": "string"
+    },
+    "end-verified": {
+      "type": "boolean"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "lane-impact": {
+      "type": "string"
+    },
+    "notice": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "point": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "latitude": {
+            "type": "string"
+          },
+          "longitude": {
+            "type": "string"
+          },
+          "point-index": {
+            "maximum": 65535,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "reduced-speed-limit-kmh": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "sequence-epoch": {
+      "maxLength": 64,
+      "minLength": 1,
+      "type": "string"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "start-verified": {
+      "type": "boolean"
+    },
+    "temporary-signal": {
+      "type": "boolean"
+    },
+    "window-end": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "window-start": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "work-zone-type": {
+      "type": "string"
+    },
+    "worker-presence": {
+      "additionalProperties": false,
+      "properties": {
+        "last-confirmed-at": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "method": {
+          "type": "string"
+        },
+        "workers-present": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "workers-present"
+      ],
+      "type": "object"
+    },
+    "zone-id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "occurred-at",
+    "sequence",
+    "sequence-epoch",
+    "source-device-id",
+    "window-start",
+    "zone-id"
+  ],
+  "type": "object"
+}

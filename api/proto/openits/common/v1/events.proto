@@ -21,6 +21,7 @@ message CommHealthEvent {
   google.protobuf.Timestamp occurred_at = 2;
   optional string owner = 10;
   uint64 sequence = 11;
+  string sequence_epoch = 13;
   openits.types.v1.WireSource source = 100;
   string source_device_id = 1;
 }
@@ -32,6 +33,7 @@ message FaultCleared {
   google.protobuf.Timestamp occurred_at = 3;
   optional string owner = 5;
   uint64 sequence = 6;
+  string sequence_epoch = 7;
   openits.types.v1.WireSource source = 100;
   string source_device_id = 1;
 }
@@ -46,14 +48,17 @@ message FaultRaised {
   google.protobuf.Timestamp occurred_at = 5;
   optional string owner = 7;
   uint64 sequence = 8;
+  string sequence_epoch = 10;
   openits.types.v1.WireSource source = 100;
   string source_device_id = 1;
 }
 
 message ModeChanged {
+  reserved 2, 3;
+  reserved "prior", "current";
   string kind = 99;
-  optional string prior = 2;
-  string current = 3;
+  optional string previous_mode = 12;
+  string mode = 13;
   optional string reason = 4;
   optional string control_source = 9;
   optional string trigger = 10;
@@ -61,6 +66,7 @@ message ModeChanged {
   google.protobuf.Timestamp occurred_at = 5;
   optional string owner = 7;
   uint64 sequence = 8;
+  string sequence_epoch = 11;
   openits.types.v1.WireSource source = 100;
   string source_device_id = 1;
 }

@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package openits.reversible_lane.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/reversible_lane/v1;reversiblelanev1";
+
+import "google/protobuf/timestamp.proto";
+import "openits/reversible_lane/v1/types.proto";
+import "openits/types/v1/types.proto";
+
+message LaneStateChanged {
+  string kind = 99;
+  optional LaneFlowState previous_state = 1;
+  optional string previous_direction = 2;
+  optional LaneFlowState new_state = 3;
+  optional string new_direction = 4;
+  optional string initiated_by = 5;
+  optional string observed_by = 7;
+  google.protobuf.Timestamp occurred_at = 8;
+  optional string owner = 9;
+  uint64 sequence = 10;
+  string sequence_epoch = 6;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 11;
+}
+
+message LcsConflictDetected {
+  string kind = 99;
+  optional string segment_id = 1;
+  optional string lane_id = 9;
+  optional LcsIndication lcs_direction_a = 2;
+  optional LcsIndication lcs_direction_b = 3;
+  optional string observed_by = 4;
+  google.protobuf.Timestamp occurred_at = 5;
+  optional string owner = 6;
+  uint64 sequence = 7;
+  string sequence_epoch = 10;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 8;
+}
+
+message TransitionTimeout {
+  string kind = 99;
+  optional string from_direction = 1;
+  optional string to_direction = 2;
+  google.protobuf.Timestamp started_at = 3;
+  optional uint32 timeout_s = 4;
+  optional string sequence_step = 5;
+  optional string observed_by = 6;
+  google.protobuf.Timestamp occurred_at = 7;
+  optional string owner = 8;
+  uint64 sequence = 9;
+  string sequence_epoch = 11;
+  string source_device_id = 10;
+}
+

@@ -2,6 +2,7 @@
   "openits-reversible-lane-events:transition-timeout": {
     "kind": "openits-reversible-lane-types:rl-transition-timeout",
     "source-device-id": "us75-contraflow",
+    "sequence-epoch": "boot-2026-10-13a",
     "occurred-at": "2026-07-13T12:00:00Z",
     "sequence": "1",
     "from-direction": "openits-types:direction-northbound",

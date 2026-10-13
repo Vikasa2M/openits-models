@@ -42,6 +42,7 @@ type ZoneStateChanged struct {
 	Owner                *string                `protobuf:"bytes,10,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Point                []*Point               `protobuf:"bytes,11,rep,name=point,proto3" json:"point,omitempty"`
 	Sequence             uint64                 `protobuf:"varint,12,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch        string                 `protobuf:"bytes,19,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId       string                 `protobuf:"bytes,13,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
@@ -203,6 +204,13 @@ func (x *ZoneStateChanged) GetSequence() uint64 {
 	return 0
 }
 
+func (x *ZoneStateChanged) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *ZoneStateChanged) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -334,7 +342,7 @@ var File_openits_work_zone_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_work_zone_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"!openits/work_zone/v1/events.proto\x12\x14openits.work_zone.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xfb\a\n" +
+	"!openits/work_zone/v1/events.proto\x12\x14openits.work_zone.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa2\b\n" +
 	"\x10ZoneStateChanged\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x17\n" +
 	"\azone_id\x18\x01 \x01(\tR\x06zoneId\x12=\n" +
@@ -358,7 +366,8 @@ const file_openits_work_zone_v1_events_proto_rawDesc = "" +
 	"\x05owner\x18\n" +
 	" \x01(\tH\tR\x05owner\x88\x01\x01\x121\n" +
 	"\x05point\x18\v \x03(\v2\x1b.openits.work_zone.v1.PointR\x05point\x12\x1a\n" +
-	"\bsequence\x18\f \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\f \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\x13 \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\r \x01(\tR\x0esourceDeviceIdB\f\n" +
 	"\n" +
 	"_directionB\x0e\n" +

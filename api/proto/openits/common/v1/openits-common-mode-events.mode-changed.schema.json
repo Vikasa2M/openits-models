@@ -46,10 +46,10 @@
     "control-source": {
       "type": "string"
     },
-    "current": {
+    "kind": {
       "type": "string"
     },
-    "kind": {
+    "mode": {
       "type": "string"
     },
     "observed-by": {
@@ -65,13 +65,18 @@
     "owner": {
       "type": "string"
     },
-    "prior": {
+    "previous-mode": {
       "type": "string"
     },
     "reason": {
       "type": "string"
     },
     "sequence": {
+      "type": "string"
+    },
+    "sequence-epoch": {
+      "maxLength": 64,
+      "minLength": 1,
       "type": "string"
     },
     "source": {
@@ -88,10 +93,11 @@
     }
   },
   "required": [
-    "current",
     "kind",
+    "mode",
     "occurred-at",
     "sequence",
+    "sequence-epoch",
     "source-device-id"
   ],
   "type": "object"

@@ -2,6 +2,7 @@
   "openits-signal-control-events:detector-report": {
     "kind": "openits-signal-control-types:sc-detector-report",
     "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence-epoch": "boot-2026-10-13a",
     "sequence": "1",
     "interval-start": "2026-07-11T14:00:00Z",
     "interval-duration-s": 300,

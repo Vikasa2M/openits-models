@@ -218,6 +218,7 @@ func subscribeCctv(ctx context.Context, out chan<- tests.EventEnvelope, window t
 			},
 		},
 	}
+	stampHeaders(events, "mock-boot-1")
 	for _, e := range events {
 		select {
 		case <-ctx.Done():

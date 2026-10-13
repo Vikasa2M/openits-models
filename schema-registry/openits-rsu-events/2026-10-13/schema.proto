@@ -1,0 +1,177 @@
+syntax = "proto3";
+
+package openits.rsu.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/rsu/v1;rsuv1";
+
+import "google/protobuf/timestamp.proto";
+import "openits/rsu/v1/types.proto";
+import "openits/types/v1/types.proto";
+
+message RsuBroadcastSample {
+  string kind = 99;
+  optional uint32 sample_window_s = 2;
+  repeated Broadcast broadcast = 3;
+  optional string observed_by = 5;
+  google.protobuf.Timestamp occurred_at = 4;
+  optional string owner = 6;
+  uint64 sequence = 7;
+  string sequence_epoch = 8;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message Broadcast {
+  optional string msg_id = 1;
+  optional string msg_type = 2;
+  optional string rate_hz = 4;
+  optional uint32 priority = 5;
+  optional string channel_id = 6;
+  optional uint32 dsrc_channel_number = 7;
+}
+
+message RsuCertificateExpiring {
+  string kind = 99;
+  optional string certificate_id = 2;
+  optional string certificate_type = 3;
+  optional uint32 days_until_expiry = 4;
+  google.protobuf.Timestamp expiry_date = 5;
+  optional string observed_by = 7;
+  google.protobuf.Timestamp occurred_at = 8;
+  optional string owner = 9;
+  uint64 sequence = 10;
+  string sequence_epoch = 1;
+  string source_device_id = 11;
+}
+
+message RsuChannelFault {
+  string kind = 99;
+  optional string fault_type = 3;
+  optional string message = 4;
+  optional string channel_id = 11;
+  optional uint32 dsrc_channel_number = 12;
+  optional string observed_by = 6;
+  google.protobuf.Timestamp occurred_at = 7;
+  optional string owner = 8;
+  uint64 sequence = 9;
+  string sequence_epoch = 1;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 10;
+}
+
+message RsuGpsStatusChange {
+  string kind = 99;
+  optional GpsFixStatus previous_status = 2;
+  optional GpsFixStatus new_status = 3;
+  optional uint32 satellites = 4;
+  optional string observed_by = 6;
+  google.protobuf.Timestamp occurred_at = 7;
+  optional string owner = 8;
+  uint64 sequence = 9;
+  string sequence_epoch = 1;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 10;
+}
+
+message RsuSecurityEvent {
+  string kind = 99;
+  optional string event_type = 2;
+  optional string source = 3;
+  optional string message = 4;
+  optional string observed_by = 6;
+  google.protobuf.Timestamp occurred_at = 7;
+  optional string owner = 8;
+  uint64 sequence = 9;
+  string sequence_epoch = 1;
+  string source_device_id = 10;
+}
+
+message RsuSrmReceived {
+  string kind = 99;
+  optional string request_id = 2;
+  optional string vehicle_id = 3;
+  optional string request_type = 4;
+  optional uint32 approach = 5;
+  optional uint32 eta_seconds = 6;
+  optional string vehicle_class = 7;
+  optional string observed_by = 9;
+  google.protobuf.Timestamp occurred_at = 10;
+  optional string owner = 11;
+  uint64 sequence = 12;
+  string sequence_epoch = 1;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 13;
+}
+
+message RsuSrmStatusChange {
+  string kind = 99;
+  optional string request_id = 2;
+  optional string vehicle_id = 3;
+  optional SrmRequestStatus previous_status = 4;
+  optional SrmRequestStatus new_status = 5;
+  optional DecisionAuthority decision_authority = 1;
+  optional string observed_by = 7;
+  google.protobuf.Timestamp occurred_at = 8;
+  optional string owner = 9;
+  uint64 sequence = 10;
+  string sequence_epoch = 6;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 11;
+}
+
+message RsuTimBroadcast {
+  string kind = 99;
+  string msg_id = 1;
+  optional uint32 priority = 3;
+  optional string channel_id = 10;
+  optional uint32 dsrc_channel_number = 11;
+  optional string observed_by = 5;
+  google.protobuf.Timestamp occurred_at = 6;
+  optional string owner = 7;
+  uint64 sequence = 8;
+  string sequence_epoch = 2;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 9;
+}
+
+message RsuTimBroadcastStateChanged {
+  string kind = 99;
+  optional Prior prior = 1;
+  Current current = 2;
+  optional uint32 active_tim_count = 3;
+  optional string observed_by = 5;
+  google.protobuf.Timestamp occurred_at = 6;
+  optional string owner = 7;
+  uint64 sequence = 8;
+  string sequence_epoch = 4;
+  string source_device_id = 9;
+}
+
+message RsuTimCleared {
+  string kind = 99;
+  string msg_id = 1;
+  Reason reason = 2;
+  optional string observed_by = 4;
+  google.protobuf.Timestamp occurred_at = 5;
+  optional string owner = 6;
+  uint64 sequence = 7;
+  string sequence_epoch = 3;
+  string source_device_id = 8;
+}
+
+message RsuTimLoaded {
+  string kind = 99;
+  string msg_id = 1;
+  optional string source = 2;
+  optional uint32 priority = 3;
+  optional uint32 duration_seconds = 4;
+  google.protobuf.Timestamp start_time = 5;
+  optional string content_summary = 6;
+  optional string observed_by = 8;
+  google.protobuf.Timestamp occurred_at = 9;
+  optional string owner = 10;
+  uint64 sequence = 11;
+  string sequence_epoch = 7;
+  string source_device_id = 12;
+}
+

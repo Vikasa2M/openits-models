@@ -35,6 +35,7 @@ type LaneStateChanged struct {
 	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner             *string                `protobuf:"bytes,9,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence          uint64                 `protobuf:"varint,10,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch     string                 `protobuf:"bytes,6,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	Source            *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId    string                 `protobuf:"bytes,11,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields     protoimpl.UnknownFields
@@ -141,6 +142,13 @@ func (x *LaneStateChanged) GetSequence() uint64 {
 	return 0
 }
 
+func (x *LaneStateChanged) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *LaneStateChanged) GetSource() *v1.WireSource {
 	if x != nil {
 		return x.Source
@@ -166,6 +174,7 @@ type LcsConflictDetected struct {
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner          *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch  string                 `protobuf:"bytes,10,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,8,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -265,6 +274,13 @@ func (x *LcsConflictDetected) GetSequence() uint64 {
 	return 0
 }
 
+func (x *LcsConflictDetected) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *LcsConflictDetected) GetSource() *v1.WireSource {
 	if x != nil {
 		return x.Source
@@ -291,6 +307,7 @@ type TransitionTimeout struct {
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner          *string                `protobuf:"bytes,8,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence       uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch  string                 `protobuf:"bytes,11,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId string                 `protobuf:"bytes,10,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -396,6 +413,13 @@ func (x *TransitionTimeout) GetSequence() uint64 {
 	return 0
 }
 
+func (x *TransitionTimeout) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *TransitionTimeout) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -407,7 +431,7 @@ var File_openits_reversible_lane_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_reversible_lane_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"'openits/reversible_lane/v1/events.proto\x12\x1aopenits.reversible_lane.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a&openits/reversible_lane/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\xbf\x05\n" +
+	"'openits/reversible_lane/v1/events.proto\x12\x1aopenits.reversible_lane.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a&openits/reversible_lane/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\xe6\x05\n" +
 	"\x10LaneStateChanged\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12U\n" +
 	"\x0eprevious_state\x18\x01 \x01(\x0e2).openits.reversible_lane.v1.LaneFlowStateH\x00R\rpreviousState\x88\x01\x01\x122\n" +
@@ -421,7 +445,8 @@ const file_openits_reversible_lane_v1_events_proto_rawDesc = "" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\t \x01(\tH\x06R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\n" +
-	" \x01(\x04R\bsequence\x124\n" +
+	" \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\x06 \x01(\tR\rsequenceEpoch\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\v \x01(\tR\x0esourceDeviceIdB\x11\n" +
 	"\x0f_previous_stateB\x15\n" +
@@ -431,7 +456,7 @@ const file_openits_reversible_lane_v1_events_proto_rawDesc = "" +
 	"\x0e_new_directionB\x0f\n" +
 	"\r_initiated_byB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xf2\x04\n" +
+	"\x06_owner\"\x99\x05\n" +
 	"\x13LcsConflictDetected\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\"\n" +
 	"\n" +
@@ -444,7 +469,9 @@ const file_openits_reversible_lane_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\x06 \x01(\tH\x05R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\a \x01(\x04R\bsequence\x124\n" +
+	"\bsequence\x18\a \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\n" +
+	" \x01(\tR\rsequenceEpoch\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceIdB\r\n" +
 	"\v_segment_idB\n" +
@@ -453,7 +480,7 @@ const file_openits_reversible_lane_v1_events_proto_rawDesc = "" +
 	"\x10_lcs_direction_aB\x12\n" +
 	"\x10_lcs_direction_bB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xa4\x04\n" +
+	"\x06_owner\"\xcb\x04\n" +
 	"\x11TransitionTimeout\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12*\n" +
 	"\x0efrom_direction\x18\x01 \x01(\tH\x00R\rfromDirection\x88\x01\x01\x12&\n" +
@@ -467,7 +494,8 @@ const file_openits_reversible_lane_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\b \x01(\tH\x05R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\t \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\t \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\v \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\n" +
 	" \x01(\tR\x0esourceDeviceIdB\x11\n" +
 	"\x0f_from_directionB\x0f\n" +

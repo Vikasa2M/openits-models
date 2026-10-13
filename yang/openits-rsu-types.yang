@@ -30,8 +30,14 @@ module openits-rsu-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.4.0";
+  openits-types:openits-version "0.4.1";
 
+  revision 2026-10-13 {
+    description
+      "Update descriptions that referred to mode-changed's prior/current
+       leaves, now previous-mode and mode. Wire-neutral.";
+    reference "RFC 7950 §11.";
+  }
   revision 2026-09-08 {
     description
       "Remove the local time-source enum in favour of the foundation's
@@ -151,7 +157,7 @@ module openits-rsu-types {
     description
       "RSU operational-mode transitions (standby / operate per
        NTCIP 1218 rsuMode). The mode-changed notification's
-       prior/current identityref values (openits-rsu-types:rsu-mode
+       previous-mode/mode identityref values (openits-rsu-types:rsu-mode
        descendants) are interpreted in this mode-space.";
     reference "NTCIP 1218:2020 (rsuMode).";
   }
@@ -161,7 +167,7 @@ module openits-rsu-types {
    * enumeration) so vendors can add proprietary modes without a
    * base-model revision. Derives from the cross-service
    * openits-types:operational-mode so a value can be carried in the
-   * generic openits-common-mode-events:mode-changed prior/current.
+   * generic openits-common-mode-events:mode-changed previous-mode/mode.
    */
   identity rsu-mode {
     base openits-types:operational-mode;

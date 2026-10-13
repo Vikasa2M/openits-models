@@ -2,6 +2,7 @@
   "openits-reversible-lane-events:lcs-conflict-detected": {
     "kind": "openits-reversible-lane-types:rl-lcs-conflict-detected",
     "source-device-id": "us75-contraflow",
+    "sequence-epoch": "boot-2026-10-13a",
     "occurred-at": "2026-07-13T12:00:00Z",
     "sequence": "1",
     "segment-id": "seg-04",

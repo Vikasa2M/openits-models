@@ -303,6 +303,7 @@ func subscribePerception(ctx context.Context, out chan<- tests.EventEnvelope, wi
 			},
 		},
 	}
+	stampHeaders(events, "mock-boot-1")
 	for _, e := range events {
 		select {
 		case <-ctx.Done():

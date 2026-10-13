@@ -2,9 +2,10 @@
   "openits-common-mode-events:mode-changed": {
     "kind": "openits-signal-control-types:sc-mode-event-kind",
     "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence-epoch": "boot-2026-10-13a",
     "sequence": "1",
-    "prior": "openits-signal-control-types:mode-free",
-    "current": "openits-signal-control-types:mode-coordinated",
+    "previous-mode": "openits-signal-control-types:mode-free",
+    "mode": "openits-signal-control-types:mode-coordinated",
     "reason": "schedule-triggered",
     "control-source": "openits-types:control-central",
     "trigger": "openits-types:trigger-schedule",

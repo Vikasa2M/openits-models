@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package openits.zone_occupancy.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/zone_occupancy/v1;zoneoccupancyv1";
+
+import "google/protobuf/timestamp.proto";
+
+message ZoneOccupancyChanged {
+  string kind = 99;
+  string zone_id = 1;
+  optional string observed_by = 2;
+  optional uint32 occupancy_count = 3;
+  google.protobuf.Timestamp occupied_since = 4;
+  google.protobuf.Timestamp occurred_at = 5;
+  optional string owner = 6;
+  bool presence = 7;
+  optional uint32 presence_confidence = 8;
+  repeated PresentClass present_class = 9;
+  uint64 sequence = 10;
+  string sequence_epoch = 12;
+  string source_device_id = 11;
+}
+
+message PresentClass {
+  optional string class = 1;
+  optional uint32 count = 2;
+  optional uint32 classification_confidence = 3;
+}
+
+message ZoneOccupancyIntervalReport {
+  string kind = 99;
+  repeated Zone zone = 1;
+  optional string observed_by = 2;
+  google.protobuf.Timestamp occurred_at = 3;
+  optional string owner = 4;
+  uint64 sequence = 5;
+  string sequence_epoch = 7;
+  string source_device_id = 6;
+}
+
+message Zone {
+  optional string zone_id = 1;
+  google.protobuf.Timestamp interval_start = 2;
+  optional uint32 interval_duration_s = 3;
+  optional uint32 observed_count = 4;
+  optional string occupancy_percent = 5;
+  optional uint32 peak_occupancy_count = 6;
+  repeated ObservedClass observed_class = 7;
+}
+
+message ObservedClass {
+  optional string class = 1;
+  optional uint32 count = 2;
+  optional uint32 mean_confidence = 3;
+}
+

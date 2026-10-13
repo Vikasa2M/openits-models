@@ -2,6 +2,7 @@
   "openits-signal-control-events:tsp-event": {
     "kind": "openits-signal-control-types:tsp-check-in",
     "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence-epoch": "boot-2026-10-13a",
     "sequence": "1",
     "tsp-number": 1,
     "vehicle-id": "bus-4471",

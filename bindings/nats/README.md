@@ -97,8 +97,12 @@ encoded payload. The required header set:
 `traceparent` (W3C Trace Context) is optional but recommended.
 
 The deterministic-`ce-id` idempotency rule is worth calling out because
-its *root* is model-level, not transport-level: event identity and
-dedup semantics come from the YANG event-header / sequence semantics.
+its *root* is model-level, not transport-level. Deduplication comes
+from `ce-id`, which is derived from event content
+(see [the ce-id spec](../../docs/ce-id-spec.md)). Ordering and loss
+detection come from the event header's (`sequence-epoch`, `sequence`)
+pair: a gap within one epoch is loss for a consumer receiving the
+device's full stream.
 The reference binding carries that identity in the `ce-id` header;
 another binding would carry the same identity in whatever field its
 envelope provides. Model conformance (Tier 1) is where the

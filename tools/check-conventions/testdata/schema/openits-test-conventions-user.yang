@@ -1,0 +1,19 @@
+module openits-test-conventions-user {
+  yang-version 1.1;
+  namespace "urn:openits:yang:test-conventions-user";
+  prefix tcu;
+
+  import openits-test-conventions { prefix tc; }
+
+  description "Fixture: a second module that uses the first module's typedef and grouping.";
+
+  revision 2026-10-13 {
+    description "Initial.";
+  }
+
+  container user {
+    config false;
+    leaf uses-shared { type tc:shared-status; }
+    uses tc:position;
+  }
+}

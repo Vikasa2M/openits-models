@@ -24,8 +24,16 @@ module openits-common-mode-events {
      Service-specific mode-kind identities derive from
      openits-types:mode-event-kind in each service's -types module.";
 
-  openits-types:openits-version "0.2.0";
+  openits-types:openits-version "0.3.0";
 
+  revision 2026-10-13 {
+    description
+      "Rename mode-changed's prior and current to previous-mode and
+       mode, the before/after convention every change event follows:
+       previous-<x> and <x>, where <x> names the value. Breaking: the
+       field names change on the wire.";
+    reference "RFC 7950 §11.";
+  }
   revision 2026-07-21 {
     description
       "Retype mode-changed/trigger from a closed enumeration to an
@@ -83,7 +91,7 @@ module openits-common-mode-events {
     description
       "A device transitioned between operational modes. The 'kind'
        identityref names the mode-space (e.g., signal-controller mode,
-       ramp-meter mode); 'prior' and 'current' are concrete
+       ramp-meter mode); 'previous-mode' and 'mode' are concrete
        operating-mode identities (openits-types:operational-mode
        descendants) interpreted in the context of the mode-space.";
 
@@ -97,22 +105,22 @@ module openits-common-mode-events {
 
     uses openits-types:event-header;
 
-    leaf prior {
+    leaf previous-mode {
       type identityref { base openits-types:operational-mode; }
       description
-        "Prior mode value, a concrete operating-mode identity from the
-         service's mode-value set (e.g.
+        "The mode before this transition, a concrete operating-mode
+         identity from the service's mode-value set (e.g.
          openits-signal-control-types:mode-free). Interpreted in the
          context of the 'kind' mode-space. Absent when the device just
          started up.";
     }
 
-    leaf current {
+    leaf mode {
       type identityref { base openits-types:operational-mode; }
       mandatory true;
       description
-        "Current mode value, a concrete operating-mode identity from
-         the service's mode-value set (e.g.
+        "The mode after this transition, a concrete operating-mode
+         identity from the service's mode-value set (e.g.
          openits-signal-control-types:mode-coordinated). Interpreted in
          the context of the 'kind' mode-space.";
     }
