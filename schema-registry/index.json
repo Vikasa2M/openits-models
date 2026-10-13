@@ -122,7 +122,8 @@
         "RFC 7950 section 11 (additive YANG evolution)",
         "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
         "RFC 7950 §11",
-        "RFC 7950 §7.13.2"
+        "RFC 7950 §7.13.2",
+        "RFC 7950 §7.18.2"
       ],
       "modules": [
         {
@@ -201,7 +202,8 @@
             "2026-08-27",
             "2026-09-07",
             "2026-09-08",
-            "2026-10-13"
+            "2026-10-13",
+            "2026-10-14"
           ],
           "refStd": [
             "NTCIP 1203 v03 (MULTI)",
@@ -212,7 +214,8 @@
             "NTCIP 1203:2010 (DMS functional reference; fault classes)",
             "RFC 7950 9.6.4.2",
             "RFC 7950 section 11",
-            "RFC 7950 §11"
+            "RFC 7950 §11",
+            "RFC 7950 §7.18.2"
           ]
         }
       ]
@@ -912,6 +915,7 @@
         "NTCIP 1211 (priority-type, PRS outcomes)",
         "RFC 7950 section 7.5.3",
         "RFC 7950 §11",
+        "RFC 7950 §7.18.2",
         "RFC 7950 §7.5.1",
         "docs/04-design-decisions.md (wire-source provenance is selective)"
       ],
@@ -1009,7 +1013,8 @@
             "2026-08-05",
             "2026-09-07",
             "2026-09-08",
-            "2026-10-12"
+            "2026-10-12",
+            "2026-10-14"
           ],
           "refStd": [
             "ATC Cabinet Standard (CMU)",
@@ -1030,7 +1035,8 @@
             "NTCIP 1211",
             "NTCIP 1211 (priority-class / PRS request semantics)",
             "NTCIP 1211 (priority-type, PRS outcomes)",
-            "RFC 7950 §11"
+            "RFC 7950 §11",
+            "RFC 7950 §7.18.2"
           ]
         }
       ]
@@ -1276,14 +1282,16 @@
         "2026-07-17",
         "2026-07-21",
         "2026-08-05",
-        "2026-08-23"
+        "2026-08-23",
+        "2026-10-14"
       ],
       "refStd": [
         "IEC 62040",
         "IEC 62040 (UPS)",
         "NEMA TS 2",
         "NEMA TS 2 (cabinet)",
-        "NTCIP 1203 v03 (dmsPowerSource)"
+        "NTCIP 1203 v03 (dmsPowerSource)",
+        "RFC 7950 §7.18.2"
       ]
     },
     {
@@ -1616,6 +1624,11 @@
         "openits-cabinet-power/2026-08-23/MANIFEST.json",
         "openits-cabinet-power/2026-08-23/README.md",
         "openits-cabinet-power/2026-08-23/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-cabinet-power/2026-10-14/MANIFEST.json",
+        "openits-cabinet-power/2026-10-14/README.md",
+        "openits-cabinet-power/2026-10-14/schema.yang"
       ]
     },
     "openits-cctv": {
@@ -1902,6 +1915,11 @@
         "openits-dms-types/2026-10-13/MANIFEST.json",
         "openits-dms-types/2026-10-13/README.md",
         "openits-dms-types/2026-10-13/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-dms-types/2026-10-14/MANIFEST.json",
+        "openits-dms-types/2026-10-14/README.md",
+        "openits-dms-types/2026-10-14/schema.yang"
       ]
     },
     "openits-ess": {
@@ -2628,6 +2646,11 @@
         "openits-signal-control-types/2026-10-12/MANIFEST.json",
         "openits-signal-control-types/2026-10-12/README.md",
         "openits-signal-control-types/2026-10-12/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-signal-control-types/2026-10-14/MANIFEST.json",
+        "openits-signal-control-types/2026-10-14/README.md",
+        "openits-signal-control-types/2026-10-14/schema.yang"
       ]
     },
     "openits-traffic-sensor": {

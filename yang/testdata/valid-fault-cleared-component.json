@@ -1,0 +1,15 @@
+{
+  "openits-common-fault-events:fault-cleared": {
+    "kind": "openits-signal-control-types:sc-fault-cabinet-low-battery",
+    "source-device-id": "us40-sc-007",
+    "sequence-epoch": "boot-2026-10-13a",
+    "sequence": "2",
+    "fault-id": "sc007-battery-low-0001",
+    "first-observed": "2026-07-11T09:12:30Z",
+    "occurred-at": "2026-07-11T10:47:02Z",
+    "component": {
+      "component-class": "openits-cabinet-power:component-battery",
+      "component-id": "1"
+    }
+  }
+}

@@ -1,0 +1,326 @@
+module openits-cabinet-power {
+  yang-version 1.1;
+  namespace "urn:openits:yang:cabinet-power";
+  prefix openits-cabinet-power;
+
+  import openits-types {
+    prefix openits-types;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+  description
+    "Platform-layer cabinet AC / UPS power and battery health, composable
+     into any battery-backed field device (signal cabinet today; DMS and
+     comm hubs are candidate composers) exactly like the
+     openits-device-diagnostics groupings. Modeling power as telemetry —
+     not only as an opaque fault — preserves the leading indicator (power
+     events precede most comm failures) and the maintenance dispatch
+     discriminator (runtime-remaining on battery vs on line power).
+
+     One grouping: cabinet-power (observed telemetry; compose under a
+     config-false state container).
+
+     SCOPE RULE: this grouping carries only what is universal to EVERY
+     battery-backed field device. Service-specific power surface — a signal
+     cabinet's police panel, or a controller's drop-to-flash-on-battery
+     policy — belongs to that service's own module, because anything placed
+     here is inherited by every future composer and becomes breaking to
+     remove once several have composed it.
+
+     Power events (on-battery, low-battery, charger fault, door open) ride the
+     shared openits-common-fault-events notifications, discriminated by the
+     cabinet-power-fault-event-kind identities below, so a power event is a
+     specific filterable kind rather than one folded fault.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  reference "IEC 62040 (UPS); NEMA TS 2 (cabinet).";
+
+  openits-types:openits-version "0.3.0";
+
+  revision 2026-10-14 {
+    description
+      "Describe the four fault identities as classification bases that
+       composing services derive from, and add the component-battery
+       component class, the sub-component a battery fault or event
+       names. Additive.";
+    reference "RFC 7950 §7.18.2.";
+  }
+  revision 2026-08-23 {
+    description
+      "Add solar (4) and generator (5) to the power-source enumeration,
+       appended with explicit values above the current maximum. The prior
+       member set (on-line / on-battery / bypass / off) assumed a
+       mains-fed cabinet and could not describe an off-grid field device;
+       openits-dms now composes this grouping and solar-powered signs are
+       common. Clarify that power-source reports what is feeding the load
+       right now, not what is fitted at the site — the generator container
+       already carries the 'fitted' sense. Additive; wire-safe.
+
+       BREAKING for Go consumers (wire-neutral): hoist all four of this
+       module's inline enumerations — power-source, battery test-state,
+       signal-operation-on-battery (cabinet-power grouping) and mode
+       (cabinet-power-policy grouping) — into named typedefs. An inline
+       enumeration inside a composable grouping is named by ygot after a
+       USE-SITE path, so the generated Go type belonged to whichever
+       composing module sorted first. Composing this grouping into
+       openits-dms therefore renamed signal-control's types out from under
+       it (OpenitsSignalControl_SignalController_CabinetPower_State_* ->
+       OpenitsDms_Sign_CabinetPower_State_*), and every future composer
+       would have re-raced the name. Named typedefs make the generated type
+       module-scoped and stable (OpenitsCabinetPower_PowerSource), so this
+       grouping can now be composed anywhere without renaming anything.
+
+       Migration: Go consumers replace
+       OpenitsSignalControl_SignalController_CabinetPower_State_PowerSource
+       (and _Battery_TestState, _SignalOperationOnBattery) with
+       OpenitsCabinetPower_PowerSource, OpenitsCabinetPower_BatteryTestState,
+       OpenitsCabinetPower_SignalOperationOnBattery; and
+       ..._CabinetPower_Config_OnBatteryPolicy_Mode with
+       OpenitsCabinetPower_OnBatteryMode. Protobuf and the wire
+       are unaffected: the proto backend emits a per-package enum whose
+       members and values are unchanged.
+
+       SCOPE: move all signal-specific surface out of this shared module
+       into openits-signal-control, where it belongs — the police-panel-open
+       leaf (a NEMA signal-cabinet feature), signal-operation-on-battery, and
+       the whole cabinet-power-policy grouping, whose every leaf describes a
+       transition to FLASH. Composing this module into openits-dms exposed
+       the problem: a sign inherited a police panel it does not have and a
+       WRITABLE config policy offering to drop it to flash. A shared grouping
+       may contain only what is universal to every composer; service-specific
+       content here is inherited by all of them and becomes breaking to
+       remove once several have composed it, so it is fixed now while there
+       are two. Signal-control's data paths are UNCHANGED (the same leaves
+       reappear at the same positions from local definitions), so this is
+       not a YANG-level break for it. The grouping-derived proto message is
+       renamed openits.types.v1.CabinetPowerPolicy ->
+       openits.types.v1.ScOnBatteryPolicy (grouping-derived messages are
+       emitted into the types package and named after the grouping); field
+       numbers on every affected message are unchanged. If a second device class ever needs a reduced-operation
+       policy, promote it back as an identity base (full-operation universal;
+       signal derives flash) rather than restoring a signal-shaped enum.";
+    reference "NTCIP 1203 v03 (dmsPowerSource).";
+  }
+  revision 2026-08-05 {
+    description
+      "Model-review remediation (2026-08). BREAKING(pre-v1): split the
+       on-battery operating policy (mode + transition thresholds) out of
+       the telemetry grouping into its own cabinet-power-policy grouping,
+       so composing devices can expose the policy as writable intent
+       (config) with a state mirror instead of readback-only state — the
+       policy is programmed, not sensed. The telemetry grouping keeps
+       every observed leaf including signal-operation-on-battery. The
+       policy mode enum gains an explicit unspecified=0 member (proto3
+       zero-value discipline) — free to re-base because the policy's wire
+       path is new in the same change. Stamp explicit value statements on
+       every remaining enumeration member (wire-neutral: values match the
+       previous positional auto-assignment).";
+    reference "IEC 62040 (UPS); NEMA TS 2.";
+  }
+  revision 2026-07-21 {
+    description
+      "Model-review remediation (2026-07): add an on-battery operating policy
+       (full-operation vs flash, with SOC and runtime-remaining transition
+       thresholds) and a current signal-operation-on-battery leaf, so a
+       composing device reports not just battery telemetry but the operating
+       POLICY it runs while on battery and its present operating state.
+       Additive.";
+    reference "IEC 62040 (UPS); NEMA TS 2.";
+  }
+  revision 2026-07-17 {
+    description
+      "Initial revision: the cabinet-power grouping (AC line, UPS battery,
+       generator, cabinet/police-panel door) plus the
+       cabinet-power-fault-event-kind identity hierarchy for the shared
+       fault notifications.";
+    reference "IEC 62040; NEMA TS 2.";
+  }
+
+  /* ---------------------------------------------------------------------
+   * Fault-event-kind hierarchy — carried on the shared
+   * openits-common-fault-events:{fault-raised,fault-cleared} notifications
+   * (kind base openits-types:fault-event-kind), so any device composing the
+   * cabinet-power grouping can raise a specific power fault kind.
+   * ------------------------------------------------------------------- */
+  identity cabinet-power-fault-event-kind {
+    base openits-types:fault-event-kind;
+    description
+      "Base for cabinet-power fault kinds. A power event is a specific,
+       fleet-filterable kind rather than one opaque folded fault.";
+  }
+  identity cabinet-power-on-battery {
+    base cabinet-power-fault-event-kind;
+    description
+      "The cabinet transferred to UPS battery (utility power lost).
+       A classification base: a service that composes cabinet-power
+       declares its own identity derived from this one, and that is
+       what its fault inventory and fault-raised carry.";
+  }
+  identity cabinet-power-low-battery {
+    base cabinet-power-fault-event-kind;
+    description
+      "Battery state-of-charge / runtime crossed the low threshold while on
+       battery — imminent shutdown.
+       A classification base: a service that composes cabinet-power
+       declares its own identity derived from this one, and that is
+       what its fault inventory and fault-raised carry.";
+  }
+  identity cabinet-power-charger-fault {
+    base cabinet-power-fault-event-kind;
+    description
+      "The battery charger faulted — the battery is not being
+       maintained.
+       A classification base: a service that composes cabinet-power
+       declares its own identity derived from this one, and that is
+       what its fault inventory and fault-raised carry.";
+  }
+  identity cabinet-power-door-open {
+    base cabinet-power-fault-event-kind;
+    description
+      "A cabinet or police-panel door opened.
+       A classification base: a service that composes cabinet-power
+       declares its own identity derived from this one, and that is
+       what its fault inventory and fault-raised carry.";
+  }
+
+  identity component-battery {
+    base openits-types:component-class;
+    description
+      "The cabinet's backup battery, as the sub-component a fault or
+       event names. Its component-id is the battery position (for
+       example \"1\" for a single string).";
+  }
+
+  /* ---------------------------------------------------------------------
+   * Composable telemetry grouping. Leaves are plain; compose under a
+   * `config false` container (like a device's diagnostics container).
+   * ------------------------------------------------------------------- */
+  typedef power-source {
+    type enumeration {
+      enum on-line { value 0; description "Running on utility (line) power."; }
+      enum on-battery { value 1; description "Utility lost; running on UPS battery (discharging) — the leading comm-loss indicator."; }
+      enum bypass { value 2; description "On maintenance / static bypass (the UPS is not protecting the load)."; }
+      enum off { value 3; description "No power to the load."; }
+      enum solar { value 4; description "Running on a solar array (with or without battery buffering) — the standalone / off-grid field-device case."; }
+      enum generator { value 5; description "Running on a backup generator (see the generator container for its health)."; }
+    }
+    description
+      "What is feeding a device's load right now (not what is fitted at
+       the site). A named typedef rather than an inline enumeration so the
+       generated type name is module-scoped and stable no matter which
+       devices compose the cabinet-power grouping.";
+  }
+
+  typedef battery-test-state {
+    type enumeration {
+      enum idle { value 0; description "No self-test in progress."; }
+      enum in-progress { value 1; description "Self-test running."; }
+      enum passed { value 2; description "Last self-test passed."; }
+      enum failed { value 3; description "Last self-test failed — battery replacement likely."; }
+    }
+    description
+      "Outcome/progress of a UPS battery self-test. Named typedef for
+       generated-name stability across composers (see power-source).";
+  }
+
+  grouping cabinet-power {
+    description
+      "Cabinet AC / UPS power and battery health for a battery-backed field
+       device. Compose into a device's state tree under a config-false
+       container.";
+    reference "IEC 62040 (UPS); NEMA TS 2 (cabinet).";
+
+    leaf power-source {
+      type power-source;
+      description
+        "Present power source — what is feeding the load right now, not
+         what is fitted at the site.";
+    }
+    leaf transfer-count {
+      type uint32;
+      description
+        "Cumulative line<->battery transfers since reset; frequent transfers
+         indicate a flapping utility feed.";
+    }
+    leaf line-voltage-v {
+      type decimal64 { fraction-digits 1; }
+      units "volts";
+      description "Measured incoming AC line voltage.";
+    }
+    leaf line-frequency-hz {
+      type decimal64 { fraction-digits 2; }
+      units "hertz";
+      description "Measured incoming AC line frequency.";
+    }
+
+    container battery {
+      description "UPS battery health.";
+      leaf state-of-charge-pct {
+        type openits-types:percentage;
+        description "Battery charge as a percent of full (0..100).";
+      }
+      leaf runtime-remaining-minutes {
+        type uint16;
+        units "minutes";
+        description
+          "Estimated runtime remaining on battery at the present load — the
+           maintenance dispatch discriminator.";
+      }
+      leaf voltage-v {
+        type decimal64 { fraction-digits 1; }
+        units "volts";
+        description "Battery bus voltage.";
+      }
+      leaf temperature-c {
+        type decimal64 { fraction-digits 1; range "-40 .. 90"; }
+        units "celsius";
+        description "Battery temperature.";
+      }
+      leaf charger-fault {
+        type boolean;
+        description
+          "The charger has faulted — the battery is not being maintained even
+           on line power.";
+      }
+      leaf test-state {
+        type battery-test-state;
+        description "Battery self-test state.";
+      }
+      leaf last-test {
+        type yang:date-and-time;
+        description "When the last battery self-test completed.";
+      }
+    }
+
+    container generator {
+      presence "A backup generator is fitted at this site.";
+      description "Backup generator status (where fitted).";
+      leaf running {
+        type boolean;
+        description "Generator is running and supplying the cabinet.";
+      }
+      leaf fuel-level-pct {
+        type openits-types:percentage;
+        description "Generator fuel level (0..100).";
+      }
+    }
+
+    leaf door-open {
+      type boolean;
+      description "Cabinet door is open (maintenance access or intrusion).";
+    }
+  }
+
+  /* ---------------------------------------------------------------------
+   * Composable policy grouping. The on-battery operating policy is
+   * programmed intent, not telemetry: compose under a device's config
+   * container (with the usual state mirror), not under config-false state.
+   * ------------------------------------------------------------------- */
+}
