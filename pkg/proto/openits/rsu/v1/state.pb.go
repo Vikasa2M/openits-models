@@ -7,6 +7,7 @@
 package rsuv1
 
 import (
+	v1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/types/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -2921,6 +2922,7 @@ func (x *Faults) GetFault() []*Fault {
 type Fault struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Category       *string                `protobuf:"bytes,1,opt,name=category,proto3,oneof" json:"category,omitempty"`
+	Component      *v1.ComponentRef       `protobuf:"bytes,7,opt,name=component,proto3" json:"component,omitempty"`
 	CorrelatesWith *string                `protobuf:"bytes,2,opt,name=correlates_with,json=correlatesWith,proto3,oneof" json:"correlates_with,omitempty"`
 	Description    *string                `protobuf:"bytes,3,opt,name=description,proto3,oneof" json:"description,omitempty"`
 	FaultId        *string                `protobuf:"bytes,4,opt,name=fault_id,json=faultId,proto3,oneof" json:"fault_id,omitempty"`
@@ -2965,6 +2967,13 @@ func (x *Fault) GetCategory() string {
 		return *x.Category
 	}
 	return ""
+}
+
+func (x *Fault) GetComponent() *v1.ComponentRef {
+	if x != nil {
+		return x.Component
+	}
+	return nil
 }
 
 func (x *Fault) GetCorrelatesWith() string {
@@ -7294,7 +7303,7 @@ var File_openits_rsu_v1_state_proto protoreflect.FileDescriptor
 
 const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\n" +
-	"\x1aopenits/rsu/v1/state.proto\x12\x0eopenits.rsu.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1aopenits/rsu/v1/types.proto\"\xfc\x04\n" +
+	"\x1aopenits/rsu/v1/state.proto\x12\x0eopenits.rsu.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1aopenits/rsu/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\xfc\x04\n" +
 	"\x03Rsu\x121\n" +
 	"\x06config\x18\x01 \x01(\v2\x19.openits.rsu.v1.RsuConfigR\x06config\x12.\n" +
 	"\x05state\x18\x02 \x01(\v2\x18.openits.rsu.v1.RsuStateR\x05state\x127\n" +
@@ -7747,9 +7756,10 @@ const file_openits_rsu_v1_state_proto_rawDesc = "" +
 	"\f_operationalB\x11\n" +
 	"\x0f_remote_address\"5\n" +
 	"\x06Faults\x12+\n" +
-	"\x05fault\x18\x01 \x03(\v2\x15.openits.rsu.v1.FaultR\x05fault\"\xeb\x02\n" +
+	"\x05fault\x18\x01 \x03(\v2\x15.openits.rsu.v1.FaultR\x05fault\"\xa9\x03\n" +
 	"\x05Fault\x12\x1f\n" +
-	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12,\n" +
+	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12<\n" +
+	"\tcomponent\x18\a \x01(\v2\x1e.openits.types.v1.ComponentRefR\tcomponent\x12,\n" +
 	"\x0fcorrelates_with\x18\x02 \x01(\tH\x01R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
 	"\vdescription\x18\x03 \x01(\tH\x02R\vdescription\x88\x01\x01\x12\x1e\n" +
 	"\bfault_id\x18\x04 \x01(\tH\x03R\afaultId\x88\x01\x01\x12A\n" +
@@ -8480,19 +8490,20 @@ var file_openits_rsu_v1_state_proto_goTypes = []any{
 	(SignalQuality)(0),                            // 97: openits.rsu.v1.SignalQuality
 	(StatsWindowType)(0),                          // 98: openits.rsu.v1.StatsWindowType
 	(CountBasis)(0),                               // 99: openits.rsu.v1.CountBasis
-	(FaultSeverity)(0),                            // 100: openits.rsu.v1.FaultSeverity
-	(DccPolicy)(0),                                // 101: openits.rsu.v1.DccPolicy
-	(BroadcastSourceMode)(0),                      // 102: openits.rsu.v1.BroadcastSourceMode
-	(IngestTransport)(0),                          // 103: openits.rsu.v1.IngestTransport
-	(ForwardProtocol)(0),                          // 104: openits.rsu.v1.ForwardProtocol
-	(ForwardFormat)(0),                            // 105: openits.rsu.v1.ForwardFormat
-	(GrantAuthority)(0),                           // 106: openits.rsu.v1.GrantAuthority
-	(SrmRequestStatus)(0),                         // 107: openits.rsu.v1.SrmRequestStatus
-	(DecisionAuthority)(0),                        // 108: openits.rsu.v1.DecisionAuthority
-	(PriorityDecisionAction)(0),                   // 109: openits.rsu.v1.PriorityDecisionAction
-	(EnrollmentStatus)(0),                         // 110: openits.rsu.v1.EnrollmentStatus
-	(CertificateType)(0),                          // 111: openits.rsu.v1.CertificateType
-	(GeographicRegionType)(0),                     // 112: openits.rsu.v1.GeographicRegionType
+	(*v1.ComponentRef)(nil),                       // 100: openits.types.v1.ComponentRef
+	(FaultSeverity)(0),                            // 101: openits.rsu.v1.FaultSeverity
+	(DccPolicy)(0),                                // 102: openits.rsu.v1.DccPolicy
+	(BroadcastSourceMode)(0),                      // 103: openits.rsu.v1.BroadcastSourceMode
+	(IngestTransport)(0),                          // 104: openits.rsu.v1.IngestTransport
+	(ForwardProtocol)(0),                          // 105: openits.rsu.v1.ForwardProtocol
+	(ForwardFormat)(0),                            // 106: openits.rsu.v1.ForwardFormat
+	(GrantAuthority)(0),                           // 107: openits.rsu.v1.GrantAuthority
+	(SrmRequestStatus)(0),                         // 108: openits.rsu.v1.SrmRequestStatus
+	(DecisionAuthority)(0),                        // 109: openits.rsu.v1.DecisionAuthority
+	(PriorityDecisionAction)(0),                   // 110: openits.rsu.v1.PriorityDecisionAction
+	(EnrollmentStatus)(0),                         // 111: openits.rsu.v1.EnrollmentStatus
+	(CertificateType)(0),                          // 112: openits.rsu.v1.CertificateType
+	(GeographicRegionType)(0),                     // 113: openits.rsu.v1.GeographicRegionType
 }
 var file_openits_rsu_v1_state_proto_depIdxs = []int32{
 	1,   // 0: openits.rsu.v1.Rsu.config:type_name -> openits.rsu.v1.RsuConfig
@@ -8547,99 +8558,100 @@ var file_openits_rsu_v1_state_proto_depIdxs = []int32{
 	34,  // 49: openits.rsu.v1.System.comm_link:type_name -> openits.rsu.v1.CommLink
 	95,  // 50: openits.rsu.v1.CommLink.last_successful:type_name -> google.protobuf.Timestamp
 	36,  // 51: openits.rsu.v1.Faults.fault:type_name -> openits.rsu.v1.Fault
-	95,  // 52: openits.rsu.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	100, // 53: openits.rsu.v1.Fault.severity:type_name -> openits.rsu.v1.FaultSeverity
-	38,  // 54: openits.rsu.v1.Channels.channel:type_name -> openits.rsu.v1.Channel
-	39,  // 55: openits.rsu.v1.Channel.config:type_name -> openits.rsu.v1.ChannelConfig
-	41,  // 56: openits.rsu.v1.Channel.state:type_name -> openits.rsu.v1.ChannelState
-	40,  // 57: openits.rsu.v1.ChannelConfig.dcc:type_name -> openits.rsu.v1.Dcc
-	101, // 58: openits.rsu.v1.Dcc.policy:type_name -> openits.rsu.v1.DccPolicy
-	43,  // 59: openits.rsu.v1.Messages.spat:type_name -> openits.rsu.v1.Spat
-	48,  // 60: openits.rsu.v1.Messages.map:type_name -> openits.rsu.v1.Map
-	54,  // 61: openits.rsu.v1.Messages.tim:type_name -> openits.rsu.v1.Tim
-	61,  // 62: openits.rsu.v1.Messages.bsm:type_name -> openits.rsu.v1.Bsm
-	64,  // 63: openits.rsu.v1.Messages.psm:type_name -> openits.rsu.v1.Psm
-	69,  // 64: openits.rsu.v1.Messages.rtcm:type_name -> openits.rsu.v1.Rtcm
-	72,  // 65: openits.rsu.v1.Messages.srm_ssm:type_name -> openits.rsu.v1.SrmSsm
-	79,  // 66: openits.rsu.v1.Messages.message_stats:type_name -> openits.rsu.v1.MessageStats
-	81,  // 67: openits.rsu.v1.Messages.message_errors:type_name -> openits.rsu.v1.MessageErrors
-	44,  // 68: openits.rsu.v1.Spat.config:type_name -> openits.rsu.v1.SpatConfig
-	47,  // 69: openits.rsu.v1.Spat.state:type_name -> openits.rsu.v1.SpatState
-	102, // 70: openits.rsu.v1.SpatConfig.source_mode:type_name -> openits.rsu.v1.BroadcastSourceMode
-	45,  // 71: openits.rsu.v1.SpatConfig.ingest:type_name -> openits.rsu.v1.SpatConfigIngest
-	46,  // 72: openits.rsu.v1.SpatConfig.intersection:type_name -> openits.rsu.v1.SpatConfigIntersection
-	103, // 73: openits.rsu.v1.SpatConfigIngest.transport:type_name -> openits.rsu.v1.IngestTransport
-	95,  // 74: openits.rsu.v1.SpatState.last_broadcast:type_name -> google.protobuf.Timestamp
-	49,  // 75: openits.rsu.v1.Map.config:type_name -> openits.rsu.v1.MapConfig
-	52,  // 76: openits.rsu.v1.Map.state:type_name -> openits.rsu.v1.MapState
-	50,  // 77: openits.rsu.v1.MapConfig.intersection:type_name -> openits.rsu.v1.MapConfigIntersection
-	102, // 78: openits.rsu.v1.MapConfig.source_mode:type_name -> openits.rsu.v1.BroadcastSourceMode
-	51,  // 79: openits.rsu.v1.MapConfig.ingest:type_name -> openits.rsu.v1.MapConfigIngest
-	103, // 80: openits.rsu.v1.MapConfigIngest.transport:type_name -> openits.rsu.v1.IngestTransport
-	53,  // 81: openits.rsu.v1.MapState.intersection:type_name -> openits.rsu.v1.MapStateIntersection
-	55,  // 82: openits.rsu.v1.Tim.config:type_name -> openits.rsu.v1.TimConfig
-	56,  // 83: openits.rsu.v1.Tim.active:type_name -> openits.rsu.v1.Active
-	57,  // 84: openits.rsu.v1.Active.message:type_name -> openits.rsu.v1.Message
-	58,  // 85: openits.rsu.v1.Message.config:type_name -> openits.rsu.v1.MessageConfig
-	60,  // 86: openits.rsu.v1.Message.state:type_name -> openits.rsu.v1.MessageState
-	95,  // 87: openits.rsu.v1.MessageConfig.start_time:type_name -> google.protobuf.Timestamp
-	59,  // 88: openits.rsu.v1.MessageConfig.region:type_name -> openits.rsu.v1.Region
-	95,  // 89: openits.rsu.v1.MessageState.last_broadcast:type_name -> google.protobuf.Timestamp
-	62,  // 90: openits.rsu.v1.Bsm.config:type_name -> openits.rsu.v1.BsmConfig
-	63,  // 91: openits.rsu.v1.Bsm.state:type_name -> openits.rsu.v1.BsmState
-	104, // 92: openits.rsu.v1.BsmConfig.forward_protocol:type_name -> openits.rsu.v1.ForwardProtocol
-	105, // 93: openits.rsu.v1.BsmConfig.forward_format:type_name -> openits.rsu.v1.ForwardFormat
-	95,  // 94: openits.rsu.v1.BsmState.last_received:type_name -> google.protobuf.Timestamp
-	65,  // 95: openits.rsu.v1.Psm.config:type_name -> openits.rsu.v1.PsmConfig
-	66,  // 96: openits.rsu.v1.Psm.state:type_name -> openits.rsu.v1.PsmState
-	67,  // 97: openits.rsu.v1.Psm.broadcast_config:type_name -> openits.rsu.v1.BroadcastConfig
-	68,  // 98: openits.rsu.v1.Psm.broadcast_state:type_name -> openits.rsu.v1.BroadcastState
-	95,  // 99: openits.rsu.v1.PsmState.last_received:type_name -> google.protobuf.Timestamp
-	95,  // 100: openits.rsu.v1.BroadcastState.last_broadcast:type_name -> google.protobuf.Timestamp
-	70,  // 101: openits.rsu.v1.Rtcm.config:type_name -> openits.rsu.v1.RtcmConfig
-	71,  // 102: openits.rsu.v1.Rtcm.state:type_name -> openits.rsu.v1.RtcmState
-	95,  // 103: openits.rsu.v1.RtcmState.last_broadcast:type_name -> google.protobuf.Timestamp
-	73,  // 104: openits.rsu.v1.SrmSsm.config:type_name -> openits.rsu.v1.SrmSsmConfig
-	74,  // 105: openits.rsu.v1.SrmSsm.state:type_name -> openits.rsu.v1.SrmSsmState
-	75,  // 106: openits.rsu.v1.SrmSsm.active_requests:type_name -> openits.rsu.v1.ActiveRequests
-	77,  // 107: openits.rsu.v1.SrmSsm.decisions:type_name -> openits.rsu.v1.Decisions
-	106, // 108: openits.rsu.v1.SrmSsmConfig.grant_authority:type_name -> openits.rsu.v1.GrantAuthority
-	76,  // 109: openits.rsu.v1.ActiveRequests.request:type_name -> openits.rsu.v1.Request
-	95,  // 110: openits.rsu.v1.Request.received_at:type_name -> google.protobuf.Timestamp
-	107, // 111: openits.rsu.v1.Request.status:type_name -> openits.rsu.v1.SrmRequestStatus
-	108, // 112: openits.rsu.v1.Request.decision_authority:type_name -> openits.rsu.v1.DecisionAuthority
-	78,  // 113: openits.rsu.v1.Decisions.decision:type_name -> openits.rsu.v1.Decision
-	109, // 114: openits.rsu.v1.Decision.action:type_name -> openits.rsu.v1.PriorityDecisionAction
-	80,  // 115: openits.rsu.v1.MessageStats.per_message_type:type_name -> openits.rsu.v1.PerMessageType
-	82,  // 116: openits.rsu.v1.MessageErrors.security:type_name -> openits.rsu.v1.MessageErrorsSecurity
-	83,  // 117: openits.rsu.v1.MessageErrors.drops:type_name -> openits.rsu.v1.Drops
-	85,  // 118: openits.rsu.v1.RsuSecurity.config:type_name -> openits.rsu.v1.RsuSecurityConfig
-	87,  // 119: openits.rsu.v1.RsuSecurity.state:type_name -> openits.rsu.v1.RsuSecurityState
-	89,  // 120: openits.rsu.v1.RsuSecurity.certificates:type_name -> openits.rsu.v1.Certificates
-	86,  // 121: openits.rsu.v1.RsuSecurityConfig.misbehavior_reporting:type_name -> openits.rsu.v1.RsuSecurityConfigMisbehaviorReporting
-	95,  // 122: openits.rsu.v1.RsuSecurityState.last_scms_contact:type_name -> google.protobuf.Timestamp
-	110, // 123: openits.rsu.v1.RsuSecurityState.enrollment_status:type_name -> openits.rsu.v1.EnrollmentStatus
-	95,  // 124: openits.rsu.v1.RsuSecurityState.earliest_cert_expiry:type_name -> google.protobuf.Timestamp
-	95,  // 125: openits.rsu.v1.RsuSecurityState.last_cert_download:type_name -> google.protobuf.Timestamp
-	95,  // 126: openits.rsu.v1.RsuSecurityState.last_crl_update:type_name -> google.protobuf.Timestamp
-	95,  // 127: openits.rsu.v1.RsuSecurityState.next_crl_due:type_name -> google.protobuf.Timestamp
-	95,  // 128: openits.rsu.v1.RsuSecurityState.policy_files_last_updated:type_name -> google.protobuf.Timestamp
-	88,  // 129: openits.rsu.v1.RsuSecurityState.misbehavior_reporting:type_name -> openits.rsu.v1.RsuSecurityStateMisbehaviorReporting
-	95,  // 130: openits.rsu.v1.RsuSecurityStateMisbehaviorReporting.last_report_sent:type_name -> google.protobuf.Timestamp
-	90,  // 131: openits.rsu.v1.Certificates.certificate:type_name -> openits.rsu.v1.Certificate
-	91,  // 132: openits.rsu.v1.Certificate.state:type_name -> openits.rsu.v1.CertificateState
-	111, // 133: openits.rsu.v1.CertificateState.type:type_name -> openits.rsu.v1.CertificateType
-	95,  // 134: openits.rsu.v1.CertificateState.valid_from:type_name -> google.protobuf.Timestamp
-	95,  // 135: openits.rsu.v1.CertificateState.valid_until:type_name -> google.protobuf.Timestamp
-	92,  // 136: openits.rsu.v1.CertificateState.permissions:type_name -> openits.rsu.v1.Permissions
-	93,  // 137: openits.rsu.v1.CertificateState.geographic_validity:type_name -> openits.rsu.v1.GeographicValidity
-	112, // 138: openits.rsu.v1.GeographicValidity.region_type:type_name -> openits.rsu.v1.GeographicRegionType
-	94,  // 139: openits.rsu.v1.GeographicValidity.circular_region:type_name -> openits.rsu.v1.CircularRegion
-	140, // [140:140] is the sub-list for method output_type
-	140, // [140:140] is the sub-list for method input_type
-	140, // [140:140] is the sub-list for extension type_name
-	140, // [140:140] is the sub-list for extension extendee
-	0,   // [0:140] is the sub-list for field type_name
+	100, // 52: openits.rsu.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
+	95,  // 53: openits.rsu.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	101, // 54: openits.rsu.v1.Fault.severity:type_name -> openits.rsu.v1.FaultSeverity
+	38,  // 55: openits.rsu.v1.Channels.channel:type_name -> openits.rsu.v1.Channel
+	39,  // 56: openits.rsu.v1.Channel.config:type_name -> openits.rsu.v1.ChannelConfig
+	41,  // 57: openits.rsu.v1.Channel.state:type_name -> openits.rsu.v1.ChannelState
+	40,  // 58: openits.rsu.v1.ChannelConfig.dcc:type_name -> openits.rsu.v1.Dcc
+	102, // 59: openits.rsu.v1.Dcc.policy:type_name -> openits.rsu.v1.DccPolicy
+	43,  // 60: openits.rsu.v1.Messages.spat:type_name -> openits.rsu.v1.Spat
+	48,  // 61: openits.rsu.v1.Messages.map:type_name -> openits.rsu.v1.Map
+	54,  // 62: openits.rsu.v1.Messages.tim:type_name -> openits.rsu.v1.Tim
+	61,  // 63: openits.rsu.v1.Messages.bsm:type_name -> openits.rsu.v1.Bsm
+	64,  // 64: openits.rsu.v1.Messages.psm:type_name -> openits.rsu.v1.Psm
+	69,  // 65: openits.rsu.v1.Messages.rtcm:type_name -> openits.rsu.v1.Rtcm
+	72,  // 66: openits.rsu.v1.Messages.srm_ssm:type_name -> openits.rsu.v1.SrmSsm
+	79,  // 67: openits.rsu.v1.Messages.message_stats:type_name -> openits.rsu.v1.MessageStats
+	81,  // 68: openits.rsu.v1.Messages.message_errors:type_name -> openits.rsu.v1.MessageErrors
+	44,  // 69: openits.rsu.v1.Spat.config:type_name -> openits.rsu.v1.SpatConfig
+	47,  // 70: openits.rsu.v1.Spat.state:type_name -> openits.rsu.v1.SpatState
+	103, // 71: openits.rsu.v1.SpatConfig.source_mode:type_name -> openits.rsu.v1.BroadcastSourceMode
+	45,  // 72: openits.rsu.v1.SpatConfig.ingest:type_name -> openits.rsu.v1.SpatConfigIngest
+	46,  // 73: openits.rsu.v1.SpatConfig.intersection:type_name -> openits.rsu.v1.SpatConfigIntersection
+	104, // 74: openits.rsu.v1.SpatConfigIngest.transport:type_name -> openits.rsu.v1.IngestTransport
+	95,  // 75: openits.rsu.v1.SpatState.last_broadcast:type_name -> google.protobuf.Timestamp
+	49,  // 76: openits.rsu.v1.Map.config:type_name -> openits.rsu.v1.MapConfig
+	52,  // 77: openits.rsu.v1.Map.state:type_name -> openits.rsu.v1.MapState
+	50,  // 78: openits.rsu.v1.MapConfig.intersection:type_name -> openits.rsu.v1.MapConfigIntersection
+	103, // 79: openits.rsu.v1.MapConfig.source_mode:type_name -> openits.rsu.v1.BroadcastSourceMode
+	51,  // 80: openits.rsu.v1.MapConfig.ingest:type_name -> openits.rsu.v1.MapConfigIngest
+	104, // 81: openits.rsu.v1.MapConfigIngest.transport:type_name -> openits.rsu.v1.IngestTransport
+	53,  // 82: openits.rsu.v1.MapState.intersection:type_name -> openits.rsu.v1.MapStateIntersection
+	55,  // 83: openits.rsu.v1.Tim.config:type_name -> openits.rsu.v1.TimConfig
+	56,  // 84: openits.rsu.v1.Tim.active:type_name -> openits.rsu.v1.Active
+	57,  // 85: openits.rsu.v1.Active.message:type_name -> openits.rsu.v1.Message
+	58,  // 86: openits.rsu.v1.Message.config:type_name -> openits.rsu.v1.MessageConfig
+	60,  // 87: openits.rsu.v1.Message.state:type_name -> openits.rsu.v1.MessageState
+	95,  // 88: openits.rsu.v1.MessageConfig.start_time:type_name -> google.protobuf.Timestamp
+	59,  // 89: openits.rsu.v1.MessageConfig.region:type_name -> openits.rsu.v1.Region
+	95,  // 90: openits.rsu.v1.MessageState.last_broadcast:type_name -> google.protobuf.Timestamp
+	62,  // 91: openits.rsu.v1.Bsm.config:type_name -> openits.rsu.v1.BsmConfig
+	63,  // 92: openits.rsu.v1.Bsm.state:type_name -> openits.rsu.v1.BsmState
+	105, // 93: openits.rsu.v1.BsmConfig.forward_protocol:type_name -> openits.rsu.v1.ForwardProtocol
+	106, // 94: openits.rsu.v1.BsmConfig.forward_format:type_name -> openits.rsu.v1.ForwardFormat
+	95,  // 95: openits.rsu.v1.BsmState.last_received:type_name -> google.protobuf.Timestamp
+	65,  // 96: openits.rsu.v1.Psm.config:type_name -> openits.rsu.v1.PsmConfig
+	66,  // 97: openits.rsu.v1.Psm.state:type_name -> openits.rsu.v1.PsmState
+	67,  // 98: openits.rsu.v1.Psm.broadcast_config:type_name -> openits.rsu.v1.BroadcastConfig
+	68,  // 99: openits.rsu.v1.Psm.broadcast_state:type_name -> openits.rsu.v1.BroadcastState
+	95,  // 100: openits.rsu.v1.PsmState.last_received:type_name -> google.protobuf.Timestamp
+	95,  // 101: openits.rsu.v1.BroadcastState.last_broadcast:type_name -> google.protobuf.Timestamp
+	70,  // 102: openits.rsu.v1.Rtcm.config:type_name -> openits.rsu.v1.RtcmConfig
+	71,  // 103: openits.rsu.v1.Rtcm.state:type_name -> openits.rsu.v1.RtcmState
+	95,  // 104: openits.rsu.v1.RtcmState.last_broadcast:type_name -> google.protobuf.Timestamp
+	73,  // 105: openits.rsu.v1.SrmSsm.config:type_name -> openits.rsu.v1.SrmSsmConfig
+	74,  // 106: openits.rsu.v1.SrmSsm.state:type_name -> openits.rsu.v1.SrmSsmState
+	75,  // 107: openits.rsu.v1.SrmSsm.active_requests:type_name -> openits.rsu.v1.ActiveRequests
+	77,  // 108: openits.rsu.v1.SrmSsm.decisions:type_name -> openits.rsu.v1.Decisions
+	107, // 109: openits.rsu.v1.SrmSsmConfig.grant_authority:type_name -> openits.rsu.v1.GrantAuthority
+	76,  // 110: openits.rsu.v1.ActiveRequests.request:type_name -> openits.rsu.v1.Request
+	95,  // 111: openits.rsu.v1.Request.received_at:type_name -> google.protobuf.Timestamp
+	108, // 112: openits.rsu.v1.Request.status:type_name -> openits.rsu.v1.SrmRequestStatus
+	109, // 113: openits.rsu.v1.Request.decision_authority:type_name -> openits.rsu.v1.DecisionAuthority
+	78,  // 114: openits.rsu.v1.Decisions.decision:type_name -> openits.rsu.v1.Decision
+	110, // 115: openits.rsu.v1.Decision.action:type_name -> openits.rsu.v1.PriorityDecisionAction
+	80,  // 116: openits.rsu.v1.MessageStats.per_message_type:type_name -> openits.rsu.v1.PerMessageType
+	82,  // 117: openits.rsu.v1.MessageErrors.security:type_name -> openits.rsu.v1.MessageErrorsSecurity
+	83,  // 118: openits.rsu.v1.MessageErrors.drops:type_name -> openits.rsu.v1.Drops
+	85,  // 119: openits.rsu.v1.RsuSecurity.config:type_name -> openits.rsu.v1.RsuSecurityConfig
+	87,  // 120: openits.rsu.v1.RsuSecurity.state:type_name -> openits.rsu.v1.RsuSecurityState
+	89,  // 121: openits.rsu.v1.RsuSecurity.certificates:type_name -> openits.rsu.v1.Certificates
+	86,  // 122: openits.rsu.v1.RsuSecurityConfig.misbehavior_reporting:type_name -> openits.rsu.v1.RsuSecurityConfigMisbehaviorReporting
+	95,  // 123: openits.rsu.v1.RsuSecurityState.last_scms_contact:type_name -> google.protobuf.Timestamp
+	111, // 124: openits.rsu.v1.RsuSecurityState.enrollment_status:type_name -> openits.rsu.v1.EnrollmentStatus
+	95,  // 125: openits.rsu.v1.RsuSecurityState.earliest_cert_expiry:type_name -> google.protobuf.Timestamp
+	95,  // 126: openits.rsu.v1.RsuSecurityState.last_cert_download:type_name -> google.protobuf.Timestamp
+	95,  // 127: openits.rsu.v1.RsuSecurityState.last_crl_update:type_name -> google.protobuf.Timestamp
+	95,  // 128: openits.rsu.v1.RsuSecurityState.next_crl_due:type_name -> google.protobuf.Timestamp
+	95,  // 129: openits.rsu.v1.RsuSecurityState.policy_files_last_updated:type_name -> google.protobuf.Timestamp
+	88,  // 130: openits.rsu.v1.RsuSecurityState.misbehavior_reporting:type_name -> openits.rsu.v1.RsuSecurityStateMisbehaviorReporting
+	95,  // 131: openits.rsu.v1.RsuSecurityStateMisbehaviorReporting.last_report_sent:type_name -> google.protobuf.Timestamp
+	90,  // 132: openits.rsu.v1.Certificates.certificate:type_name -> openits.rsu.v1.Certificate
+	91,  // 133: openits.rsu.v1.Certificate.state:type_name -> openits.rsu.v1.CertificateState
+	112, // 134: openits.rsu.v1.CertificateState.type:type_name -> openits.rsu.v1.CertificateType
+	95,  // 135: openits.rsu.v1.CertificateState.valid_from:type_name -> google.protobuf.Timestamp
+	95,  // 136: openits.rsu.v1.CertificateState.valid_until:type_name -> google.protobuf.Timestamp
+	92,  // 137: openits.rsu.v1.CertificateState.permissions:type_name -> openits.rsu.v1.Permissions
+	93,  // 138: openits.rsu.v1.CertificateState.geographic_validity:type_name -> openits.rsu.v1.GeographicValidity
+	113, // 139: openits.rsu.v1.GeographicValidity.region_type:type_name -> openits.rsu.v1.GeographicRegionType
+	94,  // 140: openits.rsu.v1.GeographicValidity.circular_region:type_name -> openits.rsu.v1.CircularRegion
+	141, // [141:141] is the sub-list for method output_type
+	141, // [141:141] is the sub-list for method input_type
+	141, // [141:141] is the sub-list for extension type_name
+	141, // [141:141] is the sub-list for extension extendee
+	0,   // [0:141] is the sub-list for field type_name
 }
 
 func init() { file_openits_rsu_v1_state_proto_init() }

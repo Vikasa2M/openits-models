@@ -6,6 +6,7 @@
     "sequence": "1",
     "fault-id": "sc01-power-onbatt-01",
     "severity": "warning",
+    "first-observed": "2026-07-17T14:05:00Z",
     "occurred-at": "2026-07-17T14:05:00Z"
   }
 }

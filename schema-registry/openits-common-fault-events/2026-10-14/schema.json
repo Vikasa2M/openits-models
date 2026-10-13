@@ -1,0 +1,261 @@
+{
+  "fault-cleared": {
+  "$defs": {
+    "ComponentRef": {
+      "additionalProperties": false,
+      "properties": {
+        "component-class": {
+          "type": "string"
+        },
+        "component-id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "component-class",
+        "component-id"
+      ],
+      "type": "object"
+    },
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "message-id": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        },
+        "oid-value": {
+          "type": "string"
+        },
+        "register": {
+          "type": "string"
+        },
+        "register-value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "component": {
+      "$ref": "#/$defs/ComponentRef"
+    },
+    "fault-id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "type": "string"
+    },
+    "first-observed": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "sequence-epoch": {
+      "maxLength": 64,
+      "minLength": 1,
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "fault-id",
+    "first-observed",
+    "kind",
+    "occurred-at",
+    "sequence",
+    "sequence-epoch",
+    "source-device-id"
+  ],
+  "type": "object"
+},
+  "fault-raised": {
+  "$defs": {
+    "ComponentRef": {
+      "additionalProperties": false,
+      "properties": {
+        "component-class": {
+          "type": "string"
+        },
+        "component-id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "component-class",
+        "component-id"
+      ],
+      "type": "object"
+    },
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "message-id": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        },
+        "oid-value": {
+          "type": "string"
+        },
+        "register": {
+          "type": "string"
+        },
+        "register-value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decoder"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "component": {
+      "$ref": "#/$defs/ComponentRef"
+    },
+    "correlates-with": {
+      "maxLength": 128,
+      "minLength": 1,
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "fault-id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "type": "string"
+    },
+    "first-observed": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "observed-by": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    },
+    "occurred-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "sequence-epoch": {
+      "maxLength": 64,
+      "minLength": 1,
+      "type": "string"
+    },
+    "severity": {
+      "enum": [
+        "critical",
+        "info",
+        "major",
+        "minor",
+        "warning"
+      ],
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    },
+    "source-device-id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^([a-zA-Z0-9_-]+)$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "fault-id",
+    "first-observed",
+    "kind",
+    "occurred-at",
+    "sequence",
+    "sequence-epoch",
+    "severity",
+    "source-device-id"
+  ],
+  "type": "object"
+}
+}

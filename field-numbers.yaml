@@ -98,6 +98,7 @@ messages:
         wiper_active: 2
     openits.cctv.v1.Fault:
         category: 1
+        component: 7
         correlates_with: 6
         description: 2
         fault_id: 3
@@ -274,7 +275,9 @@ messages:
         source: 100
         source_device_id: 1
     openits.common.v1.FaultCleared:
+        component: 9
         fault_id: 2
+        first_observed: 8
         kind: 99
         observed_by: 4
         occurred_at: 3
@@ -284,9 +287,11 @@ messages:
         source: 100
         source_device_id: 1
     openits.common.v1.FaultRaised:
+        component: 11
         correlates_with: 9
         description: 4
         fault_id: 2
+        first_observed: 12
         kind: 99
         observed_by: 6
         occurred_at: 5
@@ -598,6 +603,7 @@ messages:
         reset: 12
     openits.dms.v1.Fault:
         category: 1
+        component: 7
         correlates_with: 6
         description: 2
         fault_id: 3
@@ -811,6 +817,7 @@ messages:
         type: 1
     openits.ess.v1.Fault:
         category: 1
+        component: 7
         correlates_with: 6
         description: 2
         fault_id: 3
@@ -977,6 +984,7 @@ messages:
         uptime_s: 7
     openits.perception.v1.Fault:
         category: 1
+        component: 7
         correlates_with: 6
         description: 2
         fault_id: 3
@@ -1259,6 +1267,7 @@ messages:
         signal_head_faults: 4
     openits.ramp_metering.v1.Fault:
         category: 1
+        component: 7
         correlates_with: 6
         description: 2
         fault_id: 3
@@ -1493,6 +1502,7 @@ messages:
         transition: 17
     openits.reversible_lane.v1.Fault:
         category: 1
+        component: 7
         correlates_with: 6
         description: 2
         fault_id: 3
@@ -1826,6 +1836,7 @@ messages:
         count_24h: 2
     openits.rsu.v1.Fault:
         category: 1
+        component: 7
         correlates_with: 2
         description: 3
         fault_id: 4
@@ -2541,6 +2552,7 @@ messages:
         no_activity_minutes: 1
     openits.signal_control.v1.Fault:
         category: 1
+        component: 7
         correlates_with: 6
         description: 2
         fault_id: 3
@@ -2966,6 +2978,7 @@ messages:
         uptime_s: 7
     openits.traffic_sensor.v1.Fault:
         category: 1
+        component: 7
         correlates_with: 6
         description: 2
         fault_id: 3
@@ -3160,6 +3173,9 @@ messages:
         mode: 1
         transition_at_runtime_minutes: 3
         transition_at_soc_pct: 2
+    openits.types.v1.ComponentRef:
+        component_class: 1
+        component_id: 2
     openits.types.v1.Indiana:
         indiana_code: 1
         indiana_param: 2

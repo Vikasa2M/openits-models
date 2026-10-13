@@ -6,6 +6,7 @@ option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/dms/v1
 
 import "google/protobuf/timestamp.proto";
 import "openits/dms/v1/types.proto";
+import "openits/types/v1/types.proto";
 
 message Sign {
   SignConfig config = 1;
@@ -370,6 +371,7 @@ message Faults {
 
 message Fault {
   optional string category = 1;
+  openits.types.v1.ComponentRef component = 7;
   optional string correlates_with = 6;
   optional string description = 2;
   optional string fault_id = 3;

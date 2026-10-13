@@ -6,6 +6,7 @@ option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/ramp_m
 
 import "google/protobuf/timestamp.proto";
 import "openits/ramp_metering/v1/types.proto";
+import "openits/types/v1/types.proto";
 
 message RampMeter {
   RampMeterConfig config = 1;
@@ -312,6 +313,7 @@ message Faults {
 
 message Fault {
   optional string category = 1;
+  openits.types.v1.ComponentRef component = 7;
   optional string correlates_with = 6;
   optional string description = 2;
   optional string fault_id = 3;

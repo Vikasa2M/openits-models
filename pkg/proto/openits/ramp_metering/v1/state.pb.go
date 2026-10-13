@@ -7,6 +7,7 @@
 package rampmeteringv1
 
 import (
+	v1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/types/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -2909,6 +2910,7 @@ func (x *Faults) GetFault() []*Fault {
 type Fault struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Category       *string                `protobuf:"bytes,1,opt,name=category,proto3,oneof" json:"category,omitempty"`
+	Component      *v1.ComponentRef       `protobuf:"bytes,7,opt,name=component,proto3" json:"component,omitempty"`
 	CorrelatesWith *string                `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3,oneof" json:"correlates_with,omitempty"`
 	Description    *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
 	FaultId        *string                `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3,oneof" json:"fault_id,omitempty"`
@@ -2955,6 +2957,13 @@ func (x *Fault) GetCategory() string {
 	return ""
 }
 
+func (x *Fault) GetComponent() *v1.ComponentRef {
+	if x != nil {
+		return x.Component
+	}
+	return nil
+}
+
 func (x *Fault) GetCorrelatesWith() string {
 	if x != nil && x.CorrelatesWith != nil {
 		return *x.CorrelatesWith
@@ -2994,7 +3003,7 @@ var File_openits_ramp_metering_v1_state_proto protoreflect.FileDescriptor
 
 const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\n" +
-	"$openits/ramp_metering/v1/state.proto\x12\x18openits.ramp_metering.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a$openits/ramp_metering/v1/types.proto\"\xda\x06\n" +
+	"$openits/ramp_metering/v1/state.proto\x12\x18openits.ramp_metering.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a$openits/ramp_metering/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\xda\x06\n" +
 	"\tRampMeter\x12A\n" +
 	"\x06config\x18\x01 \x01(\v2).openits.ramp_metering.v1.RampMeterConfigR\x06config\x12>\n" +
 	"\x05state\x18\x02 \x01(\v2(.openits.ramp_metering.v1.RampMeterStateR\x05state\x12;\n" +
@@ -3395,9 +3404,10 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\x14_controller_uptime_sB\x15\n" +
 	"\x13_signal_head_faults\"?\n" +
 	"\x06Faults\x125\n" +
-	"\x05fault\x18\x01 \x03(\v2\x1f.openits.ramp_metering.v1.FaultR\x05fault\"\xf5\x02\n" +
+	"\x05fault\x18\x01 \x03(\v2\x1f.openits.ramp_metering.v1.FaultR\x05fault\"\xb3\x03\n" +
 	"\x05Fault\x12\x1f\n" +
-	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12,\n" +
+	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12<\n" +
+	"\tcomponent\x18\a \x01(\v2\x1e.openits.types.v1.ComponentRefR\tcomponent\x12,\n" +
 	"\x0fcorrelates_with\x18\x06 \x01(\tH\x01R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
 	"\vdescription\x18\x02 \x01(\tH\x02R\vdescription\x88\x01\x01\x12\x1e\n" +
 	"\bfault_id\x18\x03 \x01(\tH\x03R\afaultId\x88\x01\x01\x12A\n" +
@@ -3476,7 +3486,8 @@ var file_openits_ramp_metering_v1_state_proto_goTypes = []any{
 	(BypassOperation)(0),                    // 50: openits.ramp_metering.v1.BypassOperation
 	(HeadState)(0),                          // 51: openits.ramp_metering.v1.HeadState
 	(DetectorRole)(0),                       // 52: openits.ramp_metering.v1.DetectorRole
-	(FaultSeverity)(0),                      // 53: openits.ramp_metering.v1.FaultSeverity
+	(*v1.ComponentRef)(nil),                 // 53: openits.types.v1.ComponentRef
+	(FaultSeverity)(0),                      // 54: openits.ramp_metering.v1.FaultSeverity
 }
 var file_openits_ramp_metering_v1_state_proto_depIdxs = []int32{
 	1,  // 0: openits.ramp_metering.v1.RampMeter.config:type_name -> openits.ramp_metering.v1.RampMeterConfig
@@ -3544,13 +3555,14 @@ var file_openits_ramp_metering_v1_state_proto_depIdxs = []int32{
 	52, // 62: openits.ramp_metering.v1.MainlineDetectorsDetectorState.role:type_name -> openits.ramp_metering.v1.DetectorRole
 	42, // 63: openits.ramp_metering.v1.Diagnostics.last_self_test:type_name -> google.protobuf.Timestamp
 	41, // 64: openits.ramp_metering.v1.Faults.fault:type_name -> openits.ramp_metering.v1.Fault
-	42, // 65: openits.ramp_metering.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	53, // 66: openits.ramp_metering.v1.Fault.severity:type_name -> openits.ramp_metering.v1.FaultSeverity
-	67, // [67:67] is the sub-list for method output_type
-	67, // [67:67] is the sub-list for method input_type
-	67, // [67:67] is the sub-list for extension type_name
-	67, // [67:67] is the sub-list for extension extendee
-	0,  // [0:67] is the sub-list for field type_name
+	53, // 65: openits.ramp_metering.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
+	42, // 66: openits.ramp_metering.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	54, // 67: openits.ramp_metering.v1.Fault.severity:type_name -> openits.ramp_metering.v1.FaultSeverity
+	68, // [68:68] is the sub-list for method output_type
+	68, // [68:68] is the sub-list for method input_type
+	68, // [68:68] is the sub-list for extension type_name
+	68, // [68:68] is the sub-list for extension extendee
+	0,  // [0:68] is the sub-list for field type_name
 }
 
 func init() { file_openits_ramp_metering_v1_state_proto_init() }

@@ -7,6 +7,7 @@
 package trafficsensorv1
 
 import (
+	v1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/types/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -1801,6 +1802,7 @@ func (x *Faults) GetFault() []*Fault {
 type Fault struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Category       *string                `protobuf:"bytes,1,opt,name=category,proto3,oneof" json:"category,omitempty"`
+	Component      *v1.ComponentRef       `protobuf:"bytes,7,opt,name=component,proto3" json:"component,omitempty"`
 	CorrelatesWith *string                `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3,oneof" json:"correlates_with,omitempty"`
 	Description    *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
 	FaultId        *string                `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3,oneof" json:"fault_id,omitempty"`
@@ -1847,6 +1849,13 @@ func (x *Fault) GetCategory() string {
 	return ""
 }
 
+func (x *Fault) GetComponent() *v1.ComponentRef {
+	if x != nil {
+		return x.Component
+	}
+	return nil
+}
+
 func (x *Fault) GetCorrelatesWith() string {
 	if x != nil && x.CorrelatesWith != nil {
 		return *x.CorrelatesWith
@@ -1886,7 +1895,7 @@ var File_openits_traffic_sensor_v1_state_proto protoreflect.FileDescriptor
 
 const file_openits_traffic_sensor_v1_state_proto_rawDesc = "" +
 	"\n" +
-	"%openits/traffic_sensor/v1/state.proto\x12\x19openits.traffic_sensor.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%openits/traffic_sensor/v1/types.proto\"\xb1\x04\n" +
+	"%openits/traffic_sensor/v1/state.proto\x12\x19openits.traffic_sensor.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%openits/traffic_sensor/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\xb1\x04\n" +
 	"\rTrafficSensor\x12F\n" +
 	"\x06config\x18\x01 \x01(\v2..openits.traffic_sensor.v1.TrafficSensorConfigR\x06config\x12C\n" +
 	"\x05state\x18\x02 \x01(\v2-.openits.traffic_sensor.v1.TrafficSensorStateR\x05state\x12K\n" +
@@ -2157,9 +2166,10 @@ const file_openits_traffic_sensor_v1_state_proto_rawDesc = "" +
 	"\x06status\x18\x02 \x01(\x0e2!.openits.traffic_sensor.v1.StatusH\x00R\x06status\x88\x01\x01B\t\n" +
 	"\a_status\"@\n" +
 	"\x06Faults\x126\n" +
-	"\x05fault\x18\x01 \x03(\v2 .openits.traffic_sensor.v1.FaultR\x05fault\"\xf6\x02\n" +
+	"\x05fault\x18\x01 \x03(\v2 .openits.traffic_sensor.v1.FaultR\x05fault\"\xb4\x03\n" +
 	"\x05Fault\x12\x1f\n" +
-	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12,\n" +
+	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12<\n" +
+	"\tcomponent\x18\a \x01(\v2\x1e.openits.types.v1.ComponentRefR\tcomponent\x12,\n" +
 	"\x0fcorrelates_with\x18\x06 \x01(\tH\x01R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
 	"\vdescription\x18\x02 \x01(\tH\x02R\vdescription\x88\x01\x01\x12\x1e\n" +
 	"\bfault_id\x18\x03 \x01(\tH\x03R\afaultId\x88\x01\x01\x12A\n" +
@@ -2214,7 +2224,8 @@ var file_openits_traffic_sensor_v1_state_proto_goTypes = []any{
 	(MountingSide)(0),                          // 26: openits.traffic_sensor.v1.MountingSide
 	(DataQuality)(0),                           // 27: openits.traffic_sensor.v1.DataQuality
 	(Status)(0),                                // 28: openits.traffic_sensor.v1.Status
-	(FaultSeverity)(0),                         // 29: openits.traffic_sensor.v1.FaultSeverity
+	(*v1.ComponentRef)(nil),                    // 29: openits.types.v1.ComponentRef
+	(FaultSeverity)(0),                         // 30: openits.traffic_sensor.v1.FaultSeverity
 }
 var file_openits_traffic_sensor_v1_state_proto_depIdxs = []int32{
 	1,  // 0: openits.traffic_sensor.v1.TrafficSensor.config:type_name -> openits.traffic_sensor.v1.TrafficSensorConfig
@@ -2252,13 +2263,14 @@ var file_openits_traffic_sensor_v1_state_proto_depIdxs = []int32{
 	23, // 32: openits.traffic_sensor.v1.Calibration.last_calibrated:type_name -> google.protobuf.Timestamp
 	28, // 33: openits.traffic_sensor.v1.Calibration.status:type_name -> openits.traffic_sensor.v1.Status
 	22, // 34: openits.traffic_sensor.v1.Faults.fault:type_name -> openits.traffic_sensor.v1.Fault
-	23, // 35: openits.traffic_sensor.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	29, // 36: openits.traffic_sensor.v1.Fault.severity:type_name -> openits.traffic_sensor.v1.FaultSeverity
-	37, // [37:37] is the sub-list for method output_type
-	37, // [37:37] is the sub-list for method input_type
-	37, // [37:37] is the sub-list for extension type_name
-	37, // [37:37] is the sub-list for extension extendee
-	0,  // [0:37] is the sub-list for field type_name
+	29, // 35: openits.traffic_sensor.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
+	23, // 36: openits.traffic_sensor.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	30, // 37: openits.traffic_sensor.v1.Fault.severity:type_name -> openits.traffic_sensor.v1.FaultSeverity
+	38, // [38:38] is the sub-list for method output_type
+	38, // [38:38] is the sub-list for method input_type
+	38, // [38:38] is the sub-list for extension type_name
+	38, // [38:38] is the sub-list for extension extendee
+	0,  // [0:38] is the sub-list for field type_name
 }
 
 func init() { file_openits_traffic_sensor_v1_state_proto_init() }

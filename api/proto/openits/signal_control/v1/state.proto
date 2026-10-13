@@ -459,6 +459,7 @@ message Faults {
 
 message Fault {
   optional string category = 1;
+  openits.types.v1.ComponentRef component = 7;
   optional string correlates_with = 6;
   optional string description = 2;
   optional string fault_id = 3;

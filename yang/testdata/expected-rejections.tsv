@@ -91,3 +91,4 @@ invalid-zone-occupancy-changed-bad-kind.json	Invalid identityref "openits-zone-o
 invalid-zone-occupancy-changed-missing-presence.json	MISSING presence
 invalid-zone-occupancy-changed-missing-zone-id.json	MISSING zone-id
 invalid-fault-raised-missing-sequence-epoch.json	MISSING sequence-epoch
+invalid-fault-raised-missing-first-observed.json	MISSING first-observed
