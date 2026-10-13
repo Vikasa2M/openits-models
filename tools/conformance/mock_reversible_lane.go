@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/types/known/timestamppb"
 	"time"
 
 	commonv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/common/v1"
@@ -106,6 +107,72 @@ func collectReversibleLane() (*yangpkg.Device, error) {
 	ilSt := il.GetOrCreateState()
 	ilSt.Satisfied = boolPtr(true)
 
+	// Gates: one warning gate under central control, and one barrier
+	// whose position feedback has failed. gate-id is the list key and
+	// the config leaf the key leafref points at. segment-id leafrefs
+	// seg-1, which the segment list above already declares.
+	gates := rl.GetOrCreateGates()
+	wg, err := gates.NewGate("WG-1")
+	if err != nil {
+		return nil, err
+	}
+	wgCfg := wg.GetOrCreateConfig()
+	wgCfg.GateId = strPtr("WG-1")
+	wgCfg.GateType = yangpkg.OpenitsReversibleLaneTypes_GateType_gate_type_warning
+	wgCfg.Name = strPtr("Warning gate 1")
+	wgCfg.SegmentId = strPtr("seg-1")
+	wgSt := wg.GetOrCreateState()
+	wgSt.Position = yangpkg.OpenitsReversibleLaneTypes_GatePosition_open
+	wgSt.OperatingMode = yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneGateMode_reversible_lane_gate_mode_automatic
+	wgSt.ControlSource = yangpkg.OpenitsTypes_ControlSource_control_central
+	wgSt.OpenInhibited = boolPtr(false)
+	wgSt.CloseInhibited = boolPtr(true)
+	wgSt.MeasuredAt = strPtr(time.Now().UTC().Format(time.RFC3339))
+
+	bg, err := gates.NewGate("BG-2")
+	if err != nil {
+		return nil, err
+	}
+	bgCfg := bg.GetOrCreateConfig()
+	bgCfg.GateId = strPtr("BG-2")
+	bgCfg.GateType = yangpkg.OpenitsReversibleLaneTypes_GateType_gate_type_barrier
+	bgCfg.Name = strPtr("Barrier gate 2")
+	bgSt := bg.GetOrCreateState()
+	bgSt.Position = yangpkg.OpenitsReversibleLaneTypes_GatePosition_unknown
+	bgSt.OperatingMode = yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneGateMode_reversible_lane_gate_mode_offline
+	bgSt.OpenInhibited = boolPtr(false)
+	bgSt.CloseInhibited = boolPtr(false)
+	bgSt.MeasuredAt = strPtr(time.Now().UTC().Format(time.RFC3339))
+
+	// Every gate-fault identity is a legal inventory entry. The
+	// feedback-loss entry names BG-2, whose position is unknown.
+	faults := rl.GetOrCreateFaults()
+	gateFaults := []struct {
+		id       string
+		category yangpkg.E_OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind
+		gate     string
+	}{
+		{"f-wg-1-close", yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate_failed_to_close, "WG-1"},
+		{"f-wg-1-open", yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate_failed_to_open, "WG-1"},
+		{"f-wg-1-estop", yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate_emergency_stop, "WG-1"},
+		{"f-wg-1-refused", yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate_command_refused, "WG-1"},
+		{"f-wg-1-inputs", yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate_invalid_inputs, "WG-1"},
+		{"f-wg-1-obstruction", yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate_obstruction, "WG-1"},
+		{"f-wg-1-drive", yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate_drive_fault, "WG-1"},
+		{"f-bg-2-feedback", yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate_feedback_loss, "BG-2"},
+	}
+	for _, gf := range gateFaults {
+		fault, err := faults.NewFault(gf.id)
+		if err != nil {
+			return nil, err
+		}
+		fault.FaultId = strPtr(gf.id)
+		fault.Category = gf.category
+		fault.GateId = strPtr(gf.gate)
+		fault.Severity = yangpkg.OpenitsTypes_FaultSeverity_critical
+		fault.FirstObserved = strPtr("2026-10-14T15:55:00Z")
+	}
+
 	return dev, nil
 }
 
@@ -163,6 +230,39 @@ func subscribeReversibleLane(ctx context.Context, out chan<- tests.EventEnvelope
 			Data: &commonv1.FaultRaised{
 				FaultId: "f-rl-001",
 				Kind:    "openits-reversible-lane-types:reversible-lane-fault-interlock",
+			},
+		},
+		{
+			Subject:  base + ".gate-status-changed",
+			CEType:   "openits.reversible-lane.gate-status-changed.v1",
+			CESource: src,
+			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VFE",
+			CETime:   time.Now().UTC(),
+			Data: &reversiblelanev1.GateStatusChanged{
+				Kind:           "openits-reversible-lane-types:rl-gate-status-changed",
+				GateId:         "WG-1",
+				Position:       reversiblelanev1.GatePosition_GATE_POSITION_OPEN,
+				OperatingMode:  proto.String("openits-reversible-lane-types:reversible-lane-gate-mode-automatic"),
+				ControlSource:  proto.String("openits-types:control-central"),
+				OpenInhibited:  proto.Bool(false),
+				CloseInhibited: proto.Bool(true),
+				OccurredAt:     timestamppb.New(time.Now().UTC()),
+			},
+		},
+		{
+			Subject:  base + ".gate-status-changed",
+			CEType:   "openits.reversible-lane.gate-status-changed.v1",
+			CESource: src,
+			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VFF",
+			CETime:   time.Now().UTC(),
+			Data: &reversiblelanev1.GateStatusChanged{
+				Kind:           "openits-reversible-lane-types:rl-gate-status-changed",
+				GateId:         "BG-2",
+				Position:       reversiblelanev1.GatePosition_GATE_POSITION_UNKNOWN,
+				OperatingMode:  proto.String("openits-reversible-lane-types:reversible-lane-gate-mode-offline"),
+				OpenInhibited:  proto.Bool(false),
+				CloseInhibited: proto.Bool(false),
+				OccurredAt:     timestamppb.New(time.Now().UTC()),
 			},
 		},
 	}

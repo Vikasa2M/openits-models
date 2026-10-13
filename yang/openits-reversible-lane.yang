@@ -73,8 +73,22 @@ module openits-reversible-lane {
 
      Copyright (c) 2026.  Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.5.0";
+  openits-types:openits-version "0.6.0";
 
+  revision 2026-10-14 {
+    description
+      "Add a per-gate gates list. Config holds gate-id, an optional
+       gate-type, an optional name, and an optional reference to the
+       segment the gate protects. State uses the shared gate-status
+       grouping plus measured-at, and is the live rollup of
+       gate-status-changed. Add an optional gate-id on each
+       fault-inventory entry. Clarify that gate-state is a coarse
+       per-lane rollup and that gate-position is the per-gate
+       vocabulary.";
+    reference
+      "RFC 7950 section 11; ARC-IT 9.1 Service Package TM16
+       (Reversible Lane Management).";
+  }
   revision 2026-09-08 {
     description
       "Retype the six direction leaves onto
@@ -231,7 +245,15 @@ module openits-reversible-lane {
       enum locked         { value 5; description "Gate mechanically locked out (manual)."; }
       enum manual-release { value 6; description "Gate under manual release / local control."; }
     }
-    description "Physical barrier-gate position.";
+    description
+      "Physical barrier-gate position.
+       Coarse per-lane rollup, retained for compatibility. The
+       authoritative per-gate position vocabulary is
+       openits-reversible-lane-types:gate-position,
+       reported per gate on gate-status-changed; this leaf must not
+       disagree with it. The locked and manual-release members fold a
+       lock state and a control mode into a position enum, which is
+       why per-gate reporting separates position from operating mode.";
   }
 
   /* --------------------------------------------------------------
@@ -551,6 +573,75 @@ module openits-reversible-lane {
       }
     }
 
+    /* ----- gates ----- */
+    container gates {
+      description
+        "Per-gate configuration and live status. State is the
+         digital-twin rollup of gate-status-changed.";
+
+      list gate {
+        key "gate-id";
+        description "One warning or barrier gate.";
+
+        leaf gate-id {
+          type leafref {
+            path "../config/gate-id";
+          }
+          description "Device-local gate identifier (key).";
+        }
+        container config {
+          description
+            "Durable identity of this gate. Re-asserting it on
+             reconnect restores the operator's intent.";
+          leaf gate-id {
+            type openits-reversible-lane-types:gate-id;
+            description "Device-local gate identifier.";
+          }
+          leaf gate-type {
+            type identityref {
+              base openits-reversible-lane-types:gate-type;
+            }
+            description
+              "Whether this is a warning gate or a barrier gate.
+               Absent means not known: some gates are labeled with a
+               bare kind and have no warning/barrier distinction.";
+          }
+          leaf name {
+            type string;
+            description "Operator-facing gate description.";
+          }
+          leaf segment-id {
+            type leafref {
+              path "../../../../segments/segment/segment-id";
+            }
+            description
+              "The segment this gate protects. Absent when the gate
+               is not associated with one segment.";
+          }
+        }
+        container state {
+          config false;
+          openits-types:arc-it-flow
+            "ITS Roadway Equipment -> TMC : lane management status";
+          description
+            "Live status of this gate, the digital-twin rollup of
+             gate-status-changed. The shared gate-status grouping
+             carries the observation; gate-id and measured-at stay
+             here. No 'must' constrains the readback.";
+
+          uses openits-reversible-lane-types:gate-status;
+          leaf measured-at {
+            type yang:date-and-time;
+            description
+              "When this reading was taken. A consumer compares it
+               against the device's reporting cadence to decide
+               whether the reading is still current. A missing or
+               stale reading must not be read as a healthy gate.";
+          }
+        }
+      }
+    }
+
     /* ----- interlocks ----- */
     container interlocks {
       description
@@ -634,6 +725,15 @@ module openits-reversible-lane {
         description "One entry per active fault at the facility.";
 
         uses openits-types:fault-entry;
+        leaf gate-id {
+          type openits-reversible-lane-types:gate-id;
+          description
+            "The gate this fault belongs to, when the fault is
+             gate-scoped. Absent when the fault is not about one
+             gate. A plain identifier, not a leafref, so the
+             inventory stays representable if that gate is no longer
+             configured.";
+        }
         leaf category {
           type identityref {
             base openits-reversible-lane-types:reversible-lane-fault-event-kind;

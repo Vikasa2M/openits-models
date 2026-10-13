@@ -749,10 +749,11 @@ regardless of how device-adjacent the notification sounds.
   leaves are direct citations of the sign's own reported NTCIP 1203
   `dmsMultiSyntaxError`/`dmsMultiSyntaxErrorPosition` diagnostic objects, not an
   openits-authored success/fail boolean.
-- **Reversible-lane `lane-state-changed` / `lcs-conflict-detected` — yes.** The
-  entire payload *is* the facility PLC's decoded register readback; "conflict"
-  is what the two decoded registers show, not an openits computation over
-  them.
+- **Reversible-lane `lane-state-changed` / `lcs-conflict-detected` /
+  `gate-status-changed` — yes.** The entire payload *is* the facility
+  PLC's decoded register readback; "conflict" is what the two decoded
+  registers show, not an openits computation over them.
+  `gate-status-changed` is that same readback for one gate.
 - **RSU `rsu-tim-cleared` — no.** Its `reason` (expired / cleared-by-operator /
   superseded / rsu-restart / other) is an openits-inferred classification of
   *why* broadcasting stopped, not a field the RSU itself reported on the wire.
@@ -808,7 +809,9 @@ compose one shared grouping so they carry the same leaves. The container
 is documented as the digital-twin rollup of that stream. Traffic-sensor
 did this first (`queues/queue-zone` and `queue-state-changed` over
 `queue-zone-state`); zone-occupancy is the second (`zones/zone` and
-`zone-occupancy-changed` over `zone-occupancy-state`). The mechanics are
+`zone-occupancy-changed` over `zone-occupancy-state`); reversible-lane
+is the third (`gates/gate` and `gate-status-changed` over `gate-status`).
+The mechanics are
 in [the conventions reference](reference/yang-reference-conventions.md#a-live-state-container-and-its-change-notification-share-one-grouping).
 
 **What we considered.**

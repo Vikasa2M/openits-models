@@ -4,6 +4,15 @@ package openits.reversible_lane.v1;
 
 option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/reversible_lane/v1;reversiblelanev1";
 
+enum GatePosition {
+  GATE_POSITION_UNKNOWN = 0;
+  GATE_POSITION_CLOSING = 1;
+  GATE_POSITION_CLOSED = 2;
+  GATE_POSITION_OPENING = 3;
+  GATE_POSITION_OPEN = 4;
+  GATE_POSITION_INTERMEDIATE = 5;
+}
+
 enum LaneFlowState {
   LANE_FLOW_STATE_UNKNOWN = 0;
   LANE_FLOW_STATE_CLOSED = 1;

@@ -27,8 +27,19 @@ module openits-reversible-lane-events {
      from the base module (ygot's proto generator fails on modules
      containing notification statements).";
 
-  openits-types:openits-version "0.6.0";
+  openits-types:openits-version "0.7.0";
 
+  revision 2026-10-14 {
+    description
+      "Add gate-status-changed. One gate per event. kind is
+       constrained to rl-gate-status-change-event-kind. The payload
+       uses the shared gate-status grouping, plus optional
+       previous-position and previous-operating-mode, and carries
+       wire-source. An emitter may re-report an unchanged condition.";
+    reference
+      "RFC 7950 section 11; ARC-IT 9.1 Service Package TM16
+       (Reversible Lane Management).";
+  }
   revision 2026-10-13 {
     description
       "Inherit the mandatory sequence-epoch leaf from the openits-types
@@ -255,6 +266,91 @@ module openits-reversible-lane-events {
     leaf lcs-direction-b {
       type openits-reversible-lane-types:lcs-indication;
       description "Indication read back facing direction-b.";
+    }
+
+    uses openits-types:wire-source;
+  }
+
+  notification gate-status-changed {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : lane management status";
+    description
+      "The live status of one gate changed. What counts as a change
+       is any leaf of the gate-status grouping. kind is constrained
+       to rl-gate-status-change-event-kind, so a lane-state or
+       LCS-conflict kind is not a valid value here.
+
+       One gate per event. gate-id is a plain identifier, not a
+       leafref: the event is self-contained, and a consumer resolves
+       it against the device's configuration out of band.
+
+       An emitter MAY re-report an unchanged condition. The re-report
+       carries the same kind and payload as the most recent
+       transition and is idempotent for a consumer maintaining a
+       twin.
+
+       Payload leaves come from the shared gate-status grouping, so
+       this event and gates/gate/state mirror each other leaf for
+       leaf. That container is the digital-twin rollup of this
+       stream. previous-position and previous-operating-mode are
+       transition facts and stay on the notification only.
+
+       An unreachable gate produces no gate-status-changed event.
+       Communications loss is reported only by
+       reversible-lane-fault-plc-communication.
+
+       Decoded from the facility PLC's register readback, so the
+       notification carries wire-source.";
+
+    leaf kind {
+      type identityref {
+        base openits-reversible-lane-types:rl-gate-status-change-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier. The only value is
+         openits-reversible-lane-types:rl-gate-status-changed. The
+         base is the gate-status sub-base rather than the service
+         root, so a lane-state or LCS-conflict kind is not valid
+         here.";
+    }
+    uses openits-types:event-header;
+
+    leaf gate-id {
+      type openits-reversible-lane-types:gate-id;
+      mandatory true;
+      description
+        "The gate whose status changed. A plain identifier rather
+         than a leafref: an event is self-contained, and a consumer
+         resolves it against the device's configuration out of band.";
+    }
+    uses openits-reversible-lane-types:gate-status {
+      refine "position" {
+        mandatory true;
+        description
+          "Current position of this gate. Mandatory on this
+           notification, though optional in the live state the same
+           grouping describes, so a twin can apply the event without
+           a prior reading. unknown is the value when the position
+           was read and could not be classified, or was not yet
+           classifiable.";
+      }
+    }
+    leaf previous-position {
+      type openits-reversible-lane-types:gate-position;
+      description
+        "Position before this change. Omitted when the emitter has
+         no prior position, including a re-report that does not
+         carry one.";
+    }
+    leaf previous-operating-mode {
+      type identityref {
+        base openits-reversible-lane-types:reversible-lane-gate-mode;
+      }
+      description
+        "Operating mode before this change. Omitted when the emitter
+         has no prior mode, including a re-report that does not
+         carry one.";
     }
 
     uses openits-types:wire-source;

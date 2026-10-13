@@ -77,6 +77,16 @@ type ProtoFile struct {
 	// on standalone/unit-test files, which never share.
 	SelfImportPath string
 
+	// EnumNames is the set of proto enum names (ProtoName of a typedef or
+	// inline enumeration) that this file's package will emit. A
+	// config/state message is always named parent+container ("gate"/"state"
+	// -> "GateState"), which can spell the same identifier as an existing
+	// enum. The enum keeps its name — it may already be on the wire — and
+	// the new message is parent-qualified again. nil means no enum names
+	// were collected, which is every collision-free caller and the
+	// historical corpus.
+	EnumNames map[string]bool
+
 	// Collisions is the set of bare nested-message names (ProtoName of a
 	// list/container that is not "config"/"state") that appear more than once
 	// within the top-level message tree currently being emitted — precomputed
@@ -236,7 +246,7 @@ func (p *ProtoFile) child() *ProtoFile {
 	if p.EmittedEnums == nil {
 		p.EmittedEnums = map[string]map[string]string{}
 	}
-	return &ProtoFile{EmittedShared: p.EmittedShared, EmittedEnums: p.EmittedEnums, ClaimedEnums: p.ClaimedEnums, SelfImportPath: p.SelfImportPath, Collisions: p.Collisions, Types: p.Types, LockPrefix: p.LockPrefix}
+	return &ProtoFile{EmittedShared: p.EmittedShared, EmittedEnums: p.EmittedEnums, ClaimedEnums: p.ClaimedEnums, SelfImportPath: p.SelfImportPath, Collisions: p.Collisions, EnumNames: p.EnumNames, Types: p.Types, LockPrefix: p.LockPrefix}
 }
 
 // sortedChildren returns an entry's data children in deterministic order.
@@ -451,6 +461,30 @@ func nestedMessageName(parentMsgName string, c *yang.Entry, collisions map[strin
 	return bare
 }
 
+// avoidEnumName keeps a newly emitted message from taking a proto name that
+// this package already uses for an enum. parent is the enclosing message
+// name, so "Gate" + "GateState" becomes "GateGateState" only in that case.
+// A nil set leaves name unchanged.
+func avoidEnumName(enumNames map[string]bool, parent, name string) string {
+	if enumNames[name] {
+		return parent + name
+	}
+	return name
+}
+
+// collectEnumNames records every enumeration ProtoName reachable from e.
+func collectEnumNames(e *yang.Entry, names map[string]bool) {
+	if e == nil {
+		return
+	}
+	if e.Type != nil && e.Type.Kind == yang.Yenum {
+		names[ProtoName(enumSource(e))] = true
+	}
+	for _, c := range sortedChildren(e) {
+		collectEnumNames(c, names)
+	}
+}
+
 // indentBlock left-pads every non-empty line of s by n spaces, used to nest a
 // generated sub-message body inside its enclosing message.
 func indentBlock(s string, n int) string {
@@ -519,7 +553,7 @@ func EmitMessage(e *yang.Entry, msgName string, lock *FieldLock, shared map[stri
 			pt := leafFieldType(c, &nested, out)
 			fmt.Fprintf(&body, "  repeated %s %s = %d;\n", pt, fn, tag)
 		case c.IsList():
-			sub := nestedMessageName(msgName, c, out.Collisions)
+			sub := avoidEnumName(out.EnumNames, msgName, nestedMessageName(msgName, c, out.Collisions))
 			subFile := out.child()
 			EmitMessage(c, sub, lock, shared, subFile)
 			nested.WriteString(subFile.Body.String())
@@ -545,7 +579,7 @@ func EmitMessage(e *yang.Entry, msgName string, lock *FieldLock, shared map[stri
 					}
 				}
 			}
-			sub := nestedMessageName(msgName, c, out.Collisions)
+			sub := avoidEnumName(out.EnumNames, msgName, nestedMessageName(msgName, c, out.Collisions))
 			subFile := out.child()
 			EmitMessage(c, sub, lock, shared, subFile)
 			nested.WriteString(subFile.Body.String())
