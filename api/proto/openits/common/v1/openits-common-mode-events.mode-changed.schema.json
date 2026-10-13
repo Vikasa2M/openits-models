@@ -46,10 +46,10 @@
     "control-source": {
       "type": "string"
     },
-    "current": {
+    "kind": {
       "type": "string"
     },
-    "kind": {
+    "mode": {
       "type": "string"
     },
     "observed-by": {
@@ -65,7 +65,7 @@
     "owner": {
       "type": "string"
     },
-    "prior": {
+    "previous-mode": {
       "type": "string"
     },
     "reason": {
@@ -93,8 +93,8 @@
     }
   },
   "required": [
-    "current",
     "kind",
+    "mode",
     "occurred-at",
     "sequence",
     "sequence-epoch",

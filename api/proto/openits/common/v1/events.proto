@@ -54,9 +54,11 @@ message FaultRaised {
 }
 
 message ModeChanged {
+  reserved 2, 3;
+  reserved "prior", "current";
   string kind = 99;
-  optional string prior = 2;
-  string current = 3;
+  optional string previous_mode = 12;
+  string mode = 13;
   optional string reason = 4;
   optional string control_source = 9;
   optional string trigger = 10;

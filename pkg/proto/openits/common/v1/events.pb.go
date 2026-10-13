@@ -422,8 +422,8 @@ func (x *FaultRaised) GetSourceDeviceId() string {
 type ModeChanged struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	Prior          *string                `protobuf:"bytes,2,opt,name=prior,proto3,oneof" json:"prior,omitempty"`
-	Current        string                 `protobuf:"bytes,3,opt,name=current,proto3" json:"current,omitempty"`
+	PreviousMode   *string                `protobuf:"bytes,12,opt,name=previous_mode,json=previousMode,proto3,oneof" json:"previous_mode,omitempty"`
+	Mode           string                 `protobuf:"bytes,13,opt,name=mode,proto3" json:"mode,omitempty"`
 	Reason         *string                `protobuf:"bytes,4,opt,name=reason,proto3,oneof" json:"reason,omitempty"`
 	ControlSource  *string                `protobuf:"bytes,9,opt,name=control_source,json=controlSource,proto3,oneof" json:"control_source,omitempty"`
 	Trigger        *string                `protobuf:"bytes,10,opt,name=trigger,proto3,oneof" json:"trigger,omitempty"`
@@ -475,16 +475,16 @@ func (x *ModeChanged) GetKind() string {
 	return ""
 }
 
-func (x *ModeChanged) GetPrior() string {
-	if x != nil && x.Prior != nil {
-		return *x.Prior
+func (x *ModeChanged) GetPreviousMode() string {
+	if x != nil && x.PreviousMode != nil {
+		return *x.PreviousMode
 	}
 	return ""
 }
 
-func (x *ModeChanged) GetCurrent() string {
+func (x *ModeChanged) GetMode() string {
 	if x != nil {
-		return x.Current
+		return x.Mode
 	}
 	return ""
 }
@@ -627,11 +627,11 @@ const file_openits_common_v1_events_proto_rawDesc = "" +
 	"\f_descriptionB\x12\n" +
 	"\x10_correlates_withB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xad\x04\n" +
+	"\x06_owner\"\xda\x04\n" +
 	"\vModeChanged\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12\x19\n" +
-	"\x05prior\x18\x02 \x01(\tH\x00R\x05prior\x88\x01\x01\x12\x18\n" +
-	"\acurrent\x18\x03 \x01(\tR\acurrent\x12\x1b\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12(\n" +
+	"\rprevious_mode\x18\f \x01(\tH\x00R\fpreviousMode\x88\x01\x01\x12\x12\n" +
+	"\x04mode\x18\r \x01(\tR\x04mode\x12\x1b\n" +
 	"\x06reason\x18\x04 \x01(\tH\x01R\x06reason\x88\x01\x01\x12*\n" +
 	"\x0econtrol_source\x18\t \x01(\tH\x02R\rcontrolSource\x88\x01\x01\x12\x1d\n" +
 	"\atrigger\x18\n" +
@@ -644,14 +644,14 @@ const file_openits_common_v1_events_proto_rawDesc = "" +
 	"\bsequence\x18\b \x01(\x04R\bsequence\x12%\n" +
 	"\x0esequence_epoch\x18\v \x01(\tR\rsequenceEpoch\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
-	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\b\n" +
-	"\x06_priorB\t\n" +
+	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x10\n" +
+	"\x0e_previous_modeB\t\n" +
 	"\a_reasonB\x11\n" +
 	"\x0f_control_sourceB\n" +
 	"\n" +
 	"\b_triggerB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_ownerBIZGgithub.com/Vikasa2M/openits-models/pkg/proto/openits/common/v1;commonv1b\x06proto3"
+	"\x06_ownerJ\x04\b\x02\x10\x03J\x04\b\x03\x10\x04R\x05priorR\acurrentBIZGgithub.com/Vikasa2M/openits-models/pkg/proto/openits/common/v1;commonv1b\x06proto3"
 
 var (
 	file_openits_common_v1_events_proto_rawDescOnce sync.Once

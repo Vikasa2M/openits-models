@@ -300,9 +300,11 @@ messages:
         control_source: 9
         current: 3
         kind: 99
+        mode: 13
         observed_by: 6
         occurred_at: 5
         owner: 7
+        previous_mode: 12
         prior: 2
         reason: 4
         sequence: 8

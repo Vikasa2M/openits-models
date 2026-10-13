@@ -1260,9 +1260,12 @@
         "2026-05-17",
         "2026-05-23",
         "2026-07-13",
-        "2026-07-21"
+        "2026-07-21",
+        "2026-10-13"
       ],
-      "refStd": []
+      "refStd": [
+        "RFC 7950 §7.13"
+      ]
     },
     {
       "name": "openits-device-diagnostics",
@@ -2512,6 +2515,11 @@
         "openits-types/2026-10-12/MANIFEST.json",
         "openits-types/2026-10-12/README.md",
         "openits-types/2026-10-12/schema.yang"
+      ],
+      "2026-10-13": [
+        "openits-types/2026-10-13/MANIFEST.json",
+        "openits-types/2026-10-13/README.md",
+        "openits-types/2026-10-13/schema.yang"
       ]
     },
     "openits-v2x-messaging": {

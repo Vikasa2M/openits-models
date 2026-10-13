@@ -822,9 +822,9 @@ components:
                     properties:
                         control-source:
                             type: string
-                        current:
-                            type: string
                         kind:
+                            type: string
+                        mode:
                             type: string
                         observed-by:
                             maxLength: 64
@@ -836,7 +836,7 @@ components:
                             type: string
                         owner:
                             type: string
-                        prior:
+                        previous-mode:
                             type: string
                         reason:
                             type: string
@@ -856,8 +856,8 @@ components:
                         trigger:
                             type: string
                     required:
-                        - current
                         - kind
+                        - mode
                         - occurred-at
                         - sequence
                         - sequence-epoch
@@ -1656,9 +1656,9 @@ components:
                     properties:
                         control-source:
                             type: string
-                        current:
-                            type: string
                         kind:
+                            type: string
+                        mode:
                             type: string
                         observed-by:
                             maxLength: 64
@@ -1670,7 +1670,7 @@ components:
                             type: string
                         owner:
                             type: string
-                        prior:
+                        previous-mode:
                             type: string
                         reason:
                             type: string
@@ -1690,8 +1690,8 @@ components:
                         trigger:
                             type: string
                     required:
-                        - current
                         - kind
+                        - mode
                         - occurred-at
                         - sequence
                         - sequence-epoch
@@ -3022,9 +3022,9 @@ components:
                     properties:
                         control-source:
                             type: string
-                        current:
-                            type: string
                         kind:
+                            type: string
+                        mode:
                             type: string
                         observed-by:
                             maxLength: 64
@@ -3036,7 +3036,7 @@ components:
                             type: string
                         owner:
                             type: string
-                        prior:
+                        previous-mode:
                             type: string
                         reason:
                             type: string
@@ -3056,8 +3056,8 @@ components:
                         trigger:
                             type: string
                     required:
-                        - current
                         - kind
+                        - mode
                         - occurred-at
                         - sequence
                         - sequence-epoch
@@ -4108,9 +4108,9 @@ components:
                     properties:
                         control-source:
                             type: string
-                        current:
-                            type: string
                         kind:
+                            type: string
+                        mode:
                             type: string
                         observed-by:
                             maxLength: 64
@@ -4122,7 +4122,7 @@ components:
                             type: string
                         owner:
                             type: string
-                        prior:
+                        previous-mode:
                             type: string
                         reason:
                             type: string
@@ -4142,8 +4142,8 @@ components:
                         trigger:
                             type: string
                     required:
-                        - current
                         - kind
+                        - mode
                         - occurred-at
                         - sequence
                         - sequence-epoch
@@ -6072,9 +6072,9 @@ components:
                     properties:
                         control-source:
                             type: string
-                        current:
-                            type: string
                         kind:
+                            type: string
+                        mode:
                             type: string
                         observed-by:
                             maxLength: 64
@@ -6086,7 +6086,7 @@ components:
                             type: string
                         owner:
                             type: string
-                        prior:
+                        previous-mode:
                             type: string
                         reason:
                             type: string
@@ -6106,8 +6106,8 @@ components:
                         trigger:
                             type: string
                     required:
-                        - current
                         - kind
+                        - mode
                         - occurred-at
                         - sequence
                         - sequence-epoch
