@@ -9,6 +9,7 @@ import (
 	yangpkg "github.com/Vikasa2M/openits-models/pkg/yang/openits"
 	"github.com/Vikasa2M/openits-models/tools/conformance/tests"
 	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 // collectCctv builds a fully-populated, spec-compliant CCTV/PTZ observation:
@@ -136,7 +137,6 @@ func collectCctv() (*yangpkg.Device, error) {
 		return nil, err
 	}
 	fault.Kind = yangpkg.OpenitsCctvTypes_CctvFaultEventKind_cctv_fault_focus
-	fault.FirstObserved = strPtr("2026-10-14T00:00:00Z")
 	fault.Severity = yangpkg.OpenitsTypes_FaultSeverity_minor
 	fault.Description = strPtr("Focus hunting in low light")
 	fault.FirstObserved = strPtr("2026-07-17T02:00:00Z")
@@ -214,8 +214,9 @@ func subscribeCctv(ctx context.Context, out chan<- tests.EventEnvelope, window t
 			CEID:     "01HXYR3K9T8M2NAEQF5P4RCTV4",
 			CETime:   time.Now().UTC(),
 			Data: &commonv1.FaultRaised{
-				FaultId: "f-focus-01",
-				Kind:    "openits-cctv-types:cctv-fault-focus",
+				FirstObserved: timestamppb.New(time.Date(2026, 4, 19, 11, 45, 0, 0, time.UTC)),
+				FaultId:       "f-focus-01",
+				Kind:          "openits-cctv-types:cctv-fault-focus",
 			},
 		},
 	}

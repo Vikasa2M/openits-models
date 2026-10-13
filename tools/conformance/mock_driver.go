@@ -13,6 +13,7 @@ import (
 	yangpkg "github.com/Vikasa2M/openits-models/pkg/yang/openits"
 	"github.com/Vikasa2M/openits-models/tools/conformance/tests"
 	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 // mockDriver produces a fully-populated, spec-compliant observation so
@@ -346,8 +347,10 @@ func subscribeASC(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6V8W",
 			CETime:   time.Now().UTC(),
 			Data: &commonv1.FaultRaised{
-				FaultId:  "f-001",
-				Severity: commonv1.FaultSeverity_FAULT_SEVERITY_WARNING,
+				FirstObserved: timestamppb.New(time.Date(2026, 4, 19, 11, 45, 0, 0, time.UTC)),
+				FaultId:       "f-001",
+				Kind:          "openits-signal-control-types:sc-fault-cabinet",
+				Severity:      commonv1.FaultSeverity_FAULT_SEVERITY_WARNING,
 			},
 		},
 		{
@@ -595,7 +598,6 @@ func collectDMS() (*yangpkg.Device, error) {
 		return nil, err
 	}
 	fault.Kind = yangpkg.OpenitsDmsTypes_DmsFaultEventKind_dms_fault_pixel
-	fault.FirstObserved = strPtr("2026-10-14T00:00:00Z")
 	fault.Severity = yangpkg.OpenitsTypes_FaultSeverity_warning
 	fault.Description = strPtr("4 of 3888 pixels failed self-test")
 	fault.FirstObserved = strPtr("2026-04-18T12:00:00Z")
@@ -614,8 +616,9 @@ func subscribeDMS(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VAA",
 			CETime:   time.Now().UTC(),
 			Data: &commonv1.FaultRaised{
-				FaultId: "f-dms-001",
-				Kind:    "openits-dms-types:dms-fault-pixel",
+				FirstObserved: timestamppb.New(time.Date(2026, 4, 19, 11, 45, 0, 0, time.UTC)),
+				FaultId:       "f-dms-001",
+				Kind:          "openits-dms-types:dms-fault-pixel",
 			},
 		},
 		{
@@ -774,8 +777,9 @@ func subscribeESS(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VBA",
 			CETime:   time.Now().UTC(),
 			Data: &commonv1.FaultRaised{
-				FaultId: "f-ess-001",
-				Kind:    "openits-ess-types:ess-fault-calibration-drift",
+				FirstObserved: timestamppb.New(time.Date(2026, 4, 19, 11, 45, 0, 0, time.UTC)),
+				FaultId:       "f-ess-001",
+				Kind:          "openits-ess-types:ess-fault-calibration-drift",
 			},
 		},
 		{

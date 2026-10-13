@@ -166,7 +166,6 @@ func collectPerception() (*yangpkg.Device, error) {
 		return nil, err
 	}
 	fault.Kind = yangpkg.OpenitsPerceptionTypes_PerceptionFaultEventKind_perception_fault_blockage
-	fault.FirstObserved = strPtr("2026-10-14T00:00:00Z")
 	fault.Severity = yangpkg.OpenitsTypes_FaultSeverity_warning
 	fault.Description = strPtr("Partial lens blockage on the lower field of view")
 	fault.FirstObserved = strPtr("2026-04-19T11:45:00Z")
@@ -299,8 +298,9 @@ func subscribePerception(ctx context.Context, out chan<- tests.EventEnvelope, wi
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R7CCC",
 			CETime:   time.Now().UTC(),
 			Data: &commonv1.FaultRaised{
-				FaultId: "f-pcp-001",
-				Kind:    "openits-perception-types:perception-fault-blockage",
+				FirstObserved: timestamppb.New(time.Date(2026, 4, 19, 11, 45, 0, 0, time.UTC)),
+				FaultId:       "f-pcp-001",
+				Kind:          "openits-perception-types:perception-fault-blockage",
 			},
 		},
 	}

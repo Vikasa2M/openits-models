@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/types/known/timestamppb"
 	"time"
 
 	commonv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/common/v1"
@@ -156,7 +157,6 @@ func collectTrafficSensor() (*yangpkg.Device, error) {
 		return nil, err
 	}
 	fault.Kind = yangpkg.OpenitsTrafficSensorTypes_TrafficSensorFaultEventKind_traffic_sensor_fault_rf
-	fault.FirstObserved = strPtr("2026-10-14T00:00:00Z")
 	fault.Severity = yangpkg.OpenitsTypes_FaultSeverity_warning
 	fault.Description = strPtr("RF front-end signal marginal on lane 1")
 	fault.FirstObserved = strPtr("2026-04-19T11:45:00Z")
@@ -225,8 +225,9 @@ func subscribeTrafficSensor(ctx context.Context, out chan<- tests.EventEnvelope,
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VED",
 			CETime:   time.Now().UTC(),
 			Data: &commonv1.FaultRaised{
-				FaultId: "f-ts-001",
-				Kind:    "openits-traffic-sensor-types:traffic-sensor-fault-rf",
+				FirstObserved: timestamppb.New(time.Date(2026, 4, 19, 11, 45, 0, 0, time.UTC)),
+				FaultId:       "f-ts-001",
+				Kind:          "openits-traffic-sensor-types:traffic-sensor-fault-rf",
 			},
 		},
 	}
