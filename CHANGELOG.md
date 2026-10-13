@@ -7,6 +7,17 @@ for the Go module. See [`docs/versioning.md`](docs/versioning.md) for how the
 Go module version, per-module YANG revision dates, and protobuf wire
 compatibility relate.
 
+## [0.7.0](https://github.com/Vikasa2M/openits-models/compare/v0.6.0...v0.7.0) (2026-10-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* every notification message gains the mandatory field sequence_epoch, which producers must emit and ce-id implementations must clear before hashing (beside sequence and observed-by) or ids diverge per producer and per restart; and ModeChanged.prior and ModeChanged.current are now previous_mode and mode.
+
+### Features
+
+* event stream identity, mode-changed renames, and the conventions lint ([f20bce7](https://github.com/Vikasa2M/openits-models/commit/f20bce79719736682f57642a701b5dffdcea5c8e))
+
 ## [0.6.0](https://github.com/Vikasa2M/openits-models/compare/v0.5.0...v0.6.0) (2026-10-13)
 
 
