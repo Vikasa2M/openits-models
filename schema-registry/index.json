@@ -1793,6 +1793,11 @@
         "openits-dms-types/2026-09-08/MANIFEST.json",
         "openits-dms-types/2026-09-08/README.md",
         "openits-dms-types/2026-09-08/schema.yang"
+      ],
+      "2026-10-13": [
+        "openits-dms-types/2026-10-13/MANIFEST.json",
+        "openits-dms-types/2026-10-13/README.md",
+        "openits-dms-types/2026-10-13/schema.yang"
       ]
     },
     "openits-ess": {
@@ -2016,6 +2021,11 @@
         "openits-ramp-metering-types/2026-08-05/MANIFEST.json",
         "openits-ramp-metering-types/2026-08-05/README.md",
         "openits-ramp-metering-types/2026-08-05/schema.yang"
+      ],
+      "2026-10-13": [
+        "openits-ramp-metering-types/2026-10-13/MANIFEST.json",
+        "openits-ramp-metering-types/2026-10-13/README.md",
+        "openits-ramp-metering-types/2026-10-13/schema.yang"
       ]
     },
     "openits-reversible-lane": {
@@ -2167,6 +2177,11 @@
         "openits-rsu-types/2026-09-08/MANIFEST.json",
         "openits-rsu-types/2026-09-08/README.md",
         "openits-rsu-types/2026-09-08/schema.yang"
+      ],
+      "2026-10-13": [
+        "openits-rsu-types/2026-10-13/MANIFEST.json",
+        "openits-rsu-types/2026-10-13/README.md",
+        "openits-rsu-types/2026-10-13/schema.yang"
       ]
     },
     "openits-rsu-us-band-plan": {
@@ -2534,6 +2549,11 @@
         "openits-types/2026-10-12/MANIFEST.json",
         "openits-types/2026-10-12/README.md",
         "openits-types/2026-10-12/schema.yang"
+      ],
+      "2026-10-13": [
+        "openits-types/2026-10-13/MANIFEST.json",
+        "openits-types/2026-10-13/README.md",
+        "openits-types/2026-10-13/schema.yang"
       ]
     },
     "openits-v2x-messaging": {
