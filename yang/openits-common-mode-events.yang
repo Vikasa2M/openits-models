@@ -108,8 +108,8 @@ module openits-common-mode-events {
     leaf previous-mode {
       type identityref { base openits-types:operational-mode; }
       description
-        "The mode before this transition, a concrete operating-mode identity from the
-         service's mode-value set (e.g.
+        "The mode before this transition, a concrete operating-mode
+         identity from the service's mode-value set (e.g.
          openits-signal-control-types:mode-free). Interpreted in the
          context of the 'kind' mode-space. Absent when the device just
          started up.";
@@ -119,8 +119,8 @@ module openits-common-mode-events {
       type identityref { base openits-types:operational-mode; }
       mandatory true;
       description
-        "The mode after this transition, a concrete operating-mode identity from
-         the service's mode-value set (e.g.
+        "The mode after this transition, a concrete operating-mode
+         identity from the service's mode-value set (e.g.
          openits-signal-control-types:mode-coordinated). Interpreted in
          the context of the 'kind' mode-space.";
     }

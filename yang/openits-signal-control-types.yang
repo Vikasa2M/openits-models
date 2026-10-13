@@ -26,8 +26,14 @@ module openits-signal-control-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.15.0";
+  openits-types:openits-version "0.15.1";
 
+  revision 2026-10-13 {
+    description
+      "Update descriptions that referred to mode-changed's prior/current
+       leaves, now previous-mode and mode. Wire-neutral.";
+    reference "RFC 7950 §7.13.";
+  }
   revision 2026-10-12 {
     description
       "Let detector and monitor faults be raised as what they are, and
@@ -106,7 +112,7 @@ module openits-signal-control-types {
 
        Removes flash-exit: exiting flash is not a flash cause, it is a
        mode transition, and it is reported as such by
-       openits-common-mode-events:mode-changed with a current mode of
+       openits-common-mode-events:mode-changed with a mode of
        mode-free or mode-coordinated.
 
        Renames mmu-fault-type to monitor-fault-type and its members
@@ -341,7 +347,7 @@ module openits-signal-control-types {
        proprietary mode without a core change. Wire form is the identity
        name. controller-mode also derives from
        openits-types:operational-mode so its values can be carried in
-       the generic mode-changed prior/current identityref.";
+       the generic mode-changed previous-mode/mode identityref.";
     reference
       "NTCIP 1202:2019 §5 (vehicleDetectorTable).;
       NTCIP 1202 v03 (preemption-type); NTCIP 1211 (priority-type, PRS outcomes).;

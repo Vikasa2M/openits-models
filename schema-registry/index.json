@@ -646,7 +646,8 @@
         "2026-07-23",
         "2026-08-05",
         "2026-09-08",
-        "2026-10-12"
+        "2026-10-12",
+        "2026-10-13"
       ],
       "events": [
         "openits.rsu.fault-cleared.v1",
@@ -677,6 +678,7 @@
         "RFC 7950 section 11",
         "RFC 7950 §10.4.2",
         "RFC 7950 §11",
+        "RFC 7950 §7.13",
         "RFC 8407 section 4.3 (identifier naming)",
         "SAE J2735",
         "SAE J2735 (TIM broadcast emission)",
@@ -758,13 +760,15 @@
             "2026-07-15",
             "2026-07-21",
             "2026-08-05",
-            "2026-09-08"
+            "2026-09-08",
+            "2026-10-13"
           ],
           "refStd": [
             "NTCIP 1218:2020 (RSU functional reference; rsuMode, alarms)",
             "RFC 7950 9.6.4.2",
             "RFC 7950 section 11",
-            "RFC 7950 §11"
+            "RFC 7950 §11",
+            "RFC 7950 §7.13"
           ]
         }
       ]
@@ -790,7 +794,8 @@
         "2026-08-23",
         "2026-09-07",
         "2026-09-08",
-        "2026-10-12"
+        "2026-10-12",
+        "2026-10-13"
       ],
       "events": [
         "openits.signal-control.comm-health-event.v1",
@@ -865,6 +870,7 @@
         "NTCIP 1211 (priority-type, PRS outcomes)",
         "RFC 7950 section 7.5.3",
         "RFC 7950 §11",
+        "RFC 7950 §7.13",
         "RFC 7950 §7.5.1",
         "docs/04-design-decisions.md (wire-source provenance is selective)"
       ],
@@ -960,7 +966,8 @@
             "2026-08-05",
             "2026-09-07",
             "2026-09-08",
-            "2026-10-12"
+            "2026-10-12",
+            "2026-10-13"
           ],
           "refStd": [
             "ATC Cabinet Standard (CMU)",
@@ -981,7 +988,8 @@
             "NTCIP 1211",
             "NTCIP 1211 (priority-class / PRS request semantics)",
             "NTCIP 1211 (priority-type, PRS outcomes)",
-            "RFC 7950 §11"
+            "RFC 7950 §11",
+            "RFC 7950 §7.13"
           ]
         }
       ]
@@ -2515,11 +2523,6 @@
         "openits-types/2026-10-12/MANIFEST.json",
         "openits-types/2026-10-12/README.md",
         "openits-types/2026-10-12/schema.yang"
-      ],
-      "2026-10-13": [
-        "openits-types/2026-10-13/MANIFEST.json",
-        "openits-types/2026-10-13/README.md",
-        "openits-types/2026-10-13/schema.yang"
       ]
     },
     "openits-v2x-messaging": {
