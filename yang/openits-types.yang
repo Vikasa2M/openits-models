@@ -600,7 +600,7 @@ module openits-types {
        openits-signal-control-types:controller-mode,
        openits-rsu-types:rsu-mode), so the generic
        openits-common-mode-events:mode-changed notification can carry
-       typed, enumerable prior/current mode values via a single
+       typed, enumerable previous-mode/mode values via a single
        identityref instead of free-form strings.";
   }
 

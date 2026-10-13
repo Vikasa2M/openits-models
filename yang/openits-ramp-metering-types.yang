@@ -29,8 +29,14 @@ module openits-ramp-metering-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.5.0";
+  openits-types:openits-version "0.5.1";
 
+  revision 2026-10-13 {
+    description
+      "Update descriptions that referred to mode-changed's prior/current
+       leaves, now previous-mode and mode. Wire-neutral.";
+    reference "RFC 7950 §7.13.";
+  }
   revision 2026-08-05 {
     description
       "Model-review remediation (2026-08): stamp an explicit value
@@ -98,7 +104,7 @@ module openits-ramp-metering-types {
        add proprietary metering modes without a base-model revision.
        meter-mode derives from openits-types:operational-mode so its
        values can be carried in the generic mode-changed
-       prior/current identityref.";
+       previous-mode/mode identityref.";
     reference "RFC 7950 section 11.";
   }
   revision 2026-06-11 {
@@ -174,8 +180,8 @@ module openits-ramp-metering-types {
     description
       "Ramp-meter operational-mode transitions (off / on-standby /
        active / fault / manual). The mode-changed
-       notification's prior/current strings are interpreted in this
-       mode-space.";
+       notification's previous-mode/mode strings are interpreted in
+       this mode-space.";
     reference "NTCIP 1207:2017 (metering modes).";
   }
 

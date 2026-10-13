@@ -82,7 +82,8 @@
         "2026-08-27",
         "2026-09-07",
         "2026-09-08",
-        "2026-10-12"
+        "2026-10-12",
+        "2026-10-13"
       ],
       "events": [
         "openits.dms.fault-cleared.v1",
@@ -113,6 +114,7 @@
         "RFC 7950 section 11 (additive YANG evolution)",
         "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
         "RFC 7950 §11",
+        "RFC 7950 §7.13",
         "RFC 7950 §7.13.2"
       ],
       "modules": [
@@ -188,7 +190,8 @@
             "2026-08-23",
             "2026-08-27",
             "2026-09-07",
-            "2026-09-08"
+            "2026-09-08",
+            "2026-10-13"
           ],
           "refStd": [
             "NTCIP 1203 v03 (MULTI)",
@@ -198,7 +201,8 @@
             "NTCIP 1203 v03 (shortErrorStatus, dmsMessageMemoryType, dmsMsgSourceMode)",
             "NTCIP 1203:2010 (DMS functional reference; fault classes)",
             "RFC 7950 9.6.4.2",
-            "RFC 7950 section 11"
+            "RFC 7950 section 11",
+            "RFC 7950 §7.13"
           ]
         }
       ]
@@ -419,7 +423,8 @@
         "2026-07-15",
         "2026-07-16",
         "2026-07-21",
-        "2026-08-05"
+        "2026-08-05",
+        "2026-10-13"
       ],
       "events": [
         "openits.ramp-metering.fault-cleared.v1",
@@ -444,7 +449,8 @@
         "RFC 7950 section 11",
         "RFC 7950 section 11 (YANG identity evolution)",
         "RFC 7950 section 11 (additive YANG evolution)",
-        "RFC 7950 section 11 (breaking YANG evolution: identity rename)"
+        "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
+        "RFC 7950 §7.13"
       ],
       "modules": [
         {
@@ -507,7 +513,8 @@
             "2026-07-15",
             "2026-07-16",
             "2026-07-21",
-            "2026-08-05"
+            "2026-08-05",
+            "2026-10-13"
           ],
           "refStd": [
             "ARC-IT TI03",
@@ -515,7 +522,8 @@
             "NTCIP 1207:2017 (ramp-meter functional reference; fault classes, metering modes)",
             "RFC 7950 9.6.4.2",
             "RFC 7950 section 11",
-            "RFC 7950 section 11 (YANG identity evolution)"
+            "RFC 7950 section 11 (YANG identity evolution)",
+            "RFC 7950 §7.13"
           ]
         }
       ]
@@ -1650,6 +1658,13 @@
         "openits-common-mode-events/2026-07-21/schema.json",
         "openits-common-mode-events/2026-07-21/schema.proto",
         "openits-common-mode-events/2026-07-21/schema.yang"
+      ],
+      "2026-10-13": [
+        "openits-common-mode-events/2026-10-13/MANIFEST.json",
+        "openits-common-mode-events/2026-10-13/README.md",
+        "openits-common-mode-events/2026-10-13/schema.json",
+        "openits-common-mode-events/2026-10-13/schema.proto",
+        "openits-common-mode-events/2026-10-13/schema.yang"
       ]
     },
     "openits-device-diagnostics": {
@@ -2156,6 +2171,11 @@
         "openits-rsu-types/2026-09-08/MANIFEST.json",
         "openits-rsu-types/2026-09-08/README.md",
         "openits-rsu-types/2026-09-08/schema.yang"
+      ],
+      "2026-10-13": [
+        "openits-rsu-types/2026-10-13/MANIFEST.json",
+        "openits-rsu-types/2026-10-13/README.md",
+        "openits-rsu-types/2026-10-13/schema.yang"
       ]
     },
     "openits-rsu-us-band-plan": {
@@ -2426,6 +2446,11 @@
         "openits-signal-control-types/2026-10-12/MANIFEST.json",
         "openits-signal-control-types/2026-10-12/README.md",
         "openits-signal-control-types/2026-10-12/schema.yang"
+      ],
+      "2026-10-13": [
+        "openits-signal-control-types/2026-10-13/MANIFEST.json",
+        "openits-signal-control-types/2026-10-13/README.md",
+        "openits-signal-control-types/2026-10-13/schema.yang"
       ]
     },
     "openits-traffic-sensor": {
