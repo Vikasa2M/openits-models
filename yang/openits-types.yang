@@ -221,7 +221,7 @@ module openits-types {
        - 'fault-entry' (fault-id + severity + description +
          first-observed): the common leaves of the config-false
          active-fault list every service exposes. Each service
-         'uses fault-entry' and adds its own 'kind' identityref.
+         'uses fault-entry' and adds its own 'category' identityref.
 
        Add the percentage-precise typedef (decimal64, 0.0-100.0) and
        the device-hardware grouping; consolidate the duplicate per-
