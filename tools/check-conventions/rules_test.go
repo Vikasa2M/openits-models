@@ -78,6 +78,9 @@ func TestCounters(t *testing.T) {
 	assertPaths(t, "counters", root+"/dev/state/crc-errors", root+"/dev/state/rx-total")
 }
 
+// TestKindBase also covers shared-fault, whose kind is typed to an
+// identity openits-types defines directly on device-event-kind: that is a
+// cross-service base, not a service root, so it is not reported.
 func TestKindBase(t *testing.T) {
 	assertPaths(t, "kind-base", root+"/bad-change/kind")
 }

@@ -154,22 +154,6 @@ exceptions:
       path: /openits-cctv-events/tour-state-changed/kind
       cut: cctv
     - rule: kind-base
-      module: openits-common-comm-health-events
-      path: /openits-common-comm-health-events/comm-health-event/kind
-      cut: foundation
-    - rule: kind-base
-      module: openits-common-fault-events
-      path: /openits-common-fault-events/fault-cleared/kind
-      cut: foundation
-    - rule: kind-base
-      module: openits-common-fault-events
-      path: /openits-common-fault-events/fault-raised/kind
-      cut: foundation
-    - rule: kind-base
-      module: openits-common-mode-events
-      path: /openits-common-mode-events/mode-changed/kind
-      cut: foundation
-    - rule: kind-base
       module: openits-dms-events
       path: /openits-dms-events/message-activation-failed/kind
       cut: dms

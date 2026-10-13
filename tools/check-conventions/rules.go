@@ -258,8 +258,11 @@ func ruleCounters(m *yang.Entry) []Violation {
 }
 
 // ruleKindBase: a notification's kind is constrained to its own transition
-// or report sub-base, never a service root (an identity based directly on
-// device-event-kind). Only module-level notifications are checked.
+// or report sub-base, never a service root. A service root is an identity
+// based directly on device-event-kind and defined outside openits-types;
+// the event-kind identities openits-types defines (fault-event-kind,
+// mode-event-kind, ...) are cross-service bases the shared events modules
+// are required to use. Only module-level notifications are checked.
 func ruleKindBase(m *yang.Entry) []Violation {
 	var out []Violation
 	for _, n := range m.Dir {
@@ -270,7 +273,11 @@ func ruleKindBase(m *yang.Entry) []Violation {
 		if !ok || kind.Type == nil || kind.Type.IdentityBase == nil {
 			continue
 		}
-		for _, b := range kind.Type.IdentityBase.Base {
+		base := kind.Type.IdentityBase
+		if moduleName(yang.RootNode(base)) == "openits-types" {
+			continue
+		}
+		for _, b := range base.Base {
 			name := b.Name
 			if i := strings.LastIndex(name, ":"); i >= 0 {
 				name = name[i+1:]

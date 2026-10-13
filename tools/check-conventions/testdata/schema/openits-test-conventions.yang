@@ -3,6 +3,8 @@ module openits-test-conventions {
   namespace "urn:openits:yang:test-conventions";
   prefix tc;
 
+  import openits-types { prefix openits-types; }
+
   description "Fixture for check-conventions rule tests.";
 
   revision 2026-10-13 {
@@ -72,6 +74,10 @@ module openits-test-conventions {
     leaf kind { type identityref { base svc-change-event-kind; } }
     leaf previous-mode { type string; }
     leaf mode { type string; }
+  }
+
+  notification shared-fault {
+    leaf kind { type identityref { base openits-types:fault-event-kind; } }
   }
 
   notification bad-change {
