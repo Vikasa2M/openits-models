@@ -200,7 +200,9 @@ message Faults {
 }
 
 message Fault {
-  optional string category = 1;
+  reserved 1;
+  reserved "category";
+  string kind = 99;
   openits.types.v1.ComponentRef component = 7;
   optional string correlates_with = 6;
   optional string description = 2;

@@ -73,8 +73,16 @@ module openits-reversible-lane {
 
      Copyright (c) 2026.  Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.5.0";
+  openits-types:openits-version "0.6.0";
 
+  revision 2026-10-14 {
+    description
+      "The fault inventory classifies each entry with kind (renamed from
+       category, now mandatory), matching fault-raised, and picks up the
+       shared fault-entry shape: mandatory first-observed and an optional
+       component. Breaking: the category leaf is now kind.";
+    reference "RFC 7950 §11.";
+  }
   revision 2026-09-08 {
     description
       "Retype the six direction leaves onto
@@ -634,11 +642,15 @@ module openits-reversible-lane {
         description "One entry per active fault at the facility.";
 
         uses openits-types:fault-entry;
-        leaf category {
-          type identityref {
-            base openits-reversible-lane-types:reversible-lane-fault-event-kind;
-          }
-          description "Fault class (plc-communication / interlock / conflict / gate / lcs-head / power).";
+        leaf kind {
+          type identityref { base openits-reversible-lane-types:reversible-lane-fault-event-kind; }
+          mandatory true;
+          description
+            "Fault class, typed to this service's fault base so the
+             inventory accepts only this service's faults (including its
+             own identities for platform faults such as cabinet power).
+             Fleet-wide filters use
+             derived-from-or-self(kind, 'openits-types:fault-event-kind').";
         }
       }
     }

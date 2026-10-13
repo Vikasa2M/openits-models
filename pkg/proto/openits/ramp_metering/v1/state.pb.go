@@ -2909,7 +2909,7 @@ func (x *Faults) GetFault() []*Fault {
 
 type Fault struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Category       *string                `protobuf:"bytes,1,opt,name=category,proto3,oneof" json:"category,omitempty"`
+	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	Component      *v1.ComponentRef       `protobuf:"bytes,7,opt,name=component,proto3" json:"component,omitempty"`
 	CorrelatesWith *string                `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3,oneof" json:"correlates_with,omitempty"`
 	Description    *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
@@ -2950,9 +2950,9 @@ func (*Fault) Descriptor() ([]byte, []int) {
 	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{41}
 }
 
-func (x *Fault) GetCategory() string {
-	if x != nil && x.Category != nil {
-		return *x.Category
+func (x *Fault) GetKind() string {
+	if x != nil {
+		return x.Kind
 	}
 	return ""
 }
@@ -3404,20 +3404,19 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\x14_controller_uptime_sB\x15\n" +
 	"\x13_signal_head_faults\"?\n" +
 	"\x06Faults\x125\n" +
-	"\x05fault\x18\x01 \x03(\v2\x1f.openits.ramp_metering.v1.FaultR\x05fault\"\xb3\x03\n" +
-	"\x05Fault\x12\x1f\n" +
-	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12<\n" +
+	"\x05fault\x18\x01 \x03(\v2\x1f.openits.ramp_metering.v1.FaultR\x05fault\"\xa9\x03\n" +
+	"\x05Fault\x12\x12\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12<\n" +
 	"\tcomponent\x18\a \x01(\v2\x1e.openits.types.v1.ComponentRefR\tcomponent\x12,\n" +
-	"\x0fcorrelates_with\x18\x06 \x01(\tH\x01R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
-	"\vdescription\x18\x02 \x01(\tH\x02R\vdescription\x88\x01\x01\x12\x1e\n" +
-	"\bfault_id\x18\x03 \x01(\tH\x03R\afaultId\x88\x01\x01\x12A\n" +
+	"\x0fcorrelates_with\x18\x06 \x01(\tH\x00R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x01R\vdescription\x88\x01\x01\x12\x1e\n" +
+	"\bfault_id\x18\x03 \x01(\tH\x02R\afaultId\x88\x01\x01\x12A\n" +
 	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12H\n" +
-	"\bseverity\x18\x05 \x01(\x0e2'.openits.ramp_metering.v1.FaultSeverityH\x04R\bseverity\x88\x01\x01B\v\n" +
-	"\t_categoryB\x12\n" +
+	"\bseverity\x18\x05 \x01(\x0e2'.openits.ramp_metering.v1.FaultSeverityH\x03R\bseverity\x88\x01\x01B\x12\n" +
 	"\x10_correlates_withB\x0e\n" +
 	"\f_descriptionB\v\n" +
 	"\t_fault_idB\v\n" +
-	"\t_severityBVZTgithub.com/Vikasa2M/openits-models/pkg/proto/openits/ramp_metering/v1;rampmeteringv1b\x06proto3"
+	"\t_severityJ\x04\b\x01\x10\x02R\bcategoryBVZTgithub.com/Vikasa2M/openits-models/pkg/proto/openits/ramp_metering/v1;rampmeteringv1b\x06proto3"
 
 var (
 	file_openits_ramp_metering_v1_state_proto_rawDescOnce sync.Once

@@ -135,7 +135,8 @@ func collectCctv() (*yangpkg.Device, error) {
 	if err != nil {
 		return nil, err
 	}
-	fault.Category = yangpkg.OpenitsCctvTypes_CctvFaultEventKind_cctv_fault_focus
+	fault.Kind = yangpkg.OpenitsCctvTypes_CctvFaultEventKind_cctv_fault_focus
+	fault.FirstObserved = strPtr("2026-10-14T00:00:00Z")
 	fault.Severity = yangpkg.OpenitsTypes_FaultSeverity_minor
 	fault.Description = strPtr("Focus hunting in low light")
 	fault.FirstObserved = strPtr("2026-07-17T02:00:00Z")

@@ -92,3 +92,5 @@ invalid-zone-occupancy-changed-missing-presence.json	MISSING presence
 invalid-zone-occupancy-changed-missing-zone-id.json	MISSING zone-id
 invalid-fault-raised-missing-sequence-epoch.json	MISSING sequence-epoch
 invalid-fault-raised-missing-first-observed.json	MISSING first-observed
+invalid-sc-fault-list-dms-kind.json	not derived from the base "openits-signal-control-types:sc-fault-event-kind"
+invalid-rsu-fault-component-no-class.json	Mandatory node "component-class" instance does not exist.

@@ -594,7 +594,8 @@ func collectDMS() (*yangpkg.Device, error) {
 	if err != nil {
 		return nil, err
 	}
-	fault.Category = yangpkg.OpenitsDmsTypes_DmsFaultEventKind_dms_fault_pixel
+	fault.Kind = yangpkg.OpenitsDmsTypes_DmsFaultEventKind_dms_fault_pixel
+	fault.FirstObserved = strPtr("2026-10-14T00:00:00Z")
 	fault.Severity = yangpkg.OpenitsTypes_FaultSeverity_warning
 	fault.Description = strPtr("4 of 3888 pixels failed self-test")
 	fault.FirstObserved = strPtr("2026-04-18T12:00:00Z")

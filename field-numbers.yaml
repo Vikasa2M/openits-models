@@ -103,6 +103,7 @@ messages:
         description: 2
         fault_id: 3
         first_observed: 4
+        kind: 99
         severity: 5
     openits.cctv.v1.Faults:
         fault: 1
@@ -608,6 +609,7 @@ messages:
         description: 2
         fault_id: 3
         first_observed: 4
+        kind: 99
         severity: 5
     openits.dms.v1.Faults:
         fault: 1
@@ -822,6 +824,7 @@ messages:
         description: 2
         fault_id: 3
         first_observed: 4
+        kind: 99
         severity: 5
     openits.ess.v1.Faults:
         fault: 1
@@ -989,6 +992,7 @@ messages:
         description: 2
         fault_id: 3
         first_observed: 4
+        kind: 99
         severity: 5
     openits.perception.v1.Faults:
         fault: 1
@@ -1272,6 +1276,7 @@ messages:
         description: 2
         fault_id: 3
         first_observed: 4
+        kind: 99
         severity: 5
     openits.ramp_metering.v1.Faults:
         fault: 1
@@ -1507,6 +1512,7 @@ messages:
         description: 2
         fault_id: 3
         first_observed: 4
+        kind: 99
         severity: 5
     openits.reversible_lane.v1.Faults:
         fault: 1
@@ -1841,6 +1847,7 @@ messages:
         description: 3
         fault_id: 4
         first_observed: 5
+        kind: 99
         severity: 6
     openits.rsu.v1.Faults:
         fault: 1
@@ -2557,6 +2564,7 @@ messages:
         description: 2
         fault_id: 3
         first_observed: 4
+        kind: 99
         severity: 5
     openits.signal_control.v1.Faults:
         fault: 1
@@ -2983,6 +2991,7 @@ messages:
         description: 2
         fault_id: 3
         first_observed: 4
+        kind: 99
         severity: 5
     openits.traffic_sensor.v1.Faults:
         fault: 1

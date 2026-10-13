@@ -155,7 +155,8 @@ func collectTrafficSensor() (*yangpkg.Device, error) {
 	if err != nil {
 		return nil, err
 	}
-	fault.Category = yangpkg.OpenitsTrafficSensorTypes_TrafficSensorFaultEventKind_traffic_sensor_fault_rf
+	fault.Kind = yangpkg.OpenitsTrafficSensorTypes_TrafficSensorFaultEventKind_traffic_sensor_fault_rf
+	fault.FirstObserved = strPtr("2026-10-14T00:00:00Z")
 	fault.Severity = yangpkg.OpenitsTypes_FaultSeverity_warning
 	fault.Description = strPtr("RF front-end signal marginal on lane 1")
 	fault.FirstObserved = strPtr("2026-04-19T11:45:00Z")
