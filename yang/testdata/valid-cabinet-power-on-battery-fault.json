@@ -1,6 +1,6 @@
 {
   "openits-common-fault-events:fault-raised": {
-    "kind": "openits-cabinet-power:cabinet-power-on-battery",
+    "kind": "openits-signal-control-types:sc-fault-cabinet-on-battery",
     "source-device-id": "i35-mm214-nb-sc-01",
     "sequence-epoch": "boot-2026-10-13a",
     "sequence": "1",
