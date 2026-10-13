@@ -1,10 +1,13 @@
 package main
 
 import (
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"gopkg.in/yaml.v3"
 )
 
 func TestCompare_NewAndStale(t *testing.T) {
@@ -93,5 +96,61 @@ func TestReadExceptions_Duplicate(t *testing.T) {
 	os.WriteFile(p, []byte("exceptions:\n  - {rule: units, module: m, path: /a, cut: dms}\n  - {rule: units, module: m, path: /a, cut: dms}\n"), 0o644)
 	if _, err := readExceptions(p); err == nil || !strings.Contains(err.Error(), "duplicate") {
 		t.Fatalf("err = %v, want a duplicate error", err)
+	}
+}
+
+func TestCheckGrowth(t *testing.T) {
+	base := []Exception{
+		{Rule: "units", Module: "openits-dms", Path: "/a", Cut: "dms"},
+		{Rule: "units", Module: "openits-dms", Path: "/b", Cut: "dms"},
+	}
+	shrunk := base[:1]
+	if err := checkGrowth(shrunk, base); err != nil {
+		t.Fatalf("shrinking: err = %v, want nil", err)
+	}
+	if err := checkGrowth(base, base); err != nil {
+		t.Fatalf("unchanged: err = %v, want nil", err)
+	}
+	grown := append([]Exception{{Rule: "counters", Module: "openits-ess", Path: "/c", Cut: "ess"}}, base...)
+	err := checkGrowth(grown, base)
+	if err == nil || !strings.Contains(err.Error(), "exceptions file grew: counters openits-ess /c is not in the base") {
+		t.Fatalf("growing: err = %v, want a growth error naming counters openits-ess /c", err)
+	}
+}
+
+func TestRun_BaseGrowthFails(t *testing.T) {
+	dir := t.TempDir()
+	cur := filepath.Join(dir, "cur.yaml")
+	base := filepath.Join(dir, "base.yaml")
+	// Baseline the fixture's current violations under a stand-in cut.
+	mods, err := loadModules("testdata/schema")
+	if err != nil {
+		t.Fatal(err)
+	}
+	vs := checkSchema(mods)
+	refs, err := ruleReferences("testdata/schema")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var f exceptionsFile
+	for _, v := range append(vs, refs...) {
+		f.Exceptions = append(f.Exceptions, Exception{Rule: v.Rule, Module: v.Module, Path: v.Path, Cut: "foundation"})
+	}
+	b, err := yaml.Marshal(&f)
+	if err != nil {
+		t.Fatal(err)
+	}
+	os.WriteFile(cur, b, 0o644)
+	if err := run("testdata/schema", cur, cur, false, io.Discard); err != nil {
+		t.Fatalf("base equal to current: err = %v, want nil", err)
+	}
+	os.WriteFile(base, []byte("exceptions: []\n"), 0o644)
+	err = run("testdata/schema", cur, base, false, io.Discard)
+	if err == nil || !strings.Contains(err.Error(), "exceptions file grew") {
+		t.Fatalf("empty base: err = %v, want a growth error", err)
+	}
+	err = run("testdata/schema", cur, filepath.Join(dir, "missing.yaml"), false, io.Discard)
+	if err == nil {
+		t.Fatal("missing base file: err = nil, want an error")
 	}
 }

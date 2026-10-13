@@ -116,6 +116,25 @@ func compare(vs []Violation, exc []Exception) (fresh []Violation, stale []Except
 	return fresh, stale
 }
 
+// checkGrowth enforces shrink-only: it fails when the exceptions file
+// lists an entry the base branch's file does not.
+func checkGrowth(cur, base []Exception) error {
+	inBase := map[string]bool{}
+	for _, x := range base {
+		inBase[x.key()] = true
+	}
+	var grown []string
+	for _, x := range cur {
+		if !inBase[x.key()] {
+			grown = append(grown, fmt.Sprintf("%s %s %s", x.Rule, x.Module, x.Path))
+		}
+	}
+	if len(grown) > 0 {
+		return fmt.Errorf("exceptions file grew: %s is not in the base", strings.Join(grown, "; "))
+	}
+	return nil
+}
+
 // cutFor names the family cut expected to remove a violation in module, or
 // "" when the module maps to no cut.
 func cutFor(module string) string {

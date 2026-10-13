@@ -123,9 +123,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      # fetch-depth 0 brings the base branch in during checkout, while the
+      # token is still held; this job runs PR-authored code, so it must not
+      # keep credentials for a later fetch.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version-file: go.mod
@@ -137,6 +141,21 @@ jobs:
       - run: make check-augment-collisions
       - run: make check-events-layering
       - run: make check-conventions
+      - name: check-conventions exceptions only shrink (vs base branch)
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          set -euo pipefail
+          # The base ref must exist; only a missing file on it skips the check.
+          git rev-parse --verify --quiet "origin/${BASE_REF}^{commit}" >/dev/null
+          if ! git cat-file -e "origin/${BASE_REF}:conventions-exceptions.yaml" 2>/dev/null; then
+            echo "conventions-exceptions.yaml is not on ${BASE_REF}; skipping the growth check"
+            exit 0
+          fi
+          git show "origin/${BASE_REF}:conventions-exceptions.yaml" > "$RUNNER_TEMP/base-exceptions.yaml"
+          go run ./tools/check-conventions -yang yang -exceptions conventions-exceptions.yaml \
+            -base "$RUNNER_TEMP/base-exceptions.yaml"
       - run: make check-ce-id-vectors
       - run: make validate-noi
       - run: make check-graduation

@@ -3,7 +3,9 @@
 // docs/reference/yang-reference-conventions.md) and compares the result
 // with a checked-in, shrink-only exceptions file.
 //
-// Wired to `make check-conventions`.
+// Wired to `make check-conventions`. On pull requests CI also passes
+// -base, the exceptions file from the target branch, so a PR that adds an
+// exception fails here and needs a maintainer's explicit sign-off.
 package main
 
 import (
@@ -18,14 +20,16 @@ func main() {
 	excPath := flag.String("exceptions", "conventions-exceptions.yaml", "exceptions file")
 	write := flag.Bool("write-exceptions", false,
 		"rewrite the exceptions file to list the current violations (initial baseline, or after fixing entries)")
+	basePath := flag.String("base", "",
+		"exceptions file from the base branch; fail if the exceptions file lists any entry it does not")
 	flag.Parse()
-	if err := run(*yangDir, *excPath, *write, os.Stdout); err != nil {
+	if err := run(*yangDir, *excPath, *basePath, *write, os.Stdout); err != nil {
 		fmt.Fprintln(os.Stderr, "check-conventions:", err)
 		os.Exit(1)
 	}
 }
 
-func run(yangDir, excPath string, write bool, w io.Writer) error {
+func run(yangDir, excPath, basePath string, write bool, w io.Writer) error {
 	mods, err := loadModules(yangDir)
 	if err != nil {
 		return err
@@ -43,6 +47,18 @@ func run(yangDir, excPath string, write bool, w io.Writer) error {
 	exc, err := readExceptions(excPath)
 	if err != nil {
 		return err
+	}
+	if basePath != "" {
+		if _, err := os.Stat(basePath); err != nil {
+			return fmt.Errorf("base exceptions file: %w", err)
+		}
+		base, err := readExceptions(basePath)
+		if err != nil {
+			return err
+		}
+		if err := checkGrowth(exc, base); err != nil {
+			return err
+		}
 	}
 	fresh, stale := compare(vs, exc)
 	for _, v := range fresh {
