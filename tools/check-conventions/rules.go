@@ -286,7 +286,7 @@ func ruleCounters(m *yang.Entry) []Violation {
 		}
 		if e.Type.Name != "counter64" {
 			out = append(out, at("counters", m, e,
-				fmt.Sprintf("monotonic counter typed %s; use yang:counter64", e.Type.Name)))
+				fmt.Sprintf("monotonic counter typed %s; use yang:counter64 (if this is a gauge, rename it instead)", e.Type.Name)))
 		}
 	})
 	return out
