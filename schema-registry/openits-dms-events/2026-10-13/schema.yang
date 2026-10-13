@@ -1,0 +1,453 @@
+module openits-dms-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:dms-events";
+  prefix openits-dms-events;
+
+  import openits-types {
+    prefix openits-types;
+  }
+
+  import openits-dms-types {
+    prefix openits-dms-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Notifications for openits-dms.  Split into a companion module
+     so ygot's proto backend can generate protobuf from the base
+     module (ygot's proto generator fails on modules containing
+     notification statements).";
+
+  openits-types:openits-version "0.9.0";
+
+  revision 2026-10-13 {
+    description
+      "Inherit the mandatory sequence-epoch leaf from the openits-types
+       event-header grouping, which changes every notification payload
+       in this module. Breaking: producers must emit sequence-epoch.";
+    reference "RFC 7950 §11.";
+  }
+  revision 2026-09-07 {
+    description
+      "Retype message-activation-failed/error-type from a closed
+       enumeration to an identityref into the new
+       openits-dms-types:activation-error hierarchy (breaking, pre-1.0).
+
+       The enum could not carry the activation-level failures NTCIP 1203
+       reports through dmsActivateMsgError -- priority, message CRC,
+       local mode, message status -- so they were indistinguishable from
+       any other unclassified failure. See the openits-dms-types
+       revision of the same date for the member mapping.
+
+       error-position's description now names the condition under which
+       it is populated by reference to the content sub-base rather than
+       to one retired enum member.
+
+       BREAKING (pre-1.0): the leaf's proto representation changes from
+       an enum to a string carrying a module-qualified identity name.";
+    reference "NTCIP 1203 v03 (dmsMultiSyntaxError / dmsActivateMsgError).";
+  }
+  revision 2026-08-27 {
+    description
+      "Add the message-changed and sign-status-report notifications. The
+       state model carries the face's MULTI text and the environment
+       sensors, but no notification published either, so they could be
+       polled yet never ride the event bus: message-changed reports the
+       face transition (what is now displayed, from where, why, and what
+       it replaced), and sign-status-report is the periodic
+       display/environment snapshot that continuously varying values
+       (housing temperatures, ambient light) need in place of transition
+       events. Closes the gap that left DMS the one service family with a
+       full state tree and no report notification. Additive.";
+  }
+  revision 2026-08-23 {
+    description
+      "Add a 'phase' leaf (activate / validate) to
+       message-activation-failed. NTCIP 1203 separates
+       dmsValidateMessageError — raised during the store-and-validate
+       sequence — from dmsActivateMsgError, and a message can fail
+       validation long before anything tries to activate it; that failure
+       previously had no event home. The payload is identical for both
+       phases, so this is one orthogonal leaf rather than a second
+       notification. 'activate' is value 0, preserving the event's
+       historical meaning under the proto default. Additive.";
+    reference "NTCIP 1203 v03 (dmsValidateMessageError / dmsActivateMsgError).";
+  }
+  revision 2026-07-23 {
+    description
+      "Add wire-source provenance to message-activation-failed: this event
+       is decoded from the sign's own reported NTCIP 1203 dmsMultiSyntaxError
+       / dmsMultiSyntaxErrorPosition diagnostic objects, so it carries the
+       shared wire-source grouping per the selective provenance policy
+       (present iff decoded from a wire).";
+    reference "NTCIP 1203 v03.";
+  }
+  revision 2026-07-21 {
+    description
+      "attempted-slot-number range 1..65535 (drift fix). Fix a stray '; '
+       in a prior revision reference string. Add explicit enum ordinals to
+       message-activation-failed error-type.
+       - Collapse duplicate same-date revision statements.";
+    reference "NTCIP 1203 v03.";
+  }
+  revision 2026-07-16 {
+    description
+      "message-activation-failed: add a structured error-type (MULTI syntax
+       / unsupported-tag / font-not-found / graphic-not-found / too-long /
+       hardware / other) and a MULTI error-position (character offset) so an
+       operator can locate and classify the fault without parsing the
+       free-form reason (NTCIP 1203 dmsMultiSyntaxError /
+       dmsMultiSyntaxErrorPosition). The sign id was already present via the
+       event-header. Additive (Cut 3a).";
+    reference "NTCIP 1203 v03.";
+  }
+  revision 2026-07-14 {
+    description
+      "Cut 3c (events layering): reference message-memory-type via
+       openits-dms-types and drop the openits-dms core import — the
+       events module now imports only -types (+ shared).
+       Wire-neutral.";
+  }
+  revision 2026-07-13 {
+    description
+      "Adopt the unified event contract on message-activation-failed:
+       the notification now 'uses openits-types:event-header'
+       (source-device-id, occurred-at, sequence) and carries a
+       mandatory 'kind' identityref under
+       openits-dms-types:dms-event-kind
+       (openits-dms-types:dms-message-activation-failed). Not a
+       periodic report, so no dual report-event-kind base. All
+       existing payload leaves (attempted-memory-type,
+       attempted-slot-number, reason) are unchanged; the header's
+       source-device-id now supplies sign identity. Breaking, pre-v1:
+       the notification gains mandatory device identity + sequence.
+
+      Stamp openits-version (borrowed from OpenConfig's
+       openconfig-version practice) so tooling can read a
+       compatibility-intent signal independent of the revision date.";
+    reference "RFC 7950 section 11.";
+  }
+  revision 2026-07-12 {
+    description
+      "Rename this module (file, module name, namespace, prefix) from
+       the legacy notifications-suffixed name to openits-dms-events: standardize every service notification module on the
+       events-suffixed name. Mechanical rename only — no notification
+       content changed; ce-types (service-derived, not module-derived)
+       and proto are unaffected. Repoint sign-fault-raised's
+       'category' base from the deleted gen-1
+       openits-dms:fault-category to
+       openits-dms-types:dms-fault-event-kind — breaking, since
+       identity names change, but wire-neutral since the wire
+       representation of an identityref is a string (pre-v1,
+       acceptable). Delete the deprecated per-service fault/mode
+       shims (sign-fault-raised, sign-fault-cleared,
+       sign-mode-changed), superseded by
+       openits-common-fault-events:{fault-raised,fault-cleared} and
+       openits-common-mode-events:mode-changed, discriminated by kind
+       derived from openits-dms-types.";
+    reference
+      "RFC 7950 section 11 (breaking YANG evolution: identity
+       rename).";
+  }
+  revision 2026-07-10 {
+    description
+      "Replace the inline severity enumeration on sign-fault-raised
+       with the shared openits-types:fault-severity typedef. Member
+       set and order unchanged — wire-stable.";
+  }
+  revision 2026-06-12 {
+    description
+      "Deprecate sign-fault-raised, sign-fault-cleared, and
+       sign-mode-changed in favour of the cross-service
+       openits-common-fault-events fault-raised/fault-cleared and
+       openits-common-mode-events mode-changed notifications, which
+       carry a dms-classified kind identityref
+       (openits-dms-types:dms-fault-event-kind tree) plus wire-source
+       provenance. No emitter ever shipped for the deprecated
+       notifications; they remain for the deprecation window only.";
+  }
+  revision 2026-05-23 {
+    description
+      "Add the sign-fault-cleared notification as the companion to
+       sign-fault-raised. Closes the gap where the CE catalog declared
+       openits.dms.sign-fault-cleared.v1 with no YANG schema home.";
+  }
+  revision 2026-04-19 {
+    description "Initial release.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification message-activation-failed {
+    openits-types:arc-it-flow
+      "Roadway Equipment -> TMC : roadway equipment status";
+    description
+      "An attempt to activate a stored message on the sign failed.
+       Lets the TMC distinguish 'command accepted but never displayed'
+       from successful activation.";
+
+    leaf kind {
+      type identityref {
+        base openits-dms-types:dms-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-dms-types:dms-message-activation-failed
+         for this notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf attempted-memory-type {
+      type openits-dms-types:message-memory-type;
+      description "Which memory bank the activation targeted (e.g., changeable, volatile, schedule).";
+    }
+    leaf attempted-slot-number { type uint16 { range "1..65535"; } description "Slot number within the targeted memory bank."; }
+    leaf reason                { type string; description "Sign-reported reason the activation failed (validation, conflict, hardware)."; }
+    leaf error-type {
+      type identityref {
+        base openits-dms-types:activation-error;
+      }
+      description
+        "Structured classification of the activation failure,
+         complementing the free-form reason so a TMC can route and
+         aggregate failures without parsing prose. The sign id is
+         already carried by the event-header (source-device-id).
+
+         Derives from activation-error-content when the message cannot
+         be rendered and from activation-error-control when the sign
+         declined to show it, so a consumer can split 'fix the message'
+         from 'check the sign' with one derived-from-or-self test.";
+      reference "NTCIP 1203 v03 (dmsMultiSyntaxError / dmsActivateMsgError).";
+    }
+    leaf error-position {
+      type uint16;
+      description
+        "Zero-based character offset in the attempted MULTI string where the
+         syntax/tag error was detected (NTCIP 1203 dmsMultiSyntaxErrorPosition),
+         so an operator can locate the fault. Absent when the failure is not
+         a MULTI-content error — that is, whenever error-type does not derive
+         from openits-dms-types:activation-error-content.";
+    }
+
+    leaf phase {
+      type enumeration {
+        enum activate { value 0; description "The failure occurred activating an already-stored message (NTCIP 1203 dmsActivateMsgError)."; }
+        enum validate { value 1; description "The failure occurred validating message content during the store sequence, before any activation was attempted (NTCIP 1203 dmsValidateMessageError)."; }
+      }
+      default "activate";
+      description
+        "Which step of the store-then-activate sequence failed. NTCIP 1203
+         reports these through separate objects, and they call for
+         different operator responses: a validate-phase failure means the
+         library write did not take and the slot is unusable, while an
+         activate-phase failure means a stored message did not reach the
+         face.
+
+         An orthogonal axis, not a parallel classification: it does not
+         mirror the 'kind' identity hierarchy (which stays
+         dms-message-activation-failed for both), it says at which point
+         in the sequence that failure arose. 'activate' is value 0 so the
+         proto default preserves the historical meaning of this event,
+         which had no phase leaf and always described activation.";
+      reference "NTCIP 1203 v03 (dmsValidateMessageError / dmsActivateMsgError).";
+    }
+
+    uses openits-types:wire-source;
+  }
+
+  notification message-changed {
+    openits-types:arc-it-flow
+      "Roadway Equipment -> TMC : roadway equipment status";
+    description
+      "The message on the sign face changed: a stored message was
+       activated, one message replaced another, or the face went blank.
+       Carries the sign's own readback of what is now displayed — not the
+       command that requested it — so consumers see what drivers see,
+       including fallback messages the sign selected on its own (comm
+       loss, power recovery) that no central command named.
+
+       Emitted on transition only; the steady-state face is not
+       re-reported. A consumer that needs current state keeps the last
+       event per sign or reads sign/control/state/active in the state
+       model, whose leaves this payload mirrors.";
+
+    leaf kind {
+      type identityref {
+        base openits-dms-types:dms-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-dms-types:dms-message-changed for
+         this notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf memory-type {
+      type openits-dms-types:message-memory-type;
+      description
+        "Bank of the message now on the face (NTCIP 1203
+         dmsMsgTableSource). A blanked face reports memory-type = blank
+         and an empty multi-string, mirroring
+         sign/control/state/active.";
+      reference "NTCIP 1203 v03 (dmsMsgTableSource).";
+    }
+    leaf slot-number {
+      type uint16 { range "1..65535"; }
+      description
+        "Slot of the now-active message within its bank (absent for the
+         blank bank, which needs no slot).";
+    }
+    leaf multi-string {
+      type string { length "0..65535"; }
+      description
+        "MULTI text now on the face, verbatim — the operator-facing
+         payload of this event. Empty when the face is blank. Consumers
+         that need rendered pixel maps fetch those from the registry, as
+         with the state model's message slots.";
+    }
+    leaf crc {
+      type uint32;
+      description
+        "CRC-16 of the displayed MULTI (NTCIP 1203 dmsMessageCRC),
+         carried in a uint32 for proto-tag stability. Lets a consumer
+         detect a content change that reuses the same
+         (memory-type, slot-number) without diffing the text.";
+      reference "NTCIP 1203 v03 (dmsMessageCRC).";
+    }
+    leaf activation-trigger {
+      type identityref {
+        base openits-types:mode-change-trigger;
+      }
+      description
+        "Why this message reached the face: operator/central command,
+         schedule, or a fallback the sign entered on its own. The same
+         WHY axis as sign/control/state/active/activation-trigger; see
+         that leaf for how NTCIP 1203 dmsMsgSourceMode splits across the
+         WHY and WHICH-AUTHORITY axes.";
+      reference "NTCIP 1203 v03 (dmsMsgSourceMode).";
+    }
+
+    leaf prior-memory-type {
+      type openits-dms-types:message-memory-type;
+      description
+        "Bank of the message the face showed before this change. Absent
+         when no prior display is known (e.g. the first observation of a
+         sign); blank when the face was blank.";
+    }
+    leaf prior-slot-number {
+      type uint16 { range "1..65535"; }
+      description "Slot of the prior message within its bank.";
+    }
+    leaf prior-multi-string {
+      type string { length "0..65535"; }
+      description
+        "MULTI text the face showed before this change, so one event
+         renders as changed-from-X-to-Y without a state lookup. Empty
+         when the face was blank; absent when no prior display is
+         known.";
+    }
+
+    uses openits-types:wire-source;
+  }
+
+  notification sign-status-report {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> Maintenance : equipment maintenance status";
+    description
+      "Periodic sign health snapshot: the display readback plus the
+       co-located environment sensors (housing temperatures, ambient
+       light, humidity). The cadence companion to the transition events —
+       these values vary continuously, so they are reported on an
+       emitter-chosen interval rather than as change events; the interval
+       is reporting policy, not modeled here. Payload leaves mirror
+       sign/control/state and sign/environment in the state model, which
+       carry the full semantics; vendor diagnostics ride as augments on
+       this notification.";
+
+    leaf kind {
+      type identityref {
+        base openits-dms-types:dms-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-dms-types:dms-sign-status-report for
+         this notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf display-state {
+      type identityref {
+        base openits-dms-types:sign-mode;
+      }
+      description
+        "What the face is displaying at report time (off / blank /
+         normal message / test); the snapshot of
+         sign/control/state/display-state.";
+    }
+    leaf brightness-current {
+      type openits-types:percentage;
+      description
+        "Currently applied brightness; may sit below the setpoint under
+         auto-dim. Trend against ambient-light-level to judge whether
+         dimming is tracking ambient conditions.";
+    }
+    leaf ambient-light-level {
+      type openits-types:percentage;
+      description
+        "Ambient light at the sign face as a normalized 0-100 level —
+         the device's photocell level scaled against its own reported
+         maximum, which is what makes values comparable across a mixed
+         fleet. See sign/environment/ambient-light-level for the
+         normalization contract; this is NOT an illuminance
+         measurement.";
+      reference "NTCIP 1203 v03 (dmsIllumPhotocellLevelStatus, dmsIllumMaxPhotocellLevel).";
+    }
+    leaf ambient-illuminance-lux {
+      type uint32;
+      units "lux";
+      description
+        "Measured ambient illuminance at the sign face, in lux — only
+         from a calibrated photometric sensor, never converted from the
+         normalized photocell level. See
+         sign/environment/ambient-illuminance-lux.";
+      reference "EN 12966 (VMS luminance classes; ambient illuminance reference).";
+    }
+    leaf cabinet-temperature-c {
+      type decimal64 { fraction-digits 1; }
+      units "celsius";
+      description
+        "Cabinet interior temperature; surfaces thermal stress on lamps
+         and electronics (sign/environment/cabinet-temperature-c).";
+    }
+    leaf sign-face-temperature-c {
+      type decimal64 { fraction-digits 1; }
+      units "celsius";
+      description
+        "Display-face temperature, the thermal-management input
+         (sign/environment/sign-face-temperature-c).";
+    }
+    leaf humidity-percent {
+      type openits-types:percentage;
+      description "Cabinet interior relative humidity, 0-100 (sign/environment/humidity-percent).";
+    }
+    leaf door-open {
+      type boolean;
+      description "Maintenance-door intrusion sensor state at report time.";
+    }
+    leaf fan-active {
+      type boolean;
+      description "Cabinet/enclosure cooling fan running at report time.";
+    }
+    leaf heater-active {
+      type boolean;
+      description "Enclosure heater running at report time.";
+    }
+  }
+}

@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package openits.ess.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/ess/v1;essv1";
+
+import "google/protobuf/timestamp.proto";
+import "openits/ess/v1/types.proto";
+
+message SensorRecalibrated {
+  string kind = 99;
+  optional string sensor_id = 1;
+  optional string calibrated_by = 2;
+  optional string observed_by = 4;
+  google.protobuf.Timestamp occurred_at = 5;
+  optional string owner = 6;
+  uint64 sequence = 7;
+  string sequence_epoch = 3;
+  string source_device_id = 8;
+}
+
+message WeatherAlert {
+  string kind = 99;
+  optional string threshold_id = 1;
+  optional string observed_value = 2;
+  optional string threshold_value = 3;
+  optional string sensor_id = 12;
+  optional Unit unit = 4;
+  optional Direction direction = 5;
+  optional string human_description = 6;
+  optional string observed_by = 7;
+  google.protobuf.Timestamp occurred_at = 8;
+  optional string owner = 9;
+  uint64 sequence = 10;
+  string sequence_epoch = 13;
+  string source_device_id = 11;
+}
+

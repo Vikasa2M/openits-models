@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package openits.ramp_metering.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/ramp_metering/v1;rampmeteringv1";
+
+import "google/protobuf/timestamp.proto";
+import "openits/ramp_metering/v1/types.proto";
+
+message QueueOverrideActivated {
+  string kind = 99;
+  optional uint32 queue_length_vehicles = 1;
+  optional uint32 threshold_vehicles = 2;
+  optional uint32 plan_id = 3;
+  optional Trigger trigger = 9;
+  optional uint32 occupancy_pct = 10;
+  optional string observed_by = 4;
+  google.protobuf.Timestamp occurred_at = 5;
+  optional string owner = 6;
+  uint64 sequence = 7;
+  string sequence_epoch = 11;
+  string source_device_id = 8;
+}
+
+message QueueOverrideCleared {
+  string kind = 99;
+  optional uint32 queue_length_vehicles = 1;
+  optional uint32 plan_id = 2;
+  optional string observed_by = 3;
+  google.protobuf.Timestamp occurred_at = 4;
+  optional string owner = 5;
+  uint64 sequence = 6;
+  string sequence_epoch = 8;
+  string source_device_id = 7;
+}
+
+message ReleaseRateChanged {
+  reserved 4;
+  reserved "reason";
+  string kind = 99;
+  optional uint32 previous_rate_vph = 1;
+  optional uint32 new_rate_vph = 2;
+  optional uint32 plan_id = 3;
+  optional RateChangeCause cause = 10;
+  optional string observed_by = 5;
+  google.protobuf.Timestamp occurred_at = 6;
+  optional string owner = 7;
+  uint64 sequence = 8;
+  string sequence_epoch = 11;
+  string source_device_id = 9;
+}
+

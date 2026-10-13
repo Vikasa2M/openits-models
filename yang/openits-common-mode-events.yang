@@ -28,11 +28,11 @@ module openits-common-mode-events {
 
   revision 2026-10-13 {
     description
-      "Rename mode-changed's prior and current to previous-mode and mode,
-       the before/after convention every change event follows: previous-
-       <x> and <x>, where <x> names the value. Breaking: the field names
-       change on the wire.";
-    reference "RFC 7950 §7.13.";
+      "Rename mode-changed's prior and current to previous-mode and
+       mode, the before/after convention every change event follows:
+       previous-<x> and <x>, where <x> names the value. Breaking: the
+       field names change on the wire.";
+    reference "RFC 7950 §11.";
   }
   revision 2026-07-21 {
     description

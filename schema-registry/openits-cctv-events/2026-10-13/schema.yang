@@ -1,0 +1,255 @@
+module openits-cctv-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:cctv-events";
+  prefix openits-cctv-events;
+
+  import openits-types {
+    prefix openits-types;
+  }
+  import openits-cctv-types {
+    prefix openits-cctv-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+  description
+    "Service-specific domain events for openits-cctv (NTCIP 1205). Split
+     into a companion module so ygot's proto backend can generate protobuf
+     from the base module.
+
+     Fault and mode events are emitted via openits-common-fault-events /
+     openits-common-mode-events, discriminated by the cctv-fault-event-kind /
+     cctv-mode-event-kind identities in openits-cctv-types — this module
+     declares only the genuinely CCTV-specific domain events.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.2.0";
+
+  revision 2026-10-13 {
+    description
+      "Inherit the mandatory sequence-epoch leaf from the openits-types
+       event-header grouping, which changes every notification payload
+       in this module. Breaking: producers must emit sequence-epoch.";
+    reference "RFC 7950 §11.";
+  }
+  revision 2026-08-05 {
+    description
+      "Model-review remediation (2026-08): add the ptz-move-commanded
+       notification. The cctv-ptz-move-commanded kind identity existed
+       with no notification carrying it (a dangling catalog entry);
+       direct moves (absolute goto / velocity) now audit the same way
+       preset recalls and tour transitions already did, completing the
+       PTZ arbitration audit trail. Additive.";
+    reference "NTCIP 1205.";
+  }
+  revision 2026-07-21 {
+    description
+      "Align lockout-denied requested-priority / held-priority to the
+       1..255 range used by the control container (they were bare uint8,
+       contradicting their own descriptions). Pre-1.0 tightening; wire form
+       of in-range values unchanged.";
+    reference "NTCIP 1205.";
+  }
+  revision 2026-07-17 {
+    description
+      "Initial revision: CCTV domain events — ptz-preset-recalled,
+       tour-state-changed, and lockout-denied (control-ownership refusal).";
+    reference "NTCIP 1205.";
+  }
+
+  notification ptz-preset-recalled {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : camera control status";
+    description
+      "A stored PTZ preset was recalled (goto), whether by an operator
+       command or by a running tour advancing to its next stop. Lets an
+       audit trail record which view the camera was pointed at and why.";
+
+    leaf kind {
+      type identityref {
+        base openits-cctv-types:cctv-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-cctv-types:cctv-ptz-preset-recalled for
+         this notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf preset-id {
+      type uint16;
+      mandatory true;
+      description "Preset that was recalled.";
+    }
+    leaf preset-name {
+      type string;
+      description "Operator label of the recalled preset, if any.";
+    }
+    leaf recalled-by {
+      type string;
+      description
+        "Identifier of the operator / subsystem that recalled the preset.
+         Absent when the recall was a tour advance (see via-tour).";
+    }
+    leaf via-tour {
+      type boolean;
+      description
+        "True when the recall was a tour advancing to its next stop rather
+         than an explicit operator goto.";
+    }
+  }
+
+  notification ptz-move-commanded {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : camera control status";
+    description
+      "A direct PTZ move was commanded — an absolute pan/tilt/zoom goto
+       or a velocity (joystick) move. The audit counterpart of the
+       ptz/config command surface: together with ptz-preset-recalled
+       (preset/tour motion) every commanded camera motion leaves a
+       trail of who pointed the camera where. Exactly one of absolute /
+       velocity is present, matching move-mode.";
+
+    leaf kind {
+      type identityref {
+        base openits-cctv-types:cctv-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-cctv-types:cctv-ptz-move-commanded for
+         this notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf commanded-by {
+      type string;
+      description
+        "Identifier of the operator / subsystem that issued the move —
+         the control-ownership holder at the time of the command.";
+    }
+    leaf move-mode {
+      type openits-cctv-types:ptz-move-mode;
+      mandatory true;
+      description
+        "Which command channel issued this move: absolute or velocity for
+         this notification (preset/tour motion is carried by
+         ptz-preset-recalled instead).";
+    }
+    container absolute {
+      presence "The commanded move was an absolute goto.";
+      description "Commanded absolute setpoint (NTCIP 1205 positionPan/Tilt/Zoom).";
+      leaf pan-degrees {
+        type decimal64 { fraction-digits 1; range "0.0 .. 359.9"; }
+        units "degrees";
+        description "Commanded pan angle, clockwise from the mounting reference.";
+      }
+      leaf tilt-degrees {
+        type decimal64 { fraction-digits 1; range "-90 .. 90"; }
+        units "degrees";
+        description "Commanded tilt angle (negative = below horizon).";
+      }
+      leaf zoom-percent {
+        type openits-types:percentage;
+        description "Commanded zoom as a percent of full optical zoom.";
+      }
+    }
+    container velocity {
+      presence "The commanded move was a velocity (joystick) move.";
+      description
+        "Commanded slew rates, signed percent of max per axis
+         (0 = stop that axis).";
+      leaf pan-speed {
+        type int8 { range "-100 .. 100"; }
+        units "percent";
+        description "Commanded pan slew rate, signed percent of max.";
+      }
+      leaf tilt-speed {
+        type int8 { range "-100 .. 100"; }
+        units "percent";
+        description "Commanded tilt slew rate, signed percent of max.";
+      }
+      leaf zoom-speed {
+        type int8 { range "-100 .. 100"; }
+        units "percent";
+        description "Commanded zoom rate, signed percent of max.";
+      }
+    }
+  }
+
+  notification tour-state-changed {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : camera control status";
+    description
+      "A camera preset tour changed run state (started / stopped / paused).
+       Emitted on transitions only so consumers can track tour lifecycle
+       without polling.";
+
+    leaf kind {
+      type identityref {
+        base openits-cctv-types:cctv-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-cctv-types:cctv-tour-state-changed for
+         this notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf tour-id {
+      type uint16;
+      mandatory true;
+      description "Tour whose run state changed.";
+    }
+    leaf previous-state {
+      type openits-cctv-types:tour-run-state;
+      description "Run state before the transition.";
+    }
+    leaf current-state {
+      type openits-cctv-types:tour-run-state;
+      mandatory true;
+      description "Run state after the transition.";
+    }
+  }
+
+  notification lockout-denied {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : camera control status";
+    description
+      "A control-ownership acquisition was refused because the requester's
+       priority did not exceed the current holder's. The soft-arbitration
+       counterpart to the config/state holder divergence: a losing write
+       surfaces here rather than silently failing.";
+
+    leaf kind {
+      type identityref {
+        base openits-cctv-types:cctv-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-cctv-types:cctv-lockout-denied for this
+         notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf requested-by {
+      type string;
+      mandatory true;
+      description "Identifier of the operator / subsystem that was refused.";
+    }
+    leaf requested-priority {
+      type uint8 { range "1 .. 255"; }
+      description "Priority the refused requester asserted.";
+    }
+    leaf current-holder {
+      type string;
+      description "Identifier of the operator / subsystem currently holding control.";
+    }
+    leaf held-priority {
+      type uint8 { range "1 .. 255"; }
+      description "Priority the current holder asserted.";
+    }
+  }
+}

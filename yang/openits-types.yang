@@ -27,10 +27,10 @@ module openits-types {
        within one (source-device-id, sequence-epoch) stream. A gap means
        loss only for a consumer receiving the device's full stream.
        Breaking: every producer must emit sequence-epoch.
-       Also reword the operational-mode identity description, which named
-       mode-changed's old prior/current leaves; now previous-mode and
-       mode. Wire-neutral.";
-    reference "CloudEvents 1.0 (id); docs/ce-id-spec.md.";
+       Also reword the operational-mode identity description, which
+       named mode-changed's old prior/current leaves; now previous-mode
+       and mode. Wire-neutral.";
+    reference "CloudEvents 1.0 (id).";
   }
 
   revision 2026-10-12 {

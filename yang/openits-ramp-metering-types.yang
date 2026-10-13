@@ -35,7 +35,7 @@ module openits-ramp-metering-types {
     description
       "Update descriptions that referred to mode-changed's prior/current
        leaves, now previous-mode and mode. Wire-neutral.";
-    reference "RFC 7950 §7.13.";
+    reference "RFC 7950 §11.";
   }
   revision 2026-08-05 {
     description

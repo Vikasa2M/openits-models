@@ -1,0 +1,260 @@
+module openits-zone-occupancy-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:zone-occupancy-events";
+  prefix openits-zone-occupancy-events;
+
+  import openits-types {
+    prefix openits-types;
+  }
+  import openits-zone-occupancy-types {
+    prefix openits-zone-occupancy-types;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Event payloads for the zone-occupancy capability: the periodic
+     per-region occupancy report, and the live occupancy change that is
+     its transition-time counterpart.
+
+     Imports only shared -types modules, per the events-layering rule —
+     an events module never depends on a capability's or service's
+     config/state schema.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.3.0";
+
+  revision 2026-10-13 {
+    description
+      "Inherit the mandatory sequence-epoch leaf from the openits-types
+       event-header grouping, which changes every notification payload
+       in this module. Breaking: producers must emit sequence-epoch.";
+    reference "RFC 7950 §11.";
+  }
+  revision 2026-09-05 {
+    description
+      "Add zone-occupancy-changed: the live half of the pair the interval
+       report started. Fires on transition (the region became occupied,
+       became vacant, or stayed occupied while its population changed),
+       one region per event, and composes the shared
+       openits-zone-occupancy-types:zone-occupancy-state grouping so it
+       mirrors zone-occupancy/zones/zone leaf for leaf; presence is
+       refined mandatory here, since every transition kind is defined
+       in terms of it. Additive.";
+    reference
+      "docs/04-design-decisions.md;
+       docs/reference/yang-reference-conventions.md.";
+  }
+  revision 2026-08-15 {
+    description
+      "Initial revision. zone-occupancy-interval-report carries the
+       observed (presence) population per region, including the
+       per-class breakdown and confidence that nothing in the family
+       previously described.
+
+       observed-count and occupancy-percent move here from
+       openits-perception-events:zone-interval-report, which keeps the
+       crossed (throughput) half. The 2026-07-13 perception revision
+       separated those two populations at leaf level because mixing them
+       silently double-counts; this puts the split at the capability
+       boundary it was always describing, so each figure has exactly one
+       home.";
+    reference "docs/08-capability-architecture.md.";
+  }
+
+  notification zone-occupancy-interval-report {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : traffic flow";
+    description
+      "Periodic per-region occupancy report, emitted once per
+       configured reporting interval.";
+
+    leaf kind {
+      type identityref {
+        base openits-zone-occupancy-types:zone-occupancy-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier;
+         openits-zone-occupancy-types:zoc-zone-occupancy-interval-report
+         for this notification.";
+    }
+    uses openits-types:event-header;
+
+    list zone {
+      key "zone-id";
+      description "Interval occupancy for one configured region.";
+
+      leaf zone-id {
+        type openits-zone-occupancy-types:occupancy-zone-id;
+        description "The configured region this entry reports on.";
+      }
+      leaf interval-start {
+        type yang:date-and-time;
+        description "Wall-clock time the reporting interval opened.";
+      }
+      leaf interval-duration-s {
+        type uint16 {
+          range "1..3600";
+        }
+        units "seconds";
+        description "Length of the reporting interval.";
+      }
+      leaf observed-count {
+        type uint32;
+        units "objects";
+        description
+          "Presence population: distinct objects present in the region
+           at any point during the interval, including those that never
+           traversed it.
+
+           NOT a throughput volume. An object that arrived before the
+           interval opened and was still there when it closed is counted
+           here exactly once and crossed nothing.";
+      }
+      leaf occupancy-percent {
+        type openits-types:percentage-precise;
+        description
+          "Time occupancy: fraction of the interval the region had at
+           least one object present.";
+      }
+      leaf peak-occupancy-count {
+        type uint16;
+        units "objects";
+        description
+          "Highest simultaneous occupancy during the interval.
+
+           Reported alongside the mean-bearing occupancy-percent because
+           the two answer different questions and the peak is the one
+           that establishes a constraint: a region averaging half full
+           that reached capacity every evening is full, and an interval
+           mean will not say so.";
+      }
+
+      list observed-class {
+        key "class";
+        description
+          "Breakdown of the PRESENT population per object class.
+
+           Where the region classifies, the counts sum to observed-count
+           with object-unknown as the catch-all, so no observed object
+           is dropped. Where it does not classify, the list is empty and
+           the sum rule does not apply — an empty list is not a claim
+           that nothing was there.";
+
+        leaf class {
+          type identityref {
+            base openits-types:object-class;
+          }
+          description "Object class this count belongs to.";
+        }
+        leaf count {
+          type uint32;
+          units "objects";
+          description
+            "Distinct objects of this class present during the interval.";
+        }
+        leaf mean-confidence {
+          type openits-types:percentage;
+          description
+            "Mean classification confidence across the objects counted
+             here. Lets a consumer weigh or refuse a breakdown produced
+             under poor conditions rather than treating every count as
+             equally established.";
+        }
+      }
+    }
+  }
+
+  notification zone-occupancy-changed {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : traffic flow";
+    description
+      "The live occupancy of one region changed. The transition half of
+       the pair zone-occupancy-interval-report started: the report is
+       the scheduled aggregate over a closed window, this is the
+       condition right now, emitted when it moves.
+
+       What counts as a change is exactly the set of identities under
+       openits-zone-occupancy-types:zoc-occupancy-change-event-kind,
+       which 'kind' is constrained to: the region became occupied,
+       became vacant, or stayed occupied while its count or its set of
+       present classes changed. A delta that maps to none of those
+       (presence-confidence or classification-confidence drifting,
+       measured-at ticking) is not an event. That rule is what makes
+       the stream acquisition-neutral: a collector polling the device's
+       state tree and a device publishing natively emit the same events
+       for the same physical history, because both emit transitions and
+       neither emits samples.
+
+       An emitter MAY re-report an unchanged condition. The re-report
+       carries the same kind and payload as the most recent transition
+       and is idempotent for a consumer maintaining a twin. Whether and
+       how often to re-report is reporting policy, not modeled here.
+
+       Payload leaves come from the shared zone-occupancy-state
+       grouping, so this event and zone-occupancy/zones/zone mirror each
+       other leaf for leaf: that container is the digital-twin rollup of
+       this stream. The grouping also carries the
+       readback-representability rule: nothing here is constrained
+       against anything else, so a misbehaving device stays visible.
+
+       Timing: occurred-at is when the transition took effect as far as
+       the emitter knows. A native device reports the instant; a polling
+       collector reports the poll that detected it. occupied-since is
+       the device-asserted onset where the device knows it, so a
+       consumer recovers the true dwell even from a polled transition.
+       There is no previous-state leaf: 'kind' carries the direction,
+       and occupied-since separates an onset from an update.
+
+       One region per event, the single-subject convention every openits
+       change event follows, so a consumer keys its twin on
+       (source-device-id, zone-id) without unpacking a list. No
+       wire-source: the transition is inferred or natively produced,
+       never decoded from a device protocol.";
+
+    leaf kind {
+      type identityref {
+        base openits-zone-occupancy-types:zoc-occupancy-change-event-kind;
+      }
+      mandatory true;
+      description
+        "Which transition this is:
+         openits-zone-occupancy-types:zoc-zone-occupied,
+         zoc-zone-vacated, or zoc-zone-occupancy-updated. The base is
+         the change sub-base rather than the capability root, so the
+         interval report's kind is not a valid value here.";
+    }
+    uses openits-types:event-header;
+
+    leaf zone-id {
+      type openits-zone-occupancy-types:occupancy-zone-id;
+      mandatory true;
+      description
+        "The configured region whose occupancy changed. A plain
+         identifier rather than a leafref: an event is self-contained,
+         and a consumer resolves it against the device's configuration
+         (or its own inventory) out of band.";
+    }
+    uses openits-zone-occupancy-types:zone-occupancy-state {
+      refine "presence" {
+        mandatory true;
+        description
+          "At least one object is currently in the region. Mandatory on
+           this notification, though optional in the live state the same
+           grouping describes, because every transition kind is defined
+           in terms of it: occupied and updated assert true, vacated
+           asserts false. A change event that omits it has no meaning,
+           and a binding without presence tracking (proto3) would read
+           the omission as false.";
+      }
+    }
+  }
+}
