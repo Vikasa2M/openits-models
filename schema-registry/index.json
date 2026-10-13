@@ -60,10 +60,12 @@
           "namespace": "urn:openits:yang:cctv-types",
           "revisions": [
             "2026-07-17",
-            "2026-07-21"
+            "2026-07-21",
+            "2026-10-14"
           ],
           "refStd": [
-            "NTCIP 1205"
+            "NTCIP 1205",
+            "RFC 7950 §11"
           ]
         }
       ]
@@ -1676,6 +1678,11 @@
         "openits-cctv-types/2026-07-21/MANIFEST.json",
         "openits-cctv-types/2026-07-21/README.md",
         "openits-cctv-types/2026-07-21/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-cctv-types/2026-10-14/MANIFEST.json",
+        "openits-cctv-types/2026-10-14/README.md",
+        "openits-cctv-types/2026-10-14/schema.yang"
       ]
     },
     "openits-common-comm-health-events": {

@@ -232,6 +232,20 @@ that tuple is a durable correlation key even as the device re-raises. The
 optional correlates-with leaf lets a device hint causality between its own
 faults; cross-device correlation is likewise a center concern.
 
+### Fault shape
+
+Every service's active-fault inventory entry and the shared `fault-raised`
+and `fault-cleared` events carry the same fields. `kind` is a mandatory
+identityref typed to that service's own fault base, so a fleet-wide
+`derived-from-or-self(kind, 'openits-types:fault-event-kind')` filter spans
+every service. `first-observed` is mandatory. A fault about one
+sub-component carries the optional `component` reference
+(`component/component-class`, `component/component-id`, where the id is the
+key of the live-state entry, a composite key joined with `/`); absent means
+the whole device. Producers do not encode the sub-component inside
+`fault-id`. `fault-id` and `correlates-with` are limited to 128 characters.
+`fault-raised` may be re-emitted with the same `fault-id` as an upsert.
+
 ## Write path
 
 *(Contract-of-intent — not yet implemented in the telemetry model.)*

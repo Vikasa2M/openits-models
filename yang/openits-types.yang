@@ -26,7 +26,9 @@ module openits-types {
        typedef, the component-class identity and the component-ref
        grouping, and reshape fault-entry: typed fault-id and
        correlates-with, a mandatory first-observed, and an optional
-       component. Breaking: first-observed is now mandatory.";
+       component. Breaking: first-observed is now mandatory.
+       Also update descriptions that named the fault inventory's
+       category leaf, now kind.";
     reference "RFC 7950 §7.12.";
   }
 
@@ -219,7 +221,7 @@ module openits-types {
        - 'fault-entry' (fault-id + severity + description +
          first-observed): the common leaves of the config-false
          active-fault list every service exposes. Each service
-         'uses fault-entry' and adds its own 'category' identityref.
+         'uses fault-entry' and adds its own 'kind' identityref.
 
        Add the percentage-precise typedef (decimal64, 0.0-100.0) and
        the device-hardware grouping; consolidate the duplicate per-
@@ -1072,7 +1074,7 @@ module openits-types {
    * One entry in a device's live active-fault list (the config-false
    * 'faults' container every service exposes). A service's fault list
    * 'uses fault-entry' for the common leaves and adds its own
-   * service-specific 'category' identityref (base
+   * service-specific 'kind' identityref (base
    * <service>-fault-event-kind), so a fleet-wide
    * derived-from-or-self(fault-event-kind) filter spans every service.
    * -------------------------------------------------------------- */
