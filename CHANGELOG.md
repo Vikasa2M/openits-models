@@ -7,6 +7,30 @@ for the Go module. See [`docs/versioning.md`](docs/versioning.md) for how the
 Go module version, per-module YANG revision dates, and protobuf wire
 compatibility relate.
 
+## [0.6.0](https://github.com/Vikasa2M/openits-models/compare/v0.5.0...v0.6.0) (2026-10-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* 51 wire changes across nine proto files. Optional scalars gain explicit presence, so Go consumers see pointers in struct literals and direct field assignment (reads through GetX() are unaffected). Seven classification axes emit module-qualified identity strings instead of enum names. Thirteen generated enum type and value names lose a redundant prefix. Detector delay changes JSON encoding from number to string and detector volume from string to number. plan-applied's `source` leaf is renamed `trigger`. See docs/migration/v0.6.0.md for every mapping and an upgrade checklist.
+
+### Features
+
+* pre-1.0 wire cleanup — field presence, identity conversions, generator fixes ([ade90ff](https://github.com/Vikasa2M/openits-models/commit/ade90ffd9c5a17767a2c4932021aa35a036154f4))
+
+
+### Bug Fixes
+
+* **deps:** bump google.golang.org/grpc from 1.83.1 to 1.83.2 ([a3ddac3](https://github.com/Vikasa2M/openits-models/commit/a3ddac3fc325eb8d724b469f87f15f23254135fd))
+* **deps:** bump google.golang.org/grpc from 1.83.1 to 1.83.2 ([8560593](https://github.com/Vikasa2M/openits-models/commit/8560593cfe277737f292841f335a6d1c2e1d6a9f))
+* **dms:** keep config defaults out of read-back state ([c5f8d55](https://github.com/Vikasa2M/openits-models/commit/c5f8d55d24045930b78eec3c04b4c02ec3415056))
+* model defects from the pre-1.0 review ([74a6081](https://github.com/Vikasa2M/openits-models/commit/74a60810f50d44198829f3035ee203e4da4a0865))
+* remove internal names from two public model descriptions ([c9735b0](https://github.com/Vikasa2M/openits-models/commit/c9735b06d134f2574e78643c1d6c3616712f59c5))
+* **rsu:** make the SPaT-requires-UTC rule actually fire, and gate rejection reasons ([d7b12ad](https://github.com/Vikasa2M/openits-models/commit/d7b12ad20dc3da38bf3411e3cd4262aa72829813))
+* **signal-control:** raise detector and monitor faults as themselves; correct flash and monitor definitions ([95c8685](https://github.com/Vikasa2M/openits-models/commit/95c8685c527d56b3d4ab61258315e5eeb385cf79))
+* stop naming vendors as authors of modules they have not ratified ([26def2f](https://github.com/Vikasa2M/openits-models/commit/26def2fc83780a168f30811f2a027d035ced33b7))
+* **types:** make the fault-severity order normative ([e972858](https://github.com/Vikasa2M/openits-models/commit/e972858ae9d8552bfe5c91f03e8f3fd839dde77f))
+
 ## [0.5.0](https://github.com/Vikasa2M/openits-models/compare/v0.4.0...v0.5.0) (2026-09-05)
 
 
