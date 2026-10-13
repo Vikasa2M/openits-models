@@ -104,7 +104,7 @@ module openits-ramp-metering-types {
        add proprietary metering modes without a base-model revision.
        meter-mode derives from openits-types:operational-mode so its
        values can be carried in the generic mode-changed
-       previous-mode/mode identityref.";
+       prior/current identityref.";
     reference "RFC 7950 section 11.";
   }
   revision 2026-06-11 {

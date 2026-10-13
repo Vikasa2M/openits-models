@@ -105,7 +105,7 @@ module openits-rsu-types {
        Add the rsu-mode identity set (rsu-mode base + mode-standby /
        mode-operate, per NTCIP 1218 rsuMode), deriving from
        openits-types:operational-mode, so an RSU mode transition can be
-       carried in the generic mode-changed previous-mode/mode identityref.";
+       carried in the generic mode-changed prior/current identityref.";
     reference "RFC 7950 section 11.";
   }
   revision 2026-06-11 {
@@ -157,7 +157,7 @@ module openits-rsu-types {
     description
       "RSU operational-mode transitions (standby / operate per
        NTCIP 1218 rsuMode). The mode-changed notification's
-       prior/current identityref values (openits-rsu-types:rsu-mode
+       previous-mode/mode identityref values (openits-rsu-types:rsu-mode
        descendants) are interpreted in this mode-space.";
     reference "NTCIP 1218:2020 (rsuMode).";
   }
