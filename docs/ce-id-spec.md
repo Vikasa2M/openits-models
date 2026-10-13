@@ -27,10 +27,13 @@ ce-id    = ULID(timestamp = stable-time-ms, randomness = digest[0:10])
   - **`sequence`** — a per-producer counter that resets on restart and differs
     between redundant producers. It is transport bookkeeping for gap
     detection, not event identity.
+  - **`sequence-epoch`** — names the producer's stream (a restart or a
+    different producer mints a new one). Like `sequence`, it is transport
+    bookkeeping, not event identity.
   - **`observed-by`** — names the observer, not the occurrence.
 
   Every other leaf participates. Clear them on a *copy*: the wire payload
-  still carries both values.
+  still carries these values.
 
   **Cleared means absent, not zero.** The two are the same bytes only for a
   field with proto3 implicit presence. `observed-by` is optional in every

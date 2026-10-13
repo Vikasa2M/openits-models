@@ -31,6 +31,11 @@ func run(yangDir, excPath string, write bool, w io.Writer) error {
 		return err
 	}
 	vs := checkSchema(mods)
+	refs, err := ruleReferences(yangDir)
+	if err != nil {
+		return err
+	}
+	vs = append(vs, refs...)
 	sortViolations(vs)
 	if write {
 		return writeExceptions(excPath, vs)
