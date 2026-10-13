@@ -17,6 +17,7 @@ module openits-test-conventions {
       enum bad { value 1; }
     }
   }
+  typedef pct-type { type uint8; units "percent"; }
   identity device-event-kind;
   identity svc-event-kind { base device-event-kind; }
   identity svc-change-event-kind { base svc-event-kind; }
@@ -50,6 +51,12 @@ module openits-test-conventions {
       leaf height-m { type uint32; }
       leaf frames-total { type counter64; }
       leaf crc-errors { type uint64; }
+      leaf rx-total { type uint64; }
+      leaf bad-match-ms { type uint32; units "seconds"; }
+      leaf inherited-pct { type pct-type; }
+      leaf ratio-percent { type uint32; }
+      leaf count-units { type uint32; units "vehicles"; }
+      leaf channel-a { type uint32; }
     }
     container config {
       leaf commanded {

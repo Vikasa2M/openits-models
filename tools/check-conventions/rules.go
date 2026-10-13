@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"slices"
 	"sort"
 	"strings"
 
@@ -23,9 +24,10 @@ func (v Violation) key() string { return v.Rule + "\x00" + v.Module + "\x00" + v
 // checkSchema runs every rule that works on the parsed schema.
 func checkSchema(mods []*yang.Entry) []Violation {
 	var out []Violation
+	seenEnums := map[string]bool{} // typedef enums are reported once, globally
 	for _, m := range mods {
 		out = append(out, ruleBeforeAfter(m)...)
-		out = append(out, ruleUnknownZero(m)...)
+		out = append(out, ruleUnknownZero(m, seenEnums)...)
 		out = append(out, ruleUnits(m)...)
 		out = append(out, ruleCounters(m)...)
 		out = append(out, ruleKindBase(m)...)
@@ -95,12 +97,35 @@ func ruleBeforeAfter(m *yang.Entry) []Violation {
 	return out
 }
 
+// moduleName is the module a module or submodule belongs to.
+func moduleName(m *yang.Module) string {
+	if m.BelongsTo != nil {
+		return m.BelongsTo.Name
+	}
+	return m.Name
+}
+
+// typedefModule returns the module that defines the typedef a leaf's type
+// names, resolving a prefixed type name through the leaf's imports.
+func typedefModule(e *yang.Entry) (module, typedef string) {
+	typedef = e.Type.Name
+	l, ok := e.Node.(*yang.Leaf)
+	if !ok || l.Type == nil {
+		return moduleName(yang.RootNode(e.Node)), typedef
+	}
+	if i := strings.Index(l.Type.Name, ":"); i >= 0 {
+		if mod := yang.FindModuleByPrefix(e.Node, l.Type.Name[:i]); mod != nil {
+			return moduleName(mod), l.Type.Name[i+1:]
+		}
+	}
+	return moduleName(yang.RootNode(e.Node)), typedef
+}
+
 // ruleUnknownZero: an enumeration read from a device (config false, or in
-// a notification) has unknown at value 0. A typedef is reported once per
-// using module.
-func ruleUnknownZero(m *yang.Entry) []Violation {
+// a notification) has unknown at value 0. A typedef is reported once, for
+// the module that defines it (seen is shared across modules).
+func ruleUnknownZero(m *yang.Entry, seen map[string]bool) []Violation {
 	var out []Violation
-	seen := map[string]bool{}
 	walk(m, func(e *yang.Entry) {
 		if !isLeaf(e) || e.Type == nil || e.Type.Kind != yang.Yenum || e.Type.Enum == nil {
 			return
@@ -108,34 +133,54 @@ func ruleUnknownZero(m *yang.Entry) []Violation {
 		if !e.ReadOnly() && !inNotification(e) {
 			return
 		}
-		where := e.Path()
+		module, where := m.Name, e.Path()
 		if e.Type.Name != "enumeration" {
-			where = "typedef " + e.Type.Name
+			var td string
+			module, td = typedefModule(e)
+			where = "typedef " + td
 		}
-		if seen[where] {
+		k := module + "\x00" + where
+		if seen[k] {
 			return
 		}
-		seen[where] = true
+		seen[k] = true
 		v, ok := e.Type.Enum.NameMap()["unknown"]
 		switch {
 		case !ok:
-			out = append(out, Violation{"unknown-zero", m.Name, where,
+			out = append(out, Violation{"unknown-zero", module, where,
 				"enumeration read from a device has no unknown member; add unknown with value 0"})
 		case v != 0:
-			out = append(out, Violation{"unknown-zero", m.Name, where,
+			out = append(out, Violation{"unknown-zero", module, where,
 				fmt.Sprintf("unknown has value %d; it must be 0", v)})
 		}
 	})
 	return out
 }
 
-// shortUnits are the unit suffixes a leaf name may end in.
-var shortUnits = map[string]bool{
-	"s": true, "ms": true, "us": true, "min": true, "h": true,
-	"pct": true, "deg": true, "kmh": true, "vph": true,
-	"c": true, "m": true, "mm": true, "cm": true, "km": true,
-	"v": true, "a": true, "w": true, "hz": true,
-	"db": true, "dbm": true, "lux": true, "kbps": true, "bytes": true, "wm2": true,
+// shortUnits maps each short unit suffix to the units strings a leaf with
+// that suffix may carry.
+var shortUnits = map[string][]string{
+	"s": {"seconds", "s"}, "ms": {"milliseconds"}, "us": {"microseconds"},
+	"min": {"minutes"}, "h": {"hours"}, "pct": {"percent"}, "deg": {"degrees"},
+	"kmh": {"km/h"}, "vph": {"vehicles/hour", "vehicles-per-hour"},
+	"c": {"celsius"}, "m": {"meters"}, "mm": {"millimeters"}, "cm": {"centimeters"},
+	"km": {"kilometers"}, "v": {"volts"}, "a": {"amperes"}, "w": {"watts"},
+	"hz": {"hertz"}, "db": {"dB"}, "dbm": {"dBm"}, "lux": {"lux"},
+	"kbps": {"kilobits/second"}, "bytes": {"bytes"},
+	"wm2": {"watts-per-square-meter"}, "mi": {"miles"},
+	"ppm": {"parts-per-million"}, "hpa": {"hectopascals"}, "dbi": {"dBi"},
+}
+
+// ambiguousSuffixes are single letters that also end ordinary A/B labels
+// (direction-a, channel-w), so they count as unit suffixes only when the
+// leaf has a units statement.
+var ambiguousSuffixes = map[string]bool{"a": true, "v": true, "w": true}
+
+// countUnits are units that count things rather than measure a quantity;
+// such a leaf needs no unit suffix in its name.
+var countUnits = map[string]bool{
+	"vehicles": true, "objects": true, "veh/km": true,
+	"counts/minute": true, "points-per-second": true, "bytes": true,
 }
 
 // longUnits are spelled-out unit suffixes the convention replaces.
@@ -159,7 +204,7 @@ func unitsOf(e *yang.Entry) string {
 	return ""
 }
 
-// ruleUnits: a leaf with a unit carries both a short unit suffix and a
+// ruleUnits: a leaf with a unit carries a short unit suffix and a matching
 // units statement.
 func ruleUnits(m *yang.Entry) []Violation {
 	var out []Violation
@@ -169,23 +214,32 @@ func ruleUnits(m *yang.Entry) []Violation {
 		}
 		suf := lastToken(e.Name)
 		units := unitsOf(e)
+		accepted, isSuffix := shortUnits[suf]
 		switch {
 		case longUnits[suf] != "":
 			out = append(out, Violation{"units", m.Name, e.Path(),
 				fmt.Sprintf("spelled-out unit suffix -%s; use -%s", suf, longUnits[suf])})
-		case units != "" && !shortUnits[suf]:
+		case isSuffix && units == "":
+			if !ambiguousSuffixes[suf] {
+				out = append(out, Violation{"units", m.Name, e.Path(),
+					fmt.Sprintf("name ends in unit suffix -%s but there is no units statement", suf)})
+			}
+		case isSuffix:
+			if !slices.Contains(accepted, units) {
+				out = append(out, Violation{"units", m.Name, e.Path(),
+					fmt.Sprintf("suffix -%s but units %q; expected one of %s", suf, units, strings.Join(accepted, ", "))})
+			}
+		case units != "" && !countUnits[units]:
 			out = append(out, Violation{"units", m.Name, e.Path(),
 				fmt.Sprintf("has units %q but no unit suffix in its name", units)})
-		case shortUnits[suf] && units == "":
-			out = append(out, Violation{"units", m.Name, e.Path(),
-				fmt.Sprintf("name ends in unit suffix -%s but there is no units statement", suf)})
 		}
 	})
 	return out
 }
 
 // ruleCounters: a monotonic counter read from a device is named *-total or
-// *-errors and typed counter64.
+// *-errors and typed counter64. Notification leaves are skipped because
+// notifications carry no counters.
 func ruleCounters(m *yang.Entry) []Violation {
 	var out []Violation
 	walk(m, func(e *yang.Entry) {
@@ -205,7 +259,7 @@ func ruleCounters(m *yang.Entry) []Violation {
 
 // ruleKindBase: a notification's kind is constrained to its own transition
 // or report sub-base, never a service root (an identity based directly on
-// device-event-kind).
+// device-event-kind). Only module-level notifications are checked.
 func ruleKindBase(m *yang.Entry) []Violation {
 	var out []Violation
 	for _, n := range m.Dir {

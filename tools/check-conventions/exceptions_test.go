@@ -57,19 +57,41 @@ func TestWriteExceptions_PreservesCutAndReason(t *testing.T) {
 
 func TestCutFor(t *testing.T) {
 	cases := map[string]string{
-		"openits-types":                                 "foundation",
-		"openits-common-mode-events":                    "foundation",
-		"openits-cabinet-power":                         "foundation",
-		"openits-signal-control-types":                  "signal-control",
-		"openits-vehicle-detection":                     "signal-control",
-		"openits-v2x-radio-types":                       "rsu",
-		"openits-scms":                                  "rsu",
-		"openits-dms-events":                            "dms",
-		"openits-vendor-econolite-signal-control-types": "vendor-examples",
+		"openits-types":                                     "foundation",
+		"openits-common-mode-events":                        "foundation",
+		"openits-cabinet-power":                             "foundation",
+		"openits-signal-control-types":                      "signal-control",
+		"openits-vehicle-detection":                         "rsu",
+		"openits-v2x-radio-types":                           "rsu",
+		"openits-scms":                                      "rsu",
+		"openits-dms-events":                                "dms",
+		"openits-traffic-sensor-types":                      "sensing",
+		"openits-perception":                                "sensing",
+		"openits-zone-occupancy-events":                     "sensing",
+		"openits-vendor-econolite-signal-control-types":     "signal-control",
+		"openits-vendor-trafficvision-perception-types":     "sensing",
+		"openits-vendor-trafficvision-traffic-sensor-types": "sensing",
+		"openits-brand-new-service":                         "",
 	}
 	for mod, want := range cases {
 		if got := cutFor(mod); got != want {
 			t.Errorf("cutFor(%q) = %q, want %q", mod, got, want)
 		}
+	}
+}
+
+func TestWriteExceptions_UnmappedModuleFails(t *testing.T) {
+	p := filepath.Join(t.TempDir(), "x.yaml")
+	err := writeExceptions(p, []Violation{{Rule: "units", Module: "openits-brand-new-service", Path: "/a"}})
+	if err == nil || !strings.Contains(err.Error(), "openits-brand-new-service") {
+		t.Fatalf("err = %v, want an error naming the module", err)
+	}
+}
+
+func TestReadExceptions_Duplicate(t *testing.T) {
+	p := filepath.Join(t.TempDir(), "x.yaml")
+	os.WriteFile(p, []byte("exceptions:\n  - {rule: units, module: m, path: /a, cut: dms}\n  - {rule: units, module: m, path: /a, cut: dms}\n"), 0o644)
+	if _, err := readExceptions(p); err == nil || !strings.Contains(err.Error(), "duplicate") {
+		t.Fatalf("err = %v, want a duplicate error", err)
 	}
 }

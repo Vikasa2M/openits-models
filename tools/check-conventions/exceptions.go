@@ -48,7 +48,12 @@ func readExceptions(path string) ([]Exception, error) {
 	if err := yaml.Unmarshal(b, &f); err != nil {
 		return nil, fmt.Errorf("parsing %s: %w", path, err)
 	}
+	dup := map[string]bool{}
 	for _, x := range f.Exceptions {
+		if dup[x.key()] {
+			return nil, fmt.Errorf("%s: duplicate exception %s %s %s", path, x.Rule, x.Module, x.Path)
+		}
+		dup[x.key()] = true
 		if x.Cut == "" {
 			return nil, fmt.Errorf("%s: %s %s %s has no cut", path, x.Rule, x.Module, x.Path)
 		}
@@ -74,7 +79,11 @@ func writeExceptions(path string, vs []Violation) error {
 	for _, v := range vs {
 		x, ok := kept[v.key()]
 		if !ok {
-			x = Exception{Rule: v.Rule, Module: v.Module, Path: v.Path, Cut: cutFor(v.Module)}
+			cut := cutFor(v.Module)
+			if cut == "" {
+				return fmt.Errorf("no family cut known for module %s; add it to cutFor", v.Module)
+			}
+			x = Exception{Rule: v.Rule, Module: v.Module, Path: v.Path, Cut: cut}
 		}
 		f.Exceptions = append(f.Exceptions, x)
 	}
@@ -107,23 +116,32 @@ func compare(vs []Violation, exc []Exception) (fresh []Violation, stale []Except
 	return fresh, stale
 }
 
-// cutFor names the family cut expected to remove a violation in module.
+// cutFor names the family cut expected to remove a violation in module, or
+// "" when the module maps to no cut.
 func cutFor(module string) string {
 	m := strings.TrimPrefix(module, "openits-")
+	if rest, ok := strings.CutPrefix(m, "vendor-"); ok {
+		// vendor-<vendor>-<service...>: the cut is the service's.
+		if i := strings.Index(rest, "-"); i >= 0 {
+			return cutFor("openits-" + rest[i+1:])
+		}
+		return ""
+	}
 	m = strings.TrimSuffix(m, "-types")
 	m = strings.TrimSuffix(m, "-events")
 	switch {
-	case strings.HasPrefix(m, "vendor-"):
-		return "vendor-examples"
 	case m == "types", strings.HasPrefix(m, "common-"), m == "device-diagnostics",
 		m == "cabinet-power", m == "schedule", m == "nema-common":
 		return "foundation"
-	case strings.HasPrefix(m, "v2x-"), m == "scms", m == "rsu":
+	case strings.HasPrefix(m, "v2x-"), m == "scms", m == "rsu", m == "vehicle-detection":
 		return "rsu"
-	case m == "vehicle-detection":
-		return "signal-control"
+	case m == "traffic-sensor", m == "perception", m == "zone-occupancy":
+		return "sensing"
+	case m == "signal-control", m == "reversible-lane", m == "work-zone", m == "dms",
+		m == "cctv", m == "ramp-metering", m == "ess":
+		return m
 	}
-	return m
+	return ""
 }
 
 func sortViolations(vs []Violation) {

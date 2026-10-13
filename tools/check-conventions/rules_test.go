@@ -69,13 +69,34 @@ func TestUnits(t *testing.T) {
 		root+"/dev/state/delay-seconds",
 		root+"/dev/state/timeout",
 		root+"/dev/state/height-m",
+		root+"/dev/state/bad-match-ms",
+		root+"/dev/state/ratio-percent",
 	)
 }
 
 func TestCounters(t *testing.T) {
-	assertPaths(t, "counters", root+"/dev/state/crc-errors")
+	assertPaths(t, "counters", root+"/dev/state/crc-errors", root+"/dev/state/rx-total")
 }
 
 func TestKindBase(t *testing.T) {
 	assertPaths(t, "kind-base", root+"/bad-change/kind")
+}
+
+func TestUnknownZero_TypedefReportedAgainstDefiningModule(t *testing.T) {
+	mods, err := loadModules("testdata/schema")
+	if err != nil {
+		t.Fatal(err)
+	}
+	n := 0
+	for _, v := range checkSchema(mods) {
+		if v.Rule == "unknown-zero" && v.Path == "typedef shared-status" {
+			n++
+			if v.Module != "openits-test-conventions" {
+				t.Errorf("typedef violation Module = %q, want the defining module openits-test-conventions", v.Module)
+			}
+		}
+	}
+	if n != 1 {
+		t.Fatalf("typedef shared-status reported %d times across modules, want 1", n)
+	}
 }
