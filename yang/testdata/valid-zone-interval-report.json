@@ -2,6 +2,7 @@
   "openits-perception-events:zone-interval-report": {
     "kind": "openits-perception-types:pcp-zone-interval-report",
     "source-device-id": "eb-travel-lanes-cam-03",
+    "sequence-epoch": "boot-2026-10-13a",
     "occurred-at": "2026-07-11T14:05:00Z",
     "sequence": "3",
     "zone": [

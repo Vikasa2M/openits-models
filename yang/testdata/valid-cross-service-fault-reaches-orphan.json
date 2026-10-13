@@ -2,6 +2,7 @@
   "openits-common-fault-events:fault-raised": {
     "kind": "openits-traffic-sensor-types:traffic-sensor-fault-rf",
     "source-device-id": "i35-mm214-nb-ts-01",
+    "sequence-epoch": "boot-2026-10-13a",
     "sequence": "1",
     "fault-id": "ts01-fault-0042",
     "severity": "major",

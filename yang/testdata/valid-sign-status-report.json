@@ -2,6 +2,7 @@
   "openits-dms-events:sign-status-report": {
     "kind": "openits-dms-types:dms-sign-status-report",
     "source-device-id": "us40-dms-014",
+    "sequence-epoch": "boot-2026-10-13a",
     "occurred-at": "2026-08-27T14:15:00Z",
     "sequence": "13",
     "display-state": "openits-dms-types:mode-normal",

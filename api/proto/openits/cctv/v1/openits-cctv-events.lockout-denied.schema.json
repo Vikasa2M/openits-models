@@ -37,6 +37,11 @@
     "sequence": {
       "type": "string"
     },
+    "sequence-epoch": {
+      "maxLength": 64,
+      "minLength": 1,
+      "type": "string"
+    },
     "source-device-id": {
       "maxLength": 64,
       "minLength": 1,
@@ -49,6 +54,7 @@
     "occurred-at",
     "requested-by",
     "sequence",
+    "sequence-epoch",
     "source-device-id"
   ],
   "type": "object"

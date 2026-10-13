@@ -16,6 +16,7 @@ message ZoneIncidentCleared {
   google.protobuf.Timestamp occurred_at = 5;
   optional string owner = 6;
   uint64 sequence = 7;
+  string sequence_epoch = 9;
   string source_device_id = 8;
 }
 
@@ -37,6 +38,7 @@ message ZoneIncidentDetected {
   google.protobuf.Timestamp occurred_at = 12;
   optional string owner = 13;
   uint64 sequence = 14;
+  string sequence_epoch = 18;
   string source_device_id = 15;
 }
 
@@ -53,6 +55,7 @@ message ZoneIncidentUpdated {
   google.protobuf.Timestamp occurred_at = 7;
   optional string owner = 8;
   uint64 sequence = 9;
+  string sequence_epoch = 13;
   string source_device_id = 10;
 }
 
@@ -63,6 +66,7 @@ message ZoneIntervalReport {
   google.protobuf.Timestamp occurred_at = 3;
   optional string owner = 4;
   uint64 sequence = 5;
+  string sequence_epoch = 7;
   string source_device_id = 6;
 }
 

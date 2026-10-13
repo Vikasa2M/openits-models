@@ -2,6 +2,7 @@
   "openits-rsu-events:rsu-srm-status-change": {
     "kind": "openits-rsu-types:rsu-srm-status-change-kind",
     "source-device-id": "rsu-i35-mm214",
+    "sequence-epoch": "boot-2026-10-13a",
     "occurred-at": "2026-07-11T14:05:03Z",
     "sequence": "2",
     "request-id": "srm-000482",

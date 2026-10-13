@@ -25,6 +25,7 @@ message ZoneStateChanged {
   optional string owner = 10;
   repeated Point point = 11;
   uint64 sequence = 12;
+  string sequence_epoch = 19;
   string source_device_id = 13;
 }
 

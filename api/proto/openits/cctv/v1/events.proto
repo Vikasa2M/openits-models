@@ -17,6 +17,7 @@ message LockoutDenied {
   google.protobuf.Timestamp occurred_at = 6;
   optional string owner = 7;
   uint64 sequence = 8;
+  string sequence_epoch = 10;
   string source_device_id = 9;
 }
 
@@ -30,6 +31,7 @@ message PtzMoveCommanded {
   google.protobuf.Timestamp occurred_at = 6;
   optional string owner = 7;
   uint64 sequence = 8;
+  string sequence_epoch = 10;
   string source_device_id = 9;
 }
 
@@ -55,6 +57,7 @@ message PtzPresetRecalled {
   google.protobuf.Timestamp occurred_at = 6;
   optional string owner = 7;
   uint64 sequence = 8;
+  string sequence_epoch = 10;
   string source_device_id = 9;
 }
 
@@ -67,6 +70,7 @@ message TourStateChanged {
   google.protobuf.Timestamp occurred_at = 5;
   optional string owner = 6;
   uint64 sequence = 7;
+  string sequence_epoch = 9;
   string source_device_id = 8;
 }
 

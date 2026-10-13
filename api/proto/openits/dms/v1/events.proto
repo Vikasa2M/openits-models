@@ -20,6 +20,7 @@ message MessageActivationFailed {
   google.protobuf.Timestamp occurred_at = 5;
   optional string owner = 6;
   uint64 sequence = 7;
+  string sequence_epoch = 12;
   openits.types.v1.WireSource source = 100;
   string source_device_id = 8;
 }
@@ -38,6 +39,7 @@ message MessageChanged {
   google.protobuf.Timestamp occurred_at = 10;
   optional string owner = 11;
   uint64 sequence = 12;
+  string sequence_epoch = 14;
   openits.types.v1.WireSource source = 100;
   string source_device_id = 13;
 }
@@ -58,6 +60,7 @@ message SignStatusReport {
   google.protobuf.Timestamp occurred_at = 12;
   optional string owner = 13;
   uint64 sequence = 14;
+  string sequence_epoch = 16;
   string source_device_id = 15;
 }
 

@@ -2,6 +2,7 @@
   "openits-signal-control-events:plan-applied": {
     "kind": "openits-signal-control-types:sc-plan-applied",
     "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence-epoch": "boot-2026-10-13a",
     "sequence": "1",
     "plan-id": 4,
     "cycle-length-s": 120,

@@ -71,6 +71,11 @@
     "sequence": {
       "type": "string"
     },
+    "sequence-epoch": {
+      "maxLength": 64,
+      "minLength": 1,
+      "type": "string"
+    },
     "severity": {
       "enum": [
         "critical",
@@ -96,6 +101,7 @@
     "kind",
     "occurred-at",
     "sequence",
+    "sequence-epoch",
     "severity",
     "source-device-id"
   ],

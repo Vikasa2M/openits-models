@@ -15,6 +15,7 @@ message SensorRecalibrated {
   google.protobuf.Timestamp occurred_at = 5;
   optional string owner = 6;
   uint64 sequence = 7;
+  string sequence_epoch = 3;
   string source_device_id = 8;
 }
 
@@ -31,6 +32,7 @@ message WeatherAlert {
   google.protobuf.Timestamp occurred_at = 8;
   optional string owner = 9;
   uint64 sequence = 10;
+  string sequence_epoch = 13;
   string source_device_id = 11;
 }
 

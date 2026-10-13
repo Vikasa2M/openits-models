@@ -19,6 +19,7 @@ message LaneStateChanged {
   google.protobuf.Timestamp occurred_at = 8;
   optional string owner = 9;
   uint64 sequence = 10;
+  string sequence_epoch = 6;
   openits.types.v1.WireSource source = 100;
   string source_device_id = 11;
 }
@@ -33,6 +34,7 @@ message LcsConflictDetected {
   google.protobuf.Timestamp occurred_at = 5;
   optional string owner = 6;
   uint64 sequence = 7;
+  string sequence_epoch = 10;
   openits.types.v1.WireSource source = 100;
   string source_device_id = 8;
 }
@@ -48,6 +50,7 @@ message TransitionTimeout {
   google.protobuf.Timestamp occurred_at = 7;
   optional string owner = 8;
   uint64 sequence = 9;
+  string sequence_epoch = 11;
   string source_device_id = 10;
 }
 

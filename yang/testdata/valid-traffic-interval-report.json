@@ -2,6 +2,7 @@
   "openits-traffic-sensor-events:traffic-interval-report": {
     "kind": "openits-traffic-sensor-types:ts-traffic-interval-report",
     "source-device-id": "i35-mm214-nb-ts-01",
+    "sequence-epoch": "boot-2026-10-13a",
     "occurred-at": "2026-07-11T14:00:00Z",
     "sequence": "1",
     "lane": [

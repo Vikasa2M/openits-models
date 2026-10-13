@@ -2,6 +2,7 @@
   "openits-traffic-sensor-events:queue-state-changed": {
     "kind": "openits-traffic-sensor-types:ts-queue-state-changed",
     "source-device-id": "ts-i70-mm42",
+    "sequence-epoch": "boot-2026-10-13a",
     "occurred-at": "2026-07-13T12:00:00Z",
     "sequence": "1",
     "zone-id": "z1",

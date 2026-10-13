@@ -56,6 +56,11 @@
     "sequence": {
       "type": "string"
     },
+    "sequence-epoch": {
+      "maxLength": 64,
+      "minLength": 1,
+      "type": "string"
+    },
     "sign-face-temperature-c": {
       "type": "string"
     },
@@ -70,6 +75,7 @@
     "kind",
     "occurred-at",
     "sequence",
+    "sequence-epoch",
     "source-device-id"
   ],
   "type": "object"

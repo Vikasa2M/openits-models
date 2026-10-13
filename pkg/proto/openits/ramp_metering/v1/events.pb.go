@@ -34,6 +34,7 @@ type QueueOverrideActivated struct {
 	OccurredAt          *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner               *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence            uint64                 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch       string                 `protobuf:"bytes,11,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId      string                 `protobuf:"bytes,8,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
@@ -139,6 +140,13 @@ func (x *QueueOverrideActivated) GetSequence() uint64 {
 	return 0
 }
 
+func (x *QueueOverrideActivated) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *QueueOverrideActivated) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -155,6 +163,7 @@ type QueueOverrideCleared struct {
 	OccurredAt          *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner               *string                `protobuf:"bytes,5,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence            uint64                 `protobuf:"varint,6,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch       string                 `protobuf:"bytes,8,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId      string                 `protobuf:"bytes,7,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
@@ -239,6 +248,13 @@ func (x *QueueOverrideCleared) GetSequence() uint64 {
 	return 0
 }
 
+func (x *QueueOverrideCleared) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *QueueOverrideCleared) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -257,6 +273,7 @@ type ReleaseRateChanged struct {
 	OccurredAt      *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner           *string                `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence        uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch   string                 `protobuf:"bytes,11,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId  string                 `protobuf:"bytes,9,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
@@ -355,6 +372,13 @@ func (x *ReleaseRateChanged) GetSequence() uint64 {
 	return 0
 }
 
+func (x *ReleaseRateChanged) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *ReleaseRateChanged) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -366,7 +390,7 @@ var File_openits_ramp_metering_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_ramp_metering_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"%openits/ramp_metering/v1/events.proto\x12\x18openits.ramp_metering.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a$openits/ramp_metering/v1/types.proto\"\xdc\x04\n" +
+	"%openits/ramp_metering/v1/events.proto\x12\x18openits.ramp_metering.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a$openits/ramp_metering/v1/types.proto\"\x83\x05\n" +
 	"\x16QueueOverrideActivated\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x127\n" +
 	"\x15queue_length_vehicles\x18\x01 \x01(\rH\x00R\x13queueLengthVehicles\x88\x01\x01\x122\n" +
@@ -380,7 +404,8 @@ const file_openits_ramp_metering_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\x06 \x01(\tH\x06R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\a \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\a \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\v \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceIdB\x18\n" +
 	"\x16_queue_length_vehiclesB\x15\n" +
 	"\x13_threshold_vehiclesB\n" +
@@ -390,7 +415,7 @@ const file_openits_ramp_metering_v1_events_proto_rawDesc = "" +
 	"\b_triggerB\x10\n" +
 	"\x0e_occupancy_pctB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\x85\x03\n" +
+	"\x06_owner\"\xac\x03\n" +
 	"\x14QueueOverrideCleared\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x127\n" +
 	"\x15queue_length_vehicles\x18\x01 \x01(\rH\x00R\x13queueLengthVehicles\x88\x01\x01\x12\x1c\n" +
@@ -400,13 +425,14 @@ const file_openits_ramp_metering_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\x05 \x01(\tH\x03R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\x06 \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\x06 \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\b \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\a \x01(\tR\x0esourceDeviceIdB\x18\n" +
 	"\x16_queue_length_vehiclesB\n" +
 	"\n" +
 	"\b_plan_idB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\x8d\x04\n" +
+	"\x06_owner\"\xb4\x04\n" +
 	"\x12ReleaseRateChanged\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12/\n" +
 	"\x11previous_rate_vph\x18\x01 \x01(\rH\x00R\x0fpreviousRateVph\x88\x01\x01\x12%\n" +
@@ -420,7 +446,8 @@ const file_openits_ramp_metering_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\a \x01(\tH\x05R\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\b \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\b \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\v \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\t \x01(\tR\x0esourceDeviceIdB\x14\n" +
 	"\x12_previous_rate_vphB\x0f\n" +
 	"\r_new_rate_vphB\n" +

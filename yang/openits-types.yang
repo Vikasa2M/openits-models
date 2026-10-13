@@ -18,7 +18,17 @@ module openits-types {
      for the openits YANG module family. Service-neutral content only;
      service-specific typedefs live in their respective modules.";
 
-  openits-types:openits-version "0.11.1";
+  openits-types:openits-version "0.12.0";
+
+  revision 2026-10-13 {
+    description
+      "Give every event a defined stream identity. Add the mandatory
+       event-header leaf sequence-epoch, and define sequence as counting
+       within one (source-device-id, sequence-epoch) stream. A gap means
+       loss only for a consumer receiving the device's full stream.
+       Breaking: every producer must emit sequence-epoch.";
+    reference "CloudEvents 1.0 (id); docs/ce-id-spec.md.";
+  }
 
   revision 2026-10-12 {
     description
@@ -966,13 +976,37 @@ module openits-types {
       type uint64;
       mandatory true;
       description
-        "Per-source-device monotonic event counter. Increments by 1 for
-         each event the device emits, in emission order. MAY reset to 0
-         on device restart (a decrease therefore signals a reboot, not a
-         gap). Consumers order events by (occurred-at, sequence); the
-         sequence breaks ties among the 5-15 hi-res rows that share one
-         decisecond tick. A gap in the sequence between two consecutive
-         received events for one device indicates event loss in transit.";
+        "Event counter within one stream. A stream is one
+         (source-device-id, sequence-epoch) pair. Within a stream the
+         producer increments sequence by exactly 1 for each event it
+         emits, in emission order. A different sequence-epoch is a
+         different stream that starts fresh; it is not loss.
+
+         Consumers order a stream's events by sequence, and by
+         (occurred-at, sequence) across ties such as the high-resolution
+         rows that share one decisecond tick. A gap within one stream
+         indicates loss only for a consumer that receives the device's
+         full event stream. A consumer subscribed to a subset of the
+         device's subjects MUST NOT infer loss from gaps.
+
+         Not part of event identity: ce-id excludes it.";
+    }
+
+    leaf sequence-epoch {
+      type string {
+        length "1..64";
+      }
+      mandatory true;
+      description
+        "Opaque name of the stream this event's sequence belongs to. A
+         producer mints a new epoch whenever its counter can restart:
+         a device reboot, a collector restart, or failover to a
+         different producer. Two redundant producers watching one device
+         therefore emit two epochs; their duplicate events still collapse
+         by ce-id, which excludes this leaf.
+
+         Consumers MUST compare epochs for equality only; the value has
+         no order and no internal structure.";
     }
 
     leaf observed-by {

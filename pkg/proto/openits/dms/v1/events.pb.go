@@ -36,6 +36,7 @@ type MessageActivationFailed struct {
 	OccurredAt          *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner               *string                `protobuf:"bytes,6,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence            uint64                 `protobuf:"varint,7,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch       string                 `protobuf:"bytes,12,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	Source              *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId      string                 `protobuf:"bytes,8,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields       protoimpl.UnknownFields
@@ -149,6 +150,13 @@ func (x *MessageActivationFailed) GetSequence() uint64 {
 	return 0
 }
 
+func (x *MessageActivationFailed) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *MessageActivationFailed) GetSource() *v1.WireSource {
 	if x != nil {
 		return x.Source
@@ -178,6 +186,7 @@ type MessageChanged struct {
 	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner             *string                `protobuf:"bytes,11,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence          uint64                 `protobuf:"varint,12,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch     string                 `protobuf:"bytes,14,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	Source            *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
 	SourceDeviceId    string                 `protobuf:"bytes,13,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields     protoimpl.UnknownFields
@@ -305,6 +314,13 @@ func (x *MessageChanged) GetSequence() uint64 {
 	return 0
 }
 
+func (x *MessageChanged) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *MessageChanged) GetSource() *v1.WireSource {
 	if x != nil {
 		return x.Source
@@ -336,6 +352,7 @@ type SignStatusReport struct {
 	OccurredAt            *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
 	Owner                 *string                `protobuf:"bytes,13,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	Sequence              uint64                 `protobuf:"varint,14,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch         string                 `protobuf:"bytes,16,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
 	SourceDeviceId        string                 `protobuf:"bytes,15,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
@@ -476,6 +493,13 @@ func (x *SignStatusReport) GetSequence() uint64 {
 	return 0
 }
 
+func (x *SignStatusReport) GetSequenceEpoch() string {
+	if x != nil {
+		return x.SequenceEpoch
+	}
+	return ""
+}
+
 func (x *SignStatusReport) GetSourceDeviceId() string {
 	if x != nil {
 		return x.SourceDeviceId
@@ -487,7 +511,7 @@ var File_openits_dms_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_dms_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"\x1bopenits/dms/v1/events.proto\x12\x0eopenits.dms.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1aopenits/dms/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\xe0\x05\n" +
+	"\x1bopenits/dms/v1/events.proto\x12\x0eopenits.dms.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1aopenits/dms/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\x87\x06\n" +
 	"\x17MessageActivationFailed\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12Z\n" +
 	"\x15attempted_memory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x00R\x13attemptedMemoryType\x88\x01\x01\x127\n" +
@@ -503,7 +527,8 @@ const file_openits_dms_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\x06 \x01(\tH\aR\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\a \x01(\x04R\bsequence\x124\n" +
+	"\bsequence\x18\a \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\f \x01(\tR\rsequenceEpoch\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\b \x01(\tR\x0esourceDeviceIdB\x18\n" +
 	"\x16_attempted_memory_typeB\x18\n" +
@@ -513,7 +538,7 @@ const file_openits_dms_v1_events_proto_rawDesc = "" +
 	"\x0f_error_positionB\b\n" +
 	"\x06_phaseB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xe5\x06\n" +
+	"\x06_owner\"\x8c\a\n" +
 	"\x0eMessageChanged\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12G\n" +
 	"\vmemory_type\x18\x01 \x01(\x0e2!.openits.dms.v1.MessageMemoryTypeH\x00R\n" +
@@ -532,7 +557,8 @@ const file_openits_dms_v1_events_proto_rawDesc = "" +
 	" \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\v \x01(\tH\tR\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\f \x01(\x04R\bsequence\x124\n" +
+	"\bsequence\x18\f \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\x0e \x01(\tR\rsequenceEpoch\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\r \x01(\tR\x0esourceDeviceIdB\x0e\n" +
 	"\f_memory_typeB\x0e\n" +
@@ -544,7 +570,7 @@ const file_openits_dms_v1_events_proto_rawDesc = "" +
 	"\x12_prior_slot_numberB\x15\n" +
 	"\x13_prior_multi_stringB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xc0\a\n" +
+	"\x06_owner\"\xe7\a\n" +
 	"\x10SignStatusReport\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12(\n" +
 	"\rdisplay_state\x18\x01 \x01(\tH\x00R\fdisplayState\x88\x01\x01\x122\n" +
@@ -565,7 +591,8 @@ const file_openits_dms_v1_events_proto_rawDesc = "" +
 	"\voccurred_at\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
 	"\x05owner\x18\r \x01(\tH\vR\x05owner\x88\x01\x01\x12\x1a\n" +
-	"\bsequence\x18\x0e \x01(\x04R\bsequence\x12(\n" +
+	"\bsequence\x18\x0e \x01(\x04R\bsequence\x12%\n" +
+	"\x0esequence_epoch\x18\x10 \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\x0f \x01(\tR\x0esourceDeviceIdB\x10\n" +
 	"\x0e_display_stateB\x15\n" +
 	"\x13_brightness_currentB\x16\n" +

@@ -18,6 +18,7 @@ message ZoneOccupancyChanged {
   optional uint32 presence_confidence = 8;
   repeated PresentClass present_class = 9;
   uint64 sequence = 10;
+  string sequence_epoch = 12;
   string source_device_id = 11;
 }
 
@@ -34,6 +35,7 @@ message ZoneOccupancyIntervalReport {
   google.protobuf.Timestamp occurred_at = 3;
   optional string owner = 4;
   uint64 sequence = 5;
+  string sequence_epoch = 7;
   string source_device_id = 6;
 }
 
