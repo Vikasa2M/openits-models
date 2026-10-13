@@ -326,7 +326,9 @@ the integrity of "openits-conformant" as a label.
 
 This means the wire format is stable across nearly all change
 types. The only breaking case is a removal or rename in core,
-which is heavily gated and rare.
+which is heavily gated and rare. Before 1.0, a rename in core lands
+in place without a `ce-type` bump; breaking changes bump the minor
+version instead (see [Versioning](versioning.md)).
 
 ## Tooling that enforces the model
 

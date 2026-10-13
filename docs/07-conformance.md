@@ -46,14 +46,14 @@ when:
    their configured data interval; and so on.
 
 3. **Event identity and dedup semantics are honored.** Every event
-   carries the deterministic, content-derived identity the `ce-id` derivation (`docs/ce-id-spec.md`)
-   defines, so that a retried publish
-   produces the **same** event id and consumers can deduplicate
+   carries the deterministic, content-derived identity the `ce-id`
+   derivation (`docs/ce-id-spec.md`) defines, so that a retried
+   publish produces the **same** event id and consumers can deduplicate
    without coordination. This is a model-level rule — it is rooted in
    the schema, not in any transport — and it is carried by whatever
    envelope the binding provides (`ce-id` in the reference binding).
-   Every notification carries `sequence-epoch`, and `sequence` increases by
-   exactly 1 within an epoch (`TestEvent_SequenceContiguousWithinEpoch`).
+   Every notification carries `sequence-epoch`, and `sequence` increases
+   by exactly 1 within an epoch (`TestEvent_SequenceContiguousWithinEpoch`).
 
 4. **The implementation's NoIs are filed for any augments it
    ships.** If you ship `vendor-x-signal-control-feature-y`, you

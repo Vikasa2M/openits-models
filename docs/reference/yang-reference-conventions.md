@@ -952,9 +952,15 @@ subjects cannot infer loss from gaps. The YANG, `ce-id-spec.md`,
 `make check-conventions` lints the before/after, unknown, units, counters,
 event `kind` and repository-path parts of these rows, against
 `conventions-exceptions.yaml`, which lists today's violations with the family
-cut that removes each and may only shrink. Two parts cannot be linted and stay
-review items: whether an event is wire-decoded (so needs `wire-source`), and
-the exact standards citation form.
+cut that removes each and may only shrink. The lint covers less than the
+table states in three places. The unknown check covers enumerations only;
+whether an identity set has a `<base>-unknown` identity is a review item. The
+counters check runs from name to type only: a leaf named `-total` or
+`-errors` must be `counter64`, but a `counter64` leaf with another name, and
+the discontinuity marker, are not checked. And the lint loads `yang/*.yang`
+only, so augment and deviation modules are not linted. Two further parts
+cannot be linted and stay review items: whether an event is wire-decoded (so
+needs `wire-source`), and the exact standards citation form.
 
 ### 7. Config holds durable intent only
 
