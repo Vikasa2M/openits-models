@@ -228,6 +228,7 @@ func subscribeTrafficSensor(ctx context.Context, out chan<- tests.EventEnvelope,
 				FirstObserved: timestamppb.New(time.Date(2026, 4, 19, 11, 45, 0, 0, time.UTC)),
 				FaultId:       "f-ts-001",
 				Kind:          "openits-traffic-sensor-types:traffic-sensor-fault-rf",
+				Severity:      commonv1.FaultSeverity_FAULT_SEVERITY_MINOR,
 			},
 		},
 	}

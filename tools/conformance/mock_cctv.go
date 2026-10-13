@@ -217,6 +217,7 @@ func subscribeCctv(ctx context.Context, out chan<- tests.EventEnvelope, window t
 				FirstObserved: timestamppb.New(time.Date(2026, 4, 19, 11, 45, 0, 0, time.UTC)),
 				FaultId:       "f-focus-01",
 				Kind:          "openits-cctv-types:cctv-fault-focus",
+				Severity:      commonv1.FaultSeverity_FAULT_SEVERITY_MINOR,
 			},
 		},
 	}

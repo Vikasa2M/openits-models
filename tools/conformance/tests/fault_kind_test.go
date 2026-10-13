@@ -53,3 +53,47 @@ func TestFaultKind_BarePlatformIdentityFails(t *testing.T) {
 		t.Fatalf("bare cabinet-power identity accepted under a service subject")
 	}
 }
+
+func TestFaultKind_ClearedOtherServiceFails(t *testing.T) {
+	ev := faultEv("signal-control", "openits-dms-types:dms-fault-lamp")
+	ev.Subject = strings.TrimSuffix(ev.Subject, "fault-raised") + "fault-cleared"
+	ev.Data = &commonv1.FaultCleared{Kind: "openits-dms-types:dms-fault-lamp", FaultId: "f-1"}
+	if r := runKind(ev); r.Pass {
+		t.Fatalf("fault-cleared with another service's kind accepted")
+	}
+}
+
+func TestFaultKind_EmptyKindFails(t *testing.T) {
+	r := runKind(faultEv("dms", ""))
+	if r.Pass || !strings.Contains(r.Message, "no kind") {
+		t.Fatalf("empty kind not reported: pass=%v msg=%q", r.Pass, r.Message)
+	}
+}
+
+func TestFaultKind_NoModulePrefixFails(t *testing.T) {
+	r := runKind(faultEv("dms", "dms-fault-lamp"))
+	if r.Pass || !strings.Contains(r.Message, "module prefix") {
+		t.Fatalf("unprefixed kind not reported: pass=%v msg=%q", r.Pass, r.Message)
+	}
+}
+
+func TestFaultKind_MisspelledCoreModuleFails(t *testing.T) {
+	r := runKind(faultEv("signal-control", "openits-signal-control-type:sc-fault-power"))
+	if r.Pass || !strings.Contains(r.Message, "unknown module") {
+		t.Fatalf("misspelled core module not reported: pass=%v msg=%q", r.Pass, r.Message)
+	}
+}
+
+func TestFaultKind_NonFaultEventSkipped(t *testing.T) {
+	ev := faultEv("dms", "openits-signal-control-types:sc-fault-power")
+	ev.Subject = strings.TrimSuffix(ev.Subject, "fault-raised") + "mode-changed"
+	if r := runKind(ev); !r.Pass {
+		t.Fatalf("non-fault event not skipped: %s", r.Message)
+	}
+}
+
+func TestFaultKind_UnknownServiceSkipped(t *testing.T) {
+	if r := runKind(faultEv("widget", "openits-dms-types:dms-fault-lamp")); !r.Pass {
+		t.Fatalf("unknown service not skipped: %s", r.Message)
+	}
+}

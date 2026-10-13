@@ -301,6 +301,7 @@ func subscribePerception(ctx context.Context, out chan<- tests.EventEnvelope, wi
 				FirstObserved: timestamppb.New(time.Date(2026, 4, 19, 11, 45, 0, 0, time.UTC)),
 				FaultId:       "f-pcp-001",
 				Kind:          "openits-perception-types:perception-fault-blockage",
+				Severity:      commonv1.FaultSeverity_FAULT_SEVERITY_MAJOR,
 			},
 		},
 	}

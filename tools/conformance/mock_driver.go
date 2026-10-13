@@ -619,6 +619,7 @@ func subscribeDMS(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 				FirstObserved: timestamppb.New(time.Date(2026, 4, 19, 11, 45, 0, 0, time.UTC)),
 				FaultId:       "f-dms-001",
 				Kind:          "openits-dms-types:dms-fault-pixel",
+				Severity:      commonv1.FaultSeverity_FAULT_SEVERITY_MINOR,
 			},
 		},
 		{
@@ -780,6 +781,7 @@ func subscribeESS(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 				FirstObserved: timestamppb.New(time.Date(2026, 4, 19, 11, 45, 0, 0, time.UTC)),
 				FaultId:       "f-ess-001",
 				Kind:          "openits-ess-types:ess-fault-calibration-drift",
+				Severity:      commonv1.FaultSeverity_FAULT_SEVERITY_WARNING,
 			},
 		},
 		{
@@ -1045,6 +1047,19 @@ func subscribeRSU(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 	base := "openits.us-tx.txdot.d07.rsu.rsu-i35-mm214"
 	src := "urn:openits:rsu:us-tx:txdot:d07:rsu-i35-mm214"
 	events := []tests.EventEnvelope{
+		{
+			Subject:  base + ".fault-raised",
+			CEType:   "openits.rsu.fault-raised.v1",
+			CESource: src,
+			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VRA",
+			CETime:   time.Now().UTC(),
+			Data: &commonv1.FaultRaised{
+				FirstObserved: timestamppb.New(time.Date(2026, 4, 19, 11, 45, 0, 0, time.UTC)),
+				FaultId:       "f-rsu-001",
+				Kind:          "openits-rsu-types:rsu-fault-antenna",
+				Severity:      commonv1.FaultSeverity_FAULT_SEVERITY_MINOR,
+			},
+		},
 		{
 			Subject:  base + ".rsu-srm-received",
 			CEType:   "openits.rsu.rsu-srm-received.v1",

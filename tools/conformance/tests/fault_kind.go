@@ -29,10 +29,10 @@ var (
 )
 
 // generatedModules is the set of modules that define at least one
-// identity or enum in the generated schema. Vendor modules are not
-// generator inputs, so their identities are absent from the generated
-// enums; a kind from a module outside this set cannot be judged here and
-// is skipped rather than failed.
+// identity or enum in the generated schema. A kind from an openits-*
+// module outside this set is reported as an unknown module (a typo),
+// except openits-vendor-* modules, which are not generator inputs and are
+// skipped.
 func generatedModules() map[string]bool {
 	knownModulesOnce.Do(func() {
 		knownModules = map[string]bool{}
@@ -61,7 +61,7 @@ func TestFault_KindMatchesService(t *T, obs *Observation) {
 			continue
 		}
 		parts := strings.Split(e.Subject, ".")
-		if len(parts) < 2 {
+		if len(parts) != 7 {
 			continue
 		}
 		last := parts[len(parts)-1]
@@ -71,9 +71,6 @@ func TestFault_KindMatchesService(t *T, obs *Observation) {
 		m := e.Data.ProtoReflect()
 		kf := m.Descriptor().Fields().ByName("kind")
 		if kf == nil {
-			continue
-		}
-		if len(parts) < 5 {
 			continue
 		}
 		service := parts[4]
@@ -91,7 +88,11 @@ func TestFault_KindMatchesService(t *T, obs *Observation) {
 			t.Errorf("%s on a %s subject has kind %q without a module prefix", last, service, kind)
 			continue
 		}
+		if !strings.HasPrefix(module, "openits-") || strings.HasPrefix(module, "openits-vendor-") {
+			continue
+		}
 		if !generatedModules()[module] {
+			t.Errorf("%s on a %s subject has kind %q from unknown module %q", last, service, kind, module)
 			continue
 		}
 		member := false
