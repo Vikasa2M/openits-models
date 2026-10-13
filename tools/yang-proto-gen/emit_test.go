@@ -15,7 +15,10 @@ func readGolden(t *testing.T, name string) string {
 	if err != nil {
 		t.Fatalf("read golden %s: %v", name, err)
 	}
-	return string(b)
+	// Goldens are LF in git; on Windows a checkout may rewrite them to CRLF
+	// (core.autocrlf), which would make an otherwise identical emit look like
+	// a mismatch. Normalize before comparing.
+	return strings.ReplaceAll(string(b), "\r\n", "\n")
 }
 
 func TestEmitMessage_leavesContainers(t *testing.T) {
