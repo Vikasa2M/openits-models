@@ -375,6 +375,7 @@ func subscribeASC(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			},
 		},
 	}
+	stampHeaders(events, "mock-boot-1")
 	for _, e := range events {
 		select {
 		case <-ctx.Done():
@@ -643,6 +644,7 @@ func subscribeDMS(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			},
 		},
 	}
+	stampHeaders(events, "mock-boot-1")
 	for _, e := range events {
 		select {
 		case <-ctx.Done():
@@ -802,6 +804,7 @@ func subscribeESS(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			},
 		},
 	}
+	stampHeaders(events, "mock-boot-1")
 	for _, e := range events {
 		select {
 		case <-ctx.Done():
@@ -1102,6 +1105,7 @@ func subscribeRSU(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			},
 		},
 	}
+	stampHeaders(events, "mock-boot-1")
 	for _, e := range events {
 		select {
 		case <-ctx.Done():
@@ -1271,6 +1275,7 @@ func subscribeRM(ctx context.Context, out chan<- tests.EventEnvelope, window tim
 			},
 		},
 	}
+	stampHeaders(events, "mock-boot-1")
 	for _, e := range events {
 		select {
 		case <-ctx.Done():

@@ -166,6 +166,7 @@ func subscribeReversibleLane(ctx context.Context, out chan<- tests.EventEnvelope
 			},
 		},
 	}
+	stampHeaders(events, "mock-boot-1")
 	for _, e := range events {
 		select {
 		case <-ctx.Done():
