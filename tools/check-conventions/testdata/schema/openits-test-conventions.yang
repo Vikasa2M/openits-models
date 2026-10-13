@@ -1,0 +1,75 @@
+module openits-test-conventions {
+  yang-version 1.1;
+  namespace "urn:openits:yang:test-conventions";
+  prefix tc;
+
+  description "Fixture for check-conventions rule tests.";
+
+  revision 2026-10-13 {
+    description "Initial.";
+  }
+
+  // Stand-ins for the real names the rules key on.
+  typedef counter64 { type uint64; }
+  typedef shared-status {
+    type enumeration {
+      enum ok  { value 0; }
+      enum bad { value 1; }
+    }
+  }
+  identity device-event-kind;
+  identity svc-event-kind { base device-event-kind; }
+  identity svc-change-event-kind { base svc-event-kind; }
+
+  container dev {
+    container state {
+      config false;
+      leaf good-status {
+        type enumeration {
+          enum unknown { value 0; }
+          enum ok { value 1; }
+        }
+      }
+      leaf no-unknown {
+        type enumeration {
+          enum ok { value 0; }
+          enum bad { value 1; }
+        }
+      }
+      leaf unknown-not-zero {
+        type enumeration {
+          enum ok { value 0; }
+          enum unknown { value 1; }
+        }
+      }
+      leaf status-first { type shared-status; }
+      leaf status-second { type shared-status; }
+      leaf delay-s { type uint32; units "seconds"; }
+      leaf delay-seconds { type uint32; units "seconds"; }
+      leaf timeout { type uint32; units "seconds"; }
+      leaf height-m { type uint32; }
+      leaf frames-total { type counter64; }
+      leaf crc-errors { type uint64; }
+    }
+    container config {
+      leaf commanded {
+        type enumeration {
+          enum on { value 0; }
+          enum off { value 1; }
+        }
+      }
+    }
+  }
+
+  notification good-change {
+    leaf kind { type identityref { base svc-change-event-kind; } }
+    leaf previous-mode { type string; }
+    leaf mode { type string; }
+  }
+
+  notification bad-change {
+    leaf kind { type identityref { base svc-event-kind; } }
+    leaf prior { type string; }
+    leaf previous-rate { type string; }
+  }
+}

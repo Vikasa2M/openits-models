@@ -1,0 +1,131 @@
+package main
+
+import (
+	"errors"
+	"fmt"
+	"io/fs"
+	"os"
+	"sort"
+	"strings"
+
+	"gopkg.in/yaml.v3"
+)
+
+// Exception is one known violation, listed with the family cut expected to
+// remove it. Cut "permanent" is for a name a cited standard fixes, and
+// needs a reason.
+type Exception struct {
+	Rule   string `yaml:"rule"`
+	Module string `yaml:"module"`
+	Path   string `yaml:"path"`
+	Cut    string `yaml:"cut"`
+	Reason string `yaml:"reason,omitempty"`
+}
+
+func (x Exception) key() string { return x.Rule + "\x00" + x.Module + "\x00" + x.Path }
+
+type exceptionsFile struct {
+	Exceptions []Exception `yaml:"exceptions"`
+}
+
+const exceptionsHeader = `# Known violations of the house-contract conventions, checked by
+# tools/check-conventions (make check-conventions). This list only shrinks:
+# the gate fails on any violation not listed here and on any entry that no
+# longer violates. Each family cut deletes its own entries. "cut: permanent"
+# is for a name a cited standard fixes and must carry a reason.
+`
+
+// readExceptions loads the exceptions file. A missing file is an empty list.
+func readExceptions(path string) ([]Exception, error) {
+	b, err := os.ReadFile(path)
+	if errors.Is(err, fs.ErrNotExist) {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, err
+	}
+	var f exceptionsFile
+	if err := yaml.Unmarshal(b, &f); err != nil {
+		return nil, fmt.Errorf("parsing %s: %w", path, err)
+	}
+	for _, x := range f.Exceptions {
+		if x.Cut == "" {
+			return nil, fmt.Errorf("%s: %s %s %s has no cut", path, x.Rule, x.Module, x.Path)
+		}
+		if x.Cut == "permanent" && strings.TrimSpace(x.Reason) == "" {
+			return nil, fmt.Errorf("%s: permanent exception %s %s %s needs a reason", path, x.Rule, x.Module, x.Path)
+		}
+	}
+	return f.Exceptions, nil
+}
+
+// writeExceptions rewrites the file to list exactly vs, keeping the cut and
+// reason of entries already present.
+func writeExceptions(path string, vs []Violation) error {
+	old, err := readExceptions(path)
+	if err != nil {
+		return err
+	}
+	kept := map[string]Exception{}
+	for _, x := range old {
+		kept[x.key()] = x
+	}
+	var f exceptionsFile
+	for _, v := range vs {
+		x, ok := kept[v.key()]
+		if !ok {
+			x = Exception{Rule: v.Rule, Module: v.Module, Path: v.Path, Cut: cutFor(v.Module)}
+		}
+		f.Exceptions = append(f.Exceptions, x)
+	}
+	b, err := yaml.Marshal(&f)
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(path, append([]byte(exceptionsHeader), b...), 0o644)
+}
+
+// compare splits the current violations into ones not listed (fresh) and
+// lists the exceptions that no longer match any violation (stale).
+func compare(vs []Violation, exc []Exception) (fresh []Violation, stale []Exception) {
+	listed := map[string]bool{}
+	for _, x := range exc {
+		listed[x.key()] = true
+	}
+	found := map[string]bool{}
+	for _, v := range vs {
+		found[v.key()] = true
+		if !listed[v.key()] {
+			fresh = append(fresh, v)
+		}
+	}
+	for _, x := range exc {
+		if !found[x.key()] {
+			stale = append(stale, x)
+		}
+	}
+	return fresh, stale
+}
+
+// cutFor names the family cut expected to remove a violation in module.
+func cutFor(module string) string {
+	m := strings.TrimPrefix(module, "openits-")
+	m = strings.TrimSuffix(m, "-types")
+	m = strings.TrimSuffix(m, "-events")
+	switch {
+	case strings.HasPrefix(m, "vendor-"):
+		return "vendor-examples"
+	case m == "types", strings.HasPrefix(m, "common-"), m == "device-diagnostics",
+		m == "cabinet-power", m == "schedule", m == "nema-common":
+		return "foundation"
+	case strings.HasPrefix(m, "v2x-"), m == "scms", m == "rsu":
+		return "rsu"
+	case m == "vehicle-detection":
+		return "signal-control"
+	}
+	return m
+}
+
+func sortViolations(vs []Violation) {
+	sort.Slice(vs, func(i, j int) bool { return vs[i].key() < vs[j].key() })
+}
