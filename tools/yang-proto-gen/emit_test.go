@@ -519,3 +519,71 @@ func TestEmit_enumNoCrossModuleCollision(t *testing.T) {
 		t.Errorf("expected event-b's state field to reference the qualified EnumCollisionBState enum, got:\n%s", body)
 	}
 }
+
+// TestEmitMessage_messageAvoidsEnumName is the gate-state collision: a
+// config/state container is always named parent+container, so list/container
+// "gate" plus container "state" spells "GateState", the same identifier as
+// the typedef enum. The enum keeps its name. The message is parent-qualified
+// again only when that name is already an enum in the package. With no enum
+// set, the message stays "GateState", and a container whose name is not an
+// enum ("Note") is never qualified.
+func TestEmitMessage_messageAvoidsEnumName(t *testing.T) {
+	ms := yang.NewModules()
+	if err := ms.Read(filepath.Join("testdata", "enum-message-collision-fixture.yang")); err != nil {
+		t.Fatalf("read enum-message-collision-fixture.yang: %v", err)
+	}
+	if errs := ms.Process(); len(errs) > 0 {
+		t.Fatalf("process: %v", errs)
+	}
+	mod, errs := ms.GetModule("enum-message-collision-fixture")
+	if len(errs) > 0 {
+		t.Fatalf("getmodule: %v", errs)
+	}
+	var gate *yang.Entry
+	for _, c := range sortedChildren(mod) {
+		if c.Name == "gate" {
+			gate = c
+		}
+	}
+	if gate == nil {
+		t.Fatal("container gate not found")
+	}
+
+	names := map[string]bool{}
+	collectEnumNames(gate, names)
+	if !names["GateState"] {
+		t.Fatalf("collectEnumNames = %v, want GateState", names)
+	}
+
+	emit := func(enumNames map[string]bool) string {
+		lock := &FieldLock{Messages: map[string]map[string]int{}}
+		pf := ProtoFile{EnumNames: enumNames}
+		EmitMessage(gate, "Gate", lock, nil, &pf)
+		return pf.Body.String()
+	}
+
+	colliding := emit(names)
+	if !strings.Contains(colliding, "message GateGateState {") {
+		t.Errorf("collision must parent-qualify the message, got:\n%s", colliding)
+	}
+	if strings.Contains(colliding, "message GateState {") {
+		t.Errorf("collision must not emit a message named GateState, got:\n%s", colliding)
+	}
+	if !strings.Contains(colliding, "enum GateState {") {
+		t.Errorf("the enum keeps the name GateState, got:\n%s", colliding)
+	}
+	if !strings.Contains(colliding, "message Note {") {
+		t.Errorf("a non-colliding container keeps its bare name, got:\n%s", colliding)
+	}
+	if strings.Contains(colliding, "message GateNote {") {
+		t.Errorf("a non-colliding container must not be parent-qualified, got:\n%s", colliding)
+	}
+
+	clear := emit(nil)
+	if !strings.Contains(clear, "message GateState {") {
+		t.Errorf("without an enum-name set the message stays GateState, got:\n%s", clear)
+	}
+	if strings.Contains(clear, "message GateGateState {") {
+		t.Errorf("without an enum-name set nothing is parent-qualified, got:\n%s", clear)
+	}
+}

@@ -1,0 +1,17 @@
+{
+  "openits-common-fault-events:fault-raised": {
+    "kind": "openits-reversible-lane-types:reversible-lane-fault-gate-obstruction",
+    "source-device-id": "rl-controller-1",
+    "sequence-epoch": "boot-2026-10-13a",
+    "sequence": "7",
+    "fault-id": "f-bg-2-obstruction",
+    "severity": "major",
+    "description": "Obstruction detected in the path of barrier gate 2.",
+    "first-observed": "2026-10-14T16:05:00Z",
+    "occurred-at": "2026-10-14T16:05:01Z",
+    "component": {
+      "component-class": "openits-reversible-lane-types:rl-component-gate",
+      "component-id": "BG-2"
+    }
+  }
+}

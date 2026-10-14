@@ -55,6 +55,7 @@ invalid-reversible-lane-commanded-dual-green.json	A green-arrow or flashing-yell
 invalid-reversible-lane-directions-not-opposing.json	direction-b must be the opposing carriageway of direction-a (NB<->SB,
 invalid-reversible-open-without-direction.json	an open target-state must name target-direction
 invalid-reversible-target-direction-unconfigured.json	target-direction must be one of the facility's configured directions
+invalid-gate-status-changed-bad-kind.json	Invalid identityref "openits-reversible-lane-types:rl-lcs-conflict-detected" value - identity not derived from the base "openits-reversible-lane-types:rl-gate-status-change-event-kind". (Data location "/openits-reversible-lane-events:gate-status-changed/kind"
 invalid-rm-cycle-infeasible.json	min-green + yellow-change + red-clear must not exceed the feasible
 invalid-rm-metering-abstract-base.json	A ramp meter commanded into a metering mode must have its
 invalid-rm-metering-aws-disabled.json	A ramp meter commanded into a metering mode must have its
@@ -94,3 +95,4 @@ invalid-fault-raised-missing-sequence-epoch.json	MISSING sequence-epoch
 invalid-fault-raised-missing-first-observed.json	MISSING first-observed
 invalid-sc-fault-list-dms-kind.json	not derived from the base "openits-signal-control-types:sc-fault-event-kind"
 invalid-rsu-fault-component-no-class.json	Mandatory node "component-class" instance does not exist.
+invalid-reversible-lane-gate-entry-direction-unconfigured.json	controls-entry-for must be one of the facility's configured directions

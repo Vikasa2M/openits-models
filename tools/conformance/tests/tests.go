@@ -322,6 +322,11 @@ func All(kind string) []TestCase {
 			// events
 			TestCase{"TestReversibleLaneEvent_LcsConflictShape", TestReversibleLaneEvent_LcsConflictShape},
 			TestCase{"TestReversibleLaneEvent_FaultRaisedShape", TestReversibleLaneEvent_FaultRaisedShape},
+			TestCase{"TestReversibleLaneGate_HasIdentity", TestReversibleLaneGate_HasIdentity},
+			TestCase{"TestReversibleLaneFault_FeedbackLossPositionUnknown", TestReversibleLaneFault_FeedbackLossPositionUnknown},
+			TestCase{"TestReversibleLaneFault_GateFaultNamesExistingGate", TestReversibleLaneFault_GateFaultNamesExistingGate},
+			TestCase{"TestReversibleLaneEvent_GateFaultRaisedNamesGate", TestReversibleLaneEvent_GateFaultRaisedNamesGate},
+			TestCase{"TestReversibleLaneEvent_GateStatusChangedMirrorsLiveState", TestReversibleLaneEvent_GateStatusChangedMirrorsLiveState},
 		)
 	case "perception":
 		return append(common,

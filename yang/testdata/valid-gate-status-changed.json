@@ -1,0 +1,21 @@
+{
+  "openits-reversible-lane-events:gate-status-changed": {
+    "kind": "openits-reversible-lane-types:rl-gate-status-changed",
+    "source-device-id": "rl-controller-1",
+    "sequence-epoch": "boot-2026-10-13a",
+    "occurred-at": "2026-10-14T16:00:00Z",
+    "sequence": "1",
+    "gate-id": "WG-1",
+    "position": "open",
+    "previous-position": "closed",
+    "operating-mode": "openits-reversible-lane-types:reversible-lane-gate-mode-automatic",
+    "previous-operating-mode": "openits-reversible-lane-types:reversible-lane-gate-mode-manual",
+    "control-source": "openits-types:control-central",
+    "open-inhibited": false,
+    "close-inhibited": false,
+    "source": {
+      "decoder": "modbus",
+      "register": "status"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "openits-reversible-lane-events:gate-status-changed": {
+    "kind": "openits-reversible-lane-types:rl-lcs-conflict-detected",
+    "source-device-id": "rl-controller-1",
+    "sequence-epoch": "boot-2026-10-13a",
+    "occurred-at": "2026-10-14T16:10:00Z",
+    "sequence": "7",
+    "gate-id": "WG-1",
+    "position": "open"
+  }
+}
