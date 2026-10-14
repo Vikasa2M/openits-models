@@ -90,6 +90,8 @@ check_yang_files() {
 generate_go() {
     log_info "Generating Go code from openits YANG modules..."
     mkdir -p "$OUT_GO_DIR"
+
+    # .gitattributes forces LF on checkout, so ygot reads yang/ directly.
     local yang_paths="$YANG_DIR:$YANG_DIR/ietf"
 
     generator \
@@ -141,7 +143,7 @@ generate_go() {
         "$YANG_DIR/openits-cctv-types.yang" \
         "$YANG_DIR/openits-cctv.yang"
 
-    normalize_go_header "$OUT_GO_DIR/openits.go"
+    normalize_go_header "$OUT_GO_DIR/openits.go" "$yang_paths"
     log_info "Generated: $OUT_GO_DIR/openits.go"
 }
 
@@ -153,8 +155,61 @@ generate_go() {
 # touched; real content drift is still caught.
 normalize_go_header() {
     local f="$1"
-    sed -e 's|by [^ ]*/github.com/openconfig/ygot|by github.com/openconfig/ygot|' \
-        -e "s|${ROOT_DIR}/||g" "$f" >"$f.tmp" && mv "$f.tmp" "$f"
+    local yang_paths="$2"
+    # ygot embeds absolute input paths in the leading block comment (through
+    # the closing */ before `package`). Rewrite only that header. A whole-file
+    # substitution would also rewrite any .../yang/ string that ends up inside
+    # an embedded YANG description.
+    if ! grep -q '^*/$' "$f"; then
+        log_error "ygot output $f has no closing */ header line; refusing to rewrite the file"
+        exit 1
+    fi
+    local win_root=""
+    if command -v cygpath >/dev/null 2>&1; then
+        win_root=$(cygpath -m "$ROOT_DIR" 2>/dev/null || true)
+    fi
+    local header body
+    header=$(mktemp)
+    body=$(mktemp)
+    awk -v hdr="$header" -v bod="$body" '
+        !done && /^\*\// { print > hdr; done=1; next }
+        !done { print > hdr; next }
+        { print > bod }
+    ' "$f"
+    if [[ ! -s "$body" ]]; then
+        log_error "ygot header split produced an empty body for $f; refusing to rewrite the file"
+        rm -f "$header" "$body"
+        exit 1
+    fi
+    local sed_args=(
+        -e 's|by [^ ]*/github.com/openconfig/ygot|by github.com/openconfig/ygot|'
+        -e "s|${ROOT_DIR}/||g"
+        -e 's|\\|/|g'
+    )
+    if [ -n "$win_root" ]; then
+        sed_args+=(-e "s|${win_root}/||g")
+    fi
+    sed "${sed_args[@]}" "$header" >"$header.norm"
+    # ygot prints -path as one include entry and appends "/...". Derive the
+    # expected line from the same -path this script passed, normalised the
+    # same way as the header, and abort if ygot's line does not match. A
+    # hard-coded rewrite would hide a future -path change.
+    local canon
+    canon=$(printf '%s\n' "$yang_paths" | sed -e "s|${ROOT_DIR}/||g" -e 's|\\|/|g')
+    if [ -n "$win_root" ]; then
+        canon=$(printf '%s\n' "$canon" | sed -e "s|${win_root}/||g")
+    fi
+    local expected=$'\t- '"${canon}/..."
+    if ! grep -Fqx -- "$expected" "$header.norm"; then
+        log_error "normalised ygot import path does not match -path"
+        log_error "expected: ${expected}"
+        rm -f "$header" "$header.norm" "$body"
+        exit 1
+    fi
+    cat "$header.norm" "$body" >"$f.tmp"
+    # Never ship CR in the generated Go.
+    tr -d '\r' <"$f.tmp" >"$f"
+    rm -f "$header" "$header.norm" "$body" "$f.tmp"
 }
 
 main() {
