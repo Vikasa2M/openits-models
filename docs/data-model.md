@@ -218,6 +218,42 @@ event) rather than by tree duplication. If a future deployment needs
 NMDA-style datastores over NETCONF/gNMI, the models work unchanged —
 the convention is a packaging choice, not a capability limit.
 
+### Health, freshness and modes
+
+The foundation module `openits-types` defines the shared vocabulary for
+"is it working, how fresh is this, what is it doing".
+
+- **Health.** Every device root `state` carries the `device-health`
+  grouping: `oper-status` (`unknown`, `ok`, `degraded`, `failed`,
+  `not-present`; `unknown` is value 0), `last-change` and `observed-at`.
+  An absent `oper-status` means unknown, never ok: a consumer MUST NOT infer
+  a healthy device from the absence of the leaf. It is operational condition
+  only; reachability belongs to comm-health and administrative state to
+  configuration or a maintenance mode.
+- **Freshness.** Every `config false` observation carries one timestamp,
+  `observed-at`, of when it was read. The older names `measured-at`,
+  `collected-at`, `last-update` and `computed-at` no longer exist. A consumer
+  compares `observed-at` with the reporting cadence, and with the comm-loss
+  rule below, to judge whether a reading is current.
+- **Status summary.** The `device-status-summary` grouping is the shared
+  shape of a periodic status report: `oper-status`, `control-source`,
+  `uptime-s`, `active-fault-count` and `observed-at`. It carries no mode.
+  The grouping is defined; each family adopts it in its own cut.
+- **Mode values bind to their family.** `mode-changed` types `mode` and
+  `previous-mode` as identityrefs based on the cross-service
+  `operational-mode`, so YANG alone would accept a DMS value under a
+  signal-control kind. Each family's `mode-event-kind` identity carries
+  `openits-types:mode-value-base`, naming the identity its values must
+  derive from strictly (the base itself is not a value). `make
+  check-mode-kinds` checks the declarations and the fixtures, and the
+  conformance test `TestMode_ValueMatchesKind` checks emitted events.
+- **Canonical unknowns.** `openits-types:mode-unknown` and
+  `openits-types:control-unknown` are the cross-service "could not tell"
+  values. A family's own unknown dual-bases on them. A bare
+  `openits-types:mode-unknown` is therefore not a valid `mode-changed` value
+  under a family kind; it is valid only through the family's own unknown
+  (today DMS and ramp metering define one).
+
 ### Comm-loss staleness
 
 Live state is only as current as the device's last contact. After a
