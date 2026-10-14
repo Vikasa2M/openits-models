@@ -50,7 +50,9 @@ module openits-reversible-lane-types {
        gate through the shared fault entry's component, not inside
        fault-id. Add rl-gate-status-changed under
        rl-gate-status-change-event-kind. gate-agreement is evaluated
-       against gates/gate/state and each gate's controls-entry-for.";
+       against gates/gate/state and each gate's controls-entry-for; a
+       consumer treats an offline gate, or a gate without
+       controls-entry-for, as not satisfying it.";
     reference
       "RFC 7950 §11.";
   }
@@ -319,13 +321,6 @@ module openits-reversible-lane-types {
        component-id the gate's gate-id, both in the live fault
        inventory and on fault-raised and fault-cleared.";
   }
-  identity rl-component-gate {
-    base openits-types:component-class;
-    description
-      "One warning or barrier gate, as the sub-component a fault or
-       event names. Its component-id is the gate's gate-id, the key of
-       gates/gate in openits-reversible-lane.";
-  }
   identity reversible-lane-fault-gate-failed-to-close {
     base reversible-lane-fault-gate;
     description
@@ -411,7 +406,12 @@ module openits-reversible-lane-types {
       "Barrier-gate positions agree with the commanded facility state.
        Evaluated against per-gate positions in gates/gate/state: a gate
        whose controls-entry-for names the direction being closed must
-       be closed.";
+       be closed. A consumer computing gate-agreement from
+       gates/gate/state MUST treat a gate whose operating-mode is
+       offline as not satisfying it; its reported position stays
+       authoritative for display. A consumer MUST NOT report
+       gate-agreement satisfied on account of a gate that does not
+       declare controls-entry-for.";
   }
   identity red-x-confirmed  { base interlock-kind; description "A steady red-X is confirmed on every lane facing the direction being closed."; }
   identity lockout-clear    { base interlock-kind; description "No manual lockout is engaged — the facility is not locally locked out of a changeover."; }
@@ -455,6 +455,19 @@ module openits-reversible-lane-types {
   }
 
   /* --------------------------------------------------------------
+   * Component class. A fault or event names one gate through the
+   * shared openits-types component reference.
+   * -------------------------------------------------------------- */
+
+  identity rl-component-gate {
+    base openits-types:component-class;
+    description
+      "One warning or barrier gate, as the sub-component a fault or
+       event names. Its component-id is the gate's gate-id, the key of
+       gates/gate in openits-reversible-lane.";
+  }
+
+  /* --------------------------------------------------------------
    * Per-gate mode. Facility-level mode (control/state/mode on the
    * shared mode-changed notification) is a separate follow-up; a
    * gate is a sub-component and today's mode-changed keys only on
@@ -482,8 +495,9 @@ module openits-reversible-lane-types {
     description
       "The gate is not commandable. Whether it still protects the lane
        depends on position, which stays authoritative when it was
-       read. The gate-agreement interlock evaluates as unsatisfied
-       for a gate in this mode.
+       read. A consumer computing gate-agreement from gates/gate/state
+       MUST treat a gate in this mode as not satisfying it; its
+       reported position stays authoritative for display.
 
        Reports a property of the gate, not of the link to it: the gate
        declared itself out of service. A gate that could not be read

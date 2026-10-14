@@ -81,7 +81,8 @@ module openits-reversible-lane {
        gate-type, an optional name, an optional reference to the
        segment the gate protects, and an optional controls-entry-for
        naming the direction whose entry the gate closes, so the
-       gate-agreement interlock is computable. State uses the shared
+       gate-agreement interlock is computable; it must be one of the
+       facility's configured directions. State uses the shared
        gate-status grouping plus measured-at, and is the live rollup of
        gate-status-changed. A gate fault in the fault inventory names
        its gate through the shared component reference
@@ -631,13 +632,19 @@ module openits-reversible-lane {
           }
           leaf controls-entry-for {
             type identityref { base openits-types:carriageway-direction; }
+            must ". = ../../../../config/direction-a or . = ../../../../config/direction-b" {
+              error-message
+                "controls-entry-for must be one of the facility's configured directions";
+            }
             description
               "The travel direction whose entry this gate closes, one of
                the facility's direction-a or direction-b. The
                gate-agreement interlock uses it to decide which gates
                must be closed before that direction is closed. Absent
                means not configured, and gate-agreement cannot be
-               evaluated for this gate.";
+               evaluated for this gate: a consumer MUST NOT report
+               gate-agreement satisfied on account of a gate that does
+               not declare controls-entry-for.";
           }
         }
         container state {

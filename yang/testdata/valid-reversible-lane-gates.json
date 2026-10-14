@@ -1,5 +1,10 @@
 {
   "openits-reversible-lane:reversible-lane": {
+    "config": {
+      "id": "rl-facility-1",
+      "direction-a": "openits-types:direction-northbound",
+      "direction-b": "openits-types:direction-southbound"
+    },
     "segments": {
       "segment": [
         {

@@ -95,3 +95,4 @@ invalid-fault-raised-missing-sequence-epoch.json	MISSING sequence-epoch
 invalid-fault-raised-missing-first-observed.json	MISSING first-observed
 invalid-sc-fault-list-dms-kind.json	not derived from the base "openits-signal-control-types:sc-fault-event-kind"
 invalid-rsu-fault-component-no-class.json	Mandatory node "component-class" instance does not exist.
+invalid-reversible-lane-gate-entry-direction-unconfigured.json	controls-entry-for must be one of the facility's configured directions
