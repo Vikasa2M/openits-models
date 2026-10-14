@@ -18,7 +18,17 @@ module openits-types {
      for the openits YANG module family. Service-neutral content only;
      service-specific typedefs live in their respective modules.";
 
-  openits-types:openits-version "0.13.0";
+  openits-types:openits-version "0.14.0";
+
+  revision 2026-10-16 {
+    description
+      "Add the oper-status typedef, the device-health and
+       device-status-summary groupings, the canonical mode-unknown and
+       control-unknown identities, and the mode-value-base and
+       mandatory-for-kind extensions; clarify control-schedule versus
+       control-local-backup. Additive.";
+    reference "RFC 7950 §7.19.";
+  }
 
   revision 2026-10-14 {
     description
@@ -369,6 +379,36 @@ module openits-types {
        alignment reports for FHWA / ITS JPO review.";
   }
 
+  extension mode-value-base {
+    argument identity;
+    description
+      "Placed on a family's mode-event-kind identity (the identity that
+       discriminates that family's mode space on a mode-changed
+       notification). The argument names the identity, as
+       '<prefix>:<identity-name>', that every previous-mode and mode
+       value carried by a mode-changed notification of that kind MUST
+       derive from (or equal). It binds the family's kind to its own
+       mode vocabulary, so a signal-control kind cannot carry a DMS
+       mode value. Tooling and conformance checks enforce it; the
+       YANG type system alone cannot, because mode is a single
+       identityref based on operational-mode.";
+  }
+
+  extension mandatory-for-kind {
+    argument leaf-and-identity;
+    description
+      "Placed on a notification. Argument format:
+         '<leaf-name> <prefix:identity>'
+       The named leaf of the notification is mandatory when the
+       notification's kind derives from (or equals) the named
+       identity, and optional otherwise. It expresses a
+       kind-conditional mandatory leaf that a plain 'mandatory true'
+       cannot, because the leaf applies to some kinds and not others.
+       The leaf-name is a direct child of the notification. Tooling
+       (the notification mandatory-leaf checker) enforces it on
+       instances.";
+  }
+
   /* --------------------------------------------------------------
    * Generic typedefs
    * -------------------------------------------------------------- */
@@ -469,6 +509,26 @@ module openits-types {
        order (warning < minor < major < critical); info sits below
        warning for notices that need no action.";
     reference "ITU-T X.733 §8.1.2.3 (perceived severity).";
+  }
+
+  typedef oper-status {
+    type enumeration {
+      enum unknown { value 0; description "The operational condition is not known."; }
+      enum ok { value 1; description "Operating normally."; }
+      enum degraded { value 2; description "Operating, but with reduced function or capacity."; }
+      enum failed { value 3; description "Not performing its function."; }
+      enum not-present { value 4; description "The device or unit is not installed or not detected."; }
+    }
+    description
+      "Operational condition of a device: whether it is performing its
+       function. It is the operational condition only.
+       Administrative state (enabled, disabled, in service) belongs in
+       configuration or in a maintenance mode, not here. Reachability
+       belongs to comm-health: an unreachable device keeps its last
+       reported oper-status, which the comm-loss rule marks stale; it
+       does not become failed or unknown because the link dropped.
+       An absent oper-status means unknown, never ok: a consumer MUST
+       NOT infer a healthy device from the absence of this leaf.";
   }
 
   /* --------------------------------------------------------------
@@ -649,6 +709,16 @@ module openits-types {
        mode-maintenance) spans services without enumerating per-family
        values.";
   }
+  identity mode-unknown {
+    base operational-mode;
+    description
+      "Canonical cross-service 'operating mode not known' value. Used
+       when a device cannot report which mode it is in, for example a
+       first report before the mode is determined. It is not a mode
+       the device is in, and never means normal operation; a family
+       whose mode-changed values are bound by mode-value-base MAY
+       dual-base its own unknown value on this identity.";
+  }
   identity mode-standby-generic { base operational-mode; description "Canonical cross-service standby / armed-but-idle mode for fleet-wide filtering; family standby values dual-base on this."; }
   identity mode-failed-generic  { base operational-mode; description "Canonical cross-service failed / faulted operating mode for fleet-wide filtering; family failed values dual-base on this."; }
 
@@ -669,7 +739,10 @@ module openits-types {
   identity control-local-backup {
     base control-source;
     description
-      "Running on local/backup logic (e.g. TOD) after loss of central.";
+      "Fallback: running on local logic after loss of central control
+       (comm loss or a central-system failure). Unplanned, and it ends
+       when central control resumes. Distinct from control-schedule,
+       where operating from a schedule is the design.";
   }
 
   identity control-manual {
@@ -684,7 +757,20 @@ module openits-types {
 
   identity control-schedule {
     base control-source;
-    description "Driven by the device's time-of-day / schedule authority (NTCIP TOD).";
+    description
+      "Operating by design from the device's time-of-day / schedule
+       authority (NTCIP TOD), with no loss of central control implied.
+       Distinct from control-local-backup, which is a fallback after
+       central control is lost.";
+  }
+
+  identity control-unknown {
+    base control-source;
+    description
+      "Canonical 'control authority not known' value, for a device
+       that cannot report which authority is driving it. Distinct from
+       control-failed (authority indeterminate because control failed)
+       and control-other (a known authority not otherwise classified).";
   }
 
   identity control-other {
@@ -1105,6 +1191,71 @@ module openits-types {
           "The key of the referenced live-state list entry. A composite
            key is its key values joined by '/' in key order.";
       }
+    }
+  }
+
+  grouping device-health {
+    description
+      "Cross-service health of a device, placed on a device's root
+       state. Carries operational condition and freshness only; it
+       holds no mode and no kind, which stay with the service.";
+    leaf oper-status {
+      type oper-status;
+      description
+        "Operational condition of the device. Absent means unknown,
+         never ok.";
+    }
+    leaf last-change {
+      type yang:date-and-time;
+      description
+        "When oper-status last changed value.";
+    }
+    leaf observed-at {
+      type yang:date-and-time;
+      description
+        "The time of this health reading. A consumer compares it
+         with the reporting cadence to judge how fresh the reading
+         is.";
+    }
+  }
+
+  grouping device-status-summary {
+    description
+      "The shared shape of a device's periodic status summary: health,
+       which authority controls it, how long it has been up, and how
+       many faults are active. It carries no mode; the mode of a
+       family is reported by that family.";
+    leaf oper-status {
+      type oper-status;
+      description
+        "Operational condition of the device at observed-at. Absent
+         means unknown, never ok.";
+    }
+    leaf control-source {
+      type identityref {
+        base control-source;
+      }
+      description
+        "Which authority is currently driving the device. Absent
+         means not reported; control-unknown means the device could
+         not tell.";
+    }
+    leaf uptime-s {
+      type uint64;
+      units "seconds";
+      description
+        "Seconds since the device last started.";
+    }
+    leaf active-fault-count {
+      type uint32;
+      description
+        "Number of faults currently active on the device.";
+    }
+    leaf observed-at {
+      type yang:date-and-time;
+      description
+        "The time of this reading. A consumer compares it with the
+         reporting cadence to judge how fresh the summary is.";
     }
   }
 
