@@ -15,7 +15,7 @@ YANG_GO_OUT := pkg/yang
 .PHONY: all ci gen check-gen yang-proto-gen proto yang yang-go validate-yang \
 	check-revisions check-naming check-enum-values check-inline-enums validate-noi check-graduation \
 	check-augment-collisions check-deviations check-events-layering check-conventions check-mode-kinds check-revision-history proto-lint proto-breaking yang-lint \
-	vet test conformance fmt tidy build-tools \
+	vet test test-scripts conformance fmt tidy build-tools \
 	asyncapi asyncapi-check catalog catalog-check
 
 # Regenerate every generated model artifact from source: YANG -> proto
@@ -68,7 +68,7 @@ gen: yang-proto-gen proto yang-go asyncapi catalog
 # ever executed — exactly when the change is riskiest and the harness matters most.
 # Last position keeps `make ci` an honest mirror of CI: everything else reports,
 # and the only red left is the break you meant to take.
-ci: check-gen build-tools vet test \
+ci: check-gen build-tools vet test test-scripts \
 	validate-yang yang-lint check-revisions check-naming \
 	check-enum-values check-inline-enums check-deviations \
 	check-augment-collisions check-events-layering check-conventions check-mode-kinds check-revision-history check-ce-id-vectors \
@@ -232,6 +232,10 @@ vet:
 # so this is a model gate, not just Go housekeeping.
 test:
 	$(GOCMD) test ./...
+
+# Unit tests for the Python helper scripts.
+test-scripts:
+	python3 -m unittest discover -s scripts -p 'test_*.py'
 fmt:
 	$(GOFMT) -s -w .
 tidy:

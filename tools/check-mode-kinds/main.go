@@ -9,7 +9,8 @@
 //	(a) every identity derived from openits-types:mode-event-kind (other
 //	    than the base itself and the allowlist below) carries exactly one
 //	    mode-value-base, naming an identity strictly derived from
-//	    openits-types:operational-mode; the extension appears on nothing
+//	    openits-types:operational-mode and defined in the kind's own
+//	    module (or its family types module); the extension appears on nothing
 //	    else; and every allowlist entry is still needed.
 //	(b) every <fixtures>/valid-*.json whose top-level element is a
 //	    mode-changed carries a mode (and, if present, a previous-mode) that
@@ -284,6 +285,8 @@ func (s *Schema) CheckKinds(allow map[string]string) []string {
 			vs = append(vs, fmt.Sprintf("%s: %s %s is not a defined identity", k, extDisplay, base))
 		case base == operationalMode || !s.DerivedFromOrSelf(base, operationalMode):
 			vs = append(vs, fmt.Sprintf("%s: %s %s is not derived from %s", k, extDisplay, base, operationalMode))
+		case !sameFamilyModule(k, base):
+			vs = append(vs, fmt.Sprintf("%s: %s %s is not defined in the kind's own module (or its family types module)", k, extDisplay, base))
 		}
 	}
 	for _, k := range sortedKeys(s.ids) {
@@ -298,6 +301,15 @@ func (s *Schema) CheckKinds(allow map[string]string) []string {
 		}
 	}
 	return vs
+}
+
+// sameFamilyModule reports whether the identity base is defined in the
+// same module as the kind, or in the kind's family types module (a kind
+// in <family>-events names a base in <family>-types).
+func sameFamilyModule(kind, base string) bool {
+	km, _, _ := strings.Cut(kind, ":")
+	bm, _, _ := strings.Cut(base, ":")
+	return km == bm || strings.TrimSuffix(km, "-events")+"-types" == bm
 }
 
 // valueBase returns the single resolved mode-value-base of kind, or "".

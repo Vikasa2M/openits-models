@@ -104,6 +104,14 @@ func TestKinds_BaseIsOperationalModeItselfFails(t *testing.T) {
 	wantViolation(t, vs, "not derived from openits-types:operational-mode")
 }
 
+func TestKinds_BaseInOtherFamilyFails(t *testing.T) {
+	vs := load(t, extraModule(`  identity x-mode-event-kind {
+    base ot:mode-event-kind;
+    ot:mode-value-base "fa:a-mode";
+  }`)).CheckKinds(testAllow)
+	wantViolation(t, vs, "test-extra:x-mode-event-kind: openits-types:mode-value-base test-fam-a:a-mode is not defined in the kind's own module")
+}
+
 func TestKinds_UnresolvedBaseFails(t *testing.T) {
 	vs := load(t, extraModule(`  identity x-mode-event-kind {
     base ot:mode-event-kind;

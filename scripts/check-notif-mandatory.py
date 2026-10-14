@@ -484,11 +484,28 @@ class Schema:
             return sorted(reasons)
         return []
 
+    def top_level_children(self, module, body, visited=None):
+        """Names of the data nodes at a notification's own top level,
+        crossing `uses` (a transparent splice) but not descending into
+        containers, lists, choices or cases."""
+        if visited is None:
+            visited = frozenset()
+        out = set()
+        for kw, arg, sub in strip_and_split(body):
+            k = bare(kw)
+            if k in ("leaf", "leaf-list", "container", "list", "choice", "anydata", "anyxml"):
+                out.add(arg)
+            elif k == "uses":
+                target = self.resolve(module, arg)
+                if target and target in self.groupings and target not in visited:
+                    out |= self.top_level_children(target[0], self.groupings[target], visited | {target})
+        return out
+
     def mandatory_for_kind_errors(self):
         """Hard errors for malformed `mandatory-for-kind` statements: an
         argument that is not exactly '<leaf> <prefix:identity>', or an
         identity that does not resolve to one defined in the loaded
-        schemas. A malformed statement must not silently stop enforcing
+        schemas, or a leaf that is not a child of the notification. A malformed statement must not silently stop enforcing
         its leaf, so the caller exits non-zero on any of these."""
         errors = []
         for (module, name), body in sorted(self.notifications.items()):
@@ -500,6 +517,8 @@ class Schema:
                 if len(parts) != 2:
                     errors.append(f"{where}: argument must be '<leaf> <prefix:identity>' (got {len(parts)} token(s))")
                     continue
+                if parts[0] not in self.top_level_children(module, body):
+                    errors.append(f"{where}: leaf {parts[0]!r} is not a child of the notification")
                 target = self.resolve(module, parts[1])
                 if target is None:
                     errors.append(f"{where}: prefix of {parts[1]!r} is not imported by {module}")

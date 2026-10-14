@@ -36,7 +36,8 @@ var modeFamilyByService = map[string]modeFamily{
 // notification types both values to the cross-service operational-mode,
 // so YANG cannot stop a DMS value under a signal-control kind; this is
 // where it is enforced. A vendor-module kind or value is skipped, as in
-// TestFault_KindMatchesService; an unknown openits module fails.
+// TestFault_KindMatchesService; an unknown openits module fails, and so
+// does a mode-changed on a service with no mode kind in the table.
 func TestMode_ValueMatchesKind(t *T, obs *Observation) {
 	for _, e := range obs.Events {
 		parts := strings.Split(e.Subject, ".")
@@ -49,9 +50,6 @@ func TestMode_ValueMatchesKind(t *T, obs *Observation) {
 		}
 		service := parts[4]
 		fam, ok := modeFamilyByService[service]
-		if !ok {
-			continue
-		}
 		module, _, st := classifyIdentity(mc.GetKind())
 		switch st {
 		case identityEmpty:
@@ -64,6 +62,10 @@ func TestMode_ValueMatchesKind(t *T, obs *Observation) {
 			continue
 		case identityUnknownModule:
 			t.Errorf("mode-changed on a %s subject has kind %q from unknown module %q", service, mc.GetKind(), module)
+			continue
+		}
+		if !ok {
+			t.Errorf("mode-changed on a %s subject, but the service has no mode kind", service)
 			continue
 		}
 		if mc.GetKind() != fam.kind {
