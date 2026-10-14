@@ -74,12 +74,10 @@ one, and never rewrite a published revision's description.
 `make check-revisions` gates this.
 
 Edge case — the module already has a revision dated today: if that
-revision has NOT shipped in a release, fold your change into it (extend
-its description). If it HAS shipped (a release tag includes it), its
-registry snapshot is immutable — do not amend it or let
-`update-schema-registry.sh` rewrite that snapshot; flag the collision in
-the PR and let a maintainer decide (usually: date the new revision the
-next day).
+revision exists only on your branch (it is not on main yet), fold your change
+into it and rebuild its snapshot. If it is already on main, released or not,
+it is immutable — `make check-revision-history` fails any edit to it — so date
+your revision the next day instead.
 
 ## Fixtures
 

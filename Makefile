@@ -14,7 +14,7 @@ YANG_GO_OUT := pkg/yang
 
 .PHONY: all ci gen check-gen yang-proto-gen proto yang yang-go validate-yang \
 	check-revisions check-naming check-enum-values check-inline-enums validate-noi check-graduation \
-	check-augment-collisions check-deviations check-events-layering check-conventions proto-lint proto-breaking yang-lint \
+	check-augment-collisions check-deviations check-events-layering check-conventions check-revision-history proto-lint proto-breaking yang-lint \
 	vet test conformance fmt tidy build-tools \
 	asyncapi asyncapi-check catalog catalog-check
 
@@ -71,7 +71,7 @@ gen: yang-proto-gen proto yang-go asyncapi catalog
 ci: check-gen build-tools vet test \
 	validate-yang yang-lint check-revisions check-naming \
 	check-enum-values check-inline-enums check-deviations \
-	check-augment-collisions check-events-layering check-conventions check-ce-id-vectors \
+	check-augment-collisions check-events-layering check-conventions check-revision-history check-ce-id-vectors \
 	validate-noi check-graduation \
 	proto-lint conformance proto-breaking
 
@@ -169,6 +169,12 @@ check-events-layering:
 
 check-conventions:
 	$(GOCMD) run ./tools/check-conventions -yang yang -exceptions conventions-exceptions.yaml
+
+# Fail if a revision statement that exists on the base branch was edited or
+# removed (revisions and their registry snapshots are immutable once shipped).
+REVISION_BASE ?= origin/main
+check-revision-history:
+	$(GOCMD) run ./tools/check-revision-history -base $(REVISION_BASE)
 
 # Re-derive every ce-id test vector published in docs/ce-id-spec.md from
 # the algorithm that document specifies. The spec is normative for the wire

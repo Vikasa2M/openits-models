@@ -156,6 +156,14 @@ jobs:
           git show "origin/${BASE_REF}:conventions-exceptions.yaml" > "$RUNNER_TEMP/base-exceptions.yaml"
           go run ./tools/check-conventions -yang yang -exceptions conventions-exceptions.yaml \
             -base "$RUNNER_TEMP/base-exceptions.yaml"
+      - name: check-revision-history (revisions on the base branch are immutable)
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          set -euo pipefail
+          git rev-parse --verify --quiet "origin/${BASE_REF}^{commit}" >/dev/null
+          go run ./tools/check-revision-history -base "origin/${BASE_REF}"
       - run: make check-ce-id-vectors
       - run: make validate-noi
       - run: make check-graduation

@@ -81,6 +81,9 @@ exemplar each rule names, not the nearest module.
 
 ## 4. Mechanical discipline
 
+- `make check-revision-history` (CI runs it on every PR) proves no
+  revision already on main was edited or removed. A description sweep that
+  rewords old revision text is the usual way this fails.
 - Exactly one new `revision` per changed module, dated, descriptive; no
   duplicate same-date revisions. Watch for the sneaky variant: AMENDING an
   already-released revision's description (and thereby rewriting its
