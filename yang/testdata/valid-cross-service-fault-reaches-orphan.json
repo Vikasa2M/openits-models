@@ -6,6 +6,7 @@
     "sequence": "1",
     "fault-id": "ts01-fault-0042",
     "severity": "major",
+    "first-observed": "2026-07-10T14:05:09Z",
     "occurred-at": "2026-07-10T14:05:12Z"
   }
 }

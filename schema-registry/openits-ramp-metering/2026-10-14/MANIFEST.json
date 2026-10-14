@@ -1,0 +1,7 @@
+{
+  "module": "openits-ramp-metering",
+  "revision": "2026-10-14",
+  "files": [
+    "schema.yang"
+  ]
+}

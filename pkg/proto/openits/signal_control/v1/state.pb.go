@@ -4277,7 +4277,8 @@ func (x *Faults) GetFault() []*Fault {
 
 type Fault struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Category       *string                `protobuf:"bytes,1,opt,name=category,proto3,oneof" json:"category,omitempty"`
+	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
+	Component      *v1.ComponentRef       `protobuf:"bytes,7,opt,name=component,proto3" json:"component,omitempty"`
 	CorrelatesWith *string                `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3,oneof" json:"correlates_with,omitempty"`
 	Description    *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
 	FaultId        *string                `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3,oneof" json:"fault_id,omitempty"`
@@ -4317,11 +4318,18 @@ func (*Fault) Descriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{58}
 }
 
-func (x *Fault) GetCategory() string {
-	if x != nil && x.Category != nil {
-		return *x.Category
+func (x *Fault) GetKind() string {
+	if x != nil {
+		return x.Kind
 	}
 	return ""
+}
+
+func (x *Fault) GetComponent() *v1.ComponentRef {
+	if x != nil {
+		return x.Component
+	}
+	return nil
 }
 
 func (x *Fault) GetCorrelatesWith() string {
@@ -4945,19 +4953,19 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\b_runningB\x11\n" +
 	"\x0f_fuel_level_pct\"@\n" +
 	"\x06Faults\x126\n" +
-	"\x05fault\x18\x01 \x03(\v2 .openits.signal_control.v1.FaultR\x05fault\"\xf6\x02\n" +
-	"\x05Fault\x12\x1f\n" +
-	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12,\n" +
-	"\x0fcorrelates_with\x18\x06 \x01(\tH\x01R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
-	"\vdescription\x18\x02 \x01(\tH\x02R\vdescription\x88\x01\x01\x12\x1e\n" +
-	"\bfault_id\x18\x03 \x01(\tH\x03R\afaultId\x88\x01\x01\x12A\n" +
+	"\x05fault\x18\x01 \x03(\v2 .openits.signal_control.v1.FaultR\x05fault\"\xaa\x03\n" +
+	"\x05Fault\x12\x12\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12<\n" +
+	"\tcomponent\x18\a \x01(\v2\x1e.openits.types.v1.ComponentRefR\tcomponent\x12,\n" +
+	"\x0fcorrelates_with\x18\x06 \x01(\tH\x00R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x01R\vdescription\x88\x01\x01\x12\x1e\n" +
+	"\bfault_id\x18\x03 \x01(\tH\x02R\afaultId\x88\x01\x01\x12A\n" +
 	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12I\n" +
-	"\bseverity\x18\x05 \x01(\x0e2(.openits.signal_control.v1.FaultSeverityH\x04R\bseverity\x88\x01\x01B\v\n" +
-	"\t_categoryB\x12\n" +
+	"\bseverity\x18\x05 \x01(\x0e2(.openits.signal_control.v1.FaultSeverityH\x03R\bseverity\x88\x01\x01B\x12\n" +
 	"\x10_correlates_withB\x0e\n" +
 	"\f_descriptionB\v\n" +
 	"\t_fault_idB\v\n" +
-	"\t_severityBXZVgithub.com/Vikasa2M/openits-models/pkg/proto/openits/signal_control/v1;signalcontrolv1b\x06proto3"
+	"\t_severityJ\x04\b\x01\x10\x02R\bcategoryBXZVgithub.com/Vikasa2M/openits-models/pkg/proto/openits/signal_control/v1;signalcontrolv1b\x06proto3"
 
 var (
 	file_openits_signal_control_v1_state_proto_rawDescOnce sync.Once
@@ -5053,7 +5061,8 @@ var file_openits_signal_control_v1_state_proto_goTypes = []any{
 	(SignalOperationOnBattery)(0),                 // 77: openits.signal_control.v1.SignalOperationOnBattery
 	(PowerSource)(0),                              // 78: openits.signal_control.v1.PowerSource
 	(BatteryTestState)(0),                         // 79: openits.signal_control.v1.BatteryTestState
-	(FaultSeverity)(0),                            // 80: openits.signal_control.v1.FaultSeverity
+	(*v1.ComponentRef)(nil),                       // 80: openits.types.v1.ComponentRef
+	(FaultSeverity)(0),                            // 81: openits.signal_control.v1.FaultSeverity
 }
 var file_openits_signal_control_v1_state_proto_depIdxs = []int32{
 	1,  // 0: openits.signal_control.v1.SignalController.config:type_name -> openits.signal_control.v1.SignalControllerConfig
@@ -5143,13 +5152,14 @@ var file_openits_signal_control_v1_state_proto_depIdxs = []int32{
 	79, // 84: openits.signal_control.v1.Battery.test_state:type_name -> openits.signal_control.v1.BatteryTestState
 	59, // 85: openits.signal_control.v1.Battery.last_test:type_name -> google.protobuf.Timestamp
 	58, // 86: openits.signal_control.v1.Faults.fault:type_name -> openits.signal_control.v1.Fault
-	59, // 87: openits.signal_control.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	80, // 88: openits.signal_control.v1.Fault.severity:type_name -> openits.signal_control.v1.FaultSeverity
-	89, // [89:89] is the sub-list for method output_type
-	89, // [89:89] is the sub-list for method input_type
-	89, // [89:89] is the sub-list for extension type_name
-	89, // [89:89] is the sub-list for extension extendee
-	0,  // [0:89] is the sub-list for field type_name
+	80, // 87: openits.signal_control.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
+	59, // 88: openits.signal_control.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	81, // 89: openits.signal_control.v1.Fault.severity:type_name -> openits.signal_control.v1.FaultSeverity
+	90, // [90:90] is the sub-list for method output_type
+	90, // [90:90] is the sub-list for method input_type
+	90, // [90:90] is the sub-list for extension type_name
+	90, // [90:90] is the sub-list for extension extendee
+	0,  // [0:90] is the sub-list for field type_name
 }
 
 func init() { file_openits_signal_control_v1_state_proto_init() }

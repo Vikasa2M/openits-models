@@ -1,0 +1,15 @@
+{
+  "openits-signal-control:signal-controller": {
+    "config": { "id": "c1", "name": "c1" },
+    "faults": {
+      "fault": [
+        {
+          "fault-id": "cabinet-power-1",
+          "severity": "major",
+          "first-observed": "2026-10-14T00:00:00Z",
+          "kind": "openits-signal-control-types:sc-fault-cabinet-on-battery"
+        }
+      ]
+    }
+  }
+}

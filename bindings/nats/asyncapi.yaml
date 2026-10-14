@@ -500,6 +500,19 @@ components:
             payload:
                 schema:
                     $defs:
+                        ComponentRef:
+                            additionalProperties: false
+                            properties:
+                                component-class:
+                                    type: string
+                                component-id:
+                                    maxLength: 128
+                                    minLength: 1
+                                    type: string
+                            required:
+                                - component-class
+                                - component-id
+                            type: object
                         WireSource:
                             additionalProperties: false
                             properties:
@@ -531,7 +544,14 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        component:
+                            $ref: '#/$defs/ComponentRef'
                         fault-id:
+                            maxLength: 128
+                            minLength: 1
+                            type: string
+                        first-observed:
+                            format: date-time
                             type: string
                         kind:
                             type: string
@@ -560,6 +580,7 @@ components:
                             type: string
                     required:
                         - fault-id
+                        - first-observed
                         - kind
                         - occurred-at
                         - sequence
@@ -599,6 +620,19 @@ components:
             payload:
                 schema:
                     $defs:
+                        ComponentRef:
+                            additionalProperties: false
+                            properties:
+                                component-class:
+                                    type: string
+                                component-id:
+                                    maxLength: 128
+                                    minLength: 1
+                                    type: string
+                            required:
+                                - component-class
+                                - component-id
+                            type: object
                         WireSource:
                             additionalProperties: false
                             properties:
@@ -630,11 +664,20 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        component:
+                            $ref: '#/$defs/ComponentRef'
                         correlates-with:
+                            maxLength: 128
+                            minLength: 1
                             type: string
                         description:
                             type: string
                         fault-id:
+                            maxLength: 128
+                            minLength: 1
+                            type: string
+                        first-observed:
+                            format: date-time
                             type: string
                         kind:
                             type: string
@@ -671,6 +714,7 @@ components:
                             type: string
                     required:
                         - fault-id
+                        - first-observed
                         - kind
                         - occurred-at
                         - sequence
@@ -1159,6 +1203,19 @@ components:
             payload:
                 schema:
                     $defs:
+                        ComponentRef:
+                            additionalProperties: false
+                            properties:
+                                component-class:
+                                    type: string
+                                component-id:
+                                    maxLength: 128
+                                    minLength: 1
+                                    type: string
+                            required:
+                                - component-class
+                                - component-id
+                            type: object
                         WireSource:
                             additionalProperties: false
                             properties:
@@ -1190,7 +1247,14 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        component:
+                            $ref: '#/$defs/ComponentRef'
                         fault-id:
+                            maxLength: 128
+                            minLength: 1
+                            type: string
+                        first-observed:
+                            format: date-time
                             type: string
                         kind:
                             type: string
@@ -1219,6 +1283,7 @@ components:
                             type: string
                     required:
                         - fault-id
+                        - first-observed
                         - kind
                         - occurred-at
                         - sequence
@@ -1258,6 +1323,19 @@ components:
             payload:
                 schema:
                     $defs:
+                        ComponentRef:
+                            additionalProperties: false
+                            properties:
+                                component-class:
+                                    type: string
+                                component-id:
+                                    maxLength: 128
+                                    minLength: 1
+                                    type: string
+                            required:
+                                - component-class
+                                - component-id
+                            type: object
                         WireSource:
                             additionalProperties: false
                             properties:
@@ -1289,11 +1367,20 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        component:
+                            $ref: '#/$defs/ComponentRef'
                         correlates-with:
+                            maxLength: 128
+                            minLength: 1
                             type: string
                         description:
                             type: string
                         fault-id:
+                            maxLength: 128
+                            minLength: 1
+                            type: string
+                        first-observed:
+                            format: date-time
                             type: string
                         kind:
                             type: string
@@ -1330,6 +1417,7 @@ components:
                             type: string
                     required:
                         - fault-id
+                        - first-observed
                         - kind
                         - occurred-at
                         - sequence
@@ -1823,6 +1911,19 @@ components:
             payload:
                 schema:
                     $defs:
+                        ComponentRef:
+                            additionalProperties: false
+                            properties:
+                                component-class:
+                                    type: string
+                                component-id:
+                                    maxLength: 128
+                                    minLength: 1
+                                    type: string
+                            required:
+                                - component-class
+                                - component-id
+                            type: object
                         WireSource:
                             additionalProperties: false
                             properties:
@@ -1854,7 +1955,14 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        component:
+                            $ref: '#/$defs/ComponentRef'
                         fault-id:
+                            maxLength: 128
+                            minLength: 1
+                            type: string
+                        first-observed:
+                            format: date-time
                             type: string
                         kind:
                             type: string
@@ -1883,6 +1991,7 @@ components:
                             type: string
                     required:
                         - fault-id
+                        - first-observed
                         - kind
                         - occurred-at
                         - sequence
@@ -1922,6 +2031,19 @@ components:
             payload:
                 schema:
                     $defs:
+                        ComponentRef:
+                            additionalProperties: false
+                            properties:
+                                component-class:
+                                    type: string
+                                component-id:
+                                    maxLength: 128
+                                    minLength: 1
+                                    type: string
+                            required:
+                                - component-class
+                                - component-id
+                            type: object
                         WireSource:
                             additionalProperties: false
                             properties:
@@ -1953,11 +2075,20 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        component:
+                            $ref: '#/$defs/ComponentRef'
                         correlates-with:
+                            maxLength: 128
+                            minLength: 1
                             type: string
                         description:
                             type: string
                         fault-id:
+                            maxLength: 128
+                            minLength: 1
+                            type: string
+                        first-observed:
+                            format: date-time
                             type: string
                         kind:
                             type: string
@@ -1994,6 +2125,7 @@ components:
                             type: string
                     required:
                         - fault-id
+                        - first-observed
                         - kind
                         - occurred-at
                         - sequence
@@ -2197,6 +2329,19 @@ components:
             payload:
                 schema:
                     $defs:
+                        ComponentRef:
+                            additionalProperties: false
+                            properties:
+                                component-class:
+                                    type: string
+                                component-id:
+                                    maxLength: 128
+                                    minLength: 1
+                                    type: string
+                            required:
+                                - component-class
+                                - component-id
+                            type: object
                         WireSource:
                             additionalProperties: false
                             properties:
@@ -2228,7 +2373,14 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        component:
+                            $ref: '#/$defs/ComponentRef'
                         fault-id:
+                            maxLength: 128
+                            minLength: 1
+                            type: string
+                        first-observed:
+                            format: date-time
                             type: string
                         kind:
                             type: string
@@ -2257,6 +2409,7 @@ components:
                             type: string
                     required:
                         - fault-id
+                        - first-observed
                         - kind
                         - occurred-at
                         - sequence
@@ -2296,6 +2449,19 @@ components:
             payload:
                 schema:
                     $defs:
+                        ComponentRef:
+                            additionalProperties: false
+                            properties:
+                                component-class:
+                                    type: string
+                                component-id:
+                                    maxLength: 128
+                                    minLength: 1
+                                    type: string
+                            required:
+                                - component-class
+                                - component-id
+                            type: object
                         WireSource:
                             additionalProperties: false
                             properties:
@@ -2327,11 +2493,20 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        component:
+                            $ref: '#/$defs/ComponentRef'
                         correlates-with:
+                            maxLength: 128
+                            minLength: 1
                             type: string
                         description:
                             type: string
                         fault-id:
+                            maxLength: 128
+                            minLength: 1
+                            type: string
+                        first-observed:
+                            format: date-time
                             type: string
                         kind:
                             type: string
@@ -2368,6 +2543,7 @@ components:
                             type: string
                     required:
                         - fault-id
+                        - first-observed
                         - kind
                         - occurred-at
                         - sequence
@@ -2778,6 +2954,19 @@ components:
             payload:
                 schema:
                     $defs:
+                        ComponentRef:
+                            additionalProperties: false
+                            properties:
+                                component-class:
+                                    type: string
+                                component-id:
+                                    maxLength: 128
+                                    minLength: 1
+                                    type: string
+                            required:
+                                - component-class
+                                - component-id
+                            type: object
                         WireSource:
                             additionalProperties: false
                             properties:
@@ -2809,7 +2998,14 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        component:
+                            $ref: '#/$defs/ComponentRef'
                         fault-id:
+                            maxLength: 128
+                            minLength: 1
+                            type: string
+                        first-observed:
+                            format: date-time
                             type: string
                         kind:
                             type: string
@@ -2838,6 +3034,7 @@ components:
                             type: string
                     required:
                         - fault-id
+                        - first-observed
                         - kind
                         - occurred-at
                         - sequence
@@ -2877,6 +3074,19 @@ components:
             payload:
                 schema:
                     $defs:
+                        ComponentRef:
+                            additionalProperties: false
+                            properties:
+                                component-class:
+                                    type: string
+                                component-id:
+                                    maxLength: 128
+                                    minLength: 1
+                                    type: string
+                            required:
+                                - component-class
+                                - component-id
+                            type: object
                         WireSource:
                             additionalProperties: false
                             properties:
@@ -2908,11 +3118,20 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        component:
+                            $ref: '#/$defs/ComponentRef'
                         correlates-with:
+                            maxLength: 128
+                            minLength: 1
                             type: string
                         description:
                             type: string
                         fault-id:
+                            maxLength: 128
+                            minLength: 1
+                            type: string
+                        first-observed:
+                            format: date-time
                             type: string
                         kind:
                             type: string
@@ -2949,6 +3168,7 @@ components:
                             type: string
                     required:
                         - fault-id
+                        - first-observed
                         - kind
                         - occurred-at
                         - sequence
@@ -3341,6 +3561,19 @@ components:
             payload:
                 schema:
                     $defs:
+                        ComponentRef:
+                            additionalProperties: false
+                            properties:
+                                component-class:
+                                    type: string
+                                component-id:
+                                    maxLength: 128
+                                    minLength: 1
+                                    type: string
+                            required:
+                                - component-class
+                                - component-id
+                            type: object
                         WireSource:
                             additionalProperties: false
                             properties:
@@ -3372,7 +3605,14 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        component:
+                            $ref: '#/$defs/ComponentRef'
                         fault-id:
+                            maxLength: 128
+                            minLength: 1
+                            type: string
+                        first-observed:
+                            format: date-time
                             type: string
                         kind:
                             type: string
@@ -3401,6 +3641,7 @@ components:
                             type: string
                     required:
                         - fault-id
+                        - first-observed
                         - kind
                         - occurred-at
                         - sequence
@@ -3440,6 +3681,19 @@ components:
             payload:
                 schema:
                     $defs:
+                        ComponentRef:
+                            additionalProperties: false
+                            properties:
+                                component-class:
+                                    type: string
+                                component-id:
+                                    maxLength: 128
+                                    minLength: 1
+                                    type: string
+                            required:
+                                - component-class
+                                - component-id
+                            type: object
                         WireSource:
                             additionalProperties: false
                             properties:
@@ -3471,11 +3725,20 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        component:
+                            $ref: '#/$defs/ComponentRef'
                         correlates-with:
+                            maxLength: 128
+                            minLength: 1
                             type: string
                         description:
                             type: string
                         fault-id:
+                            maxLength: 128
+                            minLength: 1
+                            type: string
+                        first-observed:
+                            format: date-time
                             type: string
                         kind:
                             type: string
@@ -3512,6 +3775,7 @@ components:
                             type: string
                     required:
                         - fault-id
+                        - first-observed
                         - kind
                         - occurred-at
                         - sequence
@@ -3864,6 +4128,19 @@ components:
             payload:
                 schema:
                     $defs:
+                        ComponentRef:
+                            additionalProperties: false
+                            properties:
+                                component-class:
+                                    type: string
+                                component-id:
+                                    maxLength: 128
+                                    minLength: 1
+                                    type: string
+                            required:
+                                - component-class
+                                - component-id
+                            type: object
                         WireSource:
                             additionalProperties: false
                             properties:
@@ -3895,7 +4172,14 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        component:
+                            $ref: '#/$defs/ComponentRef'
                         fault-id:
+                            maxLength: 128
+                            minLength: 1
+                            type: string
+                        first-observed:
+                            format: date-time
                             type: string
                         kind:
                             type: string
@@ -3924,6 +4208,7 @@ components:
                             type: string
                     required:
                         - fault-id
+                        - first-observed
                         - kind
                         - occurred-at
                         - sequence
@@ -3963,6 +4248,19 @@ components:
             payload:
                 schema:
                     $defs:
+                        ComponentRef:
+                            additionalProperties: false
+                            properties:
+                                component-class:
+                                    type: string
+                                component-id:
+                                    maxLength: 128
+                                    minLength: 1
+                                    type: string
+                            required:
+                                - component-class
+                                - component-id
+                            type: object
                         WireSource:
                             additionalProperties: false
                             properties:
@@ -3994,11 +4292,20 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        component:
+                            $ref: '#/$defs/ComponentRef'
                         correlates-with:
+                            maxLength: 128
+                            minLength: 1
                             type: string
                         description:
                             type: string
                         fault-id:
+                            maxLength: 128
+                            minLength: 1
+                            type: string
+                        first-observed:
+                            format: date-time
                             type: string
                         kind:
                             type: string
@@ -4035,6 +4342,7 @@ components:
                             type: string
                     required:
                         - fault-id
+                        - first-observed
                         - kind
                         - occurred-at
                         - sequence
@@ -5828,6 +6136,19 @@ components:
             payload:
                 schema:
                     $defs:
+                        ComponentRef:
+                            additionalProperties: false
+                            properties:
+                                component-class:
+                                    type: string
+                                component-id:
+                                    maxLength: 128
+                                    minLength: 1
+                                    type: string
+                            required:
+                                - component-class
+                                - component-id
+                            type: object
                         WireSource:
                             additionalProperties: false
                             properties:
@@ -5859,7 +6180,14 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        component:
+                            $ref: '#/$defs/ComponentRef'
                         fault-id:
+                            maxLength: 128
+                            minLength: 1
+                            type: string
+                        first-observed:
+                            format: date-time
                             type: string
                         kind:
                             type: string
@@ -5888,6 +6216,7 @@ components:
                             type: string
                     required:
                         - fault-id
+                        - first-observed
                         - kind
                         - occurred-at
                         - sequence
@@ -5927,6 +6256,19 @@ components:
             payload:
                 schema:
                     $defs:
+                        ComponentRef:
+                            additionalProperties: false
+                            properties:
+                                component-class:
+                                    type: string
+                                component-id:
+                                    maxLength: 128
+                                    minLength: 1
+                                    type: string
+                            required:
+                                - component-class
+                                - component-id
+                            type: object
                         WireSource:
                             additionalProperties: false
                             properties:
@@ -5958,11 +6300,20 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        component:
+                            $ref: '#/$defs/ComponentRef'
                         correlates-with:
+                            maxLength: 128
+                            minLength: 1
                             type: string
                         description:
                             type: string
                         fault-id:
+                            maxLength: 128
+                            minLength: 1
+                            type: string
+                        first-observed:
+                            format: date-time
                             type: string
                         kind:
                             type: string
@@ -5999,6 +6350,7 @@ components:
                             type: string
                     required:
                         - fault-id
+                        - first-observed
                         - kind
                         - occurred-at
                         - sequence
@@ -7310,6 +7662,19 @@ components:
             payload:
                 schema:
                     $defs:
+                        ComponentRef:
+                            additionalProperties: false
+                            properties:
+                                component-class:
+                                    type: string
+                                component-id:
+                                    maxLength: 128
+                                    minLength: 1
+                                    type: string
+                            required:
+                                - component-class
+                                - component-id
+                            type: object
                         WireSource:
                             additionalProperties: false
                             properties:
@@ -7341,7 +7706,14 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        component:
+                            $ref: '#/$defs/ComponentRef'
                         fault-id:
+                            maxLength: 128
+                            minLength: 1
+                            type: string
+                        first-observed:
+                            format: date-time
                             type: string
                         kind:
                             type: string
@@ -7370,6 +7742,7 @@ components:
                             type: string
                     required:
                         - fault-id
+                        - first-observed
                         - kind
                         - occurred-at
                         - sequence
@@ -7409,6 +7782,19 @@ components:
             payload:
                 schema:
                     $defs:
+                        ComponentRef:
+                            additionalProperties: false
+                            properties:
+                                component-class:
+                                    type: string
+                                component-id:
+                                    maxLength: 128
+                                    minLength: 1
+                                    type: string
+                            required:
+                                - component-class
+                                - component-id
+                            type: object
                         WireSource:
                             additionalProperties: false
                             properties:
@@ -7440,11 +7826,20 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        component:
+                            $ref: '#/$defs/ComponentRef'
                         correlates-with:
+                            maxLength: 128
+                            minLength: 1
                             type: string
                         description:
                             type: string
                         fault-id:
+                            maxLength: 128
+                            minLength: 1
+                            type: string
+                        first-observed:
+                            format: date-time
                             type: string
                         kind:
                             type: string
@@ -7481,6 +7876,7 @@ components:
                             type: string
                     required:
                         - fault-id
+                        - first-observed
                         - kind
                         - occurred-at
                         - sequence

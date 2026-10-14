@@ -28,6 +28,11 @@ message WireSource {
   }
 }
 
+message ComponentRef {
+  string component_class = 1;
+  string component_id = 2;
+}
+
 message ScOnBatteryPolicy {
   optional OnBatteryMode mode = 1;
   optional uint32 transition_at_soc_pct = 2;

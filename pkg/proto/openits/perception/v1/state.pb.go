@@ -7,6 +7,7 @@
 package perceptionv1
 
 import (
+	v1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/types/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -1608,7 +1609,8 @@ func (x *Faults) GetFault() []*Fault {
 
 type Fault struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Category       *string                `protobuf:"bytes,1,opt,name=category,proto3,oneof" json:"category,omitempty"`
+	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
+	Component      *v1.ComponentRef       `protobuf:"bytes,7,opt,name=component,proto3" json:"component,omitempty"`
 	CorrelatesWith *string                `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3,oneof" json:"correlates_with,omitempty"`
 	Description    *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
 	FaultId        *string                `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3,oneof" json:"fault_id,omitempty"`
@@ -1648,11 +1650,18 @@ func (*Fault) Descriptor() ([]byte, []int) {
 	return file_openits_perception_v1_state_proto_rawDescGZIP(), []int{20}
 }
 
-func (x *Fault) GetCategory() string {
-	if x != nil && x.Category != nil {
-		return *x.Category
+func (x *Fault) GetKind() string {
+	if x != nil {
+		return x.Kind
 	}
 	return ""
+}
+
+func (x *Fault) GetComponent() *v1.ComponentRef {
+	if x != nil {
+		return x.Component
+	}
+	return nil
 }
 
 func (x *Fault) GetCorrelatesWith() string {
@@ -2054,7 +2063,7 @@ var File_openits_perception_v1_state_proto protoreflect.FileDescriptor
 
 const file_openits_perception_v1_state_proto_rawDesc = "" +
 	"\n" +
-	"!openits/perception/v1/state.proto\x12\x15openits.perception.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a!openits/perception/v1/types.proto\"\x9a\x06\n" +
+	"!openits/perception/v1/state.proto\x12\x15openits.perception.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a!openits/perception/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\x9a\x06\n" +
 	"\x10PerceptionSensor\x12E\n" +
 	"\x06config\x18\x01 \x01(\v2-.openits.perception.v1.PerceptionSensorConfigR\x06config\x12B\n" +
 	"\x05state\x18\x02 \x01(\v2,.openits.perception.v1.PerceptionSensorStateR\x05state\x12G\n" +
@@ -2310,19 +2319,19 @@ const file_openits_perception_v1_state_proto_rawDesc = "" +
 	"\f_dispositionB\x0e\n" +
 	"\f_reviewed_by\"<\n" +
 	"\x06Faults\x122\n" +
-	"\x05fault\x18\x01 \x03(\v2\x1c.openits.perception.v1.FaultR\x05fault\"\xf2\x02\n" +
-	"\x05Fault\x12\x1f\n" +
-	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12,\n" +
-	"\x0fcorrelates_with\x18\x06 \x01(\tH\x01R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
-	"\vdescription\x18\x02 \x01(\tH\x02R\vdescription\x88\x01\x01\x12\x1e\n" +
-	"\bfault_id\x18\x03 \x01(\tH\x03R\afaultId\x88\x01\x01\x12A\n" +
+	"\x05fault\x18\x01 \x03(\v2\x1c.openits.perception.v1.FaultR\x05fault\"\xa6\x03\n" +
+	"\x05Fault\x12\x12\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12<\n" +
+	"\tcomponent\x18\a \x01(\v2\x1e.openits.types.v1.ComponentRefR\tcomponent\x12,\n" +
+	"\x0fcorrelates_with\x18\x06 \x01(\tH\x00R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x01R\vdescription\x88\x01\x01\x12\x1e\n" +
+	"\bfault_id\x18\x03 \x01(\tH\x02R\afaultId\x88\x01\x01\x12A\n" +
 	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12E\n" +
-	"\bseverity\x18\x05 \x01(\x0e2$.openits.perception.v1.FaultSeverityH\x04R\bseverity\x88\x01\x01B\v\n" +
-	"\t_categoryB\x12\n" +
+	"\bseverity\x18\x05 \x01(\x0e2$.openits.perception.v1.FaultSeverityH\x03R\bseverity\x88\x01\x01B\x12\n" +
 	"\x10_correlates_withB\x0e\n" +
 	"\f_descriptionB\v\n" +
 	"\t_fault_idB\v\n" +
-	"\t_severity\"\xa9\x01\n" +
+	"\t_severityJ\x04\b\x01\x10\x02R\bcategory\"\xa9\x01\n" +
 	"\rZoneOccupancy\x12W\n" +
 	"\rconfiguration\x18\x01 \x01(\v21.openits.perception.v1.ZoneOccupancyConfigurationR\rconfiguration\x12?\n" +
 	"\x05zones\x18\x02 \x01(\v2).openits.perception.v1.ZoneOccupancyZonesR\x05zones\"g\n" +
@@ -2409,7 +2418,8 @@ var file_openits_perception_v1_state_proto_goTypes = []any{
 	(Lifecycle)(0),                                // 28: openits.perception.v1.Lifecycle
 	(IncidentSeverity)(0),                         // 29: openits.perception.v1.IncidentSeverity
 	(IncidentDisposition)(0),                      // 30: openits.perception.v1.IncidentDisposition
-	(FaultSeverity)(0),                            // 31: openits.perception.v1.FaultSeverity
+	(*v1.ComponentRef)(nil),                       // 31: openits.types.v1.ComponentRef
+	(FaultSeverity)(0),                            // 32: openits.perception.v1.FaultSeverity
 }
 var file_openits_perception_v1_state_proto_depIdxs = []int32{
 	1,  // 0: openits.perception.v1.PerceptionSensor.config:type_name -> openits.perception.v1.PerceptionSensorConfig
@@ -2441,20 +2451,21 @@ var file_openits_perception_v1_state_proto_depIdxs = []int32{
 	18, // 26: openits.perception.v1.IncidentReview.review:type_name -> openits.perception.v1.Review
 	30, // 27: openits.perception.v1.Review.disposition:type_name -> openits.perception.v1.IncidentDisposition
 	20, // 28: openits.perception.v1.Faults.fault:type_name -> openits.perception.v1.Fault
-	27, // 29: openits.perception.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	31, // 30: openits.perception.v1.Fault.severity:type_name -> openits.perception.v1.FaultSeverity
-	22, // 31: openits.perception.v1.ZoneOccupancy.configuration:type_name -> openits.perception.v1.ZoneOccupancyConfiguration
-	24, // 32: openits.perception.v1.ZoneOccupancy.zones:type_name -> openits.perception.v1.ZoneOccupancyZones
-	23, // 33: openits.perception.v1.ZoneOccupancyConfiguration.zone:type_name -> openits.perception.v1.ZoneOccupancyConfigurationZone
-	25, // 34: openits.perception.v1.ZoneOccupancyZones.zone:type_name -> openits.perception.v1.ZoneOccupancyZonesZone
-	27, // 35: openits.perception.v1.ZoneOccupancyZonesZone.measured_at:type_name -> google.protobuf.Timestamp
-	27, // 36: openits.perception.v1.ZoneOccupancyZonesZone.occupied_since:type_name -> google.protobuf.Timestamp
-	26, // 37: openits.perception.v1.ZoneOccupancyZonesZone.present_class:type_name -> openits.perception.v1.PresentClass
-	38, // [38:38] is the sub-list for method output_type
-	38, // [38:38] is the sub-list for method input_type
-	38, // [38:38] is the sub-list for extension type_name
-	38, // [38:38] is the sub-list for extension extendee
-	0,  // [0:38] is the sub-list for field type_name
+	31, // 29: openits.perception.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
+	27, // 30: openits.perception.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	32, // 31: openits.perception.v1.Fault.severity:type_name -> openits.perception.v1.FaultSeverity
+	22, // 32: openits.perception.v1.ZoneOccupancy.configuration:type_name -> openits.perception.v1.ZoneOccupancyConfiguration
+	24, // 33: openits.perception.v1.ZoneOccupancy.zones:type_name -> openits.perception.v1.ZoneOccupancyZones
+	23, // 34: openits.perception.v1.ZoneOccupancyConfiguration.zone:type_name -> openits.perception.v1.ZoneOccupancyConfigurationZone
+	25, // 35: openits.perception.v1.ZoneOccupancyZones.zone:type_name -> openits.perception.v1.ZoneOccupancyZonesZone
+	27, // 36: openits.perception.v1.ZoneOccupancyZonesZone.measured_at:type_name -> google.protobuf.Timestamp
+	27, // 37: openits.perception.v1.ZoneOccupancyZonesZone.occupied_since:type_name -> google.protobuf.Timestamp
+	26, // 38: openits.perception.v1.ZoneOccupancyZonesZone.present_class:type_name -> openits.perception.v1.PresentClass
+	39, // [39:39] is the sub-list for method output_type
+	39, // [39:39] is the sub-list for method input_type
+	39, // [39:39] is the sub-list for extension type_name
+	39, // [39:39] is the sub-list for extension extendee
+	0,  // [0:39] is the sub-list for field type_name
 }
 
 func init() { file_openits_perception_v1_state_proto_init() }

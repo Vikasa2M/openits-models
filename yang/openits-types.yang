@@ -18,7 +18,19 @@ module openits-types {
      for the openits YANG module family. Service-neutral content only;
      service-specific typedefs live in their respective modules.";
 
-  openits-types:openits-version "0.12.0";
+  openits-types:openits-version "0.13.0";
+
+  revision 2026-10-14 {
+    description
+      "One fault shape for inventories and events. Add the fault-id
+       typedef, the component-class identity and the component-ref
+       grouping, and reshape fault-entry: typed fault-id and
+       correlates-with, a mandatory first-observed, and an optional
+       component. Breaking: first-observed is now mandatory.
+       Also update descriptions that named the fault inventory's
+       category leaf, now kind.";
+    reference "RFC 7950 §7.12.";
+  }
 
   revision 2026-10-13 {
     description
@@ -422,6 +434,19 @@ module openits-types {
        lane.  250 veh/km upper bound covers jam density with margin.";
   }
 
+  typedef fault-id {
+    type string {
+      length "1..128";
+    }
+    description
+      "Device-local fault identifier, condition-scoped: stable across
+       raise and clear of the same condition on the same device, and
+       reused if the condition recurs after clearing. Distinct
+       simultaneous instances of one condition take distinct ids.
+       Consumers correlate and deduplicate on (source-device-id,
+       fault-id).";
+  }
+
   typedef fault-severity {
     type enumeration {
       enum info { value 0; description "Informational only; no operator action required."; }
@@ -449,6 +474,15 @@ module openits-types {
   /* --------------------------------------------------------------
    * Shared identities
    * -------------------------------------------------------------- */
+
+  identity component-class {
+    description
+      "Base for the kinds of sub-component a fault or mode change can
+       name: a phase, a detector, a lamp module, a gate, a radio. Each
+       service, and each platform module, derives its own classes. The
+       foundation defines none, so a consumer branches on a class the
+       service published rather than on a fault-id string.";
+  }
 
   identity process-state { description "Base identity for process states"; }
   identity proc-running  { base process-state; description "Process is running"; }
@@ -1040,29 +1074,53 @@ module openits-types {
    * One entry in a device's live active-fault list (the config-false
    * 'faults' container every service exposes). A service's fault list
    * 'uses fault-entry' for the common leaves and adds its own
-   * service-specific 'category' identityref (base
+   * service-specific 'kind' identityref (base
    * <service>-fault-event-kind), so a fleet-wide
    * derived-from-or-self(fault-event-kind) filter spans every service.
    * -------------------------------------------------------------- */
 
+  grouping component-ref {
+    description
+      "Names the sub-component an event or fault concerns. Absent when
+       it concerns the device as a whole.";
+    container component {
+      presence
+        "The fault or event concerns one sub-component of the device.";
+      description
+        "The sub-component, as a (class, id) pair a consumer joins to
+         the live-state list for that class.";
+      leaf component-class {
+        type identityref {
+          base component-class;
+        }
+        mandatory true;
+        description "What kind of sub-component this is.";
+      }
+      leaf component-id {
+        type string {
+          length "1..128";
+        }
+        mandatory true;
+        description
+          "The key of the referenced live-state list entry. A composite
+           key is its key values joined by '/' in key order.";
+      }
+    }
+  }
+
   grouping fault-entry {
     description
-      "Common leaves of one active-fault inventory entry: a device-local
-       fault id (the list key), severity, human-readable description, and
-       first-observed time. A service's fault list adds its own
-       'category' identityref (base <service>-fault-event-kind).";
+      "One active fault: the leaves a service's live fault inventory
+       and the fault-raised notification share. The classifier is not
+       here: an inventory types its own kind leaf to the service's fault
+       base, and fault-raised types its kind to the cross-service
+       base.";
 
     leaf fault-id {
-      type string;
+      type fault-id;
       description
-        "Device-local fault identifier, condition-scoped: stable across
-         raise/clear of the same fault condition on the same
-         source-device. The pair (source-device-id, fault-id) is unique
-         among a device's currently-active faults. Re-raising a condition
-         after it cleared reuses the same fault-id. If the same condition
-         has multiple simultaneous distinct instances, each gets a
-         distinct fault-id (e.g. a suffix). Consumers correlate/dedupe on
-         (source-device-id, fault-id). Used as the enclosing list's key.";
+        "Device-local fault identifier (see the fault-id typedef). The
+         key of the enclosing inventory list.";
     }
     leaf severity {
       type fault-severity;
@@ -1073,19 +1131,22 @@ module openits-types {
       description "Human-readable fault description from the device.";
     }
     leaf correlates-with {
-      type string;
+      type fault-id;
       description
-        "Optional fault-id of another currently-active fault on the SAME
-         source-device that this fault is causally related to (e.g. a
-         comm fault raised because a cabinet-power fault took the modem
-         down). References a fault-id in this device's active-fault
-         inventory. Additive/optional — consumers MAY use it to collapse
-         a fault storm to its root.";
+        "Optional fault-id of another active fault on the same device
+         that this fault is causally related to, so a consumer can
+         collapse a fault storm to its root.";
     }
     leaf first-observed {
       type yang:date-and-time;
-      description "Wall-clock time the fault was first observed at the device.";
+      mandatory true;
+      description
+        "When the fault was first observed: the device's own time when
+         it reports one, otherwise the time the producer first saw the
+         fault. Consumers key a fault occurrence on (source-device-id,
+         fault-id, first-observed).";
     }
+    uses component-ref;
   }
 
   /* --------------------------------------------------------------

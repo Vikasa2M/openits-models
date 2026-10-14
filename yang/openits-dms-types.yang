@@ -6,6 +6,9 @@ module openits-dms-types {
   import openits-types {
     prefix openits-types;
   }
+  import openits-cabinet-power {
+    prefix openits-cabinet-power;
+  }
 
   organization
     "OpenITS Working Group (proposal)";
@@ -28,8 +31,17 @@ module openits-dms-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.8.1";
+  openits-types:openits-version "0.9.0";
 
+  revision 2026-10-14 {
+    description
+      "Add the DMS forms of the four cabinet-power faults
+       (on-battery, low-battery, charger-fault, door-open), each derived
+       from this service's fault base and from the cabinet-power
+       identity, so a cabinet-power fault can sit in this service's
+       fault inventory. Additive.";
+    reference "RFC 7950 §7.18.2.";
+  }
   revision 2026-10-13 {
     description
       "Update descriptions that referred to mode-changed's prior/current
@@ -447,6 +459,40 @@ module openits-dms-types {
     base dms-fault-event-kind;
     description
       "Communication fault between sign and upstream system.";
+  }
+  identity dms-fault-cabinet-on-battery {
+    base dms-fault-power;
+    base openits-cabinet-power:cabinet-power-on-battery;
+    description
+      "The sign is running on battery backup. The DMS form of the
+       cabinet-power fault, so it can sit in this service's fault
+       inventory; a fleet query on the cabinet-power identity matches
+       it.";
+  }
+  identity dms-fault-cabinet-low-battery {
+    base dms-fault-power;
+    base openits-cabinet-power:cabinet-power-low-battery;
+    description
+      "The sign's backup battery is low. The DMS form of the cabinet-
+       power fault, so it can sit in this service's fault inventory; a
+       fleet query on the cabinet-power identity matches it.";
+  }
+  identity dms-fault-cabinet-charger-fault {
+    base dms-fault-power;
+    base openits-cabinet-power:cabinet-power-charger-fault;
+    description
+      "The sign's battery charger reports a fault. The DMS form of the
+       cabinet-power fault, so it can sit in this service's fault
+       inventory; a fleet query on the cabinet-power identity matches
+       it.";
+  }
+  identity dms-fault-cabinet-door-open {
+    base dms-fault-environment;
+    base openits-cabinet-power:cabinet-power-door-open;
+    description
+      "The sign's cabinet door is open. The DMS form of the cabinet-
+       power fault, so it can sit in this service's fault inventory; a
+       fleet query on the cabinet-power identity matches it.";
   }
   identity dms-fault-photocell {
     base dms-fault-event-kind;

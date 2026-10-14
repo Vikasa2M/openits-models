@@ -49,7 +49,7 @@
     },
     "faults": {
       "fault": [
-        { "fault-id": "f1", "severity": "minor", "description": "focus hunting in low light", "first-observed": "2026-07-17T02:00:00Z", "category": "openits-cctv-types:cctv-fault-focus" }
+        { "fault-id": "f1", "severity": "minor", "description": "focus hunting in low light", "first-observed": "2026-07-17T02:00:00Z", "kind": "openits-cctv-types:cctv-fault-focus" }
       ]
     },
     "control": {

@@ -7,6 +7,7 @@
 package reversiblelanev1
 
 import (
+	v1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/types/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -1480,7 +1481,8 @@ func (x *Faults) GetFault() []*Fault {
 
 type Fault struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Category       *string                `protobuf:"bytes,1,opt,name=category,proto3,oneof" json:"category,omitempty"`
+	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
+	Component      *v1.ComponentRef       `protobuf:"bytes,7,opt,name=component,proto3" json:"component,omitempty"`
 	CorrelatesWith *string                `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3,oneof" json:"correlates_with,omitempty"`
 	Description    *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
 	FaultId        *string                `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3,oneof" json:"fault_id,omitempty"`
@@ -1520,11 +1522,18 @@ func (*Fault) Descriptor() ([]byte, []int) {
 	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{20}
 }
 
-func (x *Fault) GetCategory() string {
-	if x != nil && x.Category != nil {
-		return *x.Category
+func (x *Fault) GetKind() string {
+	if x != nil {
+		return x.Kind
 	}
 	return ""
+}
+
+func (x *Fault) GetComponent() *v1.ComponentRef {
+	if x != nil {
+		return x.Component
+	}
+	return nil
 }
 
 func (x *Fault) GetCorrelatesWith() string {
@@ -1566,7 +1575,7 @@ var File_openits_reversible_lane_v1_state_proto protoreflect.FileDescriptor
 
 const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"\n" +
-	"&openits/reversible_lane/v1/state.proto\x12\x1aopenits.reversible_lane.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a&openits/reversible_lane/v1/types.proto\"\xa6\x03\n" +
+	"&openits/reversible_lane/v1/state.proto\x12\x1aopenits.reversible_lane.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a&openits/reversible_lane/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\xa6\x03\n" +
 	"\x0eReversibleLane\x12H\n" +
 	"\x06config\x18\x01 \x01(\v20.openits.reversible_lane.v1.ReversibleLaneConfigR\x06config\x12E\n" +
 	"\x05state\x18\x02 \x01(\v2/.openits.reversible_lane.v1.ReversibleLaneStateR\x05state\x12=\n" +
@@ -1777,19 +1786,19 @@ const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"\n" +
 	"_satisfied\"A\n" +
 	"\x06Faults\x127\n" +
-	"\x05fault\x18\x01 \x03(\v2!.openits.reversible_lane.v1.FaultR\x05fault\"\xf7\x02\n" +
-	"\x05Fault\x12\x1f\n" +
-	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12,\n" +
-	"\x0fcorrelates_with\x18\x06 \x01(\tH\x01R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
-	"\vdescription\x18\x02 \x01(\tH\x02R\vdescription\x88\x01\x01\x12\x1e\n" +
-	"\bfault_id\x18\x03 \x01(\tH\x03R\afaultId\x88\x01\x01\x12A\n" +
+	"\x05fault\x18\x01 \x03(\v2!.openits.reversible_lane.v1.FaultR\x05fault\"\xab\x03\n" +
+	"\x05Fault\x12\x12\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12<\n" +
+	"\tcomponent\x18\a \x01(\v2\x1e.openits.types.v1.ComponentRefR\tcomponent\x12,\n" +
+	"\x0fcorrelates_with\x18\x06 \x01(\tH\x00R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x01R\vdescription\x88\x01\x01\x12\x1e\n" +
+	"\bfault_id\x18\x03 \x01(\tH\x02R\afaultId\x88\x01\x01\x12A\n" +
 	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12J\n" +
-	"\bseverity\x18\x05 \x01(\x0e2).openits.reversible_lane.v1.FaultSeverityH\x04R\bseverity\x88\x01\x01B\v\n" +
-	"\t_categoryB\x12\n" +
+	"\bseverity\x18\x05 \x01(\x0e2).openits.reversible_lane.v1.FaultSeverityH\x03R\bseverity\x88\x01\x01B\x12\n" +
 	"\x10_correlates_withB\x0e\n" +
 	"\f_descriptionB\v\n" +
 	"\t_fault_idB\v\n" +
-	"\t_severityBZZXgithub.com/Vikasa2M/openits-models/pkg/proto/openits/reversible_lane/v1;reversiblelanev1b\x06proto3"
+	"\t_severityJ\x04\b\x01\x10\x02R\bcategoryBZZXgithub.com/Vikasa2M/openits-models/pkg/proto/openits/reversible_lane/v1;reversiblelanev1b\x06proto3"
 
 var (
 	file_openits_reversible_lane_v1_state_proto_rawDescOnce sync.Once
@@ -1833,7 +1842,8 @@ var file_openits_reversible_lane_v1_state_proto_goTypes = []any{
 	(LcsIndication)(0),                          // 25: openits.reversible_lane.v1.LcsIndication
 	(GateState)(0),                              // 26: openits.reversible_lane.v1.GateState
 	(EvaluationPoint)(0),                        // 27: openits.reversible_lane.v1.EvaluationPoint
-	(FaultSeverity)(0),                          // 28: openits.reversible_lane.v1.FaultSeverity
+	(*v1.ComponentRef)(nil),                     // 28: openits.types.v1.ComponentRef
+	(FaultSeverity)(0),                          // 29: openits.reversible_lane.v1.FaultSeverity
 }
 var file_openits_reversible_lane_v1_state_proto_depIdxs = []int32{
 	1,  // 0: openits.reversible_lane.v1.ReversibleLane.config:type_name -> openits.reversible_lane.v1.ReversibleLaneConfig
@@ -1869,13 +1879,14 @@ var file_openits_reversible_lane_v1_state_proto_depIdxs = []int32{
 	18, // 30: openits.reversible_lane.v1.Interlock.state:type_name -> openits.reversible_lane.v1.InterlockState
 	27, // 31: openits.reversible_lane.v1.InterlockConfig.evaluation_point:type_name -> openits.reversible_lane.v1.EvaluationPoint
 	20, // 32: openits.reversible_lane.v1.Faults.fault:type_name -> openits.reversible_lane.v1.Fault
-	21, // 33: openits.reversible_lane.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	28, // 34: openits.reversible_lane.v1.Fault.severity:type_name -> openits.reversible_lane.v1.FaultSeverity
-	35, // [35:35] is the sub-list for method output_type
-	35, // [35:35] is the sub-list for method input_type
-	35, // [35:35] is the sub-list for extension type_name
-	35, // [35:35] is the sub-list for extension extendee
-	0,  // [0:35] is the sub-list for field type_name
+	28, // 33: openits.reversible_lane.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
+	21, // 34: openits.reversible_lane.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	29, // 35: openits.reversible_lane.v1.Fault.severity:type_name -> openits.reversible_lane.v1.FaultSeverity
+	36, // [36:36] is the sub-list for method output_type
+	36, // [36:36] is the sub-list for method input_type
+	36, // [36:36] is the sub-list for extension type_name
+	36, // [36:36] is the sub-list for extension extendee
+	0,  // [0:36] is the sub-list for field type_name
 }
 
 func init() { file_openits_reversible_lane_v1_state_proto_init() }

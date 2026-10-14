@@ -7,6 +7,7 @@
 package cctvv1
 
 import (
+	v1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/types/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -2300,7 +2301,8 @@ func (x *Faults) GetFault() []*Fault {
 
 type Fault struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Category       *string                `protobuf:"bytes,1,opt,name=category,proto3,oneof" json:"category,omitempty"`
+	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
+	Component      *v1.ComponentRef       `protobuf:"bytes,7,opt,name=component,proto3" json:"component,omitempty"`
 	CorrelatesWith *string                `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3,oneof" json:"correlates_with,omitempty"`
 	Description    *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
 	FaultId        *string                `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3,oneof" json:"fault_id,omitempty"`
@@ -2340,11 +2342,18 @@ func (*Fault) Descriptor() ([]byte, []int) {
 	return file_openits_cctv_v1_state_proto_rawDescGZIP(), []int{33}
 }
 
-func (x *Fault) GetCategory() string {
-	if x != nil && x.Category != nil {
-		return *x.Category
+func (x *Fault) GetKind() string {
+	if x != nil {
+		return x.Kind
 	}
 	return ""
+}
+
+func (x *Fault) GetComponent() *v1.ComponentRef {
+	if x != nil {
+		return x.Component
+	}
+	return nil
 }
 
 func (x *Fault) GetCorrelatesWith() string {
@@ -2670,7 +2679,7 @@ var File_openits_cctv_v1_state_proto protoreflect.FileDescriptor
 
 const file_openits_cctv_v1_state_proto_rawDesc = "" +
 	"\n" +
-	"\x1bopenits/cctv/v1/state.proto\x12\x0fopenits.cctv.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bopenits/cctv/v1/types.proto\"\x9a\x04\n" +
+	"\x1bopenits/cctv/v1/state.proto\x12\x0fopenits.cctv.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bopenits/cctv/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\x9a\x04\n" +
 	"\x06Camera\x125\n" +
 	"\x06config\x18\x01 \x01(\v2\x1d.openits.cctv.v1.CameraConfigR\x06config\x122\n" +
 	"\x05state\x18\x02 \x01(\v2\x1c.openits.cctv.v1.CameraStateR\x05state\x125\n" +
@@ -2985,19 +2994,19 @@ const file_openits_cctv_v1_state_proto_rawDesc = "" +
 	"\x0e_heater_activeB\x10\n" +
 	"\x0e_blower_active\"6\n" +
 	"\x06Faults\x12,\n" +
-	"\x05fault\x18\x01 \x03(\v2\x16.openits.cctv.v1.FaultR\x05fault\"\xec\x02\n" +
-	"\x05Fault\x12\x1f\n" +
-	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12,\n" +
-	"\x0fcorrelates_with\x18\x06 \x01(\tH\x01R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
-	"\vdescription\x18\x02 \x01(\tH\x02R\vdescription\x88\x01\x01\x12\x1e\n" +
-	"\bfault_id\x18\x03 \x01(\tH\x03R\afaultId\x88\x01\x01\x12A\n" +
+	"\x05fault\x18\x01 \x03(\v2\x16.openits.cctv.v1.FaultR\x05fault\"\xa0\x03\n" +
+	"\x05Fault\x12\x12\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12<\n" +
+	"\tcomponent\x18\a \x01(\v2\x1e.openits.types.v1.ComponentRefR\tcomponent\x12,\n" +
+	"\x0fcorrelates_with\x18\x06 \x01(\tH\x00R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x01R\vdescription\x88\x01\x01\x12\x1e\n" +
+	"\bfault_id\x18\x03 \x01(\tH\x02R\afaultId\x88\x01\x01\x12A\n" +
 	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12?\n" +
-	"\bseverity\x18\x05 \x01(\x0e2\x1e.openits.cctv.v1.FaultSeverityH\x04R\bseverity\x88\x01\x01B\v\n" +
-	"\t_categoryB\x12\n" +
+	"\bseverity\x18\x05 \x01(\x0e2\x1e.openits.cctv.v1.FaultSeverityH\x03R\bseverity\x88\x01\x01B\x12\n" +
 	"\x10_correlates_withB\x0e\n" +
 	"\f_descriptionB\v\n" +
 	"\t_fault_idB\v\n" +
-	"\t_severity\"v\n" +
+	"\t_severityJ\x04\b\x01\x10\x02R\bcategory\"v\n" +
 	"\aControl\x126\n" +
 	"\x06config\x18\x01 \x01(\v2\x1e.openits.cctv.v1.ControlConfigR\x06config\x123\n" +
 	"\x05state\x18\x02 \x01(\v2\x1d.openits.cctv.v1.ControlStateR\x05state\"\x86\x01\n" +
@@ -3087,7 +3096,8 @@ var file_openits_cctv_v1_state_proto_goTypes = []any{
 	(VideoCodec)(0),                     // 45: openits.cctv.v1.VideoCodec
 	(StreamHealth)(0),                   // 46: openits.cctv.v1.StreamHealth
 	(HeaterMode)(0),                     // 47: openits.cctv.v1.HeaterMode
-	(FaultSeverity)(0),                  // 48: openits.cctv.v1.FaultSeverity
+	(*v1.ComponentRef)(nil),             // 48: openits.types.v1.ComponentRef
+	(FaultSeverity)(0),                  // 49: openits.cctv.v1.FaultSeverity
 }
 var file_openits_cctv_v1_state_proto_depIdxs = []int32{
 	1,  // 0: openits.cctv.v1.Camera.config:type_name -> openits.cctv.v1.CameraConfig
@@ -3138,19 +3148,20 @@ var file_openits_cctv_v1_state_proto_depIdxs = []int32{
 	31, // 45: openits.cctv.v1.Environment.state:type_name -> openits.cctv.v1.EnvironmentState
 	47, // 46: openits.cctv.v1.EnvironmentConfig.heater_mode:type_name -> openits.cctv.v1.HeaterMode
 	33, // 47: openits.cctv.v1.Faults.fault:type_name -> openits.cctv.v1.Fault
-	39, // 48: openits.cctv.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	48, // 49: openits.cctv.v1.Fault.severity:type_name -> openits.cctv.v1.FaultSeverity
-	35, // 50: openits.cctv.v1.Control.config:type_name -> openits.cctv.v1.ControlConfig
-	37, // 51: openits.cctv.v1.Control.state:type_name -> openits.cctv.v1.ControlState
-	36, // 52: openits.cctv.v1.ControlConfig.holder:type_name -> openits.cctv.v1.ControlConfigHolder
-	38, // 53: openits.cctv.v1.ControlState.holder:type_name -> openits.cctv.v1.ControlStateHolder
-	39, // 54: openits.cctv.v1.ControlStateHolder.held_since:type_name -> google.protobuf.Timestamp
-	39, // 55: openits.cctv.v1.ControlStateHolder.expires_at:type_name -> google.protobuf.Timestamp
-	56, // [56:56] is the sub-list for method output_type
-	56, // [56:56] is the sub-list for method input_type
-	56, // [56:56] is the sub-list for extension type_name
-	56, // [56:56] is the sub-list for extension extendee
-	0,  // [0:56] is the sub-list for field type_name
+	48, // 48: openits.cctv.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
+	39, // 49: openits.cctv.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	49, // 50: openits.cctv.v1.Fault.severity:type_name -> openits.cctv.v1.FaultSeverity
+	35, // 51: openits.cctv.v1.Control.config:type_name -> openits.cctv.v1.ControlConfig
+	37, // 52: openits.cctv.v1.Control.state:type_name -> openits.cctv.v1.ControlState
+	36, // 53: openits.cctv.v1.ControlConfig.holder:type_name -> openits.cctv.v1.ControlConfigHolder
+	38, // 54: openits.cctv.v1.ControlState.holder:type_name -> openits.cctv.v1.ControlStateHolder
+	39, // 55: openits.cctv.v1.ControlStateHolder.held_since:type_name -> google.protobuf.Timestamp
+	39, // 56: openits.cctv.v1.ControlStateHolder.expires_at:type_name -> google.protobuf.Timestamp
+	57, // [57:57] is the sub-list for method output_type
+	57, // [57:57] is the sub-list for method input_type
+	57, // [57:57] is the sub-list for extension type_name
+	57, // [57:57] is the sub-list for extension extendee
+	0,  // [0:57] is the sub-list for field type_name
 }
 
 func init() { file_openits_cctv_v1_state_proto_init() }

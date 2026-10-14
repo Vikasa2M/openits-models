@@ -1,0 +1,17 @@
+{
+  "openits-common-fault-events:fault-raised": {
+    "kind": "openits-signal-control-types:sc-fault-cabinet-low-battery",
+    "source-device-id": "us40-sc-007",
+    "sequence-epoch": "boot-2026-10-13a",
+    "sequence": "1",
+    "fault-id": "sc007-battery-low-0001",
+    "severity": "major",
+    "description": "Cabinet backup battery is low.",
+    "first-observed": "2026-07-11T09:12:30Z",
+    "occurred-at": "2026-07-11T09:12:33Z",
+    "component": {
+      "component-class": "openits-cabinet-power:component-battery",
+      "component-id": "1"
+    }
+  }
+}
