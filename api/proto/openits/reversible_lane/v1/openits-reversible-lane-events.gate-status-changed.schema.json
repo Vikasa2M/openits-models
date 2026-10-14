@@ -55,6 +55,9 @@
       "pattern": "^([a-zA-Z0-9_-]+)$",
       "type": "string"
     },
+    "interlock-bypassed": {
+      "type": "boolean"
+    },
     "kind": {
       "type": "string"
     },

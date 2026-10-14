@@ -73,21 +73,22 @@ module openits-reversible-lane {
 
      Copyright (c) 2026.  Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.6.0";
+  openits-types:openits-version "0.7.0";
 
   revision 2026-10-15 {
     description
       "Add a per-gate gates list. Config holds gate-id, an optional
-       gate-type, an optional name, and an optional reference to the
-       segment the gate protects. State uses the shared gate-status
-       grouping plus measured-at, and is the live rollup of
-       gate-status-changed. Add an optional gate-id on each
-       fault-inventory entry. Clarify that gate-state is a coarse
-       per-lane rollup and that gate-position is the per-gate
-       vocabulary.";
+       gate-type, an optional name, an optional reference to the
+       segment the gate protects, and an optional controls-entry-for
+       naming the direction whose entry the gate closes, so the
+       gate-agreement interlock is computable. State uses the shared
+       gate-status grouping plus measured-at, and is the live rollup of
+       gate-status-changed. A gate fault in the fault inventory names
+       its gate through the shared component reference
+       (rl-component-gate). Clarify that gate-state is a coarse per-lane
+       rollup and that gate-position is the per-gate vocabulary.";
     reference
-      "RFC 7950 section 11; ARC-IT 9.1 Service Package TM16
-       (Reversible Lane Management).";
+      "RFC 7950 §11.";
   }
   revision 2026-10-14 {
     description
@@ -257,11 +258,11 @@ module openits-reversible-lane {
       "Physical barrier-gate position.
        Coarse per-lane rollup, retained for compatibility. The
        authoritative per-gate position vocabulary is
-       openits-reversible-lane-types:gate-position,
-       reported per gate on gate-status-changed; this leaf must not
-       disagree with it. The locked and manual-release members fold a
-       lock state and a control mode into a position enum, which is
-       why per-gate reporting separates position from operating mode.";
+       openits-reversible-lane-types:gate-position, reported per
+       gate on gate-status-changed. The locked and manual-release
+       members fold a lock state and a control mode into a position
+       enum, which is why per-gate reporting separates position from
+       operating mode.";
   }
 
   /* --------------------------------------------------------------
@@ -611,8 +612,10 @@ module openits-reversible-lane {
             }
             description
               "Whether this is a warning gate or a barrier gate.
-               Absent means not known: some gates are labeled with a
-               bare kind and have no warning/barrier distinction.";
+               gate-type-unknown when the type is reported but cannot
+               be classified (some gates are labeled with a bare kind
+               and have no warning/barrier distinction). Absent means
+               not configured.";
           }
           leaf name {
             type string;
@@ -625,6 +628,16 @@ module openits-reversible-lane {
             description
               "The segment this gate protects. Absent when the gate
                is not associated with one segment.";
+          }
+          leaf controls-entry-for {
+            type identityref { base openits-types:carriageway-direction; }
+            description
+              "The travel direction whose entry this gate closes, one of
+               the facility's direction-a or direction-b. The
+               gate-agreement interlock uses it to decide which gates
+               must be closed before that direction is closed. Absent
+               means not configured, and gate-agreement cannot be
+               evaluated for this gate.";
           }
         }
         container state {
@@ -733,15 +746,6 @@ module openits-reversible-lane {
         description "One entry per active fault at the facility.";
 
         uses openits-types:fault-entry;
-        leaf gate-id {
-          type openits-reversible-lane-types:gate-id;
-          description
-            "The gate this fault belongs to, when the fault is
-             gate-scoped. Absent when the fault is not about one
-             gate. A plain identifier, not a leafref, so the
-             inventory stays representable if that gate is no longer
-             configured.";
-        }
         leaf kind {
           type identityref { base openits-reversible-lane-types:reversible-lane-fault-event-kind; }
           mandatory true;

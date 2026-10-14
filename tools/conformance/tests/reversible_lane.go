@@ -199,6 +199,17 @@ func TestReversibleLaneGate_HasIdentity(t *T, obs *Observation) {
 	}
 }
 
+// faultGateID returns the gate a fault-inventory entry names through the
+// shared component reference (component-class rl-component-gate), or ""
+// when the entry names no gate.
+func faultGateID(f *yangpkg.OpenitsReversibleLane_ReversibleLane_Faults_Fault) string {
+	c := f.GetComponent()
+	if c == nil || c.ComponentClass != yangpkg.OpenitsTypes_ComponentClass_rl_component_gate {
+		return ""
+	}
+	return c.GetComponentId()
+}
+
 func TestReversibleLaneFault_FeedbackLossPositionUnknown(t *T, obs *Observation) {
 	rl := obs.Device.GetReversibleLane()
 	faults := rl.GetFaults()
@@ -206,37 +217,40 @@ func TestReversibleLaneFault_FeedbackLossPositionUnknown(t *T, obs *Observation)
 		return
 	}
 	for _, f := range faults.Fault {
-		if f.GetCategory() != yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate_feedback_loss {
+		if f.GetKind() != yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate_feedback_loss {
+			continue
+		}
+		gateID := faultGateID(f)
+		if gateID == "" {
+			t.Errorf("feedback-loss fault %q names no gate: component must be rl-component-gate with the gate-id", f.GetFaultId())
 			continue
 		}
 		gates := rl.GetGates()
 		g := (*yangpkg.OpenitsReversibleLane_ReversibleLane_Gates_Gate)(nil)
 		if gates != nil {
-			g = gates.Gate[f.GetGateId()]
+			g = gates.Gate[gateID]
 		}
 		if g == nil || g.GetState() == nil {
-			t.Errorf("feedback-loss fault %q names gate %q, which has no state", f.GetFaultId(), f.GetGateId())
+			t.Errorf("feedback-loss fault %q names gate %q, which has no state", f.GetFaultId(), gateID)
 			continue
 		}
 		if g.GetState().Position != yangpkg.OpenitsReversibleLaneTypes_GatePosition_unknown {
-			t.Errorf("gate %q has feedback-loss raised but position is %s; position MUST be unknown", f.GetGateId(), g.GetState().Position)
+			t.Errorf("gate %q has feedback-loss raised but position is %s; position MUST be unknown", gateID, g.GetState().Position)
 		}
 	}
 }
 
-// gateFaultCategory is the base reversible-lane-fault-gate and every
+// gateFaultKind is the base reversible-lane-fault-gate and every
 // identity declared with that base. ygot enums do not carry the identity
 // derivation graph, so the set is the schema's own list.
-func gateFaultCategory(c yangpkg.E_OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind) bool {
+func gateFaultKind(c yangpkg.E_OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind) bool {
 	switch c {
 	case yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate,
-		yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate_command_refused,
 		yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate_drive_fault,
 		yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate_emergency_stop,
 		yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate_failed_to_close,
 		yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate_failed_to_open,
 		yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate_feedback_loss,
-		yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate_invalid_inputs,
 		yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind_reversible_lane_fault_gate_obstruction:
 		return true
 	default:
@@ -244,6 +258,9 @@ func gateFaultCategory(c yangpkg.E_OpenitsReversibleLaneTypes_ReversibleLaneFaul
 	}
 }
 
+// TestReversibleLaneFault_GateFaultNamesExistingGate: every gate-scope
+// fault in the inventory names its gate through component
+// (rl-component-gate + gate-id), and that gate is configured.
 func TestReversibleLaneFault_GateFaultNamesExistingGate(t *T, obs *Observation) {
 	rl := obs.Device.GetReversibleLane()
 	faults := rl.GetFaults()
@@ -255,11 +272,32 @@ func TestReversibleLaneFault_GateFaultNamesExistingGate(t *T, obs *Observation) 
 		gates = g.Gate
 	}
 	for _, f := range faults.Fault {
-		if !gateFaultCategory(f.GetCategory()) || f.GetGateId() == "" {
+		if !gateFaultKind(f.GetKind()) {
 			continue
 		}
-		if gates[f.GetGateId()] == nil {
-			t.Errorf("fault %q category %s names gate %q, which is not in gates/gate", f.GetFaultId(), f.GetCategory(), f.GetGateId())
+		gateID := faultGateID(f)
+		if gateID == "" {
+			t.Errorf("fault %q kind %s is gate-scoped but its component does not name a gate (want component-class rl-component-gate)", f.GetFaultId(), f.GetKind())
+			continue
+		}
+		if gates[gateID] == nil {
+			t.Errorf("fault %q kind %s names gate %q, which is not in gates/gate", f.GetFaultId(), f.GetKind(), gateID)
+		}
+	}
+}
+
+// TestReversibleLaneEvent_GateFaultRaisedNamesGate: a fault-raised whose
+// kind is a reversible-lane gate fault names its gate through component.
+func TestReversibleLaneEvent_GateFaultRaisedNamesGate(t *T, obs *Observation) {
+	const prefix = "openits-reversible-lane-types:reversible-lane-fault-gate"
+	for _, e := range obs.Events {
+		fr, ok := e.Data.(*commonv1.FaultRaised)
+		if !ok || !strings.HasPrefix(fr.GetKind(), prefix) {
+			continue
+		}
+		c := fr.GetComponent()
+		if c.GetComponentClass() != "openits-reversible-lane-types:rl-component-gate" || c.GetComponentId() == "" {
+			t.Errorf("fault-raised %q kind %s does not name its gate via component (rl-component-gate + gate-id)", fr.GetFaultId(), fr.GetKind())
 		}
 	}
 }
@@ -319,6 +357,9 @@ func TestReversibleLaneEvent_GateStatusChangedMirrorsLiveState(t *T, obs *Observ
 				t.Errorf("gate %q: live control-source=%s but the latest gate-status-changed says %q", id, live.ControlSource, latest.GetControlSource())
 			}
 		}
+		if live.InterlockBypassed != nil && live.GetInterlockBypassed() != latest.GetInterlockBypassed() {
+			t.Errorf("gate %q: live interlock-bypassed=%t but the latest gate-status-changed says %t", id, live.GetInterlockBypassed(), latest.GetInterlockBypassed())
+		}
 		if live.OpenInhibited != nil && live.GetOpenInhibited() != latest.GetOpenInhibited() {
 			t.Errorf("gate %q: live open-inhibited=%t but the latest gate-status-changed says %t", id, live.GetOpenInhibited(), latest.GetOpenInhibited())
 		}
@@ -363,8 +404,6 @@ func gateModeIdentity(v yangpkg.E_OpenitsReversibleLaneTypes_ReversibleLaneGateM
 		return "openits-reversible-lane-types:reversible-lane-gate-mode-offline"
 	case yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneGateMode_reversible_lane_gate_mode_manual:
 		return "openits-reversible-lane-types:reversible-lane-gate-mode-manual"
-	case yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneGateMode_reversible_lane_gate_mode_manual_non_interlocked:
-		return "openits-reversible-lane-types:reversible-lane-gate-mode-manual-non-interlocked"
 	case yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneGateMode_reversible_lane_gate_mode_unknown:
 		return "openits-reversible-lane-types:reversible-lane-gate-mode-unknown"
 	default:

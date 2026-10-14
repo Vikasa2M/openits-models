@@ -33,24 +33,26 @@ module openits-reversible-lane-types {
 
   openits-types:openits-version "0.6.0";
 
-  revision 2026-10-14 {
+  revision 2026-10-15 {
     description
-      "Add a device-local gate-id typedef, warning and barrier
-       gate-type identities, and a gate-position enumeration that
-       includes intermediate. Add the gate-status grouping shared by
-       per-gate live state and gate-status-changed: position,
-       operating-mode, control-source, and open and close inhibits.
-       Add per-gate operating modes offline, automatic, manual,
-       manual-non-interlocked, and unknown. Split the former
-       reversible-lane-fault-gate leaf into a gate-scope class with
-       failed-to-close, failed-to-open, emergency-stop,
-       command-refused, invalid-inputs, obstruction, drive-fault, and
-       feedback-loss. Add rl-gate-status-changed under
+      "Add per-gate status. Add a device-local gate-id typedef, the
+       gate-type identities warning, barrier and gate-type-unknown, and
+       a gate-position enumeration that includes intermediate. Add the
+       gate-status grouping shared by per-gate live state and
+       gate-status-changed: position, operating-mode, control-source,
+       interlock-bypassed, and open and close inhibits. Add per-gate
+       operating modes offline, automatic, manual and unknown; interlock
+       bypass is the separate interlock-bypassed leaf, not a mode.
+       Split the former reversible-lane-fault-gate leaf into a
+       gate-scope class with failed-to-close, failed-to-open,
+       emergency-stop, obstruction, drive-fault and feedback-loss. Add
+       the rl-component-gate component class: a gate fault names its
+       gate through the shared fault entry's component, not inside
+       fault-id. Add rl-gate-status-changed under
        rl-gate-status-change-event-kind. gate-agreement is evaluated
-       against gates/gate/state.";
+       against gates/gate/state and each gate's controls-entry-for.";
     reference
-      "RFC 7950 section 11; ARC-IT 9.1 Service Package TM16
-       (Reversible Lane Management).";
+      "RFC 7950 §11.";
   }
 
   revision 2026-09-08 {
@@ -184,6 +186,14 @@ module openits-reversible-lane-types {
       "A barrier gate. When closed it is deployed across the travel
        way.";
   }
+  identity gate-type-unknown {
+    base gate-type;
+    description
+      "The gate type was reported but could not be classified as
+       warning or barrier, for example a gate labeled with a bare kind
+       that carries no warning/barrier distinction. A gate type that
+       was not reported is left absent.";
+  }
 
   typedef gate-position {
     type enumeration {
@@ -204,7 +214,9 @@ module openits-reversible-lane-types {
         value 2;
         description
           "At the closed rest position: deployed across the travel
-           way, which prevents flow.";
+           way, closing the entry. A barrier gate prevents flow; a
+           warning gate closes the entry without physically preventing
+           flow.";
       }
       enum opening {
         value 3;
@@ -242,8 +254,8 @@ module openits-reversible-lane-types {
        Orthogonal to operating mode. Reported per gate in
        gates/gate/state and on
        openits-reversible-lane-events:gate-status-changed. The per-lane
-       openits-reversible-lane:gate-state leaf is a coarse rollup only
-       and must not disagree with this typedef.";
+       openits-reversible-lane:gate-state leaf is a coarse rollup
+       only.";
     reference
       "ARC-IT 9.1 Service Package TM16 (Reversible Lane Management).";
   }
@@ -296,19 +308,23 @@ module openits-reversible-lane-types {
       "Gate-scope fault class: a fault attributable to one specific
        warning or barrier gate rather than to the facility. Consumers
        select every gate fault with
-       derived-from-or-self(category, 'reversible-lane-fault-gate').
+       derived-from-or-self(kind, 'reversible-lane-fault-gate').
        Producers that emitted the former leaf identity
        reversible-lane-fault-gate for a gate that failed to move
        should now emit reversible-lane-fault-gate-failed-to-open or
        reversible-lane-fault-gate-failed-to-close.
 
-       The shared fault event has no sub-component field, so a
-       gate-scope fault names its gate inside fault-id per
-       openits-types:fault-entry. Distinct simultaneous instances of
-       one condition take distinct fault-ids, stable across
-       raise and clear for the same gate. That is a string convention
-       pending structured sub-component addressing on the shared
-       fault event.";
+       A gate-scope fault names its gate through the shared fault
+       entry's component: component-class rl-component-gate and
+       component-id the gate's gate-id, both in the live fault
+       inventory and on fault-raised and fault-cleared.";
+  }
+  identity rl-component-gate {
+    base openits-types:component-class;
+    description
+      "One warning or barrier gate, as the sub-component a fault or
+       event names. Its component-id is the gate's gate-id, the key of
+       gates/gate in openits-reversible-lane.";
   }
   identity reversible-lane-fault-gate-failed-to-close {
     base reversible-lane-fault-gate;
@@ -330,24 +346,6 @@ module openits-reversible-lane-types {
     base reversible-lane-fault-gate;
     description
       "A gate-local emergency stop is active.";
-  }
-  identity reversible-lane-fault-gate-command-refused {
-    base reversible-lane-fault-gate;
-    description
-      "The controller refused a gate command. Raised when the
-       controller reports the refusal. Cleared when the controller's
-       refusal indication clears: on a latching controller, through
-       an explicit fault-clear action or when the condition ends.
-       This is not a command-acknowledgement channel. Distinct from
-       a communications loss, which is
-       reversible-lane-fault-plc-communication.";
-  }
-  identity reversible-lane-fault-gate-invalid-inputs {
-    base reversible-lane-fault-gate;
-    description
-      "The gate reports its command or control inputs as implausible
-       or mutually inconsistent. Position feedback that is absent or
-       implausible is feedback-loss, not this fault.";
   }
   identity reversible-lane-fault-gate-obstruction {
     base reversible-lane-fault-gate;
@@ -411,7 +409,9 @@ module openits-reversible-lane-types {
     base interlock-kind;
     description
       "Barrier-gate positions agree with the commanded facility state.
-       Evaluated against per-gate positions in gates/gate/state.";
+       Evaluated against per-gate positions in gates/gate/state: a gate
+       whose controls-entry-for names the direction being closed must
+       be closed.";
   }
   identity red-x-confirmed  { base interlock-kind; description "A steady red-X is confirmed on every lane facing the direction being closed."; }
   identity lockout-clear    { base interlock-kind; description "No manual lockout is engaged — the facility is not locally locked out of a changeover."; }
@@ -479,7 +479,6 @@ module openits-reversible-lane-types {
   }
   identity reversible-lane-gate-mode-offline {
     base reversible-lane-gate-mode;
-    base openits-types:mode-maintenance;
     description
       "The gate is not commandable. Whether it still protects the lane
        depends on position, which stays authoritative when it was
@@ -491,30 +490,22 @@ module openits-reversible-lane-types {
        at all leaves operating-mode absent instead, and the two MUST
        NOT be collapsed.
 
-       The second base (mode-maintenance) is for cross-service
-       maintenance filtering via derived-from-or-self. A gate reporting
-       this mode is out of service rather than necessarily under
-       servicing.";
+       Out of service, not necessarily under servicing, so this mode
+       does not derive from openits-types:mode-maintenance.";
   }
   identity reversible-lane-gate-mode-automatic {
     base reversible-lane-gate-mode;
-    description "The gate accepts automatic or scheduled commands.";
+    description
+      "The gate accepts commands from the automatic control path
+       without operator intervention. Which authority is issuing them
+       is carried by control-source, not by this mode.";
   }
   identity reversible-lane-gate-mode-manual {
     base reversible-lane-gate-mode;
     description
-      "Under manual operator control, with interlocks still enforced:
-       a commanded movement is refused while an interlock blocks it.
-       Who is driving the gate is carried by control-source, not by
-       this mode.";
-  }
-  identity reversible-lane-gate-mode-manual-non-interlocked {
-    base reversible-lane-gate-mode;
-    description
-      "Under manual operator control with interlock enforcement
-       bypassed: the gate moves even where an interlock would normally
-       block it. A consumer presenting gate state MUST annunciate
-       this mode.";
+      "Under manual operator control. Whether interlock enforcement is
+       bypassed is carried by interlock-bypassed, not by this mode, and
+       who is driving the gate is carried by control-source.";
   }
   identity reversible-lane-gate-mode-unknown {
     base reversible-lane-gate-mode;
@@ -532,8 +523,8 @@ module openits-reversible-lane-types {
   grouping gate-status {
     description
       "Live status of one gate: position, operating mode, who is
-       driving it, and whether an interlock currently prevents opening
-       or closing.
+       driving it, whether interlock enforcement is bypassed, and
+       whether an interlock currently prevents opening or closing.
 
        Shared by gates/gate/state and gate-status-changed so the two
        mirror each other leaf for leaf: an event consumer maintaining
@@ -569,6 +560,17 @@ module openits-reversible-lane-types {
         "Which authority is currently driving the gate. Absent means
          not known. Reuses openits-types:control-source; this service
          adds no control-source identity of its own.";
+    }
+    leaf interlock-bypassed {
+      type boolean;
+      description
+        "True when interlock enforcement is bypassed for this gate: the
+         gate moves even where an interlock would normally block it,
+         in whatever operating mode it is in (for example automatic
+         with a bypass key turned). False when interlocks are enforced.
+         Absent means not known. A consumer presenting gate state MUST
+         annunciate a gate whose interlock-bypassed is true. Orthogonal
+         to operating-mode and control-source.";
     }
     leaf open-inhibited {
       type boolean;

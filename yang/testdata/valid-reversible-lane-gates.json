@@ -19,12 +19,14 @@
             "gate-id": "WG-1",
             "gate-type": "openits-reversible-lane-types:gate-type-warning",
             "name": "Warning gate 1",
-            "segment-id": "seg-1"
+            "segment-id": "seg-1",
+            "controls-entry-for": "openits-types:direction-northbound"
           },
           "state": {
             "position": "open",
             "operating-mode": "openits-reversible-lane-types:reversible-lane-gate-mode-automatic",
             "control-source": "openits-types:control-central",
+            "interlock-bypassed": false,
             "open-inhibited": false,
             "close-inhibited": true,
             "measured-at": "2026-10-14T16:00:00Z"
@@ -34,7 +36,8 @@
           "gate-id": "BG-2",
           "config": {
             "gate-id": "BG-2",
-            "name": "Barrier gate 2"
+            "name": "Barrier gate 2",
+            "gate-type": "openits-reversible-lane-types:gate-type-unknown"
           },
           "state": {
             "position": "unknown",
@@ -50,10 +53,13 @@
       "fault": [
         {
           "fault-id": "f-bg-2-feedback",
-          "gate-id": "BG-2",
-          "category": "openits-reversible-lane-types:reversible-lane-fault-gate-feedback-loss",
+          "kind": "openits-reversible-lane-types:reversible-lane-fault-gate-feedback-loss",
           "severity": "critical",
-          "first-observed": "2026-10-14T15:55:00Z"
+          "first-observed": "2026-10-14T15:55:00Z",
+          "component": {
+            "component-class": "openits-reversible-lane-types:rl-component-gate",
+            "component-id": "BG-2"
+          }
         }
       ]
     }

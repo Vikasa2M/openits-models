@@ -15,16 +15,17 @@ message GateStatusChanged {
   optional string previous_operating_mode = 3;
   optional bool close_inhibited = 4;
   optional string control_source = 5;
-  optional string observed_by = 6;
-  google.protobuf.Timestamp occurred_at = 7;
-  optional bool open_inhibited = 8;
-  optional string operating_mode = 9;
-  optional string owner = 10;
-  GatePosition position = 11;
-  uint64 sequence = 12;
-  string sequence_epoch = 13;
+  optional bool interlock_bypassed = 6;
+  optional string observed_by = 7;
+  google.protobuf.Timestamp occurred_at = 8;
+  optional bool open_inhibited = 9;
+  optional string operating_mode = 10;
+  optional string owner = 11;
+  GatePosition position = 12;
+  uint64 sequence = 13;
+  string sequence_epoch = 14;
   openits.types.v1.WireSource source = 100;
-  string source_device_id = 14;
+  string source_device_id = 15;
 }
 
 message LaneStateChanged {

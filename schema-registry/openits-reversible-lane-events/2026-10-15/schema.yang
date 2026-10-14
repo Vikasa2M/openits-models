@@ -29,16 +29,16 @@ module openits-reversible-lane-events {
 
   openits-types:openits-version "0.7.0";
 
-  revision 2026-10-14 {
+  revision 2026-10-15 {
     description
       "Add gate-status-changed. One gate per event. kind is
        constrained to rl-gate-status-change-event-kind. The payload
-       uses the shared gate-status grouping, plus optional
-       previous-position and previous-operating-mode, and carries
-       wire-source. An emitter may re-report an unchanged condition.";
+       uses the shared gate-status grouping (including
+       interlock-bypassed), plus optional previous-position and
+       previous-operating-mode, and carries wire-source. An emitter
+       MAY re-report an unchanged condition.";
     reference
-      "RFC 7950 section 11; ARC-IT 9.1 Service Package TM16
-       (Reversible Lane Management).";
+      "RFC 7950 §11.";
   }
   revision 2026-10-13 {
     description

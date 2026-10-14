@@ -8,7 +8,8 @@
     "gate-id": "BG-2",
     "position": "closed",
     "previous-position": "open",
-    "operating-mode": "openits-reversible-lane-types:reversible-lane-gate-mode-manual-non-interlocked",
+    "operating-mode": "openits-reversible-lane-types:reversible-lane-gate-mode-manual",
+    "interlock-bypassed": true,
     "previous-operating-mode": "openits-reversible-lane-types:reversible-lane-gate-mode-automatic",
     "control-source": "openits-types:control-manual"
   }
