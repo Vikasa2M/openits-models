@@ -37,7 +37,7 @@ module openits-cctv {
 
   revision 2026-10-16 {
     description
-      "Report health on the root state (shared device-health: oper-status, last-change, observed-at). State that the existing operational-status is family-specific and not interchangeable with oper-status. Additive.";
+      "Report health on the root state (shared device-health: oper-status, last-change, observed-at). State that the existing operational-status is family-specific and not interchangeable with oper-status. State that operational-status offline is reachability while oper-status keeps its last value when the camera is unreachable. Additive.";
     reference "RFC 7950 §7.12.";
   }
   revision 2026-10-14 {
@@ -119,7 +119,10 @@ module openits-cctv {
            position-feedback fault is active while the camera still reports.
            Family-specific status kept until the CCTV cut reconciles it
            with the cross-service oper-status. They are not
-           interchangeable: oper-status uses the shared vocabulary.";
+           interchangeable: oper-status uses the shared vocabulary.
+           Its offline value is reachability; oper-status excludes
+           reachability and keeps its last value while the camera is
+           unreachable.";
       }
     }
 

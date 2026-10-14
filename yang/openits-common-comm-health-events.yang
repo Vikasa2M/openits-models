@@ -40,7 +40,9 @@ module openits-common-comm-health-events {
        comm-lost event (openits-types:mandatory-for-kind); observed-by
        comes from the event-header grouping, where it stays optional for
        other kinds. The comm-lost identity description now states the
-       normative staleness rule. Breaking: comm-lost producers must emit
+       normative staleness rule, including the testable exit condition
+       (a reading is current only when its observed-at is later than
+       last-contact). Breaking: comm-lost producers must emit
        last-contact and observed-by.";
     reference "RFC 7950 §7.19.";
   }
@@ -147,8 +149,11 @@ module openits-common-comm-health-events {
 
        STALENESS RULE (normative): after comm-lost, all live state held
        for that source-device-id is stale as of last-contact -- the last
-       time the observer heard from the device -- until a comm-restored
-       event and a resync. Consumers MUST NOT present that state as
+       time the observer heard from the device. A reading of that device
+       is current again only when its observed-at is later than the
+       last-contact of the comm-lost (normally after comm-restored);
+       readings from another observer with a later observed-at are
+       current. Consumers MUST NOT present that state as
        current, and MUST NOT treat a retained oper-status as the device's
        present condition. A comm-lost event MUST carry last-contact and
        observed-by (the poller that detected the loss).";

@@ -230,9 +230,10 @@ The foundation module `openits-types` defines the shared vocabulary for
   a healthy device from the absence of the leaf. It is operational condition
   only; reachability belongs to comm-health and administrative state to
   configuration or a maintenance mode.
-- **Freshness.** Every `config false` observation carries one timestamp,
-  `observed-at`, of when it was read. The older names `measured-at`,
-  `collected-at`, `last-update` and `computed-at` no longer exist. A consumer
+- **Freshness.** Where an observation carries a read timestamp it is named
+  `observed-at`; adding one to containers without a timestamp lands in the
+  family cuts. The older names `measured-at`, `collected-at`, `last-update`
+  and `computed-at` no longer exist. A consumer
   compares `observed-at` with the reporting cadence, and with the comm-loss
   rule below, to judge whether a reading is current.
 - **Status summary.** The `device-status-summary` grouping is the shared
@@ -258,8 +259,11 @@ The foundation module `openits-types` defines the shared vocabulary for
 
 Live state is only as current as the device's last contact. After a
 `comm-lost` event, all live state held for that `source-device-id` is stale
-as of the event's `last-contact` until a `comm-restored` event and a resync;
-consumers MUST NOT present it as current. A `comm-lost` event therefore
+as of the event's `last-contact`; consumers MUST NOT present it as current.
+A reading of that device is current again only when its `observed-at` is
+later than the `last-contact` of the comm-lost (normally after
+`comm-restored`); readings from another observer with a later `observed-at`
+are current. A `comm-lost` event therefore
 MUST carry `last-contact` (the last time the observer heard from the device)
 and `observed-by` (the poller that detected the loss): the unreachable device
 cannot report its own silence. The requirement is declared in the schema with
