@@ -196,6 +196,13 @@ func TestFixture_CanonicalUnknownOutsideFamilyFails(t *testing.T) {
 	wantViolation(t, vs, "mode openits-types:mode-unknown does not derive from test-fam-a:a-mode")
 }
 
+func TestFixture_AbstractBaseAsValueFails(t *testing.T) {
+	vs := checkOne(t, "test-fam-a:a-mode-event-kind", "test-fam-a:a-mode", "test-fam-a:a-on")
+	wantViolation(t, vs, "previous-mode test-fam-a:a-mode is the abstract")
+	vs = checkOne(t, "test-fam-a:a-mode-event-kind", "", "test-fam-a:a-mode")
+	wantViolation(t, vs, "mode test-fam-a:a-mode is the abstract")
+}
+
 func TestFixture_UnknownValueFails(t *testing.T) {
 	wantViolation(t, checkOne(t, "test-fam-a:a-mode-event-kind", "", "test-fam-a:a-nope"), "unknown identity")
 }
@@ -262,6 +269,17 @@ func TestRun_InvalidFixtureThatPassesFails(t *testing.T) {
 	modeFixture(t, inv, "invalid-mode-changed-own.json", "test-fam-a:a-mode-event-kind", "", "test-fam-a:a-on")
 	if _, err := runDirs(t, fx, inv); err == nil || !strings.Contains(err.Error(), "invalid-mode-changed-own.json passes") {
 		t.Fatalf("passing invalid fixture not reported: %v", err)
+	}
+}
+
+func TestRun_InvalidFixtureNotModeChangedFails(t *testing.T) {
+	fx, inv := t.TempDir(), t.TempDir()
+	p := filepath.Join(inv, "invalid-other.json")
+	if err := os.WriteFile(p, []byte(`{"x:fault-raised": {"kind": "test-fam-b:b-on"}}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := runDirs(t, fx, inv); err == nil || !strings.Contains(err.Error(), "invalid-other.json is not a mode-changed fixture") {
+		t.Fatalf("non-mode-changed invalid fixture not reported: %v", err)
 	}
 }
 

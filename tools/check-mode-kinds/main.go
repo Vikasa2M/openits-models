@@ -13,7 +13,8 @@
 //	    else; and every allowlist entry is still needed.
 //	(b) every <fixtures>/valid-*.json whose top-level element is a
 //	    mode-changed carries a mode (and, if present, a previous-mode) that
-//	    derives from, or is, the base its kind names.
+//	    strictly derives from the base its kind names (the abstract base
+//	    itself is not a value).
 //	(c) every <invalid>/invalid-*.json is a mode-changed fixture that FAILS
 //	    rule (b). These fixtures are schema-valid, so they live outside the
 //	    directory yanglint scans and this gate is what rejects them.
@@ -361,6 +362,8 @@ func (s *Schema) CheckFixture(path string) (applies bool, vs []string, err error
 			vs = append(vs, fmt.Sprintf("%s %q has no module prefix", name, val))
 		case s.ids[val] == nil:
 			vs = append(vs, fmt.Sprintf("%s %s is an unknown identity", name, val))
+		case val == base:
+			vs = append(vs, fmt.Sprintf("%s %s is the abstract %s of kind %s, not a mode value derived from it", name, val, extDisplay, kind))
 		case !s.DerivedFromOrSelf(val, base):
 			vs = append(vs, fmt.Sprintf("%s %s does not derive from %s (the %s of kind %s)", name, val, base, extDisplay, kind))
 		}

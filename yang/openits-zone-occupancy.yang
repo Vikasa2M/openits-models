@@ -44,7 +44,7 @@ module openits-zone-occupancy {
 
   revision 2026-10-16 {
     description
-      "Rename the zone reading's timestamp measured-at to observed-at, the one freshness name across the model. Breaking: consumers must read observed-at.";
+      "Rename the zone reading's timestamp measured-at to observed-at, the one freshness name across the model, and describe it once as the time the reading was taken. Breaking: consumers must read observed-at.";
     reference "RFC 7950 §7.6.";
   }
   revision 2026-09-05 {
@@ -197,7 +197,7 @@ module openits-zone-occupancy {
           leaf observed-at {
             type yang:date-and-time;
             description
-              "The time of this reading. When this reading was taken. A consumer compares it
+              "The time of this reading: when it was taken. A consumer compares it
                against the device's reporting cadence to decide whether
                the reading is still current, rather than assuming
                anything it received is fresh.";

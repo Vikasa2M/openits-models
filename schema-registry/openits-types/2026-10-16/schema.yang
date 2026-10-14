@@ -24,8 +24,8 @@ module openits-types {
     description
       "Add the oper-status typedef, the device-health and
        device-status-summary groupings, the canonical mode-unknown and
-       control-unknown identities, and the mode-value-base and
-       mandatory-for-kind extensions; clarify control-schedule versus
+       control-unknown identities, and the mode-value-base (values derive
+       strictly from the named base) and mandatory-for-kind extensions; clarify control-schedule versus
        control-local-backup. Additive.";
     reference "RFC 7950 §7.19.";
   }
@@ -387,8 +387,8 @@ module openits-types {
        notification). The argument names the identity, as
        '<prefix>:<identity-name>', that every previous-mode and mode
        value carried by a mode-changed notification of that kind MUST
-       derive from (or equal). It binds the family's kind to its own
-       mode vocabulary, so a signal-control kind cannot carry a DMS
+       derive from (strictly: the base itself is not a value). It binds
+       the family's kind to its own mode vocabulary, so a signal-control kind cannot carry a DMS
        mode value. Tooling and conformance checks enforce it; the
        YANG type system alone cannot, because mode is a single
        identityref based on operational-mode.";

@@ -2347,11 +2347,6 @@
         "openits-reversible-lane/2026-10-15/MANIFEST.json",
         "openits-reversible-lane/2026-10-15/README.md",
         "openits-reversible-lane/2026-10-15/schema.yang"
-      ],
-      "2026-10-16": [
-        "openits-reversible-lane/2026-10-16/MANIFEST.json",
-        "openits-reversible-lane/2026-10-16/README.md",
-        "openits-reversible-lane/2026-10-16/schema.yang"
       ]
     },
     "openits-reversible-lane-events": {
@@ -2948,11 +2943,6 @@
         "openits-types/2026-10-14/MANIFEST.json",
         "openits-types/2026-10-14/README.md",
         "openits-types/2026-10-14/schema.yang"
-      ],
-      "2026-10-16": [
-        "openits-types/2026-10-16/MANIFEST.json",
-        "openits-types/2026-10-16/README.md",
-        "openits-types/2026-10-16/schema.yang"
       ]
     },
     "openits-v2x-messaging": {
@@ -3153,11 +3143,6 @@
         "openits-zone-occupancy/2026-09-05/MANIFEST.json",
         "openits-zone-occupancy/2026-09-05/README.md",
         "openits-zone-occupancy/2026-09-05/schema.yang"
-      ],
-      "2026-10-16": [
-        "openits-zone-occupancy/2026-10-16/MANIFEST.json",
-        "openits-zone-occupancy/2026-10-16/README.md",
-        "openits-zone-occupancy/2026-10-16/schema.yang"
       ]
     },
     "openits-zone-occupancy-events": {

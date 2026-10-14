@@ -77,7 +77,7 @@ module openits-reversible-lane {
 
   revision 2026-10-16 {
     description
-      "Report health on the root state (shared device-health: oper-status, last-change, observed-at) and rename the gate state timestamp measured-at to observed-at. Breaking: consumers must read observed-at.";
+      "Report health on the root state (shared device-health: oper-status, last-change, observed-at) and rename the gate state timestamp measured-at to observed-at, described once as the time the reading was taken. Breaking: consumers must read observed-at.";
     reference "RFC 7950 §7.12.";
   }
   revision 2026-10-15 {
@@ -667,7 +667,7 @@ module openits-reversible-lane {
           leaf observed-at {
             type yang:date-and-time;
             description
-              "The time of this reading. When this reading was taken. A consumer compares it
+              "The time of this reading: when it was taken. A consumer compares it
                against the device's reporting cadence to decide
                whether the reading is still current. A missing or
                stale reading must not be read as a healthy gate.";
