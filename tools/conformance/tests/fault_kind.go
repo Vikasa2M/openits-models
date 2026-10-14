@@ -2,9 +2,6 @@ package tests
 
 import (
 	"strings"
-	"sync"
-
-	yangpkg "github.com/Vikasa2M/openits-models/pkg/yang/openits"
 )
 
 // faultEnumByService maps a subject's service token to the generated enum
@@ -21,30 +18,6 @@ var faultEnumByService = map[string]string{
 	"reversible-lane": "E_OpenitsReversibleLaneTypes_ReversibleLaneFaultEventKind",
 	"perception":      "E_OpenitsPerceptionTypes_PerceptionFaultEventKind",
 	"cctv":            "E_OpenitsCctvTypes_CctvFaultEventKind",
-}
-
-var (
-	knownModulesOnce sync.Once
-	knownModules     map[string]bool
-)
-
-// generatedModules is the set of modules that define at least one
-// identity or enum in the generated schema. A kind from an openits-*
-// module outside this set is reported as an unknown module (a typo),
-// except openits-vendor-* modules, which are not generator inputs and are
-// skipped.
-func generatedModules() map[string]bool {
-	knownModulesOnce.Do(func() {
-		knownModules = map[string]bool{}
-		for _, defs := range yangpkg.ΛEnum {
-			for _, d := range defs {
-				if d.DefiningModule != "" {
-					knownModules[d.DefiningModule] = true
-				}
-			}
-		}
-	})
-	return knownModules
 }
 
 // TestFault_KindMatchesService checks that the kind carried by a
@@ -79,31 +52,18 @@ func TestFault_KindMatchesService(t *T, obs *Observation) {
 			continue
 		}
 		kind := m.Get(kf).String()
-		if kind == "" {
+		module, name, st := classifyIdentity(kind)
+		switch st {
+		case identityEmpty:
 			t.Errorf("%s on a %s subject has no kind", last, service)
-			continue
-		}
-		module, name, found := strings.Cut(kind, ":")
-		if !found {
+		case identityNoPrefix:
 			t.Errorf("%s on a %s subject has kind %q without a module prefix", last, service, kind)
-			continue
-		}
-		if !strings.HasPrefix(module, "openits-") || strings.HasPrefix(module, "openits-vendor-") {
-			continue
-		}
-		if !generatedModules()[module] {
+		case identityUnknownModule:
 			t.Errorf("%s on a %s subject has kind %q from unknown module %q", last, service, kind, module)
-			continue
-		}
-		member := false
-		for _, d := range yangpkg.ΛEnum[enum] {
-			if d.Name == name && d.DefiningModule == module {
-				member = true
-				break
+		case identityChecked:
+			if !enumHas(enum, module, name) {
+				t.Errorf("%s on a %s subject has kind %q, which is not a %s fault", last, service, kind, service)
 			}
-		}
-		if !member {
-			t.Errorf("%s on a %s subject has kind %q, which is not a %s fault", last, service, kind, service)
 		}
 	}
 }

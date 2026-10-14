@@ -20,8 +20,14 @@ module openits-cctv-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.3.1";
+  openits-types:openits-version "0.3.2";
 
+  revision 2026-10-16 {
+    description
+      "Say why cctv-mode-event-kind carries no
+       openits-types:mode-value-base. Wire-neutral.";
+    reference "RFC 7950 §11.";
+  }
   revision 2026-10-14 {
     description
       "Update descriptions that named the fault inventory's category leaf,
@@ -75,14 +81,19 @@ module openits-cctv-types {
     base cctv-event-kind;
     description
       "Base for CCTV mode-change kinds carried on the shared mode-changed
-       notification — e.g. a control-ownership / local-override transition.";
+       notification — e.g. a control-ownership / local-override transition.
+       It carries no openits-types:mode-value-base: CCTV mode values
+       (cctv-control-mode) are not operational-mode identities, so no
+       mode-changed value can be bound to this kind yet. Reconciled in the
+       CCTV cut.";
   }
 
   /* ---------------------------------------------------------------------
    * Control-ownership mode (NTCIP 1205 control-mode axis). Commanded in
    * control/config and read back in control/state; a physical local override
-   * at the pole shows up as config<->state divergence and rides the shared
-   * mode-changed notification.
+   * at the pole shows up as config<->state divergence. These values are not
+   * operational-mode identities, so they cannot yet ride the shared
+   * mode-changed notification (see cctv-mode-event-kind).
    * ------------------------------------------------------------------- */
   identity cctv-control-mode {
     description "Base for CCTV control-ownership modes (NTCIP 1205).";

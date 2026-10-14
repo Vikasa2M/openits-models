@@ -629,8 +629,8 @@ func subscribeDMS(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VAB",
 			CETime:   time.Now().UTC(),
 			Data: &commonv1.ModeChanged{
-				PreviousMode: proto.String("blank"),
-				Mode:         "normal",
+				PreviousMode: proto.String("openits-dms-types:mode-blank"),
+				Mode:         "openits-dms-types:mode-normal",
 				Kind:         "openits-dms-types:dms-mode-event-kind",
 			},
 		},
@@ -1263,8 +1263,8 @@ func subscribeRM(ctx context.Context, out chan<- tests.EventEnvelope, window tim
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VDA",
 			CETime:   time.Now().UTC(),
 			Data: &commonv1.ModeChanged{
-				PreviousMode: proto.String("on-standby"),
-				Mode:         "active",
+				PreviousMode: proto.String("openits-ramp-metering-types:mode-on-standby"),
+				Mode:         "openits-ramp-metering-types:mode-active",
 				Reason:       proto.String("schedule"),
 				Kind:         "openits-ramp-metering-types:ramp-meter-mode-event-kind",
 			},

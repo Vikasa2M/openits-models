@@ -4,6 +4,9 @@
 # offending path. A notification missing a mandatory leaf: "MISSING <leaf>".
 # Deviation-tier fixtures (invalid-*-under-*.json) are checked by
 # make check-deviations instead and are not listed here.
+# Schema-valid mode-changed fixtures whose values lie outside their kind's
+# mode-value-base live in mode-kinds/ (not scanned here) and are rejected by
+# make check-mode-kinds instead.
 invalid-barrier-out-of-range.json	Unsatisfied range - value "5" is out of the allowed range. (Data location "/openits-signal-control:signal-controller/phases/phase[phase-number='2']/config/barrier"
 invalid-cctv-recall-unknown-preset.json	Invalid leafref value "9" - no target instance "../preset/preset-id" with the same value. (Data location "/openits-cctv:camera/ptz/presets/recall"
 invalid-cctv-velocity-out-of-range.json	Value "150" is out of type int8 min/max bounds. (Data location "/openits-cctv:camera/ptz/config/velocity/pan-speed"

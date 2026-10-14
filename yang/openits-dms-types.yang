@@ -31,8 +31,18 @@ module openits-dms-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.9.0";
+  openits-types:openits-version "0.10.0";
 
+  revision 2026-10-16 {
+    description
+      "Bind dms-mode-event-kind to sign-mode with
+       openits-types:mode-value-base, so a mode-changed of this kind
+       carries only sign-mode values; who is driving the sign
+       (dms-control-mode) is read from control/state/control-mode.
+       mode-unknown gains a second base, the canonical
+       openits-types:mode-unknown. Additive.";
+    reference "RFC 7950 §7.19.";
+  }
   revision 2026-10-14 {
     description
       "Add the DMS forms of the four cabinet-power faults
@@ -263,14 +273,14 @@ module openits-dms-types {
   identity dms-mode-event-kind {
     base openits-types:mode-event-kind;
     base dms-event-kind;
+    openits-types:mode-value-base "openits-dms-types:sign-mode";
     description
-      "DMS mode transitions — spans both dms-control-mode (who is
-       driving: local / external / central / central-override /
-       simulation / other) and the sign-mode display-state (off /
-       blank / test / normal). The mode-changed notification's
-       previous-mode/mode strings are interpreted in this mode-space.
-       (central and simulation are dms-control-mode values, not
-       sign-mode.)";
+      "DMS mode transitions on the sign-mode display-state axis (off /
+       blank / test / normal). The previous-mode and mode of a
+       mode-changed of this kind derive from sign-mode. Who is driving
+       the sign (dms-control-mode: local / external / central /
+       central-override / simulation / other) is not carried here; it is
+       read from control/state/control-mode.";
     reference "NTCIP 1203:2010 (dmsControlMode).";
   }
 
@@ -533,7 +543,11 @@ module openits-dms-types {
   }
   identity mode-unknown {
     base sign-mode;
-    description "Operating mode is unknown or not reported.";
+    base openits-types:mode-unknown;
+    description
+      "Operating mode is unknown or not reported. Also derives from the
+       canonical openits-types:mode-unknown, so a cross-service filter on
+       that identity finds it.";
   }
   identity mode-off {
     base sign-mode;

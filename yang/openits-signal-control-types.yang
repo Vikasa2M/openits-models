@@ -29,8 +29,15 @@ module openits-signal-control-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.16.0";
+  openits-types:openits-version "0.17.0";
 
+  revision 2026-10-16 {
+    description
+      "Bind sc-mode-event-kind to controller-mode with
+       openits-types:mode-value-base, so a mode-changed of this kind
+       carries only controller-mode values. Additive.";
+    reference "RFC 7950 §7.19.";
+  }
   revision 2026-10-14 {
     description
       "Add the signal-control forms of the four cabinet-power faults
@@ -520,7 +527,10 @@ module openits-signal-control-types {
   identity sc-mode-event-kind {
     base openits-types:mode-event-kind;
     base signal-control-event-kind;
-    description "Signal-control operational-mode transitions.";
+    openits-types:mode-value-base "openits-sc-types:controller-mode";
+    description
+      "Signal-control operational-mode transitions. The previous-mode and
+       mode of a mode-changed of this kind derive from controller-mode.";
   }
 
   identity sc-comm-health-event-kind {

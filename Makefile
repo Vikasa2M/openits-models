@@ -14,7 +14,7 @@ YANG_GO_OUT := pkg/yang
 
 .PHONY: all ci gen check-gen yang-proto-gen proto yang yang-go validate-yang \
 	check-revisions check-naming check-enum-values check-inline-enums validate-noi check-graduation \
-	check-augment-collisions check-deviations check-events-layering check-conventions check-revision-history proto-lint proto-breaking yang-lint \
+	check-augment-collisions check-deviations check-events-layering check-conventions check-mode-kinds check-revision-history proto-lint proto-breaking yang-lint \
 	vet test conformance fmt tidy build-tools \
 	asyncapi asyncapi-check catalog catalog-check
 
@@ -71,7 +71,7 @@ gen: yang-proto-gen proto yang-go asyncapi catalog
 ci: check-gen build-tools vet test \
 	validate-yang yang-lint check-revisions check-naming \
 	check-enum-values check-inline-enums check-deviations \
-	check-augment-collisions check-events-layering check-conventions check-revision-history check-ce-id-vectors \
+	check-augment-collisions check-events-layering check-conventions check-mode-kinds check-revision-history check-ce-id-vectors \
 	validate-noi check-graduation \
 	proto-lint conformance proto-breaking
 
@@ -169,6 +169,13 @@ check-events-layering:
 
 check-conventions:
 	$(GOCMD) run ./tools/check-conventions -yang yang -exceptions conventions-exceptions.yaml
+
+# Each family's mode-event-kind names its mode-value base
+# (openits-types:mode-value-base); every valid mode-changed fixture's values
+# derive from it, and every fixture in yang/testdata/mode-kinds/ (schema-valid,
+# so yanglint cannot reject it) must fail that check.
+check-mode-kinds:
+	$(GOCMD) run ./tools/check-mode-kinds -yang yang -fixtures yang/testdata -invalid yang/testdata/mode-kinds
 
 # Fail if a revision statement that exists on the base branch was edited or
 # removed (revisions and their registry snapshots are immutable once shipped).

@@ -1,0 +1,14 @@
+{
+  "openits-common-mode-events:mode-changed": {
+    "kind": "openits-signal-control-types:sc-mode-event-kind",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence-epoch": "boot-2026-10-13a",
+    "sequence": "2",
+    "previous-mode": "openits-signal-control-types:mode-coordinated",
+    "mode": "openits-dms-types:mode-blank",
+    "reason": "operator-command",
+    "control-source": "openits-types:control-central",
+    "trigger": "openits-types:trigger-operator",
+    "occurred-at": "2026-07-11T14:10:00Z"
+  }
+}

@@ -141,6 +141,7 @@ jobs:
       - run: make check-augment-collisions
       - run: make check-events-layering
       - run: make check-conventions
+      - run: make check-mode-kinds
       - name: check-conventions exceptions only shrink (vs base branch)
         if: github.event_name == 'pull_request'
         env:

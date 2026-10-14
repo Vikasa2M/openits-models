@@ -1,0 +1,16 @@
+module test-fam-b {
+  yang-version 1.1;
+  namespace "urn:test:fam-b";
+  prefix fb;
+
+  import openits-types { prefix ot; }
+
+  identity b-mode-event-kind {
+    base ot:mode-event-kind;
+    ot:mode-value-base "b-mode";
+  }
+  identity b-mode {
+    base ot:operational-mode;
+  }
+  identity b-on { base b-mode; }
+}

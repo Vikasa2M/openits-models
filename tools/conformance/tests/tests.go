@@ -110,6 +110,7 @@ func All(kind string) []TestCase {
 		{"TestCEID_Present", TestCEID_Present},
 		{"TestEvent_SequenceContiguousWithinEpoch", TestEvent_SequenceContiguousWithinEpoch},
 		{"TestFault_KindMatchesService", TestFault_KindMatchesService},
+		{"TestMode_ValueMatchesKind", TestMode_ValueMatchesKind},
 
 		// YANG validation — ygot struct must parse whatever the driver
 		// collected for the device under test
