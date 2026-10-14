@@ -13,7 +13,7 @@ Run the full gate with the targets below; `make all` covers most of it.
 | go-test | `go build ./... && go vet ./... && go test ./...` | tools + generated Go compile and pass tests |
 | check-gen | `make check-gen` | committed generated artifacts match a fresh regen |
 | buf | `buf lint` + `buf breaking --against .git#ref=<main-sha>` | proto style + no wire-breaking change vs main |
-| yang-checks | `make check-revisions check-naming check-enum-values check-deviations check-augment-collisions check-events-layering validate-noi check-graduation` | governance: revisions, naming, enum values, layering, deviations |
+| yang-checks | `make check-revisions check-naming check-enum-values check-deviations check-augment-collisions check-events-layering check-conventions check-revision-history validate-noi check-graduation` | governance: revisions, naming, enum values, layering, deviations |
 | validate-yang | `make validate-yang` | every fixture in `yang/testdata/` gets its expected verdict from yanglint |
 | yang-lint | `make yang-lint` | pyang --strict structural lint |
 | conformance (×9) | `go run ./tools/conformance -driver mock -kind <kind>` | mock device satisfies the per-kind behavioral checks |
@@ -64,6 +64,12 @@ names the offending string.
 core module. Events may import only `openits-types`, `ietf-yang-types`,
 `openits-nema-common`, and `*-types` modules — move the shared
 typedef/grouping into the service's `-types` module instead.
+
+**check-revision-history fails.** A revision statement that already exists
+on main was edited or removed. The output names each module and revision
+date. Restore that revision block verbatim (`git show origin/main:<file>`)
+and describe the new change in a new revision instead. The usual cause is a
+description sweep that also rewrote old revision text.
 
 **check-revisions fails.** Duplicate same-date revision statements or a
 module changed without a new revision. One revision per change set.
