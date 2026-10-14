@@ -6,6 +6,9 @@ module openits-signal-control-types {
   import openits-types {
     prefix openits-types;
   }
+  import openits-cabinet-power {
+    prefix openits-cabinet-power;
+  }
 
   organization
     "OpenITS Working Group (proposal)";
@@ -26,8 +29,17 @@ module openits-signal-control-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.15.0";
+  openits-types:openits-version "0.16.0";
 
+  revision 2026-10-14 {
+    description
+      "Add the signal-control forms of the four cabinet-power faults
+       (on-battery, low-battery, charger-fault, door-open), each derived
+       from this service's fault base and from the cabinet-power
+       identity, so a cabinet-power fault can sit in this service's
+       fault inventory. Additive.";
+    reference "RFC 7950 §7.18.2.";
+  }
   revision 2026-10-12 {
     description
       "Let detector and monitor faults be raised as what they are, and
@@ -1068,6 +1080,43 @@ module openits-signal-control-types {
     base sc-fault-event-kind;
     description "Cabinet-environment or hardware fault (door, temperature, fan).";
   }
+  identity sc-fault-cabinet-on-battery {
+    base sc-fault-power;
+    base openits-cabinet-power:cabinet-power-on-battery;
+    description
+      "The signal cabinet is running on battery backup. The
+       signal-control form of the cabinet-power fault, so it can sit in
+       this service's fault inventory; a fleet query on the cabinet-power
+       identity matches it.";
+  }
+  identity sc-fault-cabinet-low-battery {
+    base sc-fault-power;
+    base openits-cabinet-power:cabinet-power-low-battery;
+    description
+      "The signal cabinet's backup battery is low. The signal-control
+       form of the cabinet-power fault, so it can sit in this service's
+       fault inventory; a fleet query on the cabinet-power identity
+       matches it.";
+  }
+  identity sc-fault-cabinet-charger-fault {
+    base sc-fault-power;
+    base openits-cabinet-power:cabinet-power-charger-fault;
+    description
+      "The signal cabinet's battery charger reports a fault. The
+       signal-control form of the cabinet-power fault, so it can sit in
+       this service's fault inventory; a fleet query on the cabinet-
+       power identity matches it.";
+  }
+  identity sc-fault-cabinet-door-open {
+    base sc-fault-cabinet;
+    base openits-cabinet-power:cabinet-power-door-open;
+    description
+      "The signal cabinet door is open. The signal-control form of the
+       cabinet-power fault, so it can sit in this service's fault
+       inventory; a fleet query on the cabinet-power identity matches
+       it.";
+  }
+
   identity sc-fault-software {
     base sc-fault-event-kind;
     description "Controller software/firmware fault (watchdog reset, database error).";

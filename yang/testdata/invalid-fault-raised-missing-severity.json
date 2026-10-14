@@ -5,6 +5,7 @@
     "sequence-epoch": "boot-2026-10-13a",
     "fault-id": "dms014-lamp-0091",
     "description": "DMS sign lamp illumination fault detected during self-test.",
+    "first-observed": "2026-07-11T09:12:30Z",
     "occurred-at": "2026-07-11T09:12:33Z",
     "sequence": "1"
   }

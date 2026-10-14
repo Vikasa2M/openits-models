@@ -5,6 +5,7 @@
     "sequence": "7",
     "fault-id": "dms014-lamp-0091",
     "severity": "major",
+    "first-observed": "2026-10-13T09:12:30Z",
     "occurred-at": "2026-10-13T09:12:33Z"
   }
 }

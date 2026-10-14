@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package openits.common.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/common/v1;commonv1";
+
+import "google/protobuf/timestamp.proto";
+import "openits/common/v1/types.proto";
+import "openits/types/v1/types.proto";
+
+message CommHealthEvent {
+  string kind = 99;
+  optional int64 drift_milliseconds = 3;
+  optional uint32 attempts_total = 4;
+  optional uint32 attempts_failed = 5;
+  optional uint32 percent_loss = 6;
+  optional uint32 avg_response_ms = 7;
+  optional uint32 link_id = 8;
+  optional string link_type = 12;
+  optional string observed_by = 9;
+  google.protobuf.Timestamp occurred_at = 2;
+  optional string owner = 10;
+  uint64 sequence = 11;
+  string sequence_epoch = 13;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message FaultCleared {
+  string kind = 99;
+  string fault_id = 2;
+  google.protobuf.Timestamp first_observed = 8;
+  openits.types.v1.ComponentRef component = 9;
+  optional string observed_by = 4;
+  google.protobuf.Timestamp occurred_at = 3;
+  optional string owner = 5;
+  uint64 sequence = 6;
+  string sequence_epoch = 7;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message FaultRaised {
+  string kind = 99;
+  openits.types.v1.ComponentRef component = 11;
+  optional string correlates_with = 9;
+  optional string description = 4;
+  string fault_id = 2;
+  google.protobuf.Timestamp first_observed = 12;
+  optional string observed_by = 6;
+  google.protobuf.Timestamp occurred_at = 5;
+  optional string owner = 7;
+  uint64 sequence = 8;
+  string sequence_epoch = 10;
+  FaultSeverity severity = 3;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message ModeChanged {
+  reserved 2, 3;
+  reserved "prior", "current";
+  string kind = 99;
+  optional string previous_mode = 12;
+  string mode = 13;
+  optional string reason = 4;
+  optional string control_source = 9;
+  optional string trigger = 10;
+  optional string observed_by = 6;
+  google.protobuf.Timestamp occurred_at = 5;
+  optional string owner = 7;
+  uint64 sequence = 8;
+  string sequence_epoch = 11;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+

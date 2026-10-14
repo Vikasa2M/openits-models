@@ -419,7 +419,7 @@ container state {
 
 Where the config-false condition matters operationally, say so in the
 leaf or container `description` and name the notification or fault
-category that reports it (`fault-raised`, a specific
+kind that reports it (`fault-raised`, a specific
 `*-conflict-detected` event, etc.) instead of encoding it as a `must`.
 
 ### 1b. Leafrefs in config-false trees → `require-instance false`

@@ -20,7 +20,14 @@ module openits-cctv-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.3.0";
+  openits-types:openits-version "0.3.1";
+
+  revision 2026-10-14 {
+    description
+      "Update descriptions that named the fault inventory's category leaf,
+       now kind. Wire-neutral.";
+    reference "RFC 7950 §11.";
+  }
 
   revision 2026-07-21 {
     description
@@ -59,7 +66,7 @@ module openits-cctv-types {
     base openits-types:fault-event-kind;
     base cctv-event-kind;
     description
-      "Base for CCTV fault categories — the 'category' on the active-fault
+      "Base for CCTV fault categories — the 'kind' on the active-fault
        inventory and the 'kind' on the shared fault-raised / fault-cleared
        notifications.";
   }

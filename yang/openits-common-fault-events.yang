@@ -6,6 +6,9 @@ module openits-common-fault-events {
   import openits-types {
     prefix openits-types;
   }
+  import ietf-yang-types {
+    prefix yang;
+  }
 
   organization
     "OpenITS Working Group (proposal)";
@@ -28,8 +31,16 @@ module openits-common-fault-events {
      carried by openits-signal-control-events:controller-fault-
      event instead.";
 
-  openits-types:openits-version "0.3.0";
+  openits-types:openits-version "0.4.0";
 
+  revision 2026-10-14 {
+    description
+      "fault-raised composes the shared openits-types fault-entry, so it
+       carries first-observed and an optional component, and may be
+       re-emitted as an upsert. fault-cleared carries first-observed and
+       the component. Breaking: first-observed is mandatory on both.";
+    reference "RFC 7950 §7.13.";
+  }
   revision 2026-10-13 {
     description
       "Inherit the mandatory sequence-epoch leaf from the openits-types
@@ -119,7 +130,9 @@ module openits-common-fault-events {
       "Device -> Maintenance : fault data";
     description
       "A fault condition became active on a device. Subsequent
-       fault-cleared with the same fault-id announces resolution.";
+       fault-cleared with the same fault-id announces resolution. A
+       producer MAY re-emit fault-raised with the same fault-id as an
+       upsert, for a resync or a severity change.";
 
     leaf kind {
       type identityref { base openits-types:fault-event-kind; }
@@ -133,41 +146,13 @@ module openits-common-fault-events {
 
     uses openits-types:event-header;
 
-    leaf fault-id {
-      type string;
-      mandatory true;
-      description
-        "Device-local fault identifier, condition-scoped: stable across
-         raise/clear of the same fault condition on the same
-         source-device. The pair (source-device-id, fault-id) is unique
-         among a device's currently-active faults. Re-raising a condition
-         after it cleared reuses the same fault-id. If the same condition
-         has multiple simultaneous distinct instances, each gets a
-         distinct fault-id (e.g. a suffix). Consumers correlate/dedupe on
-         (source-device-id, fault-id).";
-    }
-
-    leaf severity {
-      type openits-types:fault-severity;
-      mandatory true;
-      description
-        "Severity of the fault condition. See the openits-types
-         fault-severity typedef for triage tiers and normative floors.
-         The mapping from decoder-family-specific severity bits to this
-         enum is decoder-controlled.";
-    }
-
-    leaf description {
-      type string;
-      description "Human-readable fault description.";
-    }
-
-    leaf correlates-with {
-      type string;
-      description
-        "Optional fault-id of another currently-active fault on the same
-         source-device this fault correlates with (see the
-         openits-types:fault-entry correlates-with contract).";
+    uses openits-types:fault-entry {
+      refine "fault-id" {
+        mandatory true;
+      }
+      refine "severity" {
+        mandatory true;
+      }
     }
 
     uses openits-types:wire-source;
@@ -191,7 +176,7 @@ module openits-common-fault-events {
     uses openits-types:event-header;
 
     leaf fault-id {
-      type string;
+      type openits-types:fault-id;
       mandatory true;
       description
         "Device-local fault identifier, condition-scoped: stable across
@@ -204,6 +189,16 @@ module openits-common-fault-events {
          (source-device-id, fault-id). Matches the corresponding
          fault-raised.";
     }
+
+    leaf first-observed {
+      type yang:date-and-time;
+      mandatory true;
+      description
+        "first-observed of the fault being cleared, so a consumer can
+         match the clear to the occurrence it ends.";
+    }
+
+    uses openits-types:component-ref;
 
     uses openits-types:wire-source;
   }

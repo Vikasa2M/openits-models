@@ -42,8 +42,16 @@ module openits-cabinet-power {
 
   reference "IEC 62040 (UPS); NEMA TS 2 (cabinet).";
 
-  openits-types:openits-version "0.2.0";
+  openits-types:openits-version "0.3.0";
 
+  revision 2026-10-14 {
+    description
+      "Describe the four fault identities as classification bases that
+       composing services derive from, and add the component-battery
+       component class, the sub-component a battery fault or event
+       names. Additive.";
+    reference "RFC 7950 §7.18.2.";
+  }
   revision 2026-08-23 {
     description
       "Add solar (4) and generator (5) to the power-source enumeration,
@@ -149,21 +157,45 @@ module openits-cabinet-power {
   }
   identity cabinet-power-on-battery {
     base cabinet-power-fault-event-kind;
-    description "The cabinet transferred to UPS battery (utility power lost).";
+    description
+      "The cabinet transferred to UPS battery (utility power lost).
+       A classification base: a service that composes cabinet-power
+       declares its own identity derived from this one, and that is
+       what its fault inventory and fault-raised carry.";
   }
   identity cabinet-power-low-battery {
     base cabinet-power-fault-event-kind;
     description
       "Battery state-of-charge / runtime crossed the low threshold while on
-       battery — imminent shutdown.";
+       battery — imminent shutdown.
+       A classification base: a service that composes cabinet-power
+       declares its own identity derived from this one, and that is
+       what its fault inventory and fault-raised carry.";
   }
   identity cabinet-power-charger-fault {
     base cabinet-power-fault-event-kind;
-    description "The battery charger faulted — the battery is not being maintained.";
+    description
+      "The battery charger faulted — the battery is not being
+       maintained.
+       A classification base: a service that composes cabinet-power
+       declares its own identity derived from this one, and that is
+       what its fault inventory and fault-raised carry.";
   }
   identity cabinet-power-door-open {
     base cabinet-power-fault-event-kind;
-    description "A cabinet or police-panel door opened.";
+    description
+      "A cabinet or police-panel door opened.
+       A classification base: a service that composes cabinet-power
+       declares its own identity derived from this one, and that is
+       what its fault inventory and fault-raised carry.";
+  }
+
+  identity component-battery {
+    base openits-types:component-class;
+    description
+      "The cabinet's backup battery, as the sub-component a fault or
+       event names. Its component-id is the battery position (for
+       example \"1\" for a single string).";
   }
 
   /* ---------------------------------------------------------------------

@@ -5,6 +5,7 @@
     "sequence-epoch": "boot-2026-10-13a",
     "sequence": "1",
     "fault-id": "dms014-lamp-0091",
+    "first-observed": "2026-07-11T10:47:02Z",
     "occurred-at": "2026-07-11T10:47:02Z"
   }
 }

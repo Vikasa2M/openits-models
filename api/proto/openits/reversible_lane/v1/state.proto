@@ -6,13 +6,13 @@ option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/revers
 
 import "google/protobuf/timestamp.proto";
 import "openits/reversible_lane/v1/types.proto";
+import "openits/types/v1/types.proto";
 
 message ReversibleLane {
   ReversibleLaneConfig config = 1;
   ReversibleLaneState state = 2;
   Control control = 3;
   Segments segments = 4;
-  Gates gates = 7;
   Interlocks interlocks = 5;
   Faults faults = 6;
 }
@@ -134,32 +134,6 @@ message LaneState {
   optional GateState gate_state = 7;
 }
 
-message Gates {
-  repeated Gate gate = 1;
-}
-
-message Gate {
-  optional string gate_id = 1;
-  GateConfig config = 2;
-  GateGateState state = 3;
-}
-
-message GateConfig {
-  optional string gate_id = 1;
-  optional string gate_type = 2;
-  optional string name = 3;
-  optional string segment_id = 4;
-}
-
-message GateGateState {
-  google.protobuf.Timestamp measured_at = 1;
-  optional bool close_inhibited = 2;
-  optional string control_source = 3;
-  optional bool open_inhibited = 4;
-  optional string operating_mode = 5;
-  optional GatePosition position = 6;
-}
-
 message Interlocks {
   repeated Interlock interlock = 2;
 }
@@ -187,8 +161,10 @@ message Faults {
 }
 
 message Fault {
-  optional string gate_id = 7;
-  optional string category = 1;
+  reserved 1;
+  reserved "category";
+  string kind = 99;
+  openits.types.v1.ComponentRef component = 7;
   optional string correlates_with = 6;
   optional string description = 2;
   optional string fault_id = 3;

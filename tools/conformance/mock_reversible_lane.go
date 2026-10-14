@@ -228,8 +228,10 @@ func subscribeReversibleLane(ctx context.Context, out chan<- tests.EventEnvelope
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VFD",
 			CETime:   time.Now().UTC(),
 			Data: &commonv1.FaultRaised{
-				FaultId: "f-rl-001",
-				Kind:    "openits-reversible-lane-types:reversible-lane-fault-interlock",
+				FirstObserved: timestamppb.New(time.Date(2026, 4, 19, 11, 45, 0, 0, time.UTC)),
+				FaultId:       "f-rl-001",
+				Kind:          "openits-reversible-lane-types:reversible-lane-fault-interlock",
+				Severity:      commonv1.FaultSeverity_FAULT_SEVERITY_MAJOR,
 			},
 		},
 		{

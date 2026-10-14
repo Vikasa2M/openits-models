@@ -440,7 +440,7 @@ JetStream-only with no SQL store at all.
    third backend is unnecessary.
 
 3. **OLAP queries don't fit streams.** "For each district, count
-   fault-raised events by category over the last 30 days" is a
+   fault-raised events by kind over the last 30 days" is a
    columnar aggregation. Doing it via JetStream replay means
    streaming millions of events to a consumer and aggregating in
    application code; doing it in ClickHouse pushes the
