@@ -1,0 +1,7 @@
+{
+  "module": "openits-ess",
+  "revision": "2026-10-16",
+  "files": [
+    "schema.yang"
+  ]
+}

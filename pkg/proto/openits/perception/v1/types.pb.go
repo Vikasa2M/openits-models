@@ -119,6 +119,61 @@ func (IncidentDisposition) EnumDescriptor() ([]byte, []int) {
 	return file_openits_perception_v1_types_proto_rawDescGZIP(), []int{1}
 }
 
+type OperStatus int32
+
+const (
+	OperStatus_OPER_STATUS_UNKNOWN     OperStatus = 0
+	OperStatus_OPER_STATUS_OK          OperStatus = 1
+	OperStatus_OPER_STATUS_DEGRADED    OperStatus = 2
+	OperStatus_OPER_STATUS_FAILED      OperStatus = 3
+	OperStatus_OPER_STATUS_NOT_PRESENT OperStatus = 4
+)
+
+// Enum value maps for OperStatus.
+var (
+	OperStatus_name = map[int32]string{
+		0: "OPER_STATUS_UNKNOWN",
+		1: "OPER_STATUS_OK",
+		2: "OPER_STATUS_DEGRADED",
+		3: "OPER_STATUS_FAILED",
+		4: "OPER_STATUS_NOT_PRESENT",
+	}
+	OperStatus_value = map[string]int32{
+		"OPER_STATUS_UNKNOWN":     0,
+		"OPER_STATUS_OK":          1,
+		"OPER_STATUS_DEGRADED":    2,
+		"OPER_STATUS_FAILED":      3,
+		"OPER_STATUS_NOT_PRESENT": 4,
+	}
+)
+
+func (x OperStatus) Enum() *OperStatus {
+	p := new(OperStatus)
+	*p = x
+	return p
+}
+
+func (x OperStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OperStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_perception_v1_types_proto_enumTypes[2].Descriptor()
+}
+
+func (OperStatus) Type() protoreflect.EnumType {
+	return &file_openits_perception_v1_types_proto_enumTypes[2]
+}
+
+func (x OperStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OperStatus.Descriptor instead.
+func (OperStatus) EnumDescriptor() ([]byte, []int) {
+	return file_openits_perception_v1_types_proto_rawDescGZIP(), []int{2}
+}
+
 type Lifecycle int32
 
 const (
@@ -152,11 +207,11 @@ func (x Lifecycle) String() string {
 }
 
 func (Lifecycle) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_perception_v1_types_proto_enumTypes[2].Descriptor()
+	return file_openits_perception_v1_types_proto_enumTypes[3].Descriptor()
 }
 
 func (Lifecycle) Type() protoreflect.EnumType {
-	return &file_openits_perception_v1_types_proto_enumTypes[2]
+	return &file_openits_perception_v1_types_proto_enumTypes[3]
 }
 
 func (x Lifecycle) Number() protoreflect.EnumNumber {
@@ -165,7 +220,7 @@ func (x Lifecycle) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Lifecycle.Descriptor instead.
 func (Lifecycle) EnumDescriptor() ([]byte, []int) {
-	return file_openits_perception_v1_types_proto_rawDescGZIP(), []int{2}
+	return file_openits_perception_v1_types_proto_rawDescGZIP(), []int{3}
 }
 
 type FaultSeverity int32
@@ -207,11 +262,11 @@ func (x FaultSeverity) String() string {
 }
 
 func (FaultSeverity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_perception_v1_types_proto_enumTypes[3].Descriptor()
+	return file_openits_perception_v1_types_proto_enumTypes[4].Descriptor()
 }
 
 func (FaultSeverity) Type() protoreflect.EnumType {
-	return &file_openits_perception_v1_types_proto_enumTypes[3]
+	return &file_openits_perception_v1_types_proto_enumTypes[4]
 }
 
 func (x FaultSeverity) Number() protoreflect.EnumNumber {
@@ -220,7 +275,7 @@ func (x FaultSeverity) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use FaultSeverity.Descriptor instead.
 func (FaultSeverity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_perception_v1_types_proto_rawDescGZIP(), []int{3}
+	return file_openits_perception_v1_types_proto_rawDescGZIP(), []int{4}
 }
 
 var File_openits_perception_v1_types_proto protoreflect.FileDescriptor
@@ -235,7 +290,14 @@ const file_openits_perception_v1_types_proto_rawDesc = "" +
 	"\x13IncidentDisposition\x12 \n" +
 	"\x1cINCIDENT_DISPOSITION_PENDING\x10\x00\x12\"\n" +
 	"\x1eINCIDENT_DISPOSITION_CONFIRMED\x10\x01\x12$\n" +
-	" INCIDENT_DISPOSITION_FALSE_ALARM\x10\x02*U\n" +
+	" INCIDENT_DISPOSITION_FALSE_ALARM\x10\x02*\x88\x01\n" +
+	"\n" +
+	"OperStatus\x12\x17\n" +
+	"\x13OPER_STATUS_UNKNOWN\x10\x00\x12\x12\n" +
+	"\x0eOPER_STATUS_OK\x10\x01\x12\x18\n" +
+	"\x14OPER_STATUS_DEGRADED\x10\x02\x12\x16\n" +
+	"\x12OPER_STATUS_FAILED\x10\x03\x12\x1b\n" +
+	"\x17OPER_STATUS_NOT_PRESENT\x10\x04*U\n" +
 	"\tLifecycle\x12\x17\n" +
 	"\x13LIFECYCLE_TENTATIVE\x10\x00\x12\x17\n" +
 	"\x13LIFECYCLE_CONFIRMED\x10\x01\x12\x16\n" +
@@ -259,12 +321,13 @@ func file_openits_perception_v1_types_proto_rawDescGZIP() []byte {
 	return file_openits_perception_v1_types_proto_rawDescData
 }
 
-var file_openits_perception_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_openits_perception_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
 var file_openits_perception_v1_types_proto_goTypes = []any{
 	(IncidentSeverity)(0),    // 0: openits.perception.v1.IncidentSeverity
 	(IncidentDisposition)(0), // 1: openits.perception.v1.IncidentDisposition
-	(Lifecycle)(0),           // 2: openits.perception.v1.Lifecycle
-	(FaultSeverity)(0),       // 3: openits.perception.v1.FaultSeverity
+	(OperStatus)(0),          // 2: openits.perception.v1.OperStatus
+	(Lifecycle)(0),           // 3: openits.perception.v1.Lifecycle
+	(FaultSeverity)(0),       // 4: openits.perception.v1.FaultSeverity
 }
 var file_openits_perception_v1_types_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -284,7 +347,7 @@ func file_openits_perception_v1_types_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_perception_v1_types_proto_rawDesc), len(file_openits_perception_v1_types_proto_rawDesc)),
-			NumEnums:      4,
+			NumEnums:      5,
 			NumMessages:   0,
 			NumExtensions: 0,
 			NumServices:   0,

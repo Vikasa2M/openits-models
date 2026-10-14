@@ -939,7 +939,7 @@ func collectRSU() (*yangpkg.Device, error) {
 	basis.StatsWindowSeconds = u32Ptr(300)
 	basis.SampleCount = u32Ptr(420)
 	basis.PenetrationEstimatePct = f64Ptr(8.0)
-	basis.ComputedAt = strPtr("2026-06-02T03:15:00Z")
+	basis.ObservedAt = strPtr("2026-06-02T03:15:00Z")
 
 	counts := va.GetOrCreateCounts()
 	counts.CountBasis = yangpkg.OpenitsVehicleDetection_CountBasis_observation_sessions
@@ -1241,7 +1241,7 @@ func collectRM() (*yangpkg.Device, error) {
 		detSt := det.GetOrCreateState()
 		detSt.Role = d.role
 		detSt.Active = boolPtr(true)
-		detSt.LastUpdate = strPtr("2026-04-19T07:05:00Z")
+		detSt.ObservedAt = strPtr("2026-04-19T07:05:00Z")
 	}
 
 	diag := rm.GetOrCreateDiagnostics()

@@ -1,0 +1,209 @@
+module openits-zone-occupancy {
+  yang-version 1.1;
+  namespace "urn:openits:yang:zone-occupancy";
+  prefix openits-zone-occupancy;
+
+  import openits-types {
+    prefix openits-types;
+  }
+  import openits-zone-occupancy-types {
+    prefix openits-zone-occupancy-types;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Zone-occupancy capability: whether a defined region is occupied
+     right now, by how many objects, of what class, and for how long.
+
+     This is presence, not throughput, and the distinction is the reason
+     the capability exists. Throughput answers 'how many passed and how
+     fast' and belongs to openits-vehicle-detection; a vehicle that
+     arrives and parks never traverses anything and is invisible to it.
+     Occupancy answers 'what is here now' — different cardinality,
+     different time semantics, different consumers.
+
+     A device implements this capability by 'using' the 'zone-occupancy'
+     grouping, typically behind a feature since not every unit of a
+     given type senses occupancy. The capability is deliberately
+     independent of tracking: an in-ground magnetometer or an overhead
+     ultrasonic sensor implements occupancy and nothing else — no
+     tracks, no polygons, no incident detection — and must be able to
+     describe what it does without importing a perception service core
+     (docs/08-capability-architecture.md).
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.3.0";
+
+  revision 2026-10-16 {
+    description
+      "Rename the zone reading's timestamp measured-at to observed-at, the one freshness name across the model. Breaking: consumers must read observed-at.";
+    reference "RFC 7950 §7.6.";
+  }
+  revision 2026-09-05 {
+    description
+      "Converge zones/zone on the shared
+       openits-zone-occupancy-types:zone-occupancy-state grouping, which
+       the new zone-occupancy-changed notification also composes, so the
+       live state and the change event cannot drift. Wire-neutral: the
+       schema tree is identical, only the leaves' defining statement
+       moved. zone-id and measured-at stay declared here because they
+       are the two things that legitimately differ between a stored
+       reading and a reported transition (leafref key vs plain id;
+       reading time vs event-header occurred-at). Record that this
+       container is the digital-twin rollup of the change stream.";
+    reference "docs/reference/yang-reference-conventions.md.";
+  }
+  revision 2026-08-23 {
+    description
+      "BREAKING (pre-v1): remove configuration/zone/capacity.
+
+       Capacity is not something the device knows, senses, or acts on. It
+       is written by central, stored, and read back unchanged; the device
+       reports occupancy-count identically whether capacity says 8 or 800.
+       A config leaf the device never acts on is not device configuration —
+       it is the operator's inventory parked in the device tree, and the
+       operator already holds it, having provisioned the region.
+
+       It also did not reach the consumers who would need it: the
+       zone-occupancy-interval-report notification never carried capacity,
+       so an event subscriber could not see it regardless. Only something
+       already reading the device's config tree could, and that is central.
+
+       The deployment that made capacity look necessary — one zone spanning
+       several stalls, where '5' needs the '8' — is the weaker one anyway. A
+       zone per stall reports WHICH spaces are free via presence, not merely
+       how many, and there capacity is always 1 and carries no information.
+
+       What capacity enabled was a fullness judgment (capacity minus
+       occupancy-count). That is a derived value, and deriving it here would
+       create redundant state that can disagree with its own inputs, leaving
+       a consumer no way to know which to believe. It belongs to whoever is
+       computing an availability product.
+
+       Migration: consumers needing a stall count take it from the
+       provisioning system that assigned it. occupancy-percent is unaffected
+       — it is time occupancy (the fraction of the interval anything was
+       present), not a fullness fraction.";
+    reference "RFC 7950 section 11.";
+  }
+  revision 2026-08-15 {
+    description
+      "Initial revision. Per-zone occupancy configuration and live
+       state, including a class breakdown of the PRESENT population and
+       separate presence / classification confidence.
+
+       The class breakdown closes a real gap: the only per-class counts
+       in the family were scoped to a crossed (throughput) population,
+       so nothing anywhere described what class of object was sitting in
+       a region. Parking occupancy, loading-zone enforcement and transit
+       layover monitoring all need exactly that.";
+    reference "docs/08-capability-architecture.md.";
+  }
+
+  grouping zone-occupancy {
+    description
+      "Zone-occupancy configuration and live readback for a device.
+       Both halves live under one container so the state-to-config
+       leafref is relative and stays valid wherever a device profile
+       places the capability.";
+
+    container zone-occupancy {
+      description
+        "Regions this device reports occupancy for, and what is in them.";
+
+      container configuration {
+        description "Regions whose occupancy this device reports.";
+
+        list zone {
+          key "zone-id";
+          description "One region under occupancy observation.";
+
+          leaf zone-id {
+            type openits-zone-occupancy-types:occupancy-zone-id;
+            description "Device-local identifier for this region.";
+          }
+          leaf name {
+            type string;
+            description "Operator-facing description of the region.";
+          }
+          leaf sensing-method {
+            type identityref {
+              base openits-zone-occupancy-types:occupancy-sensing-method;
+            }
+            description
+              "How this region's occupancy is sensed. Tells a consumer
+               what kind of answer to expect from it.";
+          }
+          leaf classifies {
+            type boolean;
+            description
+              "Whether this region's sensor classifies what it detects.
+
+               Read together with an empty present-class list, this
+               separates two situations a consumer must not confuse: a
+               sensor that never classifies (an inductive loop — false
+               here, and the empty list is complete) from a classifier
+               that ran and found nothing to report (true here, and the
+               empty list means the region is empty). Omitted where the
+               device does not state it, which is itself distinct from
+               either.";
+          }
+        }
+      }
+
+      container zones {
+        config false;
+        openits-types:arc-it-flow
+          "ITS Roadway Equipment -> TMC : traffic flow";
+        description
+          "Live occupancy read back per configured region.
+
+           Each entry mirrors the most recent zone-occupancy-changed
+           notification for its region: in the event binding this
+           container is the digital-twin rollup of that stream, and in a
+           datastore binding it is the subscribable source of the same
+           leaves. Both carry the observation through the shared
+           openits-zone-occupancy-types:zone-occupancy-state grouping,
+           which also states why no 'must' constrains those leaves
+           against each other (readback-representability doctrine).
+           zone-id and observed-at stay declared here: the key is a
+           leafref into configuration, and the timestamp is the
+           reading's, not an event's.";
+
+        list zone {
+          key "zone-id";
+          description "Live occupancy for one configured region.";
+
+          leaf zone-id {
+            type leafref {
+              path "../../../configuration/zone/zone-id";
+              require-instance false;
+            }
+            description
+              "The configured region this entry reports on.
+               require-instance false: occupancy reported for a
+               just-deleted region is a reportable anomaly, not invalid
+               data.";
+          }
+          uses openits-zone-occupancy-types:zone-occupancy-state;
+          leaf observed-at {
+            type yang:date-and-time;
+            description
+              "The time of this reading. When this reading was taken. A consumer compares it
+               against the device's reporting cadence to decide whether
+               the reading is still current, rather than assuming
+               anything it received is fresh.";
+          }
+        }
+      }
+    }
+  }
+}

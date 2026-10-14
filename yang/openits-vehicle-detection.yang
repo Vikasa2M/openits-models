@@ -28,8 +28,13 @@ module openits-vehicle-detection {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.3.0";
+  openits-types:openits-version "0.4.0";
 
+  revision 2026-10-16 {
+    description
+      "Rename the analytics snapshot timestamp computed-at to observed-at, the one freshness name across the model. Breaking: consumers must read observed-at.";
+    reference "RFC 7950 §7.6.";
+  }
   revision 2026-08-23 {
     description
       "Hoist the vehicle-analytics grouping's two inline enumerations into named
@@ -80,7 +85,7 @@ module openits-vehicle-detection {
   }
   typedef stats-window-type {
   type enumeration {
-    enum rolling { value 0; description "A sliding window ending at computed-at."; }
+    enum rolling { value 0; description "A sliding window ending at observed-at."; }
     enum tumbling { value 1; description "A fixed, non-overlapping window."; }
   }
     description
@@ -149,9 +154,9 @@ module openits-vehicle-detection {
              (at 6% penetration a fused volume is ~16x low), so a consumer
              needs this to scale counts or refuse them.";
         }
-        leaf computed-at {
+        leaf observed-at {
           type yang:date-and-time;
-          description "Wall-clock time this analytics snapshot was produced.";
+          description "The time of this reading: wall-clock time this analytics snapshot was produced.";
         }
       }
       container counts {

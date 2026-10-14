@@ -344,6 +344,7 @@ type SignState struct {
 	Heading          *uint32                   `protobuf:"varint,13,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
 	Id               *string                   `protobuf:"bytes,14,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate      *timestamppb.Timestamp    `protobuf:"bytes,11,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
+	LastChange       *timestamppb.Timestamp    `protobuf:"bytes,23,opt,name=last_change,json=lastChange,proto3" json:"last_change,omitempty"`
 	Latitude         *string                   `protobuf:"bytes,6,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference  *SignStateLinearReference `protobuf:"bytes,19,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
 	Longitude        *string                   `protobuf:"bytes,7,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
@@ -351,6 +352,8 @@ type SignState struct {
 	Make             *string                   `protobuf:"bytes,8,opt,name=make,proto3,oneof" json:"make,omitempty"`
 	Model            *string                   `protobuf:"bytes,9,opt,name=model,proto3,oneof" json:"model,omitempty"`
 	Name             *string                   `protobuf:"bytes,15,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	ObservedAt       *timestamppb.Timestamp    `protobuf:"bytes,24,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
+	OperStatus       *OperStatus               `protobuf:"varint,25,opt,name=oper_status,json=operStatus,proto3,enum=openits.dms.v1.OperStatus,oneof" json:"oper_status,omitempty"`
 	Owner            *string                   `protobuf:"bytes,21,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	RoadReference    *string                   `protobuf:"bytes,16,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
 	Serial           *string                   `protobuf:"bytes,10,opt,name=serial,proto3,oneof" json:"serial,omitempty"`
@@ -466,6 +469,13 @@ func (x *SignState) GetInstallDate() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *SignState) GetLastChange() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastChange
+	}
+	return nil
+}
+
 func (x *SignState) GetLatitude() string {
 	if x != nil && x.Latitude != nil {
 		return *x.Latitude
@@ -513,6 +523,20 @@ func (x *SignState) GetName() string {
 		return *x.Name
 	}
 	return ""
+}
+
+func (x *SignState) GetObservedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ObservedAt
+	}
+	return nil
+}
+
+func (x *SignState) GetOperStatus() OperStatus {
+	if x != nil && x.OperStatus != nil {
+		return *x.OperStatus
+	}
+	return OperStatus_OPER_STATUS_UNKNOWN
 }
 
 func (x *SignState) GetOwner() string {
@@ -3522,7 +3546,8 @@ const file_openits_dms_v1_state_proto_rawDesc = "" +
 	"_directionB\n" +
 	"\n" +
 	"\b_measureB\r\n" +
-	"\v_lrs_method\"\x8a\t\n" +
+	"\v_lrs_method\"\xd6\n" +
+	"\n" +
 	"\tSignState\x12#\n" +
 	"\n" +
 	"technology\x18\x01 \x01(\tH\x00R\n" +
@@ -3536,7 +3561,9 @@ const file_openits_dms_v1_state_proto_rawDesc = "" +
 	"\x10hardware_version\x18\x12 \x01(\tH\x06R\x0fhardwareVersion\x88\x01\x01\x12\x1d\n" +
 	"\aheading\x18\r \x01(\rH\aR\aheading\x88\x01\x01\x12\x13\n" +
 	"\x02id\x18\x0e \x01(\tH\bR\x02id\x88\x01\x01\x12=\n" +
-	"\finstall_date\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	"\finstall_date\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12;\n" +
+	"\vlast_change\x18\x17 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"lastChange\x12\x1f\n" +
 	"\blatitude\x18\x06 \x01(\tH\tR\blatitude\x88\x01\x01\x12S\n" +
 	"\x10linear_reference\x18\x13 \x01(\v2(.openits.dms.v1.SignStateLinearReferenceR\x0flinearReference\x12!\n" +
 	"\tlongitude\x18\a \x01(\tH\n" +
@@ -3544,12 +3571,16 @@ const file_openits_dms_v1_state_proto_rawDesc = "" +
 	"\rmaintained_by\x18\x14 \x01(\tH\vR\fmaintainedBy\x88\x01\x01\x12\x17\n" +
 	"\x04make\x18\b \x01(\tH\fR\x04make\x88\x01\x01\x12\x19\n" +
 	"\x05model\x18\t \x01(\tH\rR\x05model\x88\x01\x01\x12\x17\n" +
-	"\x04name\x18\x0f \x01(\tH\x0eR\x04name\x88\x01\x01\x12\x19\n" +
-	"\x05owner\x18\x15 \x01(\tH\x0fR\x05owner\x88\x01\x01\x12*\n" +
-	"\x0eroad_reference\x18\x10 \x01(\tH\x10R\rroadReference\x88\x01\x01\x12\x1b\n" +
+	"\x04name\x18\x0f \x01(\tH\x0eR\x04name\x88\x01\x01\x12;\n" +
+	"\vobserved_at\x18\x18 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x12@\n" +
+	"\voper_status\x18\x19 \x01(\x0e2\x1a.openits.dms.v1.OperStatusH\x0fR\n" +
+	"operStatus\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\x15 \x01(\tH\x10R\x05owner\x88\x01\x01\x12*\n" +
+	"\x0eroad_reference\x18\x10 \x01(\tH\x11R\rroadReference\x88\x01\x01\x12\x1b\n" +
 	"\x06serial\x18\n" +
-	" \x01(\tH\x11R\x06serial\x88\x01\x01\x12\x1c\n" +
-	"\asite_id\x18\x16 \x01(\tH\x12R\x06siteId\x88\x01\x01B\r\n" +
+	" \x01(\tH\x12R\x06serial\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\x16 \x01(\tH\x13R\x06siteId\x88\x01\x01B\r\n" +
 	"\v_technologyB\x14\n" +
 	"\x12_sign_width_pixelsB\x15\n" +
 	"\x13_sign_height_pixelsB\f\n" +
@@ -3567,7 +3598,8 @@ const file_openits_dms_v1_state_proto_rawDesc = "" +
 	"\x0e_maintained_byB\a\n" +
 	"\x05_makeB\b\n" +
 	"\x06_modelB\a\n" +
-	"\x05_nameB\b\n" +
+	"\x05_nameB\x0e\n" +
+	"\f_oper_statusB\b\n" +
 	"\x06_ownerB\x11\n" +
 	"\x0f_road_referenceB\t\n" +
 	"\a_serialB\n" +
@@ -4053,21 +4085,22 @@ var file_openits_dms_v1_state_proto_goTypes = []any{
 	(*Faults)(nil),                                        // 43: openits.dms.v1.Faults
 	(*Fault)(nil),                                         // 44: openits.dms.v1.Fault
 	(*timestamppb.Timestamp)(nil),                         // 45: google.protobuf.Timestamp
-	(SignType)(0),                                         // 46: openits.dms.v1.SignType
-	(BeaconType)(0),                                       // 47: openits.dms.v1.BeaconType
-	(ColorCapability)(0),                                  // 48: openits.dms.v1.ColorCapability
-	(MessageMemoryType)(0),                                // 49: openits.dms.v1.MessageMemoryType
-	(Beacon)(0),                                           // 50: openits.dms.v1.Beacon
-	(DmsMessageStatus)(0),                                 // 51: openits.dms.v1.DmsMessageStatus
-	(DayOfWeek)(0),                                        // 52: openits.dms.v1.DayOfWeek
-	(Month)(0),                                            // 53: openits.dms.v1.Month
-	(RequestSelfTest)(0),                                  // 54: openits.dms.v1.RequestSelfTest
-	(IlluminationControl)(0),                              // 55: openits.dms.v1.IlluminationControl
-	(BeaconState)(0),                                      // 56: openits.dms.v1.BeaconState
-	(PowerSource)(0),                                      // 57: openits.dms.v1.PowerSource
-	(BatteryTestState)(0),                                 // 58: openits.dms.v1.BatteryTestState
-	(*v1.ComponentRef)(nil),                               // 59: openits.types.v1.ComponentRef
-	(FaultSeverity)(0),                                    // 60: openits.dms.v1.FaultSeverity
+	(OperStatus)(0),                                       // 46: openits.dms.v1.OperStatus
+	(SignType)(0),                                         // 47: openits.dms.v1.SignType
+	(BeaconType)(0),                                       // 48: openits.dms.v1.BeaconType
+	(ColorCapability)(0),                                  // 49: openits.dms.v1.ColorCapability
+	(MessageMemoryType)(0),                                // 50: openits.dms.v1.MessageMemoryType
+	(Beacon)(0),                                           // 51: openits.dms.v1.Beacon
+	(DmsMessageStatus)(0),                                 // 52: openits.dms.v1.DmsMessageStatus
+	(DayOfWeek)(0),                                        // 53: openits.dms.v1.DayOfWeek
+	(Month)(0),                                            // 54: openits.dms.v1.Month
+	(RequestSelfTest)(0),                                  // 55: openits.dms.v1.RequestSelfTest
+	(IlluminationControl)(0),                              // 56: openits.dms.v1.IlluminationControl
+	(BeaconState)(0),                                      // 57: openits.dms.v1.BeaconState
+	(PowerSource)(0),                                      // 58: openits.dms.v1.PowerSource
+	(BatteryTestState)(0),                                 // 59: openits.dms.v1.BatteryTestState
+	(*v1.ComponentRef)(nil),                               // 60: openits.types.v1.ComponentRef
+	(FaultSeverity)(0),                                    // 61: openits.dms.v1.FaultSeverity
 }
 var file_openits_dms_v1_state_proto_depIdxs = []int32{
 	1,  // 0: openits.dms.v1.Sign.config:type_name -> openits.dms.v1.SignConfig
@@ -4083,83 +4116,86 @@ var file_openits_dms_v1_state_proto_depIdxs = []int32{
 	2,  // 10: openits.dms.v1.SignConfig.linear_reference:type_name -> openits.dms.v1.SignConfigLinearReference
 	4,  // 11: openits.dms.v1.SignState.capabilities:type_name -> openits.dms.v1.Capabilities
 	45, // 12: openits.dms.v1.SignState.install_date:type_name -> google.protobuf.Timestamp
-	7,  // 13: openits.dms.v1.SignState.linear_reference:type_name -> openits.dms.v1.SignStateLinearReference
-	46, // 14: openits.dms.v1.Capabilities.sign_type:type_name -> openits.dms.v1.SignType
-	47, // 15: openits.dms.v1.Capabilities.beacon_type:type_name -> openits.dms.v1.BeaconType
-	48, // 16: openits.dms.v1.Capabilities.color_capability:type_name -> openits.dms.v1.ColorCapability
-	5,  // 17: openits.dms.v1.Capabilities.font:type_name -> openits.dms.v1.Font
-	6,  // 18: openits.dms.v1.Capabilities.graphic:type_name -> openits.dms.v1.Graphic
-	9,  // 19: openits.dms.v1.Messages.slot:type_name -> openits.dms.v1.Slot
-	49, // 20: openits.dms.v1.Slot.memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	10, // 21: openits.dms.v1.Slot.config:type_name -> openits.dms.v1.SlotConfig
-	11, // 22: openits.dms.v1.Slot.state:type_name -> openits.dms.v1.SlotState
-	49, // 23: openits.dms.v1.SlotConfig.memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	50, // 24: openits.dms.v1.SlotConfig.beacon:type_name -> openits.dms.v1.Beacon
-	51, // 25: openits.dms.v1.SlotState.status:type_name -> openits.dms.v1.DmsMessageStatus
-	13, // 26: openits.dms.v1.Schedule.day_plan:type_name -> openits.dms.v1.DayPlan
-	15, // 27: openits.dms.v1.Schedule.schedule_entry:type_name -> openits.dms.v1.ScheduleEntry
-	16, // 28: openits.dms.v1.Schedule.state:type_name -> openits.dms.v1.ScheduleState
-	14, // 29: openits.dms.v1.DayPlan.action:type_name -> openits.dms.v1.Action
-	49, // 30: openits.dms.v1.Action.memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	52, // 31: openits.dms.v1.ScheduleEntry.days_of_week:type_name -> openits.dms.v1.DayOfWeek
-	53, // 32: openits.dms.v1.ScheduleEntry.months:type_name -> openits.dms.v1.Month
-	45, // 33: openits.dms.v1.ScheduleState.next_action_at:type_name -> google.protobuf.Timestamp
-	18, // 34: openits.dms.v1.Control.config:type_name -> openits.dms.v1.ControlConfig
-	27, // 35: openits.dms.v1.Control.state:type_name -> openits.dms.v1.ControlState
-	54, // 36: openits.dms.v1.ControlConfig.request_self_test:type_name -> openits.dms.v1.RequestSelfTest
-	19, // 37: openits.dms.v1.ControlConfig.active_message:type_name -> openits.dms.v1.ActiveMessage
-	20, // 38: openits.dms.v1.ControlConfig.fallback:type_name -> openits.dms.v1.ControlConfigFallback
-	55, // 39: openits.dms.v1.ControlConfig.illumination_control:type_name -> openits.dms.v1.IlluminationControl
-	49, // 40: openits.dms.v1.ActiveMessage.memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	21, // 41: openits.dms.v1.ControlConfigFallback.comm_loss:type_name -> openits.dms.v1.ControlConfigFallbackCommLoss
-	22, // 42: openits.dms.v1.ControlConfigFallback.end_of_duration:type_name -> openits.dms.v1.ControlConfigFallbackEndOfDuration
-	23, // 43: openits.dms.v1.ControlConfigFallback.power_recovery:type_name -> openits.dms.v1.ControlConfigFallbackPowerRecovery
-	26, // 44: openits.dms.v1.ControlConfigFallback.reset:type_name -> openits.dms.v1.ControlConfigFallbackReset
-	49, // 45: openits.dms.v1.ControlConfigFallbackCommLoss.memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	49, // 46: openits.dms.v1.ControlConfigFallbackEndOfDuration.memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	24, // 47: openits.dms.v1.ControlConfigFallbackPowerRecovery.short_outage:type_name -> openits.dms.v1.ControlConfigFallbackPowerRecoveryShortOutage
-	25, // 48: openits.dms.v1.ControlConfigFallbackPowerRecovery.long_outage:type_name -> openits.dms.v1.ControlConfigFallbackPowerRecoveryLongOutage
-	49, // 49: openits.dms.v1.ControlConfigFallbackPowerRecoveryShortOutage.memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	49, // 50: openits.dms.v1.ControlConfigFallbackPowerRecoveryLongOutage.memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	49, // 51: openits.dms.v1.ControlConfigFallbackReset.memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	56, // 52: openits.dms.v1.ControlState.beacon_state:type_name -> openits.dms.v1.BeaconState
-	45, // 53: openits.dms.v1.ControlState.last_mode_change:type_name -> google.protobuf.Timestamp
-	28, // 54: openits.dms.v1.ControlState.active:type_name -> openits.dms.v1.Active
-	29, // 55: openits.dms.v1.ControlState.preempted:type_name -> openits.dms.v1.Preempted
-	30, // 56: openits.dms.v1.ControlState.fallback:type_name -> openits.dms.v1.ControlStateFallback
-	55, // 57: openits.dms.v1.ControlState.illumination_control:type_name -> openits.dms.v1.IlluminationControl
-	45, // 58: openits.dms.v1.Active.activated_at:type_name -> google.protobuf.Timestamp
-	45, // 59: openits.dms.v1.Active.expires_at:type_name -> google.protobuf.Timestamp
-	50, // 60: openits.dms.v1.Active.beacon:type_name -> openits.dms.v1.Beacon
-	49, // 61: openits.dms.v1.Active.memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	49, // 62: openits.dms.v1.Preempted.memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	31, // 63: openits.dms.v1.ControlStateFallback.comm_loss:type_name -> openits.dms.v1.ControlStateFallbackCommLoss
-	32, // 64: openits.dms.v1.ControlStateFallback.end_of_duration:type_name -> openits.dms.v1.ControlStateFallbackEndOfDuration
-	33, // 65: openits.dms.v1.ControlStateFallback.power_recovery:type_name -> openits.dms.v1.ControlStateFallbackPowerRecovery
-	36, // 66: openits.dms.v1.ControlStateFallback.reset:type_name -> openits.dms.v1.ControlStateFallbackReset
-	49, // 67: openits.dms.v1.ControlStateFallbackCommLoss.memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	49, // 68: openits.dms.v1.ControlStateFallbackEndOfDuration.memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	34, // 69: openits.dms.v1.ControlStateFallbackPowerRecovery.short_outage:type_name -> openits.dms.v1.ControlStateFallbackPowerRecoveryShortOutage
-	35, // 70: openits.dms.v1.ControlStateFallbackPowerRecovery.long_outage:type_name -> openits.dms.v1.ControlStateFallbackPowerRecoveryLongOutage
-	49, // 71: openits.dms.v1.ControlStateFallbackPowerRecoveryShortOutage.memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	49, // 72: openits.dms.v1.ControlStateFallbackPowerRecoveryLongOutage.memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	49, // 73: openits.dms.v1.ControlStateFallbackReset.memory_type:type_name -> openits.dms.v1.MessageMemoryType
-	39, // 74: openits.dms.v1.CabinetPower.state:type_name -> openits.dms.v1.CabinetPowerState
-	40, // 75: openits.dms.v1.CabinetPowerState.battery:type_name -> openits.dms.v1.Battery
-	41, // 76: openits.dms.v1.CabinetPowerState.generator:type_name -> openits.dms.v1.Generator
-	57, // 77: openits.dms.v1.CabinetPowerState.power_source:type_name -> openits.dms.v1.PowerSource
-	58, // 78: openits.dms.v1.Battery.test_state:type_name -> openits.dms.v1.BatteryTestState
-	45, // 79: openits.dms.v1.Battery.last_test:type_name -> google.protobuf.Timestamp
-	45, // 80: openits.dms.v1.Diagnostics.last_self_test:type_name -> google.protobuf.Timestamp
-	44, // 81: openits.dms.v1.Faults.fault:type_name -> openits.dms.v1.Fault
-	59, // 82: openits.dms.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
-	45, // 83: openits.dms.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	60, // 84: openits.dms.v1.Fault.severity:type_name -> openits.dms.v1.FaultSeverity
-	85, // [85:85] is the sub-list for method output_type
-	85, // [85:85] is the sub-list for method input_type
-	85, // [85:85] is the sub-list for extension type_name
-	85, // [85:85] is the sub-list for extension extendee
-	0,  // [0:85] is the sub-list for field type_name
+	45, // 13: openits.dms.v1.SignState.last_change:type_name -> google.protobuf.Timestamp
+	7,  // 14: openits.dms.v1.SignState.linear_reference:type_name -> openits.dms.v1.SignStateLinearReference
+	45, // 15: openits.dms.v1.SignState.observed_at:type_name -> google.protobuf.Timestamp
+	46, // 16: openits.dms.v1.SignState.oper_status:type_name -> openits.dms.v1.OperStatus
+	47, // 17: openits.dms.v1.Capabilities.sign_type:type_name -> openits.dms.v1.SignType
+	48, // 18: openits.dms.v1.Capabilities.beacon_type:type_name -> openits.dms.v1.BeaconType
+	49, // 19: openits.dms.v1.Capabilities.color_capability:type_name -> openits.dms.v1.ColorCapability
+	5,  // 20: openits.dms.v1.Capabilities.font:type_name -> openits.dms.v1.Font
+	6,  // 21: openits.dms.v1.Capabilities.graphic:type_name -> openits.dms.v1.Graphic
+	9,  // 22: openits.dms.v1.Messages.slot:type_name -> openits.dms.v1.Slot
+	50, // 23: openits.dms.v1.Slot.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	10, // 24: openits.dms.v1.Slot.config:type_name -> openits.dms.v1.SlotConfig
+	11, // 25: openits.dms.v1.Slot.state:type_name -> openits.dms.v1.SlotState
+	50, // 26: openits.dms.v1.SlotConfig.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	51, // 27: openits.dms.v1.SlotConfig.beacon:type_name -> openits.dms.v1.Beacon
+	52, // 28: openits.dms.v1.SlotState.status:type_name -> openits.dms.v1.DmsMessageStatus
+	13, // 29: openits.dms.v1.Schedule.day_plan:type_name -> openits.dms.v1.DayPlan
+	15, // 30: openits.dms.v1.Schedule.schedule_entry:type_name -> openits.dms.v1.ScheduleEntry
+	16, // 31: openits.dms.v1.Schedule.state:type_name -> openits.dms.v1.ScheduleState
+	14, // 32: openits.dms.v1.DayPlan.action:type_name -> openits.dms.v1.Action
+	50, // 33: openits.dms.v1.Action.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	53, // 34: openits.dms.v1.ScheduleEntry.days_of_week:type_name -> openits.dms.v1.DayOfWeek
+	54, // 35: openits.dms.v1.ScheduleEntry.months:type_name -> openits.dms.v1.Month
+	45, // 36: openits.dms.v1.ScheduleState.next_action_at:type_name -> google.protobuf.Timestamp
+	18, // 37: openits.dms.v1.Control.config:type_name -> openits.dms.v1.ControlConfig
+	27, // 38: openits.dms.v1.Control.state:type_name -> openits.dms.v1.ControlState
+	55, // 39: openits.dms.v1.ControlConfig.request_self_test:type_name -> openits.dms.v1.RequestSelfTest
+	19, // 40: openits.dms.v1.ControlConfig.active_message:type_name -> openits.dms.v1.ActiveMessage
+	20, // 41: openits.dms.v1.ControlConfig.fallback:type_name -> openits.dms.v1.ControlConfigFallback
+	56, // 42: openits.dms.v1.ControlConfig.illumination_control:type_name -> openits.dms.v1.IlluminationControl
+	50, // 43: openits.dms.v1.ActiveMessage.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	21, // 44: openits.dms.v1.ControlConfigFallback.comm_loss:type_name -> openits.dms.v1.ControlConfigFallbackCommLoss
+	22, // 45: openits.dms.v1.ControlConfigFallback.end_of_duration:type_name -> openits.dms.v1.ControlConfigFallbackEndOfDuration
+	23, // 46: openits.dms.v1.ControlConfigFallback.power_recovery:type_name -> openits.dms.v1.ControlConfigFallbackPowerRecovery
+	26, // 47: openits.dms.v1.ControlConfigFallback.reset:type_name -> openits.dms.v1.ControlConfigFallbackReset
+	50, // 48: openits.dms.v1.ControlConfigFallbackCommLoss.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	50, // 49: openits.dms.v1.ControlConfigFallbackEndOfDuration.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	24, // 50: openits.dms.v1.ControlConfigFallbackPowerRecovery.short_outage:type_name -> openits.dms.v1.ControlConfigFallbackPowerRecoveryShortOutage
+	25, // 51: openits.dms.v1.ControlConfigFallbackPowerRecovery.long_outage:type_name -> openits.dms.v1.ControlConfigFallbackPowerRecoveryLongOutage
+	50, // 52: openits.dms.v1.ControlConfigFallbackPowerRecoveryShortOutage.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	50, // 53: openits.dms.v1.ControlConfigFallbackPowerRecoveryLongOutage.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	50, // 54: openits.dms.v1.ControlConfigFallbackReset.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	57, // 55: openits.dms.v1.ControlState.beacon_state:type_name -> openits.dms.v1.BeaconState
+	45, // 56: openits.dms.v1.ControlState.last_mode_change:type_name -> google.protobuf.Timestamp
+	28, // 57: openits.dms.v1.ControlState.active:type_name -> openits.dms.v1.Active
+	29, // 58: openits.dms.v1.ControlState.preempted:type_name -> openits.dms.v1.Preempted
+	30, // 59: openits.dms.v1.ControlState.fallback:type_name -> openits.dms.v1.ControlStateFallback
+	56, // 60: openits.dms.v1.ControlState.illumination_control:type_name -> openits.dms.v1.IlluminationControl
+	45, // 61: openits.dms.v1.Active.activated_at:type_name -> google.protobuf.Timestamp
+	45, // 62: openits.dms.v1.Active.expires_at:type_name -> google.protobuf.Timestamp
+	51, // 63: openits.dms.v1.Active.beacon:type_name -> openits.dms.v1.Beacon
+	50, // 64: openits.dms.v1.Active.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	50, // 65: openits.dms.v1.Preempted.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	31, // 66: openits.dms.v1.ControlStateFallback.comm_loss:type_name -> openits.dms.v1.ControlStateFallbackCommLoss
+	32, // 67: openits.dms.v1.ControlStateFallback.end_of_duration:type_name -> openits.dms.v1.ControlStateFallbackEndOfDuration
+	33, // 68: openits.dms.v1.ControlStateFallback.power_recovery:type_name -> openits.dms.v1.ControlStateFallbackPowerRecovery
+	36, // 69: openits.dms.v1.ControlStateFallback.reset:type_name -> openits.dms.v1.ControlStateFallbackReset
+	50, // 70: openits.dms.v1.ControlStateFallbackCommLoss.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	50, // 71: openits.dms.v1.ControlStateFallbackEndOfDuration.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	34, // 72: openits.dms.v1.ControlStateFallbackPowerRecovery.short_outage:type_name -> openits.dms.v1.ControlStateFallbackPowerRecoveryShortOutage
+	35, // 73: openits.dms.v1.ControlStateFallbackPowerRecovery.long_outage:type_name -> openits.dms.v1.ControlStateFallbackPowerRecoveryLongOutage
+	50, // 74: openits.dms.v1.ControlStateFallbackPowerRecoveryShortOutage.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	50, // 75: openits.dms.v1.ControlStateFallbackPowerRecoveryLongOutage.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	50, // 76: openits.dms.v1.ControlStateFallbackReset.memory_type:type_name -> openits.dms.v1.MessageMemoryType
+	39, // 77: openits.dms.v1.CabinetPower.state:type_name -> openits.dms.v1.CabinetPowerState
+	40, // 78: openits.dms.v1.CabinetPowerState.battery:type_name -> openits.dms.v1.Battery
+	41, // 79: openits.dms.v1.CabinetPowerState.generator:type_name -> openits.dms.v1.Generator
+	58, // 80: openits.dms.v1.CabinetPowerState.power_source:type_name -> openits.dms.v1.PowerSource
+	59, // 81: openits.dms.v1.Battery.test_state:type_name -> openits.dms.v1.BatteryTestState
+	45, // 82: openits.dms.v1.Battery.last_test:type_name -> google.protobuf.Timestamp
+	45, // 83: openits.dms.v1.Diagnostics.last_self_test:type_name -> google.protobuf.Timestamp
+	44, // 84: openits.dms.v1.Faults.fault:type_name -> openits.dms.v1.Fault
+	60, // 85: openits.dms.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
+	45, // 86: openits.dms.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	61, // 87: openits.dms.v1.Fault.severity:type_name -> openits.dms.v1.FaultSeverity
+	88, // [88:88] is the sub-list for method output_type
+	88, // [88:88] is the sub-list for method input_type
+	88, // [88:88] is the sub-list for extension type_name
+	88, // [88:88] is the sub-list for extension extendee
+	0,  // [0:88] is the sub-list for field type_name
 }
 
 func init() { file_openits_dms_v1_state_proto_init() }

@@ -46,8 +46,13 @@ module openits-signal-control {
 
      Copyright (c) 2026.  Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.19.0";
+  openits-types:openits-version "0.20.0";
 
+  revision 2026-10-16 {
+    description
+      "Report health on the root state (shared device-health: oper-status, last-change, observed-at) and rename the detector measurement timestamp collected-at to observed-at. Breaking: consumers must read observed-at.";
+    reference "RFC 7950 §7.12.";
+  }
   revision 2026-10-14 {
     description
       "The fault inventory classifies each entry with kind (renamed from
@@ -724,6 +729,7 @@ module openits-signal-control {
       description "Applied controller identity (mirror) + device-reported hardware.";
       uses openits-types:device-identity-config;
       uses openits-types:device-hardware;
+      uses openits-types:device-health;
     }
 
     /* ----- start-up behavior ----- */
@@ -1072,9 +1078,9 @@ module openits-signal-control {
               units "seconds";
               description "Length of the collection period the V/O/S values cover.";
             }
-            leaf collected-at {
+            leaf observed-at {
               type yang:date-and-time;
-              description "Wall-clock time this measurement was collected.";
+              description "The time of this reading: wall-clock time this measurement was collected.";
             }
           }
         }

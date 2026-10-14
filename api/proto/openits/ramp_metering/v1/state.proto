@@ -53,6 +53,7 @@ message RampMeterState {
   optional uint32 heading = 10;
   optional string id = 11;
   google.protobuf.Timestamp install_date = 5;
+  google.protobuf.Timestamp last_change = 19;
   optional string latitude = 2;
   RampMeterStateLinearReference linear_reference = 7;
   optional string longitude = 3;
@@ -60,6 +61,8 @@ message RampMeterState {
   optional string make = 4;
   optional string model = 6;
   optional string name = 12;
+  google.protobuf.Timestamp observed_at = 20;
+  optional OperStatus oper_status = 21;
   optional string owner = 17;
   optional string road_reference = 13;
   optional string serial = 8;
@@ -267,10 +270,12 @@ message LaneDetectorConfig {
 }
 
 message LaneDetectorState {
+  reserved 4;
+  reserved "last_update";
   optional bool active = 1;
   optional uint32 count_vph = 2;
   optional string detector_id = 3;
-  google.protobuf.Timestamp last_update = 4;
+  google.protobuf.Timestamp observed_at = 8;
   optional uint32 occupancy_pct = 5;
   optional DetectorRole role = 6;
   optional string speed_kmh = 7;
@@ -292,10 +297,12 @@ message MainlineDetectorsDetectorConfig {
 }
 
 message MainlineDetectorsDetectorState {
+  reserved 4;
+  reserved "last_update";
   optional bool active = 1;
   optional uint32 count_vph = 2;
   optional string detector_id = 3;
-  google.protobuf.Timestamp last_update = 4;
+  google.protobuf.Timestamp observed_at = 8;
   optional uint32 occupancy_pct = 5;
   optional DetectorRole role = 6;
   optional string speed_kmh = 7;

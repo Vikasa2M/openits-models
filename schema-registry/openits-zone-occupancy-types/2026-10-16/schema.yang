@@ -1,0 +1,267 @@
+module openits-zone-occupancy-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:zone-occupancy-types";
+  prefix openits-zone-occupancy-types;
+
+  import openits-types {
+    prefix openits-types;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Shared types, identities, and the live-state grouping for the
+     zone-occupancy capability: the zone identifier, the sensing-method
+     axis, the event-kind identities its notifications carry, and the
+     zone-occupancy-state grouping that the capability's live container
+     and its change notification both compose.
+
+     Split from the capability core so the events module can import leaf
+     definitions without depending on the capability's config/state
+     schema, per the events-layering rule.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.2.1";
+
+  revision 2026-10-16 {
+    description
+      "Description only: name the state timestamp observed-at, renamed from measured-at in the service core. Wire-neutral.";
+    reference "RFC 7950 §7.19.";
+  }
+  revision 2026-09-05 {
+    description
+      "Add the zone-occupancy-state grouping (the live observation,
+       hoisted verbatim from openits-zone-occupancy so the events module
+       can compose it without importing the core) and the
+       zoc-occupancy-change-event-kind sub-base with its three
+       transition identities: zoc-zone-occupied, zoc-zone-vacated,
+       zoc-zone-occupancy-updated. Additive.";
+    reference "docs/reference/yang-reference-conventions.md.";
+  }
+  revision 2026-08-15 {
+    description
+      "Initial revision. Zone identifier, sensing-method identity axis,
+       and the zone-occupancy event-kind hierarchy.";
+    reference "docs/08-capability-architecture.md.";
+  }
+
+  typedef occupancy-zone-id {
+    type string {
+      length "1..64";
+      pattern '[a-zA-Z0-9_-]+';
+    }
+    description
+      "Device-local identifier for a region whose occupancy is reported.
+
+       Device-local and opaque: it is unique within one device and
+       carries no meaning outside it. Two devices may both call a zone
+       'A1' and mean different ground. Binding a zone to a real-world
+       space (a numbered bay, a row, a lot) is the consuming system's
+       job and happens out of band; nothing in this model parses the
+       identifier or infers structure from it.";
+  }
+
+  /* --------------------------------------------------------------
+   * Sensing method
+   *
+   * What produced the presence call. Load-bearing for interpretation
+   * rather than decoration: it tells a consumer what kind of answer to
+   * expect. An inductive loop cannot classify what is over it at any
+   * confidence, so a zone reporting no class from a loop is complete,
+   * not degraded.
+   * -------------------------------------------------------------- */
+
+  identity occupancy-sensing-method {
+    description "Base identity for how zone occupancy is sensed.";
+  }
+  identity sensing-video          { base occupancy-sensing-method; description "Camera with on-board vision analytics."; }
+  identity sensing-radar          { base occupancy-sensing-method; description "Radar."; }
+  identity sensing-lidar          { base occupancy-sensing-method; description "LiDAR or other point-cloud sensor."; }
+  identity sensing-magnetometer   { base occupancy-sensing-method; description "Magnetometer, typically in-ground per bay."; }
+  identity sensing-inductive-loop { base occupancy-sensing-method; description "Inductive loop embedded in the surface."; }
+  identity sensing-ultrasonic     { base occupancy-sensing-method; description "Ultrasonic ranging, typically overhead per bay."; }
+  identity sensing-infrared       { base occupancy-sensing-method; description "Active or passive infrared."; }
+  identity sensing-fusion {
+    base occupancy-sensing-method;
+    description
+      "Two or more methods combined into one presence call. Reported
+       when the device will not attribute the call to a single method —
+       not as a catch-all for a method absent from this list.";
+  }
+
+  /* --------------------------------------------------------------
+   * Live occupancy state
+   *
+   * The observation itself, without the identity of the region or the
+   * time of the reading. Composed by the capability's live container
+   * (openits-zone-occupancy zones/zone) and by the zone-occupancy-changed
+   * notification, so the two mirror each other leaf for leaf.
+   * -------------------------------------------------------------- */
+
+  grouping zone-occupancy-state {
+    description
+      "Live occupancy of one region: what is here now, how many, of
+       what class, since when, and how sure the device is.
+
+       Shared by the zone-occupancy/zones/zone live state list and the
+       zone-occupancy-changed notification so the two cannot drift: an
+       event consumer maintaining a twin of the state tree sets exactly
+       these leaves, and a datastore consumer reads exactly these
+       leaves. Each user declares its own key and timestamp outside the
+       grouping (the state list a leafref zone-id and observed-at, the
+       notification a plain occupancy-zone-id and the event-header's
+       occurred-at), because those are the two things that legitimately
+       differ between a stored reading and a reported transition.
+
+       No 'must' constrains these leaves against each other,
+       deliberately. A device may report presence without a count (a
+       magnetometer knows something is there and cannot count it), more
+       objects than the region physically holds (a vehicle straddling
+       two bays), or a class breakdown that does not sum to the count (a
+       classifier that dropped one). Each of those is a real condition
+       worth transmitting, and a constraint that made them
+       unrepresentable would hide a misbehaving device instead of
+       surfacing it (readback-representability doctrine).";
+
+    leaf presence {
+      type boolean;
+      description "At least one object is currently in the region.";
+    }
+    leaf occupancy-count {
+      type uint16;
+      units "objects";
+      description
+        "Objects currently in the region. Omitted by a sensor that
+         detects presence without counting — absent, which is not
+         the same as zero.";
+    }
+    leaf occupied-since {
+      type yang:date-and-time;
+      description
+        "Wall-clock time the current unbroken occupancy began, so
+         a consumer can derive dwell without keeping its own state
+         or waiting a full reporting interval. Omitted while the
+         region is vacant, and reset when it empties.";
+    }
+    leaf presence-confidence {
+      type openits-types:percentage;
+      description
+        "Confidence that the presence call is correct — that
+         something is, or is not, in the region.
+
+         Separate from classification-confidence below, because
+         they fail independently. A magnetometer is near-certain
+         something is present and cannot classify it at all. A
+         camera at dusk may be unsure anything is there while
+         being confident about the class if it is. Collapsing the
+         two into one figure would force one of those devices to
+         report a number that is not true of it.";
+    }
+
+    list present-class {
+      key "class";
+      description
+        "Classification of the population PRESENT in the region.
+
+         Distinct from any crossed/throughput breakdown: these are
+         the objects here now, whether or not they ever traverse
+         the region. A vehicle that arrives and stays is counted
+         here and appears in no throughput breakdown at all —
+         which is exactly the case a parking or loading-zone
+         consumer cares about.
+
+         Where the region classifies, the counts sum to
+         occupancy-count with object-unknown as the catch-all, so
+         no present object is dropped from the breakdown. Where it
+         does not classify, the list is empty and the sum rule
+         does not apply.";
+
+      leaf class {
+        type identityref {
+          base openits-types:object-class;
+        }
+        description "Object class this count belongs to.";
+      }
+      leaf count {
+        type uint16;
+        units "objects";
+        description "Objects of this class currently in the region.";
+      }
+      leaf classification-confidence {
+        type openits-types:percentage;
+        description
+          "Confidence in this class assignment. Where the count is
+           above one, the device's representative confidence for
+           the group — a consumer wanting per-object confidence
+           needs a tracking capability, not this one.";
+      }
+    }
+  }
+
+  /* --------------------------------------------------------------
+   * Event kinds
+   * -------------------------------------------------------------- */
+
+  identity zone-occupancy-event-kind {
+    base openits-types:device-event-kind;
+    description
+      "Root for zone-occupancy capability events. Capability dimension
+       of the event-kind taxonomy, so a consumer can filter every
+       occupancy event with
+       derived-from-or-self(zone-occupancy-event-kind) regardless of
+       which device profile emitted it.";
+  }
+
+  identity zoc-zone-occupancy-interval-report {
+    base zone-occupancy-event-kind;
+    base openits-types:report-event-kind;
+    description
+      "Periodic per-zone occupancy report. Dual-based on
+       report-event-kind so it is caught by the cross-catalog
+       periodic-report filter as well as by the capability filter.";
+  }
+
+  identity zoc-occupancy-change-event-kind {
+    base zone-occupancy-event-kind;
+    description
+      "Sub-base for the live transitions the zone-occupancy-changed
+       notification carries. That notification constrains 'kind' to
+       this base, so the identities derived from it ARE the definition
+       of what counts as a change: a delta that maps to none of them (a
+       confidence revision, an observed-at tick) is not an event. Not
+       based on report-event-kind: these fire on transition, not on a
+       schedule.";
+  }
+
+  identity zoc-zone-occupied {
+    base zoc-occupancy-change-event-kind;
+    description
+      "The region went from vacant to occupied. presence is true and
+       occupied-since carries the onset as the device knows it.";
+  }
+
+  identity zoc-zone-vacated {
+    base zoc-occupancy-change-event-kind;
+    description
+      "The region went from occupied to vacant. presence is false,
+       occupied-since is absent and present-class is empty, exactly as
+       the live state reads for a vacant region; a counting device
+       reports occupancy-count 0.";
+  }
+
+  identity zoc-zone-occupancy-updated {
+    base zoc-occupancy-change-event-kind;
+    description
+      "The region stayed occupied and its population changed:
+       occupancy-count moved, or the set of present classes changed. A
+       change in presence-confidence or classification-confidence alone
+       is not an update and does not emit.";
+  }
+}

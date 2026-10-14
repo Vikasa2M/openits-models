@@ -44,8 +44,13 @@ module openits-dms {
 
      Copyright (c) 2026.  Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.11.0";
+  openits-types:openits-version "0.12.0";
 
+  revision 2026-10-16 {
+    description
+      "Report health on the root state: add the shared device-health grouping (oper-status, last-change, observed-at). Additive.";
+    reference "RFC 7950 §7.12.";
+  }
   revision 2026-10-14 {
     description
       "The fault inventory classifies each entry with kind (renamed from
@@ -553,6 +558,7 @@ module openits-dms {
       description "Applied identity (mirror) + device-reported hardware and face geometry.";
       uses openits-types:device-identity-config;
       uses openits-types:device-hardware;
+      uses openits-types:device-health;
 
       leaf technology {
         type identityref {

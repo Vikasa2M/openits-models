@@ -50,6 +50,7 @@ message ReversibleLaneState {
   optional uint32 heading = 3;
   optional string id = 4;
   google.protobuf.Timestamp install_date = 14;
+  google.protobuf.Timestamp last_change = 19;
   optional string latitude = 5;
   ReversibleLaneStateLinearReference linear_reference = 15;
   optional string longitude = 6;
@@ -57,6 +58,8 @@ message ReversibleLaneState {
   optional string make = 7;
   optional string model = 8;
   optional string name = 9;
+  google.protobuf.Timestamp observed_at = 20;
+  optional OperStatus oper_status = 21;
   optional string owner = 17;
   optional string road_reference = 10;
   optional string serial = 11;
@@ -154,7 +157,9 @@ message GateConfig {
 }
 
 message GateGateState {
-  google.protobuf.Timestamp measured_at = 1;
+  reserved 1;
+  reserved "measured_at";
+  google.protobuf.Timestamp observed_at = 8;
   optional bool close_inhibited = 2;
   optional string control_source = 3;
   optional bool interlock_bypassed = 4;

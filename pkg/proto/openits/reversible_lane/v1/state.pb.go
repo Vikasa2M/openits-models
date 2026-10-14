@@ -340,6 +340,7 @@ type ReversibleLaneState struct {
 	Heading         *uint32                             `protobuf:"varint,3,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
 	Id              *string                             `protobuf:"bytes,4,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate     *timestamppb.Timestamp              `protobuf:"bytes,14,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
+	LastChange      *timestamppb.Timestamp              `protobuf:"bytes,19,opt,name=last_change,json=lastChange,proto3" json:"last_change,omitempty"`
 	Latitude        *string                             `protobuf:"bytes,5,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference *ReversibleLaneStateLinearReference `protobuf:"bytes,15,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
 	Longitude       *string                             `protobuf:"bytes,6,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
@@ -347,6 +348,8 @@ type ReversibleLaneState struct {
 	Make            *string                             `protobuf:"bytes,7,opt,name=make,proto3,oneof" json:"make,omitempty"`
 	Model           *string                             `protobuf:"bytes,8,opt,name=model,proto3,oneof" json:"model,omitempty"`
 	Name            *string                             `protobuf:"bytes,9,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	ObservedAt      *timestamppb.Timestamp              `protobuf:"bytes,20,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
+	OperStatus      *OperStatus                         `protobuf:"varint,21,opt,name=oper_status,json=operStatus,proto3,enum=openits.reversible_lane.v1.OperStatus,oneof" json:"oper_status,omitempty"`
 	Owner           *string                             `protobuf:"bytes,17,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	RoadReference   *string                             `protobuf:"bytes,10,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
 	Serial          *string                             `protobuf:"bytes,11,opt,name=serial,proto3,oneof" json:"serial,omitempty"`
@@ -434,6 +437,13 @@ func (x *ReversibleLaneState) GetInstallDate() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *ReversibleLaneState) GetLastChange() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastChange
+	}
+	return nil
+}
+
 func (x *ReversibleLaneState) GetLatitude() string {
 	if x != nil && x.Latitude != nil {
 		return *x.Latitude
@@ -481,6 +491,20 @@ func (x *ReversibleLaneState) GetName() string {
 		return *x.Name
 	}
 	return ""
+}
+
+func (x *ReversibleLaneState) GetObservedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ObservedAt
+	}
+	return nil
+}
+
+func (x *ReversibleLaneState) GetOperStatus() OperStatus {
+	if x != nil && x.OperStatus != nil {
+		return *x.OperStatus
+	}
+	return OperStatus_OPER_STATUS_UNKNOWN
 }
 
 func (x *ReversibleLaneState) GetOwner() string {
@@ -1401,7 +1425,7 @@ func (x *GateConfig) GetControlsEntryFor() string {
 
 type GateGateState struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
-	MeasuredAt        *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=measured_at,json=measuredAt,proto3" json:"measured_at,omitempty"`
+	ObservedAt        *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
 	CloseInhibited    *bool                  `protobuf:"varint,2,opt,name=close_inhibited,json=closeInhibited,proto3,oneof" json:"close_inhibited,omitempty"`
 	ControlSource     *string                `protobuf:"bytes,3,opt,name=control_source,json=controlSource,proto3,oneof" json:"control_source,omitempty"`
 	InterlockBypassed *bool                  `protobuf:"varint,4,opt,name=interlock_bypassed,json=interlockBypassed,proto3,oneof" json:"interlock_bypassed,omitempty"`
@@ -1442,9 +1466,9 @@ func (*GateGateState) Descriptor() ([]byte, []int) {
 	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{18}
 }
 
-func (x *GateGateState) GetMeasuredAt() *timestamppb.Timestamp {
+func (x *GateGateState) GetObservedAt() *timestamppb.Timestamp {
 	if x != nil {
-		return x.MeasuredAt
+		return x.ObservedAt
 	}
 	return nil
 }
@@ -1912,7 +1936,7 @@ const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"_directionB\n" +
 	"\n" +
 	"\b_measureB\r\n" +
-	"\v_lrs_method\"\xa3\a\n" +
+	"\v_lrs_method\"\xfb\b\n" +
 	"\x13ReversibleLaneState\x12!\n" +
 	"\televation\x18\x01 \x01(\tH\x00R\televation\x88\x01\x01\x12\x1f\n" +
 	"\bfirmware\x18\x02 \x01(\tH\x01R\bfirmware\x88\x01\x01\x12*\n" +
@@ -1920,7 +1944,9 @@ const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"\x10hardware_version\x18\r \x01(\tH\x03R\x0fhardwareVersion\x88\x01\x01\x12\x1d\n" +
 	"\aheading\x18\x03 \x01(\rH\x04R\aheading\x88\x01\x01\x12\x13\n" +
 	"\x02id\x18\x04 \x01(\tH\x05R\x02id\x88\x01\x01\x12=\n" +
-	"\finstall_date\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	"\finstall_date\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12;\n" +
+	"\vlast_change\x18\x13 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"lastChange\x12\x1f\n" +
 	"\blatitude\x18\x05 \x01(\tH\x06R\blatitude\x88\x01\x01\x12i\n" +
 	"\x10linear_reference\x18\x0f \x01(\v2>.openits.reversible_lane.v1.ReversibleLaneStateLinearReferenceR\x0flinearReference\x12!\n" +
 	"\tlongitude\x18\x06 \x01(\tH\aR\tlongitude\x88\x01\x01\x12(\n" +
@@ -1928,12 +1954,16 @@ const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"\x04make\x18\a \x01(\tH\tR\x04make\x88\x01\x01\x12\x19\n" +
 	"\x05model\x18\b \x01(\tH\n" +
 	"R\x05model\x88\x01\x01\x12\x17\n" +
-	"\x04name\x18\t \x01(\tH\vR\x04name\x88\x01\x01\x12\x19\n" +
-	"\x05owner\x18\x11 \x01(\tH\fR\x05owner\x88\x01\x01\x12*\n" +
+	"\x04name\x18\t \x01(\tH\vR\x04name\x88\x01\x01\x12;\n" +
+	"\vobserved_at\x18\x14 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x12L\n" +
+	"\voper_status\x18\x15 \x01(\x0e2&.openits.reversible_lane.v1.OperStatusH\fR\n" +
+	"operStatus\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\x11 \x01(\tH\rR\x05owner\x88\x01\x01\x12*\n" +
 	"\x0eroad_reference\x18\n" +
-	" \x01(\tH\rR\rroadReference\x88\x01\x01\x12\x1b\n" +
-	"\x06serial\x18\v \x01(\tH\x0eR\x06serial\x88\x01\x01\x12\x1c\n" +
-	"\asite_id\x18\x12 \x01(\tH\x0fR\x06siteId\x88\x01\x01B\f\n" +
+	" \x01(\tH\x0eR\rroadReference\x88\x01\x01\x12\x1b\n" +
+	"\x06serial\x18\v \x01(\tH\x0fR\x06serial\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\x12 \x01(\tH\x10R\x06siteId\x88\x01\x01B\f\n" +
 	"\n" +
 	"_elevationB\v\n" +
 	"\t_firmwareB\x11\n" +
@@ -1948,7 +1978,8 @@ const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"\x0e_maintained_byB\a\n" +
 	"\x05_makeB\b\n" +
 	"\x06_modelB\a\n" +
-	"\x05_nameB\b\n" +
+	"\x05_nameB\x0e\n" +
+	"\f_oper_statusB\b\n" +
 	"\x06_ownerB\x11\n" +
 	"\x0f_road_referenceB\t\n" +
 	"\a_serialB\n" +
@@ -2067,10 +2098,10 @@ const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"_gate_typeB\a\n" +
 	"\x05_nameB\r\n" +
 	"\v_segment_idB\x15\n" +
-	"\x13_controls_entry_for\"\xee\x03\n" +
+	"\x13_controls_entry_for\"\x81\x04\n" +
 	"\rGateGateState\x12;\n" +
-	"\vmeasured_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"measuredAt\x12,\n" +
+	"\vobserved_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x12,\n" +
 	"\x0fclose_inhibited\x18\x02 \x01(\bH\x00R\x0ecloseInhibited\x88\x01\x01\x12*\n" +
 	"\x0econtrol_source\x18\x03 \x01(\tH\x01R\rcontrolSource\x88\x01\x01\x122\n" +
 	"\x12interlock_bypassed\x18\x04 \x01(\bH\x02R\x11interlockBypassed\x88\x01\x01\x12*\n" +
@@ -2082,7 +2113,7 @@ const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"\x13_interlock_bypassedB\x11\n" +
 	"\x0f_open_inhibitedB\x11\n" +
 	"\x0f_operating_modeB\v\n" +
-	"\t_position\"Q\n" +
+	"\t_positionJ\x04\b\x01\x10\x02R\vmeasured_at\"Q\n" +
 	"\n" +
 	"Interlocks\x12C\n" +
 	"\tinterlock\x18\x02 \x03(\v2%.openits.reversible_lane.v1.InterlockR\tinterlock\"\xcb\x01\n" +
@@ -2159,15 +2190,16 @@ var file_openits_reversible_lane_v1_state_proto_goTypes = []any{
 	(*Faults)(nil),                              // 23: openits.reversible_lane.v1.Faults
 	(*Fault)(nil),                               // 24: openits.reversible_lane.v1.Fault
 	(*timestamppb.Timestamp)(nil),               // 25: google.protobuf.Timestamp
-	(TargetState)(0),                            // 26: openits.reversible_lane.v1.TargetState
-	(LaneFlowState)(0),                          // 27: openits.reversible_lane.v1.LaneFlowState
-	(Phase)(0),                                  // 28: openits.reversible_lane.v1.Phase
-	(LcsIndication)(0),                          // 29: openits.reversible_lane.v1.LcsIndication
-	(GateState)(0),                              // 30: openits.reversible_lane.v1.GateState
-	(GatePosition)(0),                           // 31: openits.reversible_lane.v1.GatePosition
-	(EvaluationPoint)(0),                        // 32: openits.reversible_lane.v1.EvaluationPoint
-	(*v1.ComponentRef)(nil),                     // 33: openits.types.v1.ComponentRef
-	(FaultSeverity)(0),                          // 34: openits.reversible_lane.v1.FaultSeverity
+	(OperStatus)(0),                             // 26: openits.reversible_lane.v1.OperStatus
+	(TargetState)(0),                            // 27: openits.reversible_lane.v1.TargetState
+	(LaneFlowState)(0),                          // 28: openits.reversible_lane.v1.LaneFlowState
+	(Phase)(0),                                  // 29: openits.reversible_lane.v1.Phase
+	(LcsIndication)(0),                          // 30: openits.reversible_lane.v1.LcsIndication
+	(GateState)(0),                              // 31: openits.reversible_lane.v1.GateState
+	(GatePosition)(0),                           // 32: openits.reversible_lane.v1.GatePosition
+	(EvaluationPoint)(0),                        // 33: openits.reversible_lane.v1.EvaluationPoint
+	(*v1.ComponentRef)(nil),                     // 34: openits.types.v1.ComponentRef
+	(FaultSeverity)(0),                          // 35: openits.reversible_lane.v1.FaultSeverity
 }
 var file_openits_reversible_lane_v1_state_proto_depIdxs = []int32{
 	1,  // 0: openits.reversible_lane.v1.ReversibleLane.config:type_name -> openits.reversible_lane.v1.ReversibleLaneConfig
@@ -2180,43 +2212,46 @@ var file_openits_reversible_lane_v1_state_proto_depIdxs = []int32{
 	25, // 7: openits.reversible_lane.v1.ReversibleLaneConfig.install_date:type_name -> google.protobuf.Timestamp
 	2,  // 8: openits.reversible_lane.v1.ReversibleLaneConfig.linear_reference:type_name -> openits.reversible_lane.v1.ReversibleLaneConfigLinearReference
 	25, // 9: openits.reversible_lane.v1.ReversibleLaneState.install_date:type_name -> google.protobuf.Timestamp
-	4,  // 10: openits.reversible_lane.v1.ReversibleLaneState.linear_reference:type_name -> openits.reversible_lane.v1.ReversibleLaneStateLinearReference
-	6,  // 11: openits.reversible_lane.v1.Control.config:type_name -> openits.reversible_lane.v1.ControlConfig
-	7,  // 12: openits.reversible_lane.v1.Control.state:type_name -> openits.reversible_lane.v1.ControlState
-	26, // 13: openits.reversible_lane.v1.ControlConfig.target_state:type_name -> openits.reversible_lane.v1.TargetState
-	27, // 14: openits.reversible_lane.v1.ControlState.current_state:type_name -> openits.reversible_lane.v1.LaneFlowState
-	25, // 15: openits.reversible_lane.v1.ControlState.last_command_at:type_name -> google.protobuf.Timestamp
-	8,  // 16: openits.reversible_lane.v1.ControlState.transition:type_name -> openits.reversible_lane.v1.Transition
-	28, // 17: openits.reversible_lane.v1.Transition.phase:type_name -> openits.reversible_lane.v1.Phase
-	25, // 18: openits.reversible_lane.v1.Transition.started_at:type_name -> google.protobuf.Timestamp
-	10, // 19: openits.reversible_lane.v1.Segments.segment:type_name -> openits.reversible_lane.v1.Segment
-	11, // 20: openits.reversible_lane.v1.Segment.config:type_name -> openits.reversible_lane.v1.SegmentConfig
-	12, // 21: openits.reversible_lane.v1.Segment.lane:type_name -> openits.reversible_lane.v1.Lane
-	13, // 22: openits.reversible_lane.v1.Lane.config:type_name -> openits.reversible_lane.v1.LaneConfig
-	14, // 23: openits.reversible_lane.v1.Lane.state:type_name -> openits.reversible_lane.v1.LaneState
-	29, // 24: openits.reversible_lane.v1.LaneConfig.lcs_direction_a:type_name -> openits.reversible_lane.v1.LcsIndication
-	29, // 25: openits.reversible_lane.v1.LaneConfig.lcs_direction_b:type_name -> openits.reversible_lane.v1.LcsIndication
-	29, // 26: openits.reversible_lane.v1.LaneState.lcs_direction_a:type_name -> openits.reversible_lane.v1.LcsIndication
-	29, // 27: openits.reversible_lane.v1.LaneState.lcs_direction_b:type_name -> openits.reversible_lane.v1.LcsIndication
-	30, // 28: openits.reversible_lane.v1.LaneState.gate_state:type_name -> openits.reversible_lane.v1.GateState
-	16, // 29: openits.reversible_lane.v1.Gates.gate:type_name -> openits.reversible_lane.v1.Gate
-	17, // 30: openits.reversible_lane.v1.Gate.config:type_name -> openits.reversible_lane.v1.GateConfig
-	18, // 31: openits.reversible_lane.v1.Gate.state:type_name -> openits.reversible_lane.v1.GateGateState
-	25, // 32: openits.reversible_lane.v1.GateGateState.measured_at:type_name -> google.protobuf.Timestamp
-	31, // 33: openits.reversible_lane.v1.GateGateState.position:type_name -> openits.reversible_lane.v1.GatePosition
-	20, // 34: openits.reversible_lane.v1.Interlocks.interlock:type_name -> openits.reversible_lane.v1.Interlock
-	21, // 35: openits.reversible_lane.v1.Interlock.config:type_name -> openits.reversible_lane.v1.InterlockConfig
-	22, // 36: openits.reversible_lane.v1.Interlock.state:type_name -> openits.reversible_lane.v1.InterlockState
-	32, // 37: openits.reversible_lane.v1.InterlockConfig.evaluation_point:type_name -> openits.reversible_lane.v1.EvaluationPoint
-	24, // 38: openits.reversible_lane.v1.Faults.fault:type_name -> openits.reversible_lane.v1.Fault
-	33, // 39: openits.reversible_lane.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
-	25, // 40: openits.reversible_lane.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	34, // 41: openits.reversible_lane.v1.Fault.severity:type_name -> openits.reversible_lane.v1.FaultSeverity
-	42, // [42:42] is the sub-list for method output_type
-	42, // [42:42] is the sub-list for method input_type
-	42, // [42:42] is the sub-list for extension type_name
-	42, // [42:42] is the sub-list for extension extendee
-	0,  // [0:42] is the sub-list for field type_name
+	25, // 10: openits.reversible_lane.v1.ReversibleLaneState.last_change:type_name -> google.protobuf.Timestamp
+	4,  // 11: openits.reversible_lane.v1.ReversibleLaneState.linear_reference:type_name -> openits.reversible_lane.v1.ReversibleLaneStateLinearReference
+	25, // 12: openits.reversible_lane.v1.ReversibleLaneState.observed_at:type_name -> google.protobuf.Timestamp
+	26, // 13: openits.reversible_lane.v1.ReversibleLaneState.oper_status:type_name -> openits.reversible_lane.v1.OperStatus
+	6,  // 14: openits.reversible_lane.v1.Control.config:type_name -> openits.reversible_lane.v1.ControlConfig
+	7,  // 15: openits.reversible_lane.v1.Control.state:type_name -> openits.reversible_lane.v1.ControlState
+	27, // 16: openits.reversible_lane.v1.ControlConfig.target_state:type_name -> openits.reversible_lane.v1.TargetState
+	28, // 17: openits.reversible_lane.v1.ControlState.current_state:type_name -> openits.reversible_lane.v1.LaneFlowState
+	25, // 18: openits.reversible_lane.v1.ControlState.last_command_at:type_name -> google.protobuf.Timestamp
+	8,  // 19: openits.reversible_lane.v1.ControlState.transition:type_name -> openits.reversible_lane.v1.Transition
+	29, // 20: openits.reversible_lane.v1.Transition.phase:type_name -> openits.reversible_lane.v1.Phase
+	25, // 21: openits.reversible_lane.v1.Transition.started_at:type_name -> google.protobuf.Timestamp
+	10, // 22: openits.reversible_lane.v1.Segments.segment:type_name -> openits.reversible_lane.v1.Segment
+	11, // 23: openits.reversible_lane.v1.Segment.config:type_name -> openits.reversible_lane.v1.SegmentConfig
+	12, // 24: openits.reversible_lane.v1.Segment.lane:type_name -> openits.reversible_lane.v1.Lane
+	13, // 25: openits.reversible_lane.v1.Lane.config:type_name -> openits.reversible_lane.v1.LaneConfig
+	14, // 26: openits.reversible_lane.v1.Lane.state:type_name -> openits.reversible_lane.v1.LaneState
+	30, // 27: openits.reversible_lane.v1.LaneConfig.lcs_direction_a:type_name -> openits.reversible_lane.v1.LcsIndication
+	30, // 28: openits.reversible_lane.v1.LaneConfig.lcs_direction_b:type_name -> openits.reversible_lane.v1.LcsIndication
+	30, // 29: openits.reversible_lane.v1.LaneState.lcs_direction_a:type_name -> openits.reversible_lane.v1.LcsIndication
+	30, // 30: openits.reversible_lane.v1.LaneState.lcs_direction_b:type_name -> openits.reversible_lane.v1.LcsIndication
+	31, // 31: openits.reversible_lane.v1.LaneState.gate_state:type_name -> openits.reversible_lane.v1.GateState
+	16, // 32: openits.reversible_lane.v1.Gates.gate:type_name -> openits.reversible_lane.v1.Gate
+	17, // 33: openits.reversible_lane.v1.Gate.config:type_name -> openits.reversible_lane.v1.GateConfig
+	18, // 34: openits.reversible_lane.v1.Gate.state:type_name -> openits.reversible_lane.v1.GateGateState
+	25, // 35: openits.reversible_lane.v1.GateGateState.observed_at:type_name -> google.protobuf.Timestamp
+	32, // 36: openits.reversible_lane.v1.GateGateState.position:type_name -> openits.reversible_lane.v1.GatePosition
+	20, // 37: openits.reversible_lane.v1.Interlocks.interlock:type_name -> openits.reversible_lane.v1.Interlock
+	21, // 38: openits.reversible_lane.v1.Interlock.config:type_name -> openits.reversible_lane.v1.InterlockConfig
+	22, // 39: openits.reversible_lane.v1.Interlock.state:type_name -> openits.reversible_lane.v1.InterlockState
+	33, // 40: openits.reversible_lane.v1.InterlockConfig.evaluation_point:type_name -> openits.reversible_lane.v1.EvaluationPoint
+	24, // 41: openits.reversible_lane.v1.Faults.fault:type_name -> openits.reversible_lane.v1.Fault
+	34, // 42: openits.reversible_lane.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
+	25, // 43: openits.reversible_lane.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	35, // 44: openits.reversible_lane.v1.Fault.severity:type_name -> openits.reversible_lane.v1.FaultSeverity
+	45, // [45:45] is the sub-list for method output_type
+	45, // [45:45] is the sub-list for method input_type
+	45, // [45:45] is the sub-list for extension type_name
+	45, // [45:45] is the sub-list for extension extendee
+	0,  // [0:45] is the sub-list for field type_name
 }
 
 func init() { file_openits_reversible_lane_v1_state_proto_init() }

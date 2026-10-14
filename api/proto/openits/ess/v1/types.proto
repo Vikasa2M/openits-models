@@ -23,6 +23,14 @@ enum Direction {
   DIRECTION_EXITED = 1;
 }
 
+enum OperStatus {
+  OPER_STATUS_UNKNOWN = 0;
+  OPER_STATUS_OK = 1;
+  OPER_STATUS_DEGRADED = 2;
+  OPER_STATUS_FAILED = 3;
+  OPER_STATUS_NOT_PRESENT = 4;
+}
+
 enum Quality {
   QUALITY_VALID = 0;
   QUALITY_SUSPECT = 1;

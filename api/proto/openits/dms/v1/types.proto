@@ -39,6 +39,14 @@ enum ColorCapability {
   COLOR_CAPABILITY_COLOR = 2;
 }
 
+enum OperStatus {
+  OPER_STATUS_UNKNOWN = 0;
+  OPER_STATUS_OK = 1;
+  OPER_STATUS_DEGRADED = 2;
+  OPER_STATUS_FAILED = 3;
+  OPER_STATUS_NOT_PRESENT = 4;
+}
+
 enum Beacon {
   BEACON_NONE = 0;
   BEACON_FLASHING = 1;

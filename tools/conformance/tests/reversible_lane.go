@@ -324,10 +324,10 @@ func TestReversibleLaneEvent_GateStatusChangedMirrorsLiveState(t *T, obs *Observ
 	}
 	for id, g := range gates.Gate {
 		live := g.GetState()
-		if live == nil || live.MeasuredAt == nil {
+		if live == nil || live.ObservedAt == nil {
 			continue
 		}
-		measured, err := time.Parse(time.RFC3339Nano, live.GetMeasuredAt())
+		measured, err := time.Parse(time.RFC3339Nano, live.GetObservedAt())
 		if err != nil {
 			continue
 		}

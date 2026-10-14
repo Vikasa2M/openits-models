@@ -42,8 +42,13 @@ module openits-ramp-metering {
 
      Copyright (c) 2026.  Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.10.0";
+  openits-types:openits-version "0.11.0";
 
+  revision 2026-10-16 {
+    description
+      "Report health on the root state (shared device-health: oper-status, last-change, observed-at) and rename the detector timestamp last-update to observed-at. Breaking: consumers must read observed-at.";
+    reference "RFC 7950 §7.12.";
+  }
   revision 2026-10-14 {
     description
       "The fault inventory classifies each entry with kind (renamed from
@@ -371,7 +376,7 @@ module openits-ramp-metering {
     leaf count-vph     { type uint16; description "Vehicles-per-hour rate observed by this detector."; }
     leaf occupancy-pct { type openits-types:percentage; description "Detector occupancy percentage (0-100)."; }
     leaf speed-kmh     { type openits-types:speed-kmh; description "Average speed observed by this detector, where measurable."; }
-    leaf last-update   { type yang:date-and-time; description "Wall-clock time of the most recent detector reading."; }
+    leaf observed-at   { type yang:date-and-time; description "The time of this reading: wall-clock time of the most recent detector reading."; }
   }
 
   /* --------------------------------------------------------------
@@ -394,6 +399,7 @@ module openits-ramp-metering {
       description "Applied identity (mirror) + device-reported hardware.";
       uses openits-types:device-identity-config;
       uses openits-types:device-hardware;
+      uses openits-types:device-health;
     }
 
     // -----------------------------------------------------------------

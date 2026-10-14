@@ -334,6 +334,7 @@ type TrafficSensorState struct {
 	Heading           *uint32                            `protobuf:"varint,5,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
 	Id                *string                            `protobuf:"bytes,14,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate       *timestamppb.Timestamp             `protobuf:"bytes,12,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
+	LastChange        *timestamppb.Timestamp             `protobuf:"bytes,21,opt,name=last_change,json=lastChange,proto3" json:"last_change,omitempty"`
 	Latitude          *string                            `protobuf:"bytes,6,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference   *TrafficSensorStateLinearReference `protobuf:"bytes,17,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
 	Longitude         *string                            `protobuf:"bytes,7,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
@@ -341,6 +342,8 @@ type TrafficSensorState struct {
 	Make              *string                            `protobuf:"bytes,8,opt,name=make,proto3,oneof" json:"make,omitempty"`
 	Model             *string                            `protobuf:"bytes,9,opt,name=model,proto3,oneof" json:"model,omitempty"`
 	Name              *string                            `protobuf:"bytes,10,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	ObservedAt        *timestamppb.Timestamp             `protobuf:"bytes,22,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
+	OperStatus        *OperStatus                        `protobuf:"varint,23,opt,name=oper_status,json=operStatus,proto3,enum=openits.traffic_sensor.v1.OperStatus,oneof" json:"oper_status,omitempty"`
 	Owner             *string                            `protobuf:"bytes,19,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	RoadReference     *string                            `protobuf:"bytes,11,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
 	Serial            *string                            `protobuf:"bytes,13,opt,name=serial,proto3,oneof" json:"serial,omitempty"`
@@ -442,6 +445,13 @@ func (x *TrafficSensorState) GetInstallDate() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *TrafficSensorState) GetLastChange() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastChange
+	}
+	return nil
+}
+
 func (x *TrafficSensorState) GetLatitude() string {
 	if x != nil && x.Latitude != nil {
 		return *x.Latitude
@@ -489,6 +499,20 @@ func (x *TrafficSensorState) GetName() string {
 		return *x.Name
 	}
 	return ""
+}
+
+func (x *TrafficSensorState) GetObservedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ObservedAt
+	}
+	return nil
+}
+
+func (x *TrafficSensorState) GetOperStatus() OperStatus {
+	if x != nil && x.OperStatus != nil {
+		return *x.OperStatus
+	}
+	return OperStatus_OPER_STATUS_UNKNOWN
 }
 
 func (x *TrafficSensorState) GetOwner() string {
@@ -1944,7 +1968,8 @@ const file_openits_traffic_sensor_v1_state_proto_rawDesc = "" +
 	"_directionB\n" +
 	"\n" +
 	"\b_measureB\r\n" +
-	"\v_lrs_method\"\xdb\b\n" +
+	"\v_lrs_method\"\xb2\n" +
+	"\n" +
 	"\x12TrafficSensorState\x12`\n" +
 	"\x12operational_status\x18\x01 \x01(\x0e2,.openits.traffic_sensor.v1.OperationalStatusH\x00R\x11operationalStatus\x88\x01\x01\x12,\n" +
 	"\x0finactive_reason\x18\x02 \x01(\tH\x01R\x0einactiveReason\x88\x01\x01\x12!\n" +
@@ -1954,7 +1979,9 @@ const file_openits_traffic_sensor_v1_state_proto_rawDesc = "" +
 	"\x10hardware_version\x18\x10 \x01(\tH\x05R\x0fhardwareVersion\x88\x01\x01\x12\x1d\n" +
 	"\aheading\x18\x05 \x01(\rH\x06R\aheading\x88\x01\x01\x12\x13\n" +
 	"\x02id\x18\x0e \x01(\tH\aR\x02id\x88\x01\x01\x12=\n" +
-	"\finstall_date\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	"\finstall_date\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12;\n" +
+	"\vlast_change\x18\x15 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"lastChange\x12\x1f\n" +
 	"\blatitude\x18\x06 \x01(\tH\bR\blatitude\x88\x01\x01\x12g\n" +
 	"\x10linear_reference\x18\x11 \x01(\v2<.openits.traffic_sensor.v1.TrafficSensorStateLinearReferenceR\x0flinearReference\x12!\n" +
 	"\tlongitude\x18\a \x01(\tH\tR\tlongitude\x88\x01\x01\x12(\n" +
@@ -1963,11 +1990,15 @@ const file_openits_traffic_sensor_v1_state_proto_rawDesc = "" +
 	"\x04make\x18\b \x01(\tH\vR\x04make\x88\x01\x01\x12\x19\n" +
 	"\x05model\x18\t \x01(\tH\fR\x05model\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\n" +
-	" \x01(\tH\rR\x04name\x88\x01\x01\x12\x19\n" +
-	"\x05owner\x18\x13 \x01(\tH\x0eR\x05owner\x88\x01\x01\x12*\n" +
-	"\x0eroad_reference\x18\v \x01(\tH\x0fR\rroadReference\x88\x01\x01\x12\x1b\n" +
-	"\x06serial\x18\r \x01(\tH\x10R\x06serial\x88\x01\x01\x12\x1c\n" +
-	"\asite_id\x18\x14 \x01(\tH\x11R\x06siteId\x88\x01\x01B\x15\n" +
+	" \x01(\tH\rR\x04name\x88\x01\x01\x12;\n" +
+	"\vobserved_at\x18\x16 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x12K\n" +
+	"\voper_status\x18\x17 \x01(\x0e2%.openits.traffic_sensor.v1.OperStatusH\x0eR\n" +
+	"operStatus\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\x13 \x01(\tH\x0fR\x05owner\x88\x01\x01\x12*\n" +
+	"\x0eroad_reference\x18\v \x01(\tH\x10R\rroadReference\x88\x01\x01\x12\x1b\n" +
+	"\x06serial\x18\r \x01(\tH\x11R\x06serial\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\x14 \x01(\tH\x12R\x06siteId\x88\x01\x01B\x15\n" +
 	"\x13_operational_statusB\x12\n" +
 	"\x10_inactive_reasonB\f\n" +
 	"\n" +
@@ -1984,7 +2015,8 @@ const file_openits_traffic_sensor_v1_state_proto_rawDesc = "" +
 	"\x0e_maintained_byB\a\n" +
 	"\x05_makeB\b\n" +
 	"\x06_modelB\a\n" +
-	"\x05_nameB\b\n" +
+	"\x05_nameB\x0e\n" +
+	"\f_oper_statusB\b\n" +
 	"\x06_ownerB\x11\n" +
 	"\x0f_road_referenceB\t\n" +
 	"\a_serialB\n" +
@@ -2219,12 +2251,13 @@ var file_openits_traffic_sensor_v1_state_proto_goTypes = []any{
 	(*Fault)(nil),                              // 22: openits.traffic_sensor.v1.Fault
 	(*timestamppb.Timestamp)(nil),              // 23: google.protobuf.Timestamp
 	(OperationalStatus)(0),                     // 24: openits.traffic_sensor.v1.OperationalStatus
-	(LaneNumberingOrigin)(0),                   // 25: openits.traffic_sensor.v1.LaneNumberingOrigin
-	(MountingSide)(0),                          // 26: openits.traffic_sensor.v1.MountingSide
-	(DataQuality)(0),                           // 27: openits.traffic_sensor.v1.DataQuality
-	(Status)(0),                                // 28: openits.traffic_sensor.v1.Status
-	(*v1.ComponentRef)(nil),                    // 29: openits.types.v1.ComponentRef
-	(FaultSeverity)(0),                         // 30: openits.traffic_sensor.v1.FaultSeverity
+	(OperStatus)(0),                            // 25: openits.traffic_sensor.v1.OperStatus
+	(LaneNumberingOrigin)(0),                   // 26: openits.traffic_sensor.v1.LaneNumberingOrigin
+	(MountingSide)(0),                          // 27: openits.traffic_sensor.v1.MountingSide
+	(DataQuality)(0),                           // 28: openits.traffic_sensor.v1.DataQuality
+	(Status)(0),                                // 29: openits.traffic_sensor.v1.Status
+	(*v1.ComponentRef)(nil),                    // 30: openits.types.v1.ComponentRef
+	(FaultSeverity)(0),                         // 31: openits.traffic_sensor.v1.FaultSeverity
 }
 var file_openits_traffic_sensor_v1_state_proto_depIdxs = []int32{
 	1,  // 0: openits.traffic_sensor.v1.TrafficSensor.config:type_name -> openits.traffic_sensor.v1.TrafficSensorConfig
@@ -2239,37 +2272,40 @@ var file_openits_traffic_sensor_v1_state_proto_depIdxs = []int32{
 	2,  // 9: openits.traffic_sensor.v1.TrafficSensorConfig.linear_reference:type_name -> openits.traffic_sensor.v1.TrafficSensorConfigLinearReference
 	24, // 10: openits.traffic_sensor.v1.TrafficSensorState.operational_status:type_name -> openits.traffic_sensor.v1.OperationalStatus
 	23, // 11: openits.traffic_sensor.v1.TrafficSensorState.install_date:type_name -> google.protobuf.Timestamp
-	4,  // 12: openits.traffic_sensor.v1.TrafficSensorState.linear_reference:type_name -> openits.traffic_sensor.v1.TrafficSensorStateLinearReference
-	6,  // 13: openits.traffic_sensor.v1.Associations.associated_device:type_name -> openits.traffic_sensor.v1.AssociatedDevice
-	25, // 14: openits.traffic_sensor.v1.Configuration.lane_numbering_origin:type_name -> openits.traffic_sensor.v1.LaneNumberingOrigin
-	26, // 15: openits.traffic_sensor.v1.Configuration.mounting_side:type_name -> openits.traffic_sensor.v1.MountingSide
-	8,  // 16: openits.traffic_sensor.v1.Configuration.vehicle_class:type_name -> openits.traffic_sensor.v1.VehicleClass
-	9,  // 17: openits.traffic_sensor.v1.Configuration.queue_zone:type_name -> openits.traffic_sensor.v1.ConfigurationQueueZone
-	11, // 18: openits.traffic_sensor.v1.Lanes.lane:type_name -> openits.traffic_sensor.v1.LanesLane
-	12, // 19: openits.traffic_sensor.v1.LanesLane.config:type_name -> openits.traffic_sensor.v1.LanesLaneConfig
-	13, // 20: openits.traffic_sensor.v1.LanesLane.state:type_name -> openits.traffic_sensor.v1.LanesLaneState
-	24, // 21: openits.traffic_sensor.v1.LanesLaneState.operational_status:type_name -> openits.traffic_sensor.v1.OperationalStatus
-	14, // 22: openits.traffic_sensor.v1.LanesLaneState.interval:type_name -> openits.traffic_sensor.v1.Interval
-	16, // 23: openits.traffic_sensor.v1.LanesLaneState.presence:type_name -> openits.traffic_sensor.v1.Presence
-	15, // 24: openits.traffic_sensor.v1.Interval.class_volume:type_name -> openits.traffic_sensor.v1.IntervalClassVolume
-	27, // 25: openits.traffic_sensor.v1.Interval.data_quality:type_name -> openits.traffic_sensor.v1.DataQuality
-	23, // 26: openits.traffic_sensor.v1.Interval.interval_start:type_name -> google.protobuf.Timestamp
-	23, // 27: openits.traffic_sensor.v1.Presence.last_detection:type_name -> google.protobuf.Timestamp
-	18, // 28: openits.traffic_sensor.v1.Queues.queue_zone:type_name -> openits.traffic_sensor.v1.QueuesQueueZone
-	23, // 29: openits.traffic_sensor.v1.QueuesQueueZone.queue_start:type_name -> google.protobuf.Timestamp
-	23, // 30: openits.traffic_sensor.v1.Diagnostics.last_self_test:type_name -> google.protobuf.Timestamp
-	20, // 31: openits.traffic_sensor.v1.Diagnostics.calibration:type_name -> openits.traffic_sensor.v1.Calibration
-	23, // 32: openits.traffic_sensor.v1.Calibration.last_calibrated:type_name -> google.protobuf.Timestamp
-	28, // 33: openits.traffic_sensor.v1.Calibration.status:type_name -> openits.traffic_sensor.v1.Status
-	22, // 34: openits.traffic_sensor.v1.Faults.fault:type_name -> openits.traffic_sensor.v1.Fault
-	29, // 35: openits.traffic_sensor.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
-	23, // 36: openits.traffic_sensor.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	30, // 37: openits.traffic_sensor.v1.Fault.severity:type_name -> openits.traffic_sensor.v1.FaultSeverity
-	38, // [38:38] is the sub-list for method output_type
-	38, // [38:38] is the sub-list for method input_type
-	38, // [38:38] is the sub-list for extension type_name
-	38, // [38:38] is the sub-list for extension extendee
-	0,  // [0:38] is the sub-list for field type_name
+	23, // 12: openits.traffic_sensor.v1.TrafficSensorState.last_change:type_name -> google.protobuf.Timestamp
+	4,  // 13: openits.traffic_sensor.v1.TrafficSensorState.linear_reference:type_name -> openits.traffic_sensor.v1.TrafficSensorStateLinearReference
+	23, // 14: openits.traffic_sensor.v1.TrafficSensorState.observed_at:type_name -> google.protobuf.Timestamp
+	25, // 15: openits.traffic_sensor.v1.TrafficSensorState.oper_status:type_name -> openits.traffic_sensor.v1.OperStatus
+	6,  // 16: openits.traffic_sensor.v1.Associations.associated_device:type_name -> openits.traffic_sensor.v1.AssociatedDevice
+	26, // 17: openits.traffic_sensor.v1.Configuration.lane_numbering_origin:type_name -> openits.traffic_sensor.v1.LaneNumberingOrigin
+	27, // 18: openits.traffic_sensor.v1.Configuration.mounting_side:type_name -> openits.traffic_sensor.v1.MountingSide
+	8,  // 19: openits.traffic_sensor.v1.Configuration.vehicle_class:type_name -> openits.traffic_sensor.v1.VehicleClass
+	9,  // 20: openits.traffic_sensor.v1.Configuration.queue_zone:type_name -> openits.traffic_sensor.v1.ConfigurationQueueZone
+	11, // 21: openits.traffic_sensor.v1.Lanes.lane:type_name -> openits.traffic_sensor.v1.LanesLane
+	12, // 22: openits.traffic_sensor.v1.LanesLane.config:type_name -> openits.traffic_sensor.v1.LanesLaneConfig
+	13, // 23: openits.traffic_sensor.v1.LanesLane.state:type_name -> openits.traffic_sensor.v1.LanesLaneState
+	24, // 24: openits.traffic_sensor.v1.LanesLaneState.operational_status:type_name -> openits.traffic_sensor.v1.OperationalStatus
+	14, // 25: openits.traffic_sensor.v1.LanesLaneState.interval:type_name -> openits.traffic_sensor.v1.Interval
+	16, // 26: openits.traffic_sensor.v1.LanesLaneState.presence:type_name -> openits.traffic_sensor.v1.Presence
+	15, // 27: openits.traffic_sensor.v1.Interval.class_volume:type_name -> openits.traffic_sensor.v1.IntervalClassVolume
+	28, // 28: openits.traffic_sensor.v1.Interval.data_quality:type_name -> openits.traffic_sensor.v1.DataQuality
+	23, // 29: openits.traffic_sensor.v1.Interval.interval_start:type_name -> google.protobuf.Timestamp
+	23, // 30: openits.traffic_sensor.v1.Presence.last_detection:type_name -> google.protobuf.Timestamp
+	18, // 31: openits.traffic_sensor.v1.Queues.queue_zone:type_name -> openits.traffic_sensor.v1.QueuesQueueZone
+	23, // 32: openits.traffic_sensor.v1.QueuesQueueZone.queue_start:type_name -> google.protobuf.Timestamp
+	23, // 33: openits.traffic_sensor.v1.Diagnostics.last_self_test:type_name -> google.protobuf.Timestamp
+	20, // 34: openits.traffic_sensor.v1.Diagnostics.calibration:type_name -> openits.traffic_sensor.v1.Calibration
+	23, // 35: openits.traffic_sensor.v1.Calibration.last_calibrated:type_name -> google.protobuf.Timestamp
+	29, // 36: openits.traffic_sensor.v1.Calibration.status:type_name -> openits.traffic_sensor.v1.Status
+	22, // 37: openits.traffic_sensor.v1.Faults.fault:type_name -> openits.traffic_sensor.v1.Fault
+	30, // 38: openits.traffic_sensor.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
+	23, // 39: openits.traffic_sensor.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	31, // 40: openits.traffic_sensor.v1.Fault.severity:type_name -> openits.traffic_sensor.v1.FaultSeverity
+	41, // [41:41] is the sub-list for method output_type
+	41, // [41:41] is the sub-list for method input_type
+	41, // [41:41] is the sub-list for extension type_name
+	41, // [41:41] is the sub-list for extension extendee
+	0,  // [0:41] is the sub-list for field type_name
 }
 
 func init() { file_openits_traffic_sensor_v1_state_proto_init() }

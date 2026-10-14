@@ -356,6 +356,7 @@ type PerceptionSensorState struct {
 	Heading         *uint32                               `protobuf:"varint,3,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
 	Id              *string                               `protobuf:"bytes,12,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate     *timestamppb.Timestamp                `protobuf:"bytes,10,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
+	LastChange      *timestamppb.Timestamp                `protobuf:"bytes,19,opt,name=last_change,json=lastChange,proto3" json:"last_change,omitempty"`
 	Latitude        *string                               `protobuf:"bytes,4,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference *PerceptionSensorStateLinearReference `protobuf:"bytes,15,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
 	Longitude       *string                               `protobuf:"bytes,5,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
@@ -363,6 +364,8 @@ type PerceptionSensorState struct {
 	Make            *string                               `protobuf:"bytes,6,opt,name=make,proto3,oneof" json:"make,omitempty"`
 	Model           *string                               `protobuf:"bytes,7,opt,name=model,proto3,oneof" json:"model,omitempty"`
 	Name            *string                               `protobuf:"bytes,8,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	ObservedAt      *timestamppb.Timestamp                `protobuf:"bytes,20,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
+	OperStatus      *OperStatus                           `protobuf:"varint,21,opt,name=oper_status,json=operStatus,proto3,enum=openits.perception.v1.OperStatus,oneof" json:"oper_status,omitempty"`
 	Owner           *string                               `protobuf:"bytes,17,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	RoadReference   *string                               `protobuf:"bytes,9,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
 	Serial          *string                               `protobuf:"bytes,11,opt,name=serial,proto3,oneof" json:"serial,omitempty"`
@@ -450,6 +453,13 @@ func (x *PerceptionSensorState) GetInstallDate() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *PerceptionSensorState) GetLastChange() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastChange
+	}
+	return nil
+}
+
 func (x *PerceptionSensorState) GetLatitude() string {
 	if x != nil && x.Latitude != nil {
 		return *x.Latitude
@@ -497,6 +507,20 @@ func (x *PerceptionSensorState) GetName() string {
 		return *x.Name
 	}
 	return ""
+}
+
+func (x *PerceptionSensorState) GetObservedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ObservedAt
+	}
+	return nil
+}
+
+func (x *PerceptionSensorState) GetOperStatus() OperStatus {
+	if x != nil && x.OperStatus != nil {
+		return *x.OperStatus
+	}
+	return OperStatus_OPER_STATUS_UNKNOWN
 }
 
 func (x *PerceptionSensorState) GetOwner() string {
@@ -1910,7 +1934,7 @@ func (x *ZoneOccupancyZones) GetZone() []*ZoneOccupancyZonesZone {
 type ZoneOccupancyZonesZone struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	ZoneId             *string                `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3,oneof" json:"zone_id,omitempty"`
-	MeasuredAt         *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=measured_at,json=measuredAt,proto3" json:"measured_at,omitempty"`
+	ObservedAt         *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
 	OccupancyCount     *uint32                `protobuf:"varint,3,opt,name=occupancy_count,json=occupancyCount,proto3,oneof" json:"occupancy_count,omitempty"`
 	OccupiedSince      *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=occupied_since,json=occupiedSince,proto3" json:"occupied_since,omitempty"`
 	Presence           *bool                  `protobuf:"varint,2,opt,name=presence,proto3,oneof" json:"presence,omitempty"`
@@ -1957,9 +1981,9 @@ func (x *ZoneOccupancyZonesZone) GetZoneId() string {
 	return ""
 }
 
-func (x *ZoneOccupancyZonesZone) GetMeasuredAt() *timestamppb.Timestamp {
+func (x *ZoneOccupancyZonesZone) GetObservedAt() *timestamppb.Timestamp {
 	if x != nil {
-		return x.MeasuredAt
+		return x.ObservedAt
 	}
 	return nil
 }
@@ -2116,7 +2140,7 @@ const file_openits_perception_v1_state_proto_rawDesc = "" +
 	"_directionB\n" +
 	"\n" +
 	"\b_measureB\r\n" +
-	"\v_lrs_method\"\xa2\a\n" +
+	"\v_lrs_method\"\xf5\b\n" +
 	"\x15PerceptionSensorState\x12!\n" +
 	"\televation\x18\x01 \x01(\tH\x00R\televation\x88\x01\x01\x12\x1f\n" +
 	"\bfirmware\x18\x02 \x01(\tH\x01R\bfirmware\x88\x01\x01\x12*\n" +
@@ -2125,7 +2149,9 @@ const file_openits_perception_v1_state_proto_rawDesc = "" +
 	"\aheading\x18\x03 \x01(\rH\x04R\aheading\x88\x01\x01\x12\x13\n" +
 	"\x02id\x18\f \x01(\tH\x05R\x02id\x88\x01\x01\x12=\n" +
 	"\finstall_date\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	" \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12;\n" +
+	"\vlast_change\x18\x13 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"lastChange\x12\x1f\n" +
 	"\blatitude\x18\x04 \x01(\tH\x06R\blatitude\x88\x01\x01\x12f\n" +
 	"\x10linear_reference\x18\x0f \x01(\v2;.openits.perception.v1.PerceptionSensorStateLinearReferenceR\x0flinearReference\x12!\n" +
 	"\tlongitude\x18\x05 \x01(\tH\aR\tlongitude\x88\x01\x01\x12(\n" +
@@ -2133,11 +2159,15 @@ const file_openits_perception_v1_state_proto_rawDesc = "" +
 	"\x04make\x18\x06 \x01(\tH\tR\x04make\x88\x01\x01\x12\x19\n" +
 	"\x05model\x18\a \x01(\tH\n" +
 	"R\x05model\x88\x01\x01\x12\x17\n" +
-	"\x04name\x18\b \x01(\tH\vR\x04name\x88\x01\x01\x12\x19\n" +
-	"\x05owner\x18\x11 \x01(\tH\fR\x05owner\x88\x01\x01\x12*\n" +
-	"\x0eroad_reference\x18\t \x01(\tH\rR\rroadReference\x88\x01\x01\x12\x1b\n" +
-	"\x06serial\x18\v \x01(\tH\x0eR\x06serial\x88\x01\x01\x12\x1c\n" +
-	"\asite_id\x18\x12 \x01(\tH\x0fR\x06siteId\x88\x01\x01B\f\n" +
+	"\x04name\x18\b \x01(\tH\vR\x04name\x88\x01\x01\x12;\n" +
+	"\vobserved_at\x18\x14 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x12G\n" +
+	"\voper_status\x18\x15 \x01(\x0e2!.openits.perception.v1.OperStatusH\fR\n" +
+	"operStatus\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\x11 \x01(\tH\rR\x05owner\x88\x01\x01\x12*\n" +
+	"\x0eroad_reference\x18\t \x01(\tH\x0eR\rroadReference\x88\x01\x01\x12\x1b\n" +
+	"\x06serial\x18\v \x01(\tH\x0fR\x06serial\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\x12 \x01(\tH\x10R\x06siteId\x88\x01\x01B\f\n" +
 	"\n" +
 	"_elevationB\v\n" +
 	"\t_firmwareB\x11\n" +
@@ -2152,7 +2182,8 @@ const file_openits_perception_v1_state_proto_rawDesc = "" +
 	"\x0e_maintained_byB\a\n" +
 	"\x05_makeB\b\n" +
 	"\x06_modelB\a\n" +
-	"\x05_nameB\b\n" +
+	"\x05_nameB\x0e\n" +
+	"\f_oper_statusB\b\n" +
 	"\x06_ownerB\x11\n" +
 	"\x0f_road_referenceB\t\n" +
 	"\a_serialB\n" +
@@ -2350,11 +2381,11 @@ const file_openits_perception_v1_state_proto_rawDesc = "" +
 	"\x0f_sensing_methodB\r\n" +
 	"\v_classifiesJ\x04\b\x03\x10\x04R\bcapacity\"W\n" +
 	"\x12ZoneOccupancyZones\x12A\n" +
-	"\x04zone\x18\x01 \x03(\v2-.openits.perception.v1.ZoneOccupancyZonesZoneR\x04zone\"\xca\x03\n" +
+	"\x04zone\x18\x01 \x03(\v2-.openits.perception.v1.ZoneOccupancyZonesZoneR\x04zone\"\xdd\x03\n" +
 	"\x16ZoneOccupancyZonesZone\x12\x1c\n" +
 	"\azone_id\x18\x01 \x01(\tH\x00R\x06zoneId\x88\x01\x01\x12;\n" +
-	"\vmeasured_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"measuredAt\x12,\n" +
+	"\vobserved_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x12,\n" +
 	"\x0foccupancy_count\x18\x03 \x01(\rH\x01R\x0eoccupancyCount\x88\x01\x01\x12A\n" +
 	"\x0eoccupied_since\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\roccupiedSince\x12\x1f\n" +
 	"\bpresence\x18\x02 \x01(\bH\x02R\bpresence\x88\x01\x01\x124\n" +
@@ -2364,7 +2395,7 @@ const file_openits_perception_v1_state_proto_rawDesc = "" +
 	"\b_zone_idB\x12\n" +
 	"\x10_occupancy_countB\v\n" +
 	"\t_presenceB\x16\n" +
-	"\x14_presence_confidence\"\xb8\x01\n" +
+	"\x14_presence_confidenceJ\x04\b\x06\x10\aR\vmeasured_at\"\xb8\x01\n" +
 	"\fPresentClass\x12\x19\n" +
 	"\x05class\x18\x01 \x01(\tH\x00R\x05class\x88\x01\x01\x12\x19\n" +
 	"\x05count\x18\x02 \x01(\rH\x01R\x05count\x88\x01\x01\x12@\n" +
@@ -2415,11 +2446,12 @@ var file_openits_perception_v1_state_proto_goTypes = []any{
 	(*ZoneOccupancyZonesZone)(nil),                // 25: openits.perception.v1.ZoneOccupancyZonesZone
 	(*PresentClass)(nil),                          // 26: openits.perception.v1.PresentClass
 	(*timestamppb.Timestamp)(nil),                 // 27: google.protobuf.Timestamp
-	(Lifecycle)(0),                                // 28: openits.perception.v1.Lifecycle
-	(IncidentSeverity)(0),                         // 29: openits.perception.v1.IncidentSeverity
-	(IncidentDisposition)(0),                      // 30: openits.perception.v1.IncidentDisposition
-	(*v1.ComponentRef)(nil),                       // 31: openits.types.v1.ComponentRef
-	(FaultSeverity)(0),                            // 32: openits.perception.v1.FaultSeverity
+	(OperStatus)(0),                               // 28: openits.perception.v1.OperStatus
+	(Lifecycle)(0),                                // 29: openits.perception.v1.Lifecycle
+	(IncidentSeverity)(0),                         // 30: openits.perception.v1.IncidentSeverity
+	(IncidentDisposition)(0),                      // 31: openits.perception.v1.IncidentDisposition
+	(*v1.ComponentRef)(nil),                       // 32: openits.types.v1.ComponentRef
+	(FaultSeverity)(0),                            // 33: openits.perception.v1.FaultSeverity
 }
 var file_openits_perception_v1_state_proto_depIdxs = []int32{
 	1,  // 0: openits.perception.v1.PerceptionSensor.config:type_name -> openits.perception.v1.PerceptionSensorConfig
@@ -2436,36 +2468,39 @@ var file_openits_perception_v1_state_proto_depIdxs = []int32{
 	27, // 11: openits.perception.v1.PerceptionSensorConfig.install_date:type_name -> google.protobuf.Timestamp
 	2,  // 12: openits.perception.v1.PerceptionSensorConfig.linear_reference:type_name -> openits.perception.v1.PerceptionSensorConfigLinearReference
 	27, // 13: openits.perception.v1.PerceptionSensorState.install_date:type_name -> google.protobuf.Timestamp
-	4,  // 14: openits.perception.v1.PerceptionSensorState.linear_reference:type_name -> openits.perception.v1.PerceptionSensorStateLinearReference
-	6,  // 15: openits.perception.v1.Associations.associated_device:type_name -> openits.perception.v1.AssociatedDevice
-	8,  // 16: openits.perception.v1.PerceptionSensorConfiguration.zone:type_name -> openits.perception.v1.PerceptionSensorConfigurationZone
-	9,  // 17: openits.perception.v1.PerceptionSensorConfigurationZone.vertex:type_name -> openits.perception.v1.Vertex
-	11, // 18: openits.perception.v1.Objects.track:type_name -> openits.perception.v1.Track
-	28, // 19: openits.perception.v1.Track.lifecycle:type_name -> openits.perception.v1.Lifecycle
-	27, // 20: openits.perception.v1.Track.observed_at:type_name -> google.protobuf.Timestamp
-	13, // 21: openits.perception.v1.PerceptionSensorZones.zone:type_name -> openits.perception.v1.PerceptionSensorZonesZone
-	16, // 22: openits.perception.v1.Incidents.incident:type_name -> openits.perception.v1.Incident
-	29, // 23: openits.perception.v1.Incident.severity:type_name -> openits.perception.v1.IncidentSeverity
-	27, // 24: openits.perception.v1.Incident.first_observed:type_name -> google.protobuf.Timestamp
-	30, // 25: openits.perception.v1.Incident.disposition:type_name -> openits.perception.v1.IncidentDisposition
-	18, // 26: openits.perception.v1.IncidentReview.review:type_name -> openits.perception.v1.Review
-	30, // 27: openits.perception.v1.Review.disposition:type_name -> openits.perception.v1.IncidentDisposition
-	20, // 28: openits.perception.v1.Faults.fault:type_name -> openits.perception.v1.Fault
-	31, // 29: openits.perception.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
-	27, // 30: openits.perception.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	32, // 31: openits.perception.v1.Fault.severity:type_name -> openits.perception.v1.FaultSeverity
-	22, // 32: openits.perception.v1.ZoneOccupancy.configuration:type_name -> openits.perception.v1.ZoneOccupancyConfiguration
-	24, // 33: openits.perception.v1.ZoneOccupancy.zones:type_name -> openits.perception.v1.ZoneOccupancyZones
-	23, // 34: openits.perception.v1.ZoneOccupancyConfiguration.zone:type_name -> openits.perception.v1.ZoneOccupancyConfigurationZone
-	25, // 35: openits.perception.v1.ZoneOccupancyZones.zone:type_name -> openits.perception.v1.ZoneOccupancyZonesZone
-	27, // 36: openits.perception.v1.ZoneOccupancyZonesZone.measured_at:type_name -> google.protobuf.Timestamp
-	27, // 37: openits.perception.v1.ZoneOccupancyZonesZone.occupied_since:type_name -> google.protobuf.Timestamp
-	26, // 38: openits.perception.v1.ZoneOccupancyZonesZone.present_class:type_name -> openits.perception.v1.PresentClass
-	39, // [39:39] is the sub-list for method output_type
-	39, // [39:39] is the sub-list for method input_type
-	39, // [39:39] is the sub-list for extension type_name
-	39, // [39:39] is the sub-list for extension extendee
-	0,  // [0:39] is the sub-list for field type_name
+	27, // 14: openits.perception.v1.PerceptionSensorState.last_change:type_name -> google.protobuf.Timestamp
+	4,  // 15: openits.perception.v1.PerceptionSensorState.linear_reference:type_name -> openits.perception.v1.PerceptionSensorStateLinearReference
+	27, // 16: openits.perception.v1.PerceptionSensorState.observed_at:type_name -> google.protobuf.Timestamp
+	28, // 17: openits.perception.v1.PerceptionSensorState.oper_status:type_name -> openits.perception.v1.OperStatus
+	6,  // 18: openits.perception.v1.Associations.associated_device:type_name -> openits.perception.v1.AssociatedDevice
+	8,  // 19: openits.perception.v1.PerceptionSensorConfiguration.zone:type_name -> openits.perception.v1.PerceptionSensorConfigurationZone
+	9,  // 20: openits.perception.v1.PerceptionSensorConfigurationZone.vertex:type_name -> openits.perception.v1.Vertex
+	11, // 21: openits.perception.v1.Objects.track:type_name -> openits.perception.v1.Track
+	29, // 22: openits.perception.v1.Track.lifecycle:type_name -> openits.perception.v1.Lifecycle
+	27, // 23: openits.perception.v1.Track.observed_at:type_name -> google.protobuf.Timestamp
+	13, // 24: openits.perception.v1.PerceptionSensorZones.zone:type_name -> openits.perception.v1.PerceptionSensorZonesZone
+	16, // 25: openits.perception.v1.Incidents.incident:type_name -> openits.perception.v1.Incident
+	30, // 26: openits.perception.v1.Incident.severity:type_name -> openits.perception.v1.IncidentSeverity
+	27, // 27: openits.perception.v1.Incident.first_observed:type_name -> google.protobuf.Timestamp
+	31, // 28: openits.perception.v1.Incident.disposition:type_name -> openits.perception.v1.IncidentDisposition
+	18, // 29: openits.perception.v1.IncidentReview.review:type_name -> openits.perception.v1.Review
+	31, // 30: openits.perception.v1.Review.disposition:type_name -> openits.perception.v1.IncidentDisposition
+	20, // 31: openits.perception.v1.Faults.fault:type_name -> openits.perception.v1.Fault
+	32, // 32: openits.perception.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
+	27, // 33: openits.perception.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	33, // 34: openits.perception.v1.Fault.severity:type_name -> openits.perception.v1.FaultSeverity
+	22, // 35: openits.perception.v1.ZoneOccupancy.configuration:type_name -> openits.perception.v1.ZoneOccupancyConfiguration
+	24, // 36: openits.perception.v1.ZoneOccupancy.zones:type_name -> openits.perception.v1.ZoneOccupancyZones
+	23, // 37: openits.perception.v1.ZoneOccupancyConfiguration.zone:type_name -> openits.perception.v1.ZoneOccupancyConfigurationZone
+	25, // 38: openits.perception.v1.ZoneOccupancyZones.zone:type_name -> openits.perception.v1.ZoneOccupancyZonesZone
+	27, // 39: openits.perception.v1.ZoneOccupancyZonesZone.observed_at:type_name -> google.protobuf.Timestamp
+	27, // 40: openits.perception.v1.ZoneOccupancyZonesZone.occupied_since:type_name -> google.protobuf.Timestamp
+	26, // 41: openits.perception.v1.ZoneOccupancyZonesZone.present_class:type_name -> openits.perception.v1.PresentClass
+	42, // [42:42] is the sub-list for method output_type
+	42, // [42:42] is the sub-list for method input_type
+	42, // [42:42] is the sub-list for extension type_name
+	42, // [42:42] is the sub-list for extension extendee
+	0,  // [0:42] is the sub-list for field type_name
 }
 
 func init() { file_openits_perception_v1_state_proto_init() }

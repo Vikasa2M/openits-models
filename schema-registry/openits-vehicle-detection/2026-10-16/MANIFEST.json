@@ -1,0 +1,7 @@
+{
+  "module": "openits-vehicle-detection",
+  "revision": "2026-10-16",
+  "files": [
+    "schema.yang"
+  ]
+}

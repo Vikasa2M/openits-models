@@ -2,6 +2,9 @@
   "openits-cctv:camera": {
     "config": { "id": "cctv-i35-mm214", "name": "I-35 NB @ MM 214 PTZ", "latitude": "30.2672", "longitude": "-97.7431" },
     "state": {
+      "oper-status": "ok",
+      "last-change": "2026-10-14T08:00:00Z",
+      "observed-at": "2026-10-14T16:00:00Z",
       "id": "cctv-i35-mm214", "name": "I-35 NB @ MM 214 PTZ",
       "latitude": "30.2672", "longitude": "-97.7431",
       "make": "Axis", "model": "Q6215-LE", "firmware": "10.12.0",

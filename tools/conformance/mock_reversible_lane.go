@@ -130,7 +130,7 @@ func collectReversibleLane() (*yangpkg.Device, error) {
 	wgSt.InterlockBypassed = boolPtr(false)
 	wgSt.OpenInhibited = boolPtr(false)
 	wgSt.CloseInhibited = boolPtr(true)
-	wgSt.MeasuredAt = strPtr(time.Now().UTC().Format(time.RFC3339))
+	wgSt.ObservedAt = strPtr(time.Now().UTC().Format(time.RFC3339))
 
 	bg, err := gates.NewGate("BG-2")
 	if err != nil {
@@ -146,7 +146,7 @@ func collectReversibleLane() (*yangpkg.Device, error) {
 	bgSt.OperatingMode = yangpkg.OpenitsReversibleLaneTypes_ReversibleLaneGateMode_reversible_lane_gate_mode_offline
 	bgSt.OpenInhibited = boolPtr(false)
 	bgSt.CloseInhibited = boolPtr(false)
-	bgSt.MeasuredAt = strPtr(time.Now().UTC().Format(time.RFC3339))
+	bgSt.ObservedAt = strPtr(time.Now().UTC().Format(time.RFC3339))
 
 	// Every gate-fault identity is a legal inventory entry. Each names
 	// its gate through the shared component reference (rl-component-gate

@@ -364,6 +364,7 @@ type RampMeterState struct {
 	Heading         *uint32                        `protobuf:"varint,10,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
 	Id              *string                        `protobuf:"bytes,11,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate     *timestamppb.Timestamp         `protobuf:"bytes,5,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
+	LastChange      *timestamppb.Timestamp         `protobuf:"bytes,19,opt,name=last_change,json=lastChange,proto3" json:"last_change,omitempty"`
 	Latitude        *string                        `protobuf:"bytes,2,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference *RampMeterStateLinearReference `protobuf:"bytes,7,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
 	Longitude       *string                        `protobuf:"bytes,3,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
@@ -371,6 +372,8 @@ type RampMeterState struct {
 	Make            *string                        `protobuf:"bytes,4,opt,name=make,proto3,oneof" json:"make,omitempty"`
 	Model           *string                        `protobuf:"bytes,6,opt,name=model,proto3,oneof" json:"model,omitempty"`
 	Name            *string                        `protobuf:"bytes,12,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	ObservedAt      *timestamppb.Timestamp         `protobuf:"bytes,20,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
+	OperStatus      *OperStatus                    `protobuf:"varint,21,opt,name=oper_status,json=operStatus,proto3,enum=openits.ramp_metering.v1.OperStatus,oneof" json:"oper_status,omitempty"`
 	Owner           *string                        `protobuf:"bytes,17,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	RoadReference   *string                        `protobuf:"bytes,13,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
 	Serial          *string                        `protobuf:"bytes,8,opt,name=serial,proto3,oneof" json:"serial,omitempty"`
@@ -458,6 +461,13 @@ func (x *RampMeterState) GetInstallDate() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *RampMeterState) GetLastChange() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastChange
+	}
+	return nil
+}
+
 func (x *RampMeterState) GetLatitude() string {
 	if x != nil && x.Latitude != nil {
 		return *x.Latitude
@@ -505,6 +515,20 @@ func (x *RampMeterState) GetName() string {
 		return *x.Name
 	}
 	return ""
+}
+
+func (x *RampMeterState) GetObservedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ObservedAt
+	}
+	return nil
+}
+
+func (x *RampMeterState) GetOperStatus() OperStatus {
+	if x != nil && x.OperStatus != nil {
+		return *x.OperStatus
+	}
+	return OperStatus_OPER_STATUS_UNKNOWN
 }
 
 func (x *RampMeterState) GetOwner() string {
@@ -2468,7 +2492,7 @@ type LaneDetectorState struct {
 	Active        *bool                  `protobuf:"varint,1,opt,name=active,proto3,oneof" json:"active,omitempty"`
 	CountVph      *uint32                `protobuf:"varint,2,opt,name=count_vph,json=countVph,proto3,oneof" json:"count_vph,omitempty"`
 	DetectorId    *string                `protobuf:"bytes,3,opt,name=detector_id,json=detectorId,proto3,oneof" json:"detector_id,omitempty"`
-	LastUpdate    *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=last_update,json=lastUpdate,proto3" json:"last_update,omitempty"`
+	ObservedAt    *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
 	OccupancyPct  *uint32                `protobuf:"varint,5,opt,name=occupancy_pct,json=occupancyPct,proto3,oneof" json:"occupancy_pct,omitempty"`
 	Role          *DetectorRole          `protobuf:"varint,6,opt,name=role,proto3,enum=openits.ramp_metering.v1.DetectorRole,oneof" json:"role,omitempty"`
 	SpeedKmh      *string                `protobuf:"bytes,7,opt,name=speed_kmh,json=speedKmh,proto3,oneof" json:"speed_kmh,omitempty"`
@@ -2527,9 +2551,9 @@ func (x *LaneDetectorState) GetDetectorId() string {
 	return ""
 }
 
-func (x *LaneDetectorState) GetLastUpdate() *timestamppb.Timestamp {
+func (x *LaneDetectorState) GetObservedAt() *timestamppb.Timestamp {
 	if x != nil {
-		return x.LastUpdate
+		return x.ObservedAt
 	}
 	return nil
 }
@@ -2716,7 +2740,7 @@ type MainlineDetectorsDetectorState struct {
 	Active        *bool                  `protobuf:"varint,1,opt,name=active,proto3,oneof" json:"active,omitempty"`
 	CountVph      *uint32                `protobuf:"varint,2,opt,name=count_vph,json=countVph,proto3,oneof" json:"count_vph,omitempty"`
 	DetectorId    *string                `protobuf:"bytes,3,opt,name=detector_id,json=detectorId,proto3,oneof" json:"detector_id,omitempty"`
-	LastUpdate    *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=last_update,json=lastUpdate,proto3" json:"last_update,omitempty"`
+	ObservedAt    *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
 	OccupancyPct  *uint32                `protobuf:"varint,5,opt,name=occupancy_pct,json=occupancyPct,proto3,oneof" json:"occupancy_pct,omitempty"`
 	Role          *DetectorRole          `protobuf:"varint,6,opt,name=role,proto3,enum=openits.ramp_metering.v1.DetectorRole,oneof" json:"role,omitempty"`
 	SpeedKmh      *string                `protobuf:"bytes,7,opt,name=speed_kmh,json=speedKmh,proto3,oneof" json:"speed_kmh,omitempty"`
@@ -2775,9 +2799,9 @@ func (x *MainlineDetectorsDetectorState) GetDetectorId() string {
 	return ""
 }
 
-func (x *MainlineDetectorsDetectorState) GetLastUpdate() *timestamppb.Timestamp {
+func (x *MainlineDetectorsDetectorState) GetObservedAt() *timestamppb.Timestamp {
 	if x != nil {
-		return x.LastUpdate
+		return x.ObservedAt
 	}
 	return nil
 }
@@ -3059,7 +3083,7 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"_directionB\n" +
 	"\n" +
 	"\b_measureB\r\n" +
-	"\v_lrs_method\"\x97\a\n" +
+	"\v_lrs_method\"\xed\b\n" +
 	"\x0eRampMeterState\x12!\n" +
 	"\televation\x18\t \x01(\tH\x00R\televation\x88\x01\x01\x12\x1f\n" +
 	"\bfirmware\x18\x01 \x01(\tH\x01R\bfirmware\x88\x01\x01\x12*\n" +
@@ -3068,7 +3092,9 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\aheading\x18\n" +
 	" \x01(\rH\x04R\aheading\x88\x01\x01\x12\x13\n" +
 	"\x02id\x18\v \x01(\tH\x05R\x02id\x88\x01\x01\x12=\n" +
-	"\finstall_date\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	"\finstall_date\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12;\n" +
+	"\vlast_change\x18\x13 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"lastChange\x12\x1f\n" +
 	"\blatitude\x18\x02 \x01(\tH\x06R\blatitude\x88\x01\x01\x12b\n" +
 	"\x10linear_reference\x18\a \x01(\v27.openits.ramp_metering.v1.RampMeterStateLinearReferenceR\x0flinearReference\x12!\n" +
 	"\tlongitude\x18\x03 \x01(\tH\aR\tlongitude\x88\x01\x01\x12(\n" +
@@ -3076,11 +3102,15 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\x04make\x18\x04 \x01(\tH\tR\x04make\x88\x01\x01\x12\x19\n" +
 	"\x05model\x18\x06 \x01(\tH\n" +
 	"R\x05model\x88\x01\x01\x12\x17\n" +
-	"\x04name\x18\f \x01(\tH\vR\x04name\x88\x01\x01\x12\x19\n" +
-	"\x05owner\x18\x11 \x01(\tH\fR\x05owner\x88\x01\x01\x12*\n" +
-	"\x0eroad_reference\x18\r \x01(\tH\rR\rroadReference\x88\x01\x01\x12\x1b\n" +
-	"\x06serial\x18\b \x01(\tH\x0eR\x06serial\x88\x01\x01\x12\x1c\n" +
-	"\asite_id\x18\x12 \x01(\tH\x0fR\x06siteId\x88\x01\x01B\f\n" +
+	"\x04name\x18\f \x01(\tH\vR\x04name\x88\x01\x01\x12;\n" +
+	"\vobserved_at\x18\x14 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x12J\n" +
+	"\voper_status\x18\x15 \x01(\x0e2$.openits.ramp_metering.v1.OperStatusH\fR\n" +
+	"operStatus\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\x11 \x01(\tH\rR\x05owner\x88\x01\x01\x12*\n" +
+	"\x0eroad_reference\x18\r \x01(\tH\x0eR\rroadReference\x88\x01\x01\x12\x1b\n" +
+	"\x06serial\x18\b \x01(\tH\x0fR\x06serial\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\x12 \x01(\tH\x10R\x06siteId\x88\x01\x01B\f\n" +
 	"\n" +
 	"_elevationB\v\n" +
 	"\t_firmwareB\x11\n" +
@@ -3095,7 +3125,8 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\x0e_maintained_byB\a\n" +
 	"\x05_makeB\b\n" +
 	"\x06_modelB\a\n" +
-	"\x05_nameB\b\n" +
+	"\x05_nameB\x0e\n" +
+	"\f_oper_statusB\b\n" +
 	"\x06_ownerB\x11\n" +
 	"\x0f_road_referenceB\t\n" +
 	"\a_serialB\n" +
@@ -3346,14 +3377,14 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"detectorId\x88\x01\x01\x12?\n" +
 	"\x04role\x18\x02 \x01(\x0e2&.openits.ramp_metering.v1.DetectorRoleH\x01R\x04role\x88\x01\x01B\x0e\n" +
 	"\f_detector_idB\a\n" +
-	"\x05_role\"\x94\x03\n" +
+	"\x05_role\"\xa7\x03\n" +
 	"\x11LaneDetectorState\x12\x1b\n" +
 	"\x06active\x18\x01 \x01(\bH\x00R\x06active\x88\x01\x01\x12 \n" +
 	"\tcount_vph\x18\x02 \x01(\rH\x01R\bcountVph\x88\x01\x01\x12$\n" +
 	"\vdetector_id\x18\x03 \x01(\tH\x02R\n" +
 	"detectorId\x88\x01\x01\x12;\n" +
-	"\vlast_update\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"lastUpdate\x12(\n" +
+	"\vobserved_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x12(\n" +
 	"\roccupancy_pct\x18\x05 \x01(\rH\x03R\foccupancyPct\x88\x01\x01\x12?\n" +
 	"\x04role\x18\x06 \x01(\x0e2&.openits.ramp_metering.v1.DetectorRoleH\x04R\x04role\x88\x01\x01\x12 \n" +
 	"\tspeed_kmh\x18\a \x01(\tH\x05R\bspeedKmh\x88\x01\x01B\t\n" +
@@ -3364,7 +3395,7 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\x0e_occupancy_pctB\a\n" +
 	"\x05_roleB\f\n" +
 	"\n" +
-	"_speed_kmh\"d\n" +
+	"_speed_kmhJ\x04\b\x04\x10\x05R\vlast_update\"d\n" +
 	"\x11MainlineDetectors\x12O\n" +
 	"\bdetector\x18\x01 \x03(\v23.openits.ramp_metering.v1.MainlineDetectorsDetectorR\bdetector\"\xf4\x01\n" +
 	"\x19MainlineDetectorsDetector\x12$\n" +
@@ -3378,14 +3409,14 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"detectorId\x88\x01\x01\x12?\n" +
 	"\x04role\x18\x02 \x01(\x0e2&.openits.ramp_metering.v1.DetectorRoleH\x01R\x04role\x88\x01\x01B\x0e\n" +
 	"\f_detector_idB\a\n" +
-	"\x05_role\"\xa1\x03\n" +
+	"\x05_role\"\xb4\x03\n" +
 	"\x1eMainlineDetectorsDetectorState\x12\x1b\n" +
 	"\x06active\x18\x01 \x01(\bH\x00R\x06active\x88\x01\x01\x12 \n" +
 	"\tcount_vph\x18\x02 \x01(\rH\x01R\bcountVph\x88\x01\x01\x12$\n" +
 	"\vdetector_id\x18\x03 \x01(\tH\x02R\n" +
 	"detectorId\x88\x01\x01\x12;\n" +
-	"\vlast_update\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"lastUpdate\x12(\n" +
+	"\vobserved_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x12(\n" +
 	"\roccupancy_pct\x18\x05 \x01(\rH\x03R\foccupancyPct\x88\x01\x01\x12?\n" +
 	"\x04role\x18\x06 \x01(\x0e2&.openits.ramp_metering.v1.DetectorRoleH\x04R\x04role\x88\x01\x01\x12 \n" +
 	"\tspeed_kmh\x18\a \x01(\tH\x05R\bspeedKmh\x88\x01\x01B\t\n" +
@@ -3396,7 +3427,7 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\x0e_occupancy_pctB\a\n" +
 	"\x05_roleB\f\n" +
 	"\n" +
-	"_speed_kmh\"\xe6\x01\n" +
+	"_speed_kmhJ\x04\b\x04\x10\x05R\vlast_update\"\xe6\x01\n" +
 	"\vDiagnostics\x123\n" +
 	"\x13controller_uptime_s\x18\x02 \x01(\rH\x00R\x11controllerUptimeS\x88\x01\x01\x12@\n" +
 	"\x0elast_self_test\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\flastSelfTest\x121\n" +
@@ -3475,18 +3506,19 @@ var file_openits_ramp_metering_v1_state_proto_goTypes = []any{
 	(*Faults)(nil),                          // 40: openits.ramp_metering.v1.Faults
 	(*Fault)(nil),                           // 41: openits.ramp_metering.v1.Fault
 	(*timestamppb.Timestamp)(nil),           // 42: google.protobuf.Timestamp
-	(NonMeteringDisplay)(0),                 // 43: openits.ramp_metering.v1.NonMeteringDisplay
-	(SequencePhase)(0),                      // 44: openits.ramp_metering.v1.SequencePhase
-	(AwsFaultAction)(0),                     // 45: openits.ramp_metering.v1.AwsFaultAction
-	(LampStatus)(0),                         // 46: openits.ramp_metering.v1.LampStatus
-	(DayOfWeek)(0),                          // 47: openits.ramp_metering.v1.DayOfWeek
-	(Month)(0),                              // 48: openits.ramp_metering.v1.Month
-	(ReleaseCoordination)(0),                // 49: openits.ramp_metering.v1.ReleaseCoordination
-	(BypassOperation)(0),                    // 50: openits.ramp_metering.v1.BypassOperation
-	(HeadState)(0),                          // 51: openits.ramp_metering.v1.HeadState
-	(DetectorRole)(0),                       // 52: openits.ramp_metering.v1.DetectorRole
-	(*v1.ComponentRef)(nil),                 // 53: openits.types.v1.ComponentRef
-	(FaultSeverity)(0),                      // 54: openits.ramp_metering.v1.FaultSeverity
+	(OperStatus)(0),                         // 43: openits.ramp_metering.v1.OperStatus
+	(NonMeteringDisplay)(0),                 // 44: openits.ramp_metering.v1.NonMeteringDisplay
+	(SequencePhase)(0),                      // 45: openits.ramp_metering.v1.SequencePhase
+	(AwsFaultAction)(0),                     // 46: openits.ramp_metering.v1.AwsFaultAction
+	(LampStatus)(0),                         // 47: openits.ramp_metering.v1.LampStatus
+	(DayOfWeek)(0),                          // 48: openits.ramp_metering.v1.DayOfWeek
+	(Month)(0),                              // 49: openits.ramp_metering.v1.Month
+	(ReleaseCoordination)(0),                // 50: openits.ramp_metering.v1.ReleaseCoordination
+	(BypassOperation)(0),                    // 51: openits.ramp_metering.v1.BypassOperation
+	(HeadState)(0),                          // 52: openits.ramp_metering.v1.HeadState
+	(DetectorRole)(0),                       // 53: openits.ramp_metering.v1.DetectorRole
+	(*v1.ComponentRef)(nil),                 // 54: openits.types.v1.ComponentRef
+	(FaultSeverity)(0),                      // 55: openits.ramp_metering.v1.FaultSeverity
 }
 var file_openits_ramp_metering_v1_state_proto_depIdxs = []int32{
 	1,  // 0: openits.ramp_metering.v1.RampMeter.config:type_name -> openits.ramp_metering.v1.RampMeterConfig
@@ -3504,64 +3536,67 @@ var file_openits_ramp_metering_v1_state_proto_depIdxs = []int32{
 	42, // 12: openits.ramp_metering.v1.RampMeterConfig.install_date:type_name -> google.protobuf.Timestamp
 	2,  // 13: openits.ramp_metering.v1.RampMeterConfig.linear_reference:type_name -> openits.ramp_metering.v1.RampMeterConfigLinearReference
 	42, // 14: openits.ramp_metering.v1.RampMeterState.install_date:type_name -> google.protobuf.Timestamp
-	4,  // 15: openits.ramp_metering.v1.RampMeterState.linear_reference:type_name -> openits.ramp_metering.v1.RampMeterStateLinearReference
-	6,  // 16: openits.ramp_metering.v1.Control.config:type_name -> openits.ramp_metering.v1.ControlConfig
-	7,  // 17: openits.ramp_metering.v1.Control.state:type_name -> openits.ramp_metering.v1.ControlState
-	43, // 18: openits.ramp_metering.v1.ControlConfig.non_metering_display:type_name -> openits.ramp_metering.v1.NonMeteringDisplay
-	42, // 19: openits.ramp_metering.v1.ControlState.last_mode_change:type_name -> google.protobuf.Timestamp
-	43, // 20: openits.ramp_metering.v1.ControlState.non_metering_display:type_name -> openits.ramp_metering.v1.NonMeteringDisplay
-	9,  // 21: openits.ramp_metering.v1.Sequencing.config:type_name -> openits.ramp_metering.v1.SequencingConfig
-	10, // 22: openits.ramp_metering.v1.Sequencing.state:type_name -> openits.ramp_metering.v1.SequencingState
-	44, // 23: openits.ramp_metering.v1.SequencingState.sequence_phase:type_name -> openits.ramp_metering.v1.SequencePhase
-	12, // 24: openits.ramp_metering.v1.AdvanceWarningSign.config:type_name -> openits.ramp_metering.v1.AdvanceWarningSignConfig
-	13, // 25: openits.ramp_metering.v1.AdvanceWarningSign.state:type_name -> openits.ramp_metering.v1.AdvanceWarningSignState
-	45, // 26: openits.ramp_metering.v1.AdvanceWarningSignConfig.aws_fault_action:type_name -> openits.ramp_metering.v1.AwsFaultAction
-	46, // 27: openits.ramp_metering.v1.AdvanceWarningSignState.lamp_status:type_name -> openits.ramp_metering.v1.LampStatus
-	15, // 28: openits.ramp_metering.v1.Plans.plan:type_name -> openits.ramp_metering.v1.Plan
-	16, // 29: openits.ramp_metering.v1.Plan.phase_timing:type_name -> openits.ramp_metering.v1.PhaseTiming
-	18, // 30: openits.ramp_metering.v1.Schedule.day_plan:type_name -> openits.ramp_metering.v1.DayPlan
-	20, // 31: openits.ramp_metering.v1.Schedule.schedule_entry:type_name -> openits.ramp_metering.v1.ScheduleEntry
-	21, // 32: openits.ramp_metering.v1.Schedule.state:type_name -> openits.ramp_metering.v1.ScheduleState
-	19, // 33: openits.ramp_metering.v1.DayPlan.action:type_name -> openits.ramp_metering.v1.Action
-	47, // 34: openits.ramp_metering.v1.ScheduleEntry.days_of_week:type_name -> openits.ramp_metering.v1.DayOfWeek
-	48, // 35: openits.ramp_metering.v1.ScheduleEntry.months:type_name -> openits.ramp_metering.v1.Month
-	42, // 36: openits.ramp_metering.v1.ScheduleState.next_action_at:type_name -> google.protobuf.Timestamp
-	23, // 37: openits.ramp_metering.v1.TrafficResponsive.config:type_name -> openits.ramp_metering.v1.TrafficResponsiveConfig
-	25, // 38: openits.ramp_metering.v1.TrafficResponsive.state:type_name -> openits.ramp_metering.v1.TrafficResponsiveState
-	24, // 39: openits.ramp_metering.v1.TrafficResponsiveConfig.band:type_name -> openits.ramp_metering.v1.Band
-	27, // 40: openits.ramp_metering.v1.Lanes.config:type_name -> openits.ramp_metering.v1.LanesConfig
-	28, // 41: openits.ramp_metering.v1.Lanes.state:type_name -> openits.ramp_metering.v1.LanesState
-	29, // 42: openits.ramp_metering.v1.Lanes.lane:type_name -> openits.ramp_metering.v1.Lane
-	49, // 43: openits.ramp_metering.v1.LanesConfig.release_coordination:type_name -> openits.ramp_metering.v1.ReleaseCoordination
-	49, // 44: openits.ramp_metering.v1.LanesState.release_coordination:type_name -> openits.ramp_metering.v1.ReleaseCoordination
-	30, // 45: openits.ramp_metering.v1.Lane.config:type_name -> openits.ramp_metering.v1.LaneConfig
-	31, // 46: openits.ramp_metering.v1.Lane.state:type_name -> openits.ramp_metering.v1.LaneState
-	32, // 47: openits.ramp_metering.v1.Lane.detector:type_name -> openits.ramp_metering.v1.LaneDetector
-	50, // 48: openits.ramp_metering.v1.LaneConfig.bypass_operation:type_name -> openits.ramp_metering.v1.BypassOperation
-	51, // 49: openits.ramp_metering.v1.LaneState.head_state:type_name -> openits.ramp_metering.v1.HeadState
-	42, // 50: openits.ramp_metering.v1.LaneState.last_release:type_name -> google.protobuf.Timestamp
-	50, // 51: openits.ramp_metering.v1.LaneState.bypass_operation:type_name -> openits.ramp_metering.v1.BypassOperation
-	33, // 52: openits.ramp_metering.v1.LaneDetector.config:type_name -> openits.ramp_metering.v1.LaneDetectorConfig
-	34, // 53: openits.ramp_metering.v1.LaneDetector.state:type_name -> openits.ramp_metering.v1.LaneDetectorState
-	52, // 54: openits.ramp_metering.v1.LaneDetectorConfig.role:type_name -> openits.ramp_metering.v1.DetectorRole
-	42, // 55: openits.ramp_metering.v1.LaneDetectorState.last_update:type_name -> google.protobuf.Timestamp
-	52, // 56: openits.ramp_metering.v1.LaneDetectorState.role:type_name -> openits.ramp_metering.v1.DetectorRole
-	36, // 57: openits.ramp_metering.v1.MainlineDetectors.detector:type_name -> openits.ramp_metering.v1.MainlineDetectorsDetector
-	37, // 58: openits.ramp_metering.v1.MainlineDetectorsDetector.config:type_name -> openits.ramp_metering.v1.MainlineDetectorsDetectorConfig
-	38, // 59: openits.ramp_metering.v1.MainlineDetectorsDetector.state:type_name -> openits.ramp_metering.v1.MainlineDetectorsDetectorState
-	52, // 60: openits.ramp_metering.v1.MainlineDetectorsDetectorConfig.role:type_name -> openits.ramp_metering.v1.DetectorRole
-	42, // 61: openits.ramp_metering.v1.MainlineDetectorsDetectorState.last_update:type_name -> google.protobuf.Timestamp
-	52, // 62: openits.ramp_metering.v1.MainlineDetectorsDetectorState.role:type_name -> openits.ramp_metering.v1.DetectorRole
-	42, // 63: openits.ramp_metering.v1.Diagnostics.last_self_test:type_name -> google.protobuf.Timestamp
-	41, // 64: openits.ramp_metering.v1.Faults.fault:type_name -> openits.ramp_metering.v1.Fault
-	53, // 65: openits.ramp_metering.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
-	42, // 66: openits.ramp_metering.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	54, // 67: openits.ramp_metering.v1.Fault.severity:type_name -> openits.ramp_metering.v1.FaultSeverity
-	68, // [68:68] is the sub-list for method output_type
-	68, // [68:68] is the sub-list for method input_type
-	68, // [68:68] is the sub-list for extension type_name
-	68, // [68:68] is the sub-list for extension extendee
-	0,  // [0:68] is the sub-list for field type_name
+	42, // 15: openits.ramp_metering.v1.RampMeterState.last_change:type_name -> google.protobuf.Timestamp
+	4,  // 16: openits.ramp_metering.v1.RampMeterState.linear_reference:type_name -> openits.ramp_metering.v1.RampMeterStateLinearReference
+	42, // 17: openits.ramp_metering.v1.RampMeterState.observed_at:type_name -> google.protobuf.Timestamp
+	43, // 18: openits.ramp_metering.v1.RampMeterState.oper_status:type_name -> openits.ramp_metering.v1.OperStatus
+	6,  // 19: openits.ramp_metering.v1.Control.config:type_name -> openits.ramp_metering.v1.ControlConfig
+	7,  // 20: openits.ramp_metering.v1.Control.state:type_name -> openits.ramp_metering.v1.ControlState
+	44, // 21: openits.ramp_metering.v1.ControlConfig.non_metering_display:type_name -> openits.ramp_metering.v1.NonMeteringDisplay
+	42, // 22: openits.ramp_metering.v1.ControlState.last_mode_change:type_name -> google.protobuf.Timestamp
+	44, // 23: openits.ramp_metering.v1.ControlState.non_metering_display:type_name -> openits.ramp_metering.v1.NonMeteringDisplay
+	9,  // 24: openits.ramp_metering.v1.Sequencing.config:type_name -> openits.ramp_metering.v1.SequencingConfig
+	10, // 25: openits.ramp_metering.v1.Sequencing.state:type_name -> openits.ramp_metering.v1.SequencingState
+	45, // 26: openits.ramp_metering.v1.SequencingState.sequence_phase:type_name -> openits.ramp_metering.v1.SequencePhase
+	12, // 27: openits.ramp_metering.v1.AdvanceWarningSign.config:type_name -> openits.ramp_metering.v1.AdvanceWarningSignConfig
+	13, // 28: openits.ramp_metering.v1.AdvanceWarningSign.state:type_name -> openits.ramp_metering.v1.AdvanceWarningSignState
+	46, // 29: openits.ramp_metering.v1.AdvanceWarningSignConfig.aws_fault_action:type_name -> openits.ramp_metering.v1.AwsFaultAction
+	47, // 30: openits.ramp_metering.v1.AdvanceWarningSignState.lamp_status:type_name -> openits.ramp_metering.v1.LampStatus
+	15, // 31: openits.ramp_metering.v1.Plans.plan:type_name -> openits.ramp_metering.v1.Plan
+	16, // 32: openits.ramp_metering.v1.Plan.phase_timing:type_name -> openits.ramp_metering.v1.PhaseTiming
+	18, // 33: openits.ramp_metering.v1.Schedule.day_plan:type_name -> openits.ramp_metering.v1.DayPlan
+	20, // 34: openits.ramp_metering.v1.Schedule.schedule_entry:type_name -> openits.ramp_metering.v1.ScheduleEntry
+	21, // 35: openits.ramp_metering.v1.Schedule.state:type_name -> openits.ramp_metering.v1.ScheduleState
+	19, // 36: openits.ramp_metering.v1.DayPlan.action:type_name -> openits.ramp_metering.v1.Action
+	48, // 37: openits.ramp_metering.v1.ScheduleEntry.days_of_week:type_name -> openits.ramp_metering.v1.DayOfWeek
+	49, // 38: openits.ramp_metering.v1.ScheduleEntry.months:type_name -> openits.ramp_metering.v1.Month
+	42, // 39: openits.ramp_metering.v1.ScheduleState.next_action_at:type_name -> google.protobuf.Timestamp
+	23, // 40: openits.ramp_metering.v1.TrafficResponsive.config:type_name -> openits.ramp_metering.v1.TrafficResponsiveConfig
+	25, // 41: openits.ramp_metering.v1.TrafficResponsive.state:type_name -> openits.ramp_metering.v1.TrafficResponsiveState
+	24, // 42: openits.ramp_metering.v1.TrafficResponsiveConfig.band:type_name -> openits.ramp_metering.v1.Band
+	27, // 43: openits.ramp_metering.v1.Lanes.config:type_name -> openits.ramp_metering.v1.LanesConfig
+	28, // 44: openits.ramp_metering.v1.Lanes.state:type_name -> openits.ramp_metering.v1.LanesState
+	29, // 45: openits.ramp_metering.v1.Lanes.lane:type_name -> openits.ramp_metering.v1.Lane
+	50, // 46: openits.ramp_metering.v1.LanesConfig.release_coordination:type_name -> openits.ramp_metering.v1.ReleaseCoordination
+	50, // 47: openits.ramp_metering.v1.LanesState.release_coordination:type_name -> openits.ramp_metering.v1.ReleaseCoordination
+	30, // 48: openits.ramp_metering.v1.Lane.config:type_name -> openits.ramp_metering.v1.LaneConfig
+	31, // 49: openits.ramp_metering.v1.Lane.state:type_name -> openits.ramp_metering.v1.LaneState
+	32, // 50: openits.ramp_metering.v1.Lane.detector:type_name -> openits.ramp_metering.v1.LaneDetector
+	51, // 51: openits.ramp_metering.v1.LaneConfig.bypass_operation:type_name -> openits.ramp_metering.v1.BypassOperation
+	52, // 52: openits.ramp_metering.v1.LaneState.head_state:type_name -> openits.ramp_metering.v1.HeadState
+	42, // 53: openits.ramp_metering.v1.LaneState.last_release:type_name -> google.protobuf.Timestamp
+	51, // 54: openits.ramp_metering.v1.LaneState.bypass_operation:type_name -> openits.ramp_metering.v1.BypassOperation
+	33, // 55: openits.ramp_metering.v1.LaneDetector.config:type_name -> openits.ramp_metering.v1.LaneDetectorConfig
+	34, // 56: openits.ramp_metering.v1.LaneDetector.state:type_name -> openits.ramp_metering.v1.LaneDetectorState
+	53, // 57: openits.ramp_metering.v1.LaneDetectorConfig.role:type_name -> openits.ramp_metering.v1.DetectorRole
+	42, // 58: openits.ramp_metering.v1.LaneDetectorState.observed_at:type_name -> google.protobuf.Timestamp
+	53, // 59: openits.ramp_metering.v1.LaneDetectorState.role:type_name -> openits.ramp_metering.v1.DetectorRole
+	36, // 60: openits.ramp_metering.v1.MainlineDetectors.detector:type_name -> openits.ramp_metering.v1.MainlineDetectorsDetector
+	37, // 61: openits.ramp_metering.v1.MainlineDetectorsDetector.config:type_name -> openits.ramp_metering.v1.MainlineDetectorsDetectorConfig
+	38, // 62: openits.ramp_metering.v1.MainlineDetectorsDetector.state:type_name -> openits.ramp_metering.v1.MainlineDetectorsDetectorState
+	53, // 63: openits.ramp_metering.v1.MainlineDetectorsDetectorConfig.role:type_name -> openits.ramp_metering.v1.DetectorRole
+	42, // 64: openits.ramp_metering.v1.MainlineDetectorsDetectorState.observed_at:type_name -> google.protobuf.Timestamp
+	53, // 65: openits.ramp_metering.v1.MainlineDetectorsDetectorState.role:type_name -> openits.ramp_metering.v1.DetectorRole
+	42, // 66: openits.ramp_metering.v1.Diagnostics.last_self_test:type_name -> google.protobuf.Timestamp
+	41, // 67: openits.ramp_metering.v1.Faults.fault:type_name -> openits.ramp_metering.v1.Fault
+	54, // 68: openits.ramp_metering.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
+	42, // 69: openits.ramp_metering.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	55, // 70: openits.ramp_metering.v1.Fault.severity:type_name -> openits.ramp_metering.v1.FaultSeverity
+	71, // [71:71] is the sub-list for method output_type
+	71, // [71:71] is the sub-list for method input_type
+	71, // [71:71] is the sub-list for extension type_name
+	71, // [71:71] is the sub-list for extension extendee
+	0,  // [0:71] is the sub-list for field type_name
 }
 
 func init() { file_openits_ramp_metering_v1_state_proto_init() }

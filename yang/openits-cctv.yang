@@ -33,8 +33,13 @@ module openits-cctv {
 
   reference "NTCIP 1205.";
 
-  openits-types:openits-version "0.4.0";
+  openits-types:openits-version "0.5.0";
 
+  revision 2026-10-16 {
+    description
+      "Report health on the root state (shared device-health: oper-status, last-change, observed-at). State that the existing operational-status is family-specific and not interchangeable with oper-status. Additive.";
+    reference "RFC 7950 §7.12.";
+  }
   revision 2026-10-14 {
     description
       "The fault inventory classifies each entry with kind (renamed from
@@ -105,12 +110,16 @@ module openits-cctv {
       description "Applied identity (mirror) plus device-reported hardware.";
       uses openits-types:device-identity-config;
       uses openits-types:device-hardware;
+      uses openits-types:device-health;
       leaf operational-status {
         type openits-cctv-types:operational-status;
         description
           "Device-level operational rollup: online / degraded / offline /
            unknown. degraded whenever a stream is down or a focus/iris/
-           position-feedback fault is active while the camera still reports.";
+           position-feedback fault is active while the camera still reports.
+           Family-specific status kept until the CCTV cut reconciles it
+           with the cross-service oper-status. They are not
+           interchangeable: oper-status uses the shared vocabulary.";
       }
     }
 

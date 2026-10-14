@@ -40,8 +40,13 @@ module openits-zone-occupancy {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.2.1";
+  openits-types:openits-version "0.3.0";
 
+  revision 2026-10-16 {
+    description
+      "Rename the zone reading's timestamp measured-at to observed-at, the one freshness name across the model. Breaking: consumers must read observed-at.";
+    reference "RFC 7950 §7.6.";
+  }
   revision 2026-09-05 {
     description
       "Converge zones/zone on the shared
@@ -169,7 +174,7 @@ module openits-zone-occupancy {
            openits-zone-occupancy-types:zone-occupancy-state grouping,
            which also states why no 'must' constrains those leaves
            against each other (readback-representability doctrine).
-           zone-id and measured-at stay declared here: the key is a
+           zone-id and observed-at stay declared here: the key is a
            leafref into configuration, and the timestamp is the
            reading's, not an event's.";
 
@@ -189,10 +194,10 @@ module openits-zone-occupancy {
                data.";
           }
           uses openits-zone-occupancy-types:zone-occupancy-state;
-          leaf measured-at {
+          leaf observed-at {
             type yang:date-and-time;
             description
-              "When this reading was taken. A consumer compares it
+              "The time of this reading. When this reading was taken. A consumer compares it
                against the device's reporting cadence to decide whether
                the reading is still current, rather than assuming
                anything it received is fresh.";

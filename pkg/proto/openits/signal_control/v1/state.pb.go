@@ -396,6 +396,7 @@ type SignalControllerState struct {
 	Heading         *uint32                               `protobuf:"varint,3,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
 	Id              *string                               `protobuf:"bytes,4,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate     *timestamppb.Timestamp                `protobuf:"bytes,14,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
+	LastChange      *timestamppb.Timestamp                `protobuf:"bytes,19,opt,name=last_change,json=lastChange,proto3" json:"last_change,omitempty"`
 	Latitude        *string                               `protobuf:"bytes,5,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference *SignalControllerStateLinearReference `protobuf:"bytes,15,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
 	Longitude       *string                               `protobuf:"bytes,6,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
@@ -403,6 +404,8 @@ type SignalControllerState struct {
 	Make            *string                               `protobuf:"bytes,7,opt,name=make,proto3,oneof" json:"make,omitempty"`
 	Model           *string                               `protobuf:"bytes,8,opt,name=model,proto3,oneof" json:"model,omitempty"`
 	Name            *string                               `protobuf:"bytes,9,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	ObservedAt      *timestamppb.Timestamp                `protobuf:"bytes,20,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
+	OperStatus      *OperStatus                           `protobuf:"varint,21,opt,name=oper_status,json=operStatus,proto3,enum=openits.signal_control.v1.OperStatus,oneof" json:"oper_status,omitempty"`
 	Owner           *string                               `protobuf:"bytes,17,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	RoadReference   *string                               `protobuf:"bytes,10,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
 	Serial          *string                               `protobuf:"bytes,11,opt,name=serial,proto3,oneof" json:"serial,omitempty"`
@@ -490,6 +493,13 @@ func (x *SignalControllerState) GetInstallDate() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *SignalControllerState) GetLastChange() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastChange
+	}
+	return nil
+}
+
 func (x *SignalControllerState) GetLatitude() string {
 	if x != nil && x.Latitude != nil {
 		return *x.Latitude
@@ -537,6 +547,20 @@ func (x *SignalControllerState) GetName() string {
 		return *x.Name
 	}
 	return ""
+}
+
+func (x *SignalControllerState) GetObservedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ObservedAt
+	}
+	return nil
+}
+
+func (x *SignalControllerState) GetOperStatus() OperStatus {
+	if x != nil && x.OperStatus != nil {
+		return *x.OperStatus
+	}
+	return OperStatus_OPER_STATUS_UNKNOWN
 }
 
 func (x *SignalControllerState) GetOwner() string {
@@ -1637,7 +1661,7 @@ type Measurement struct {
 	Occupancy               *string                `protobuf:"bytes,2,opt,name=occupancy,proto3,oneof" json:"occupancy,omitempty"`
 	SpeedKmh                *string                `protobuf:"bytes,3,opt,name=speed_kmh,json=speedKmh,proto3,oneof" json:"speed_kmh,omitempty"`
 	CollectionPeriodSeconds *uint32                `protobuf:"varint,4,opt,name=collection_period_seconds,json=collectionPeriodSeconds,proto3,oneof" json:"collection_period_seconds,omitempty"`
-	CollectedAt             *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=collected_at,json=collectedAt,proto3" json:"collected_at,omitempty"`
+	ObservedAt              *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -1700,9 +1724,9 @@ func (x *Measurement) GetCollectionPeriodSeconds() uint32 {
 	return 0
 }
 
-func (x *Measurement) GetCollectedAt() *timestamppb.Timestamp {
+func (x *Measurement) GetObservedAt() *timestamppb.Timestamp {
 	if x != nil {
-		return x.CollectedAt
+		return x.ObservedAt
 	}
 	return nil
 }
@@ -4431,7 +4455,7 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"_directionB\n" +
 	"\n" +
 	"\b_measureB\r\n" +
-	"\v_lrs_method\"\xa6\a\n" +
+	"\v_lrs_method\"\xfd\b\n" +
 	"\x15SignalControllerState\x12!\n" +
 	"\televation\x18\x01 \x01(\tH\x00R\televation\x88\x01\x01\x12\x1f\n" +
 	"\bfirmware\x18\x02 \x01(\tH\x01R\bfirmware\x88\x01\x01\x12*\n" +
@@ -4439,7 +4463,9 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\x10hardware_version\x18\r \x01(\tH\x03R\x0fhardwareVersion\x88\x01\x01\x12\x1d\n" +
 	"\aheading\x18\x03 \x01(\rH\x04R\aheading\x88\x01\x01\x12\x13\n" +
 	"\x02id\x18\x04 \x01(\tH\x05R\x02id\x88\x01\x01\x12=\n" +
-	"\finstall_date\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	"\finstall_date\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12;\n" +
+	"\vlast_change\x18\x13 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"lastChange\x12\x1f\n" +
 	"\blatitude\x18\x05 \x01(\tH\x06R\blatitude\x88\x01\x01\x12j\n" +
 	"\x10linear_reference\x18\x0f \x01(\v2?.openits.signal_control.v1.SignalControllerStateLinearReferenceR\x0flinearReference\x12!\n" +
 	"\tlongitude\x18\x06 \x01(\tH\aR\tlongitude\x88\x01\x01\x12(\n" +
@@ -4447,12 +4473,16 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\x04make\x18\a \x01(\tH\tR\x04make\x88\x01\x01\x12\x19\n" +
 	"\x05model\x18\b \x01(\tH\n" +
 	"R\x05model\x88\x01\x01\x12\x17\n" +
-	"\x04name\x18\t \x01(\tH\vR\x04name\x88\x01\x01\x12\x19\n" +
-	"\x05owner\x18\x11 \x01(\tH\fR\x05owner\x88\x01\x01\x12*\n" +
+	"\x04name\x18\t \x01(\tH\vR\x04name\x88\x01\x01\x12;\n" +
+	"\vobserved_at\x18\x14 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x12K\n" +
+	"\voper_status\x18\x15 \x01(\x0e2%.openits.signal_control.v1.OperStatusH\fR\n" +
+	"operStatus\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\x11 \x01(\tH\rR\x05owner\x88\x01\x01\x12*\n" +
 	"\x0eroad_reference\x18\n" +
-	" \x01(\tH\rR\rroadReference\x88\x01\x01\x12\x1b\n" +
-	"\x06serial\x18\v \x01(\tH\x0eR\x06serial\x88\x01\x01\x12\x1c\n" +
-	"\asite_id\x18\x12 \x01(\tH\x0fR\x06siteId\x88\x01\x01B\f\n" +
+	" \x01(\tH\x0eR\rroadReference\x88\x01\x01\x12\x1b\n" +
+	"\x06serial\x18\v \x01(\tH\x0fR\x06serial\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\x12 \x01(\tH\x10R\x06siteId\x88\x01\x01B\f\n" +
 	"\n" +
 	"_elevationB\v\n" +
 	"\t_firmwareB\x11\n" +
@@ -4467,7 +4497,8 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\x0e_maintained_byB\a\n" +
 	"\x05_makeB\b\n" +
 	"\x06_modelB\a\n" +
-	"\x05_nameB\b\n" +
+	"\x05_nameB\x0e\n" +
+	"\f_oper_statusB\b\n" +
 	"\x06_ownerB\x11\n" +
 	"\x0f_road_referenceB\t\n" +
 	"\a_serialB\n" +
@@ -4634,19 +4665,20 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\vmeasurement\x18\x05 \x01(\v2&.openits.signal_control.v1.MeasurementR\vmeasurementB\t\n" +
 	"\a_activeB\x12\n" +
 	"\x10_actuation_countB\b\n" +
-	"\x06_fault\"\xb4\x02\n" +
+	"\x06_fault\"\xc6\x02\n" +
 	"\vMeasurement\x12\x1b\n" +
 	"\x06volume\x18\x01 \x01(\rH\x00R\x06volume\x88\x01\x01\x12!\n" +
 	"\toccupancy\x18\x02 \x01(\tH\x01R\toccupancy\x88\x01\x01\x12 \n" +
 	"\tspeed_kmh\x18\x03 \x01(\tH\x02R\bspeedKmh\x88\x01\x01\x12?\n" +
-	"\x19collection_period_seconds\x18\x04 \x01(\rH\x03R\x17collectionPeriodSeconds\x88\x01\x01\x12=\n" +
-	"\fcollected_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\vcollectedAtB\t\n" +
+	"\x19collection_period_seconds\x18\x04 \x01(\rH\x03R\x17collectionPeriodSeconds\x88\x01\x01\x12;\n" +
+	"\vobserved_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAtB\t\n" +
 	"\a_volumeB\f\n" +
 	"\n" +
 	"_occupancyB\f\n" +
 	"\n" +
 	"_speed_kmhB\x1c\n" +
-	"\x1a_collection_period_seconds\"H\n" +
+	"\x1a_collection_period_secondsJ\x04\b\x05\x10\x06R\fcollected_at\"H\n" +
 	"\bOverlaps\x12<\n" +
 	"\aoverlap\x18\x01 \x03(\v2\".openits.signal_control.v1.OverlapR\aoverlap\"\xdb\x01\n" +
 	"\aOverlap\x12*\n" +
@@ -5041,28 +5073,29 @@ var file_openits_signal_control_v1_state_proto_goTypes = []any{
 	(*Faults)(nil),                                // 57: openits.signal_control.v1.Faults
 	(*Fault)(nil),                                 // 58: openits.signal_control.v1.Fault
 	(*timestamppb.Timestamp)(nil),                 // 59: google.protobuf.Timestamp
-	(PedIntervalType)(0),                          // 60: openits.signal_control.v1.PedIntervalType
-	(VehIntervalType)(0),                          // 61: openits.signal_control.v1.VehIntervalType
-	(DetectorMode)(0),                             // 62: openits.signal_control.v1.DetectorMode
-	(DetectorFailAction)(0),                       // 63: openits.signal_control.v1.DetectorFailAction
-	(OverlapIntervalType)(0),                      // 64: openits.signal_control.v1.OverlapIntervalType
-	(ChannelFlashState)(0),                        // 65: openits.signal_control.v1.ChannelFlashState
-	(OffsetReference)(0),                          // 66: openits.signal_control.v1.OffsetReference
-	(TransitionMode)(0),                           // 67: openits.signal_control.v1.TransitionMode
-	(ForceOffMode)(0),                             // 68: openits.signal_control.v1.ForceOffMode
-	(SplitMode)(0),                                // 69: openits.signal_control.v1.SplitMode
-	(SpecialOperation)(0),                         // 70: openits.signal_control.v1.SpecialOperation
-	(DayOfWeek)(0),                                // 71: openits.signal_control.v1.DayOfWeek
-	(Month)(0),                                    // 72: openits.signal_control.v1.Month
-	(SyncStatus)(0),                               // 73: openits.signal_control.v1.SyncStatus
-	(PreemptStage)(0),                             // 74: openits.signal_control.v1.PreemptStage
-	(Stage)(0),                                    // 75: openits.signal_control.v1.Stage
-	(*v1.ScOnBatteryPolicy)(nil),                  // 76: openits.types.v1.ScOnBatteryPolicy
-	(SignalOperationOnBattery)(0),                 // 77: openits.signal_control.v1.SignalOperationOnBattery
-	(PowerSource)(0),                              // 78: openits.signal_control.v1.PowerSource
-	(BatteryTestState)(0),                         // 79: openits.signal_control.v1.BatteryTestState
-	(*v1.ComponentRef)(nil),                       // 80: openits.types.v1.ComponentRef
-	(FaultSeverity)(0),                            // 81: openits.signal_control.v1.FaultSeverity
+	(OperStatus)(0),                               // 60: openits.signal_control.v1.OperStatus
+	(PedIntervalType)(0),                          // 61: openits.signal_control.v1.PedIntervalType
+	(VehIntervalType)(0),                          // 62: openits.signal_control.v1.VehIntervalType
+	(DetectorMode)(0),                             // 63: openits.signal_control.v1.DetectorMode
+	(DetectorFailAction)(0),                       // 64: openits.signal_control.v1.DetectorFailAction
+	(OverlapIntervalType)(0),                      // 65: openits.signal_control.v1.OverlapIntervalType
+	(ChannelFlashState)(0),                        // 66: openits.signal_control.v1.ChannelFlashState
+	(OffsetReference)(0),                          // 67: openits.signal_control.v1.OffsetReference
+	(TransitionMode)(0),                           // 68: openits.signal_control.v1.TransitionMode
+	(ForceOffMode)(0),                             // 69: openits.signal_control.v1.ForceOffMode
+	(SplitMode)(0),                                // 70: openits.signal_control.v1.SplitMode
+	(SpecialOperation)(0),                         // 71: openits.signal_control.v1.SpecialOperation
+	(DayOfWeek)(0),                                // 72: openits.signal_control.v1.DayOfWeek
+	(Month)(0),                                    // 73: openits.signal_control.v1.Month
+	(SyncStatus)(0),                               // 74: openits.signal_control.v1.SyncStatus
+	(PreemptStage)(0),                             // 75: openits.signal_control.v1.PreemptStage
+	(Stage)(0),                                    // 76: openits.signal_control.v1.Stage
+	(*v1.ScOnBatteryPolicy)(nil),                  // 77: openits.types.v1.ScOnBatteryPolicy
+	(SignalOperationOnBattery)(0),                 // 78: openits.signal_control.v1.SignalOperationOnBattery
+	(PowerSource)(0),                              // 79: openits.signal_control.v1.PowerSource
+	(BatteryTestState)(0),                         // 80: openits.signal_control.v1.BatteryTestState
+	(*v1.ComponentRef)(nil),                       // 81: openits.types.v1.ComponentRef
+	(FaultSeverity)(0),                            // 82: openits.signal_control.v1.FaultSeverity
 }
 var file_openits_signal_control_v1_state_proto_depIdxs = []int32{
 	1,  // 0: openits.signal_control.v1.SignalController.config:type_name -> openits.signal_control.v1.SignalControllerConfig
@@ -5084,82 +5117,85 @@ var file_openits_signal_control_v1_state_proto_depIdxs = []int32{
 	59, // 16: openits.signal_control.v1.SignalControllerConfig.install_date:type_name -> google.protobuf.Timestamp
 	2,  // 17: openits.signal_control.v1.SignalControllerConfig.linear_reference:type_name -> openits.signal_control.v1.SignalControllerConfigLinearReference
 	59, // 18: openits.signal_control.v1.SignalControllerState.install_date:type_name -> google.protobuf.Timestamp
-	4,  // 19: openits.signal_control.v1.SignalControllerState.linear_reference:type_name -> openits.signal_control.v1.SignalControllerStateLinearReference
-	7,  // 20: openits.signal_control.v1.Phases.phase:type_name -> openits.signal_control.v1.Phase
-	8,  // 21: openits.signal_control.v1.Phase.config:type_name -> openits.signal_control.v1.PhaseConfig
-	12, // 22: openits.signal_control.v1.Phase.state:type_name -> openits.signal_control.v1.PhaseState
-	9,  // 23: openits.signal_control.v1.PhaseConfig.timing:type_name -> openits.signal_control.v1.Timing
-	10, // 24: openits.signal_control.v1.PhaseConfig.options:type_name -> openits.signal_control.v1.Options
-	11, // 25: openits.signal_control.v1.PhaseConfig.volume_density:type_name -> openits.signal_control.v1.VolumeDensity
-	60, // 26: openits.signal_control.v1.PhaseState.ped_interval:type_name -> openits.signal_control.v1.PedIntervalType
-	61, // 27: openits.signal_control.v1.PhaseState.vehicle_interval:type_name -> openits.signal_control.v1.VehIntervalType
-	14, // 28: openits.signal_control.v1.Detectors.detector:type_name -> openits.signal_control.v1.DetectorsDetector
-	15, // 29: openits.signal_control.v1.DetectorsDetector.config:type_name -> openits.signal_control.v1.DetectorsDetectorConfig
-	17, // 30: openits.signal_control.v1.DetectorsDetector.state:type_name -> openits.signal_control.v1.DetectorsDetectorState
-	62, // 31: openits.signal_control.v1.DetectorsDetectorConfig.mode:type_name -> openits.signal_control.v1.DetectorMode
-	63, // 32: openits.signal_control.v1.DetectorsDetectorConfig.fail_action:type_name -> openits.signal_control.v1.DetectorFailAction
-	16, // 33: openits.signal_control.v1.DetectorsDetectorConfig.diagnostics:type_name -> openits.signal_control.v1.Diagnostics
-	59, // 34: openits.signal_control.v1.DetectorsDetectorState.last_activation:type_name -> google.protobuf.Timestamp
-	18, // 35: openits.signal_control.v1.DetectorsDetectorState.measurement:type_name -> openits.signal_control.v1.Measurement
-	59, // 36: openits.signal_control.v1.Measurement.collected_at:type_name -> google.protobuf.Timestamp
-	20, // 37: openits.signal_control.v1.Overlaps.overlap:type_name -> openits.signal_control.v1.Overlap
-	21, // 38: openits.signal_control.v1.Overlap.config:type_name -> openits.signal_control.v1.OverlapConfig
-	23, // 39: openits.signal_control.v1.Overlap.state:type_name -> openits.signal_control.v1.OverlapState
-	22, // 40: openits.signal_control.v1.OverlapConfig.fya:type_name -> openits.signal_control.v1.Fya
-	64, // 41: openits.signal_control.v1.OverlapState.current_interval:type_name -> openits.signal_control.v1.OverlapIntervalType
-	25, // 42: openits.signal_control.v1.Channels.channel:type_name -> openits.signal_control.v1.Channel
-	65, // 43: openits.signal_control.v1.Channel.flash_state:type_name -> openits.signal_control.v1.ChannelFlashState
-	27, // 44: openits.signal_control.v1.ConflictMonitor.permissive:type_name -> openits.signal_control.v1.Permissive
-	29, // 45: openits.signal_control.v1.Coordination.timing_plan:type_name -> openits.signal_control.v1.TimingPlan
-	31, // 46: openits.signal_control.v1.Coordination.state:type_name -> openits.signal_control.v1.CoordinationState
-	66, // 47: openits.signal_control.v1.TimingPlan.offset_reference:type_name -> openits.signal_control.v1.OffsetReference
-	67, // 48: openits.signal_control.v1.TimingPlan.transition_mode:type_name -> openits.signal_control.v1.TransitionMode
-	68, // 49: openits.signal_control.v1.TimingPlan.force_off_mode:type_name -> openits.signal_control.v1.ForceOffMode
-	30, // 50: openits.signal_control.v1.TimingPlan.split:type_name -> openits.signal_control.v1.Split
-	69, // 51: openits.signal_control.v1.Split.split_mode:type_name -> openits.signal_control.v1.SplitMode
-	33, // 52: openits.signal_control.v1.Sequences.sequence:type_name -> openits.signal_control.v1.Sequence
-	34, // 53: openits.signal_control.v1.Sequence.ring_sequence:type_name -> openits.signal_control.v1.RingSequence
-	36, // 54: openits.signal_control.v1.Timebase.day_plan:type_name -> openits.signal_control.v1.DayPlan
-	38, // 55: openits.signal_control.v1.Timebase.schedule_entry:type_name -> openits.signal_control.v1.ScheduleEntry
-	39, // 56: openits.signal_control.v1.Timebase.clock:type_name -> openits.signal_control.v1.Clock
-	37, // 57: openits.signal_control.v1.DayPlan.action:type_name -> openits.signal_control.v1.Action
-	70, // 58: openits.signal_control.v1.Action.special_operation:type_name -> openits.signal_control.v1.SpecialOperation
-	71, // 59: openits.signal_control.v1.ScheduleEntry.days_of_week:type_name -> openits.signal_control.v1.DayOfWeek
-	72, // 60: openits.signal_control.v1.ScheduleEntry.months:type_name -> openits.signal_control.v1.Month
-	59, // 61: openits.signal_control.v1.Clock.current_time:type_name -> google.protobuf.Timestamp
-	73, // 62: openits.signal_control.v1.Clock.sync_status:type_name -> openits.signal_control.v1.SyncStatus
-	41, // 63: openits.signal_control.v1.Preemption.preemptor:type_name -> openits.signal_control.v1.Preemptor
-	42, // 64: openits.signal_control.v1.Preemptor.config:type_name -> openits.signal_control.v1.PreemptorConfig
-	44, // 65: openits.signal_control.v1.Preemptor.state:type_name -> openits.signal_control.v1.PreemptorState
-	43, // 66: openits.signal_control.v1.PreemptorConfig.track_clearance:type_name -> openits.signal_control.v1.TrackClearance
-	59, // 67: openits.signal_control.v1.PreemptorState.active_since:type_name -> google.protobuf.Timestamp
-	74, // 68: openits.signal_control.v1.PreemptorState.current_stage:type_name -> openits.signal_control.v1.PreemptStage
-	46, // 69: openits.signal_control.v1.Priority.strategy:type_name -> openits.signal_control.v1.Strategy
-	48, // 70: openits.signal_control.v1.Priority.state:type_name -> openits.signal_control.v1.PriorityState
-	47, // 71: openits.signal_control.v1.Strategy.config:type_name -> openits.signal_control.v1.StrategyConfig
-	49, // 72: openits.signal_control.v1.PriorityState.active_request:type_name -> openits.signal_control.v1.ActiveRequest
-	75, // 73: openits.signal_control.v1.ActiveRequest.stage:type_name -> openits.signal_control.v1.Stage
-	51, // 74: openits.signal_control.v1.Operation.monitor:type_name -> openits.signal_control.v1.Monitor
-	59, // 75: openits.signal_control.v1.Operation.last_mode_change:type_name -> google.protobuf.Timestamp
-	53, // 76: openits.signal_control.v1.CabinetPower.config:type_name -> openits.signal_control.v1.CabinetPowerConfig
-	54, // 77: openits.signal_control.v1.CabinetPower.state:type_name -> openits.signal_control.v1.CabinetPowerState
-	76, // 78: openits.signal_control.v1.CabinetPowerConfig.on_battery_policy:type_name -> openits.types.v1.ScOnBatteryPolicy
-	77, // 79: openits.signal_control.v1.CabinetPowerState.signal_operation_on_battery:type_name -> openits.signal_control.v1.SignalOperationOnBattery
-	55, // 80: openits.signal_control.v1.CabinetPowerState.battery:type_name -> openits.signal_control.v1.Battery
-	56, // 81: openits.signal_control.v1.CabinetPowerState.generator:type_name -> openits.signal_control.v1.Generator
-	76, // 82: openits.signal_control.v1.CabinetPowerState.on_battery_policy:type_name -> openits.types.v1.ScOnBatteryPolicy
-	78, // 83: openits.signal_control.v1.CabinetPowerState.power_source:type_name -> openits.signal_control.v1.PowerSource
-	79, // 84: openits.signal_control.v1.Battery.test_state:type_name -> openits.signal_control.v1.BatteryTestState
-	59, // 85: openits.signal_control.v1.Battery.last_test:type_name -> google.protobuf.Timestamp
-	58, // 86: openits.signal_control.v1.Faults.fault:type_name -> openits.signal_control.v1.Fault
-	80, // 87: openits.signal_control.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
-	59, // 88: openits.signal_control.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	81, // 89: openits.signal_control.v1.Fault.severity:type_name -> openits.signal_control.v1.FaultSeverity
-	90, // [90:90] is the sub-list for method output_type
-	90, // [90:90] is the sub-list for method input_type
-	90, // [90:90] is the sub-list for extension type_name
-	90, // [90:90] is the sub-list for extension extendee
-	0,  // [0:90] is the sub-list for field type_name
+	59, // 19: openits.signal_control.v1.SignalControllerState.last_change:type_name -> google.protobuf.Timestamp
+	4,  // 20: openits.signal_control.v1.SignalControllerState.linear_reference:type_name -> openits.signal_control.v1.SignalControllerStateLinearReference
+	59, // 21: openits.signal_control.v1.SignalControllerState.observed_at:type_name -> google.protobuf.Timestamp
+	60, // 22: openits.signal_control.v1.SignalControllerState.oper_status:type_name -> openits.signal_control.v1.OperStatus
+	7,  // 23: openits.signal_control.v1.Phases.phase:type_name -> openits.signal_control.v1.Phase
+	8,  // 24: openits.signal_control.v1.Phase.config:type_name -> openits.signal_control.v1.PhaseConfig
+	12, // 25: openits.signal_control.v1.Phase.state:type_name -> openits.signal_control.v1.PhaseState
+	9,  // 26: openits.signal_control.v1.PhaseConfig.timing:type_name -> openits.signal_control.v1.Timing
+	10, // 27: openits.signal_control.v1.PhaseConfig.options:type_name -> openits.signal_control.v1.Options
+	11, // 28: openits.signal_control.v1.PhaseConfig.volume_density:type_name -> openits.signal_control.v1.VolumeDensity
+	61, // 29: openits.signal_control.v1.PhaseState.ped_interval:type_name -> openits.signal_control.v1.PedIntervalType
+	62, // 30: openits.signal_control.v1.PhaseState.vehicle_interval:type_name -> openits.signal_control.v1.VehIntervalType
+	14, // 31: openits.signal_control.v1.Detectors.detector:type_name -> openits.signal_control.v1.DetectorsDetector
+	15, // 32: openits.signal_control.v1.DetectorsDetector.config:type_name -> openits.signal_control.v1.DetectorsDetectorConfig
+	17, // 33: openits.signal_control.v1.DetectorsDetector.state:type_name -> openits.signal_control.v1.DetectorsDetectorState
+	63, // 34: openits.signal_control.v1.DetectorsDetectorConfig.mode:type_name -> openits.signal_control.v1.DetectorMode
+	64, // 35: openits.signal_control.v1.DetectorsDetectorConfig.fail_action:type_name -> openits.signal_control.v1.DetectorFailAction
+	16, // 36: openits.signal_control.v1.DetectorsDetectorConfig.diagnostics:type_name -> openits.signal_control.v1.Diagnostics
+	59, // 37: openits.signal_control.v1.DetectorsDetectorState.last_activation:type_name -> google.protobuf.Timestamp
+	18, // 38: openits.signal_control.v1.DetectorsDetectorState.measurement:type_name -> openits.signal_control.v1.Measurement
+	59, // 39: openits.signal_control.v1.Measurement.observed_at:type_name -> google.protobuf.Timestamp
+	20, // 40: openits.signal_control.v1.Overlaps.overlap:type_name -> openits.signal_control.v1.Overlap
+	21, // 41: openits.signal_control.v1.Overlap.config:type_name -> openits.signal_control.v1.OverlapConfig
+	23, // 42: openits.signal_control.v1.Overlap.state:type_name -> openits.signal_control.v1.OverlapState
+	22, // 43: openits.signal_control.v1.OverlapConfig.fya:type_name -> openits.signal_control.v1.Fya
+	65, // 44: openits.signal_control.v1.OverlapState.current_interval:type_name -> openits.signal_control.v1.OverlapIntervalType
+	25, // 45: openits.signal_control.v1.Channels.channel:type_name -> openits.signal_control.v1.Channel
+	66, // 46: openits.signal_control.v1.Channel.flash_state:type_name -> openits.signal_control.v1.ChannelFlashState
+	27, // 47: openits.signal_control.v1.ConflictMonitor.permissive:type_name -> openits.signal_control.v1.Permissive
+	29, // 48: openits.signal_control.v1.Coordination.timing_plan:type_name -> openits.signal_control.v1.TimingPlan
+	31, // 49: openits.signal_control.v1.Coordination.state:type_name -> openits.signal_control.v1.CoordinationState
+	67, // 50: openits.signal_control.v1.TimingPlan.offset_reference:type_name -> openits.signal_control.v1.OffsetReference
+	68, // 51: openits.signal_control.v1.TimingPlan.transition_mode:type_name -> openits.signal_control.v1.TransitionMode
+	69, // 52: openits.signal_control.v1.TimingPlan.force_off_mode:type_name -> openits.signal_control.v1.ForceOffMode
+	30, // 53: openits.signal_control.v1.TimingPlan.split:type_name -> openits.signal_control.v1.Split
+	70, // 54: openits.signal_control.v1.Split.split_mode:type_name -> openits.signal_control.v1.SplitMode
+	33, // 55: openits.signal_control.v1.Sequences.sequence:type_name -> openits.signal_control.v1.Sequence
+	34, // 56: openits.signal_control.v1.Sequence.ring_sequence:type_name -> openits.signal_control.v1.RingSequence
+	36, // 57: openits.signal_control.v1.Timebase.day_plan:type_name -> openits.signal_control.v1.DayPlan
+	38, // 58: openits.signal_control.v1.Timebase.schedule_entry:type_name -> openits.signal_control.v1.ScheduleEntry
+	39, // 59: openits.signal_control.v1.Timebase.clock:type_name -> openits.signal_control.v1.Clock
+	37, // 60: openits.signal_control.v1.DayPlan.action:type_name -> openits.signal_control.v1.Action
+	71, // 61: openits.signal_control.v1.Action.special_operation:type_name -> openits.signal_control.v1.SpecialOperation
+	72, // 62: openits.signal_control.v1.ScheduleEntry.days_of_week:type_name -> openits.signal_control.v1.DayOfWeek
+	73, // 63: openits.signal_control.v1.ScheduleEntry.months:type_name -> openits.signal_control.v1.Month
+	59, // 64: openits.signal_control.v1.Clock.current_time:type_name -> google.protobuf.Timestamp
+	74, // 65: openits.signal_control.v1.Clock.sync_status:type_name -> openits.signal_control.v1.SyncStatus
+	41, // 66: openits.signal_control.v1.Preemption.preemptor:type_name -> openits.signal_control.v1.Preemptor
+	42, // 67: openits.signal_control.v1.Preemptor.config:type_name -> openits.signal_control.v1.PreemptorConfig
+	44, // 68: openits.signal_control.v1.Preemptor.state:type_name -> openits.signal_control.v1.PreemptorState
+	43, // 69: openits.signal_control.v1.PreemptorConfig.track_clearance:type_name -> openits.signal_control.v1.TrackClearance
+	59, // 70: openits.signal_control.v1.PreemptorState.active_since:type_name -> google.protobuf.Timestamp
+	75, // 71: openits.signal_control.v1.PreemptorState.current_stage:type_name -> openits.signal_control.v1.PreemptStage
+	46, // 72: openits.signal_control.v1.Priority.strategy:type_name -> openits.signal_control.v1.Strategy
+	48, // 73: openits.signal_control.v1.Priority.state:type_name -> openits.signal_control.v1.PriorityState
+	47, // 74: openits.signal_control.v1.Strategy.config:type_name -> openits.signal_control.v1.StrategyConfig
+	49, // 75: openits.signal_control.v1.PriorityState.active_request:type_name -> openits.signal_control.v1.ActiveRequest
+	76, // 76: openits.signal_control.v1.ActiveRequest.stage:type_name -> openits.signal_control.v1.Stage
+	51, // 77: openits.signal_control.v1.Operation.monitor:type_name -> openits.signal_control.v1.Monitor
+	59, // 78: openits.signal_control.v1.Operation.last_mode_change:type_name -> google.protobuf.Timestamp
+	53, // 79: openits.signal_control.v1.CabinetPower.config:type_name -> openits.signal_control.v1.CabinetPowerConfig
+	54, // 80: openits.signal_control.v1.CabinetPower.state:type_name -> openits.signal_control.v1.CabinetPowerState
+	77, // 81: openits.signal_control.v1.CabinetPowerConfig.on_battery_policy:type_name -> openits.types.v1.ScOnBatteryPolicy
+	78, // 82: openits.signal_control.v1.CabinetPowerState.signal_operation_on_battery:type_name -> openits.signal_control.v1.SignalOperationOnBattery
+	55, // 83: openits.signal_control.v1.CabinetPowerState.battery:type_name -> openits.signal_control.v1.Battery
+	56, // 84: openits.signal_control.v1.CabinetPowerState.generator:type_name -> openits.signal_control.v1.Generator
+	77, // 85: openits.signal_control.v1.CabinetPowerState.on_battery_policy:type_name -> openits.types.v1.ScOnBatteryPolicy
+	79, // 86: openits.signal_control.v1.CabinetPowerState.power_source:type_name -> openits.signal_control.v1.PowerSource
+	80, // 87: openits.signal_control.v1.Battery.test_state:type_name -> openits.signal_control.v1.BatteryTestState
+	59, // 88: openits.signal_control.v1.Battery.last_test:type_name -> google.protobuf.Timestamp
+	58, // 89: openits.signal_control.v1.Faults.fault:type_name -> openits.signal_control.v1.Fault
+	81, // 90: openits.signal_control.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
+	59, // 91: openits.signal_control.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	82, // 92: openits.signal_control.v1.Fault.severity:type_name -> openits.signal_control.v1.FaultSeverity
+	93, // [93:93] is the sub-list for method output_type
+	93, // [93:93] is the sub-list for method input_type
+	93, // [93:93] is the sub-list for extension type_name
+	93, // [93:93] is the sub-list for extension extendee
+	0,  // [0:93] is the sub-list for field type_name
 }
 
 func init() { file_openits_signal_control_v1_state_proto_init() }

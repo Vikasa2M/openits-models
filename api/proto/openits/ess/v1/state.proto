@@ -51,6 +51,7 @@ message StationState {
   optional uint32 heading = 12;
   optional string id = 13;
   google.protobuf.Timestamp install_date = 1;
+  google.protobuf.Timestamp last_change = 19;
   optional string latitude = 3;
   StationStateLinearReference linear_reference = 10;
   optional string longitude = 4;
@@ -58,6 +59,8 @@ message StationState {
   optional string make = 5;
   optional string model = 6;
   optional string name = 7;
+  google.protobuf.Timestamp observed_at = 20;
+  optional OperStatus oper_status = 21;
   optional string owner = 17;
   optional string road_reference = 8;
   optional string serial = 9;

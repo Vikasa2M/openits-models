@@ -349,6 +349,7 @@ type CameraState struct {
 	Heading           *uint32                     `protobuf:"varint,5,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
 	Id                *string                     `protobuf:"bytes,6,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate       *timestamppb.Timestamp      `protobuf:"bytes,15,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
+	LastChange        *timestamppb.Timestamp      `protobuf:"bytes,20,opt,name=last_change,json=lastChange,proto3" json:"last_change,omitempty"`
 	Latitude          *string                     `protobuf:"bytes,7,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference   *CameraStateLinearReference `protobuf:"bytes,16,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
 	Longitude         *string                     `protobuf:"bytes,8,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
@@ -356,6 +357,8 @@ type CameraState struct {
 	Make              *string                     `protobuf:"bytes,9,opt,name=make,proto3,oneof" json:"make,omitempty"`
 	Model             *string                     `protobuf:"bytes,10,opt,name=model,proto3,oneof" json:"model,omitempty"`
 	Name              *string                     `protobuf:"bytes,11,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	ObservedAt        *timestamppb.Timestamp      `protobuf:"bytes,21,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
+	OperStatus        *OperStatus                 `protobuf:"varint,22,opt,name=oper_status,json=operStatus,proto3,enum=openits.cctv.v1.OperStatus,oneof" json:"oper_status,omitempty"`
 	Owner             *string                     `protobuf:"bytes,18,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	RoadReference     *string                     `protobuf:"bytes,12,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
 	Serial            *string                     `protobuf:"bytes,13,opt,name=serial,proto3,oneof" json:"serial,omitempty"`
@@ -450,6 +453,13 @@ func (x *CameraState) GetInstallDate() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *CameraState) GetLastChange() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastChange
+	}
+	return nil
+}
+
 func (x *CameraState) GetLatitude() string {
 	if x != nil && x.Latitude != nil {
 		return *x.Latitude
@@ -497,6 +507,20 @@ func (x *CameraState) GetName() string {
 		return *x.Name
 	}
 	return ""
+}
+
+func (x *CameraState) GetObservedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ObservedAt
+	}
+	return nil
+}
+
+func (x *CameraState) GetOperStatus() OperStatus {
+	if x != nil && x.OperStatus != nil {
+		return *x.OperStatus
+	}
+	return OperStatus_OPER_STATUS_UNKNOWN
 }
 
 func (x *CameraState) GetOwner() string {
@@ -2731,7 +2755,7 @@ const file_openits_cctv_v1_state_proto_rawDesc = "" +
 	"_directionB\n" +
 	"\n" +
 	"\b_measureB\r\n" +
-	"\v_lrs_method\"\xf7\a\n" +
+	"\v_lrs_method\"\xc4\t\n" +
 	"\vCameraState\x12V\n" +
 	"\x12operational_status\x18\x0e \x01(\x0e2\".openits.cctv.v1.OperationalStatusH\x00R\x11operationalStatus\x88\x01\x01\x12!\n" +
 	"\televation\x18\x01 \x01(\tH\x01R\televation\x88\x01\x01\x12\x1f\n" +
@@ -2740,7 +2764,9 @@ const file_openits_cctv_v1_state_proto_rawDesc = "" +
 	"\x10hardware_version\x18\x04 \x01(\tH\x04R\x0fhardwareVersion\x88\x01\x01\x12\x1d\n" +
 	"\aheading\x18\x05 \x01(\rH\x05R\aheading\x88\x01\x01\x12\x13\n" +
 	"\x02id\x18\x06 \x01(\tH\x06R\x02id\x88\x01\x01\x12=\n" +
-	"\finstall_date\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	"\finstall_date\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12;\n" +
+	"\vlast_change\x18\x14 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"lastChange\x12\x1f\n" +
 	"\blatitude\x18\a \x01(\tH\aR\blatitude\x88\x01\x01\x12V\n" +
 	"\x10linear_reference\x18\x10 \x01(\v2+.openits.cctv.v1.CameraStateLinearReferenceR\x0flinearReference\x12!\n" +
 	"\tlongitude\x18\b \x01(\tH\bR\tlongitude\x88\x01\x01\x12(\n" +
@@ -2749,11 +2775,15 @@ const file_openits_cctv_v1_state_proto_rawDesc = "" +
 	"R\x04make\x88\x01\x01\x12\x19\n" +
 	"\x05model\x18\n" +
 	" \x01(\tH\vR\x05model\x88\x01\x01\x12\x17\n" +
-	"\x04name\x18\v \x01(\tH\fR\x04name\x88\x01\x01\x12\x19\n" +
-	"\x05owner\x18\x12 \x01(\tH\rR\x05owner\x88\x01\x01\x12*\n" +
-	"\x0eroad_reference\x18\f \x01(\tH\x0eR\rroadReference\x88\x01\x01\x12\x1b\n" +
-	"\x06serial\x18\r \x01(\tH\x0fR\x06serial\x88\x01\x01\x12\x1c\n" +
-	"\asite_id\x18\x13 \x01(\tH\x10R\x06siteId\x88\x01\x01B\x15\n" +
+	"\x04name\x18\v \x01(\tH\fR\x04name\x88\x01\x01\x12;\n" +
+	"\vobserved_at\x18\x15 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x12A\n" +
+	"\voper_status\x18\x16 \x01(\x0e2\x1b.openits.cctv.v1.OperStatusH\rR\n" +
+	"operStatus\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\x12 \x01(\tH\x0eR\x05owner\x88\x01\x01\x12*\n" +
+	"\x0eroad_reference\x18\f \x01(\tH\x0fR\rroadReference\x88\x01\x01\x12\x1b\n" +
+	"\x06serial\x18\r \x01(\tH\x10R\x06serial\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\x13 \x01(\tH\x11R\x06siteId\x88\x01\x01B\x15\n" +
 	"\x13_operational_statusB\f\n" +
 	"\n" +
 	"_elevationB\v\n" +
@@ -2769,7 +2799,8 @@ const file_openits_cctv_v1_state_proto_rawDesc = "" +
 	"\x0e_maintained_byB\a\n" +
 	"\x05_makeB\b\n" +
 	"\x06_modelB\a\n" +
-	"\x05_nameB\b\n" +
+	"\x05_nameB\x0e\n" +
+	"\f_oper_statusB\b\n" +
 	"\x06_ownerB\x11\n" +
 	"\x0f_road_referenceB\t\n" +
 	"\a_serialB\n" +
@@ -3089,15 +3120,16 @@ var file_openits_cctv_v1_state_proto_goTypes = []any{
 	(*ControlStateHolder)(nil),          // 38: openits.cctv.v1.ControlStateHolder
 	(*timestamppb.Timestamp)(nil),       // 39: google.protobuf.Timestamp
 	(OperationalStatus)(0),              // 40: openits.cctv.v1.OperationalStatus
-	(MountingStructure)(0),              // 41: openits.cctv.v1.MountingStructure
-	(PtzMoveMode)(0),                    // 42: openits.cctv.v1.PtzMoveMode
-	(TourRunState)(0),                   // 43: openits.cctv.v1.TourRunState
-	(LensMode)(0),                       // 44: openits.cctv.v1.LensMode
-	(VideoCodec)(0),                     // 45: openits.cctv.v1.VideoCodec
-	(StreamHealth)(0),                   // 46: openits.cctv.v1.StreamHealth
-	(HeaterMode)(0),                     // 47: openits.cctv.v1.HeaterMode
-	(*v1.ComponentRef)(nil),             // 48: openits.types.v1.ComponentRef
-	(FaultSeverity)(0),                  // 49: openits.cctv.v1.FaultSeverity
+	(OperStatus)(0),                     // 41: openits.cctv.v1.OperStatus
+	(MountingStructure)(0),              // 42: openits.cctv.v1.MountingStructure
+	(PtzMoveMode)(0),                    // 43: openits.cctv.v1.PtzMoveMode
+	(TourRunState)(0),                   // 44: openits.cctv.v1.TourRunState
+	(LensMode)(0),                       // 45: openits.cctv.v1.LensMode
+	(VideoCodec)(0),                     // 46: openits.cctv.v1.VideoCodec
+	(StreamHealth)(0),                   // 47: openits.cctv.v1.StreamHealth
+	(HeaterMode)(0),                     // 48: openits.cctv.v1.HeaterMode
+	(*v1.ComponentRef)(nil),             // 49: openits.types.v1.ComponentRef
+	(FaultSeverity)(0),                  // 50: openits.cctv.v1.FaultSeverity
 }
 var file_openits_cctv_v1_state_proto_depIdxs = []int32{
 	1,  // 0: openits.cctv.v1.Camera.config:type_name -> openits.cctv.v1.CameraConfig
@@ -3114,54 +3146,57 @@ var file_openits_cctv_v1_state_proto_depIdxs = []int32{
 	2,  // 11: openits.cctv.v1.CameraConfig.linear_reference:type_name -> openits.cctv.v1.CameraConfigLinearReference
 	40, // 12: openits.cctv.v1.CameraState.operational_status:type_name -> openits.cctv.v1.OperationalStatus
 	39, // 13: openits.cctv.v1.CameraState.install_date:type_name -> google.protobuf.Timestamp
-	4,  // 14: openits.cctv.v1.CameraState.linear_reference:type_name -> openits.cctv.v1.CameraStateLinearReference
-	41, // 15: openits.cctv.v1.Mounting.structure:type_name -> openits.cctv.v1.MountingStructure
-	6,  // 16: openits.cctv.v1.Mounting.associated_device:type_name -> openits.cctv.v1.AssociatedDevice
-	8,  // 17: openits.cctv.v1.Ptz.capabilities:type_name -> openits.cctv.v1.Capabilities
-	9,  // 18: openits.cctv.v1.Ptz.config:type_name -> openits.cctv.v1.PtzConfig
-	12, // 19: openits.cctv.v1.Ptz.state:type_name -> openits.cctv.v1.PtzState
-	13, // 20: openits.cctv.v1.Ptz.presets:type_name -> openits.cctv.v1.Presets
-	16, // 21: openits.cctv.v1.Ptz.tours:type_name -> openits.cctv.v1.Tours
-	10, // 22: openits.cctv.v1.PtzConfig.absolute:type_name -> openits.cctv.v1.PtzConfigAbsolute
-	11, // 23: openits.cctv.v1.PtzConfig.velocity:type_name -> openits.cctv.v1.PtzConfigVelocity
-	42, // 24: openits.cctv.v1.PtzState.move_mode:type_name -> openits.cctv.v1.PtzMoveMode
-	14, // 25: openits.cctv.v1.Presets.preset:type_name -> openits.cctv.v1.Preset
-	15, // 26: openits.cctv.v1.Presets.state:type_name -> openits.cctv.v1.PresetsState
-	17, // 27: openits.cctv.v1.Tours.tour:type_name -> openits.cctv.v1.Tour
-	19, // 28: openits.cctv.v1.Tours.state:type_name -> openits.cctv.v1.ToursState
-	18, // 29: openits.cctv.v1.Tour.stop:type_name -> openits.cctv.v1.Stop
-	43, // 30: openits.cctv.v1.ToursState.run_state:type_name -> openits.cctv.v1.TourRunState
-	21, // 31: openits.cctv.v1.Lens.config:type_name -> openits.cctv.v1.LensConfig
-	22, // 32: openits.cctv.v1.Lens.state:type_name -> openits.cctv.v1.LensState
-	44, // 33: openits.cctv.v1.LensConfig.focus_mode:type_name -> openits.cctv.v1.LensMode
-	44, // 34: openits.cctv.v1.LensConfig.iris_mode:type_name -> openits.cctv.v1.LensMode
-	44, // 35: openits.cctv.v1.LensState.focus_mode:type_name -> openits.cctv.v1.LensMode
-	44, // 36: openits.cctv.v1.LensState.iris_mode:type_name -> openits.cctv.v1.LensMode
-	24, // 37: openits.cctv.v1.PrivacyMasks.mask:type_name -> openits.cctv.v1.Mask
-	26, // 38: openits.cctv.v1.Streams.stream:type_name -> openits.cctv.v1.Stream
-	27, // 39: openits.cctv.v1.Stream.config:type_name -> openits.cctv.v1.StreamConfig
-	28, // 40: openits.cctv.v1.Stream.state:type_name -> openits.cctv.v1.StreamState
-	45, // 41: openits.cctv.v1.StreamConfig.codec:type_name -> openits.cctv.v1.VideoCodec
-	45, // 42: openits.cctv.v1.StreamState.codec:type_name -> openits.cctv.v1.VideoCodec
-	46, // 43: openits.cctv.v1.StreamState.health:type_name -> openits.cctv.v1.StreamHealth
-	30, // 44: openits.cctv.v1.Environment.config:type_name -> openits.cctv.v1.EnvironmentConfig
-	31, // 45: openits.cctv.v1.Environment.state:type_name -> openits.cctv.v1.EnvironmentState
-	47, // 46: openits.cctv.v1.EnvironmentConfig.heater_mode:type_name -> openits.cctv.v1.HeaterMode
-	33, // 47: openits.cctv.v1.Faults.fault:type_name -> openits.cctv.v1.Fault
-	48, // 48: openits.cctv.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
-	39, // 49: openits.cctv.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	49, // 50: openits.cctv.v1.Fault.severity:type_name -> openits.cctv.v1.FaultSeverity
-	35, // 51: openits.cctv.v1.Control.config:type_name -> openits.cctv.v1.ControlConfig
-	37, // 52: openits.cctv.v1.Control.state:type_name -> openits.cctv.v1.ControlState
-	36, // 53: openits.cctv.v1.ControlConfig.holder:type_name -> openits.cctv.v1.ControlConfigHolder
-	38, // 54: openits.cctv.v1.ControlState.holder:type_name -> openits.cctv.v1.ControlStateHolder
-	39, // 55: openits.cctv.v1.ControlStateHolder.held_since:type_name -> google.protobuf.Timestamp
-	39, // 56: openits.cctv.v1.ControlStateHolder.expires_at:type_name -> google.protobuf.Timestamp
-	57, // [57:57] is the sub-list for method output_type
-	57, // [57:57] is the sub-list for method input_type
-	57, // [57:57] is the sub-list for extension type_name
-	57, // [57:57] is the sub-list for extension extendee
-	0,  // [0:57] is the sub-list for field type_name
+	39, // 14: openits.cctv.v1.CameraState.last_change:type_name -> google.protobuf.Timestamp
+	4,  // 15: openits.cctv.v1.CameraState.linear_reference:type_name -> openits.cctv.v1.CameraStateLinearReference
+	39, // 16: openits.cctv.v1.CameraState.observed_at:type_name -> google.protobuf.Timestamp
+	41, // 17: openits.cctv.v1.CameraState.oper_status:type_name -> openits.cctv.v1.OperStatus
+	42, // 18: openits.cctv.v1.Mounting.structure:type_name -> openits.cctv.v1.MountingStructure
+	6,  // 19: openits.cctv.v1.Mounting.associated_device:type_name -> openits.cctv.v1.AssociatedDevice
+	8,  // 20: openits.cctv.v1.Ptz.capabilities:type_name -> openits.cctv.v1.Capabilities
+	9,  // 21: openits.cctv.v1.Ptz.config:type_name -> openits.cctv.v1.PtzConfig
+	12, // 22: openits.cctv.v1.Ptz.state:type_name -> openits.cctv.v1.PtzState
+	13, // 23: openits.cctv.v1.Ptz.presets:type_name -> openits.cctv.v1.Presets
+	16, // 24: openits.cctv.v1.Ptz.tours:type_name -> openits.cctv.v1.Tours
+	10, // 25: openits.cctv.v1.PtzConfig.absolute:type_name -> openits.cctv.v1.PtzConfigAbsolute
+	11, // 26: openits.cctv.v1.PtzConfig.velocity:type_name -> openits.cctv.v1.PtzConfigVelocity
+	43, // 27: openits.cctv.v1.PtzState.move_mode:type_name -> openits.cctv.v1.PtzMoveMode
+	14, // 28: openits.cctv.v1.Presets.preset:type_name -> openits.cctv.v1.Preset
+	15, // 29: openits.cctv.v1.Presets.state:type_name -> openits.cctv.v1.PresetsState
+	17, // 30: openits.cctv.v1.Tours.tour:type_name -> openits.cctv.v1.Tour
+	19, // 31: openits.cctv.v1.Tours.state:type_name -> openits.cctv.v1.ToursState
+	18, // 32: openits.cctv.v1.Tour.stop:type_name -> openits.cctv.v1.Stop
+	44, // 33: openits.cctv.v1.ToursState.run_state:type_name -> openits.cctv.v1.TourRunState
+	21, // 34: openits.cctv.v1.Lens.config:type_name -> openits.cctv.v1.LensConfig
+	22, // 35: openits.cctv.v1.Lens.state:type_name -> openits.cctv.v1.LensState
+	45, // 36: openits.cctv.v1.LensConfig.focus_mode:type_name -> openits.cctv.v1.LensMode
+	45, // 37: openits.cctv.v1.LensConfig.iris_mode:type_name -> openits.cctv.v1.LensMode
+	45, // 38: openits.cctv.v1.LensState.focus_mode:type_name -> openits.cctv.v1.LensMode
+	45, // 39: openits.cctv.v1.LensState.iris_mode:type_name -> openits.cctv.v1.LensMode
+	24, // 40: openits.cctv.v1.PrivacyMasks.mask:type_name -> openits.cctv.v1.Mask
+	26, // 41: openits.cctv.v1.Streams.stream:type_name -> openits.cctv.v1.Stream
+	27, // 42: openits.cctv.v1.Stream.config:type_name -> openits.cctv.v1.StreamConfig
+	28, // 43: openits.cctv.v1.Stream.state:type_name -> openits.cctv.v1.StreamState
+	46, // 44: openits.cctv.v1.StreamConfig.codec:type_name -> openits.cctv.v1.VideoCodec
+	46, // 45: openits.cctv.v1.StreamState.codec:type_name -> openits.cctv.v1.VideoCodec
+	47, // 46: openits.cctv.v1.StreamState.health:type_name -> openits.cctv.v1.StreamHealth
+	30, // 47: openits.cctv.v1.Environment.config:type_name -> openits.cctv.v1.EnvironmentConfig
+	31, // 48: openits.cctv.v1.Environment.state:type_name -> openits.cctv.v1.EnvironmentState
+	48, // 49: openits.cctv.v1.EnvironmentConfig.heater_mode:type_name -> openits.cctv.v1.HeaterMode
+	33, // 50: openits.cctv.v1.Faults.fault:type_name -> openits.cctv.v1.Fault
+	49, // 51: openits.cctv.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
+	39, // 52: openits.cctv.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	50, // 53: openits.cctv.v1.Fault.severity:type_name -> openits.cctv.v1.FaultSeverity
+	35, // 54: openits.cctv.v1.Control.config:type_name -> openits.cctv.v1.ControlConfig
+	37, // 55: openits.cctv.v1.Control.state:type_name -> openits.cctv.v1.ControlState
+	36, // 56: openits.cctv.v1.ControlConfig.holder:type_name -> openits.cctv.v1.ControlConfigHolder
+	38, // 57: openits.cctv.v1.ControlState.holder:type_name -> openits.cctv.v1.ControlStateHolder
+	39, // 58: openits.cctv.v1.ControlStateHolder.held_since:type_name -> google.protobuf.Timestamp
+	39, // 59: openits.cctv.v1.ControlStateHolder.expires_at:type_name -> google.protobuf.Timestamp
+	60, // [60:60] is the sub-list for method output_type
+	60, // [60:60] is the sub-list for method input_type
+	60, // [60:60] is the sub-list for extension type_name
+	60, // [60:60] is the sub-list for extension extendee
+	0,  // [0:60] is the sub-list for field type_name
 }
 
 func init() { file_openits_cctv_v1_state_proto_init() }

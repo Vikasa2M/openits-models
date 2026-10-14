@@ -28,8 +28,13 @@ module openits-zone-occupancy-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.2.0";
+  openits-types:openits-version "0.2.1";
 
+  revision 2026-10-16 {
+    description
+      "Description only: name the state timestamp observed-at, renamed from measured-at in the service core. Wire-neutral.";
+    reference "RFC 7950 §7.19.";
+  }
   revision 2026-09-05 {
     description
       "Add the zone-occupancy-state grouping (the live observation,
@@ -110,7 +115,7 @@ module openits-zone-occupancy-types {
        event consumer maintaining a twin of the state tree sets exactly
        these leaves, and a datastore consumer reads exactly these
        leaves. Each user declares its own key and timestamp outside the
-       grouping (the state list a leafref zone-id and measured-at, the
+       grouping (the state list a leafref zone-id and observed-at, the
        notification a plain occupancy-zone-id and the event-header's
        occurred-at), because those are the two things that legitimately
        differ between a stored reading and a reported transition.
@@ -230,7 +235,7 @@ module openits-zone-occupancy-types {
        notification carries. That notification constrains 'kind' to
        this base, so the identities derived from it ARE the definition
        of what counts as a change: a delta that maps to none of them (a
-       confidence revision, a measured-at tick) is not an event. Not
+       confidence revision, an observed-at tick) is not an event. Not
        based on report-event-kind: these fire on transition, not on a
        schedule.";
   }
