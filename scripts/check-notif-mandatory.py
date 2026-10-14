@@ -71,6 +71,13 @@ notification's own depth, exactly like the min-elements refine below
 ignored), and `mandatory false` on a refine removes an inherited
 mandatory.
 
+A notification-level `openits-types:mandatory-for-kind "<leaf> <prefix:identity>"`
+extension statement makes <leaf> mandatory when the instance's `kind` is
+derived-from-or-self that identity (the leaf stays optional for every other
+kind). Used by openits-common-comm-health-events so comm-lost must carry
+last-contact and observed-by; reported as MISSING <leaf> like any other
+mandatory leaf.
+
 Extend the min-elements handling above if a future notification needs
 a floor this doesn't already cover.
 
@@ -471,6 +478,45 @@ class Schema:
             return sorted(reasons)
         return []
 
+    def notification_kind_mandatory_missing(self, notif_name, instance):
+        """Leaves required by `mandatory-for-kind` statements on the
+        notification whose kind matches but which are absent."""
+        if not isinstance(instance, dict):
+            return []
+        for (module, name), body in self.notifications.items():
+            if name != notif_name:
+                continue
+            present = {k.split(":")[-1] for k in instance}
+            kind_val = None
+            for k, v in instance.items():
+                if k.split(":")[-1] == "kind":
+                    kind_val = v
+                    break
+            if not isinstance(kind_val, str):
+                return []
+            if ":" in kind_val:
+                pfx, iname = kind_val.split(":", 1)
+                kind_id = (self.prefix_map.get(module, {}).get(pfx, pfx), iname)
+            else:
+                kind_id = (module, kind_val)
+            missing = []
+            for kw, arg, _sub in strip_and_split(body):
+                if bare(kw) != "mandatory-for-kind" or not arg:
+                    continue
+                parts = arg.split()
+                if len(parts) != 2:
+                    continue
+                leaf, ref = parts
+                target = self.resolve(module, ref)
+                if (
+                    target
+                    and leaf not in present
+                    and self._derived_from_or_self(kind_id, target)
+                ):
+                    missing.append(leaf)
+            return sorted(set(missing))
+        return []
+
     def _top_level_min_elements(self, module, body, visited=None):
         """Collect min-elements floors reachable at a notification's own
         top level: {child-name: floor}. Two sources: a min-elements
@@ -572,6 +618,7 @@ def main(argv):
             continue
         problems = (
             list(missing)
+            + [m for m in schema.notification_kind_mandatory_missing(notif_name, instance) if m not in missing]
             + schema.notification_when_violations(notif_name, instance)
             + schema.notification_min_elements_violations(notif_name, instance)
         )

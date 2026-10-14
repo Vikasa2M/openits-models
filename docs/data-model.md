@@ -218,6 +218,18 @@ event) rather than by tree duplication. If a future deployment needs
 NMDA-style datastores over NETCONF/gNMI, the models work unchanged —
 the convention is a packaging choice, not a capability limit.
 
+### Comm-loss staleness
+
+Live state is only as current as the device's last contact. After a
+`comm-lost` event, all live state held for that `source-device-id` is stale
+as of the event's `last-contact` until a `comm-restored` event and a resync;
+consumers MUST NOT present it as current. A `comm-lost` event therefore
+MUST carry `last-contact` (the last time the observer heard from the device)
+and `observed-by` (the poller that detected the loss): the unreachable device
+cannot report its own silence. The requirement is declared in the schema with
+`openits-types:mandatory-for-kind` on the notification and enforced by the
+notification checker.
+
 ### Fault lifecycle boundary
 
 OpenITS models the **device half** of a fault's lifecycle only: a device

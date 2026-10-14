@@ -11,6 +11,7 @@ import "openits/types/v1/types.proto";
 message CommHealthEvent {
   string kind = 99;
   optional int64 drift_milliseconds = 3;
+  google.protobuf.Timestamp last_contact = 14;
   optional uint32 attempts_total = 4;
   optional uint32 attempts_failed = 5;
   optional uint32 percent_loss = 6;

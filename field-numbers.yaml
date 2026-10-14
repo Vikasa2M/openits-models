@@ -265,6 +265,7 @@ messages:
         avg_response_ms: 7
         drift_milliseconds: 3
         kind: 99
+        last_contact: 14
         link_id: 8
         link_type: 12
         observed_by: 9

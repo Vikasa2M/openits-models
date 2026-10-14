@@ -1310,10 +1310,12 @@
         "2026-07-13",
         "2026-07-21",
         "2026-09-02",
-        "2026-10-13"
+        "2026-10-13",
+        "2026-10-16"
       ],
       "refStd": [
-        "RFC 7950 §11"
+        "RFC 7950 §11",
+        "RFC 7950 §7.19"
       ]
     },
     {
@@ -1720,6 +1722,13 @@
         "openits-common-comm-health-events/2026-10-13/schema.json",
         "openits-common-comm-health-events/2026-10-13/schema.proto",
         "openits-common-comm-health-events/2026-10-13/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-common-comm-health-events/2026-10-16/MANIFEST.json",
+        "openits-common-comm-health-events/2026-10-16/README.md",
+        "openits-common-comm-health-events/2026-10-16/schema.json",
+        "openits-common-comm-health-events/2026-10-16/schema.proto",
+        "openits-common-comm-health-events/2026-10-16/schema.yang"
       ]
     },
     "openits-common-fault-events": {
@@ -2801,6 +2810,11 @@
         "openits-types/2026-10-14/MANIFEST.json",
         "openits-types/2026-10-14/README.md",
         "openits-types/2026-10-14/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-types/2026-10-16/MANIFEST.json",
+        "openits-types/2026-10-16/README.md",
+        "openits-types/2026-10-16/schema.yang"
       ]
     },
     "openits-v2x-messaging": {
