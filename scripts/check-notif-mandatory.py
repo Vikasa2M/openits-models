@@ -94,7 +94,11 @@ Prints one result line per fixture file (same order given):
     MISSING <path> <leaf1>,<leaf2>,...
                             notification instance is missing one or more
                             mandatory leaves
-Always exits 0; the caller inspects the per-line verdicts.
+Exits 0 and the caller inspects the per-line verdicts, except that a
+malformed `mandatory-for-kind` statement (an argument that is not exactly
+two tokens, or an identity that does not resolve) is a schema error: it is
+reported on stderr naming the module and notification, and the script
+exits 2 before checking any fixture.
 """
 import json
 import re
@@ -263,6 +267,8 @@ class Schema:
                 self.groupings[(mod_name, arg)] = sub
             elif k == "notification" and sub is not None:
                 self.notifications[(mod_name, arg)] = sub
+            elif k == "identity" and sub is None:
+                self.identity_bases[(mod_name, arg)] = []
             elif k == "identity" and sub is not None:
                 bases = []
                 for ik, iarg, _isub in strip_and_split(sub):
@@ -478,6 +484,29 @@ class Schema:
             return sorted(reasons)
         return []
 
+    def mandatory_for_kind_errors(self):
+        """Hard errors for malformed `mandatory-for-kind` statements: an
+        argument that is not exactly '<leaf> <prefix:identity>', or an
+        identity that does not resolve to one defined in the loaded
+        schemas. A malformed statement must not silently stop enforcing
+        its leaf, so the caller exits non-zero on any of these."""
+        errors = []
+        for (module, name), body in sorted(self.notifications.items()):
+            for kw, arg, _sub in strip_and_split(body):
+                if bare(kw) != "mandatory-for-kind":
+                    continue
+                where = f"{module}: notification {name}: mandatory-for-kind {arg!r}"
+                parts = (arg or "").split()
+                if len(parts) != 2:
+                    errors.append(f"{where}: argument must be '<leaf> <prefix:identity>' (got {len(parts)} token(s))")
+                    continue
+                target = self.resolve(module, parts[1])
+                if target is None:
+                    errors.append(f"{where}: prefix of {parts[1]!r} is not imported by {module}")
+                elif target not in self.identity_bases:
+                    errors.append(f"{where}: identity {target[0]}:{target[1]} is not defined in the loaded schemas")
+        return errors
+
     def notification_kind_mandatory_missing(self, notif_name, instance):
         """Leaves required by `mandatory-for-kind` statements on the
         notification whose kind matches but which are absent."""
@@ -596,6 +625,11 @@ def main(argv):
     schema = Schema()
     for path in schema_args:
         schema.load(path)
+    errors = schema.mandatory_for_kind_errors()
+    if errors:
+        for e in errors:
+            print(f"check-notif-mandatory: ERROR {e}", file=sys.stderr)
+        return 2
 
     for fpath in fixtures:
         with open(fpath, encoding="utf-8") as f:
