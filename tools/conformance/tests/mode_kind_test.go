@@ -1,6 +1,9 @@
 package tests
 
 import (
+	"os"
+	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -161,6 +164,52 @@ func TestModeKind_TableEnumsExist(t *testing.T) {
 		}
 		if len(enumMembers(f.enum)) == 0 {
 			t.Errorf("%s: enum %s missing from the generated schema", svc, f.enum)
+		}
+	}
+}
+
+// modeKindSkip lists mode-event-kinds deliberately absent from
+// modeFamilyByService, each with the reason.
+var modeKindSkip = map[string]string{}
+
+// TestModeFamilyTable_CoversEveryModeEventKind fails when a module defines
+// a <family>-mode-event-kind identity (other than the abstract
+// openits-types base) that neither modeFamilyByService nor modeKindSkip
+// accounts for, so a new family cannot slip past TestMode_ValueMatchesKind.
+func TestModeFamilyTable_CoversEveryModeEventKind(t *testing.T) {
+	files, err := filepath.Glob("../../../yang/*.yang")
+	if err != nil || len(files) == 0 {
+		t.Fatalf("no YANG modules found: %v", err)
+	}
+	re := regexp.MustCompile(`(?m)^\s*identity\s+([a-z0-9-]+-mode-event-kind)\b`)
+	covered := map[string]bool{}
+	for _, f := range modeFamilyByService {
+		covered[f.kind] = true
+	}
+	found := 0
+	for _, f := range files {
+		mod := strings.TrimSuffix(filepath.Base(f), ".yang")
+		data, err := os.ReadFile(f)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, m := range re.FindAllStringSubmatch(string(data), -1) {
+			kind := mod + ":" + m[1]
+			if kind == "openits-types:mode-event-kind" {
+				continue
+			}
+			found++
+			if !covered[kind] && modeKindSkip[kind] == "" {
+				t.Errorf("%s is in neither modeFamilyByService nor modeKindSkip", kind)
+			}
+		}
+	}
+	if found < len(modeFamilyByService) {
+		t.Fatalf("found %d mode-event-kind identities, fewer than the %d table entries", found, len(modeFamilyByService))
+	}
+	for k := range modeKindSkip {
+		if covered[k] {
+			t.Errorf("%s is in both modeFamilyByService and modeKindSkip", k)
 		}
 	}
 }

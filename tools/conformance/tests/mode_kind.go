@@ -17,7 +17,9 @@ type modeFamily struct {
 }
 
 // modeFamilyByService maps a subject's service token to its mode family.
-// It mirrors the mode-value-base statements in the -types modules, which
+// The kind is matched exactly: a sub-kind (an identity derived from a
+// family's mode-event-kind) is not supported by this table and would need
+// enum-membership matching. It mirrors the mode-value-base statements in the -types modules, which
 // tools/check-mode-kinds enforces on the YANG side.
 var modeFamilyByService = map[string]modeFamily{
 	"signal-control": {"openits-signal-control-types:sc-mode-event-kind", "E_OpenitsSignalControlTypes_ControllerMode"},
