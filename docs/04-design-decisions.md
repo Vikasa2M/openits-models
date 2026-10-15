@@ -858,7 +858,7 @@ that rule applied to a live container. Two things make it hold up:
    zone-occupancy shape.
 
 Each user declares its own key and timestamp outside the grouping — the
-state list a leafref and the reading's `measured-at`, the notification a
+state list a leafref and the reading's `observed-at`, the notification a
 plain identifier and the header's `occurred-at`. Carrying both timestamps
 in the event would be redundant state that can disagree with itself, the
 same objection that removed zone capacity.

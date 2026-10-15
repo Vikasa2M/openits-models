@@ -1,0 +1,269 @@
+module openits-common-comm-health-events {
+  yang-version 1.1;
+  namespace "urn:openits:yang:common-comm-health-events";
+  prefix openits-common-comm-health;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (proposal)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Cross-service communication-health notifications. Every openits
+     service or feed (signal-control, dms, ess, rsu, ramp-metering,
+     perception, traffic-sensor, reversible-lane, work-zone) uses
+     these notifications for time-drift, comm-attempt statistics,
+     percent-loss windows, and link-flap events. Service-specific
+     content (e.g., which controller-id reports it) is carried in
+     the notification payload via standard leaves and via the
+     wire-source grouping.
+
+     The 'kind' identityref discriminates the specific comm-health
+     event class. Service-specific or vendor-specific kinds derive
+     from openits-types:comm-health-event-kind in their own modules.";
+
+  openits-types:openits-version "0.4.0";
+
+  revision 2026-10-16 {
+    description
+      "Make comm-lost carry last-contact and its observer, and define
+       comm-loss staleness. Add a 'last-contact' leaf guarded to
+       comm-lost, and require last-contact and observed-by on every
+       comm-lost event (openits-types:mandatory-for-kind); observed-by
+       comes from the event-header grouping, where it stays optional for
+       other kinds. The comm-lost identity description now states the
+       normative staleness rule, including the testable exit condition
+       (a reading is current only when its observed-at is later than
+       last-contact). Breaking: comm-lost producers must emit
+       last-contact and observed-by.";
+    reference "RFC 7950 §7.19.";
+  }
+  revision 2026-10-13 {
+    description
+      "Inherit the mandatory sequence-epoch leaf from the openits-types
+       event-header grouping, which changes every notification payload
+       in this module. Breaking: producers must emit sequence-epoch.";
+    reference "RFC 7950 §11.";
+  }
+  revision 2026-09-02 {
+    description
+      "Documentation only: add work-zone to the module description's
+       service list, and widen the surrounding sentence so it no
+       longer reads as devices-only -- a work-zone feed is a data
+       source, not a field device, and it uses these notifications the
+       same way every device service does.
+
+       This edit generates nothing. The routing that lets a work-zone
+       feed's comm-health events fan out to
+       openits.work-zone.comm-health-event.v1 is carried entirely by
+       wz-comm-health-event-kind's dual base in openits-work-zone-types
+       (2026-09-02 revision); nothing here registers or enables that
+       fan-out.";
+  }
+  revision 2026-07-21 {
+    description
+      "Add 'when' guards to the kind-specific comm-health-event leaves so
+       a contradictory instance (e.g. kind=comm-lost carrying attempt
+       counters) no longer validates: drift-milliseconds gated on
+       time-drift-observed; attempts-*/percent-loss/avg-response-ms on
+       comm-attempt-window; link-id on the four link-scoped kinds.
+       Constraint-tightening on optional leaves.
+       - Add a guarded 'link-type' leaf (base openits-types:comm-link-type)
+         to comm-health-event and document that the degraded threshold is
+         operator/vendor policy, not model-fixed. Additive.
+       - Collapse duplicate same-date revision statements.";
+  }
+  revision 2026-07-13 {
+    description
+      "Add 'comm-lost' and 'comm-restored' identities (base
+       comm-health-event-kind), splitting total loss of communication
+       from comm-link-degraded, which is amended to explicitly exclude
+       total loss. Dispatch-relevant distinction: comm-lost is the
+       first split on a TMC comm dashboard. Additive only.
+
+      Adopt the shared openits-types:event-header grouping in
+       comm-health-event, replacing the inline source-device-id +
+       occurred-at leaf pair. Wire-stable. Also drop gateway
+       from the service list in the module description — the
+       collector/gateway model was removed.";
+  }
+  revision 2026-05-17 {
+    description
+      "Add descriptions to source-device-id and occurred-at leaves
+       in comm-health-event so the notification contract is
+       self-documenting for Phase 0c decoder implementers.";
+  }
+  revision 2026-05-16 {
+    description "Initial revision.";
+  }
+
+  /* --------------------------------------------------------------
+   * Base kinds (derive from openits-types:comm-health-event-kind)
+   * -------------------------------------------------------------- */
+
+  identity time-drift-observed {
+    base openits-types:comm-health-event-kind;
+    description
+      "Device clock observed to drift relative to a reference time
+       source. Magnitude carried in the payload.";
+  }
+
+  identity comm-attempt-window {
+    base openits-types:comm-health-event-kind;
+    description
+      "Periodic snapshot of comm-attempt counters (total, failed,
+       percent-loss, average response-time) over a reporting window.";
+  }
+
+  identity comm-link-degraded {
+    base openits-types:comm-health-event-kind;
+    description
+      "Comm link transitioned from healthy to degraded — elevated
+       latency, elevated error rate, or partial loss above threshold —
+       NOT total loss, which is comm-lost. THRESHOLD SEMANTICS: the
+       healthy->degraded threshold (latency / error-rate / loss) is
+       operator or vendor policy, NOT fixed by this model; consumers MUST
+       NOT assume a uniform threshold across devices.";
+  }
+
+  identity comm-link-recovered {
+    base openits-types:comm-health-event-kind;
+    description
+      "Comm link transitioned from degraded back to healthy.";
+  }
+
+  identity comm-lost {
+    base openits-types:comm-health-event-kind;
+    description
+      "Total loss of communication with the device (device unreachable).
+       Dispatch-relevant; distinct from degraded. The first split on a
+       TMC comm dashboard.
+
+       STALENESS RULE (normative): after comm-lost, all live state held
+       for that source-device-id is stale as of last-contact -- the last
+       time the observer heard from the device. A reading of that device
+       is current again only when its observed-at is later than the
+       last-contact of the comm-lost (normally after comm-restored);
+       readings from another observer with a later observed-at are
+       current. Consumers MUST NOT present that state as
+       current, and MUST NOT treat a retained oper-status as the device's
+       present condition. A comm-lost event MUST carry last-contact and
+       observed-by (the poller that detected the loss).";
+  }
+
+  identity comm-restored {
+    base openits-types:comm-health-event-kind;
+    description
+      "Communication re-established with the device after a loss.";
+  }
+
+  /* --------------------------------------------------------------
+   * Notifications
+   * -------------------------------------------------------------- */
+
+  notification comm-health-event {
+    openits-types:arc-it-flow
+      "Device -> NMS : communication-health observation";
+    description
+      "Generic comm-health observation. The 'kind' identityref names
+       the specific event class; the payload leaves carry magnitudes,
+       and wire-source carries the original wire identifier if the
+       event was decoded from a wire vocabulary (NTCIP status OID,
+       SNMP trap, etc.) rather than synthesized internally.";
+
+    leaf kind {
+      type identityref { base openits-types:comm-health-event-kind; }
+      mandatory true;
+      description "Specific comm-health event class.";
+    }
+
+    uses openits-types:event-header;
+
+    leaf drift-milliseconds {
+      when "derived-from-or-self(../kind, 'openits-common-comm-health:time-drift-observed')";
+      type int64;
+      units "milliseconds";
+      description
+        "Time-drift magnitude (positive = device ahead of reference,
+         negative = device behind). Only meaningful when kind is
+         time-drift-observed.";
+    }
+
+    leaf last-contact {
+      when "derived-from-or-self(../kind, 'openits-common-comm-health:comm-lost')";
+      type yang:date-and-time;
+      description
+        "Last time the observer received a valid response from the device.
+         Live state for the source-device-id is stale as of this time (see
+         the comm-lost identity). Mandatory when kind is comm-lost.";
+    }
+
+    openits-types:mandatory-for-kind "last-contact openits-common-comm-health:comm-lost";
+    openits-types:mandatory-for-kind "observed-by openits-common-comm-health:comm-lost";
+
+    leaf attempts-total {
+      when "derived-from-or-self(../kind, 'openits-common-comm-health:comm-attempt-window')";
+      type uint32;
+      description
+        "Total comm attempts in this reporting window. Only meaningful
+         when kind is comm-attempt-window.";
+    }
+
+    leaf attempts-failed {
+      when "derived-from-or-self(../kind, 'openits-common-comm-health:comm-attempt-window')";
+      type uint32;
+      description
+        "Failed comm attempts in this reporting window. Only meaningful
+         when kind is comm-attempt-window.";
+    }
+
+    leaf percent-loss {
+      when "derived-from-or-self(../kind, 'openits-common-comm-health:comm-attempt-window')";
+      type openits-types:percentage;
+      description
+        "Percent-loss over this reporting window. Only meaningful when
+         kind is comm-attempt-window.";
+    }
+
+    leaf avg-response-ms {
+      when "derived-from-or-self(../kind, 'openits-common-comm-health:comm-attempt-window')";
+      type uint32;
+      units "milliseconds";
+      description
+        "Average response time over this reporting window. Only
+         meaningful when kind is comm-attempt-window.";
+    }
+
+    leaf link-id {
+      when "derived-from-or-self(../kind, 'openits-common-comm-health:comm-link-degraded')
+         or derived-from-or-self(../kind, 'openits-common-comm-health:comm-link-recovered')
+         or derived-from-or-self(../kind, 'openits-common-comm-health:comm-lost')
+         or derived-from-or-self(../kind, 'openits-common-comm-health:comm-restored')";
+      type uint8;
+      description
+        "Comm-link identifier. Used for link-degraded / link-recovered
+         events to identify which link transitioned.";
+    }
+
+    leaf link-type {
+      when "derived-from-or-self(../kind, 'openits-common-comm-health:comm-link-degraded')
+         or derived-from-or-self(../kind, 'openits-common-comm-health:comm-link-recovered')
+         or derived-from-or-self(../kind, 'openits-common-comm-health:comm-lost')
+         or derived-from-or-self(../kind, 'openits-common-comm-health:comm-restored')";
+      type identityref { base openits-types:comm-link-type; }
+      description
+        "Type of the comm link this event pertains to (ethernet, serial,
+         cellular, ...). Pairs with link-id to name the transitioning link.";
+    }
+
+    uses openits-types:wire-source;
+  }
+}

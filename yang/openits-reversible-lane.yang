@@ -73,8 +73,13 @@ module openits-reversible-lane {
 
      Copyright (c) 2026.  Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.7.0";
+  openits-types:openits-version "0.8.0";
 
+  revision 2026-10-16 {
+    description
+      "Report health on the root state (shared device-health: oper-status, last-change, observed-at) and rename the gate state timestamp measured-at to observed-at, described once as the time the reading was taken. Breaking: consumers must read observed-at.";
+    reference "RFC 7950 §7.12.";
+  }
   revision 2026-10-15 {
     description
       "Add a per-gate gates list. Config holds gate-id, an optional
@@ -312,6 +317,7 @@ module openits-reversible-lane {
          hardware.";
       uses openits-types:device-identity-config;
       uses openits-types:device-hardware;
+      uses openits-types:device-health;
     }
 
     /* ----- control ----- */
@@ -654,14 +660,14 @@ module openits-reversible-lane {
           description
             "Live status of this gate, the digital-twin rollup of
              gate-status-changed. The shared gate-status grouping
-             carries the observation; gate-id and measured-at stay
+             carries the observation; gate-id and observed-at stay
              here. No 'must' constrains the readback.";
 
           uses openits-reversible-lane-types:gate-status;
-          leaf measured-at {
+          leaf observed-at {
             type yang:date-and-time;
             description
-              "When this reading was taken. A consumer compares it
+              "The time of this reading: when it was taken. A consumer compares it
                against the device's reporting cadence to decide
                whether the reading is still current. A missing or
                stale reading must not be read as a healthy gate.";

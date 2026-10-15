@@ -13,7 +13,7 @@ Run the full gate with the targets below; `make all` covers most of it.
 | go-test | `go build ./... && go vet ./... && go test ./...` | tools + generated Go compile and pass tests |
 | check-gen | `make check-gen` | committed generated artifacts match a fresh regen |
 | buf | `buf lint` + `buf breaking --against .git#ref=<main-sha>` | proto style + no wire-breaking change vs main |
-| yang-checks | `make check-revisions check-naming check-enum-values check-deviations check-augment-collisions check-events-layering check-conventions check-revision-history validate-noi check-graduation` | governance: revisions, naming, enum values, layering, deviations |
+| yang-checks | `make check-revisions check-naming check-enum-values check-deviations check-augment-collisions check-events-layering check-conventions check-mode-kinds check-revision-history validate-noi check-graduation` | governance: revisions, naming, enum values, layering, deviations |
 | validate-yang | `make validate-yang` | every fixture in `yang/testdata/` gets its expected verdict from yanglint |
 | yang-lint | `make yang-lint` | pyang --strict structural lint |
 | conformance (×9) | `go run ./tools/conformance -driver mock -kind <kind>` | mock device satisfies the per-kind behavioral checks |
@@ -64,6 +64,17 @@ names the offending string.
 core module. Events may import only `openits-types`, `ietf-yang-types`,
 `openits-nema-common`, and `*-types` modules — move the shared
 typedef/grouping into the service's `-types` module instead.
+
+**check-mode-kinds fails.** `mode-changed` types `previous-mode`/`mode` to
+the cross-service `openits-types:operational-mode`, so yanglint accepts a
+DMS value under a signal-control kind; this gate does not. Each family's
+`*-mode-event-kind` must carry exactly one `openits-types:mode-value-base`
+naming its own mode base (derived from `operational-mode`), and every
+`valid-*` `mode-changed` fixture's values must derive from the base its
+`kind` names. Fix the fixture value (or the new kind's missing extension);
+a new mode kind with no family base goes on the gate's allowlist only with
+a reason naming the cut that removes it. Fixtures in
+`yang/testdata/mode-kinds/` are schema-valid but must FAIL this check.
 
 **check-revision-history fails.** A revision statement that already exists
 on main was edited or removed. The output names each module and revision

@@ -110,6 +110,7 @@ func All(kind string) []TestCase {
 		{"TestCEID_Present", TestCEID_Present},
 		{"TestEvent_SequenceContiguousWithinEpoch", TestEvent_SequenceContiguousWithinEpoch},
 		{"TestFault_KindMatchesService", TestFault_KindMatchesService},
+		{"TestMode_ValueMatchesKind", TestMode_ValueMatchesKind},
 
 		// YANG validation — ygot struct must parse whatever the driver
 		// collected for the device under test
@@ -356,7 +357,7 @@ func All(kind string) []TestCase {
 			TestCase{"TestZoneOccupancy_ClassifiesGatesBreakdown", TestZoneOccupancy_ClassifiesGatesBreakdown},
 			TestCase{"TestZoneOccupancy_PresentClassSumsToCount", TestZoneOccupancy_PresentClassSumsToCount},
 			TestCase{"TestZoneOccupancy_OccupiedSinceOnlyWhenPresent", TestZoneOccupancy_OccupiedSinceOnlyWhenPresent},
-			TestCase{"TestZoneOccupancy_MeasuredAtPresent", TestZoneOccupancy_MeasuredAtPresent},
+			TestCase{"TestZoneOccupancy_ObservedAtPresent", TestZoneOccupancy_ObservedAtPresent},
 			TestCase{"TestZoneOccupancyEvent_IntervalReportShape", TestZoneOccupancyEvent_IntervalReportShape},
 			TestCase{"TestZoneOccupancyEvent_ObservedClassReconciles", TestZoneOccupancyEvent_ObservedClassReconciles},
 			TestCase{"TestZoneOccupancyEvent_PeakWithinObserved", TestZoneOccupancyEvent_PeakWithinObserved},

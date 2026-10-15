@@ -29,8 +29,13 @@ module openits-zone-occupancy-events {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.3.0";
+  openits-types:openits-version "0.3.1";
 
+  revision 2026-10-16 {
+    description
+      "Description only: name the state timestamp observed-at, renamed from measured-at in the service core. Wire-neutral.";
+    reference "RFC 7950 §7.19.";
+  }
   revision 2026-10-13 {
     description
       "Inherit the mandatory sequence-epoch leaf from the openits-types
@@ -188,7 +193,7 @@ module openits-zone-occupancy-events {
        became vacant, or stayed occupied while its count or its set of
        present classes changed. A delta that maps to none of those
        (presence-confidence or classification-confidence drifting,
-       measured-at ticking) is not an event. That rule is what makes
+       observed-at ticking) is not an event. That rule is what makes
        the stream acquisition-neutral: a collector polling the device's
        state tree and a device publishing natively emit the same events
        for the same physical history, because both emit transitions and

@@ -34,7 +34,7 @@
             "interlock-bypassed": false,
             "open-inhibited": false,
             "close-inhibited": true,
-            "measured-at": "2026-10-14T16:00:00Z"
+            "observed-at": "2026-10-14T16:00:00Z"
           }
         },
         {
@@ -49,7 +49,7 @@
             "operating-mode": "openits-reversible-lane-types:reversible-lane-gate-mode-offline",
             "open-inhibited": false,
             "close-inhibited": false,
-            "measured-at": "2026-10-14T16:00:00Z"
+            "observed-at": "2026-10-14T16:00:00Z"
           }
         }
       ]

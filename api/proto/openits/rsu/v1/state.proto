@@ -54,6 +54,7 @@ message RsuState {
   optional uint32 heading = 2;
   optional string id = 3;
   google.protobuf.Timestamp install_date = 14;
+  google.protobuf.Timestamp last_change = 19;
   optional string latitude = 4;
   RsuStateLinearReference linear_reference = 15;
   optional string longitude = 5;
@@ -61,6 +62,8 @@ message RsuState {
   optional string make = 11;
   optional string model = 12;
   optional string name = 6;
+  google.protobuf.Timestamp observed_at = 20;
+  optional OperStatus oper_status = 21;
   optional string owner = 17;
   optional string road_reference = 7;
   optional string serial = 13;
@@ -269,11 +272,13 @@ message VehicleAnalytics {
 }
 
 message SampleBasis {
+  reserved 5;
+  reserved "computed_at";
   optional StatsWindowType window_type = 1;
   optional uint32 stats_window_seconds = 2;
   optional uint32 sample_count = 3;
   optional string penetration_estimate_pct = 4;
-  google.protobuf.Timestamp computed_at = 5;
+  google.protobuf.Timestamp observed_at = 6;
 }
 
 message Counts {

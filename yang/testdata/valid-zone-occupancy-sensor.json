@@ -25,7 +25,7 @@
             "occupancy-count": 11,
             "occupied-since": "2026-07-11T04:12:00Z",
             "presence-confidence": 96,
-            "measured-at": "2026-07-11T15:00:00Z",
+            "observed-at": "2026-07-11T15:00:00Z",
             "present-class": [
               {
                 "class": "openits-types:object-truck",
@@ -45,7 +45,7 @@
             "occupancy-count": 1,
             "occupied-since": "2026-07-11T09:41:00Z",
             "presence-confidence": 99,
-            "measured-at": "2026-07-11T15:00:00Z"
+            "observed-at": "2026-07-11T15:00:00Z"
           }
         ]
       }

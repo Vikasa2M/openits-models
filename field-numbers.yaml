@@ -44,6 +44,7 @@ messages:
         heading: 5
         id: 6
         install_date: 15
+        last_change: 20
         latitude: 7
         linear_reference: 16
         longitude: 8
@@ -51,6 +52,8 @@ messages:
         make: 9
         model: 10
         name: 11
+        observed_at: 21
+        oper_status: 22
         operational_status: 14
         owner: 18
         road_reference: 12
@@ -265,6 +268,7 @@ messages:
         avg_response_ms: 7
         drift_milliseconds: 3
         kind: 99
+        last_contact: 14
         link_id: 8
         link_type: 12
         observed_by: 9
@@ -730,6 +734,7 @@ messages:
         heading: 13
         id: 14
         install_date: 11
+        last_change: 23
         latitude: 6
         linear_reference: 19
         longitude: 7
@@ -737,6 +742,8 @@ messages:
         make: 8
         model: 9
         name: 15
+        observed_at: 24
+        oper_status: 25
         owner: 21
         road_reference: 16
         serial: 10
@@ -919,6 +926,7 @@ messages:
         heading: 12
         id: 13
         install_date: 1
+        last_change: 19
         latitude: 3
         linear_reference: 10
         longitude: 4
@@ -926,6 +934,8 @@ messages:
         make: 5
         model: 6
         name: 7
+        observed_at: 20
+        oper_status: 21
         owner: 17
         road_reference: 8
         serial: 9
@@ -1070,6 +1080,7 @@ messages:
         heading: 3
         id: 12
         install_date: 10
+        last_change: 19
         latitude: 4
         linear_reference: 15
         longitude: 5
@@ -1077,6 +1088,8 @@ messages:
         make: 6
         model: 7
         name: 8
+        observed_at: 20
+        oper_status: 21
         owner: 17
         road_reference: 9
         serial: 11
@@ -1195,6 +1208,7 @@ messages:
         zone: 1
     openits.perception.v1.ZoneOccupancyZonesZone:
         measured_at: 6
+        observed_at: 8
         occupancy_count: 3
         occupied_since: 4
         presence: 2
@@ -1304,6 +1318,7 @@ messages:
         count_vph: 2
         detector_id: 3
         last_update: 4
+        observed_at: 8
         occupancy_pct: 5
         role: 6
         speed_kmh: 7
@@ -1341,6 +1356,7 @@ messages:
         count_vph: 2
         detector_id: 3
         last_update: 4
+        observed_at: 8
         occupancy_pct: 5
         role: 6
         speed_kmh: 7
@@ -1427,6 +1443,7 @@ messages:
         heading: 10
         id: 11
         install_date: 5
+        last_change: 19
         latitude: 2
         linear_reference: 7
         longitude: 3
@@ -1434,6 +1451,8 @@ messages:
         make: 4
         model: 6
         name: 12
+        observed_at: 20
+        oper_status: 21
         owner: 17
         road_reference: 13
         serial: 8
@@ -1531,6 +1550,7 @@ messages:
         control_source: 3
         interlock_bypassed: 4
         measured_at: 1
+        observed_at: 8
         open_inhibited: 5
         operating_mode: 6
         position: 7
@@ -1643,6 +1663,7 @@ messages:
         heading: 3
         id: 4
         install_date: 14
+        last_change: 19
         latitude: 5
         linear_reference: 15
         longitude: 6
@@ -1650,6 +1671,8 @@ messages:
         make: 7
         model: 8
         name: 9
+        observed_at: 20
+        oper_status: 21
         owner: 17
         road_reference: 10
         serial: 11
@@ -2239,6 +2262,7 @@ messages:
         heading: 2
         id: 3
         install_date: 14
+        last_change: 19
         latitude: 4
         linear_reference: 15
         longitude: 5
@@ -2246,6 +2270,8 @@ messages:
         make: 11
         model: 12
         name: 6
+        observed_at: 20
+        oper_status: 21
         owner: 17
         road_reference: 7
         serial: 13
@@ -2318,6 +2344,7 @@ messages:
         last_broadcast: 3
     openits.rsu.v1.SampleBasis:
         computed_at: 5
+        observed_at: 6
         penetration_estimate_pct: 4
         sample_count: 3
         stats_window_seconds: 2
@@ -2616,6 +2643,7 @@ messages:
     openits.signal_control.v1.Measurement:
         collected_at: 5
         collection_period_seconds: 4
+        observed_at: 6
         occupancy: 2
         speed_kmh: 3
         volume: 1
@@ -2878,6 +2906,7 @@ messages:
         heading: 3
         id: 4
         install_date: 14
+        last_change: 19
         latitude: 5
         linear_reference: 15
         longitude: 6
@@ -2885,6 +2914,8 @@ messages:
         make: 7
         model: 8
         name: 9
+        observed_at: 20
+        oper_status: 21
         owner: 17
         road_reference: 10
         serial: 11
@@ -3180,6 +3211,7 @@ messages:
         id: 14
         inactive_reason: 2
         install_date: 12
+        last_change: 21
         latitude: 6
         linear_reference: 17
         longitude: 7
@@ -3187,6 +3219,8 @@ messages:
         make: 8
         model: 9
         name: 10
+        observed_at: 22
+        oper_status: 23
         operational_status: 1
         owner: 19
         road_reference: 11

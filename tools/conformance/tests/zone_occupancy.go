@@ -135,17 +135,17 @@ func TestZoneOccupancy_OccupiedSinceOnlyWhenPresent(t *T, obs *Observation) {
 	}
 }
 
-// Every live reading must say when it was taken. Without measured-at a
+// Every live reading must say when it was taken. Without observed-at a
 // consumer cannot compare the reading against the device's cadence, and is
 // forced to assume anything it received is fresh.
-func TestZoneOccupancy_MeasuredAtPresent(t *T, obs *Observation) {
+func TestZoneOccupancy_ObservedAtPresent(t *T, obs *Observation) {
 	zoc := zoneOccupancyOf(obs)
 	if zoc == nil || zoc.GetZones() == nil {
 		return
 	}
 	for id, live := range zoc.GetZones().Zone {
-		if live.MeasuredAt == nil {
-			t.Errorf("live occupancy zone %q has no measured-at; a consumer cannot judge whether the reading is still current", id)
+		if live.ObservedAt == nil {
+			t.Errorf("live occupancy zone %q has no observed-at; a consumer cannot judge whether the reading is still current", id)
 		}
 	}
 }
@@ -388,7 +388,7 @@ func TestZoneOccupancyEvent_ChangedPresentClassSumsToCount(t *T, obs *Observatio
 
 // The live container is the digital-twin rollup of the change stream, so the
 // two must agree: for each region, the latest transition the reading could
-// have reflected (occurred-at <= measured-at, ordered by occurred-at then
+// have reflected (occurred-at <= observed-at, ordered by occurred-at then
 // sequence) must report the same presence and count as the reading. A
 // mismatch means the device changed state without emitting the transition,
 // which is precisely the defect a consumer maintaining a twin cannot detect
@@ -409,10 +409,10 @@ func TestZoneOccupancyEvent_ChangedMirrorsLiveState(t *T, obs *Observation) {
 	}
 	events := zoneOccupancyChangedEvents(obs)
 	for id, live := range zoc.GetZones().Zone {
-		if live.MeasuredAt == nil {
-			continue // TestZoneOccupancy_MeasuredAtPresent's finding
+		if live.ObservedAt == nil {
+			continue // TestZoneOccupancy_ObservedAtPresent's finding
 		}
-		measured, err := time.Parse(time.RFC3339Nano, live.GetMeasuredAt())
+		measured, err := time.Parse(time.RFC3339Nano, live.GetObservedAt())
 		if err != nil {
 			continue // a malformed date-and-time is TestYANG_Validate's finding
 		}

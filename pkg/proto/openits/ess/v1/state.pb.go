@@ -348,6 +348,7 @@ type StationState struct {
 	Heading         *uint32                      `protobuf:"varint,12,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
 	Id              *string                      `protobuf:"bytes,13,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate     *timestamppb.Timestamp       `protobuf:"bytes,1,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
+	LastChange      *timestamppb.Timestamp       `protobuf:"bytes,19,opt,name=last_change,json=lastChange,proto3" json:"last_change,omitempty"`
 	Latitude        *string                      `protobuf:"bytes,3,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference *StationStateLinearReference `protobuf:"bytes,10,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
 	Longitude       *string                      `protobuf:"bytes,4,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
@@ -355,6 +356,8 @@ type StationState struct {
 	Make            *string                      `protobuf:"bytes,5,opt,name=make,proto3,oneof" json:"make,omitempty"`
 	Model           *string                      `protobuf:"bytes,6,opt,name=model,proto3,oneof" json:"model,omitempty"`
 	Name            *string                      `protobuf:"bytes,7,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	ObservedAt      *timestamppb.Timestamp       `protobuf:"bytes,20,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
+	OperStatus      *OperStatus                  `protobuf:"varint,21,opt,name=oper_status,json=operStatus,proto3,enum=openits.ess.v1.OperStatus,oneof" json:"oper_status,omitempty"`
 	Owner           *string                      `protobuf:"bytes,17,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	RoadReference   *string                      `protobuf:"bytes,8,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
 	Serial          *string                      `protobuf:"bytes,9,opt,name=serial,proto3,oneof" json:"serial,omitempty"`
@@ -442,6 +445,13 @@ func (x *StationState) GetInstallDate() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *StationState) GetLastChange() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastChange
+	}
+	return nil
+}
+
 func (x *StationState) GetLatitude() string {
 	if x != nil && x.Latitude != nil {
 		return *x.Latitude
@@ -489,6 +499,20 @@ func (x *StationState) GetName() string {
 		return *x.Name
 	}
 	return ""
+}
+
+func (x *StationState) GetObservedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ObservedAt
+	}
+	return nil
+}
+
+func (x *StationState) GetOperStatus() OperStatus {
+	if x != nil && x.OperStatus != nil {
+		return *x.OperStatus
+	}
+	return OperStatus_OPER_STATUS_UNKNOWN
 }
 
 func (x *StationState) GetOwner() string {
@@ -1817,7 +1841,7 @@ const file_openits_ess_v1_state_proto_rawDesc = "" +
 	"_directionB\n" +
 	"\n" +
 	"\b_measureB\r\n" +
-	"\v_lrs_method\"\x89\a\n" +
+	"\v_lrs_method\"\xd5\b\n" +
 	"\fStationState\x12!\n" +
 	"\televation\x18\v \x01(\tH\x00R\televation\x88\x01\x01\x12\x1f\n" +
 	"\bfirmware\x18\x02 \x01(\tH\x01R\bfirmware\x88\x01\x01\x12*\n" +
@@ -1825,7 +1849,9 @@ const file_openits_ess_v1_state_proto_rawDesc = "" +
 	"\x10hardware_version\x18\x0f \x01(\tH\x03R\x0fhardwareVersion\x88\x01\x01\x12\x1d\n" +
 	"\aheading\x18\f \x01(\rH\x04R\aheading\x88\x01\x01\x12\x13\n" +
 	"\x02id\x18\r \x01(\tH\x05R\x02id\x88\x01\x01\x12=\n" +
-	"\finstall_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	"\finstall_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12;\n" +
+	"\vlast_change\x18\x13 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"lastChange\x12\x1f\n" +
 	"\blatitude\x18\x03 \x01(\tH\x06R\blatitude\x88\x01\x01\x12V\n" +
 	"\x10linear_reference\x18\n" +
 	" \x01(\v2+.openits.ess.v1.StationStateLinearReferenceR\x0flinearReference\x12!\n" +
@@ -1834,11 +1860,15 @@ const file_openits_ess_v1_state_proto_rawDesc = "" +
 	"\x04make\x18\x05 \x01(\tH\tR\x04make\x88\x01\x01\x12\x19\n" +
 	"\x05model\x18\x06 \x01(\tH\n" +
 	"R\x05model\x88\x01\x01\x12\x17\n" +
-	"\x04name\x18\a \x01(\tH\vR\x04name\x88\x01\x01\x12\x19\n" +
-	"\x05owner\x18\x11 \x01(\tH\fR\x05owner\x88\x01\x01\x12*\n" +
-	"\x0eroad_reference\x18\b \x01(\tH\rR\rroadReference\x88\x01\x01\x12\x1b\n" +
-	"\x06serial\x18\t \x01(\tH\x0eR\x06serial\x88\x01\x01\x12\x1c\n" +
-	"\asite_id\x18\x12 \x01(\tH\x0fR\x06siteId\x88\x01\x01B\f\n" +
+	"\x04name\x18\a \x01(\tH\vR\x04name\x88\x01\x01\x12;\n" +
+	"\vobserved_at\x18\x14 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x12@\n" +
+	"\voper_status\x18\x15 \x01(\x0e2\x1a.openits.ess.v1.OperStatusH\fR\n" +
+	"operStatus\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\x11 \x01(\tH\rR\x05owner\x88\x01\x01\x12*\n" +
+	"\x0eroad_reference\x18\b \x01(\tH\x0eR\rroadReference\x88\x01\x01\x12\x1b\n" +
+	"\x06serial\x18\t \x01(\tH\x0fR\x06serial\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\x12 \x01(\tH\x10R\x06siteId\x88\x01\x01B\f\n" +
 	"\n" +
 	"_elevationB\v\n" +
 	"\t_firmwareB\x11\n" +
@@ -1853,7 +1883,8 @@ const file_openits_ess_v1_state_proto_rawDesc = "" +
 	"\x0e_maintained_byB\a\n" +
 	"\x05_makeB\b\n" +
 	"\x06_modelB\a\n" +
-	"\x05_nameB\b\n" +
+	"\x05_nameB\x0e\n" +
+	"\f_oper_statusB\b\n" +
 	"\x06_ownerB\x11\n" +
 	"\x0f_road_referenceB\t\n" +
 	"\a_serialB\n" +
@@ -2095,15 +2126,16 @@ var file_openits_ess_v1_state_proto_goTypes = []any{
 	(*Faults)(nil),                       // 18: openits.ess.v1.Faults
 	(*Fault)(nil),                        // 19: openits.ess.v1.Fault
 	(*timestamppb.Timestamp)(nil),        // 20: google.protobuf.Timestamp
-	(Quality)(0),                         // 21: openits.ess.v1.Quality
-	(PrecipitationType)(0),               // 22: openits.ess.v1.PrecipitationType
-	(PrecipitationIntensity)(0),          // 23: openits.ess.v1.PrecipitationIntensity
-	(VisibilitySituation)(0),             // 24: openits.ess.v1.VisibilitySituation
-	(SensingMethod)(0),                   // 25: openits.ess.v1.SensingMethod
-	(PavementCondition)(0),               // 26: openits.ess.v1.PavementCondition
-	(SensorHealth)(0),                    // 27: openits.ess.v1.SensorHealth
-	(*v1.ComponentRef)(nil),              // 28: openits.types.v1.ComponentRef
-	(FaultSeverity)(0),                   // 29: openits.ess.v1.FaultSeverity
+	(OperStatus)(0),                      // 21: openits.ess.v1.OperStatus
+	(Quality)(0),                         // 22: openits.ess.v1.Quality
+	(PrecipitationType)(0),               // 23: openits.ess.v1.PrecipitationType
+	(PrecipitationIntensity)(0),          // 24: openits.ess.v1.PrecipitationIntensity
+	(VisibilitySituation)(0),             // 25: openits.ess.v1.VisibilitySituation
+	(SensingMethod)(0),                   // 26: openits.ess.v1.SensingMethod
+	(PavementCondition)(0),               // 27: openits.ess.v1.PavementCondition
+	(SensorHealth)(0),                    // 28: openits.ess.v1.SensorHealth
+	(*v1.ComponentRef)(nil),              // 29: openits.types.v1.ComponentRef
+	(FaultSeverity)(0),                   // 30: openits.ess.v1.FaultSeverity
 }
 var file_openits_ess_v1_state_proto_depIdxs = []int32{
 	1,  // 0: openits.ess.v1.Station.config:type_name -> openits.ess.v1.StationConfig
@@ -2119,41 +2151,44 @@ var file_openits_ess_v1_state_proto_depIdxs = []int32{
 	20, // 10: openits.ess.v1.StationConfig.install_date:type_name -> google.protobuf.Timestamp
 	2,  // 11: openits.ess.v1.StationConfig.linear_reference:type_name -> openits.ess.v1.StationConfigLinearReference
 	20, // 12: openits.ess.v1.StationState.install_date:type_name -> google.protobuf.Timestamp
-	4,  // 13: openits.ess.v1.StationState.linear_reference:type_name -> openits.ess.v1.StationStateLinearReference
-	20, // 14: openits.ess.v1.Atmospheric.observed_at:type_name -> google.protobuf.Timestamp
-	21, // 15: openits.ess.v1.Atmospheric.quality:type_name -> openits.ess.v1.Quality
-	22, // 16: openits.ess.v1.Precipitation.type:type_name -> openits.ess.v1.PrecipitationType
-	23, // 17: openits.ess.v1.Precipitation.intensity:type_name -> openits.ess.v1.PrecipitationIntensity
-	20, // 18: openits.ess.v1.Precipitation.observed_at:type_name -> google.protobuf.Timestamp
-	21, // 19: openits.ess.v1.Precipitation.quality:type_name -> openits.ess.v1.Quality
-	24, // 20: openits.ess.v1.Visibility.situation:type_name -> openits.ess.v1.VisibilitySituation
-	20, // 21: openits.ess.v1.Visibility.observed_at:type_name -> google.protobuf.Timestamp
-	21, // 22: openits.ess.v1.Visibility.quality:type_name -> openits.ess.v1.Quality
-	10, // 23: openits.ess.v1.Pavement.sensor:type_name -> openits.ess.v1.PavementSensor
-	11, // 24: openits.ess.v1.PavementSensor.config:type_name -> openits.ess.v1.PavementSensorConfig
-	12, // 25: openits.ess.v1.PavementSensor.state:type_name -> openits.ess.v1.PavementSensorState
-	25, // 26: openits.ess.v1.PavementSensorConfig.sensing_method:type_name -> openits.ess.v1.SensingMethod
-	20, // 27: openits.ess.v1.PavementSensorState.observed_at:type_name -> google.protobuf.Timestamp
-	26, // 28: openits.ess.v1.PavementSensorState.condition:type_name -> openits.ess.v1.PavementCondition
-	25, // 29: openits.ess.v1.PavementSensorState.sensing_method:type_name -> openits.ess.v1.SensingMethod
-	20, // 30: openits.ess.v1.Radiation.observed_at:type_name -> google.protobuf.Timestamp
-	21, // 31: openits.ess.v1.Radiation.quality:type_name -> openits.ess.v1.Quality
-	15, // 32: openits.ess.v1.Diagnostics.sensor:type_name -> openits.ess.v1.DiagnosticsSensor
-	16, // 33: openits.ess.v1.DiagnosticsSensor.config:type_name -> openits.ess.v1.DiagnosticsSensorConfig
-	17, // 34: openits.ess.v1.DiagnosticsSensor.state:type_name -> openits.ess.v1.DiagnosticsSensorState
-	27, // 35: openits.ess.v1.DiagnosticsSensorState.health:type_name -> openits.ess.v1.SensorHealth
-	20, // 36: openits.ess.v1.DiagnosticsSensorState.last_observation:type_name -> google.protobuf.Timestamp
-	20, // 37: openits.ess.v1.DiagnosticsSensorState.last_calibration:type_name -> google.protobuf.Timestamp
-	20, // 38: openits.ess.v1.DiagnosticsSensorState.next_calibration:type_name -> google.protobuf.Timestamp
-	19, // 39: openits.ess.v1.Faults.fault:type_name -> openits.ess.v1.Fault
-	28, // 40: openits.ess.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
-	20, // 41: openits.ess.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	29, // 42: openits.ess.v1.Fault.severity:type_name -> openits.ess.v1.FaultSeverity
-	43, // [43:43] is the sub-list for method output_type
-	43, // [43:43] is the sub-list for method input_type
-	43, // [43:43] is the sub-list for extension type_name
-	43, // [43:43] is the sub-list for extension extendee
-	0,  // [0:43] is the sub-list for field type_name
+	20, // 13: openits.ess.v1.StationState.last_change:type_name -> google.protobuf.Timestamp
+	4,  // 14: openits.ess.v1.StationState.linear_reference:type_name -> openits.ess.v1.StationStateLinearReference
+	20, // 15: openits.ess.v1.StationState.observed_at:type_name -> google.protobuf.Timestamp
+	21, // 16: openits.ess.v1.StationState.oper_status:type_name -> openits.ess.v1.OperStatus
+	20, // 17: openits.ess.v1.Atmospheric.observed_at:type_name -> google.protobuf.Timestamp
+	22, // 18: openits.ess.v1.Atmospheric.quality:type_name -> openits.ess.v1.Quality
+	23, // 19: openits.ess.v1.Precipitation.type:type_name -> openits.ess.v1.PrecipitationType
+	24, // 20: openits.ess.v1.Precipitation.intensity:type_name -> openits.ess.v1.PrecipitationIntensity
+	20, // 21: openits.ess.v1.Precipitation.observed_at:type_name -> google.protobuf.Timestamp
+	22, // 22: openits.ess.v1.Precipitation.quality:type_name -> openits.ess.v1.Quality
+	25, // 23: openits.ess.v1.Visibility.situation:type_name -> openits.ess.v1.VisibilitySituation
+	20, // 24: openits.ess.v1.Visibility.observed_at:type_name -> google.protobuf.Timestamp
+	22, // 25: openits.ess.v1.Visibility.quality:type_name -> openits.ess.v1.Quality
+	10, // 26: openits.ess.v1.Pavement.sensor:type_name -> openits.ess.v1.PavementSensor
+	11, // 27: openits.ess.v1.PavementSensor.config:type_name -> openits.ess.v1.PavementSensorConfig
+	12, // 28: openits.ess.v1.PavementSensor.state:type_name -> openits.ess.v1.PavementSensorState
+	26, // 29: openits.ess.v1.PavementSensorConfig.sensing_method:type_name -> openits.ess.v1.SensingMethod
+	20, // 30: openits.ess.v1.PavementSensorState.observed_at:type_name -> google.protobuf.Timestamp
+	27, // 31: openits.ess.v1.PavementSensorState.condition:type_name -> openits.ess.v1.PavementCondition
+	26, // 32: openits.ess.v1.PavementSensorState.sensing_method:type_name -> openits.ess.v1.SensingMethod
+	20, // 33: openits.ess.v1.Radiation.observed_at:type_name -> google.protobuf.Timestamp
+	22, // 34: openits.ess.v1.Radiation.quality:type_name -> openits.ess.v1.Quality
+	15, // 35: openits.ess.v1.Diagnostics.sensor:type_name -> openits.ess.v1.DiagnosticsSensor
+	16, // 36: openits.ess.v1.DiagnosticsSensor.config:type_name -> openits.ess.v1.DiagnosticsSensorConfig
+	17, // 37: openits.ess.v1.DiagnosticsSensor.state:type_name -> openits.ess.v1.DiagnosticsSensorState
+	28, // 38: openits.ess.v1.DiagnosticsSensorState.health:type_name -> openits.ess.v1.SensorHealth
+	20, // 39: openits.ess.v1.DiagnosticsSensorState.last_observation:type_name -> google.protobuf.Timestamp
+	20, // 40: openits.ess.v1.DiagnosticsSensorState.last_calibration:type_name -> google.protobuf.Timestamp
+	20, // 41: openits.ess.v1.DiagnosticsSensorState.next_calibration:type_name -> google.protobuf.Timestamp
+	19, // 42: openits.ess.v1.Faults.fault:type_name -> openits.ess.v1.Fault
+	29, // 43: openits.ess.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
+	20, // 44: openits.ess.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	30, // 45: openits.ess.v1.Fault.severity:type_name -> openits.ess.v1.FaultSeverity
+	46, // [46:46] is the sub-list for method output_type
+	46, // [46:46] is the sub-list for method input_type
+	46, // [46:46] is the sub-list for extension type_name
+	46, // [46:46] is the sub-list for extension extendee
+	0,  // [0:46] is the sub-list for field type_name
 }
 
 func init() { file_openits_ess_v1_state_proto_init() }

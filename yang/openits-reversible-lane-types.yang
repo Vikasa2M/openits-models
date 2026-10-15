@@ -31,8 +31,13 @@ module openits-reversible-lane-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.6.0";
+  openits-types:openits-version "0.6.1";
 
+  revision 2026-10-16 {
+    description
+      "Description only: name the state timestamp observed-at, renamed from measured-at in the service core. Wire-neutral.";
+    reference "RFC 7950 §7.19.";
+  }
   revision 2026-10-15 {
     description
       "Add per-gate status. Add a device-local gate-id typedef, the
@@ -545,7 +550,7 @@ module openits-reversible-lane-types {
        a twin of the state tree sets exactly these leaves, and a
        datastore consumer reads exactly these leaves. Each user
        declares its own key and timestamp outside the grouping (the
-       state list a leafref gate-id and measured-at, the notification
+       state list a leafref gate-id and observed-at, the notification
        a plain gate-id and the event-header's occurred-at).
 
        No 'must' constrains these leaves against each other.

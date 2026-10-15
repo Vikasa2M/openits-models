@@ -9,6 +9,9 @@
       "road-reference": "I-35 NB @ MP 214"
     },
     "state": {
+      "oper-status": "ok",
+      "last-change": "2026-10-14T08:00:00Z",
+      "observed-at": "2026-10-14T16:00:00Z",
       "id": "i35-radar-mm214",
       "name": "I-35 NB @ MP 214 radar",
       "latitude": "30.2672000",

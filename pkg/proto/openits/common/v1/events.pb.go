@@ -27,6 +27,7 @@ type CommHealthEvent struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	Kind              string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	DriftMilliseconds *int64                 `protobuf:"varint,3,opt,name=drift_milliseconds,json=driftMilliseconds,proto3,oneof" json:"drift_milliseconds,omitempty"`
+	LastContact       *timestamppb.Timestamp `protobuf:"bytes,14,opt,name=last_contact,json=lastContact,proto3" json:"last_contact,omitempty"`
 	AttemptsTotal     *uint32                `protobuf:"varint,4,opt,name=attempts_total,json=attemptsTotal,proto3,oneof" json:"attempts_total,omitempty"`
 	AttemptsFailed    *uint32                `protobuf:"varint,5,opt,name=attempts_failed,json=attemptsFailed,proto3,oneof" json:"attempts_failed,omitempty"`
 	PercentLoss       *uint32                `protobuf:"varint,6,opt,name=percent_loss,json=percentLoss,proto3,oneof" json:"percent_loss,omitempty"`
@@ -86,6 +87,13 @@ func (x *CommHealthEvent) GetDriftMilliseconds() int64 {
 		return *x.DriftMilliseconds
 	}
 	return 0
+}
+
+func (x *CommHealthEvent) GetLastContact() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastContact
+	}
+	return nil
 }
 
 func (x *CommHealthEvent) GetAttemptsTotal() uint32 {
@@ -595,10 +603,11 @@ var File_openits_common_v1_events_proto protoreflect.FileDescriptor
 
 const file_openits_common_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"\x1eopenits/common/v1/events.proto\x12\x11openits.common.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dopenits/common/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\x80\x06\n" +
+	"\x1eopenits/common/v1/events.proto\x12\x11openits.common.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dopenits/common/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\xbf\x06\n" +
 	"\x0fCommHealthEvent\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x122\n" +
-	"\x12drift_milliseconds\x18\x03 \x01(\x03H\x00R\x11driftMilliseconds\x88\x01\x01\x12*\n" +
+	"\x12drift_milliseconds\x18\x03 \x01(\x03H\x00R\x11driftMilliseconds\x88\x01\x01\x12=\n" +
+	"\flast_contact\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\vlastContact\x12*\n" +
 	"\x0eattempts_total\x18\x04 \x01(\rH\x01R\rattemptsTotal\x88\x01\x01\x12,\n" +
 	"\x0fattempts_failed\x18\x05 \x01(\rH\x02R\x0eattemptsFailed\x88\x01\x01\x12&\n" +
 	"\fpercent_loss\x18\x06 \x01(\rH\x03R\vpercentLoss\x88\x01\x01\x12+\n" +
@@ -713,24 +722,25 @@ var file_openits_common_v1_events_proto_goTypes = []any{
 	(FaultSeverity)(0),            // 7: openits.common.v1.FaultSeverity
 }
 var file_openits_common_v1_events_proto_depIdxs = []int32{
-	4,  // 0: openits.common.v1.CommHealthEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	5,  // 1: openits.common.v1.CommHealthEvent.source:type_name -> openits.types.v1.WireSource
-	4,  // 2: openits.common.v1.FaultCleared.first_observed:type_name -> google.protobuf.Timestamp
-	6,  // 3: openits.common.v1.FaultCleared.component:type_name -> openits.types.v1.ComponentRef
-	4,  // 4: openits.common.v1.FaultCleared.occurred_at:type_name -> google.protobuf.Timestamp
-	5,  // 5: openits.common.v1.FaultCleared.source:type_name -> openits.types.v1.WireSource
-	6,  // 6: openits.common.v1.FaultRaised.component:type_name -> openits.types.v1.ComponentRef
-	4,  // 7: openits.common.v1.FaultRaised.first_observed:type_name -> google.protobuf.Timestamp
-	4,  // 8: openits.common.v1.FaultRaised.occurred_at:type_name -> google.protobuf.Timestamp
-	7,  // 9: openits.common.v1.FaultRaised.severity:type_name -> openits.common.v1.FaultSeverity
-	5,  // 10: openits.common.v1.FaultRaised.source:type_name -> openits.types.v1.WireSource
-	4,  // 11: openits.common.v1.ModeChanged.occurred_at:type_name -> google.protobuf.Timestamp
-	5,  // 12: openits.common.v1.ModeChanged.source:type_name -> openits.types.v1.WireSource
-	13, // [13:13] is the sub-list for method output_type
-	13, // [13:13] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+	4,  // 0: openits.common.v1.CommHealthEvent.last_contact:type_name -> google.protobuf.Timestamp
+	4,  // 1: openits.common.v1.CommHealthEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	5,  // 2: openits.common.v1.CommHealthEvent.source:type_name -> openits.types.v1.WireSource
+	4,  // 3: openits.common.v1.FaultCleared.first_observed:type_name -> google.protobuf.Timestamp
+	6,  // 4: openits.common.v1.FaultCleared.component:type_name -> openits.types.v1.ComponentRef
+	4,  // 5: openits.common.v1.FaultCleared.occurred_at:type_name -> google.protobuf.Timestamp
+	5,  // 6: openits.common.v1.FaultCleared.source:type_name -> openits.types.v1.WireSource
+	6,  // 7: openits.common.v1.FaultRaised.component:type_name -> openits.types.v1.ComponentRef
+	4,  // 8: openits.common.v1.FaultRaised.first_observed:type_name -> google.protobuf.Timestamp
+	4,  // 9: openits.common.v1.FaultRaised.occurred_at:type_name -> google.protobuf.Timestamp
+	7,  // 10: openits.common.v1.FaultRaised.severity:type_name -> openits.common.v1.FaultSeverity
+	5,  // 11: openits.common.v1.FaultRaised.source:type_name -> openits.types.v1.WireSource
+	4,  // 12: openits.common.v1.ModeChanged.occurred_at:type_name -> google.protobuf.Timestamp
+	5,  // 13: openits.common.v1.ModeChanged.source:type_name -> openits.types.v1.WireSource
+	14, // [14:14] is the sub-list for method output_type
+	14, // [14:14] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_openits_common_v1_events_proto_init() }

@@ -1,0 +1,14 @@
+{
+  "openits-common-mode-events:mode-changed": {
+    "kind": "openits-dms-types:dms-mode-event-kind",
+    "source-device-id": "i35-mm210-nb-dms-01",
+    "sequence-epoch": "boot-2026-10-13a",
+    "sequence": "1",
+    "previous-mode": "openits-dms-types:mode-unknown",
+    "mode": "openits-dms-types:mode-normal",
+    "reason": "first-report",
+    "control-source": "openits-types:control-central",
+    "trigger": "openits-types:trigger-unknown",
+    "occurred-at": "2026-07-11T14:00:00Z"
+  }
+}

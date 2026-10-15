@@ -115,7 +115,7 @@ func collectPerception() (*yangpkg.Device, error) {
 	// leaf and the incident's own timeline must agree.
 	zocSt.OccupiedSince = strPtr("2026-04-19T11:58:12Z")
 	zocSt.PresenceConfidence = u8Ptr(96)
-	zocSt.MeasuredAt = strPtr("2026-04-19T12:00:58Z")
+	zocSt.ObservedAt = strPtr("2026-04-19T12:00:58Z")
 	// Presence confidence (96) and classification confidence (91/84) differ
 	// deliberately — the capability separates them because they fail
 	// independently, and a mock that set them equal would not exercise that.
@@ -267,7 +267,7 @@ func subscribePerception(ctx context.Context, out chan<- tests.EventEnvelope, wi
 			// zones/zone entry in collectPerception leaf for leaf, which is the
 			// point: the state container is the digital-twin rollup of this
 			// stream, so a consumer that applied this event holds exactly what
-			// a poller would read. occurred-at equals that entry's measured-at
+			// a poller would read. occurred-at equals that entry's observed-at
 			// because the mock's state snapshot IS the reading that detected
 			// the transition.
 			Subject:  zocBase + ".zone-occupancy-changed",

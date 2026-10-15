@@ -51,6 +51,7 @@ message TrafficSensorState {
   optional uint32 heading = 5;
   optional string id = 14;
   google.protobuf.Timestamp install_date = 12;
+  google.protobuf.Timestamp last_change = 21;
   optional string latitude = 6;
   TrafficSensorStateLinearReference linear_reference = 17;
   optional string longitude = 7;
@@ -58,6 +59,8 @@ message TrafficSensorState {
   optional string make = 8;
   optional string model = 9;
   optional string name = 10;
+  google.protobuf.Timestamp observed_at = 22;
+  optional OperStatus oper_status = 23;
   optional string owner = 19;
   optional string road_reference = 11;
   optional string serial = 13;

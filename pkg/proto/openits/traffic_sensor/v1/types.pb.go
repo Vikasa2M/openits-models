@@ -119,6 +119,61 @@ func (OperationalStatus) EnumDescriptor() ([]byte, []int) {
 	return file_openits_traffic_sensor_v1_types_proto_rawDescGZIP(), []int{1}
 }
 
+type OperStatus int32
+
+const (
+	OperStatus_OPER_STATUS_UNKNOWN     OperStatus = 0
+	OperStatus_OPER_STATUS_OK          OperStatus = 1
+	OperStatus_OPER_STATUS_DEGRADED    OperStatus = 2
+	OperStatus_OPER_STATUS_FAILED      OperStatus = 3
+	OperStatus_OPER_STATUS_NOT_PRESENT OperStatus = 4
+)
+
+// Enum value maps for OperStatus.
+var (
+	OperStatus_name = map[int32]string{
+		0: "OPER_STATUS_UNKNOWN",
+		1: "OPER_STATUS_OK",
+		2: "OPER_STATUS_DEGRADED",
+		3: "OPER_STATUS_FAILED",
+		4: "OPER_STATUS_NOT_PRESENT",
+	}
+	OperStatus_value = map[string]int32{
+		"OPER_STATUS_UNKNOWN":     0,
+		"OPER_STATUS_OK":          1,
+		"OPER_STATUS_DEGRADED":    2,
+		"OPER_STATUS_FAILED":      3,
+		"OPER_STATUS_NOT_PRESENT": 4,
+	}
+)
+
+func (x OperStatus) Enum() *OperStatus {
+	p := new(OperStatus)
+	*p = x
+	return p
+}
+
+func (x OperStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OperStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_traffic_sensor_v1_types_proto_enumTypes[2].Descriptor()
+}
+
+func (OperStatus) Type() protoreflect.EnumType {
+	return &file_openits_traffic_sensor_v1_types_proto_enumTypes[2]
+}
+
+func (x OperStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OperStatus.Descriptor instead.
+func (OperStatus) EnumDescriptor() ([]byte, []int) {
+	return file_openits_traffic_sensor_v1_types_proto_rawDescGZIP(), []int{2}
+}
+
 type LaneNumberingOrigin int32
 
 const (
@@ -155,11 +210,11 @@ func (x LaneNumberingOrigin) String() string {
 }
 
 func (LaneNumberingOrigin) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_traffic_sensor_v1_types_proto_enumTypes[2].Descriptor()
+	return file_openits_traffic_sensor_v1_types_proto_enumTypes[3].Descriptor()
 }
 
 func (LaneNumberingOrigin) Type() protoreflect.EnumType {
-	return &file_openits_traffic_sensor_v1_types_proto_enumTypes[2]
+	return &file_openits_traffic_sensor_v1_types_proto_enumTypes[3]
 }
 
 func (x LaneNumberingOrigin) Number() protoreflect.EnumNumber {
@@ -168,7 +223,7 @@ func (x LaneNumberingOrigin) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use LaneNumberingOrigin.Descriptor instead.
 func (LaneNumberingOrigin) EnumDescriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_types_proto_rawDescGZIP(), []int{2}
+	return file_openits_traffic_sensor_v1_types_proto_rawDescGZIP(), []int{3}
 }
 
 type MountingSide int32
@@ -207,11 +262,11 @@ func (x MountingSide) String() string {
 }
 
 func (MountingSide) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_traffic_sensor_v1_types_proto_enumTypes[3].Descriptor()
+	return file_openits_traffic_sensor_v1_types_proto_enumTypes[4].Descriptor()
 }
 
 func (MountingSide) Type() protoreflect.EnumType {
-	return &file_openits_traffic_sensor_v1_types_proto_enumTypes[3]
+	return &file_openits_traffic_sensor_v1_types_proto_enumTypes[4]
 }
 
 func (x MountingSide) Number() protoreflect.EnumNumber {
@@ -220,7 +275,7 @@ func (x MountingSide) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MountingSide.Descriptor instead.
 func (MountingSide) EnumDescriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_types_proto_rawDescGZIP(), []int{3}
+	return file_openits_traffic_sensor_v1_types_proto_rawDescGZIP(), []int{4}
 }
 
 type Status int32
@@ -262,11 +317,11 @@ func (x Status) String() string {
 }
 
 func (Status) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_traffic_sensor_v1_types_proto_enumTypes[4].Descriptor()
+	return file_openits_traffic_sensor_v1_types_proto_enumTypes[5].Descriptor()
 }
 
 func (Status) Type() protoreflect.EnumType {
-	return &file_openits_traffic_sensor_v1_types_proto_enumTypes[4]
+	return &file_openits_traffic_sensor_v1_types_proto_enumTypes[5]
 }
 
 func (x Status) Number() protoreflect.EnumNumber {
@@ -275,7 +330,7 @@ func (x Status) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Status.Descriptor instead.
 func (Status) EnumDescriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_types_proto_rawDescGZIP(), []int{4}
+	return file_openits_traffic_sensor_v1_types_proto_rawDescGZIP(), []int{5}
 }
 
 type FaultSeverity int32
@@ -317,11 +372,11 @@ func (x FaultSeverity) String() string {
 }
 
 func (FaultSeverity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_traffic_sensor_v1_types_proto_enumTypes[5].Descriptor()
+	return file_openits_traffic_sensor_v1_types_proto_enumTypes[6].Descriptor()
 }
 
 func (FaultSeverity) Type() protoreflect.EnumType {
-	return &file_openits_traffic_sensor_v1_types_proto_enumTypes[5]
+	return &file_openits_traffic_sensor_v1_types_proto_enumTypes[6]
 }
 
 func (x FaultSeverity) Number() protoreflect.EnumNumber {
@@ -330,7 +385,7 @@ func (x FaultSeverity) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use FaultSeverity.Descriptor instead.
 func (FaultSeverity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_traffic_sensor_v1_types_proto_rawDescGZIP(), []int{5}
+	return file_openits_traffic_sensor_v1_types_proto_rawDescGZIP(), []int{6}
 }
 
 var File_openits_traffic_sensor_v1_types_proto protoreflect.FileDescriptor
@@ -345,7 +400,14 @@ const file_openits_traffic_sensor_v1_types_proto_rawDesc = "" +
 	"\x11OperationalStatus\x12\x1d\n" +
 	"\x19OPERATIONAL_STATUS_ACTIVE\x10\x00\x12\x1f\n" +
 	"\x1bOPERATIONAL_STATUS_INACTIVE\x10\x01\x12\x1f\n" +
-	"\x1bOPERATIONAL_STATUS_DEGRADED\x10\x02*\xc0\x01\n" +
+	"\x1bOPERATIONAL_STATUS_DEGRADED\x10\x02*\x88\x01\n" +
+	"\n" +
+	"OperStatus\x12\x17\n" +
+	"\x13OPER_STATUS_UNKNOWN\x10\x00\x12\x12\n" +
+	"\x0eOPER_STATUS_OK\x10\x01\x12\x18\n" +
+	"\x14OPER_STATUS_DEGRADED\x10\x02\x12\x16\n" +
+	"\x12OPER_STATUS_FAILED\x10\x03\x12\x1b\n" +
+	"\x17OPER_STATUS_NOT_PRESENT\x10\x04*\xc0\x01\n" +
 	"\x13LaneNumberingOrigin\x12,\n" +
 	"(LANE_NUMBERING_ORIGIN_LEFTMOST_IN_TRAVEL\x10\x00\x12-\n" +
 	")LANE_NUMBERING_ORIGIN_RIGHTMOST_IN_TRAVEL\x10\x01\x12%\n" +
@@ -382,14 +444,15 @@ func file_openits_traffic_sensor_v1_types_proto_rawDescGZIP() []byte {
 	return file_openits_traffic_sensor_v1_types_proto_rawDescData
 }
 
-var file_openits_traffic_sensor_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 6)
+var file_openits_traffic_sensor_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 7)
 var file_openits_traffic_sensor_v1_types_proto_goTypes = []any{
 	(DataQuality)(0),         // 0: openits.traffic_sensor.v1.DataQuality
 	(OperationalStatus)(0),   // 1: openits.traffic_sensor.v1.OperationalStatus
-	(LaneNumberingOrigin)(0), // 2: openits.traffic_sensor.v1.LaneNumberingOrigin
-	(MountingSide)(0),        // 3: openits.traffic_sensor.v1.MountingSide
-	(Status)(0),              // 4: openits.traffic_sensor.v1.Status
-	(FaultSeverity)(0),       // 5: openits.traffic_sensor.v1.FaultSeverity
+	(OperStatus)(0),          // 2: openits.traffic_sensor.v1.OperStatus
+	(LaneNumberingOrigin)(0), // 3: openits.traffic_sensor.v1.LaneNumberingOrigin
+	(MountingSide)(0),        // 4: openits.traffic_sensor.v1.MountingSide
+	(Status)(0),              // 5: openits.traffic_sensor.v1.Status
+	(FaultSeverity)(0),       // 6: openits.traffic_sensor.v1.FaultSeverity
 }
 var file_openits_traffic_sensor_v1_types_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -409,7 +472,7 @@ func file_openits_traffic_sensor_v1_types_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_traffic_sensor_v1_types_proto_rawDesc), len(file_openits_traffic_sensor_v1_types_proto_rawDesc)),
-			NumEnums:      6,
+			NumEnums:      7,
 			NumMessages:   0,
 			NumExtensions: 0,
 			NumServices:   0,

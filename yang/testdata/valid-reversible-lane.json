@@ -10,6 +10,9 @@
       "direction-b": "openits-types:direction-southbound"
     },
     "state": {
+      "oper-status": "ok",
+      "last-change": "2026-10-14T08:00:00Z",
+      "observed-at": "2026-10-14T16:00:00Z",
       "id": "us75-contraflow",
       "name": "US-75 Contraflow MP 3.1-8.4",
       "road-reference": "US-75 contraflow, MP 3.1-8.4",

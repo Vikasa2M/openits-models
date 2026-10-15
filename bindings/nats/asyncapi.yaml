@@ -5754,6 +5754,9 @@ components:
                             type: string
                         kind:
                             type: string
+                        last-contact:
+                            format: date-time
+                            type: string
                         link-id:
                             maximum: 255
                             minimum: 0
@@ -8407,6 +8410,9 @@ components:
                         drift-milliseconds:
                             type: string
                         kind:
+                            type: string
+                        last-contact:
+                            format: date-time
                             type: string
                         link-id:
                             maximum: 255

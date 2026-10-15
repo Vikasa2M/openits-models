@@ -54,6 +54,7 @@ jobs:
       - run: go build ./...
       - run: go vet ./...
       - run: go test ./...
+      - run: make test-scripts
 
   # Freshness gate: regenerate every artifact (yang->proto->Go, yang->ygot,
   # yang->asyncapi) and fail if the working tree drifts from what's committed.
@@ -141,6 +142,7 @@ jobs:
       - run: make check-augment-collisions
       - run: make check-events-layering
       - run: make check-conventions
+      - run: make check-mode-kinds
       - name: check-conventions exceptions only shrink (vs base branch)
         if: github.event_name == 'pull_request'
         env:

@@ -50,7 +50,7 @@
           "stats-window-seconds": 300,
           "sample-count": 420,
           "penetration-estimate-pct": "8.0",
-          "computed-at": "2026-07-15T12:00:00Z"
+          "observed-at": "2026-07-15T12:00:00Z"
         },
         "counts": {
           "count-basis": "observation-sessions",

@@ -1,0 +1,14 @@
+{
+  "openits-common-mode-events:mode-changed": {
+    "kind": "openits-ramp-metering-types:ramp-meter-mode-event-kind",
+    "source-device-id": "i405-nb-western-ave",
+    "sequence-epoch": "boot-2026-10-13a",
+    "sequence": "4",
+    "previous-mode": "openits-ramp-metering-types:mode-on-standby",
+    "mode": "openits-ramp-metering-types:mode-active",
+    "reason": "schedule",
+    "control-source": "openits-types:control-schedule",
+    "trigger": "openits-types:trigger-schedule",
+    "occurred-at": "2026-07-11T15:00:00Z"
+  }
+}

@@ -30,8 +30,15 @@ module openits-rsu-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.4.1";
+  openits-types:openits-version "0.5.0";
 
+  revision 2026-10-16 {
+    description
+      "Bind rsu-mode-event-kind to rsu-mode with
+       openits-types:mode-value-base, so a mode-changed of this kind
+       carries only rsu-mode values. Additive.";
+    reference "RFC 7950 §7.19.";
+  }
   revision 2026-10-13 {
     description
       "Update descriptions that referred to mode-changed's prior/current
@@ -154,6 +161,7 @@ module openits-rsu-types {
   identity rsu-mode-event-kind {
     base openits-types:mode-event-kind;
     base rsu-event-kind;
+    openits-types:mode-value-base "openits-rsu-types:rsu-mode";
     description
       "RSU operational-mode transitions (standby / operate per
        NTCIP 1218 rsuMode). The mode-changed notification's

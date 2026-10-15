@@ -3,6 +3,11 @@
     "config": {
       "id": "rsu-i35-mm214"
     },
+    "state": {
+      "oper-status": "ok",
+      "last-change": "2026-10-14T08:00:00Z",
+      "observed-at": "2026-10-14T16:00:00Z"
+    },
     "channels": {
       "channel": [
         {
@@ -43,7 +48,7 @@
           "stats-window-seconds": 300,
           "sample-count": 420,
           "penetration-estimate-pct": "8.0",
-          "computed-at": "2026-07-15T12:00:00Z"
+          "observed-at": "2026-07-15T12:00:00Z"
         },
         "counts": {
           "count-basis": "observation-sessions",

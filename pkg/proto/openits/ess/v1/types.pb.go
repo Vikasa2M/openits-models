@@ -140,6 +140,61 @@ func (Direction) EnumDescriptor() ([]byte, []int) {
 	return file_openits_ess_v1_types_proto_rawDescGZIP(), []int{1}
 }
 
+type OperStatus int32
+
+const (
+	OperStatus_OPER_STATUS_UNKNOWN     OperStatus = 0
+	OperStatus_OPER_STATUS_OK          OperStatus = 1
+	OperStatus_OPER_STATUS_DEGRADED    OperStatus = 2
+	OperStatus_OPER_STATUS_FAILED      OperStatus = 3
+	OperStatus_OPER_STATUS_NOT_PRESENT OperStatus = 4
+)
+
+// Enum value maps for OperStatus.
+var (
+	OperStatus_name = map[int32]string{
+		0: "OPER_STATUS_UNKNOWN",
+		1: "OPER_STATUS_OK",
+		2: "OPER_STATUS_DEGRADED",
+		3: "OPER_STATUS_FAILED",
+		4: "OPER_STATUS_NOT_PRESENT",
+	}
+	OperStatus_value = map[string]int32{
+		"OPER_STATUS_UNKNOWN":     0,
+		"OPER_STATUS_OK":          1,
+		"OPER_STATUS_DEGRADED":    2,
+		"OPER_STATUS_FAILED":      3,
+		"OPER_STATUS_NOT_PRESENT": 4,
+	}
+)
+
+func (x OperStatus) Enum() *OperStatus {
+	p := new(OperStatus)
+	*p = x
+	return p
+}
+
+func (x OperStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OperStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_ess_v1_types_proto_enumTypes[2].Descriptor()
+}
+
+func (OperStatus) Type() protoreflect.EnumType {
+	return &file_openits_ess_v1_types_proto_enumTypes[2]
+}
+
+func (x OperStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OperStatus.Descriptor instead.
+func (OperStatus) EnumDescriptor() ([]byte, []int) {
+	return file_openits_ess_v1_types_proto_rawDescGZIP(), []int{2}
+}
+
 type Quality int32
 
 const (
@@ -179,11 +234,11 @@ func (x Quality) String() string {
 }
 
 func (Quality) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_types_proto_enumTypes[2].Descriptor()
+	return file_openits_ess_v1_types_proto_enumTypes[3].Descriptor()
 }
 
 func (Quality) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_types_proto_enumTypes[2]
+	return &file_openits_ess_v1_types_proto_enumTypes[3]
 }
 
 func (x Quality) Number() protoreflect.EnumNumber {
@@ -192,7 +247,7 @@ func (x Quality) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Quality.Descriptor instead.
 func (Quality) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_types_proto_rawDescGZIP(), []int{2}
+	return file_openits_ess_v1_types_proto_rawDescGZIP(), []int{3}
 }
 
 type PrecipitationType int32
@@ -255,11 +310,11 @@ func (x PrecipitationType) String() string {
 }
 
 func (PrecipitationType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_types_proto_enumTypes[3].Descriptor()
+	return file_openits_ess_v1_types_proto_enumTypes[4].Descriptor()
 }
 
 func (PrecipitationType) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_types_proto_enumTypes[3]
+	return &file_openits_ess_v1_types_proto_enumTypes[4]
 }
 
 func (x PrecipitationType) Number() protoreflect.EnumNumber {
@@ -268,7 +323,7 @@ func (x PrecipitationType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use PrecipitationType.Descriptor instead.
 func (PrecipitationType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_types_proto_rawDescGZIP(), []int{3}
+	return file_openits_ess_v1_types_proto_rawDescGZIP(), []int{4}
 }
 
 type PrecipitationIntensity int32
@@ -313,11 +368,11 @@ func (x PrecipitationIntensity) String() string {
 }
 
 func (PrecipitationIntensity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_types_proto_enumTypes[4].Descriptor()
+	return file_openits_ess_v1_types_proto_enumTypes[5].Descriptor()
 }
 
 func (PrecipitationIntensity) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_types_proto_enumTypes[4]
+	return &file_openits_ess_v1_types_proto_enumTypes[5]
 }
 
 func (x PrecipitationIntensity) Number() protoreflect.EnumNumber {
@@ -326,7 +381,7 @@ func (x PrecipitationIntensity) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use PrecipitationIntensity.Descriptor instead.
 func (PrecipitationIntensity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_types_proto_rawDescGZIP(), []int{4}
+	return file_openits_ess_v1_types_proto_rawDescGZIP(), []int{5}
 }
 
 type VisibilitySituation int32
@@ -392,11 +447,11 @@ func (x VisibilitySituation) String() string {
 }
 
 func (VisibilitySituation) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_types_proto_enumTypes[5].Descriptor()
+	return file_openits_ess_v1_types_proto_enumTypes[6].Descriptor()
 }
 
 func (VisibilitySituation) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_types_proto_enumTypes[5]
+	return &file_openits_ess_v1_types_proto_enumTypes[6]
 }
 
 func (x VisibilitySituation) Number() protoreflect.EnumNumber {
@@ -405,7 +460,7 @@ func (x VisibilitySituation) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use VisibilitySituation.Descriptor instead.
 func (VisibilitySituation) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_types_proto_rawDescGZIP(), []int{5}
+	return file_openits_ess_v1_types_proto_rawDescGZIP(), []int{6}
 }
 
 type SensingMethod int32
@@ -441,11 +496,11 @@ func (x SensingMethod) String() string {
 }
 
 func (SensingMethod) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_types_proto_enumTypes[6].Descriptor()
+	return file_openits_ess_v1_types_proto_enumTypes[7].Descriptor()
 }
 
 func (SensingMethod) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_types_proto_enumTypes[6]
+	return &file_openits_ess_v1_types_proto_enumTypes[7]
 }
 
 func (x SensingMethod) Number() protoreflect.EnumNumber {
@@ -454,7 +509,7 @@ func (x SensingMethod) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SensingMethod.Descriptor instead.
 func (SensingMethod) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_types_proto_rawDescGZIP(), []int{6}
+	return file_openits_ess_v1_types_proto_rawDescGZIP(), []int{7}
 }
 
 type PavementCondition int32
@@ -520,11 +575,11 @@ func (x PavementCondition) String() string {
 }
 
 func (PavementCondition) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_types_proto_enumTypes[7].Descriptor()
+	return file_openits_ess_v1_types_proto_enumTypes[8].Descriptor()
 }
 
 func (PavementCondition) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_types_proto_enumTypes[7]
+	return &file_openits_ess_v1_types_proto_enumTypes[8]
 }
 
 func (x PavementCondition) Number() protoreflect.EnumNumber {
@@ -533,7 +588,7 @@ func (x PavementCondition) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use PavementCondition.Descriptor instead.
 func (PavementCondition) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_types_proto_rawDescGZIP(), []int{7}
+	return file_openits_ess_v1_types_proto_rawDescGZIP(), []int{8}
 }
 
 type SensorHealth int32
@@ -578,11 +633,11 @@ func (x SensorHealth) String() string {
 }
 
 func (SensorHealth) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_types_proto_enumTypes[8].Descriptor()
+	return file_openits_ess_v1_types_proto_enumTypes[9].Descriptor()
 }
 
 func (SensorHealth) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_types_proto_enumTypes[8]
+	return &file_openits_ess_v1_types_proto_enumTypes[9]
 }
 
 func (x SensorHealth) Number() protoreflect.EnumNumber {
@@ -591,7 +646,7 @@ func (x SensorHealth) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SensorHealth.Descriptor instead.
 func (SensorHealth) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_types_proto_rawDescGZIP(), []int{8}
+	return file_openits_ess_v1_types_proto_rawDescGZIP(), []int{9}
 }
 
 type FaultSeverity int32
@@ -633,11 +688,11 @@ func (x FaultSeverity) String() string {
 }
 
 func (FaultSeverity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ess_v1_types_proto_enumTypes[9].Descriptor()
+	return file_openits_ess_v1_types_proto_enumTypes[10].Descriptor()
 }
 
 func (FaultSeverity) Type() protoreflect.EnumType {
-	return &file_openits_ess_v1_types_proto_enumTypes[9]
+	return &file_openits_ess_v1_types_proto_enumTypes[10]
 }
 
 func (x FaultSeverity) Number() protoreflect.EnumNumber {
@@ -646,7 +701,7 @@ func (x FaultSeverity) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use FaultSeverity.Descriptor instead.
 func (FaultSeverity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ess_v1_types_proto_rawDescGZIP(), []int{9}
+	return file_openits_ess_v1_types_proto_rawDescGZIP(), []int{10}
 }
 
 var File_openits_ess_v1_types_proto protoreflect.FileDescriptor
@@ -669,7 +724,14 @@ const file_openits_ess_v1_types_proto_rawDesc = "" +
 	"*8\n" +
 	"\tDirection\x12\x15\n" +
 	"\x11DIRECTION_ENTERED\x10\x00\x12\x14\n" +
-	"\x10DIRECTION_EXITED\x10\x01*x\n" +
+	"\x10DIRECTION_EXITED\x10\x01*\x88\x01\n" +
+	"\n" +
+	"OperStatus\x12\x17\n" +
+	"\x13OPER_STATUS_UNKNOWN\x10\x00\x12\x12\n" +
+	"\x0eOPER_STATUS_OK\x10\x01\x12\x18\n" +
+	"\x14OPER_STATUS_DEGRADED\x10\x02\x12\x16\n" +
+	"\x12OPER_STATUS_FAILED\x10\x03\x12\x1b\n" +
+	"\x17OPER_STATUS_NOT_PRESENT\x10\x04*x\n" +
 	"\aQuality\x12\x11\n" +
 	"\rQUALITY_VALID\x10\x00\x12\x13\n" +
 	"\x0fQUALITY_SUSPECT\x10\x01\x12\x15\n" +
@@ -757,18 +819,19 @@ func file_openits_ess_v1_types_proto_rawDescGZIP() []byte {
 	return file_openits_ess_v1_types_proto_rawDescData
 }
 
-var file_openits_ess_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 10)
+var file_openits_ess_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 11)
 var file_openits_ess_v1_types_proto_goTypes = []any{
 	(Unit)(0),                   // 0: openits.ess.v1.Unit
 	(Direction)(0),              // 1: openits.ess.v1.Direction
-	(Quality)(0),                // 2: openits.ess.v1.Quality
-	(PrecipitationType)(0),      // 3: openits.ess.v1.PrecipitationType
-	(PrecipitationIntensity)(0), // 4: openits.ess.v1.PrecipitationIntensity
-	(VisibilitySituation)(0),    // 5: openits.ess.v1.VisibilitySituation
-	(SensingMethod)(0),          // 6: openits.ess.v1.SensingMethod
-	(PavementCondition)(0),      // 7: openits.ess.v1.PavementCondition
-	(SensorHealth)(0),           // 8: openits.ess.v1.SensorHealth
-	(FaultSeverity)(0),          // 9: openits.ess.v1.FaultSeverity
+	(OperStatus)(0),             // 2: openits.ess.v1.OperStatus
+	(Quality)(0),                // 3: openits.ess.v1.Quality
+	(PrecipitationType)(0),      // 4: openits.ess.v1.PrecipitationType
+	(PrecipitationIntensity)(0), // 5: openits.ess.v1.PrecipitationIntensity
+	(VisibilitySituation)(0),    // 6: openits.ess.v1.VisibilitySituation
+	(SensingMethod)(0),          // 7: openits.ess.v1.SensingMethod
+	(PavementCondition)(0),      // 8: openits.ess.v1.PavementCondition
+	(SensorHealth)(0),           // 9: openits.ess.v1.SensorHealth
+	(FaultSeverity)(0),          // 10: openits.ess.v1.FaultSeverity
 }
 var file_openits_ess_v1_types_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -788,7 +851,7 @@ func file_openits_ess_v1_types_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_ess_v1_types_proto_rawDesc), len(file_openits_ess_v1_types_proto_rawDesc)),
-			NumEnums:      10,
+			NumEnums:      11,
 			NumMessages:   0,
 			NumExtensions: 0,
 			NumServices:   0,
