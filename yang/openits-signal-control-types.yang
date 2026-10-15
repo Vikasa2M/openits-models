@@ -31,6 +31,12 @@ module openits-signal-control-types {
 
   openits-types:openits-version "0.17.0";
 
+  revision 2026-10-17 {
+    description
+      "Add the monitor-status typedef and monitor-kind identities for
+       the cabinet monitor readback. Breaking: none in this step.";
+    reference "NEMA TS2-2021 section 4; NEMA TS1 section 6; ATC Cabinet Standard.";
+  }
   revision 2026-10-16 {
     description
       "Bind sc-mode-event-kind to controller-mode with
@@ -1480,6 +1486,40 @@ module openits-signal-control-types {
       "Flash entered as the commanded response to an active
        preemption input.";
     reference "Indiana 173 (fault-unit-flash-status).";
+  }
+  typedef monitor-status {
+    type enumeration {
+      enum unknown      { value 0; description "The controller cannot say whether a monitor is fitted or what it reports. Never means healthy."; }
+      enum ok           { value 1; description "The monitor was read at observed-at and reports no fault."; }
+      enum fault        { value 2; description "The monitor was read and reports a fault (fault-type is set)."; }
+      enum not-read     { value 3; description "A monitor is fitted but the controller could not read it (for example the SDLC link is down). Treat the cabinet as possibly in flash."; }
+      enum not-equipped { value 4; description "No cabinet monitor is fitted or configured."; }
+    }
+    description
+      "Readback status of the cabinet monitor. Unknown is the zero
+       value so an absent or defaulted status never reads as ok.";
+    reference "NEMA TS2-2021 section 4 (MMU SDLC status).";
+  }
+
+  identity monitor-kind {
+    description
+      "Which cabinet monitor function is fitted. An identity so later
+       monitor generations can be added without a breaking change.";
+  }
+  identity monitor-ts2-mmu {
+    base monitor-kind;
+    description "NEMA TS2 Malfunction Management Unit.";
+    reference "NEMA TS2-2021 section 4.";
+  }
+  identity monitor-ts1-conflict-monitor {
+    base monitor-kind;
+    description "NEMA TS1 conflict monitor.";
+    reference "NEMA TS1 section 6.";
+  }
+  identity monitor-atc-cmu {
+    base monitor-kind;
+    description "ATC cabinet Cabinet Monitor Unit.";
+    reference "ATC Cabinet Standard (CMU).";
   }
   identity monitor-fault-type {
     base sc-fault-event-kind;

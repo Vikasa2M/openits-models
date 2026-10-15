@@ -48,6 +48,11 @@ module openits-signal-control {
 
   openits-types:openits-version "0.20.0";
 
+  revision 2026-10-17 {
+    description
+      "Report the cabinet monitor's read status, kind and read time; fault-type is present only when the status is fault. Breaking: a fault-type without status fault is rejected.";
+    reference "NEMA TS2-2021 section 4.";
+  }
   revision 2026-10-16 {
     description
       "Report health on the root state (shared device-health: oper-status, last-change, observed-at) and rename the detector measurement timestamp collected-at to observed-at. Breaking: consumers must read observed-at.";
@@ -1793,12 +1798,28 @@ module openits-signal-control {
            function rather than for one cabinet family's unit, because
            all three report the same monitored conditions and a
            consumer should not have to know which is installed to read
-           the fault. An absent fault-type means no active monitor
-           fault.";
+           the fault. An absent status means unknown, never ok.";
         reference "NEMA TS2-2021 section 4; NEMA TS1 section 6; ATC Cabinet Standard (CMU).";
+        leaf status {
+          type openits-sc-types:monitor-status;
+          description
+            "Read status of the monitor. Absent means unknown, never ok;
+             not-read means a fitted monitor could not be read.";
+        }
+        leaf monitor-kind {
+          type identityref { base openits-sc-types:monitor-kind; }
+          description "Which monitor function is fitted.";
+        }
+        leaf observed-at {
+          type yang:date-and-time;
+          description "When the controller last read the monitor.";
+        }
         leaf fault-type {
           type identityref { base openits-sc-types:monitor-fault-type; }
-          description "Active monitor fault class; absent when the monitor reports no fault.";
+          must "../status = 'fault'" {
+            error-message "monitor fault-type is present only when monitor status is fault";
+          }
+          description "Active monitor fault class; present only when status is fault.";
         }
         leaf-list faulting-channels {
           type channel-number;

@@ -424,6 +424,7 @@ func All(kind string) []TestCase {
 			TestCase{"TestConflictMonitor_PermissiveResolvesChannels", TestConflictMonitor_PermissiveResolvesChannels},
 			TestCase{"TestConflictMonitor_PermissiveCanonicalOrder", TestConflictMonitor_PermissiveCanonicalOrder},
 			TestCase{"TestConflictMonitor_NoSameRingPermissive", TestConflictMonitor_NoSameRingPermissive},
+			TestCase{"TestMonitor_StatusReported", TestMonitor_StatusReported},
 
 			// coordination
 			TestCase{"TestCoordination_ActivePlan", TestCoordination_ActivePlan},

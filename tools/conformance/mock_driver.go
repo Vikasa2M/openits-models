@@ -77,6 +77,10 @@ func collectASC() (*yangpkg.Device, error) {
 	// last-mode-change moved off the identity tree into their own
 	// container, distinct from the applied-identity "state" above.
 	op := sc.GetOrCreateOperation()
+	mon := op.GetOrCreateMonitor()
+	mon.Status = yangpkg.OpenitsSignalControlTypes_MonitorStatus_ok
+	mon.MonitorKind = yangpkg.OpenitsSignalControlTypes_MonitorKind_monitor_ts2_mmu
+	mon.ObservedAt = strPtr("2026-04-18T14:00:05Z")
 	op.FlashActive = boolPtr(false)
 	op.LastModeChange = strPtr("2026-04-18T14:00:00Z")
 

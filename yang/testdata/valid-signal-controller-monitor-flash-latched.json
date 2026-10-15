@@ -38,6 +38,9 @@
       "flash-active": true,
       "flash-cause": "openits-signal-control-types:flash-mmu-conflict",
       "monitor": {
+        "status": "fault",
+        "monitor-kind": "openits-signal-control-types:monitor-ts2-mmu",
+        "observed-at": "2026-07-12T08:15:02Z",
         "fault-type": "openits-signal-control-types:monitor-conflict",
         "faulting-channels": [2, 6],
         "latched": true

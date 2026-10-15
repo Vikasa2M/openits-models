@@ -414,6 +414,9 @@ message Operation {
 }
 
 message Monitor {
+  optional MonitorStatus status = 4;
+  optional string monitor_kind = 5;
+  google.protobuf.Timestamp observed_at = 6;
   optional string fault_type = 1;
   repeated uint32 faulting_channels = 2;
   optional bool latched = 3;

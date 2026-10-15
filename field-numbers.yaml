@@ -2655,6 +2655,9 @@ messages:
         fault_type: 1
         faulting_channels: 2
         latched: 3
+        monitor_kind: 5
+        observed_at: 6
+        status: 4
     openits.signal_control.v1.OnBatteryPolicy:
         mode: 1
         transition_at_runtime_minutes: 3

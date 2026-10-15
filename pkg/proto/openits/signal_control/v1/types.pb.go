@@ -1236,6 +1236,61 @@ func (Stage) EnumDescriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{20}
 }
 
+type MonitorStatus int32
+
+const (
+	MonitorStatus_MONITOR_STATUS_UNKNOWN      MonitorStatus = 0
+	MonitorStatus_MONITOR_STATUS_OK           MonitorStatus = 1
+	MonitorStatus_MONITOR_STATUS_FAULT        MonitorStatus = 2
+	MonitorStatus_MONITOR_STATUS_NOT_READ     MonitorStatus = 3
+	MonitorStatus_MONITOR_STATUS_NOT_EQUIPPED MonitorStatus = 4
+)
+
+// Enum value maps for MonitorStatus.
+var (
+	MonitorStatus_name = map[int32]string{
+		0: "MONITOR_STATUS_UNKNOWN",
+		1: "MONITOR_STATUS_OK",
+		2: "MONITOR_STATUS_FAULT",
+		3: "MONITOR_STATUS_NOT_READ",
+		4: "MONITOR_STATUS_NOT_EQUIPPED",
+	}
+	MonitorStatus_value = map[string]int32{
+		"MONITOR_STATUS_UNKNOWN":      0,
+		"MONITOR_STATUS_OK":           1,
+		"MONITOR_STATUS_FAULT":        2,
+		"MONITOR_STATUS_NOT_READ":     3,
+		"MONITOR_STATUS_NOT_EQUIPPED": 4,
+	}
+)
+
+func (x MonitorStatus) Enum() *MonitorStatus {
+	p := new(MonitorStatus)
+	*p = x
+	return p
+}
+
+func (x MonitorStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (MonitorStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_signal_control_v1_types_proto_enumTypes[21].Descriptor()
+}
+
+func (MonitorStatus) Type() protoreflect.EnumType {
+	return &file_openits_signal_control_v1_types_proto_enumTypes[21]
+}
+
+func (x MonitorStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use MonitorStatus.Descriptor instead.
+func (MonitorStatus) EnumDescriptor() ([]byte, []int) {
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{21}
+}
+
 type SignalOperationOnBattery int32
 
 const (
@@ -1269,11 +1324,11 @@ func (x SignalOperationOnBattery) String() string {
 }
 
 func (SignalOperationOnBattery) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[21].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[22].Descriptor()
 }
 
 func (SignalOperationOnBattery) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[21]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[22]
 }
 
 func (x SignalOperationOnBattery) Number() protoreflect.EnumNumber {
@@ -1282,7 +1337,7 @@ func (x SignalOperationOnBattery) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SignalOperationOnBattery.Descriptor instead.
 func (SignalOperationOnBattery) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{21}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{22}
 }
 
 type BatteryTestState int32
@@ -1321,11 +1376,11 @@ func (x BatteryTestState) String() string {
 }
 
 func (BatteryTestState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[22].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[23].Descriptor()
 }
 
 func (BatteryTestState) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[22]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[23]
 }
 
 func (x BatteryTestState) Number() protoreflect.EnumNumber {
@@ -1334,7 +1389,7 @@ func (x BatteryTestState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use BatteryTestState.Descriptor instead.
 func (BatteryTestState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{22}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{23}
 }
 
 type PowerSource int32
@@ -1379,11 +1434,11 @@ func (x PowerSource) String() string {
 }
 
 func (PowerSource) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[23].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[24].Descriptor()
 }
 
 func (PowerSource) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[23]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[24]
 }
 
 func (x PowerSource) Number() protoreflect.EnumNumber {
@@ -1392,7 +1447,7 @@ func (x PowerSource) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use PowerSource.Descriptor instead.
 func (PowerSource) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{23}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{24}
 }
 
 var File_openits_signal_control_v1_types_proto protoreflect.FileDescriptor
@@ -1550,7 +1605,13 @@ const file_openits_signal_control_v1_types_proto_rawDesc = "" +
 	"\rSTAGE_GRANTED\x10\x02\x12\x10\n" +
 	"\fSTAGE_ACTIVE\x10\x03\x12\x13\n" +
 	"\x0fSTAGE_COMPLETED\x10\x04\x12\x10\n" +
-	"\fSTAGE_DENIED\x10\x05*\xa1\x01\n" +
+	"\fSTAGE_DENIED\x10\x05*\x9a\x01\n" +
+	"\rMonitorStatus\x12\x1a\n" +
+	"\x16MONITOR_STATUS_UNKNOWN\x10\x00\x12\x15\n" +
+	"\x11MONITOR_STATUS_OK\x10\x01\x12\x18\n" +
+	"\x14MONITOR_STATUS_FAULT\x10\x02\x12\x1b\n" +
+	"\x17MONITOR_STATUS_NOT_READ\x10\x03\x12\x1f\n" +
+	"\x1bMONITOR_STATUS_NOT_EQUIPPED\x10\x04*\xa1\x01\n" +
 	"\x18SignalOperationOnBattery\x12.\n" +
 	"*SIGNAL_OPERATION_ON_BATTERY_FULL_OPERATION\x10\x00\x12%\n" +
 	"!SIGNAL_OPERATION_ON_BATTERY_FLASH\x10\x01\x12.\n" +
@@ -1580,7 +1641,7 @@ func file_openits_signal_control_v1_types_proto_rawDescGZIP() []byte {
 	return file_openits_signal_control_v1_types_proto_rawDescData
 }
 
-var file_openits_signal_control_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 24)
+var file_openits_signal_control_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 25)
 var file_openits_signal_control_v1_types_proto_goTypes = []any{
 	(FaultSeverity)(0),            // 0: openits.signal_control.v1.FaultSeverity
 	(TsamEngagementState)(0),      // 1: openits.signal_control.v1.TsamEngagementState
@@ -1603,9 +1664,10 @@ var file_openits_signal_control_v1_types_proto_goTypes = []any{
 	(SyncStatus)(0),               // 18: openits.signal_control.v1.SyncStatus
 	(PreemptStage)(0),             // 19: openits.signal_control.v1.PreemptStage
 	(Stage)(0),                    // 20: openits.signal_control.v1.Stage
-	(SignalOperationOnBattery)(0), // 21: openits.signal_control.v1.SignalOperationOnBattery
-	(BatteryTestState)(0),         // 22: openits.signal_control.v1.BatteryTestState
-	(PowerSource)(0),              // 23: openits.signal_control.v1.PowerSource
+	(MonitorStatus)(0),            // 21: openits.signal_control.v1.MonitorStatus
+	(SignalOperationOnBattery)(0), // 22: openits.signal_control.v1.SignalOperationOnBattery
+	(BatteryTestState)(0),         // 23: openits.signal_control.v1.BatteryTestState
+	(PowerSource)(0),              // 24: openits.signal_control.v1.PowerSource
 }
 var file_openits_signal_control_v1_types_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -1625,7 +1687,7 @@ func file_openits_signal_control_v1_types_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_signal_control_v1_types_proto_rawDesc), len(file_openits_signal_control_v1_types_proto_rawDesc)),
-			NumEnums:      24,
+			NumEnums:      25,
 			NumMessages:   0,
 			NumExtensions: 0,
 			NumServices:   0,
