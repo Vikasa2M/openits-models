@@ -7,6 +7,40 @@ for the Go module. See [`docs/versioning.md`](docs/versioning.md) for how the
 Go module version, per-module YANG revision dates, and protobuf wire
 compatibility relate.
 
+## [0.8.0](https://github.com/Vikasa2M/openits-models/compare/v0.7.0...v0.8.0) (2026-10-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* measured-at (zone-occupancy, reversible-lane gates), collected-at (signal-control detectors), last-update (ramp-metering detectors) and computed-at (vehicle-detection) are renamed observed-at.
+* comm-lost events must carry last-contact and observed-by.
+* **reversible-lane:** gate faults name the gate through the shared component reference (rl-component-gate), not a gate-id leaf on the fault entry; the manual-non-interlocked gate mode is replaced by the interlock-bypassed leaf; the command-refused and invalid-inputs gate fault kinds are removed.
+* in all nine service fault inventories the category leaf is renamed to kind and is mandatory, and first-observed is mandatory.
+* first-observed is mandatory in every fault inventory entry and on fault-raised and fault-cleared; fault ids are limited to 128 characters.
+
+### Features
+
+* add foundation health, status-summary and canonical unknown definitions ([571df4b](https://github.com/Vikasa2M/openits-models/commit/571df4bb5dd4f5a01dfef0e910063998d0225435))
+* check mode-changed values against their family's mode base ([df253b2](https://github.com/Vikasa2M/openits-models/commit/df253b28e58f2f9a6c1b40054b09238647ee4540))
+* classify fault inventory entries with kind in every service ([2611967](https://github.com/Vikasa2M/openits-models/commit/26119677abaca04f197275c147f625c1e0a2ff5f))
+* let cabinet-power faults sit in signal-control and DMS fault inventories ([3afd181](https://github.com/Vikasa2M/openits-models/commit/3afd1811889ea5fe694c05009fc1e73ec040ed6f))
+* make comm-lost carry last-contact and its observer, and define comm-loss staleness ([26bd60c](https://github.com/Vikasa2M/openits-models/commit/26bd60cffd964a20a0d21dde60d3fa6f03dabd4a))
+* one fault shape for inventories and fault events ([2550e83](https://github.com/Vikasa2M/openits-models/commit/2550e834c3b15b5312af80d30acc443e6cce103d))
+* report health on every device root and name freshness observed-at everywhere ([dffc6b7](https://github.com/Vikasa2M/openits-models/commit/dffc6b7e1eb8ceb8ed6bef3afb12a8d769cb65e1))
+* **reversible-lane:** add per-gate live state and gate-status-changed notification ([95638fc](https://github.com/Vikasa2M/openits-models/commit/95638fc5a57978b385655dcbc8c61baf371ceb1e))
+* **reversible-lane:** add per-gate live state and gate-status-changed notification ([f4883ee](https://github.com/Vikasa2M/openits-models/commit/f4883eee12c4b6abe5ed1003f7f081984d644a7e))
+* **reversible-lane:** fit gate status to v0.8.0 and the house contract ([ab872cf](https://github.com/Vikasa2M/openits-models/commit/ab872cf5d8e9257c4bb0b7df5d8e199f93b3eadf))
+
+
+### Bug Fixes
+
+* describe the shared fault shape and the v0.8.0 migration ([89e8e1c](https://github.com/Vikasa2M/openits-models/commit/89e8e1ca8de0413483ef2c7f32d942cf715352a2))
+* require mode values to derive strictly from the mode base and de-duplicate observed-at descriptions ([0cf8f0e](https://github.com/Vikasa2M/openits-models/commit/0cf8f0ead9cd218029d79b1fe6145af6701a171d))
+* restore historical revision text in openits-types ([089808d](https://github.com/Vikasa2M/openits-models/commit/089808d8082384d093bb42366472f3d5b7b27362))
+* **reversible-lane:** constrain controls-entry-for and state gate-agreement fail-safes ([90fbd61](https://github.com/Vikasa2M/openits-models/commit/90fbd617575a5ec794a7e7f2966ae187d1052728))
+* state the protobuf moves of the renamed timestamps and give comm-loss staleness a testable end ([e1c7453](https://github.com/Vikasa2M/openits-models/commit/e1c7453183d5905ede7fb6762c401cf03db5138b))
+* use service-owned cabinet fault kind in fixture; correct fault shape docs ([1803b81](https://github.com/Vikasa2M/openits-models/commit/1803b8154c9b95588ed6d747b028848cf9816a8b))
+
 ## [0.7.0](https://github.com/Vikasa2M/openits-models/compare/v0.6.0...v0.7.0) (2026-10-13)
 
 
