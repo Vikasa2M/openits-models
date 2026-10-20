@@ -44,6 +44,13 @@ module openits-ramp-metering {
 
   openits-types:openits-version "0.11.0";
 
+  revision 2026-10-20 {
+    description
+      "Follow the nema-common phase-timing rename (min-green-s,
+       max-green-s, passage-s, yellow-change-s, red-clear-s) through the
+       plan phase-timing feasibility must. Breaking: the plan phase-timing
+       leaves are renamed.";
+  }
   revision 2026-10-16 {
     description
       "Report health on the root state (shared device-health: oper-status, last-change, observed-at) and rename the detector timestamp last-update to observed-at. Breaking: consumers must read observed-at.";
@@ -730,24 +737,24 @@ module openits-ramp-metering {
             "Per-plan release phase timing.  Uses the NEMA-common
              vehicle-phase-timing grouping so MUTCD minimums are
              enforced identically to signal controllers.  Carries
-             vehicle change/clearance timing only (min-green,
-             max-green, yellow-change, red-clear, passage); a ramp
+             vehicle change/clearance timing only (min-green-s,
+             max-green-s, yellow-change-s, red-clear-s, passage-s); a ramp
              meter has no pedestrian phase, so it does not use the
              full phase-timing grouping and does not accept
-             walk/ped-clear.";
+             walk-s/ped-clear-s.";
           uses openits-nema:vehicle-phase-timing;
 
           must
-            "not(min-green) or not(yellow-change) or not(red-clear)
+            "not(min-green-s) or not(yellow-change-s) or not(red-clear-s)
              or not(../headway-s)
              or (../../../lanes/config/release-coordination = 'alternate'
-                 and (min-green + yellow-change + red-clear)
+                 and (min-green-s + yellow-change-s + red-clear-s)
                      <= (../headway-s * count(../../../lanes/lane[not(config/bypass = 'true')])))
              or (not(../../../lanes/config/release-coordination = 'alternate')
-                 and (min-green + yellow-change + red-clear) <= ../headway-s)"
+                 and (min-green-s + yellow-change-s + red-clear-s) <= ../headway-s)"
           {
             error-message
-              "min-green + yellow-change + red-clear must not exceed the feasible
+              "min-green-s + yellow-change-s + red-clear-s must not exceed the feasible
                cycle: headway-s for simultaneous release, or headway-s * served-lanes
                for alternate release (each lane's cycle spans all served lanes).";
           }

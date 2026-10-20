@@ -454,34 +454,6 @@ exceptions:
       path: /openits-ess/station/precipitation/snow-rate-mm-h
       cut: ess
     - rule: units
-      module: openits-nema-common
-      path: grouping phase-timing/ped-clear
-      cut: foundation
-    - rule: units
-      module: openits-nema-common
-      path: grouping phase-timing/walk
-      cut: foundation
-    - rule: units
-      module: openits-nema-common
-      path: grouping vehicle-phase-timing/max-green
-      cut: foundation
-    - rule: units
-      module: openits-nema-common
-      path: grouping vehicle-phase-timing/min-green
-      cut: foundation
-    - rule: units
-      module: openits-nema-common
-      path: grouping vehicle-phase-timing/passage
-      cut: foundation
-    - rule: units
-      module: openits-nema-common
-      path: grouping vehicle-phase-timing/red-clear
-      cut: foundation
-    - rule: units
-      module: openits-nema-common
-      path: grouping vehicle-phase-timing/yellow-change
-      cut: foundation
-    - rule: units
       module: openits-perception
       path: /openits-perception/perception-sensor/configuration/zone/legal-heading
       cut: sensing

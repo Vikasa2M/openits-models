@@ -152,11 +152,13 @@ message Plan {
 }
 
 message PhaseTiming {
-  optional string max_green = 1;
-  optional string min_green = 2;
-  optional string passage = 3;
-  optional string red_clear = 4;
-  optional string yellow_change = 5;
+  reserved 1, 2, 3, 4, 5;
+  reserved "max_green", "min_green", "passage", "red_clear", "yellow_change";
+  optional string max_green_s = 6;
+  optional string min_green_s = 7;
+  optional string passage_s = 8;
+  optional string red_clear_s = 9;
+  optional string yellow_change_s = 10;
 }
 
 message Schedule {

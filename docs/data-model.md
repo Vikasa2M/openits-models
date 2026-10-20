@@ -185,7 +185,7 @@ The phase-timing safety limits are YANG `must` expressions, split across
 two tiers with citation-grade error messages at both.
 
 `openits-nema-common:phase-timing` carries the engineering floors only:
-yellow change positive, red clearance non-negative, min-green at least
+yellow change positive, red clearance non-negative, min-green-s at least
 one second — a floor that forbids a zero-length serve and is not a MUTCD
 value at all. Both signal-control and ramp-metering `uses` this
 grouping, so none of these can drift between services.
@@ -195,7 +195,7 @@ The jurisdiction-specific numbers live one tier up, in
 `openits-signal-control-mutcd` applies the US MUTCD 11th ed. §4F.17
 yellow range of 3.0-6.0 seconds (*"Yellow change must be 3.0-6.0 seconds
 per MUTCD 11th ed. section 4F.17 paragraph 13"*) and the paragraph-6
-red-clear ceiling; `openits-signal-control-mutcd-strict` raises the
+red-clear-s ceiling; `openits-signal-control-mutcd-strict` raises the
 yellow floor to 4.0 seconds.
 
 The split is the point, not an accident of where the code landed. A US

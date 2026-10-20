@@ -180,13 +180,13 @@ func collectASC() (*yangpkg.Device, error) {
 		pc.Barrier = u8Ptr(barrierFor(n))
 		pc.Enabled = boolPtr(true)
 		t := pc.GetOrCreateTiming()
-		t.MinGreen = f64Ptr(5)
-		t.MaxGreen = f64Ptr(45)
-		t.YellowChange = f64Ptr(3.5)
-		t.RedClear = f64Ptr(1.5)
-		t.Passage = f64Ptr(2.0)
-		t.Walk = u16Ptr(7)
-		t.PedClear = u16Ptr(20)
+		t.MinGreenS = f64Ptr(5)
+		t.MaxGreenS = f64Ptr(45)
+		t.YellowChangeS = f64Ptr(3.5)
+		t.RedClearS = f64Ptr(1.5)
+		t.PassageS = f64Ptr(2.0)
+		t.WalkS = u16Ptr(7)
+		t.PedClearS = u16Ptr(20)
 	}
 
 	// Detectors: config/state split, same idiom as everywhere else.
@@ -1252,11 +1252,11 @@ func collectRM() (*yangpkg.Device, error) {
 	pt := plan.GetOrCreatePhaseTiming()
 	// Ramp-meter cycle: short green, brief yellow/red-clear, all within the
 	// 5s headway (min-green+yellow+red-clear = 4.0 <= 5.0).
-	pt.MinGreen = f64Ptr(1)
-	pt.MaxGreen = f64Ptr(30)
-	pt.YellowChange = f64Ptr(2.0)
-	pt.RedClear = f64Ptr(1.0)
-	pt.Passage = f64Ptr(0.5)
+	pt.MinGreenS = f64Ptr(1)
+	pt.MaxGreenS = f64Ptr(30)
+	pt.YellowChangeS = f64Ptr(2.0)
+	pt.RedClearS = f64Ptr(1.0)
+	pt.PassageS = f64Ptr(0.5)
 
 	// Commanded metering control: control/config is the intended command,
 	// control/state is the applied mirror + live operational rollup

@@ -1362,10 +1362,15 @@ messages:
         speed_kmh: 7
     openits.ramp_metering.v1.PhaseTiming:
         max_green: 1
+        max_green_s: 6
         min_green: 2
+        min_green_s: 7
         passage: 3
+        passage_s: 8
         red_clear: 4
+        red_clear_s: 9
         yellow_change: 5
+        yellow_change_s: 10
     openits.ramp_metering.v1.Plan:
         headway_s: 4
         name: 2
@@ -2983,12 +2988,19 @@ messages:
         timezone: 4
     openits.signal_control.v1.Timing:
         max_green: 1
+        max_green_s: 8
         min_green: 2
+        min_green_s: 9
         passage: 3
+        passage_s: 10
         ped_clear: 4
+        ped_clear_s: 11
         red_clear: 5
+        red_clear_s: 12
         walk: 6
+        walk_s: 13
         yellow_change: 7
+        yellow_change_s: 14
     openits.signal_control.v1.TimingPlan:
         coordinated_phases: 5
         cycle_length: 2

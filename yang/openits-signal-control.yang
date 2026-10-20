@@ -48,6 +48,13 @@ module openits-signal-control {
 
   openits-types:openits-version "0.20.0";
 
+  revision 2026-10-20 {
+    description
+      "Follow the nema-common phase-timing rename (min-green-s,
+       max-green-s, passage-s, yellow-change-s, red-clear-s, walk-s,
+       ped-clear-s) through the timing musts, split-minimum musts and
+       descriptions. Breaking: timing leaves are renamed.";
+  }
   revision 2026-10-17 {
     description
       "Report the cabinet monitor's read status, kind and read time;
@@ -790,17 +797,17 @@ module openits-signal-control {
         container config {
           description "Intended phase configuration.";
 
-          must "timing/yellow-change" {
+          must "timing/yellow-change-s" {
             error-message
-              "Every signalized phase requires a yellow-change interval "
+              "Every signalized phase requires a yellow-change-s interval "
             + "(MUTCD 11th ed. 4F.17: a yellow change shall follow every "
             + "green). Enforced on config, not the optional timing "
             + "container, so a phase that omits timing entirely still fails "
             + "(RFC 7950 section 7.5.1).";
           }
-          must "not(timing/walk > 0) or (timing/ped-clear and timing/ped-clear >= 1)" {
+          must "not(timing/walk-s > 0) or (timing/ped-clear-s and timing/ped-clear-s >= 1)" {
             error-message
-              "A phase serving a pedestrian walk (walk > 0) requires a "
+              "A phase serving a pedestrian walk (walk-s > 0) requires a "
             + "pedestrian clearance interval of at least 1 second "
             + "(MUTCD 2009 4E.06 / 11th ed. 4I.06).";
           }
@@ -858,7 +865,7 @@ module openits-signal-control {
             description
               "Pedestrian crossing distance for this phase's walk movement, used "
             + "to check ped-clearance sufficiency (a jurisdiction deviation may "
-            + "require ped-clear >= crossing-distance-m / walk-speed). Optional; "
+            + "require ped-clear-s >= crossing-distance-m / walk-speed). Optional; "
             + "absent when not surveyed.";
             reference "MUTCD 11th ed. 4I.06 (pedestrian clearance time).";
           }
@@ -892,9 +899,9 @@ module openits-signal-control {
                parameters. Present iff V/D is enabled on the phase.";
             reference "NTCIP 1202:2019 §5 (volume-density).";
 
-            must "not(min-gap) or not(../timing/passage) or min-gap <= ../timing/passage" {
+            must "not(min-gap) or not(../timing/passage-s) or min-gap <= ../timing/passage-s" {
               error-message
-                "The reducing gap floor (min-gap) must not exceed the passage "
+                "The reducing gap floor (min-gap) must not exceed the passage-s "
               + "time it decays from.";
             }
 
@@ -905,22 +912,22 @@ module openits-signal-control {
             }
             leaf max-initial   { type uint16; units "seconds"; description "Upper bound on the computed variable-initial interval."; }
             leaf time-before-reduction { type uint16; units "seconds"; description "Time after the phase turns green before gap reduction begins."; }
-            leaf time-to-reduce { type uint16; units "seconds"; description "Time over which the gap reduces from passage to min-gap."; }
+            leaf time-to-reduce { type uint16; units "seconds"; description "Time over which the gap reduces from passage-s to min-gap."; }
             leaf min-gap { type decimal64 { fraction-digits 1; } units "seconds"; description "Floor the reducing gap decays to."; }
           }
 
-          must "not(max-green-2) or timing/max-green" {
+          must "not(max-green-2) or timing/max-green-s" {
             error-message
               "max-green-2 (dynamic / second maximum green) is meaningful only "
-            + "when a primary max-green is also configured. It is NOT required "
-            + "to be >= max-green: MAX-2 is an independent alternate maximum and "
+            + "when a primary max-green-s is also configured. It is NOT required "
+            + "to be >= max-green-s: MAX-2 is an independent alternate maximum and "
             + "is routinely lower than MAX-1 for off-peak operation.";
           }
           must "not(options/ped-recall = 'true' or options/rest-in-walk = 'true') "
-             + "or timing/walk > 0" {
+             + "or timing/walk-s > 0" {
             error-message
               "A phase with pedestrian recall or rest-in-walk must serve a pedestrian "
-            + "movement (walk > 0).";
+            + "movement (walk-s > 0).";
           }
         }
         container state {
@@ -1379,24 +1386,24 @@ module openits-signal-control {
           description "One entry per phase in this plan, naming its split time.";
 
           must "split-seconds >= "
-             + "sum(deref(phase-number)/../config/timing/min-green) "
-             + "+ sum(deref(phase-number)/../config/timing/yellow-change) "
-             + "+ sum(deref(phase-number)/../config/timing/red-clear)" {
+             + "sum(deref(phase-number)/../config/timing/min-green-s) "
+             + "+ sum(deref(phase-number)/../config/timing/yellow-change-s) "
+             + "+ sum(deref(phase-number)/../config/timing/red-clear-s)" {
             error-message
-              "A phase split must be at least min-green + yellow-change + "
-            + "red-clear (its vehicle minimum service time); a shorter split "
+              "A phase split must be at least min-green-s + yellow-change-s + "
+            + "red-clear-s (its vehicle minimum service time); a shorter split "
             + "forces a split failure.";
           }
           must "not(deref(phase-number)/../config/options"
              + "        [ped-recall = 'true' or rest-in-walk = 'true']) "
              + "or split-seconds >= "
-             + "     sum(deref(phase-number)/../config/timing/walk) "
-             + "   + sum(deref(phase-number)/../config/timing/ped-clear) "
-             + "   + sum(deref(phase-number)/../config/timing/yellow-change) "
-             + "   + sum(deref(phase-number)/../config/timing/red-clear)" {
+             + "     sum(deref(phase-number)/../config/timing/walk-s) "
+             + "   + sum(deref(phase-number)/../config/timing/ped-clear-s) "
+             + "   + sum(deref(phase-number)/../config/timing/yellow-change-s) "
+             + "   + sum(deref(phase-number)/../config/timing/red-clear-s)" {
             error-message
               "A phase that runs a pedestrian recall or rests in walk must have "
-            + "a split of at least walk + ped-clear + yellow-change + red-clear "
+            + "a split of at least walk-s + ped-clear-s + yellow-change-s + red-clear-s "
             + "(its pedestrian minimum service time). Walk/FDW time concurrently "
             + "with green, so this is a separate max() operand, NOT added on top "
             + "of the vehicle minimum.";

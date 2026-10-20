@@ -32,7 +32,7 @@ func TestPhaseTiming_YellowChangeMinimum(t *T, obs *Observation) {
 		if p.GetConfig().GetTiming() == nil {
 			continue
 		}
-		y := p.GetConfig().GetTiming().GetYellowChange()
+		y := p.GetConfig().GetTiming().GetYellowChangeS()
 		if y < MinYellowChange {
 			t.Errorf("phase %d yellow-change %.2fs < MUTCD minimum %.2fs", n, y, MinYellowChange)
 		}
@@ -48,7 +48,7 @@ func TestPhaseTiming_RedClearNonNegative(t *T, obs *Observation) {
 		if p.GetConfig().GetTiming() == nil {
 			continue
 		}
-		r := p.GetConfig().GetTiming().GetRedClear()
+		r := p.GetConfig().GetTiming().GetRedClearS()
 		if r < 0 {
 			t.Errorf("phase %d red-clear %.2fs is negative", n, r)
 		}
@@ -64,7 +64,7 @@ func TestPhaseTiming_MinGreenMinimum(t *T, obs *Observation) {
 		if p.GetConfig().GetTiming() == nil {
 			continue
 		}
-		g := int(p.GetConfig().GetTiming().GetMinGreen())
+		g := int(p.GetConfig().GetTiming().GetMinGreenS())
 		if g < MinGreenMinimum {
 			t.Errorf("phase %d min-green %ds < operational floor %ds", n, g, MinGreenMinimum)
 		}
@@ -80,7 +80,7 @@ func TestPhaseTiming_MaxGreenSane(t *T, obs *Observation) {
 		if p.GetConfig().GetTiming() == nil {
 			continue
 		}
-		g := int(p.GetConfig().GetTiming().GetMaxGreen())
+		g := int(p.GetConfig().GetTiming().GetMaxGreenS())
 		if g > MaxGreenSaneHi {
 			t.Errorf("phase %d max-green %ds exceeds %ds (almost certainly misconfigured)", n, g, MaxGreenSaneHi)
 		}
@@ -99,7 +99,7 @@ func TestPhaseTiming_PedClearSane(t *T, obs *Observation) {
 		if p.GetConfig().GetTiming() == nil {
 			continue
 		}
-		c := int(p.GetConfig().GetTiming().GetPedClear())
+		c := int(p.GetConfig().GetTiming().GetPedClearS())
 		if c > PedClearSaneHi {
 			t.Errorf("phase %d ped-clear %ds exceeds %ds", n, c, PedClearSaneHi)
 		}

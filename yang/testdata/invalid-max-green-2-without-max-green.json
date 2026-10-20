@@ -13,9 +13,9 @@
             "ring": 1,
             "barrier": 1,
             "timing": {
-              "min-green": "5.0",
-              "yellow-change": "3.5",
-              "red-clear": "1.5"
+              "min-green-s": "5.0",
+              "yellow-change-s": "3.5",
+              "red-clear-s": "1.5"
             },
             "max-green-2": "30.0"
           }
