@@ -9,7 +9,8 @@ name: CI
 #     conformance gates; the yang gates still run because several of them
 #     read docs/ and *.md (check-ce-id-vectors, check-conventions references,
 #     check-naming).
-#   * The release-please PR (CHANGELOG.md + manifest only) skips every gate.
+#   * The release-please PR (CHANGELOG.md + manifest only, opened in this
+#     repo by github-actions[bot]) skips every gate; see `changes`.
 #   * Gates are grouped into four jobs: go, buf, yang, conformance.
 #   * `ci-ok` always runs and fails unless every gate passed or was skipped
 #     on purpose. It is the single required status check, so skipped gates
@@ -63,11 +64,43 @@ jobs:
   # PR-authored code. On a PR, the checkout is the merge commit, so HEAD^1 is
   # the base tip and `git diff HEAD^1 HEAD` is exactly the PR's change.
   # Outside a PR (push, workflow_dispatch) everything counts as code.
+  #
+  # Outputs:
+  #   code=false     docs-only PR: go, buf and conformance skip. Docs-only
+  #                  means every changed path is under docs/ or .claude/, or
+  #                  is a top-level *.md. Every gate that reads such files is
+  #                  in the `yang` job, which still runs on docs-only PRs:
+  #                    - tools/check-ce-id-vectors reads docs/ce-id-spec.md
+  #                    - tools/check-conventions (references.go) fails a YANG
+  #                      `reference` that names a missing docs/... or *.md
+  #                    - scripts/check-naming.sh greps the whole tree,
+  #                      docs/, .claude/ and *.md included
+  #                  No go test, check-gen generator, buf input or
+  #                  conformance test reads docs/, .claude/ or a *.md file
+  #                  (they only mention them in comments and messages), so
+  #                  skipping those three jobs skips nothing that reads them.
+  #                  If a new gate or test reads one of these paths, either
+  #                  run it in `yang` or remove the path from the regex.
+  #   release=true   the release-please PR: every gate skips. This needs ALL
+  #                  three conditions. The diff alone would let a human PR
+  #                  that edits only these two files skip the gates. The
+  #                  author alone would not prove what the PR changes. A fork
+  #                  can set its own branch name and file list but cannot
+  #                  open a PR from this repository as github-actions[bot].
+  #                    (a) the diff is non-empty and only CHANGELOG.md and/or
+  #                        .release-please-manifest.json
+  #                    (b) the head repository is this repository (no fork)
+  #                    (c) the PR author is github-actions[bot]
+  #                  scripts/check-naming.sh also scans CHANGELOG.md. That
+  #                  text is release-please's rendering of commits already
+  #                  on main, so skipping it on the release PR is accepted.
+  #                  Any PR that fails a condition runs the full gates.
   changes:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     outputs:
       code: ${{ steps.filter.outputs.code }}
+      release: ${{ steps.filter.outputs.release }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         if: github.event_name == 'pull_request'
@@ -77,24 +110,35 @@ jobs:
       - id: filter
         env:
           EVENT_NAME: ${{ github.event_name }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          THIS_REPO: ${{ github.repository }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
         run: |
           set -euo pipefail
           if [ "$EVENT_NAME" != "pull_request" ]; then
             echo "code=true" >> "$GITHUB_OUTPUT"
+            echo "release=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           files="$(git diff --name-only HEAD^1 HEAD)"
           echo "Changed files:"
           printf '%s\n' "$files"
-          # Docs-only means every changed path is under docs/ or .claude/, or
-          # is a top-level *.md. An empty diff counts as code (safe default).
+          # An empty diff counts as code and not as a release (safe default).
           code=true
           if [ -n "$files" ] && ! printf '%s\n' "$files" \
               | grep -Ev '^(docs/|\.claude/)|^[^/]+\.md$' >/dev/null; then
             code=false
           fi
-          echo "code=${code}"
+          release=false
+          if [ -n "$files" ] && ! printf '%s\n' "$files" \
+              | grep -Evx 'CHANGELOG\.md|\.release-please-manifest\.json' >/dev/null \
+              && [ "$HEAD_REPO" = "$THIS_REPO" ] \
+              && [ "$PR_AUTHOR" = "github-actions[bot]" ]; then
+            release=true
+          fi
+          echo "code=${code} release=${release}"
           echo "code=${code}" >> "$GITHUB_OUTPUT"
+          echo "release=${release}" >> "$GITHUB_OUTPUT"
 
   # go build / vet / unit tests for every tool and generated package, the
   # Python helper-script tests, then the freshness gate: regenerate every
@@ -103,7 +147,7 @@ jobs:
   # build/vet/test smoke runs.
   go:
     needs: changes
-    if: needs.changes.outputs.code == 'true' && github.head_ref != 'release-please--branches--main'
+    if: needs.changes.outputs.code == 'true' && needs.changes.outputs.release != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -165,7 +209,7 @@ jobs:
   # branch from a private repo. Do not add PR-authored build/test steps here.
   buf:
     needs: changes
-    if: github.event_name != 'push' && needs.changes.outputs.code == 'true' && github.head_ref != 'release-please--branches--main'
+    if: github.event_name != 'push' && needs.changes.outputs.code == 'true' && needs.changes.outputs.release != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -195,10 +239,12 @@ jobs:
   # YANG gates: governance / layering / naming checks (Go + bash), pyang
   # --strict structural lint, and golden instance data validated against the
   # modules with yanglint (libyang) in Docker — Docker is preinstalled on
-  # ubuntu runners. Runs on docs-only PRs too: several checks read docs/.
+  # ubuntu runners. Runs on docs-only PRs too: check-ce-id-vectors,
+  # check-conventions and check-naming read docs/, .claude/ and *.md (see
+  # `changes`).
   yang:
     needs: changes
-    if: github.event_name != 'push' && github.head_ref != 'release-please--branches--main'
+    if: github.event_name != 'push' && needs.changes.outputs.release != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -272,7 +318,7 @@ jobs:
   # if any did.
   conformance:
     needs: changes
-    if: github.event_name != 'push' && needs.changes.outputs.code == 'true' && github.head_ref != 'release-please--branches--main'
+    if: github.event_name != 'push' && needs.changes.outputs.code == 'true' && needs.changes.outputs.release != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
