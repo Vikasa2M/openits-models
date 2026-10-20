@@ -97,7 +97,14 @@ Example: `feat(dms): add travel-time route table augment`.
 - **Don't hand-edit `CHANGELOG.md`** — release-please regenerates it from commit
   messages. Write a good commit subject instead. See
   [`docs/versioning.md`](docs/versioning.md).
-- Ensure every CI job is green before requesting review.
+- Ensure CI is green before requesting review. The required check is
+  **`ci-ok`**: it rolls up the gate jobs `go` (build, vet, tests,
+  `test-scripts`, `check-gen`), `buf` (`proto-lint` + `proto-breaking`),
+  `yang` (governance checks, `yang-lint`, `validate-yang`) and `conformance`
+  (every kind), and fails if any of them failed. A docs-only PR (only
+  `docs/`, `.claude/` or top-level `*.md`) skips `go`, `buf` and
+  `conformance` but still runs `yang`, because several YANG checks read the
+  docs; the release-please PR skips every gate.
 
 ## AI-assisted contributions
 

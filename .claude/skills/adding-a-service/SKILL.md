@@ -41,8 +41,9 @@ Missing any of these is the classic new-service failure mode:
 5. **Conformance kind** — register the kind + per-kind checks under
    `tools/conformance/` (follow an existing `tests/<service>.go`), give
    the mock driver device data for it.
-6. **CI matrix** — add the kind to the `conformance` job matrix in
-   `.github/workflows/ci.yml`.
+6. **Conformance kind list** — add the kind to `CONFORMANCE_KINDS` in the
+   `Makefile`; CI's `conformance` job runs `make conformance`, so that one
+   list covers both.
 
 ## 3. Model the device neutrally
 
@@ -72,4 +73,4 @@ make check-graduation        # coverage/maturity gate
 ```
 
 The PR should land the trio + generated artifacts + fixtures + conformance
-checks + CI matrix entry as one reviewable unit, commit type `feat:`.
+checks + `CONFORMANCE_KINDS` entry as one reviewable unit, commit type `feat:`.

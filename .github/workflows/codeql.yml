@@ -1,0 +1,65 @@
+name: CodeQL
+
+# CodeQL advanced setup (replaces the repository's default setup).
+#
+#   * Pull requests: Go only — the language where a PR can introduce a
+#     finding worth blocking on.
+#   * Weekly schedule (on the default branch): full scan of Go and the
+#     GitHub Actions workflows. This also refreshes the default-branch
+#     baseline that PR results are compared against, so there is no
+#     per-push scan of main.
+#   * Python is not analyzed: it covers only a few small helper scripts
+#     under scripts/.
+#
+# Same posture as ci.yml: `pull_request`, never `pull_request_target`; no
+# secrets; actions pinned to full commit SHAs; checkout without persisted
+# credentials. Only `security-events: write` is elevated, to upload results.
+
+on:
+  pull_request:
+    # Docs-only PRs have no Go to scan. Safe here because CodeQL is not a
+    # required status check; if a code-scanning merge rule is ever added to
+    # the main ruleset, drop this filter or such PRs will wait on it.
+    paths-ignore:
+      - "docs/**"
+      - "**/*.md"
+  schedule:
+    - cron: "17 6 * * 1" # Mondays 06:17 UTC
+  workflow_dispatch:
+
+concurrency:
+  group: codeql-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    name: analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+    strategy:
+      fail-fast: false
+      matrix:
+        # PRs scan Go only; the schedule and manual runs add `actions`.
+        language: ${{ fromJSON(github.event_name == 'pull_request' && '["go"]' || '["go","actions"]') }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        if: matrix.language == 'go'
+        with:
+          go-version-file: go.mod
+      - uses: github/codeql-action/init@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.language == 'go' && 'autobuild' || 'none' }}
+      - uses: github/codeql-action/analyze@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
+        with:
+          category: /language:${{ matrix.language }}

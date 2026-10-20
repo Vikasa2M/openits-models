@@ -5,18 +5,23 @@ description: How to run and interpret this repo's CI gates locally — check-gen
 
 # Running and interpreting the CI gates
 
-Every CI job mirrors a Make target, so any red job reproduces locally.
-Run the full gate with the targets below; `make all` covers most of it.
+Every CI job mirrors Make targets, so any red job reproduces locally.
+Run the full gate with `make ci` (`make all` only regenerates; it checks
+nothing).
 
 | CI job | Local command | What it proves |
 |---|---|---|
-| go-test | `go build ./... && go vet ./... && go test ./...` | tools + generated Go compile and pass tests |
-| check-gen | `make check-gen` | committed generated artifacts match a fresh regen |
+| go | `go build ./... && go vet ./... && go test ./...`, `make test-scripts`, `make check-gen` | tools + generated Go compile and pass tests; committed generated artifacts match a fresh regen |
 | buf | `buf lint` + `buf breaking --against .git#ref=<main-sha>` | proto style + no wire-breaking change vs main |
-| yang-checks | `make check-revisions check-naming check-enum-values check-deviations check-augment-collisions check-events-layering check-conventions check-mode-kinds check-revision-history validate-noi check-graduation` | governance: revisions, naming, enum values, layering, deviations |
-| validate-yang | `make validate-yang` | every fixture in `yang/testdata/` gets its expected verdict from yanglint |
-| yang-lint | `make yang-lint` | pyang --strict structural lint |
-| conformance (×9) | `go run ./tools/conformance -driver mock -kind <kind>` | mock device satisfies the per-kind behavioral checks |
+| yang | `make check-revisions check-naming check-enum-values check-inline-enums check-deviations check-augment-collisions check-events-layering check-conventions check-mode-kinds check-revision-history check-ce-id-vectors validate-noi check-graduation`, `make yang-lint`, `make validate-yang` | governance (revisions, naming, enum values, layering, deviations); pyang --strict lint; every fixture in `yang/testdata/` gets its expected verdict from yanglint |
+| conformance | `make conformance` (one kind: `go run ./tools/conformance -driver mock -kind <kind>`) | mock device satisfies the per-kind behavioral checks, every kind, fail-slow |
+| ci-ok | — | the single required check: fails if any job above failed |
+
+Inside the `go` and `yang` jobs, read the failing **step**: steps for
+`check-gen`, `yang-lint` and `validate-yang` still run after an earlier
+step fails, so one job can show more than one red step. A docs-only PR
+skips `go`, `buf` and `conformance` (shown as skipped, which `ci-ok`
+accepts); `yang` still runs because several checks read `docs/`.
 
 Conformance kinds: `asc`, `rsu`, `dms`, `ess`, `ramp-metering`,
 `traffic-sensor`, `reversible-lane`, `perception`, `cctv`.

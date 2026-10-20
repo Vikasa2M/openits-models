@@ -28,7 +28,7 @@ gen: yang-proto-gen proto yang-go asyncapi catalog
 
 # The full local gate: every check CI runs, in one command.
 #
-# CI runs these as separate jobs so they parallelize and report
+# CI groups these into a few jobs so they parallelize and report
 # independently, which means this list and the job list in
 # .github/workflows/ci.yml are two copies of one fact. Add a gate to both,
 # or a check that runs in CI will pass silently here.
@@ -37,16 +37,16 @@ gen: yang-proto-gen proto yang-go asyncapi catalog
 # of this target covered only the four YANG-shaped jobs, so a branch that
 # added a service to tools/yang-proto-gen broke `go test ./...` and still
 # came back green from every local gate; CI caught it. Hence the mapping
-# below: each of CI's seven jobs, and what covers it here.
+# below: each of CI's gate jobs, and what covers it here. (CI's other two
+# jobs gate nothing themselves: `changes` decides which gates a PR needs,
+# and `ci-ok` is the single required check that rolls the gates up.)
 #
 #   ci.yml job        covered by
 #   ----------------  ------------------------------------------------
-#   go-test           build-tools, vet, test
-#   check-gen         check-gen
+#   go                build-tools, vet, test, test-scripts, check-gen
 #   buf               proto-lint, proto-breaking
-#   yang-checks       check-revisions ... check-graduation
-#   validate-yang     validate-yang
-#   yang-lint         yang-lint
+#   yang              check-revisions ... check-graduation, yang-lint,
+#                     validate-yang
 #   conformance       conformance
 #
 # check-gen comes first: it regenerates and fails on drift, so every gate
@@ -61,7 +61,7 @@ gen: yang-proto-gen proto yang-go asyncapi catalog
 # The buf targets announce and skip when buf is not installed, rather than
 # failing. That is a visible line in the output, not a silent pass, but it
 # does mean a green `make ci` on a machine without buf has not run them.
-# proto-breaking runs LAST on purpose. GitHub runs these as seven independent
+# proto-breaking runs LAST on purpose. GitHub runs these as independent
 # jobs, so a red buf job there still lets conformance and the YANG gates report;
 # make aborts on the first failing prerequisite, so listing proto-breaking mid-way
 # meant a deliberate pre-1.0 wire break stopped the local run before conformance
@@ -210,23 +210,30 @@ yang-lint:
 			yang/*.yang yang/augments/*.yang yang/deviations/*.yang; \
 	else echo "pyang not installed; skipping yang-lint"; fi
 
-# Conformance harness against the built-in mock device. CI runs one matrix
-# job per kind; locally they run in sequence. This list must match the
-# matrix in .github/workflows/ci.yml.
+# Conformance harness against the built-in mock device, every kind in
+# sequence. This list is the single source of truth: CI's `conformance` job
+# runs this target, so a new kind only needs adding here. The harness is
+# compiled once, then every kind runs even after one fails (fail-slow), and
+# the target exits non-zero if any kind failed.
 CONFORMANCE_KINDS := asc rsu dms ess ramp-metering traffic-sensor \
 	reversible-lane perception cctv
 
 conformance:
-	@set -e; for kind in $(CONFORMANCE_KINDS); do \
+	@set -e; tmp="$$(mktemp -d)"; trap 'rm -rf "$$tmp"' EXIT; \
+	bin="$$tmp/conformance$$($(GOCMD) env GOEXE)"; \
+	$(GOCMD) build -o "$$bin" ./tools/conformance; \
+	failed=""; \
+	for kind in $(CONFORMANCE_KINDS); do \
 		echo "== conformance: $$kind"; \
-		$(GOCMD) run ./tools/conformance -driver mock -kind "$$kind"; \
-	done
+		"$$bin" -driver mock -kind "$$kind" || failed="$$failed $$kind"; \
+	done; \
+	if [ -n "$$failed" ]; then echo "conformance FAILED for:$$failed"; exit 1; fi
 
 # --- Go housekeeping ---------------------------------------------------------
 vet:
 	$(GOCMD) vet ./...
 
-# Unit tests for every tool and generated package — CI's `go-test` job runs
+# Unit tests for every tool and generated package — CI's `go` job runs
 # this alongside build-tools and vet. The tools under tools/ carry real
 # assertions about the model (the service catalog is pinned in one of them),
 # so this is a model gate, not just Go housekeeping.
