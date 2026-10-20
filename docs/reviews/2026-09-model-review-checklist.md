@@ -1,5 +1,7 @@
 # Model review checklist (2026-09-07, tree at `ea197bd`)
 
+Names in this checklist reflect the model before v0.8.0; see docs/migration/v0.8.0.md for renames.
+
 Working list from the full-tree review. Check items off as they land.
 
 **How to read it**

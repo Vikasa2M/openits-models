@@ -20,19 +20,23 @@ protos and are not touched by generation.
 
 ## Before you open a PR
 
-Run the full gate locally — these are exactly the jobs CI enforces:
+Run the full gate locally with one command. It mirrors CI and runs the
+`ci` target: `check-gen`, build, vet and tests (`go test ./...`),
+`test-scripts`, `validate-yang` (Docker), `yang-lint`, `check-revisions`,
+`check-naming`, `check-enum-values`, `check-inline-enums`,
+`check-deviations`, `check-augment-collisions`, `check-events-layering`,
+`check-conventions`, `check-mode-kinds`, `check-revision-history`,
+`check-ce-id-vectors`, `validate-noi`, `check-graduation`, `proto-lint`,
+`conformance` (every kind) and `proto-breaking`.
 
 ```
-make check-gen                       # freshness (needs protoc, protoc-gen-go, ygot)
-go build ./... && go vet ./... && go test ./...
-buf lint                             # protobuf lint
-make check-revisions check-naming    # revision bumps + naming discipline
-make check-deviations check-augment-collisions check-events-layering
-make validate-noi check-graduation   # notice-of-intent + graduation
-make validate-yang                   # golden instance data vs. schema (Docker)
-make yang-lint                       # pyang --strict (optional; needs pyang)
+make ci
+```
 
-# conformance, per kind:
+Run it on a committed tree: `check-gen` diffs the whole worktree, so
+uncommitted edits fail it. To run one conformance kind:
+
+```
 go run ./tools/conformance -driver mock -kind asc
 ```
 
@@ -52,6 +56,10 @@ See the [`Makefile`](Makefile) for every target and the
 
 - **Revision bumps.** Changing a module's content requires bumping its
   `revision` date. See [`docs/versioning.md`](docs/versioning.md).
+- **Revision history is immutable.** A `revision` statement that is on
+  `main` is never edited; add a new one (`make check-revision-history`).
+- **Mode values.** A `mode-changed` value derives from its family's
+  `mode-value-base` (`make check-mode-kinds`).
 - **Wire compatibility.** Extend protos by appending fields/messages/enums;
   never renumber or reuse field numbers. `buf breaking` runs against `main`.
 - **Naming.** No legacy ce-type / URN / subject forms (`make check-naming`).
