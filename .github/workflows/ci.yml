@@ -1,7 +1,23 @@
 name: CI
 
-# Full release gate. Every job mirrors a Make target that already exists in
+# Full release gate. Every job mirrors Make targets that already exist in
 # the repo, so `make <target>` locally reproduces exactly what CI enforces.
+#
+# Shape (sized to keep counted Actions minutes low; GitHub rounds every job
+# up to a whole minute):
+#   * `changes` decides what a PR needs. A docs-only PR skips the go, buf and
+#     conformance gates; the yang gates still run because several of them
+#     read docs/ and *.md (check-ce-id-vectors, check-conventions references,
+#     check-naming).
+#   * The release-please PR (CHANGELOG.md + manifest only) skips every gate.
+#   * Gates are grouped into four jobs: go, buf, yang, conformance.
+#   * `ci-ok` always runs and fails unless every gate passed or was skipped
+#     on purpose. It is the single required status check, so skipped gates
+#     never leave a required check hanging at "Expected" (which plain
+#     `paths-ignore:` would).
+#   * A push to main runs only a go build/vet/test smoke: the full gate
+#     already passed on the PR. The tag-time re-verify in release.yml covers
+#     only manual tag pushes, so this smoke is the post-merge check.
 #
 # Security posture (public-repo + fork PR threat model):
 #   * Trigger is `pull_request`, never `pull_request_target` — fork PRs run
@@ -37,13 +53,59 @@ env:
   PROTOC_SHA256: "3e866620c5be27664f3d2fa2d656b5f3e09b5152b42f1bedbf427b333e90021a"
   PROTOC_GEN_GO_VERSION: "v1.36.11"
   YGOT_GENERATOR_VERSION: "v0.34.0"
-  BUF_VERSION: "v1.50.0"
+  BUF_VERSION: "1.50.0"
+  # SHA256 of buf-Linux-x86_64 from the v${BUF_VERSION} release (matches the
+  # release's sha256.txt).
+  BUF_SHA256: "154ea883ce098eac4fa106ff9ee4e4964bb97f809dd8ec9c34a432b466ce1494"
 
 jobs:
-  # go build / vet / unit tests for every tool and generated package.
-  go-test:
+  # Decides which gates this run needs. Only reads the file list; it runs no
+  # PR-authored code. On a PR, the checkout is the merge commit, so HEAD^1 is
+  # the base tip and `git diff HEAD^1 HEAD` is exactly the PR's change.
+  # Outside a PR (push, workflow_dispatch) everything counts as code.
+  changes:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 5
+    outputs:
+      code: ${{ steps.filter.outputs.code }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: github.event_name == 'pull_request'
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - id: filter
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT_NAME" != "pull_request" ]; then
+            echo "code=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          files="$(git diff --name-only HEAD^1 HEAD)"
+          echo "Changed files:"
+          printf '%s\n' "$files"
+          # Docs-only means every changed path is under docs/ or .claude/, or
+          # is a top-level *.md. An empty diff counts as code (safe default).
+          code=true
+          if [ -n "$files" ] && ! printf '%s\n' "$files" \
+              | grep -Ev '^(docs/|\.claude/)|^[^/]+\.md$' >/dev/null; then
+            code=false
+          fi
+          echo "code=${code}"
+          echo "code=${code}" >> "$GITHUB_OUTPUT"
+
+  # go build / vet / unit tests for every tool and generated package, the
+  # Python helper-script tests, then the freshness gate: regenerate every
+  # artifact (yang->proto->Go, yang->ygot, yang->asyncapi) and fail if the
+  # working tree drifts from what's committed. On a push to main only the
+  # build/vet/test smoke runs.
+  go:
+    needs: changes
+    if: needs.changes.outputs.code == 'true' && github.head_ref != 'release-please--branches--main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -55,20 +117,10 @@ jobs:
       - run: go vet ./...
       - run: go test ./...
       - run: make test-scripts
-
-  # Freshness gate: regenerate every artifact (yang->proto->Go, yang->ygot,
-  # yang->asyncapi) and fail if the working tree drifts from what's committed.
-  check-gen:
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
-        with:
-          go-version-file: go.mod
+      # check-gen. `!cancelled()` lets it report even when a step above
+      # failed, as it did when it was a job of its own.
       - name: Install protoc (version + SHA256 pinned)
+        if: ${{ !cancelled() && github.event_name != 'push' }}
         run: |
           set -euo pipefail
           curl -sSL -o /tmp/protoc.zip \
@@ -76,35 +128,56 @@ jobs:
           echo "${PROTOC_SHA256}  /tmp/protoc.zip" | sha256sum -c -
           sudo unzip -oq /tmp/protoc.zip -d /usr/local
           protoc --version
+      - name: Locate GOPATH/bin
+        id: gobin
+        if: ${{ !cancelled() && github.event_name != 'push' }}
+        run: echo "dir=$(go env GOPATH)/bin" >> "$GITHUB_OUTPUT"
+      # Keyed on the pinned generator versions, so a version bump misses the
+      # cache and reinstalls through the Go checksum DB.
+      - name: Cache generators
+        id: gen-cache
+        if: ${{ !cancelled() && github.event_name != 'push' }}
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.gobin.outputs.dir }}
+          key: gobin-${{ runner.os }}-${{ runner.arch }}-protoc-gen-go-${{ env.PROTOC_GEN_GO_VERSION }}-ygot-${{ env.YGOT_GENERATOR_VERSION }}
       - name: Install generators (pinned; verified by Go checksum DB)
+        if: ${{ !cancelled() && github.event_name != 'push' && steps.gen-cache.outputs.cache-hit != 'true' }}
         run: |
           set -euo pipefail
           go install "google.golang.org/protobuf/cmd/protoc-gen-go@${PROTOC_GEN_GO_VERSION}"
           go install "github.com/openconfig/ygot/generator@${YGOT_GENERATOR_VERSION}"
-          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+      - name: Add generators to PATH
+        if: ${{ !cancelled() && github.event_name != 'push' }}
+        env:
+          GOBIN_DIR: ${{ steps.gobin.outputs.dir }}
+        run: echo "$GOBIN_DIR" >> "$GITHUB_PATH"
       - name: make check-gen (regenerate + assert no drift)
+        if: ${{ !cancelled() && github.event_name != 'push' }}
         run: make check-gen
       - name: Show drift on failure
-        if: failure()
+        if: failure() && github.event_name != 'push'
         run: git --no-pager diff --stat
 
   # Protobuf wire-contract gates. This job does NOT execute PR-authored code
-  # (buf only parses .proto files; go installs a pinned, checksum-verified
-  # buf), so it keeps the checkout credentials it needs to fetch the base
+  # (buf only parses .proto files; buf is a pinned release binary verified by
+  # SHA256), so it keeps the checkout credentials it needs to fetch the base
   # branch from a private repo. Do not add PR-authored build/test steps here.
   buf:
+    needs: changes
+    if: github.event_name != 'push' && needs.changes.outputs.code == 'true' && github.head_ref != 'release-please--branches--main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
-        with:
-          go-version-file: go.mod
-      - name: Install buf (pinned; verified by Go checksum DB)
+      - name: Install buf (version + SHA256 pinned)
         run: |
           set -euo pipefail
-          go install "github.com/bufbuild/buf/cmd/buf@${BUF_VERSION}"
-          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+          curl -sSL -o /tmp/buf \
+            "https://github.com/bufbuild/buf/releases/download/v${BUF_VERSION}/buf-Linux-x86_64"
+          echo "${BUF_SHA256}  /tmp/buf" | sha256sum -c -
+          sudo install -m 0755 /tmp/buf /usr/local/bin/buf
+          buf --version
       - name: buf lint
         run: buf lint
       - name: buf breaking (vs main)
@@ -119,10 +192,15 @@ jobs:
           echo "Comparing against main @ ${BASE_SHA}"
           buf breaking --against ".git#ref=${BASE_SHA}"
 
-  # YANG governance / layering / naming gates (Go + bash, no external deps).
-  yang-checks:
+  # YANG gates: governance / layering / naming checks (Go + bash), pyang
+  # --strict structural lint, and golden instance data validated against the
+  # modules with yanglint (libyang) in Docker — Docker is preinstalled on
+  # ubuntu runners. Runs on docs-only PRs too: several checks read docs/.
+  yang:
+    needs: changes
+    if: github.event_name != 'push' && github.head_ref != 'release-please--branches--main'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       # fetch-depth 0 brings the base branch in during checkout, while the
       # token is still held; this job runs PR-authored code, so it must not
@@ -169,49 +247,34 @@ jobs:
       - run: make check-ce-id-vectors
       - run: make validate-noi
       - run: make check-graduation
-
-  # Golden YANG instance data validated against the modules with yanglint
-  # (libyang) in Docker — Docker is preinstalled on ubuntu runners.
-  validate-yang:
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - run: make validate-yang
-
-  # pyang --strict structural lint of every YANG module.
-  yang-lint:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
+      # yang-lint and validate-yang were jobs of their own; `!cancelled()`
+      # keeps them reporting even when a governance check above failed.
+      # pyang is unpinned as before; the pip cache is keyed on this file.
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        if: ${{ !cancelled() }}
         with:
           python-version: "3.12"
-      - run: pip install pyang
-      - run: make yang-lint
+          cache: pip
+          cache-dependency-path: .github/workflows/ci.yml
+      - name: make yang-lint (pyang --strict)
+        if: ${{ !cancelled() }}
+        run: |
+          set -euo pipefail
+          pip install pyang
+          make yang-lint
+      - name: make validate-yang (yanglint in Docker)
+        if: ${{ !cancelled() }}
+        run: make validate-yang
 
-  # Conformance harness against the built-in mock device, one job per kind.
+  # Conformance harness against the built-in mock device. `make conformance`
+  # compiles the harness once and runs every kind in CONFORMANCE_KINDS
+  # (Makefile, the single list) fail-slow: all kinds report, and the job fails
+  # if any did.
   conformance:
+    needs: changes
+    if: github.event_name != 'push' && needs.changes.outputs.code == 'true' && github.head_ref != 'release-please--branches--main'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    strategy:
-      fail-fast: false
-      matrix:
-        kind:
-          - asc
-          - rsu
-          - dms
-          - ess
-          - ramp-metering
-          - traffic-sensor
-          - reversible-lane
-          - perception
-          - cctv
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -219,8 +282,21 @@ jobs:
       - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version-file: go.mod
-      # matrix.kind is a fixed, in-repo list (not untrusted input); passed via
-      # env rather than inlined into the shell as a matter of hygiene.
+      - run: make conformance
+
+  # The single required status check. Always runs; fails if any gate failed
+  # or was cancelled. A gate skipped by design (docs-only PR, release-please
+  # PR, push to main) counts as passing.
+  ci-ok:
+    needs: [changes, go, buf, yang, conformance]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
       - env:
-          KIND: ${{ matrix.kind }}
-        run: go run ./tools/conformance -driver mock -kind "$KIND"
+          NEEDS: ${{ toJSON(needs) }}
+        run: |
+          set -euo pipefail
+          printf '%s' "$NEEDS" | jq -r 'to_entries[] | "\(.key): \(.value.result)"'
+          printf '%s' "$NEEDS" | jq -e \
+            'to_entries | all(.value.result == "success" or .value.result == "skipped")' >/dev/null

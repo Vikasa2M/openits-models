@@ -104,10 +104,12 @@ consumers depend on this module; this module depends on none of them.
   step-by-step release process.
 - [`CHANGELOG.md`](CHANGELOG.md) — notable changes per release.
 
-CI (`.github/workflows/ci.yml`) runs the full gate on every push and PR:
+CI (`.github/workflows/ci.yml`) runs the full gate on every pull request:
 generation freshness, `go build`/`vet`/`test`, `buf` lint + breaking-change
 detection, YANG governance checks, `yanglint` instance-data validation, and the
-conformance harness across all device kinds.
+conformance harness across all device kinds. A push to `main` runs a
+build/vet/test smoke. CodeQL (`.github/workflows/codeql.yml`) scans Go on pull
+requests and Go plus the workflows weekly.
 
 ## License
 

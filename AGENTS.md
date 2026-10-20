@@ -39,8 +39,9 @@ markdown. Read the matching one BEFORE starting:
 
 ## Quick commands
 
-- Full local gate: `make ci` (mirrors CI — all seven jobs, including
-  `go test ./...`, buf, and conformance); individual gates:
+- Full local gate: `make ci` (mirrors CI — every gate in the `go`, `buf`,
+  `yang` and `conformance` jobs, including `go test ./...`, buf, and
+  conformance; `ci-ok` is the single required check that rolls them up); individual gates:
   `make check-gen validate-yang yang-lint check-revisions check-naming`
 - `make all` only regenerates artifacts (`all: gen`). It runs no checks —
   do not mistake a green `make all` for a passing gate.
