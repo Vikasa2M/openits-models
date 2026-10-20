@@ -18,10 +18,13 @@ roadside infrastructure.
 | `signal-control` | NTCIP 1202 | Functional — OpenITS YANG describes the same conceptual model; SNMP OIDs are mapped at translation time. |
 | `dms`            | NTCIP 1203 | Functional — same pattern. |
 | `ess`            | NTCIP 1204 | Functional. |
-| `cctv`           | NTCIP 1205 | Functional (queued for the next service-package addition). |
+| `cctv`           | NTCIP 1205 | Functional. |
 | `ramp-metering`  | NTCIP 1207 | Functional. |
 | `parking`        | NTCIP 1208 | Reference (no OpenITS service yet; future augment territory). |
-| `rsu`            | NTCIP 1218 | Functional, with SAE J2735 message types as broadcast payloads. |
+| `rsu`            | NTCIP 1218, NTCIP 1211 | Functional, with SAE J2735 message types as broadcast payloads; signal request / priority handling follows NTCIP 1211. |
+| `traffic-sensor` | NTCIP 1209 | Functional. |
+| `perception`     | — | No NTCIP object set for video incident detection; the model is OpenITS-native, annotated against ARC-IT. |
+| `reversible-lane` | — | No NTCIP object set; modeled on MUTCD Chapter 4M lane-use control signals and ARC-IT TM16. |
 
 The relationship is **functional, not wire-compatible**. Devices
 still speak NTCIP MIBs over SNMP; the OpenITS poller handles
@@ -86,7 +89,15 @@ notifications and on container references where applicable. A
 coverage tool (`tools/arcit-coverage`) walks the YANG tree and
 produces a coverage report against the ARC-IT inventory; this is
 the artefact agencies use to demonstrate federal-architecture
-alignment in funding paperwork.
+alignment in funding paperwork. The inventory
+(`tools/arcit-coverage/arcit_inventory.json`) curates five service
+packages today — TI01 Traffic Signal Control, TI06 Traffic
+Information Dissemination, MC01 Environmental Monitoring Station,
+TI03 Traffic Metering and VS06 Infrastructure-Based Safety
+Broadcast — so annotations on the newer families (cctv, perception,
+traffic-sensor, reversible-lane, zone-occupancy, work-zone) and on
+the common events report as orphans until the inventory is
+extended.
 
 The annotation is informational. ARC-IT compliance is not a
 prerequisite for OpenITS conformance, and OpenITS conformance does

@@ -41,8 +41,9 @@ markdown. Read the matching one BEFORE starting:
 
 - Full local gate: `make ci` (mirrors CI — every gate in the `go`, `buf`,
   `yang` and `conformance` jobs, including `go test ./...`, buf, and
-  conformance; `ci-ok` is the single required check that rolls them up); individual gates:
-  `make check-gen validate-yang yang-lint check-revisions check-naming`
+  conformance; `ci-ok` is the single required check that rolls them up);
+  individual gates: `make check-gen validate-yang yang-lint
+  check-revisions check-revision-history check-mode-kinds check-naming`
 - `make all` only regenerates artifacts (`all: gen`). It runs no checks —
   do not mistake a green `make all` for a passing gate.
 - Run `make ci` on a COMMITTED tree: `check-gen` diffs the whole worktree,

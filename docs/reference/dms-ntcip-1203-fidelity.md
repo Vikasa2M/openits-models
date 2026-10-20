@@ -252,7 +252,8 @@ one controller's defects into a vendor-neutral standard.
 
 | Tier | Scope | Wire impact | Status |
 |---|---|---|---|
-| 1 | CRC width wording; memory-type ordinal clarification; missing fault identities; `illumination-control` manual sub-modes | Wire-neutral + additive | Applied |
+| 1 | CRC width wording; memory-type ordinal clarification; missing fault identities | Wire-neutral + additive | Applied |
+| — | `illumination-control` manual sub-modes (manualDirect / manualIndexed) | — | Won't fix (wire addressing, not a mode) |
 | 2 | `activation-trigger` leaf + three DMS-scoped trigger identities | Additive (one new field tag) | Applied |
 | 3 | Graphics inventory; `pixel-pitch-mm`; `cabinet-power` composition; validate/activate `phase` leaf | Additive | Applied |
 | 3b | Fallback reshape: `power-loss` → `power-recovery`/{`short-outage`,`long-outage`} + threshold, plus `reset` | Breaking (YANG path) | Applied |

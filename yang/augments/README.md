@@ -30,11 +30,13 @@ canonical example.
 - `<service>` — the core service being augmented (signal-control, dms, ...)
 - `<feature>` — short feature description
 
-Examples:
+In-tree examples:
 
-- `siemens-signal-control-vehicle-counts.yang`
-- `caltrans-signal-control-corridor-id.yang`
-- `econolite-dms-marquee-mode.yang`
+- `ledstar-dms-travel-time.yang`
+- `trafficvision-traffic-sensor-camera.yang`
+- `trafficvision-perception-incident-media.yang`
+- `example-signal-control-vehicle-counts.yang` (the pedagogical example,
+  namespace `urn:example:yang:signal-control-vehicle-counts`)
 
 ## Namespace
 
@@ -46,7 +48,10 @@ content, and worked examples the project maintains on a vendor's behalf
 before that vendor ratifies them. Those use
 `urn:openits:yang:vendor-<vendor>-<service>-<feature>` and name the OpenITS
 Working Group as `organization`, so the project never mints a namespace or
-claims authorship in a vendor's name.
+claims authorship in a vendor's name. Every vendor augment in this directory
+today is of that kind (for example
+`urn:openits:yang:vendor-ledstar-dms-travel-time`); the pedagogical example
+uses the `urn:example:` placeholder.
 
 ## What an augment must contain
 
@@ -75,16 +80,17 @@ claims authorship in a vendor's name.
 4. Submit a Notice of Implementation at
    `schema-registry/notices/<your-augment>/<your-org>.yaml` so your
    adoption appears in the graduation tracker
-5. Open a PR; the `augment` label requests one operator-aligned reviewer
-   per `GOVERNANCE.md`
+5. Open a PR; the maintainers team named in
+   [`.github/CODEOWNERS`](../../.github/CODEOWNERS) reviews it (see
+   [CONTRIBUTING.md](../../CONTRIBUTING.md))
 
 ## Graduation
 
 When ≥ 3 independent organisations submit NoIs against the same augment,
 and at least one of them is `implementer_type: operator`, the augment
 becomes eligible to be folded into the core module. Run
-`make check-graduation` to see eligibility status; the TSC reviews and
-votes per `GOVERNANCE.md`.
+`make check-graduation` to see eligibility status; the maintainers review
+the graduation PR (see [CONTRIBUTING.md](../../CONTRIBUTING.md)).
 
 See [`docs/06-extension-model.md`](../../docs/06-extension-model.md)
 for the full graduation rule.

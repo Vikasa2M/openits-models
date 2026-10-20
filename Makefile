@@ -1,6 +1,6 @@
 # openits-models — data-model layer (YANG, protobuf, AsyncAPI, schema-registry).
-# Extracted from the Vikasa monorepo. Regeneration tooling for the model
-# artifacts under pkg/ lives here; the collector consumes this as a Go module.
+# Regeneration tooling for the model artifacts lives here; downstream
+# components consume this repo as a Go module.
 
 GOCMD := go
 GOFMT := gofmt
@@ -61,8 +61,9 @@ gen: yang-proto-gen proto yang-go asyncapi catalog
 # The buf targets announce and skip when buf is not installed, rather than
 # failing. That is a visible line in the output, not a silent pass, but it
 # does mean a green `make ci` on a machine without buf has not run them.
-# proto-breaking runs LAST on purpose. GitHub runs these as independent
-# jobs, so a red buf job there still lets conformance and the YANG gates report;
+# proto-breaking runs LAST on purpose. GitHub runs these as grouped jobs
+# (go, buf, yang, conformance; rolled up by ci-ok), so a red buf job there
+# still lets conformance and the YANG gates report;
 # make aborts on the first failing prerequisite, so listing proto-breaking mid-way
 # meant a deliberate pre-1.0 wire break stopped the local run before conformance
 # ever executed — exactly when the change is riskiest and the harness matters most.

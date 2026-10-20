@@ -30,12 +30,15 @@ OpenConfig converged on ~30 focused modules (`openconfig-bgp`,
 |-------|---------|------|
 | Foundation | `openits-types` | Cross-service typedefs, the `device-event-kind` identity root, the `wire-source` provenance grouping, the `arc-it-flow` extension. |
 | Shared domain | `openits-nema-common` | NEMA-adjacent types shared by signal-control and ramp-metering: `phase-number`, `phase-timing` with engineering-floor `must`-constraints (jurisdiction bounds live in `yang/deviations/`). |
-| Service core | `openits-signal-control`, `openits-dms`, `openits-ess`, `openits-rsu`, `openits-ramp-metering`, `openits-perception`, `openits-traffic-sensor`, `openits-reversible-lane` | Per-service state tree: identity, configuration, operational status, faults. |
-| Service types | `openits-{signal-control,dms,ess,rsu,ramp-metering,perception,traffic-sensor,reversible-lane}-types` | Per-service event-kind identity hierarchies (plus, for signal-control, shared typedefs), importable without pulling in the service core. |
-| Event modules | `openits-signal-control-{phase,detector,overlap,pedestrian,preemption,coordination,tsp,tsam,raw}-events` | One module per behavioral concern, each ~50–180 lines, each with its own revision cycle. |
-| Cross-service events | `openits-common-{fault,mode,comm-health}-events` | Generic notifications (fault-raised / fault-cleared / mode-changed / …) that every service emits with a service-derived `kind` identity. The generation-1 per-service fault/mode notifications are deprecated in favor of these. |
-| Vendor identity modules | `openits-vendor-econolite-signal-control-types` | Vendor-derived identities filling open extension slots. See [Extension model](06-extension-model.md). |
-| Augments | `yang/augments/*` | Net-new nodes in contributor namespaces. |
+| Service core | `openits-signal-control`, `openits-dms`, `openits-ess`, `openits-rsu`, `openits-ramp-metering`, `openits-perception`, `openits-traffic-sensor`, `openits-reversible-lane`, `openits-cctv` | Per-service state tree: identity, configuration, operational status, faults. |
+| Service types | `openits-{signal-control,dms,ess,rsu,ramp-metering,perception,traffic-sensor,reversible-lane,cctv}-types` | Per-service event-kind identity hierarchies (plus, for signal-control, shared typedefs), importable without pulling in the service core. |
+| Capabilities | `openits-v2x-radio`, `openits-v2x-messaging`, `openits-scms`, `openits-vehicle-detection`, `openits-zone-occupancy`, `openits-device-diagnostics`, `openits-cabinet-power`, `openits-schedule` (plus `-types` companions where needed) | Reusable groupings a device profile composes with `uses` (radios, messaging, SCMS security, vehicle analytics, zone occupancy, platform diagnostics, cabinet power, time-of-day scheduling). See [Capability architecture](08-capability-architecture.md). |
+| Non-device domain | `openits-work-zone-types`, `openits-work-zone-events` | Work zones: an external fact about the roadway, reported as events, with no device state tree. |
+| Event modules | `openits-<service>-events` (for example `openits-signal-control-events`, `openits-dms-events`, `openits-zone-occupancy-events`) | One companion events module per service; behavioral concerns (phase, detector, overlap, preemption, TSP, …) are sections within it. |
+| Cross-service events | `openits-common-{fault,mode,comm-health}-events` | Generic notifications (fault-raised / fault-cleared / mode-changed / …) that every service emits with a service-derived `kind` identity. The generation-1 per-service fault/mode shims (for example `sign-fault-raised`, `ramp-meter-mode-changed`) have been removed in favor of these. |
+| Vendor identity modules | `openits-vendor-econolite-signal-control-types`, `openits-vendor-trafficvision-{perception,traffic-sensor}-types` | Vendor-derived identities filling open extension slots. See [Extension model](06-extension-model.md). |
+| Augments | `yang/augments/*` (for example `ledstar-dms-travel-time`, `trafficvision-traffic-sensor-camera`) | Net-new nodes in contributor namespaces. |
+| Deviations | `yang/deviations/*` (for example `openits-signal-control-mutcd`, `openits-rsu-us-band-plan`) | Jurisdiction profiles that tighten bounds on existing nodes. |
 
 Two structural rules keep the family healthy:
 
@@ -43,10 +46,13 @@ Two structural rules keep the family healthy:
   core (a ygot proto-backend constraint that turned out to be good
   hygiene anyway — the state tree and the event surface version
   independently).
-- **Per-concern event modules stay small.** Adding a TSP event never
-  forces a revision of the phase-event module. This is the opposite of
-  NTCIP's single-MIB-per-device shape, where every change rides one
-  monolithic document.
+- **One events companion module per service.** Each service's
+  notifications live in a single `openits-<service>-events` module, with
+  behavioral concerns kept as sections within it. Signal-control once
+  split its events into one module per concern; the modules versioned in
+  lockstep, so the split bought nothing and was collapsed into one
+  module (see [Design decisions](04-design-decisions.md)). The event
+  surface still versions independently of the state tree.
 
 ## The event taxonomy
 
@@ -253,7 +259,7 @@ The foundation module `openits-types` defines the shared vocabulary for
   values. A family's own unknown dual-bases on them. A bare
   `openits-types:mode-unknown` is therefore not a valid `mode-changed` value
   under a family kind; it is valid only through the family's own unknown
-  (today DMS and ramp metering define one).
+  (today signal-control, DMS and ramp metering define one).
 
 ### Comm-loss staleness
 
@@ -296,7 +302,7 @@ belongs to the subject's service is a conformance rule
 `derived-from-or-self(kind, 'openits-types:fault-event-kind')` filter spans
 every service. `fault-raised` also carries severity, description and
 `correlates-with`; `fault-cleared` carries only `kind`, the event header,
-`fault-id`, `first-observed` and `component`.
+`fault-id`, `first-observed`, `component` and `wire-source`.
 `first-observed` is mandatory. A fault about one
 sub-component carries the optional `component` reference
 (`component/component-class`, `component/component-id`, where the id is the
@@ -392,8 +398,11 @@ differs:
     "openits-common-fault-events:fault-raised": {
       "kind": "openits-signal-control-types:fault-power-failure",
       "source-device-id": "i35-exit-214",
+      "sequence-epoch": "boot-2026-04-28a",
+      "sequence": "1",
       "fault-id": "pwr-0182",
       "severity": "major",
+      "first-observed": "2026-04-28T14:32:09.871Z",
       "occurred-at": "2026-04-28T14:32:09.871Z",
       "source": { "decoder": "indiana", "indiana-code": 182 }
     }
@@ -407,7 +416,7 @@ client with no OpenITS-specific code:
 
 ```sh
 gnmic -a controller.example:9339 subscribe \
-  --path "openits-signal-control:/signal-controller/state" \
+  --path "openits-signal-control:/signal-controller/operation" \
   --mode stream --stream-mode on-change
 # → updates arrive as the same RFC 7951 JSON, e.g.
 #   { "cabinet-output": "flash",
@@ -483,7 +492,7 @@ tree, byte-stable, `check-gen`-gated, and never hand-edited — a small excerpt:
 | Lesson | Source | Where it lives in OpenITS |
 |--------|--------|---------------------------|
 | Don't bind the model to a transport | NTCIP | YANG contract + per-deployment bindings; `wire-source` keeps OIDs as payload metadata |
-| Small per-concern modules, never mega-modules | OpenConfig | Nine signal-control event modules; companion notification modules |
+| Small per-concern modules, never mega-modules | OpenConfig | Focused foundation, capability and service modules; one events companion module per service |
 | Model telemetry confidently; beware unified config | OpenConfig | Telemetry-first trees; no universal event envelope; per-service identity sub-bases |
 | Taxonomies must be vendor-extensible | OpenConfig (augment-as-escape-valve) | Identity hierarchies with open slots; the Econolite worked example |
 | Constraints belong in the schema | NTCIP (absence thereof) | Engineering floors in `openits-nema-common`, shared by two services; jurisdiction bounds in `yang/deviations/` |
@@ -505,9 +514,7 @@ its conventions:
   dated revisions order changes chronologically, `ce-type` majors
   gate the wire, and `openits-version` gives tooling an explicit
   compatibility-intent signal neither of the other two carries on
-  its own. Not yet stamped on every module — the newer service
-  families (perception, traffic-sensor, reversible-lane) carry it;
-  backfilling the rest is open work.
+  its own. Every in-tree module carries it.
 
 ## Related documents
 

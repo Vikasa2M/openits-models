@@ -13,10 +13,10 @@ make gen          # regenerate all artifacts from yang/
 make check-gen    # regenerate and fail if anything drifts from what's committed
 ```
 
-CI runs `make check-gen`, so a PR that edits generated files without editing
-their YANG source (or forgets to regenerate) will fail. Exceptions:
-`api/proto/command.proto` and `api/proto/device.proto` are hand-authored core
-protos and are not touched by generation.
+CI's `go` job runs `make check-gen`, so a PR that edits generated files
+without editing their YANG source (or forgets to regenerate) will fail.
+Exceptions: `api/proto/command.proto` and `api/proto/device.proto` are
+hand-authored core protos and are not touched by generation.
 
 ## Before you open a PR
 

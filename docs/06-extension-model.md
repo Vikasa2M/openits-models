@@ -81,14 +81,19 @@ a consumer that doesn't load the augment ignores the unknown
 nodes (Protobuf's unknown-field tolerance does the same on the
 wire).
 
-Examples of legitimate augments:
+Augments in the tree today (all project-maintained, so all in the
+`urn:openits:yang:vendor-…` or `urn:example:` namespace):
 
-- `siemens-signal-control-vehicle-counts.yang` — per-phase vehicle
-  count statistics from Siemens detectors.
-- `caltrans-signal-control-corridor-id.yang` — Caltrans-specific
-  corridor identifier on each controller.
-- `econolite-dms-marquee-mode.yang` — Econolite-specific marquee
-  animation mode.
+- `ledstar-dms-travel-time.yang` — the route travel-time table a
+  Ledstar sign substitutes into its active message.
+- `trafficvision-traffic-sensor-camera.yang` — video-detector
+  internals (view quality, glare, frame rates, image geometry) with
+  no analog on a radar or magnetometer station.
+- `trafficvision-perception-incident-media.yang` — the snapshot and
+  video-clip references attached to each perception incident.
+- `example-signal-control-vehicle-counts.yang` — per-phase vehicle
+  count statistics; the pedagogical exemplar under the `urn:example:`
+  placeholder namespace.
 
 A consumer reading messages can ignore augments it doesn't
 recognise. A producer that ships an augment SHOULD carry both the
@@ -154,13 +159,18 @@ narrowly-scoped `augment` statements when the deviation needs new
 nodes to express its constraint. Wire-compatible (deviations don't
 change the schema; they change validation).
 
-Examples of legitimate deviations:
+Deviations in the tree today:
 
+- `openits-signal-control-mutcd.yang` — re-applies the US MUTCD
+  phase-timing bounds (yellow-change 3.0–6.0s and the rest) that the
+  vendor-neutral core deliberately does not impose.
 - `openits-signal-control-mutcd-strict.yang` — enforces yellow ≥
-  4.0s instead of core's 3.0s minimum.
-- `openits-signal-control-tsp.yang` — adds TSP-specific constraints.
-- `openits-rsu-fcc-part90.yang` — narrows allowed channels to the
-  FCC Part 90 5.9 GHz ITS band.
+  4.0s instead of the MUTCD baseline's 3.0s, and adds overlap
+  change-interval bounds (`trailing-yellow`, `trailing-red-clear`).
+- `openits-dms-mutcd.yang` — the US MUTCD page-display legibility
+  floor for dynamic message signs.
+- `openits-rsu-us-band-plan.yang` — restricts DSRC channel numbers
+  to the upper 30 MHz retained for ITS after FCC 20-164.
 
 Deviations are how a jurisdiction or use case says "in our context,
 the standard is *this*, not the maximum permissive set."
@@ -193,7 +203,7 @@ product, never merged here. That lane is specified in the
 **Path.** Outside `yang/` entirely; lives in the vendor's own
 repository.
 **Namespace.** Vendor's own (e.g.,
-`urn:siemens:yang:proprietary-diagnostics`).
+`urn:<vendor>:yang:proprietary-diagnostics`).
 **Owner.** Vendor; not under any OpenITS governance.
 **Stability.** Vendor's choice.
 **Contents.** Anything the vendor wants to keep private — internal
@@ -228,16 +238,16 @@ submitted as a PR to
 `schema-registry/notices/<augment-name>/<implementer>.yaml`:
 
 ```yaml
-augment: siemens-signal-control-vehicle-counts
-revision: 2026-04-19
-implementer: caltrans
-implementer_contact: https://github.com/caltrans
+augment: example-signal-control-vehicle-counts
+revision: 2026-07-21
+implementer: agency-a
+implementer_contact: https://agency-a.example.org
 implementer_type: operator
 deployment_scale: 1200
 first_observed: 2026-08-12
 notes: >
-  Caltrans is consuming the per-phase vehicle counts in District 7
-  SCATS coordination.
+  Agency A is consuming the per-phase vehicle counts in its
+  corridor coordination.
 ```
 
 NoI submission is a public commitment, machine-checkable for
@@ -273,8 +283,9 @@ The graduation review checklist:
       revision (no last-minute "let's add one more leaf")
 - [ ] AsyncAPI spec, conformance kit, ARC-IT inventory,
       schema-registry snapshot all updated in the same PR
-- [ ] Graduation motion passes the GOVERNANCE.md voting rule
-      (operator-weighted majority for YANG changes)
+- [ ] Graduation is approved by the maintainers team that
+      [`.github/CODEOWNERS`](../.github/CODEOWNERS) names as
+      reviewers (review process: [CONTRIBUTING.md](../CONTRIBUTING.md))
 
 ### What graduation does NOT mean
 
@@ -304,7 +315,7 @@ ensure that **what's in core is what the industry has converged on**.
 | Tier | Contributor | Required NATS subject prefix | Required namespace |
 |------|-------------|------------------------------|--------------------|
 | Core | TSC | `openits.>` | `urn:openits:yang:<service>` |
-| Augments | Any (vendor / agency / community) | `openits.>` (augments ride on the core service's subject tree) | `urn:<contributor>:yang:<service>-<feature>` |
+| Augments | Any (vendor / agency / community) | `openits.>` (augments ride on the core service's subject tree) | `urn:<contributor>:yang:<service>-<feature>`; a project-maintained example uses `urn:openits:yang:vendor-<vendor>-<service>-<feature>` (or `urn:example:` for the exemplar) |
 | Deviations | Any (TSC review on merge) | `openits.>` | `urn:openits:yang:<service>-<deviation>` |
 | Proprietary | Vendor | `vendor.<vendor>.>` (NOT `openits.>`) | Vendor's own |
 
@@ -364,27 +375,30 @@ under the `urn:example:` placeholder namespace — when a real
 contributor ships the augment, they swap `example` for their own
 vendor / agency name throughout.
 
-**Phase 1 — vendor ships in their namespace.** Siemens ships a
-poller that emits per-phase vehicle counts. They author
-`yang/augments/siemens-signal-control-vehicle-counts.yang` with
-namespace `urn:siemens:yang:signal-control-vehicle-counts`, send
+The contributors below are placeholders: vendor `example` authors
+the augment, agency `agency-a` and vendor `vendor-b` adopt it.
+
+**Phase 1 — vendor ships in their namespace.** Vendor `example`
+ships a poller that emits per-phase vehicle counts. They author
+`yang/augments/example-signal-control-vehicle-counts.yang` with
+namespace `urn:example:yang:signal-control-vehicle-counts`, send
 a PR with the YANG file, and submit an NoI at
-`schema-registry/notices/siemens-signal-control-vehicle-counts/siemens.yaml`.
+`schema-registry/notices/example-signal-control-vehicle-counts/example.yaml`.
 They start emitting
 `openits.us-tx.txdot.d07.signal-control.ctrl-001.vehicle-count-snapshot`
 events.
 
-**Phase 2 — second implementer adopts.** Caltrans deploys 1,200
-cabinets running pollers configured to consume the augment for
-SCATS coordination. They submit an NoI at
-`schema-registry/notices/siemens-signal-control-vehicle-counts/caltrans.yaml`
+**Phase 2 — second implementer adopts.** Agency `agency-a` deploys
+1,200 cabinets running pollers configured to consume the augment for
+corridor coordination. They submit an NoI at
+`schema-registry/notices/example-signal-control-vehicle-counts/agency-a.yaml`
 with `implementer_type: operator`. Operator NoI is significant;
 the graduation rule requires at least one.
 
-**Phase 3 — third implementer adopts.** Econolite ships a
+**Phase 3 — third implementer adopts.** Vendor `vendor-b` ships a
 competing controller that emits the same augment fields
 wire-compatibly (same Protobuf field numbers). They submit
-`schema-registry/notices/siemens-signal-control-vehicle-counts/econolite.yaml`.
+`schema-registry/notices/example-signal-control-vehicle-counts/vendor-b.yaml`.
 Now there are three NoIs from three independent organizations,
 including one operator. Graduation eligible.
 
@@ -397,19 +411,19 @@ author) opens a PR that:
   `/signal-controller/phases/phase/state/vehicle-counts`
 - Bumps `openits-signal-control` revision
 - Adds a deprecation notice to
-  `siemens-signal-control-vehicle-counts.yang`
+  `example-signal-control-vehicle-counts.yang`
 - Updates the conformance kit with new tests under the standard
   suite
 - Updates AsyncAPI to register the event under the standard
   channel
 
-**Phase 5 — TSC review.** Operator-weighted majority votes per
-`GOVERNANCE.md`. If it passes, merge. Siemens' name remains in
-the commit history; the `contact` of the deprecated augment
-module retains attribution.
+**Phase 5 — maintainer review.** The maintainers team named in
+`.github/CODEOWNERS` reviews the graduation PR. If it is approved,
+merge. The original author's name remains in the commit history;
+the `contact` of the deprecated augment module retains attribution.
 
 **Phase 6 — community catches up.** Implementations using the
-Siemens augment namespace continue to work for two years. New
+original augment namespace continue to work for two years. New
 implementations target the new core revision. After two years,
 the augment module is removed from `yang/augments/`.
 

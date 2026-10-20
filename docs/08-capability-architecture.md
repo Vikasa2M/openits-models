@@ -23,24 +23,42 @@ Four layers, organized by *function* rather than by *device type*:
 
 | Layer | Modules | Role |
 |-------|---------|------|
-| **Foundation** | `openits-types` | Cross-service scalars, identities, and shared groupings (`event-header`, `fault-entry`, `geo-location`, `device-hardware`, `comm-link-state`, `wire-source`). |
-| **Platform** | `openits-device-diagnostics`, and the platform groupings in `openits-types` | What *every* field device has regardless of function: identity, location, device hardware, communications health, compute diagnostics (CPU/memory/disk/temperature, uptime/restart), the active-fault inventory. |
-| **Capability** | Built: `openits-v2x-radio`, `openits-v2x-messaging`, `openits-scms`, `openits-vehicle-detection`. Planned: `openits-signal-timing`, `openits-dms-display`, `openits-ramp-control`, `openits-incident-detection`, `openits-environmental-sensing`, `openits-reversible-lane-control`. | One coherent function each — the unit a vendor advertises ("this unit does SCMS", "this sensor does incident detection"). Versioned independently. |
-| **Device profile** | Built as a thin, capability-composing profile: `openits-rsu`. Still monolithic service cores pending migration: `openits-signal-control`, `openits-dms`, `openits-ess`, `openits-traffic-sensor`, `openits-perception`, `openits-ramp-metering`, `openits-reversible-lane` (their thin-profile target names would be e.g. `openits-signal-controller`, `openits-ramp-meter`). | *Thin* — an identity plus `uses`/composition of the capabilities that device type has. Optional capabilities are gated by `feature` / `if-feature`. |
+| **Foundation** | `openits-types` | Cross-service scalars, identities, and shared groupings (`event-header`, `fault-entry`, `component-ref`, `device-identity-config`, `device-hardware`, `device-health`, `geo-location`, `wire-source`). |
+| **Platform** | `openits-device-diagnostics`, `openits-cabinet-power`, `openits-schedule`, and the platform groupings in `openits-types` | What *every* field device has regardless of function: identity, location, device hardware, device health, communications health (`comm-link-state`, in `openits-device-diagnostics`), compute diagnostics (CPU/memory/disk/temperature, uptime/restart), the active-fault inventory; plus cabinet AC/UPS power and time-of-day scheduling for the devices that have them. |
+| **Capability** | Built: `openits-v2x-radio`, `openits-v2x-messaging`, `openits-scms`, `openits-vehicle-detection`, `openits-zone-occupancy`. Planned: `openits-signal-timing`, `openits-dms-display`, `openits-ramp-control`, `openits-incident-detection`, `openits-environmental-sensing`, `openits-reversible-lane-control`. | One coherent function each — the unit a vendor advertises ("this unit does SCMS", "this sensor does incident detection"). Versioned independently. |
+| **Device profile** | Built as a thin, capability-composing profile: `openits-rsu`. Still monolithic service cores pending migration: `openits-signal-control`, `openits-dms`, `openits-ess`, `openits-traffic-sensor`, `openits-perception`, `openits-ramp-metering`, `openits-reversible-lane`, `openits-cctv` (their thin-profile target names would be e.g. `openits-signal-controller`, `openits-ramp-meter`). | *Thin* — an identity plus `uses`/composition of the capabilities that device type has. Optional capabilities are gated by `feature` / `if-feature`. |
 
 A device profile is a composition, not a monolith. An RSU:
 
 ```
-container rsu {                                   // a singleton device, like every service
-  container config { uses openits-platform:device-identity; }        // id, name, location
-  container state { config false; uses openits-platform:device-identity; }  // applied mirror
-  uses openits-v2x-radio:radios;                 // channels, radio-tech (DSRC / C-V2X)
-  uses openits-v2x-messaging:broadcast;          // SPaT / MAP / TIM / BSM
-  uses openits-scms:security;                    // SCMS certificate inventory
-  uses openits-device-diagnostics:diagnostics;   // platform health
-  uses openits-platform:faults;                  // active-fault inventory
-  if-feature onboard-detection {                 // an RSU MAY do onboard analytics
-    uses openits-vehicle-detection:detection;
+container rsu {                        // a singleton device, like every service
+  container config {
+    uses openits-types:device-identity-config;     // id, name, location
+  }
+  container state {
+    config false;
+    uses openits-types:device-identity-config;     // applied mirror
+    uses openits-types:device-hardware;            // make, model, firmware
+    uses openits-types:device-health;              // rolled-up health
+  }
+  uses openits-v2x-radio:radios;         // channels, radio-tech (DSRC / C-V2X)
+  uses openits-v2x-messaging:messaging;  // SPaT / MAP / TIM / BSM
+  uses openits-scms:security;            // SCMS certificate inventory
+  container diagnostics {                // platform health
+    config false;
+    container resources {
+      uses openits-device-diag:resource-utilization;
+    }
+    uses openits-device-diag:process-list;
+    uses openits-device-diag:log-statistics;
+    uses openits-device-diag:temperature-sensor-list;
+    uses openits-device-diag:system-runtime;
+    uses openits-vehicle-detection:vehicle-analytics {
+      if-feature onboard-detection;      // an RSU MAY do onboard analytics
+    }
+  }
+  container faults {                     // active-fault inventory
+    list fault { uses openits-types:fault-entry; }
   }
 }
 ```
@@ -134,8 +152,10 @@ is no error and no warning; the events simply never arrive. Consumers
 should subscribe by capability, or wildcard the `{service}` token when they
 want everything a controller emits.
 
-Zone-occupancy is the first capability to carry its own events, so this is
-the first time the rule bites. See
+Zone-occupancy is the first capability module to carry its own events, so
+this is the first time the rule bites. (`openits-cabinet-power` is a platform
+grouping composed into signal-control and DMS; its conditions surface through
+those services' own events.) See
 [`bindings/nats/README.md`](../bindings/nats/README.md) for the subject
 grammar.
 
@@ -168,14 +188,15 @@ the table: it is the shape this document exists to replace.
 This supersedes the "decompose the RSU mega-module slice by slice"
 framing with "re-lay the family along capability lines."
 
-Built today: the platform brick `openits-device-diagnostics`, the
-capability modules `openits-v2x-radio`, `openits-v2x-messaging`,
-`openits-scms`, and `openits-vehicle-detection`, and `openits-rsu` as
-the prototype thin device profile composing them. The remaining device
-families (signal-control, dms, ess, ramp-metering, traffic-sensor,
-perception, reversible-lane) still ship as monolithic service cores and
-follow the same composition as the capability modules they need are
-carved out.
+Built today: the platform bricks `openits-device-diagnostics`,
+`openits-cabinet-power` and `openits-schedule`, the capability modules
+`openits-v2x-radio`, `openits-v2x-messaging`, `openits-scms`,
+`openits-vehicle-detection` and `openits-zone-occupancy`, and
+`openits-rsu` as the prototype thin device profile composing them. The
+remaining device families (signal-control, dms, ess, ramp-metering,
+traffic-sensor, perception, reversible-lane, cctv) still ship as
+monolithic service cores and follow the same composition as the
+capability modules they need are carved out.
 
 ## Related documents
 

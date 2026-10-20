@@ -46,7 +46,14 @@ on one failing fixture and read stderr — it names the must. Fix by adding
 must fail with yanglint's data-violation exit code — a fixture that fails
 to PARSE (wrong module prefix, RFC 7951 keyed by the wrong module) is a
 broken test, not a passing one. Check the top-level member is prefixed by
-the module that DEFINES the node.
+the module that DEFINES the node. Every base `invalid-*` fixture also
+needs a line in `yang/testdata/expected-rejections.tsv`
+(`<fixture><TAB><substring of the error>`): "has no entry in" means the
+line is missing, "rejected for the wrong reason" means the fixture fails
+for something other than the constraint it was written to prove.
+Mandatory-leaf checks for notifications come from
+`scripts/check-notif-mandatory.py`, which `validate-yang.sh` runs first,
+so its failures (`MISSING <leaf>`) surface as `validate-yang` failures.
 
 **buf breaking fails.** You changed the wire contract: removed/renumbered
 a field, or inserted an enum value mid-list (proto ordinals are
