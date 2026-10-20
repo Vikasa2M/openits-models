@@ -2663,12 +2663,17 @@ messages:
         transition_at_runtime_minutes: 3
         transition_at_soc_pct: 2
     openits.signal_control.v1.Operation:
+        cabinet_output: 7
+        control_source: 8
         flash_active: 2
         flash_cause: 3
         last_mode_change: 5
         mmu: 4
         mode: 1
+        mode_since: 11
         monitor: 6
+        preempt_active: 9
+        priority_active: 10
     openits.signal_control.v1.OperationalStatusReport:
         flash_active: 10
         flash_cause: 11

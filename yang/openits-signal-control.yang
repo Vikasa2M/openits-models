@@ -50,7 +50,16 @@ module openits-signal-control {
 
   revision 2026-10-17 {
     description
-      "Report the cabinet monitor's read status, kind and read time; fault-type is present only when the status is fault. Breaking: a fault-type without status fault is rejected.";
+      "Report the cabinet monitor's read status, kind and read time;
+       fault-type is present only when the status is fault. Breaking: a
+       fault-type without status fault is rejected.
+
+       Split operation into independent leaves: cabinet-output, mode
+       (coordinated / free / unknown), control-source, preempt-active
+       and priority-active; flash-cause is present only while flashing;
+       last-mode-change is renamed mode-since and flash-active is
+       removed. Breaking: flash-active and last-mode-change are gone and
+       mode no longer carries flash, off, manual, preempt or priority.";
     reference "NEMA TS2-2021 section 4.";
   }
   revision 2026-10-16 {
@@ -1773,22 +1782,49 @@ module openits-signal-control {
       openits-types:arc-it-flow
         "Roadway Signal Controller -> TMC : signal system operational status";
       description
-        "Controller-wide operational rollup: current mode, flash state,
-         and Malfunction Management Unit detail. State-only — the MMU
-         forces flash as a safety response; nothing writes this subtree.";
+        "Controller-wide operating state, one independent fact per leaf:
+         what the field displays show, the coordination mode, who
+         controls the controller, whether preemption or priority is
+         active, and the cabinet monitor. State-only; nothing writes
+         this subtree.";
 
-      leaf mode {
-        type identityref { base openits-sc-types:controller-mode; }
-        description "Top-level operational mode of the controller (coordinated / free / flash / preempt / priority / manual / off).";
-      }
-      leaf flash-active {
-        type boolean;
-        description "The intersection is in a flashing state.";
+      leaf cabinet-output {
+        type openits-sc-types:cabinet-output;
+        description "What the field displays show. Absent means unknown.";
       }
       leaf flash-cause {
         type identityref { base openits-sc-types:flash-cause; }
-        description "Why it is flashing — MMU conflict, programmed TOD, startup, etc.";
-        reference "NEMA TS-2 §4 (MMU); Indiana 173 (fault-unit-flash-status).";
+        must "../cabinet-output = 'flash'" {
+          error-message "flash-cause is present only when cabinet-output is flash";
+        }
+        description "Why the cabinet is flashing; present only when cabinet-output is flash.";
+        reference "NTCIP 1202 v04 section 5.4.6 (unitFlashStatus).";
+      }
+      leaf mode {
+        type identityref { base openits-sc-types:controller-mode; }
+        description "Coordination mode: coordinated, free, or unknown.";
+      }
+      leaf control-source {
+        type identityref { base openits-types:control-source; }
+        description
+          "Which authority is driving the controller; manual control is
+           openits-types:control-manual.";
+      }
+      leaf preempt-active {
+        type boolean;
+        description
+          "True if and only if at least one preemption/preemptor has
+           state/active true.";
+      }
+      leaf priority-active {
+        type boolean;
+        description
+          "True if and only if at least one priority/state/active-request
+           is in stage granted or active.";
+      }
+      leaf mode-since {
+        type yang:date-and-time;
+        description "When mode last changed.";
       }
       container monitor {
         description
@@ -1831,10 +1867,6 @@ module openits-signal-control {
           type boolean;
           description "True when the monitor flash is latched and requires an on-site manual reset.";
         }
-      }
-      leaf last-mode-change {
-        type yang:date-and-time;
-        description "Wall-clock time of the most recent controller-mode transition.";
       }
     }
 

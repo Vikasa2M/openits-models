@@ -192,6 +192,13 @@ enum Stage {
   STAGE_DENIED = 5;
 }
 
+enum CabinetOutput {
+  CABINET_OUTPUT_UNKNOWN = 0;
+  CABINET_OUTPUT_NORMAL = 1;
+  CABINET_OUTPUT_FLASH = 2;
+  CABINET_OUTPUT_DARK = 3;
+}
+
 enum MonitorStatus {
   MONITOR_STATUS_UNKNOWN = 0;
   MONITOR_STATUS_OK = 1;

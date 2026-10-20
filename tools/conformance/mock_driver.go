@@ -73,16 +73,21 @@ func collectASC() (*yangpkg.Device, error) {
 	st.Model = strPtr("Cobalt")
 	st.Firmware = strPtr("Econolite Cobalt 9.2.3")
 
-	// Operational rollup (state-only): mode/flash-active/flash-cause/mmu/
-	// last-mode-change moved off the identity tree into their own
-	// container, distinct from the applied-identity "state" above.
+	// Operating state (state-only): cabinet output, coordination mode,
+	// control source, preempt/priority flags, mode-since and the cabinet
+	// monitor, in their own container distinct from the applied-identity
+	// "state" above.
 	op := sc.GetOrCreateOperation()
 	mon := op.GetOrCreateMonitor()
 	mon.Status = yangpkg.OpenitsSignalControlTypes_MonitorStatus_ok
 	mon.MonitorKind = yangpkg.OpenitsSignalControlTypes_MonitorKind_monitor_ts2_mmu
 	mon.ObservedAt = strPtr("2026-04-18T14:00:05Z")
-	op.FlashActive = boolPtr(false)
-	op.LastModeChange = strPtr("2026-04-18T14:00:00Z")
+	op.CabinetOutput = yangpkg.OpenitsSignalControlTypes_CabinetOutput_normal
+	op.Mode = yangpkg.OpenitsSignalControlTypes_ControllerMode_mode_coordinated
+	op.ControlSource = yangpkg.OpenitsTypes_ControlSource_control_central
+	op.PreemptActive = boolPtr(false)
+	op.PriorityActive = boolPtr(false)
+	op.ModeSince = strPtr("2026-04-18T14:00:00Z")
 
 	// Coordination: config-only timing-plan library + state readback
 	// naming the active plan. Plan 3 carries the cut-2c coordination-

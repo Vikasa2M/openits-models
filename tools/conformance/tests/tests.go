@@ -447,6 +447,7 @@ func All(kind string) []TestCase {
 			// health
 			TestCase{"TestHealth_OperationalStatus", TestHealth_OperationalStatus},
 			TestCase{"TestHealth_NotFlashing", TestHealth_NotFlashing},
+			TestCase{"TestOperation_ActiveFlagsMatchLists", TestOperation_ActiveFlagsMatchLists},
 
 			// cabinet power / UPS (platform capability)
 			TestCase{"TestCabinetPower_SourceReported", TestCabinetPower_SourceReported},

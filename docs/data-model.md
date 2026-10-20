@@ -410,8 +410,8 @@ gnmic -a controller.example:9339 subscribe \
   --path "openits-signal-control:/signal-controller/state" \
   --mode stream --stream-mode on-change
 # → updates arrive as the same RFC 7951 JSON, e.g.
-#   { "mode": "flash", "flash-active": true,
-#     "flash-cause": "flash-mmu-conflict", ... }
+#   { "cabinet-output": "flash",
+#     "flash-cause": "flash-monitor", ... }
 ```
 
 Note what stayed identical across all three: the YANG-defined field

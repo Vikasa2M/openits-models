@@ -34,7 +34,16 @@ module openits-signal-control-types {
   revision 2026-10-17 {
     description
       "Add the monitor-status typedef and monitor-kind identities for
-       the cabinet monitor readback. Breaking: none in this step.";
+       the cabinet monitor readback. Breaking: none in this step.
+
+       Split the controller operating state: add the cabinet-output
+       typedef and a signal-control mode-unknown (also based on
+       openits-types:mode-unknown); remove mode-flash, mode-off,
+       mode-manual, mode-preempt and mode-priority from controller-mode
+       (now cabinet-output, control-source and the preempt/priority-active
+       flags); rename flash-mmu-conflict to flash-monitor and
+       flash-fault-monitor to flash-controller-fault. Breaking: the
+       removed and renamed identity values are no longer accepted.";
     reference "NEMA TS2-2021 section 4; NEMA TS1 section 6; ATC Cabinet Standard.";
   }
   revision 2026-10-16 {
@@ -1316,13 +1325,27 @@ module openits-signal-control-types {
     description "TSAM (adaptive management) engagement state. Shared by the tsam-mode-changed notification's prior/current leaves.";
   }
 
+  typedef cabinet-output {
+    type enumeration {
+      enum unknown { value 0; description "The controller cannot say what the field displays show."; }
+      enum normal  { value 1; description "Signals cycle under controller control, including all-red clearance steps."; }
+      enum flash   { value 2; description "The field displays flash, whatever the cause; flash-cause says why."; }
+      enum dark    { value 3; description "No indications are shown (power loss, controller off)."; }
+    }
+    description
+      "What the cabinet's field displays are showing, independent of the
+       coordination mode: a coordinated controller under monitor flash
+       reports mode coordinated and cabinet-output flash.";
+  }
+
   identity controller-mode {
     base openits-types:operational-mode;
     description
-      "Top-level operational mode of a signal controller. An identity
-       (not a closed enum) so a vendor can derive a proprietary mode
-       from this base without a core change; the standard modes below
-       cover NTCIP 1202 v03.";
+      "Coordination mode of a signal controller: coordinated, free, or
+       unknown. What the cabinet displays (flash, dark), who controls
+       it, and whether preemption or priority is active are separate
+       leaves of the operation container, so they never mask the mode.
+       An identity so a vendor can derive a proprietary mode.";
     reference "NTCIP 1202 v03 (controller operating modes).";
   }
   identity mode-coordinated { base controller-mode; description "Coordinated operation under a timing plan."; }
@@ -1335,26 +1358,19 @@ module openits-signal-control-types {
        collapsed into this one. A coordinated controller that is not yet in step
        is reported via coordination/state/cycle-state, not a distinct mode.";
   }
-  identity mode-flash       {
+  identity mode-unknown {
     base controller-mode;
+    base openits-types:mode-unknown;
     description
-      "Flashing operation (e.g. MMU-forced or programmed flash). A single
-       mode value covers all flash — it does not split by cause. The
-       cause is carried on two other surfaces instead: the config-false
-       state tree's flash-cause leaf (current cause, state) and
-       mode-changed's trigger leaf (cause of this specific mode
-       transition); consumers read whichever surface fits their need
-       without the mode taxonomy itself splitting.";
+      "The controller cannot report its coordination mode. Also derives
+       from the canonical openits-types:mode-unknown, so a cross-service
+       filter on that identity finds it.";
   }
-  identity mode-preempt     { base controller-mode; description "Preemption is active (rail / emergency)."; }
-  identity mode-priority    { base controller-mode; description "Transit/freight priority is active."; }
-  identity mode-manual      { base controller-mode; description "Manual control (operator or cabinet switch)."; }
-  identity mode-off         { base controller-mode; description "Controller off / dark."; }
 
   /* --------------------------------------------------------------
    * Flash cause + MMU fault type
    *
-   * mode-flash (above) says only *that* the controller is flashing.
+   * cabinet-output flash says only *that* the controller is flashing.
    * These identity sets say *why*: flash-cause backs the config-false
    * state tree's flash-cause leaf and the optional flash-cause on
    * controller-fault-event (openits-signal-control-events);
@@ -1406,7 +1422,7 @@ module openits-signal-control-types {
       "Why the controller is currently in flashing operation.";
     reference "NEMA TS2-2021 section 4; Indiana 173 (fault-unit-flash-status).";
   }
-  identity flash-mmu-conflict {
+  identity flash-monitor {
     base flash-cause;
     description
       "Flash forced by the cabinet's signal monitor: its flash input to
@@ -1418,11 +1434,10 @@ module openits-signal-control-types {
        monitored condition that trips it, not only a conflict: red-fail,
        dual indication, clearance, CVM, +24V, field check and the rest.
        The specific condition is reported separately as a
-       monitor-fault-type. The identity name predates this definition;
-       it does not mean the cause was a conflict.";
+       monitor-fault-type.";
     reference "NEMA TS2-2021 section 4; NTCIP 1202:2019 §5 (unitFlashStatus mmu(6)); NTCIP 1202 v04 (unitFlashStatus smu(6)).";
   }
-  identity flash-fault-monitor {
+  identity flash-controller-fault {
     base flash-cause;
     description
       "Flash the controller unit initiated itself because it detected
@@ -1432,8 +1447,7 @@ module openits-signal-control-types {
 
        Not a cabinet-monitor flash: a flash forced by any cabinet
        monitor, including a TS1 conflict monitor or an ITS-cabinet CMU,
-       is flash-mmu-conflict. The identity name predates this
-       definition.";
+       is flash-monitor.";
     reference "NTCIP 1202:2019 §5 (unitFlashStatus faultMonitor(5)); NTCIP 1202 v04 (unitFlashStatus controllerFaultFlash(5)).";
   }
   identity flash-automatic {
