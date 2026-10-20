@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"path/filepath"
 	"testing"
+
+	"github.com/openconfig/goyang/pkg/yang"
 )
 
 // buildRealIndex loads the real yang/ corpus + schema-registry/ tree and
@@ -255,4 +257,32 @@ func equalStrings(a, b []string) bool {
 		}
 	}
 	return true
+}
+
+// TestModuleText_CRLFNormalized pins the Windows-checkout guard: a module
+// read with CRLF line endings must produce the same description and
+// revision dates as an LF checkout, so schema-registry/index.json does not
+// drift between platforms.
+func TestModuleText_CRLFNormalized(t *testing.T) {
+	cases := []struct {
+		name string
+		in   string
+		want string
+	}{
+		{"lf unchanged", "line one\nline two", "line one\nline two"},
+		{"crlf to lf", "line one\r\nline two\r\n", "line one\nline two\n"},
+		{"lone cr dropped", "line one\rline two", "line oneline two"},
+	}
+	for _, c := range cases {
+		if got := moduleDescription(&yang.Entry{Description: c.in}); got != c.want {
+			t.Errorf("%s: moduleDescription(%q) = %q, want %q", c.name, c.in, got, c.want)
+		}
+	}
+
+	mod := &yang.Module{Revision: []*yang.Revision{{Name: "2026-10-17\r"}, {Name: "2026-10-16"}}}
+	got := moduleRevisions(&yang.Entry{Node: mod})
+	want := []string{"2026-10-16", "2026-10-17"}
+	if len(got) != len(want) || got[0] != want[0] || got[1] != want[1] {
+		t.Errorf("moduleRevisions = %q, want %q", got, want)
+	}
 }
