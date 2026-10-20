@@ -41,7 +41,8 @@ Exit status is 0 on full pass, 1 on any failure, 2 on harness errors
   assignment
 - `preemption.go` — `preemption-activated` notification fires during
   the observation window with the correct `ce-type`
-- `health.go` — `operational-status-report` heartbeat arrives, not flashing
+- `health.go` — `operational-status-report` heartbeat arrives and the
+  cabinet is not in `cabinet-output` flash
 - `yang_validation.go` — emitted device state validates against the
   YANG schema via `ygot.Validate`
 - `subject.go` — published events use the 7-token `openits.*` subject

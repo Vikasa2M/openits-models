@@ -77,7 +77,8 @@ constraint. Mandatory event fields are additionally checked by
 ## Pipeline
 
 Same as `extending-a-model` (revision statement, `make gen`,
-`scripts/update-schema-registry.sh`, gates), plus event-specific checks:
+`scripts/update-schema-registry.sh`, `make gen` again for
+`schema-registry/index.json`, gates), plus event-specific checks:
 
 ```
 make gen                 # includes asyncapi regen — one channel per ce-type

@@ -75,7 +75,9 @@ one, and never rewrite a published revision's description.
 
 Edge case — the module already has a revision dated today: if that
 revision exists only on your branch (it is not on main yet), fold your change
-into it and rebuild its snapshot. If it is already on main, released or not,
+into it and rebuild its snapshot: delete that revision's
+`schema-registry/<module>/<revision>/` directory first, because
+`scripts/update-schema-registry.sh` never rewrites an existing snapshot. If it is already on main, released or not,
 it is immutable — `make check-revision-history` fails any edit to it — so date
 your revision the next day instead.
 
@@ -98,6 +100,10 @@ fixture content; use neutral placeholder values like `field-tech-07`.
 1. Edit yang/<module>.yang           (+ revision statement)
 2. make gen                          # regenerates proto, Go, asyncapi
 3. scripts/update-schema-registry.sh # immutable registry snapshot for the new revision
+   (if you are changing a revision that exists only on your branch, delete
+   its schema-registry/<module>/<revision>/ snapshot first; the script
+   never rewrites an existing snapshot)
+3b. make gen                         # again: refreshes schema-registry/index.json
 4. Add/adjust fixtures in yang/testdata/
 5. make check-gen validate-yang yang-lint check-revisions check-naming
 6. go build ./... && go test ./...

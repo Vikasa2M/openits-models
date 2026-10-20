@@ -254,7 +254,12 @@ is grounds to reject or dispute the claim.
   A device that can't sense something should omit the leaf (or
   deviate it); it must never report a fixed or fabricated value.
 - **The fault inventory.** If your hardware can fail in a way the
-  model has a fault identity for, that fault must surface.
+  model has a fault identity for, that fault must surface. Each entry needs `kind` and
+  `first-observed`, and a fault about one sub-component carries
+  `component`. Every device root reports `oper-status` (absent means unknown), and `comm-lost`
+  carries `last-contact` and `observed-by`. See
+  [Comm-loss staleness](data-model.md#comm-loss-staleness) and the
+  [v0.8.0 migration note](migration/v0.8.0.md).
 - **Safety-gating surfaces.** For DMS specifically: message-activation
   validation (the checks a candidate message passes before it goes
   live) and fallback behavior (what the sign does when it can't
