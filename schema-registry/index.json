@@ -893,6 +893,7 @@
         "2026-10-17"
       ],
       "events": [
+        "openits.signal-control.cabinet-output-changed.v1",
         "openits.signal-control.comm-health-event.v1",
         "openits.signal-control.controller-fault-event.v1",
         "openits.signal-control.coordination-change.v1",
@@ -1043,7 +1044,8 @@
             "2026-07-21",
             "2026-09-07",
             "2026-09-08",
-            "2026-10-13"
+            "2026-10-13",
+            "2026-10-17"
           ],
           "refStd": [
             "ATSPM Indiana enumeration",
@@ -2679,6 +2681,13 @@
         "openits-signal-control-events/2026-10-13/schema.json",
         "openits-signal-control-events/2026-10-13/schema.proto",
         "openits-signal-control-events/2026-10-13/schema.yang"
+      ],
+      "2026-10-17": [
+        "openits-signal-control-events/2026-10-17/MANIFEST.json",
+        "openits-signal-control-events/2026-10-17/README.md",
+        "openits-signal-control-events/2026-10-17/schema.json",
+        "openits-signal-control-events/2026-10-17/schema.proto",
+        "openits-signal-control-events/2026-10-17/schema.yang"
       ]
     },
     "openits-signal-control-fault-events": {

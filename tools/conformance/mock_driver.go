@@ -363,18 +363,50 @@ func subscribeASC(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			},
 		},
 		{
-			Subject:  base + ".operational-status",
-			CEType:   "openits.signal-control.operational-status.v1",
+			Subject:  base + ".operational-status-report",
+			CEType:   "openits.signal-control.operational-status-report.v1",
 			CESource: "urn:openits:controller:us-tx:txdot:d07:i35-exit-214",
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6V8X",
 			CETime:   time.Now().UTC(),
-			// No generated payload message backs this heartbeat: unlike
-			// every other event here, operational-status was never a YANG
-			// `notification` in the old hand-authored proto either, so
-			// tools/yang-proto-gen (which only emits from notifications)
-			// has nothing to generate for it. The envelope alone (subject
-			// + ce-type) is what TestHealth_OperationalStatus checks.
-			Data: nil,
+			Data: &signalcontrolv1.OperationalStatusReport{
+				Kind:           "openits-signal-control-types:sc-operational-status-report",
+				Mode:           proto.String("openits-signal-control-types:mode-coordinated"),
+				CabinetOutput:  signalcontrolv1.CabinetOutput_CABINET_OUTPUT_NORMAL.Enum(),
+				ControlSource:  proto.String("openits-types:control-central"),
+				PreemptActive:  proto.Bool(false),
+				PriorityActive: proto.Bool(false),
+				OperStatus:     signalcontrolv1.OperStatus_OPER_STATUS_OK.Enum(),
+				MonitorStatus:  signalcontrolv1.MonitorStatus_MONITOR_STATUS_OK.Enum(),
+				UptimeS:        proto.Uint64(431980),
+			},
+		},
+		{
+			Subject:  base + ".mode-changed",
+			CEType:   "openits.signal-control.mode-changed.v1",
+			CESource: "urn:openits:controller:us-tx:txdot:d07:i35-exit-214",
+			CEID:     "01HXYR3K9T8M2NAEQF5P4R6V90",
+			CETime:   time.Now().UTC(),
+			Data: &commonv1.ModeChanged{
+				Kind:          "openits-signal-control-types:sc-mode-event-kind",
+				PreviousMode:  proto.String("openits-signal-control-types:mode-free"),
+				Mode:          "openits-signal-control-types:mode-coordinated",
+				ControlSource: proto.String("openits-types:control-central"),
+			},
+		},
+		// The cabinet-output-changed event is a separate stream from the
+		// device state, which reports cabinet-output normal.
+		{
+			Subject:  base + ".cabinet-output-changed",
+			CEType:   "openits.signal-control.cabinet-output-changed.v1",
+			CESource: "urn:openits:controller:us-tx:txdot:d07:i35-exit-214",
+			CEID:     "01HXYR3K9T8M2NAEQF5P4R6V91",
+			CETime:   time.Now().UTC(),
+			Data: &signalcontrolv1.CabinetOutputChanged{
+				Kind:                  "openits-signal-control-types:sc-cabinet-output-changed",
+				PreviousCabinetOutput: signalcontrolv1.CabinetOutput_CABINET_OUTPUT_NORMAL.Enum(),
+				CabinetOutput:         signalcontrolv1.CabinetOutput_CABINET_OUTPUT_FLASH,
+				FlashCause:            proto.String("openits-signal-control-types:flash-monitor"),
+			},
 		},
 		{
 			Subject:  base + ".preemption-activated",

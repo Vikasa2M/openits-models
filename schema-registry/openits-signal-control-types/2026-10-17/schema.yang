@@ -43,7 +43,9 @@ module openits-signal-control-types {
        (now cabinet-output, control-source and the preempt/priority-active
        flags); rename flash-mmu-conflict to flash-monitor and
        flash-fault-monitor to flash-controller-fault. Breaking: the
-       removed and renamed identity values are no longer accepted.";
+       removed and renamed identity values are no longer accepted.
+
+       Add the cabinet-output-changed event kind.";
     reference "NEMA TS2-2021 section 4; NEMA TS1 section 6; ATC Cabinet Standard.";
   }
   revision 2026-10-16 {
@@ -512,6 +514,15 @@ module openits-signal-control-types {
     base signal-control-event-kind;
     description
       "Signal-control Transit Signal Priority cycle + detail events.";
+  }
+
+  identity sc-cabinet-event-kind {
+    base signal-control-event-kind;
+    description "Signal-control cabinet output events.";
+  }
+  identity sc-cabinet-output-changed {
+    base sc-cabinet-event-kind;
+    description "What the cabinet's field displays show changed (for example normal to flash).";
   }
 
   identity sc-tsam-event-kind {

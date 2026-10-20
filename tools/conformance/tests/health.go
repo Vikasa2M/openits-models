@@ -23,7 +23,7 @@ func TestHealth_OperationalStatus(t *T, obs *Observation) {
 	}
 	// Also require that we observed at least one heartbeat on the wire.
 	for _, e := range obs.Events {
-		if strings.HasSuffix(e.Subject, ".operational-status") {
+		if strings.HasSuffix(e.Subject, ".operational-status-report") {
 			return
 		}
 	}

@@ -103,3 +103,4 @@ invalid-comm-lost-missing-last-contact.json	MISSING last-contact
 invalid-comm-lost-missing-observed-by.json	MISSING observed-by
 invalid-sc-monitor-fault-type-without-fault.json	monitor fault-type is present only when monitor status is fault
 invalid-sc-operation-flash-cause-not-flashing.json	flash-cause is present only when cabinet-output is flash
+invalid-cabinet-output-changed-missing-output.json	MISSING cabinet-output

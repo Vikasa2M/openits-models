@@ -4,10 +4,16 @@
     "source-device-id": "i35-mm214-nb-sc-01",
     "sequence-epoch": "boot-2026-10-13a",
     "sequence": "1",
+    "oper-status": "ok",
+    "control-source": "openits-types:control-central",
+    "uptime-s": "431980",
+    "active-fault-count": 0,
+    "cabinet-output": "normal",
     "mode": "openits-signal-control-types:mode-coordinated",
-    "flash-active": false,
-    "last-mode-change": "2026-07-10T08:00:00Z",
-    "uptime-seconds": "431980",
+    "preempt-active": false,
+    "priority-active": false,
+    "monitor-status": "ok",
+    "mode-since": "2026-07-10T08:00:00Z",
     "occurred-at": "2026-07-11T14:05:12Z"
   }
 }

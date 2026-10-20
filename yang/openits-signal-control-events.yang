@@ -26,6 +26,11 @@ module openits-signal-control-events {
 
   openits-types:openits-version "0.4.0";
 
+  revision 2026-10-17 {
+    description
+      "Add cabinet-output-changed; rebuild operational-status-report on the shared device-status-summary with the split operating state; rename tsam-mode-changed prior/current to previous-mode/mode. Breaking: operational-status-report drops flash-active, last-mode-change and uptime-seconds (now uptime-s), and tsam-mode-changed's leaves are renamed.";
+    reference "RFC 7950 §11.";
+  }
   revision 2026-10-13 {
     description
       "Inherit the mandatory sequence-epoch leaf from the openits-types
@@ -569,11 +574,11 @@ module openits-signal-control-events {
 
     uses openits-types:event-header;
 
-    leaf prior {
+    leaf previous-mode {
       type openits-sc-types:tsam-engagement-state;
       description "TSAM engagement state before the transition.";
     }
-    leaf current {
+    leaf mode {
       type openits-sc-types:tsam-engagement-state;
       mandatory true;
       description "TSAM engagement state after the transition.";
@@ -689,14 +694,47 @@ module openits-signal-control-events {
 
   /* ===== Status ===== */
 
+  notification cabinet-output-changed {
+    openits-types:arc-it-flow
+      "Roadway Signal Controller -> TMC : signal system operational status";
+    description
+      "What the cabinet's field displays show changed, for example from
+       normal to flash on a monitor fault. Emitted on transitions only;
+       mode-changed carries coordination-mode transitions separately.
+       mode and cabinet-output are independent.";
+
+    leaf kind {
+      type identityref { base openits-sc-types:sc-cabinet-event-kind; }
+      mandatory true;
+      description "Always openits-signal-control-types:sc-cabinet-output-changed.";
+    }
+    uses openits-types:event-header;
+
+    leaf previous-cabinet-output {
+      type openits-sc-types:cabinet-output;
+      description "What the displays showed before the transition.";
+    }
+    leaf cabinet-output {
+      type openits-sc-types:cabinet-output;
+      mandatory true;
+      description "What the displays show now; differs from previous-cabinet-output.";
+    }
+    leaf flash-cause {
+      type identityref { base openits-sc-types:flash-cause; }
+      description "Why the cabinet is flashing; present only when cabinet-output is flash.";
+    }
+
+    uses openits-types:wire-source;
+  }
+
   notification operational-status-report {
     openits-types:arc-it-flow
       "Roadway Signal Controller -> TMC : signal system operational status";
     description
-      "Periodic snapshot of the controller's operational status. Mirrors
-       the config-false `state` container; emitted on a
-       heartbeat cadence (distinct from mode-changed, which fires on
-       transitions only).";
+      "Periodic snapshot of the controller's operating state. Mirrors
+       signal-controller/operation plus the shared status summary; emitted
+       on a heartbeat cadence (mode-changed and cabinet-output-changed
+       fire on transitions).";
 
     leaf kind {
       type identityref { base openits-sc-types:signal-control-event-kind; }
@@ -706,29 +744,29 @@ module openits-signal-control-events {
          a periodic controller status report.";
     }
     uses openits-types:event-header;
+    uses openits-types:device-status-summary;
 
-    leaf mode {
-      type identityref { base openits-sc-types:controller-mode; }
-      description "Top-level operational mode (coordinated / free / flash / preempt / priority / manual / off).";
-    }
-    leaf flash-active {
-      type boolean;
-      description "The intersection is in a flashing state.";
+    leaf cabinet-output {
+      type openits-sc-types:cabinet-output;
+      description "What the field displays show.";
     }
     leaf flash-cause {
       type identityref { base openits-sc-types:flash-cause; }
-      description
-        "Why it is flashing — MMU conflict, programmed TOD, startup,
-         etc. (Indiana 173 param).";
+      description "Why the cabinet is flashing; present only when cabinet-output is flash.";
     }
-    leaf last-mode-change {
+    leaf mode {
+      type identityref { base openits-sc-types:controller-mode; }
+      description "Coordination mode: coordinated, free, or unknown.";
+    }
+    leaf preempt-active { type boolean; description "Preemption is active (operation/preempt-active)."; }
+    leaf priority-active { type boolean; description "Priority is active (operation/priority-active)."; }
+    leaf monitor-status {
+      type openits-sc-types:monitor-status;
+      description "Cabinet monitor read status (operation/monitor/status).";
+    }
+    leaf mode-since {
       type yang:date-and-time;
-      description "Wall-clock time of the most recent controller-mode transition.";
-    }
-    leaf uptime-seconds {
-      type uint64;
-      units "seconds";
-      description "Controller uptime at the time of the snapshot.";
+      description "When mode last changed.";
     }
   }
 

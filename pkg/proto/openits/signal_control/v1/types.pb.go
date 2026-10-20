@@ -21,6 +21,58 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type CabinetOutput int32
+
+const (
+	CabinetOutput_CABINET_OUTPUT_UNKNOWN CabinetOutput = 0
+	CabinetOutput_CABINET_OUTPUT_NORMAL  CabinetOutput = 1
+	CabinetOutput_CABINET_OUTPUT_FLASH   CabinetOutput = 2
+	CabinetOutput_CABINET_OUTPUT_DARK    CabinetOutput = 3
+)
+
+// Enum value maps for CabinetOutput.
+var (
+	CabinetOutput_name = map[int32]string{
+		0: "CABINET_OUTPUT_UNKNOWN",
+		1: "CABINET_OUTPUT_NORMAL",
+		2: "CABINET_OUTPUT_FLASH",
+		3: "CABINET_OUTPUT_DARK",
+	}
+	CabinetOutput_value = map[string]int32{
+		"CABINET_OUTPUT_UNKNOWN": 0,
+		"CABINET_OUTPUT_NORMAL":  1,
+		"CABINET_OUTPUT_FLASH":   2,
+		"CABINET_OUTPUT_DARK":    3,
+	}
+)
+
+func (x CabinetOutput) Enum() *CabinetOutput {
+	p := new(CabinetOutput)
+	*p = x
+	return p
+}
+
+func (x CabinetOutput) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (CabinetOutput) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_signal_control_v1_types_proto_enumTypes[0].Descriptor()
+}
+
+func (CabinetOutput) Type() protoreflect.EnumType {
+	return &file_openits_signal_control_v1_types_proto_enumTypes[0]
+}
+
+func (x CabinetOutput) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use CabinetOutput.Descriptor instead.
+func (CabinetOutput) EnumDescriptor() ([]byte, []int) {
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{0}
+}
+
 type FaultSeverity int32
 
 const (
@@ -60,11 +112,11 @@ func (x FaultSeverity) String() string {
 }
 
 func (FaultSeverity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[0].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[1].Descriptor()
 }
 
 func (FaultSeverity) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[0]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[1]
 }
 
 func (x FaultSeverity) Number() protoreflect.EnumNumber {
@@ -73,7 +125,117 @@ func (x FaultSeverity) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use FaultSeverity.Descriptor instead.
 func (FaultSeverity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{0}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{1}
+}
+
+type MonitorStatus int32
+
+const (
+	MonitorStatus_MONITOR_STATUS_UNKNOWN      MonitorStatus = 0
+	MonitorStatus_MONITOR_STATUS_OK           MonitorStatus = 1
+	MonitorStatus_MONITOR_STATUS_FAULT        MonitorStatus = 2
+	MonitorStatus_MONITOR_STATUS_NOT_READ     MonitorStatus = 3
+	MonitorStatus_MONITOR_STATUS_NOT_EQUIPPED MonitorStatus = 4
+)
+
+// Enum value maps for MonitorStatus.
+var (
+	MonitorStatus_name = map[int32]string{
+		0: "MONITOR_STATUS_UNKNOWN",
+		1: "MONITOR_STATUS_OK",
+		2: "MONITOR_STATUS_FAULT",
+		3: "MONITOR_STATUS_NOT_READ",
+		4: "MONITOR_STATUS_NOT_EQUIPPED",
+	}
+	MonitorStatus_value = map[string]int32{
+		"MONITOR_STATUS_UNKNOWN":      0,
+		"MONITOR_STATUS_OK":           1,
+		"MONITOR_STATUS_FAULT":        2,
+		"MONITOR_STATUS_NOT_READ":     3,
+		"MONITOR_STATUS_NOT_EQUIPPED": 4,
+	}
+)
+
+func (x MonitorStatus) Enum() *MonitorStatus {
+	p := new(MonitorStatus)
+	*p = x
+	return p
+}
+
+func (x MonitorStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (MonitorStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_signal_control_v1_types_proto_enumTypes[2].Descriptor()
+}
+
+func (MonitorStatus) Type() protoreflect.EnumType {
+	return &file_openits_signal_control_v1_types_proto_enumTypes[2]
+}
+
+func (x MonitorStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use MonitorStatus.Descriptor instead.
+func (MonitorStatus) EnumDescriptor() ([]byte, []int) {
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{2}
+}
+
+type OperStatus int32
+
+const (
+	OperStatus_OPER_STATUS_UNKNOWN     OperStatus = 0
+	OperStatus_OPER_STATUS_OK          OperStatus = 1
+	OperStatus_OPER_STATUS_DEGRADED    OperStatus = 2
+	OperStatus_OPER_STATUS_FAILED      OperStatus = 3
+	OperStatus_OPER_STATUS_NOT_PRESENT OperStatus = 4
+)
+
+// Enum value maps for OperStatus.
+var (
+	OperStatus_name = map[int32]string{
+		0: "OPER_STATUS_UNKNOWN",
+		1: "OPER_STATUS_OK",
+		2: "OPER_STATUS_DEGRADED",
+		3: "OPER_STATUS_FAILED",
+		4: "OPER_STATUS_NOT_PRESENT",
+	}
+	OperStatus_value = map[string]int32{
+		"OPER_STATUS_UNKNOWN":     0,
+		"OPER_STATUS_OK":          1,
+		"OPER_STATUS_DEGRADED":    2,
+		"OPER_STATUS_FAILED":      3,
+		"OPER_STATUS_NOT_PRESENT": 4,
+	}
+)
+
+func (x OperStatus) Enum() *OperStatus {
+	p := new(OperStatus)
+	*p = x
+	return p
+}
+
+func (x OperStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OperStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_signal_control_v1_types_proto_enumTypes[3].Descriptor()
+}
+
+func (OperStatus) Type() protoreflect.EnumType {
+	return &file_openits_signal_control_v1_types_proto_enumTypes[3]
+}
+
+func (x OperStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OperStatus.Descriptor instead.
+func (OperStatus) EnumDescriptor() ([]byte, []int) {
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{3}
 }
 
 type TsamEngagementState int32
@@ -115,11 +277,11 @@ func (x TsamEngagementState) String() string {
 }
 
 func (TsamEngagementState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[1].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[4].Descriptor()
 }
 
 func (TsamEngagementState) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[1]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[4]
 }
 
 func (x TsamEngagementState) Number() protoreflect.EnumNumber {
@@ -128,7 +290,7 @@ func (x TsamEngagementState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use TsamEngagementState.Descriptor instead.
 func (TsamEngagementState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{1}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{4}
 }
 
 type AdjustmentType int32
@@ -179,11 +341,11 @@ func (x AdjustmentType) String() string {
 }
 
 func (AdjustmentType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[2].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[5].Descriptor()
 }
 
 func (AdjustmentType) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[2]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[5]
 }
 
 func (x AdjustmentType) Number() protoreflect.EnumNumber {
@@ -192,7 +354,7 @@ func (x AdjustmentType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AdjustmentType.Descriptor instead.
 func (AdjustmentType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{2}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{5}
 }
 
 type DenialReason int32
@@ -237,11 +399,11 @@ func (x DenialReason) String() string {
 }
 
 func (DenialReason) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[3].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[6].Descriptor()
 }
 
 func (DenialReason) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[3]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[6]
 }
 
 func (x DenialReason) Number() protoreflect.EnumNumber {
@@ -250,62 +412,7 @@ func (x DenialReason) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DenialReason.Descriptor instead.
 func (DenialReason) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{3}
-}
-
-type OperStatus int32
-
-const (
-	OperStatus_OPER_STATUS_UNKNOWN     OperStatus = 0
-	OperStatus_OPER_STATUS_OK          OperStatus = 1
-	OperStatus_OPER_STATUS_DEGRADED    OperStatus = 2
-	OperStatus_OPER_STATUS_FAILED      OperStatus = 3
-	OperStatus_OPER_STATUS_NOT_PRESENT OperStatus = 4
-)
-
-// Enum value maps for OperStatus.
-var (
-	OperStatus_name = map[int32]string{
-		0: "OPER_STATUS_UNKNOWN",
-		1: "OPER_STATUS_OK",
-		2: "OPER_STATUS_DEGRADED",
-		3: "OPER_STATUS_FAILED",
-		4: "OPER_STATUS_NOT_PRESENT",
-	}
-	OperStatus_value = map[string]int32{
-		"OPER_STATUS_UNKNOWN":     0,
-		"OPER_STATUS_OK":          1,
-		"OPER_STATUS_DEGRADED":    2,
-		"OPER_STATUS_FAILED":      3,
-		"OPER_STATUS_NOT_PRESENT": 4,
-	}
-)
-
-func (x OperStatus) Enum() *OperStatus {
-	p := new(OperStatus)
-	*p = x
-	return p
-}
-
-func (x OperStatus) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (OperStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[4].Descriptor()
-}
-
-func (OperStatus) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[4]
-}
-
-func (x OperStatus) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use OperStatus.Descriptor instead.
-func (OperStatus) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{4}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{6}
 }
 
 type PedIntervalType int32
@@ -350,11 +457,11 @@ func (x PedIntervalType) String() string {
 }
 
 func (PedIntervalType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[5].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[7].Descriptor()
 }
 
 func (PedIntervalType) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[5]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[7]
 }
 
 func (x PedIntervalType) Number() protoreflect.EnumNumber {
@@ -363,7 +470,7 @@ func (x PedIntervalType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use PedIntervalType.Descriptor instead.
 func (PedIntervalType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{5}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{7}
 }
 
 type VehIntervalType int32
@@ -408,11 +515,11 @@ func (x VehIntervalType) String() string {
 }
 
 func (VehIntervalType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[6].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[8].Descriptor()
 }
 
 func (VehIntervalType) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[6]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[8]
 }
 
 func (x VehIntervalType) Number() protoreflect.EnumNumber {
@@ -421,7 +528,7 @@ func (x VehIntervalType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use VehIntervalType.Descriptor instead.
 func (VehIntervalType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{6}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{8}
 }
 
 type DetectorMode int32
@@ -457,11 +564,11 @@ func (x DetectorMode) String() string {
 }
 
 func (DetectorMode) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[7].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[9].Descriptor()
 }
 
 func (DetectorMode) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[7]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[9]
 }
 
 func (x DetectorMode) Number() protoreflect.EnumNumber {
@@ -470,7 +577,7 @@ func (x DetectorMode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DetectorMode.Descriptor instead.
 func (DetectorMode) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{7}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{9}
 }
 
 type DetectorFailAction int32
@@ -512,11 +619,11 @@ func (x DetectorFailAction) String() string {
 }
 
 func (DetectorFailAction) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[8].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[10].Descriptor()
 }
 
 func (DetectorFailAction) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[8]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[10]
 }
 
 func (x DetectorFailAction) Number() protoreflect.EnumNumber {
@@ -525,7 +632,7 @@ func (x DetectorFailAction) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DetectorFailAction.Descriptor instead.
 func (DetectorFailAction) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{8}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{10}
 }
 
 type OverlapIntervalType int32
@@ -576,11 +683,11 @@ func (x OverlapIntervalType) String() string {
 }
 
 func (OverlapIntervalType) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[9].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[11].Descriptor()
 }
 
 func (OverlapIntervalType) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[9]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[11]
 }
 
 func (x OverlapIntervalType) Number() protoreflect.EnumNumber {
@@ -589,7 +696,7 @@ func (x OverlapIntervalType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use OverlapIntervalType.Descriptor instead.
 func (OverlapIntervalType) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{9}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{11}
 }
 
 type ChannelFlashState int32
@@ -628,11 +735,11 @@ func (x ChannelFlashState) String() string {
 }
 
 func (ChannelFlashState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[10].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[12].Descriptor()
 }
 
 func (ChannelFlashState) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[10]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[12]
 }
 
 func (x ChannelFlashState) Number() protoreflect.EnumNumber {
@@ -641,7 +748,7 @@ func (x ChannelFlashState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ChannelFlashState.Descriptor instead.
 func (ChannelFlashState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{10}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{12}
 }
 
 type OffsetReference int32
@@ -680,11 +787,11 @@ func (x OffsetReference) String() string {
 }
 
 func (OffsetReference) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[11].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[13].Descriptor()
 }
 
 func (OffsetReference) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[11]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[13]
 }
 
 func (x OffsetReference) Number() protoreflect.EnumNumber {
@@ -693,7 +800,7 @@ func (x OffsetReference) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use OffsetReference.Descriptor instead.
 func (OffsetReference) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{11}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{13}
 }
 
 type TransitionMode int32
@@ -735,11 +842,11 @@ func (x TransitionMode) String() string {
 }
 
 func (TransitionMode) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[12].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[14].Descriptor()
 }
 
 func (TransitionMode) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[12]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[14]
 }
 
 func (x TransitionMode) Number() protoreflect.EnumNumber {
@@ -748,7 +855,7 @@ func (x TransitionMode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use TransitionMode.Descriptor instead.
 func (TransitionMode) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{12}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{14}
 }
 
 type ForceOffMode int32
@@ -784,11 +891,11 @@ func (x ForceOffMode) String() string {
 }
 
 func (ForceOffMode) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[13].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[15].Descriptor()
 }
 
 func (ForceOffMode) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[13]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[15]
 }
 
 func (x ForceOffMode) Number() protoreflect.EnumNumber {
@@ -797,7 +904,7 @@ func (x ForceOffMode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ForceOffMode.Descriptor instead.
 func (ForceOffMode) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{13}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{15}
 }
 
 type SplitMode int32
@@ -851,11 +958,11 @@ func (x SplitMode) String() string {
 }
 
 func (SplitMode) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[14].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[16].Descriptor()
 }
 
 func (SplitMode) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[14]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[16]
 }
 
 func (x SplitMode) Number() protoreflect.EnumNumber {
@@ -864,7 +971,7 @@ func (x SplitMode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SplitMode.Descriptor instead.
 func (SplitMode) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{14}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{16}
 }
 
 type SpecialOperation int32
@@ -900,11 +1007,11 @@ func (x SpecialOperation) String() string {
 }
 
 func (SpecialOperation) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[15].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[17].Descriptor()
 }
 
 func (SpecialOperation) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[15]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[17]
 }
 
 func (x SpecialOperation) Number() protoreflect.EnumNumber {
@@ -913,7 +1020,7 @@ func (x SpecialOperation) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SpecialOperation.Descriptor instead.
 func (SpecialOperation) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{15}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{17}
 }
 
 type DayOfWeek int32
@@ -964,11 +1071,11 @@ func (x DayOfWeek) String() string {
 }
 
 func (DayOfWeek) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[16].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[18].Descriptor()
 }
 
 func (DayOfWeek) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[16]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[18]
 }
 
 func (x DayOfWeek) Number() protoreflect.EnumNumber {
@@ -977,7 +1084,7 @@ func (x DayOfWeek) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DayOfWeek.Descriptor instead.
 func (DayOfWeek) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{16}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{18}
 }
 
 type Month int32
@@ -1043,11 +1150,11 @@ func (x Month) String() string {
 }
 
 func (Month) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[17].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[19].Descriptor()
 }
 
 func (Month) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[17]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[19]
 }
 
 func (x Month) Number() protoreflect.EnumNumber {
@@ -1056,7 +1163,7 @@ func (x Month) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Month.Descriptor instead.
 func (Month) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{17}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{19}
 }
 
 type SyncStatus int32
@@ -1098,11 +1205,11 @@ func (x SyncStatus) String() string {
 }
 
 func (SyncStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[18].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[20].Descriptor()
 }
 
 func (SyncStatus) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[18]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[20]
 }
 
 func (x SyncStatus) Number() protoreflect.EnumNumber {
@@ -1111,7 +1218,7 @@ func (x SyncStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SyncStatus.Descriptor instead.
 func (SyncStatus) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{18}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{20}
 }
 
 type PreemptStage int32
@@ -1162,11 +1269,11 @@ func (x PreemptStage) String() string {
 }
 
 func (PreemptStage) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[19].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[21].Descriptor()
 }
 
 func (PreemptStage) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[19]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[21]
 }
 
 func (x PreemptStage) Number() protoreflect.EnumNumber {
@@ -1175,7 +1282,7 @@ func (x PreemptStage) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use PreemptStage.Descriptor instead.
 func (PreemptStage) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{19}
+	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{21}
 }
 
 type Stage int32
@@ -1220,11 +1327,11 @@ func (x Stage) String() string {
 }
 
 func (Stage) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[20].Descriptor()
+	return file_openits_signal_control_v1_types_proto_enumTypes[22].Descriptor()
 }
 
 func (Stage) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[20]
+	return &file_openits_signal_control_v1_types_proto_enumTypes[22]
 }
 
 func (x Stage) Number() protoreflect.EnumNumber {
@@ -1233,113 +1340,6 @@ func (x Stage) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Stage.Descriptor instead.
 func (Stage) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{20}
-}
-
-type CabinetOutput int32
-
-const (
-	CabinetOutput_CABINET_OUTPUT_UNKNOWN CabinetOutput = 0
-	CabinetOutput_CABINET_OUTPUT_NORMAL  CabinetOutput = 1
-	CabinetOutput_CABINET_OUTPUT_FLASH   CabinetOutput = 2
-	CabinetOutput_CABINET_OUTPUT_DARK    CabinetOutput = 3
-)
-
-// Enum value maps for CabinetOutput.
-var (
-	CabinetOutput_name = map[int32]string{
-		0: "CABINET_OUTPUT_UNKNOWN",
-		1: "CABINET_OUTPUT_NORMAL",
-		2: "CABINET_OUTPUT_FLASH",
-		3: "CABINET_OUTPUT_DARK",
-	}
-	CabinetOutput_value = map[string]int32{
-		"CABINET_OUTPUT_UNKNOWN": 0,
-		"CABINET_OUTPUT_NORMAL":  1,
-		"CABINET_OUTPUT_FLASH":   2,
-		"CABINET_OUTPUT_DARK":    3,
-	}
-)
-
-func (x CabinetOutput) Enum() *CabinetOutput {
-	p := new(CabinetOutput)
-	*p = x
-	return p
-}
-
-func (x CabinetOutput) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (CabinetOutput) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[21].Descriptor()
-}
-
-func (CabinetOutput) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[21]
-}
-
-func (x CabinetOutput) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use CabinetOutput.Descriptor instead.
-func (CabinetOutput) EnumDescriptor() ([]byte, []int) {
-	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{21}
-}
-
-type MonitorStatus int32
-
-const (
-	MonitorStatus_MONITOR_STATUS_UNKNOWN      MonitorStatus = 0
-	MonitorStatus_MONITOR_STATUS_OK           MonitorStatus = 1
-	MonitorStatus_MONITOR_STATUS_FAULT        MonitorStatus = 2
-	MonitorStatus_MONITOR_STATUS_NOT_READ     MonitorStatus = 3
-	MonitorStatus_MONITOR_STATUS_NOT_EQUIPPED MonitorStatus = 4
-)
-
-// Enum value maps for MonitorStatus.
-var (
-	MonitorStatus_name = map[int32]string{
-		0: "MONITOR_STATUS_UNKNOWN",
-		1: "MONITOR_STATUS_OK",
-		2: "MONITOR_STATUS_FAULT",
-		3: "MONITOR_STATUS_NOT_READ",
-		4: "MONITOR_STATUS_NOT_EQUIPPED",
-	}
-	MonitorStatus_value = map[string]int32{
-		"MONITOR_STATUS_UNKNOWN":      0,
-		"MONITOR_STATUS_OK":           1,
-		"MONITOR_STATUS_FAULT":        2,
-		"MONITOR_STATUS_NOT_READ":     3,
-		"MONITOR_STATUS_NOT_EQUIPPED": 4,
-	}
-)
-
-func (x MonitorStatus) Enum() *MonitorStatus {
-	p := new(MonitorStatus)
-	*p = x
-	return p
-}
-
-func (x MonitorStatus) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (MonitorStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_signal_control_v1_types_proto_enumTypes[22].Descriptor()
-}
-
-func (MonitorStatus) Type() protoreflect.EnumType {
-	return &file_openits_signal_control_v1_types_proto_enumTypes[22]
-}
-
-func (x MonitorStatus) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use MonitorStatus.Descriptor instead.
-func (MonitorStatus) EnumDescriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_types_proto_rawDescGZIP(), []int{22}
 }
 
@@ -1506,13 +1506,31 @@ var File_openits_signal_control_v1_types_proto protoreflect.FileDescriptor
 
 const file_openits_signal_control_v1_types_proto_rawDesc = "" +
 	"\n" +
-	"%openits/signal_control/v1/types.proto\x12\x19openits.signal_control.v1*\x95\x01\n" +
+	"%openits/signal_control/v1/types.proto\x12\x19openits.signal_control.v1*y\n" +
+	"\rCabinetOutput\x12\x1a\n" +
+	"\x16CABINET_OUTPUT_UNKNOWN\x10\x00\x12\x19\n" +
+	"\x15CABINET_OUTPUT_NORMAL\x10\x01\x12\x18\n" +
+	"\x14CABINET_OUTPUT_FLASH\x10\x02\x12\x17\n" +
+	"\x13CABINET_OUTPUT_DARK\x10\x03*\x95\x01\n" +
 	"\rFaultSeverity\x12\x17\n" +
 	"\x13FAULT_SEVERITY_INFO\x10\x00\x12\x1a\n" +
 	"\x16FAULT_SEVERITY_WARNING\x10\x01\x12\x18\n" +
 	"\x14FAULT_SEVERITY_MINOR\x10\x02\x12\x18\n" +
 	"\x14FAULT_SEVERITY_MAJOR\x10\x03\x12\x1b\n" +
-	"\x17FAULT_SEVERITY_CRITICAL\x10\x04*\xcb\x01\n" +
+	"\x17FAULT_SEVERITY_CRITICAL\x10\x04*\x9a\x01\n" +
+	"\rMonitorStatus\x12\x1a\n" +
+	"\x16MONITOR_STATUS_UNKNOWN\x10\x00\x12\x15\n" +
+	"\x11MONITOR_STATUS_OK\x10\x01\x12\x18\n" +
+	"\x14MONITOR_STATUS_FAULT\x10\x02\x12\x1b\n" +
+	"\x17MONITOR_STATUS_NOT_READ\x10\x03\x12\x1f\n" +
+	"\x1bMONITOR_STATUS_NOT_EQUIPPED\x10\x04*\x88\x01\n" +
+	"\n" +
+	"OperStatus\x12\x17\n" +
+	"\x13OPER_STATUS_UNKNOWN\x10\x00\x12\x12\n" +
+	"\x0eOPER_STATUS_OK\x10\x01\x12\x18\n" +
+	"\x14OPER_STATUS_DEGRADED\x10\x02\x12\x16\n" +
+	"\x12OPER_STATUS_FAILED\x10\x03\x12\x1b\n" +
+	"\x17OPER_STATUS_NOT_PRESENT\x10\x04*\xcb\x01\n" +
 	"\x13TsamEngagementState\x12%\n" +
 	"!TSAM_ENGAGEMENT_STATE_UNSPECIFIED\x10\x00\x12\"\n" +
 	"\x1eTSAM_ENGAGEMENT_STATE_DISABLED\x10\x01\x12\"\n" +
@@ -1534,14 +1552,7 @@ const file_openits_signal_control_v1_types_proto_rawDesc = "" +
 	"\x1eDENIAL_REASON_COORD_CONSTRAINT\x10\x02\x12*\n" +
 	"&DENIAL_REASON_HIGHER_PRIORITY_CONFLICT\x10\x03\x12\x1a\n" +
 	"\x16DENIAL_REASON_DISABLED\x10\x04\x12\x17\n" +
-	"\x13DENIAL_REASON_OTHER\x10\x05*\x88\x01\n" +
-	"\n" +
-	"OperStatus\x12\x17\n" +
-	"\x13OPER_STATUS_UNKNOWN\x10\x00\x12\x12\n" +
-	"\x0eOPER_STATUS_OK\x10\x01\x12\x18\n" +
-	"\x14OPER_STATUS_DEGRADED\x10\x02\x12\x16\n" +
-	"\x12OPER_STATUS_FAILED\x10\x03\x12\x1b\n" +
-	"\x17OPER_STATUS_NOT_PRESENT\x10\x04*\xca\x01\n" +
+	"\x13DENIAL_REASON_OTHER\x10\x05*\xca\x01\n" +
 	"\x0fPedIntervalType\x12!\n" +
 	"\x1dPED_INTERVAL_TYPE_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16PED_INTERVAL_TYPE_WALK\x10\x01\x12\x1f\n" +
@@ -1657,18 +1668,7 @@ const file_openits_signal_control_v1_types_proto_rawDesc = "" +
 	"\rSTAGE_GRANTED\x10\x02\x12\x10\n" +
 	"\fSTAGE_ACTIVE\x10\x03\x12\x13\n" +
 	"\x0fSTAGE_COMPLETED\x10\x04\x12\x10\n" +
-	"\fSTAGE_DENIED\x10\x05*y\n" +
-	"\rCabinetOutput\x12\x1a\n" +
-	"\x16CABINET_OUTPUT_UNKNOWN\x10\x00\x12\x19\n" +
-	"\x15CABINET_OUTPUT_NORMAL\x10\x01\x12\x18\n" +
-	"\x14CABINET_OUTPUT_FLASH\x10\x02\x12\x17\n" +
-	"\x13CABINET_OUTPUT_DARK\x10\x03*\x9a\x01\n" +
-	"\rMonitorStatus\x12\x1a\n" +
-	"\x16MONITOR_STATUS_UNKNOWN\x10\x00\x12\x15\n" +
-	"\x11MONITOR_STATUS_OK\x10\x01\x12\x18\n" +
-	"\x14MONITOR_STATUS_FAULT\x10\x02\x12\x1b\n" +
-	"\x17MONITOR_STATUS_NOT_READ\x10\x03\x12\x1f\n" +
-	"\x1bMONITOR_STATUS_NOT_EQUIPPED\x10\x04*\xa1\x01\n" +
+	"\fSTAGE_DENIED\x10\x05*\xa1\x01\n" +
 	"\x18SignalOperationOnBattery\x12.\n" +
 	"*SIGNAL_OPERATION_ON_BATTERY_FULL_OPERATION\x10\x00\x12%\n" +
 	"!SIGNAL_OPERATION_ON_BATTERY_FLASH\x10\x01\x12.\n" +
@@ -1700,29 +1700,29 @@ func file_openits_signal_control_v1_types_proto_rawDescGZIP() []byte {
 
 var file_openits_signal_control_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 26)
 var file_openits_signal_control_v1_types_proto_goTypes = []any{
-	(FaultSeverity)(0),            // 0: openits.signal_control.v1.FaultSeverity
-	(TsamEngagementState)(0),      // 1: openits.signal_control.v1.TsamEngagementState
-	(AdjustmentType)(0),           // 2: openits.signal_control.v1.AdjustmentType
-	(DenialReason)(0),             // 3: openits.signal_control.v1.DenialReason
-	(OperStatus)(0),               // 4: openits.signal_control.v1.OperStatus
-	(PedIntervalType)(0),          // 5: openits.signal_control.v1.PedIntervalType
-	(VehIntervalType)(0),          // 6: openits.signal_control.v1.VehIntervalType
-	(DetectorMode)(0),             // 7: openits.signal_control.v1.DetectorMode
-	(DetectorFailAction)(0),       // 8: openits.signal_control.v1.DetectorFailAction
-	(OverlapIntervalType)(0),      // 9: openits.signal_control.v1.OverlapIntervalType
-	(ChannelFlashState)(0),        // 10: openits.signal_control.v1.ChannelFlashState
-	(OffsetReference)(0),          // 11: openits.signal_control.v1.OffsetReference
-	(TransitionMode)(0),           // 12: openits.signal_control.v1.TransitionMode
-	(ForceOffMode)(0),             // 13: openits.signal_control.v1.ForceOffMode
-	(SplitMode)(0),                // 14: openits.signal_control.v1.SplitMode
-	(SpecialOperation)(0),         // 15: openits.signal_control.v1.SpecialOperation
-	(DayOfWeek)(0),                // 16: openits.signal_control.v1.DayOfWeek
-	(Month)(0),                    // 17: openits.signal_control.v1.Month
-	(SyncStatus)(0),               // 18: openits.signal_control.v1.SyncStatus
-	(PreemptStage)(0),             // 19: openits.signal_control.v1.PreemptStage
-	(Stage)(0),                    // 20: openits.signal_control.v1.Stage
-	(CabinetOutput)(0),            // 21: openits.signal_control.v1.CabinetOutput
-	(MonitorStatus)(0),            // 22: openits.signal_control.v1.MonitorStatus
+	(CabinetOutput)(0),            // 0: openits.signal_control.v1.CabinetOutput
+	(FaultSeverity)(0),            // 1: openits.signal_control.v1.FaultSeverity
+	(MonitorStatus)(0),            // 2: openits.signal_control.v1.MonitorStatus
+	(OperStatus)(0),               // 3: openits.signal_control.v1.OperStatus
+	(TsamEngagementState)(0),      // 4: openits.signal_control.v1.TsamEngagementState
+	(AdjustmentType)(0),           // 5: openits.signal_control.v1.AdjustmentType
+	(DenialReason)(0),             // 6: openits.signal_control.v1.DenialReason
+	(PedIntervalType)(0),          // 7: openits.signal_control.v1.PedIntervalType
+	(VehIntervalType)(0),          // 8: openits.signal_control.v1.VehIntervalType
+	(DetectorMode)(0),             // 9: openits.signal_control.v1.DetectorMode
+	(DetectorFailAction)(0),       // 10: openits.signal_control.v1.DetectorFailAction
+	(OverlapIntervalType)(0),      // 11: openits.signal_control.v1.OverlapIntervalType
+	(ChannelFlashState)(0),        // 12: openits.signal_control.v1.ChannelFlashState
+	(OffsetReference)(0),          // 13: openits.signal_control.v1.OffsetReference
+	(TransitionMode)(0),           // 14: openits.signal_control.v1.TransitionMode
+	(ForceOffMode)(0),             // 15: openits.signal_control.v1.ForceOffMode
+	(SplitMode)(0),                // 16: openits.signal_control.v1.SplitMode
+	(SpecialOperation)(0),         // 17: openits.signal_control.v1.SpecialOperation
+	(DayOfWeek)(0),                // 18: openits.signal_control.v1.DayOfWeek
+	(Month)(0),                    // 19: openits.signal_control.v1.Month
+	(SyncStatus)(0),               // 20: openits.signal_control.v1.SyncStatus
+	(PreemptStage)(0),             // 21: openits.signal_control.v1.PreemptStage
+	(Stage)(0),                    // 22: openits.signal_control.v1.Stage
 	(SignalOperationOnBattery)(0), // 23: openits.signal_control.v1.SignalOperationOnBattery
 	(BatteryTestState)(0),         // 24: openits.signal_control.v1.BatteryTestState
 	(PowerSource)(0),              // 25: openits.signal_control.v1.PowerSource

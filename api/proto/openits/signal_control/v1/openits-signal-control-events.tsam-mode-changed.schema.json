@@ -2,16 +2,16 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
-    "current": {
+    "kind": {
+      "type": "string"
+    },
+    "mode": {
       "enum": [
         "active",
         "advisory",
         "disabled",
         "suspended"
       ],
-      "type": "string"
-    },
-    "kind": {
       "type": "string"
     },
     "observed-by": {
@@ -27,7 +27,7 @@
     "owner": {
       "type": "string"
     },
-    "prior": {
+    "previous-mode": {
       "enum": [
         "active",
         "advisory",
@@ -55,8 +55,8 @@
     }
   },
   "required": [
-    "current",
     "kind",
+    "mode",
     "occurred-at",
     "sequence",
     "sequence-epoch",
