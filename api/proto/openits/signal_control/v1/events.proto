@@ -8,6 +8,20 @@ import "google/protobuf/timestamp.proto";
 import "openits/signal_control/v1/types.proto";
 import "openits/types/v1/types.proto";
 
+message CabinetOutputChanged {
+  string kind = 99;
+  optional CabinetOutput previous_cabinet_output = 1;
+  CabinetOutput cabinet_output = 2;
+  optional string flash_cause = 3;
+  optional string observed_by = 4;
+  google.protobuf.Timestamp occurred_at = 5;
+  optional string owner = 6;
+  uint64 sequence = 7;
+  string sequence_epoch = 8;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 9;
+}
+
 message ControllerFaultEvent {
   string kind = 99;
   string fault_id = 2;
@@ -84,18 +98,28 @@ message DetectorTransition {
 }
 
 message OperationalStatusReport {
+  reserved 4, 5, 10;
+  reserved "last_mode_change", "uptime_seconds", "flash_active";
   string kind = 99;
-  optional string mode = 2;
-  optional bool flash_active = 10;
+  optional CabinetOutput cabinet_output = 12;
+  google.protobuf.Timestamp cabinet_output_since = 22;
   optional string flash_cause = 11;
-  google.protobuf.Timestamp last_mode_change = 4;
-  optional uint64 uptime_seconds = 5;
+  optional string mode = 2;
+  optional bool preempt_active = 13;
+  optional bool priority_active = 14;
+  optional MonitorStatus monitor_status = 15;
+  google.protobuf.Timestamp mode_since = 16;
+  optional uint32 active_fault_count = 17;
+  optional string control_source = 18;
+  google.protobuf.Timestamp observed_at = 19;
   optional string observed_by = 7;
   google.protobuf.Timestamp occurred_at = 6;
+  optional OperStatus oper_status = 20;
   optional string owner = 8;
   uint64 sequence = 9;
   string sequence_epoch = 3;
   string source_device_id = 1;
+  optional uint64 uptime_s = 21;
 }
 
 message OverlapChange {
@@ -196,11 +220,11 @@ message PreemptionEvent {
 }
 
 message TsamModeChanged {
-  reserved 100;
-  reserved "source";
+  reserved 2, 3, 100;
+  reserved "prior", "current", "source";
   string kind = 99;
-  optional TsamEngagementState prior = 2;
-  TsamEngagementState current = 3;
+  optional TsamEngagementState previous_mode = 10;
+  TsamEngagementState mode = 11;
   optional string reason = 4;
   optional string observed_by = 7;
   google.protobuf.Timestamp occurred_at = 6;

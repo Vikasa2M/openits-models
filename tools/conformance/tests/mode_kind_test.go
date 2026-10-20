@@ -54,6 +54,16 @@ func TestModeKind_DualBasedUnknownPassesForDMS(t *testing.T) {
 	}
 }
 
+// The signal-control unknown dual-bases on the canonical identity and
+// is a controller-mode value, so it is accepted under the signal-control
+// kind.
+func TestModeKind_SignalControlUnknownPasses(t *testing.T) {
+	if r := runMode(modeEv("signal-control", "openits-signal-control-types:sc-mode-event-kind",
+		"openits-signal-control-types:mode-free", "openits-signal-control-types:mode-unknown")); !r.Pass {
+		t.Fatalf("signal-control mode-unknown rejected: %s", r.Message)
+	}
+}
+
 func TestModeKind_CrossFamilyModeFails(t *testing.T) {
 	r := runMode(modeEv("signal-control", "openits-signal-control-types:sc-mode-event-kind",
 		"openits-signal-control-types:mode-free", "openits-dms-types:mode-blank"))

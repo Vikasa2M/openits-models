@@ -2,8 +2,26 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
-    "flash-active": {
-      "type": "boolean"
+    "active-fault-count": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "cabinet-output": {
+      "enum": [
+        "dark",
+        "flash",
+        "normal",
+        "unknown"
+      ],
+      "type": "string"
+    },
+    "cabinet-output-since": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "control-source": {
+      "type": "string"
     },
     "flash-cause": {
       "type": "string"
@@ -11,11 +29,25 @@
     "kind": {
       "type": "string"
     },
-    "last-mode-change": {
+    "mode": {
+      "type": "string"
+    },
+    "mode-since": {
       "format": "date-time",
       "type": "string"
     },
-    "mode": {
+    "monitor-status": {
+      "enum": [
+        "fault",
+        "not-equipped",
+        "not-read",
+        "ok",
+        "unknown"
+      ],
+      "type": "string"
+    },
+    "observed-at": {
+      "format": "date-time",
       "type": "string"
     },
     "observed-by": {
@@ -28,8 +60,24 @@
       "format": "date-time",
       "type": "string"
     },
+    "oper-status": {
+      "enum": [
+        "degraded",
+        "failed",
+        "not-present",
+        "ok",
+        "unknown"
+      ],
+      "type": "string"
+    },
     "owner": {
       "type": "string"
+    },
+    "preempt-active": {
+      "type": "boolean"
+    },
+    "priority-active": {
+      "type": "boolean"
     },
     "sequence": {
       "type": "string"
@@ -45,7 +93,7 @@
       "pattern": "^([a-zA-Z0-9_-]+)$",
       "type": "string"
     },
-    "uptime-seconds": {
+    "uptime-s": {
       "type": "string"
     }
   },

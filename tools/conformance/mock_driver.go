@@ -73,12 +73,22 @@ func collectASC() (*yangpkg.Device, error) {
 	st.Model = strPtr("Cobalt")
 	st.Firmware = strPtr("Econolite Cobalt 9.2.3")
 
-	// Operational rollup (state-only): mode/flash-active/flash-cause/mmu/
-	// last-mode-change moved off the identity tree into their own
-	// container, distinct from the applied-identity "state" above.
+	// Operating state (state-only): cabinet output, coordination mode,
+	// control source, preempt/priority flags, mode-since and the cabinet
+	// monitor, in their own container distinct from the applied-identity
+	// "state" above.
 	op := sc.GetOrCreateOperation()
-	op.FlashActive = boolPtr(false)
-	op.LastModeChange = strPtr("2026-04-18T14:00:00Z")
+	mon := op.GetOrCreateMonitor()
+	mon.Status = yangpkg.OpenitsSignalControlTypes_MonitorStatus_ok
+	mon.MonitorKind = yangpkg.OpenitsSignalControlTypes_MonitorKind_monitor_ts2_mmu
+	mon.ObservedAt = strPtr("2026-04-18T14:00:05Z")
+	op.CabinetOutput = yangpkg.OpenitsSignalControlTypes_CabinetOutput_normal
+	op.Mode = yangpkg.OpenitsSignalControlTypes_ControllerMode_mode_coordinated
+	op.ControlSource = yangpkg.OpenitsTypes_ControlSource_control_central
+	op.PreemptActive = boolPtr(false)
+	op.PriorityActive = boolPtr(false)
+	op.ModeSince = strPtr("2026-04-18T14:00:00Z")
+	op.CabinetOutputSince = strPtr("2026-04-18T14:00:00Z")
 
 	// Coordination: config-only timing-plan library + state readback
 	// naming the active plan. Plan 3 carries the cut-2c coordination-
@@ -354,18 +364,80 @@ func subscribeASC(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 			},
 		},
 		{
-			Subject:  base + ".operational-status",
-			CEType:   "openits.signal-control.operational-status.v1",
+			Subject:  base + ".operational-status-report",
+			CEType:   "openits.signal-control.operational-status-report.v1",
 			CESource: "urn:openits:controller:us-tx:txdot:d07:i35-exit-214",
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R6V8X",
 			CETime:   time.Now().UTC(),
-			// No generated payload message backs this heartbeat: unlike
-			// every other event here, operational-status was never a YANG
-			// `notification` in the old hand-authored proto either, so
-			// tools/yang-proto-gen (which only emits from notifications)
-			// has nothing to generate for it. The envelope alone (subject
-			// + ce-type) is what TestHealth_OperationalStatus checks.
-			Data: nil,
+			Data: &signalcontrolv1.OperationalStatusReport{
+				Kind:           "openits-signal-control-types:sc-operational-status-report",
+				Mode:           proto.String("openits-signal-control-types:mode-coordinated"),
+				CabinetOutput:  signalcontrolv1.CabinetOutput_CABINET_OUTPUT_NORMAL.Enum(),
+				ControlSource:  proto.String("openits-types:control-central"),
+				PreemptActive:  proto.Bool(false),
+				PriorityActive: proto.Bool(false),
+				OperStatus:     signalcontrolv1.OperStatus_OPER_STATUS_OK.Enum(),
+				MonitorStatus:  signalcontrolv1.MonitorStatus_MONITOR_STATUS_OK.Enum(),
+				UptimeS:        proto.Uint64(431980),
+
+				CabinetOutputSince: timestamppb.New(time.Date(2026, 4, 18, 14, 0, 0, 0, time.UTC)),
+			},
+		},
+		{
+			Subject:  base + ".mode-changed",
+			CEType:   "openits.signal-control.mode-changed.v1",
+			CESource: "urn:openits:controller:us-tx:txdot:d07:i35-exit-214",
+			CEID:     "01HXYR3K9T8M2NAEQF5P4R6V90",
+			CETime:   time.Now().UTC(),
+			Data: &commonv1.ModeChanged{
+				Kind:          "openits-signal-control-types:sc-mode-event-kind",
+				PreviousMode:  proto.String("openits-signal-control-types:mode-free"),
+				Mode:          "openits-signal-control-types:mode-coordinated",
+				ControlSource: proto.String("openits-types:control-central"),
+			},
+		},
+		// A control-authority change alone is reported as mode-changed with
+		// the mode unchanged and the new control-source.
+		{
+			Subject:  base + ".mode-changed",
+			CEType:   "openits.signal-control.mode-changed.v1",
+			CESource: "urn:openits:controller:us-tx:txdot:d07:i35-exit-214",
+			CEID:     "01HXYR3K9T8M2NAEQF5P4R6V92",
+			CETime:   time.Now().UTC(),
+			Data: &commonv1.ModeChanged{
+				Kind:          "openits-signal-control-types:sc-mode-event-kind",
+				PreviousMode:  proto.String("openits-signal-control-types:mode-coordinated"),
+				Mode:          "openits-signal-control-types:mode-coordinated",
+				ControlSource: proto.String("openits-types:control-manual"),
+			},
+		},
+		// The cabinet-output-changed stream goes normal -> flash -> normal,
+		// so it ends coherent with the device state, which reports
+		// cabinet-output normal.
+		{
+			Subject:  base + ".cabinet-output-changed",
+			CEType:   "openits.signal-control.cabinet-output-changed.v1",
+			CESource: "urn:openits:controller:us-tx:txdot:d07:i35-exit-214",
+			CEID:     "01HXYR3K9T8M2NAEQF5P4R6V91",
+			CETime:   time.Now().UTC(),
+			Data: &signalcontrolv1.CabinetOutputChanged{
+				Kind:                  "openits-signal-control-types:sc-cabinet-output-changed",
+				PreviousCabinetOutput: signalcontrolv1.CabinetOutput_CABINET_OUTPUT_NORMAL.Enum(),
+				CabinetOutput:         signalcontrolv1.CabinetOutput_CABINET_OUTPUT_FLASH,
+				FlashCause:            proto.String("openits-signal-control-types:flash-monitor"),
+			},
+		},
+		{
+			Subject:  base + ".cabinet-output-changed",
+			CEType:   "openits.signal-control.cabinet-output-changed.v1",
+			CESource: "urn:openits:controller:us-tx:txdot:d07:i35-exit-214",
+			CEID:     "01HXYR3K9T8M2NAEQF5P4R6V93",
+			CETime:   time.Now().UTC(),
+			Data: &signalcontrolv1.CabinetOutputChanged{
+				Kind:                  "openits-signal-control-types:sc-cabinet-output-changed",
+				PreviousCabinetOutput: signalcontrolv1.CabinetOutput_CABINET_OUTPUT_FLASH.Enum(),
+				CabinetOutput:         signalcontrolv1.CabinetOutput_CABINET_OUTPUT_NORMAL,
+			},
 		},
 		{
 			Subject:  base + ".preemption-activated",

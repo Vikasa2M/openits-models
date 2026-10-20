@@ -404,16 +404,23 @@ message ActiveRequest {
 }
 
 message Operation {
-  reserved 4;
-  reserved "mmu";
-  optional string mode = 1;
-  optional bool flash_active = 2;
+  reserved 2, 4, 5;
+  reserved "flash_active", "mmu", "last_mode_change";
+  optional CabinetOutput cabinet_output = 7;
+  google.protobuf.Timestamp cabinet_output_since = 12;
   optional string flash_cause = 3;
+  optional string mode = 1;
+  optional string control_source = 8;
+  optional bool preempt_active = 9;
+  optional bool priority_active = 10;
+  google.protobuf.Timestamp mode_since = 11;
   Monitor monitor = 6;
-  google.protobuf.Timestamp last_mode_change = 5;
 }
 
 message Monitor {
+  optional MonitorStatus status = 4;
+  optional string monitor_kind = 5;
+  google.protobuf.Timestamp observed_at = 6;
   optional string fault_type = 1;
   repeated uint32 faulting_channels = 2;
   optional bool latched = 3;

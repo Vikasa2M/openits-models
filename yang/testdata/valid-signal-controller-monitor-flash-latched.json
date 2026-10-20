@@ -34,15 +34,22 @@
       ]
     },
     "operation": {
-      "mode": "openits-signal-control-types:mode-flash",
-      "flash-active": true,
-      "flash-cause": "openits-signal-control-types:flash-mmu-conflict",
+      "cabinet-output": "flash",
+      "cabinet-output-since": "2026-07-12T08:15:00Z",
+      "flash-cause": "openits-signal-control-types:flash-monitor",
+      "mode": "openits-signal-control-types:mode-free",
+      "control-source": "openits-types:control-local-backup",
+      "preempt-active": false,
+      "priority-active": false,
+      "mode-since": "2026-07-12T08:15:00Z",
       "monitor": {
+        "status": "fault",
+        "monitor-kind": "openits-signal-control-types:monitor-ts2-mmu",
+        "observed-at": "2026-07-12T08:15:02Z",
         "fault-type": "openits-signal-control-types:monitor-conflict",
         "faulting-channels": [2, 6],
         "latched": true
-      },
-      "last-mode-change": "2026-07-12T08:15:00Z"
+      }
     }
   }
 }

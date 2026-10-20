@@ -4,12 +4,35 @@ package openits.signal_control.v1;
 
 option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/signal_control/v1;signalcontrolv1";
 
+enum CabinetOutput {
+  CABINET_OUTPUT_UNKNOWN = 0;
+  CABINET_OUTPUT_NORMAL = 1;
+  CABINET_OUTPUT_FLASH = 2;
+  CABINET_OUTPUT_DARK = 3;
+}
+
 enum FaultSeverity {
   FAULT_SEVERITY_INFO = 0;
   FAULT_SEVERITY_WARNING = 1;
   FAULT_SEVERITY_MINOR = 2;
   FAULT_SEVERITY_MAJOR = 3;
   FAULT_SEVERITY_CRITICAL = 4;
+}
+
+enum MonitorStatus {
+  MONITOR_STATUS_UNKNOWN = 0;
+  MONITOR_STATUS_OK = 1;
+  MONITOR_STATUS_FAULT = 2;
+  MONITOR_STATUS_NOT_READ = 3;
+  MONITOR_STATUS_NOT_EQUIPPED = 4;
+}
+
+enum OperStatus {
+  OPER_STATUS_UNKNOWN = 0;
+  OPER_STATUS_OK = 1;
+  OPER_STATUS_DEGRADED = 2;
+  OPER_STATUS_FAILED = 3;
+  OPER_STATUS_NOT_PRESENT = 4;
 }
 
 enum TsamEngagementState {
@@ -38,14 +61,6 @@ enum DenialReason {
   DENIAL_REASON_HIGHER_PRIORITY_CONFLICT = 3;
   DENIAL_REASON_DISABLED = 4;
   DENIAL_REASON_OTHER = 5;
-}
-
-enum OperStatus {
-  OPER_STATUS_UNKNOWN = 0;
-  OPER_STATUS_OK = 1;
-  OPER_STATUS_DEGRADED = 2;
-  OPER_STATUS_FAILED = 3;
-  OPER_STATUS_NOT_PRESENT = 4;
 }
 
 enum PedIntervalType {

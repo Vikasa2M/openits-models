@@ -3764,14 +3764,18 @@ func (x *ActiveRequest) GetStrategyId() uint32 {
 }
 
 type Operation struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Mode           *string                `protobuf:"bytes,1,opt,name=mode,proto3,oneof" json:"mode,omitempty"`
-	FlashActive    *bool                  `protobuf:"varint,2,opt,name=flash_active,json=flashActive,proto3,oneof" json:"flash_active,omitempty"`
-	FlashCause     *string                `protobuf:"bytes,3,opt,name=flash_cause,json=flashCause,proto3,oneof" json:"flash_cause,omitempty"`
-	Monitor        *Monitor               `protobuf:"bytes,6,opt,name=monitor,proto3" json:"monitor,omitempty"`
-	LastModeChange *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=last_mode_change,json=lastModeChange,proto3" json:"last_mode_change,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	CabinetOutput      *CabinetOutput         `protobuf:"varint,7,opt,name=cabinet_output,json=cabinetOutput,proto3,enum=openits.signal_control.v1.CabinetOutput,oneof" json:"cabinet_output,omitempty"`
+	CabinetOutputSince *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=cabinet_output_since,json=cabinetOutputSince,proto3" json:"cabinet_output_since,omitempty"`
+	FlashCause         *string                `protobuf:"bytes,3,opt,name=flash_cause,json=flashCause,proto3,oneof" json:"flash_cause,omitempty"`
+	Mode               *string                `protobuf:"bytes,1,opt,name=mode,proto3,oneof" json:"mode,omitempty"`
+	ControlSource      *string                `protobuf:"bytes,8,opt,name=control_source,json=controlSource,proto3,oneof" json:"control_source,omitempty"`
+	PreemptActive      *bool                  `protobuf:"varint,9,opt,name=preempt_active,json=preemptActive,proto3,oneof" json:"preempt_active,omitempty"`
+	PriorityActive     *bool                  `protobuf:"varint,10,opt,name=priority_active,json=priorityActive,proto3,oneof" json:"priority_active,omitempty"`
+	ModeSince          *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=mode_since,json=modeSince,proto3" json:"mode_since,omitempty"`
+	Monitor            *Monitor               `protobuf:"bytes,6,opt,name=monitor,proto3" json:"monitor,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *Operation) Reset() {
@@ -3804,18 +3808,18 @@ func (*Operation) Descriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{50}
 }
 
-func (x *Operation) GetMode() string {
-	if x != nil && x.Mode != nil {
-		return *x.Mode
+func (x *Operation) GetCabinetOutput() CabinetOutput {
+	if x != nil && x.CabinetOutput != nil {
+		return *x.CabinetOutput
 	}
-	return ""
+	return CabinetOutput_CABINET_OUTPUT_UNKNOWN
 }
 
-func (x *Operation) GetFlashActive() bool {
-	if x != nil && x.FlashActive != nil {
-		return *x.FlashActive
+func (x *Operation) GetCabinetOutputSince() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CabinetOutputSince
 	}
-	return false
+	return nil
 }
 
 func (x *Operation) GetFlashCause() string {
@@ -3825,6 +3829,41 @@ func (x *Operation) GetFlashCause() string {
 	return ""
 }
 
+func (x *Operation) GetMode() string {
+	if x != nil && x.Mode != nil {
+		return *x.Mode
+	}
+	return ""
+}
+
+func (x *Operation) GetControlSource() string {
+	if x != nil && x.ControlSource != nil {
+		return *x.ControlSource
+	}
+	return ""
+}
+
+func (x *Operation) GetPreemptActive() bool {
+	if x != nil && x.PreemptActive != nil {
+		return *x.PreemptActive
+	}
+	return false
+}
+
+func (x *Operation) GetPriorityActive() bool {
+	if x != nil && x.PriorityActive != nil {
+		return *x.PriorityActive
+	}
+	return false
+}
+
+func (x *Operation) GetModeSince() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ModeSince
+	}
+	return nil
+}
+
 func (x *Operation) GetMonitor() *Monitor {
 	if x != nil {
 		return x.Monitor
@@ -3832,15 +3871,11 @@ func (x *Operation) GetMonitor() *Monitor {
 	return nil
 }
 
-func (x *Operation) GetLastModeChange() *timestamppb.Timestamp {
-	if x != nil {
-		return x.LastModeChange
-	}
-	return nil
-}
-
 type Monitor struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
+	Status           *MonitorStatus         `protobuf:"varint,4,opt,name=status,proto3,enum=openits.signal_control.v1.MonitorStatus,oneof" json:"status,omitempty"`
+	MonitorKind      *string                `protobuf:"bytes,5,opt,name=monitor_kind,json=monitorKind,proto3,oneof" json:"monitor_kind,omitempty"`
+	ObservedAt       *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
 	FaultType        *string                `protobuf:"bytes,1,opt,name=fault_type,json=faultType,proto3,oneof" json:"fault_type,omitempty"`
 	FaultingChannels []uint32               `protobuf:"varint,2,rep,packed,name=faulting_channels,json=faultingChannels,proto3" json:"faulting_channels,omitempty"`
 	Latched          *bool                  `protobuf:"varint,3,opt,name=latched,proto3,oneof" json:"latched,omitempty"`
@@ -3876,6 +3911,27 @@ func (x *Monitor) ProtoReflect() protoreflect.Message {
 // Deprecated: Use Monitor.ProtoReflect.Descriptor instead.
 func (*Monitor) Descriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{51}
+}
+
+func (x *Monitor) GetStatus() MonitorStatus {
+	if x != nil && x.Status != nil {
+		return *x.Status
+	}
+	return MonitorStatus_MONITOR_STATUS_UNKNOWN
+}
+
+func (x *Monitor) GetMonitorKind() string {
+	if x != nil && x.MonitorKind != nil {
+		return *x.MonitorKind
+	}
+	return ""
+}
+
+func (x *Monitor) GetObservedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ObservedAt
+	}
+	return nil
 }
 
 func (x *Monitor) GetFaultType() string {
@@ -4916,22 +4972,37 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\x0e_priority_typeB\r\n" +
 	"\v_vehicle_idB\b\n" +
 	"\x06_stageB\x0e\n" +
-	"\f_strategy_id\"\xab\x02\n" +
-	"\tOperation\x12\x17\n" +
-	"\x04mode\x18\x01 \x01(\tH\x00R\x04mode\x88\x01\x01\x12&\n" +
-	"\fflash_active\x18\x02 \x01(\bH\x01R\vflashActive\x88\x01\x01\x12$\n" +
-	"\vflash_cause\x18\x03 \x01(\tH\x02R\n" +
-	"flashCause\x88\x01\x01\x12<\n" +
-	"\amonitor\x18\x06 \x01(\v2\".openits.signal_control.v1.MonitorR\amonitor\x12D\n" +
-	"\x10last_mode_change\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\x0elastModeChangeB\a\n" +
-	"\x05_modeB\x0f\n" +
-	"\r_flash_activeB\x0e\n" +
-	"\f_flash_causeJ\x04\b\x04\x10\x05R\x03mmu\"\x94\x01\n" +
-	"\aMonitor\x12\"\n" +
+	"\f_strategy_id\"\x8a\x05\n" +
+	"\tOperation\x12T\n" +
+	"\x0ecabinet_output\x18\a \x01(\x0e2(.openits.signal_control.v1.CabinetOutputH\x00R\rcabinetOutput\x88\x01\x01\x12L\n" +
+	"\x14cabinet_output_since\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\x12cabinetOutputSince\x12$\n" +
+	"\vflash_cause\x18\x03 \x01(\tH\x01R\n" +
+	"flashCause\x88\x01\x01\x12\x17\n" +
+	"\x04mode\x18\x01 \x01(\tH\x02R\x04mode\x88\x01\x01\x12*\n" +
+	"\x0econtrol_source\x18\b \x01(\tH\x03R\rcontrolSource\x88\x01\x01\x12*\n" +
+	"\x0epreempt_active\x18\t \x01(\bH\x04R\rpreemptActive\x88\x01\x01\x12,\n" +
+	"\x0fpriority_active\x18\n" +
+	" \x01(\bH\x05R\x0epriorityActive\x88\x01\x01\x129\n" +
 	"\n" +
-	"fault_type\x18\x01 \x01(\tH\x00R\tfaultType\x88\x01\x01\x12+\n" +
+	"mode_since\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\tmodeSince\x12<\n" +
+	"\amonitor\x18\x06 \x01(\v2\".openits.signal_control.v1.MonitorR\amonitorB\x11\n" +
+	"\x0f_cabinet_outputB\x0e\n" +
+	"\f_flash_causeB\a\n" +
+	"\x05_modeB\x11\n" +
+	"\x0f_control_sourceB\x11\n" +
+	"\x0f_preempt_activeB\x12\n" +
+	"\x10_priority_activeJ\x04\b\x02\x10\x03J\x04\b\x04\x10\x05J\x04\b\x05\x10\x06R\fflash_activeR\x03mmuR\x10last_mode_change\"\xdc\x02\n" +
+	"\aMonitor\x12E\n" +
+	"\x06status\x18\x04 \x01(\x0e2(.openits.signal_control.v1.MonitorStatusH\x00R\x06status\x88\x01\x01\x12&\n" +
+	"\fmonitor_kind\x18\x05 \x01(\tH\x01R\vmonitorKind\x88\x01\x01\x12;\n" +
+	"\vobserved_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x12\"\n" +
+	"\n" +
+	"fault_type\x18\x01 \x01(\tH\x02R\tfaultType\x88\x01\x01\x12+\n" +
 	"\x11faulting_channels\x18\x02 \x03(\rR\x10faultingChannels\x12\x1d\n" +
-	"\alatched\x18\x03 \x01(\bH\x01R\alatched\x88\x01\x01B\r\n" +
+	"\alatched\x18\x03 \x01(\bH\x03R\alatched\x88\x01\x01B\t\n" +
+	"\a_statusB\x0f\n" +
+	"\r_monitor_kindB\r\n" +
 	"\v_fault_typeB\n" +
 	"\n" +
 	"\b_latched\"\xf8\x02\n" +
@@ -5090,12 +5161,14 @@ var file_openits_signal_control_v1_state_proto_goTypes = []any{
 	(SyncStatus)(0),                               // 74: openits.signal_control.v1.SyncStatus
 	(PreemptStage)(0),                             // 75: openits.signal_control.v1.PreemptStage
 	(Stage)(0),                                    // 76: openits.signal_control.v1.Stage
-	(*v1.ScOnBatteryPolicy)(nil),                  // 77: openits.types.v1.ScOnBatteryPolicy
-	(SignalOperationOnBattery)(0),                 // 78: openits.signal_control.v1.SignalOperationOnBattery
-	(PowerSource)(0),                              // 79: openits.signal_control.v1.PowerSource
-	(BatteryTestState)(0),                         // 80: openits.signal_control.v1.BatteryTestState
-	(*v1.ComponentRef)(nil),                       // 81: openits.types.v1.ComponentRef
-	(FaultSeverity)(0),                            // 82: openits.signal_control.v1.FaultSeverity
+	(CabinetOutput)(0),                            // 77: openits.signal_control.v1.CabinetOutput
+	(MonitorStatus)(0),                            // 78: openits.signal_control.v1.MonitorStatus
+	(*v1.ScOnBatteryPolicy)(nil),                  // 79: openits.types.v1.ScOnBatteryPolicy
+	(SignalOperationOnBattery)(0),                 // 80: openits.signal_control.v1.SignalOperationOnBattery
+	(PowerSource)(0),                              // 81: openits.signal_control.v1.PowerSource
+	(BatteryTestState)(0),                         // 82: openits.signal_control.v1.BatteryTestState
+	(*v1.ComponentRef)(nil),                       // 83: openits.types.v1.ComponentRef
+	(FaultSeverity)(0),                            // 84: openits.signal_control.v1.FaultSeverity
 }
 var file_openits_signal_control_v1_state_proto_depIdxs = []int32{
 	1,  // 0: openits.signal_control.v1.SignalController.config:type_name -> openits.signal_control.v1.SignalControllerConfig
@@ -5175,27 +5248,31 @@ var file_openits_signal_control_v1_state_proto_depIdxs = []int32{
 	47, // 74: openits.signal_control.v1.Strategy.config:type_name -> openits.signal_control.v1.StrategyConfig
 	49, // 75: openits.signal_control.v1.PriorityState.active_request:type_name -> openits.signal_control.v1.ActiveRequest
 	76, // 76: openits.signal_control.v1.ActiveRequest.stage:type_name -> openits.signal_control.v1.Stage
-	51, // 77: openits.signal_control.v1.Operation.monitor:type_name -> openits.signal_control.v1.Monitor
-	59, // 78: openits.signal_control.v1.Operation.last_mode_change:type_name -> google.protobuf.Timestamp
-	53, // 79: openits.signal_control.v1.CabinetPower.config:type_name -> openits.signal_control.v1.CabinetPowerConfig
-	54, // 80: openits.signal_control.v1.CabinetPower.state:type_name -> openits.signal_control.v1.CabinetPowerState
-	77, // 81: openits.signal_control.v1.CabinetPowerConfig.on_battery_policy:type_name -> openits.types.v1.ScOnBatteryPolicy
-	78, // 82: openits.signal_control.v1.CabinetPowerState.signal_operation_on_battery:type_name -> openits.signal_control.v1.SignalOperationOnBattery
-	55, // 83: openits.signal_control.v1.CabinetPowerState.battery:type_name -> openits.signal_control.v1.Battery
-	56, // 84: openits.signal_control.v1.CabinetPowerState.generator:type_name -> openits.signal_control.v1.Generator
-	77, // 85: openits.signal_control.v1.CabinetPowerState.on_battery_policy:type_name -> openits.types.v1.ScOnBatteryPolicy
-	79, // 86: openits.signal_control.v1.CabinetPowerState.power_source:type_name -> openits.signal_control.v1.PowerSource
-	80, // 87: openits.signal_control.v1.Battery.test_state:type_name -> openits.signal_control.v1.BatteryTestState
-	59, // 88: openits.signal_control.v1.Battery.last_test:type_name -> google.protobuf.Timestamp
-	58, // 89: openits.signal_control.v1.Faults.fault:type_name -> openits.signal_control.v1.Fault
-	81, // 90: openits.signal_control.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
-	59, // 91: openits.signal_control.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	82, // 92: openits.signal_control.v1.Fault.severity:type_name -> openits.signal_control.v1.FaultSeverity
-	93, // [93:93] is the sub-list for method output_type
-	93, // [93:93] is the sub-list for method input_type
-	93, // [93:93] is the sub-list for extension type_name
-	93, // [93:93] is the sub-list for extension extendee
-	0,  // [0:93] is the sub-list for field type_name
+	77, // 77: openits.signal_control.v1.Operation.cabinet_output:type_name -> openits.signal_control.v1.CabinetOutput
+	59, // 78: openits.signal_control.v1.Operation.cabinet_output_since:type_name -> google.protobuf.Timestamp
+	59, // 79: openits.signal_control.v1.Operation.mode_since:type_name -> google.protobuf.Timestamp
+	51, // 80: openits.signal_control.v1.Operation.monitor:type_name -> openits.signal_control.v1.Monitor
+	78, // 81: openits.signal_control.v1.Monitor.status:type_name -> openits.signal_control.v1.MonitorStatus
+	59, // 82: openits.signal_control.v1.Monitor.observed_at:type_name -> google.protobuf.Timestamp
+	53, // 83: openits.signal_control.v1.CabinetPower.config:type_name -> openits.signal_control.v1.CabinetPowerConfig
+	54, // 84: openits.signal_control.v1.CabinetPower.state:type_name -> openits.signal_control.v1.CabinetPowerState
+	79, // 85: openits.signal_control.v1.CabinetPowerConfig.on_battery_policy:type_name -> openits.types.v1.ScOnBatteryPolicy
+	80, // 86: openits.signal_control.v1.CabinetPowerState.signal_operation_on_battery:type_name -> openits.signal_control.v1.SignalOperationOnBattery
+	55, // 87: openits.signal_control.v1.CabinetPowerState.battery:type_name -> openits.signal_control.v1.Battery
+	56, // 88: openits.signal_control.v1.CabinetPowerState.generator:type_name -> openits.signal_control.v1.Generator
+	79, // 89: openits.signal_control.v1.CabinetPowerState.on_battery_policy:type_name -> openits.types.v1.ScOnBatteryPolicy
+	81, // 90: openits.signal_control.v1.CabinetPowerState.power_source:type_name -> openits.signal_control.v1.PowerSource
+	82, // 91: openits.signal_control.v1.Battery.test_state:type_name -> openits.signal_control.v1.BatteryTestState
+	59, // 92: openits.signal_control.v1.Battery.last_test:type_name -> google.protobuf.Timestamp
+	58, // 93: openits.signal_control.v1.Faults.fault:type_name -> openits.signal_control.v1.Fault
+	83, // 94: openits.signal_control.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
+	59, // 95: openits.signal_control.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	84, // 96: openits.signal_control.v1.Fault.severity:type_name -> openits.signal_control.v1.FaultSeverity
+	97, // [97:97] is the sub-list for method output_type
+	97, // [97:97] is the sub-list for method input_type
+	97, // [97:97] is the sub-list for extension type_name
+	97, // [97:97] is the sub-list for extension extendee
+	0,  // [0:97] is the sub-list for field type_name
 }
 
 func init() { file_openits_signal_control_v1_state_proto_init() }

@@ -424,6 +424,7 @@ func All(kind string) []TestCase {
 			TestCase{"TestConflictMonitor_PermissiveResolvesChannels", TestConflictMonitor_PermissiveResolvesChannels},
 			TestCase{"TestConflictMonitor_PermissiveCanonicalOrder", TestConflictMonitor_PermissiveCanonicalOrder},
 			TestCase{"TestConflictMonitor_NoSameRingPermissive", TestConflictMonitor_NoSameRingPermissive},
+			TestCase{"TestMonitor_StatusReported", TestMonitor_StatusReported},
 
 			// coordination
 			TestCase{"TestCoordination_ActivePlan", TestCoordination_ActivePlan},
@@ -445,7 +446,10 @@ func All(kind string) []TestCase {
 
 			// health
 			TestCase{"TestHealth_OperationalStatus", TestHealth_OperationalStatus},
+			TestCase{"TestEvents_CabinetOutputChanged", TestEvents_CabinetOutputChanged},
+			TestCase{"TestEvents_StatusReportFlashCause", TestEvents_StatusReportFlashCause},
 			TestCase{"TestHealth_NotFlashing", TestHealth_NotFlashing},
+			TestCase{"TestOperation_ActiveFlagsMatchLists", TestOperation_ActiveFlagsMatchLists},
 
 			// cabinet power / UPS (platform capability)
 			TestCase{"TestCabinetPower_SourceReported", TestCabinetPower_SourceReported},

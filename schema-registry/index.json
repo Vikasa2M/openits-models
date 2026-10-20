@@ -889,9 +889,11 @@
         "2026-10-12",
         "2026-10-13",
         "2026-10-14",
-        "2026-10-16"
+        "2026-10-16",
+        "2026-10-17"
       ],
       "events": [
+        "openits.signal-control.cabinet-output-changed.v1",
         "openits.signal-control.comm-health-event.v1",
         "openits.signal-control.controller-fault-event.v1",
         "openits.signal-control.coordination-change.v1",
@@ -916,6 +918,7 @@
       "refStd": [
         "ARC-IT 9.1 Service Package TI01",
         "ARC-IT 9.1 Service Package: Traffic Signal Control (SU01) NTCIP 1202 v03 (functional reference only; no wire compat)",
+        "ATC Cabinet Standard",
         "ATC Cabinet Standard (CMU)",
         "ATSPM Indiana enumeration",
         "ATSPM Indiana enumeration (HR event-code vocabulary)",
@@ -939,6 +942,7 @@
         "NEMA TS-2 §4 (MMU)",
         "NEMA TS-2 §4 (conflict monitor / MMU)",
         "NEMA TS-2-2016 (FYA)",
+        "NEMA TS1 section 6",
         "NEMA TS2-2021 section 4",
         "NTCIP 1201",
         "NTCIP 1201 (global time / time-base)",
@@ -989,7 +993,8 @@
             "2026-09-07",
             "2026-09-08",
             "2026-10-14",
-            "2026-10-16"
+            "2026-10-16",
+            "2026-10-17"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TI01",
@@ -1039,7 +1044,8 @@
             "2026-07-21",
             "2026-09-07",
             "2026-09-08",
-            "2026-10-13"
+            "2026-10-13",
+            "2026-10-17"
           ],
           "refStd": [
             "ATSPM Indiana enumeration",
@@ -1068,15 +1074,18 @@
             "2026-09-08",
             "2026-10-12",
             "2026-10-14",
-            "2026-10-16"
+            "2026-10-16",
+            "2026-10-17"
           ],
           "refStd": [
+            "ATC Cabinet Standard",
             "ATC Cabinet Standard (CMU)",
             "ATSPM Indiana enumeration (HR event-code vocabulary)",
             "Indiana 173 (fault-unit-flash-status)",
             "Li, H., A.M. Hainen, J.R. Sturdevant, et al. Indiana Traffic Signal Hi Resolution Data Logger Enumerations. Purdue TPF-5(377), Aug 2020 (doi: 10.5703/1288284316998), supersedes the Nov 2012 original (doi: 10.4231/K4RN35SH)",
             "MUTCD 11th ed. Ch. 8C",
             "NEMA TS-2 §4",
+            "NEMA TS1 section 6",
             "NEMA TS2-2021 section 4",
             "NTCIP 1201 (global time / time-base)",
             "NTCIP 1202 v03 (controller operating modes)",
@@ -1409,10 +1418,12 @@
         "2026-05-23",
         "2026-07-13",
         "2026-07-21",
-        "2026-10-13"
+        "2026-10-13",
+        "2026-10-17"
       ],
       "refStd": [
-        "RFC 7950 §11"
+        "RFC 7950 §11",
+        "RFC 7950 §7.21"
       ]
     },
     {
@@ -1862,6 +1873,13 @@
         "openits-common-mode-events/2026-10-13/schema.json",
         "openits-common-mode-events/2026-10-13/schema.proto",
         "openits-common-mode-events/2026-10-13/schema.yang"
+      ],
+      "2026-10-17": [
+        "openits-common-mode-events/2026-10-17/MANIFEST.json",
+        "openits-common-mode-events/2026-10-17/README.md",
+        "openits-common-mode-events/2026-10-17/schema.json",
+        "openits-common-mode-events/2026-10-17/schema.proto",
+        "openits-common-mode-events/2026-10-17/schema.yang"
       ]
     },
     "openits-device-diagnostics": {
@@ -2605,6 +2623,11 @@
         "openits-signal-control/2026-10-16/MANIFEST.json",
         "openits-signal-control/2026-10-16/README.md",
         "openits-signal-control/2026-10-16/schema.yang"
+      ],
+      "2026-10-17": [
+        "openits-signal-control/2026-10-17/MANIFEST.json",
+        "openits-signal-control/2026-10-17/README.md",
+        "openits-signal-control/2026-10-17/schema.yang"
       ]
     },
     "openits-signal-control-coordination-events": {
@@ -2667,6 +2690,13 @@
         "openits-signal-control-events/2026-10-13/schema.json",
         "openits-signal-control-events/2026-10-13/schema.proto",
         "openits-signal-control-events/2026-10-13/schema.yang"
+      ],
+      "2026-10-17": [
+        "openits-signal-control-events/2026-10-17/MANIFEST.json",
+        "openits-signal-control-events/2026-10-17/README.md",
+        "openits-signal-control-events/2026-10-17/schema.json",
+        "openits-signal-control-events/2026-10-17/schema.proto",
+        "openits-signal-control-events/2026-10-17/schema.yang"
       ]
     },
     "openits-signal-control-fault-events": {
@@ -2824,6 +2854,11 @@
         "openits-signal-control-types/2026-10-16/MANIFEST.json",
         "openits-signal-control-types/2026-10-16/README.md",
         "openits-signal-control-types/2026-10-16/schema.yang"
+      ],
+      "2026-10-17": [
+        "openits-signal-control-types/2026-10-17/MANIFEST.json",
+        "openits-signal-control-types/2026-10-17/README.md",
+        "openits-signal-control-types/2026-10-17/schema.yang"
       ]
     },
     "openits-traffic-sensor": {

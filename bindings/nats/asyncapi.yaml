@@ -300,6 +300,12 @@ channels:
             openits.rsu.rsu-tim-loaded.v1:
                 $ref: '#/components/messages/openits.rsu.rsu-tim-loaded.v1'
         title: rsu — rsu-tim-loaded
+    openits.signal-control.cabinet-output-changed.v1:
+        address: openits.signal-control.cabinet-output-changed.v1
+        messages:
+            openits.signal-control.cabinet-output-changed.v1:
+                $ref: '#/components/messages/openits.signal-control.cabinet-output-changed.v1'
+        title: signal-control — cabinet-output-changed
     openits.signal-control.comm-health-event.v1:
         address: openits.signal-control.comm-health-event.v1
         messages:
@@ -5677,6 +5683,119 @@ components:
                 schemaFormat: application/schema+json;version=draft-2020-12
             summary: rsu.rsu-tim-loaded
             title: openits.rsu.rsu-tim-loaded.v1
+        openits.signal-control.cabinet-output-changed.v1:
+            contentType: application/protobuf
+            headers:
+                properties:
+                    ce-datacontenttype:
+                        const: application/protobuf
+                        type: string
+                    ce-id:
+                        description: Event identifier, unique within the source.
+                        type: string
+                    ce-source:
+                        description: CloudEvents source URI identifying the emitting device or service instance.
+                        type: string
+                    ce-specversion:
+                        const: "1.0"
+                        type: string
+                    ce-time:
+                        format: date-time
+                        type: string
+                    ce-type:
+                        const: openits.signal-control.cabinet-output-changed.v1
+                        type: string
+                    traceparent:
+                        description: W3C Trace Context. Optional; recommended.
+                        type: string
+                type: object
+            name: openits.signal-control.cabinet-output-changed.v1
+            payload:
+                schema:
+                    $defs:
+                        WireSource:
+                            additionalProperties: false
+                            properties:
+                                decoder:
+                                    type: string
+                                indiana-code:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                indiana-param:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                message-id:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                oid:
+                                    type: string
+                                oid-value:
+                                    type: string
+                                register:
+                                    type: string
+                                register-value:
+                                    type: string
+                            required:
+                                - decoder
+                            type: object
+                    $schema: https://json-schema.org/draft/2020-12/schema
+                    additionalProperties: false
+                    properties:
+                        cabinet-output:
+                            enum:
+                                - dark
+                                - flash
+                                - normal
+                                - unknown
+                            type: string
+                        flash-cause:
+                            type: string
+                        kind:
+                            type: string
+                        observed-by:
+                            maxLength: 64
+                            minLength: 1
+                            pattern: ^([a-zA-Z0-9_-]+)$
+                            type: string
+                        occurred-at:
+                            format: date-time
+                            type: string
+                        owner:
+                            type: string
+                        previous-cabinet-output:
+                            enum:
+                                - dark
+                                - flash
+                                - normal
+                                - unknown
+                            type: string
+                        sequence:
+                            type: string
+                        sequence-epoch:
+                            maxLength: 64
+                            minLength: 1
+                            type: string
+                        source:
+                            $ref: '#/$defs/WireSource'
+                        source-device-id:
+                            maxLength: 64
+                            minLength: 1
+                            pattern: ^([a-zA-Z0-9_-]+)$
+                            type: string
+                    required:
+                        - cabinet-output
+                        - kind
+                        - occurred-at
+                        - sequence
+                        - sequence-epoch
+                        - source-device-id
+                    type: object
+                schemaFormat: application/schema+json;version=draft-2020-12
+            summary: signal-control.cabinet-output-changed
+            title: openits.signal-control.cabinet-output-changed.v1
         openits.signal-control.comm-health-event.v1:
             contentType: application/protobuf
             headers:
@@ -6642,16 +6761,41 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
-                        flash-active:
-                            type: boolean
+                        active-fault-count:
+                            maximum: 4294967295
+                            minimum: 0
+                            type: integer
+                        cabinet-output:
+                            enum:
+                                - dark
+                                - flash
+                                - normal
+                                - unknown
+                            type: string
+                        cabinet-output-since:
+                            format: date-time
+                            type: string
+                        control-source:
+                            type: string
                         flash-cause:
                             type: string
                         kind:
                             type: string
-                        last-mode-change:
+                        mode:
+                            type: string
+                        mode-since:
                             format: date-time
                             type: string
-                        mode:
+                        monitor-status:
+                            enum:
+                                - fault
+                                - not-equipped
+                                - not-read
+                                - ok
+                                - unknown
+                            type: string
+                        observed-at:
+                            format: date-time
                             type: string
                         observed-by:
                             maxLength: 64
@@ -6661,8 +6805,20 @@ components:
                         occurred-at:
                             format: date-time
                             type: string
+                        oper-status:
+                            enum:
+                                - degraded
+                                - failed
+                                - not-present
+                                - ok
+                                - unknown
+                            type: string
                         owner:
                             type: string
+                        preempt-active:
+                            type: boolean
+                        priority-active:
+                            type: boolean
                         sequence:
                             type: string
                         sequence-epoch:
@@ -6674,7 +6830,7 @@ components:
                             minLength: 1
                             pattern: ^([a-zA-Z0-9_-]+)$
                             type: string
-                        uptime-seconds:
+                        uptime-s:
                             type: string
                     required:
                         - kind
@@ -7425,14 +7581,14 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
-                        current:
+                        kind:
+                            type: string
+                        mode:
                             enum:
                                 - active
                                 - advisory
                                 - disabled
                                 - suspended
-                            type: string
-                        kind:
                             type: string
                         observed-by:
                             maxLength: 64
@@ -7444,7 +7600,7 @@ components:
                             type: string
                         owner:
                             type: string
-                        prior:
+                        previous-mode:
                             enum:
                                 - active
                                 - advisory
@@ -7465,8 +7621,8 @@ components:
                             pattern: ^([a-zA-Z0-9_-]+)$
                             type: string
                     required:
-                        - current
                         - kind
+                        - mode
                         - occurred-at
                         - sequence
                         - sequence-epoch
@@ -9151,6 +9307,13 @@ operations:
         messages:
             - $ref: '#/channels/openits.rsu.rsu-tim-loaded.v1/messages/openits.rsu.rsu-tim-loaded.v1'
         summary: Consume openits.rsu.rsu-tim-loaded.v1
+    consume_openits.signal-control.cabinet-output-changed.v1:
+        action: receive
+        channel:
+            $ref: '#/channels/openits.signal-control.cabinet-output-changed.v1'
+        messages:
+            - $ref: '#/channels/openits.signal-control.cabinet-output-changed.v1/messages/openits.signal-control.cabinet-output-changed.v1'
+        summary: Consume openits.signal-control.cabinet-output-changed.v1
     consume_openits.signal-control.comm-health-event.v1:
         action: receive
         channel:
@@ -9697,6 +9860,13 @@ operations:
         messages:
             - $ref: '#/channels/openits.rsu.rsu-tim-loaded.v1/messages/openits.rsu.rsu-tim-loaded.v1'
         summary: Publish openits.rsu.rsu-tim-loaded.v1
+    publish_openits.signal-control.cabinet-output-changed.v1:
+        action: send
+        channel:
+            $ref: '#/channels/openits.signal-control.cabinet-output-changed.v1'
+        messages:
+            - $ref: '#/channels/openits.signal-control.cabinet-output-changed.v1/messages/openits.signal-control.cabinet-output-changed.v1'
+        summary: Publish openits.signal-control.cabinet-output-changed.v1
     publish_openits.signal-control.comm-health-event.v1:
         action: send
         channel:

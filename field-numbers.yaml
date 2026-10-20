@@ -2478,6 +2478,18 @@ messages:
         temperature_c: 4
         test_state: 6
         voltage_v: 3
+    openits.signal_control.v1.CabinetOutputChanged:
+        cabinet_output: 2
+        flash_cause: 3
+        kind: 99
+        observed_by: 4
+        occurred_at: 5
+        owner: 6
+        previous_cabinet_output: 1
+        sequence: 7
+        sequence_epoch: 8
+        source: 100
+        source_device_id: 9
     openits.signal_control.v1.CabinetPower:
         battery: 1
         config: 11
@@ -2655,29 +2667,49 @@ messages:
         fault_type: 1
         faulting_channels: 2
         latched: 3
+        monitor_kind: 5
+        observed_at: 6
+        status: 4
     openits.signal_control.v1.OnBatteryPolicy:
         mode: 1
         transition_at_runtime_minutes: 3
         transition_at_soc_pct: 2
     openits.signal_control.v1.Operation:
+        cabinet_output: 7
+        cabinet_output_since: 12
+        control_source: 8
         flash_active: 2
         flash_cause: 3
         last_mode_change: 5
         mmu: 4
         mode: 1
+        mode_since: 11
         monitor: 6
+        preempt_active: 9
+        priority_active: 10
     openits.signal_control.v1.OperationalStatusReport:
+        active_fault_count: 17
+        cabinet_output: 12
+        cabinet_output_since: 22
+        control_source: 18
         flash_active: 10
         flash_cause: 11
         kind: 99
         last_mode_change: 4
         mode: 2
+        mode_since: 16
+        monitor_status: 15
+        observed_at: 19
         observed_by: 7
         occurred_at: 6
+        oper_status: 20
         owner: 8
+        preempt_active: 13
+        priority_active: 14
         sequence: 9
         sequence_epoch: 3
         source_device_id: 1
+        uptime_s: 21
         uptime_seconds: 5
     openits.signal_control.v1.Options:
         call_to_nonactuated: 8
@@ -2973,9 +3005,11 @@ messages:
     openits.signal_control.v1.TsamModeChanged:
         current: 3
         kind: 99
+        mode: 11
         observed_by: 7
         occurred_at: 6
         owner: 8
+        previous_mode: 10
         prior: 2
         reason: 4
         sequence: 9
