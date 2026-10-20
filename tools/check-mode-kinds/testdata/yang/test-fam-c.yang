@@ -1,0 +1,15 @@
+module test-fam-c {
+  yang-version 1.1;
+  namespace "urn:test:fam-c";
+  prefix fc;
+
+  import openits-types { prefix ot; }
+
+  // Allowlisted in the tests: a kind whose mode values are not
+  // operational-mode identities.
+  identity c-mode-event-kind {
+    base ot:mode-event-kind;
+  }
+  identity c-control-mode;
+  identity c-local { base c-control-mode; }
+}

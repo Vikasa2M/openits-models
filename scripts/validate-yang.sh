@@ -158,8 +158,11 @@ yl_ok() { grep -qxF "YLPASS $1" "$YL_OUT"; }
 MANDATORY_OUT="$(mktemp)"
 YL_OUT="$(mktemp)"
 trap 'rm -f "$MANDATORY_OUT" "$YL_OUT"' EXIT
-python3 "$SCRIPT_DIR/check-notif-mandatory.py" --schemas "${SCHEMAS[@]}" -- \
-    yang/testdata/valid-*.json yang/testdata/invalid-*.json > "$MANDATORY_OUT"
+if ! python3 "$SCRIPT_DIR/check-notif-mandatory.py" --schemas "${SCHEMAS[@]}" -- \
+    yang/testdata/valid-*.json yang/testdata/invalid-*.json > "$MANDATORY_OUT"; then
+    echo "validate-yang: check-notif-mandatory.py failed (schema error above)" >&2
+    exit 2
+fi
 
 # Single-container yanglint pass: validate every fixture inside ONE container.
 # Emits "YLPASS <file>" / "YLFAIL <file>" per fixture, read by yl_ok. A

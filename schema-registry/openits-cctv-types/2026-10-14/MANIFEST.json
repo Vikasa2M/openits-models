@@ -1,0 +1,7 @@
+{
+  "module": "openits-cctv-types",
+  "revision": "2026-10-14",
+  "files": [
+    "schema.yang"
+  ]
+}

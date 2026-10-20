@@ -192,6 +192,58 @@ func (*WireSource_MessageId) isWireSource_Tag() {}
 
 func (*WireSource_PlcRegister_) isWireSource_Tag() {}
 
+type ComponentRef struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	ComponentClass string                 `protobuf:"bytes,1,opt,name=component_class,json=componentClass,proto3" json:"component_class,omitempty"`
+	ComponentId    string                 `protobuf:"bytes,2,opt,name=component_id,json=componentId,proto3" json:"component_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ComponentRef) Reset() {
+	*x = ComponentRef{}
+	mi := &file_openits_types_v1_types_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ComponentRef) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ComponentRef) ProtoMessage() {}
+
+func (x *ComponentRef) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_types_v1_types_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ComponentRef.ProtoReflect.Descriptor instead.
+func (*ComponentRef) Descriptor() ([]byte, []int) {
+	return file_openits_types_v1_types_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *ComponentRef) GetComponentClass() string {
+	if x != nil {
+		return x.ComponentClass
+	}
+	return ""
+}
+
+func (x *ComponentRef) GetComponentId() string {
+	if x != nil {
+		return x.ComponentId
+	}
+	return ""
+}
+
 type ScOnBatteryPolicy struct {
 	state                      protoimpl.MessageState `protogen:"open.v1"`
 	Mode                       *OnBatteryMode         `protobuf:"varint,1,opt,name=mode,proto3,enum=openits.types.v1.OnBatteryMode,oneof" json:"mode,omitempty"`
@@ -203,7 +255,7 @@ type ScOnBatteryPolicy struct {
 
 func (x *ScOnBatteryPolicy) Reset() {
 	*x = ScOnBatteryPolicy{}
-	mi := &file_openits_types_v1_types_proto_msgTypes[1]
+	mi := &file_openits_types_v1_types_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -215,7 +267,7 @@ func (x *ScOnBatteryPolicy) String() string {
 func (*ScOnBatteryPolicy) ProtoMessage() {}
 
 func (x *ScOnBatteryPolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_types_v1_types_proto_msgTypes[1]
+	mi := &file_openits_types_v1_types_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -228,7 +280,7 @@ func (x *ScOnBatteryPolicy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ScOnBatteryPolicy.ProtoReflect.Descriptor instead.
 func (*ScOnBatteryPolicy) Descriptor() ([]byte, []int) {
-	return file_openits_types_v1_types_proto_rawDescGZIP(), []int{1}
+	return file_openits_types_v1_types_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *ScOnBatteryPolicy) GetMode() OnBatteryMode {
@@ -262,7 +314,7 @@ type WireSource_Indiana struct {
 
 func (x *WireSource_Indiana) Reset() {
 	*x = WireSource_Indiana{}
-	mi := &file_openits_types_v1_types_proto_msgTypes[2]
+	mi := &file_openits_types_v1_types_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -274,7 +326,7 @@ func (x *WireSource_Indiana) String() string {
 func (*WireSource_Indiana) ProtoMessage() {}
 
 func (x *WireSource_Indiana) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_types_v1_types_proto_msgTypes[2]
+	mi := &file_openits_types_v1_types_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -314,7 +366,7 @@ type WireSource_NtcipOid struct {
 
 func (x *WireSource_NtcipOid) Reset() {
 	*x = WireSource_NtcipOid{}
-	mi := &file_openits_types_v1_types_proto_msgTypes[3]
+	mi := &file_openits_types_v1_types_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -326,7 +378,7 @@ func (x *WireSource_NtcipOid) String() string {
 func (*WireSource_NtcipOid) ProtoMessage() {}
 
 func (x *WireSource_NtcipOid) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_types_v1_types_proto_msgTypes[3]
+	mi := &file_openits_types_v1_types_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -366,7 +418,7 @@ type WireSource_PlcRegister struct {
 
 func (x *WireSource_PlcRegister) Reset() {
 	*x = WireSource_PlcRegister{}
-	mi := &file_openits_types_v1_types_proto_msgTypes[4]
+	mi := &file_openits_types_v1_types_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -378,7 +430,7 @@ func (x *WireSource_PlcRegister) String() string {
 func (*WireSource_PlcRegister) ProtoMessage() {}
 
 func (x *WireSource_PlcRegister) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_types_v1_types_proto_msgTypes[4]
+	mi := &file_openits_types_v1_types_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -437,7 +489,10 @@ const file_openits_types_v1_types_proto_rawDesc = "" +
 	"\x0eregister_value\x18\x02 \x01(\tH\x01R\rregisterValue\x88\x01\x01B\v\n" +
 	"\t_registerB\x11\n" +
 	"\x0f_register_valueB\x05\n" +
-	"\x03tag\"\x92\x02\n" +
+	"\x03tag\"Z\n" +
+	"\fComponentRef\x12'\n" +
+	"\x0fcomponent_class\x18\x01 \x01(\tR\x0ecomponentClass\x12!\n" +
+	"\fcomponent_id\x18\x02 \x01(\tR\vcomponentId\"\x92\x02\n" +
 	"\x11ScOnBatteryPolicy\x128\n" +
 	"\x04mode\x18\x01 \x01(\x0e2\x1f.openits.types.v1.OnBatteryModeH\x00R\x04mode\x88\x01\x01\x126\n" +
 	"\x15transition_at_soc_pct\x18\x02 \x01(\rH\x01R\x12transitionAtSocPct\x88\x01\x01\x12F\n" +
@@ -463,19 +518,20 @@ func file_openits_types_v1_types_proto_rawDescGZIP() []byte {
 }
 
 var file_openits_types_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_openits_types_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_openits_types_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_openits_types_v1_types_proto_goTypes = []any{
 	(OnBatteryMode)(0),             // 0: openits.types.v1.OnBatteryMode
 	(*WireSource)(nil),             // 1: openits.types.v1.WireSource
-	(*ScOnBatteryPolicy)(nil),      // 2: openits.types.v1.ScOnBatteryPolicy
-	(*WireSource_Indiana)(nil),     // 3: openits.types.v1.WireSource.Indiana
-	(*WireSource_NtcipOid)(nil),    // 4: openits.types.v1.WireSource.NtcipOid
-	(*WireSource_PlcRegister)(nil), // 5: openits.types.v1.WireSource.PlcRegister
+	(*ComponentRef)(nil),           // 2: openits.types.v1.ComponentRef
+	(*ScOnBatteryPolicy)(nil),      // 3: openits.types.v1.ScOnBatteryPolicy
+	(*WireSource_Indiana)(nil),     // 4: openits.types.v1.WireSource.Indiana
+	(*WireSource_NtcipOid)(nil),    // 5: openits.types.v1.WireSource.NtcipOid
+	(*WireSource_PlcRegister)(nil), // 6: openits.types.v1.WireSource.PlcRegister
 }
 var file_openits_types_v1_types_proto_depIdxs = []int32{
-	3, // 0: openits.types.v1.WireSource.indiana:type_name -> openits.types.v1.WireSource.Indiana
-	4, // 1: openits.types.v1.WireSource.ntcip_oid:type_name -> openits.types.v1.WireSource.NtcipOid
-	5, // 2: openits.types.v1.WireSource.plc_register:type_name -> openits.types.v1.WireSource.PlcRegister
+	4, // 0: openits.types.v1.WireSource.indiana:type_name -> openits.types.v1.WireSource.Indiana
+	5, // 1: openits.types.v1.WireSource.ntcip_oid:type_name -> openits.types.v1.WireSource.NtcipOid
+	6, // 2: openits.types.v1.WireSource.plc_register:type_name -> openits.types.v1.WireSource.PlcRegister
 	0, // 3: openits.types.v1.ScOnBatteryPolicy.mode:type_name -> openits.types.v1.OnBatteryMode
 	4, // [4:4] is the sub-list for method output_type
 	4, // [4:4] is the sub-list for method input_type
@@ -495,17 +551,17 @@ func file_openits_types_v1_types_proto_init() {
 		(*WireSource_MessageId)(nil),
 		(*WireSource_PlcRegister_)(nil),
 	}
-	file_openits_types_v1_types_proto_msgTypes[1].OneofWrappers = []any{}
 	file_openits_types_v1_types_proto_msgTypes[2].OneofWrappers = []any{}
 	file_openits_types_v1_types_proto_msgTypes[3].OneofWrappers = []any{}
 	file_openits_types_v1_types_proto_msgTypes[4].OneofWrappers = []any{}
+	file_openits_types_v1_types_proto_msgTypes[5].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_types_v1_types_proto_rawDesc), len(file_openits_types_v1_types_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   5,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

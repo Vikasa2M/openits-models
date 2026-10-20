@@ -7,6 +7,7 @@
     "fault-id": "monitor-red-fail-ch6",
     "severity": "critical",
     "description": "Cabinet monitor latched red-fail on channel 6; cabinet in flash.",
+    "first-observed": "2026-10-12T06:41:06Z",
     "occurred-at": "2026-10-12T06:41:09Z"
   }
 }

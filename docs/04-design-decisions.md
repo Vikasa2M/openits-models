@@ -440,7 +440,7 @@ JetStream-only with no SQL store at all.
    third backend is unnecessary.
 
 3. **OLAP queries don't fit streams.** "For each district, count
-   fault-raised events by category over the last 30 days" is a
+   fault-raised events by kind over the last 30 days" is a
    columnar aggregation. Doing it via JetStream replay means
    streaming millions of events to a consumer and aggregating in
    application code; doing it in ClickHouse pushes the
@@ -749,10 +749,11 @@ regardless of how device-adjacent the notification sounds.
   leaves are direct citations of the sign's own reported NTCIP 1203
   `dmsMultiSyntaxError`/`dmsMultiSyntaxErrorPosition` diagnostic objects, not an
   openits-authored success/fail boolean.
-- **Reversible-lane `lane-state-changed` / `lcs-conflict-detected` — yes.** The
-  entire payload *is* the facility PLC's decoded register readback; "conflict"
-  is what the two decoded registers show, not an openits computation over
-  them.
+- **Reversible-lane `lane-state-changed` / `lcs-conflict-detected` /
+  `gate-status-changed` — yes.** The entire payload *is* the facility
+  PLC's decoded register readback; "conflict" is what the two decoded
+  registers show, not an openits computation over them.
+  `gate-status-changed` is that same readback for one gate.
 - **RSU `rsu-tim-cleared` — no.** Its `reason` (expired / cleared-by-operator /
   superseded / rsu-restart / other) is an openits-inferred classification of
   *why* broadcasting stopped, not a field the RSU itself reported on the wire.
@@ -808,7 +809,9 @@ compose one shared grouping so they carry the same leaves. The container
 is documented as the digital-twin rollup of that stream. Traffic-sensor
 did this first (`queues/queue-zone` and `queue-state-changed` over
 `queue-zone-state`); zone-occupancy is the second (`zones/zone` and
-`zone-occupancy-changed` over `zone-occupancy-state`). The mechanics are
+`zone-occupancy-changed` over `zone-occupancy-state`); reversible-lane
+is the third (`gates/gate` and `gate-status-changed` over `gate-status`).
+The mechanics are
 in [the conventions reference](reference/yang-reference-conventions.md#a-live-state-container-and-its-change-notification-share-one-grouping).
 
 **What we considered.**
@@ -855,7 +858,7 @@ that rule applied to a live container. Two things make it hold up:
    zone-occupancy shape.
 
 Each user declares its own key and timestamp outside the grouping — the
-state list a leafref and the reading's `measured-at`, the notification a
+state list a leafref and the reading's `observed-at`, the notification a
 plain identifier and the header's `occurred-at`. Carrying both timestamps
 in the event would be redundant state that can disagree with itself, the
 same objection that removed zone capacity.

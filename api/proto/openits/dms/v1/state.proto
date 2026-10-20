@@ -6,6 +6,7 @@ option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/dms/v1
 
 import "google/protobuf/timestamp.proto";
 import "openits/dms/v1/types.proto";
+import "openits/types/v1/types.proto";
 
 message Sign {
   SignConfig config = 1;
@@ -53,6 +54,7 @@ message SignState {
   optional uint32 heading = 13;
   optional string id = 14;
   google.protobuf.Timestamp install_date = 11;
+  google.protobuf.Timestamp last_change = 23;
   optional string latitude = 6;
   SignStateLinearReference linear_reference = 19;
   optional string longitude = 7;
@@ -60,6 +62,8 @@ message SignState {
   optional string make = 8;
   optional string model = 9;
   optional string name = 15;
+  google.protobuf.Timestamp observed_at = 24;
+  optional OperStatus oper_status = 25;
   optional string owner = 21;
   optional string road_reference = 16;
   optional string serial = 10;
@@ -369,7 +373,10 @@ message Faults {
 }
 
 message Fault {
-  optional string category = 1;
+  reserved 1;
+  reserved "category";
+  string kind = 99;
+  openits.types.v1.ComponentRef component = 7;
   optional string correlates_with = 6;
   optional string description = 2;
   optional string fault_id = 3;

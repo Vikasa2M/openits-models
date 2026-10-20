@@ -109,11 +109,12 @@ coarser of the two signals.
 
 ## Open questions for review
 
-1. **`measured-at` vs `occurred-at`.** `event-header` carries `occurred-at`;
-   `zones/zone` carries `measured-at`. For a change notification these can
+1. **`observed-at` vs `occurred-at`.** `event-header` carries `occurred-at`;
+   `zones/zone` carries `observed-at`. For a change notification these can
    legitimately differ — a poll at T detects a transition that happened at T−δ.
-   Decide whether the grouping keeps `measured-at`, or whether it collapses into
-   the header, and document which one a consumer should trust for ordering.
+   The grouping never held the timestamp; it is declared beside it. Decide
+   whether `observed-at` stays beside the grouping, or whether it collapses
+   into the header, and document which one a consumer should trust for ordering.
 2. **Cadence and de-duplication.** Does the model constrain re-report interval,
    or leave it to a deployment profile? `queue-state-changed` leaves it open;
    consistency argues for the same, but occupancy is higher-volume.

@@ -6,6 +6,7 @@ option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/ess/v1
 
 import "google/protobuf/timestamp.proto";
 import "openits/ess/v1/types.proto";
+import "openits/types/v1/types.proto";
 
 message Station {
   StationConfig config = 1;
@@ -50,6 +51,7 @@ message StationState {
   optional uint32 heading = 12;
   optional string id = 13;
   google.protobuf.Timestamp install_date = 1;
+  google.protobuf.Timestamp last_change = 19;
   optional string latitude = 3;
   StationStateLinearReference linear_reference = 10;
   optional string longitude = 4;
@@ -57,6 +59,8 @@ message StationState {
   optional string make = 5;
   optional string model = 6;
   optional string name = 7;
+  google.protobuf.Timestamp observed_at = 20;
+  optional OperStatus oper_status = 21;
   optional string owner = 17;
   optional string road_reference = 8;
   optional string serial = 9;
@@ -185,7 +189,10 @@ message Faults {
 }
 
 message Fault {
-  optional string category = 1;
+  reserved 1;
+  reserved "category";
+  string kind = 99;
+  openits.types.v1.ComponentRef component = 7;
   optional string correlates_with = 6;
   optional string description = 2;
   optional string fault_id = 3;

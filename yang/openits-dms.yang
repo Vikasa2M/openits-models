@@ -44,8 +44,21 @@ module openits-dms {
 
      Copyright (c) 2026.  Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.10.1";
+  openits-types:openits-version "0.12.0";
 
+  revision 2026-10-16 {
+    description
+      "Report health on the root state: add the shared device-health grouping (oper-status, last-change, observed-at). Additive.";
+    reference "RFC 7950 §7.12.";
+  }
+  revision 2026-10-14 {
+    description
+      "The fault inventory classifies each entry with kind (renamed from
+       category, now mandatory), matching fault-raised, and picks up the
+       shared fault-entry shape: mandatory first-observed and an optional
+       component. Breaking: the category leaf is now kind.";
+    reference "RFC 7950 §11.";
+  }
   revision 2026-10-12 {
     description
       "Stop config defaults leaking into read-back state. The shared
@@ -545,6 +558,7 @@ module openits-dms {
       description "Applied identity (mirror) + device-reported hardware and face geometry.";
       uses openits-types:device-identity-config;
       uses openits-types:device-hardware;
+      uses openits-types:device-health;
 
       leaf technology {
         type identityref {
@@ -1187,11 +1201,15 @@ module openits-dms {
         key "fault-id";
         description "One entry per active fault on the sign.";
         uses openits-types:fault-entry;
-        leaf category {
-          type identityref {
-            base openits-dms-types:dms-fault-event-kind;
-          }
-          description "Fault class (pixel / lamp / communication / environment / etc.).";
+        leaf kind {
+          type identityref { base openits-dms-types:dms-fault-event-kind; }
+          mandatory true;
+          description
+            "Fault class, typed to this service's fault base so the
+             inventory accepts only this service's faults (including its
+             own identities for platform faults such as cabinet power).
+             Fleet-wide filters use
+             derived-from-or-self(kind, 'openits-types:fault-event-kind').";
         }
       }
     }

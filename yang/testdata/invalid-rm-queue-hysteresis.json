@@ -83,7 +83,7 @@
                 "active": true,
                 "count-vph": 900,
                 "occupancy-pct": 22,
-                "last-update": "2026-04-19T07:05:00Z"
+                "observed-at": "2026-04-19T07:05:00Z"
               }
             },
             {
@@ -98,7 +98,7 @@
                 "active": true,
                 "count-vph": 720,
                 "occupancy-pct": 10,
-                "last-update": "2026-04-19T07:05:00Z"
+                "observed-at": "2026-04-19T07:05:00Z"
               }
             },
             {
@@ -113,7 +113,7 @@
                 "active": true,
                 "count-vph": 180,
                 "occupancy-pct": 35,
-                "last-update": "2026-04-19T07:05:00Z"
+                "observed-at": "2026-04-19T07:05:00Z"
               }
             }
           ]

@@ -115,7 +115,7 @@ func collectPerception() (*yangpkg.Device, error) {
 	// leaf and the incident's own timeline must agree.
 	zocSt.OccupiedSince = strPtr("2026-04-19T11:58:12Z")
 	zocSt.PresenceConfidence = u8Ptr(96)
-	zocSt.MeasuredAt = strPtr("2026-04-19T12:00:58Z")
+	zocSt.ObservedAt = strPtr("2026-04-19T12:00:58Z")
 	// Presence confidence (96) and classification confidence (91/84) differ
 	// deliberately — the capability separates them because they fail
 	// independently, and a mock that set them equal would not exercise that.
@@ -165,7 +165,7 @@ func collectPerception() (*yangpkg.Device, error) {
 	if err != nil {
 		return nil, err
 	}
-	fault.Category = yangpkg.OpenitsPerceptionTypes_PerceptionFaultEventKind_perception_fault_blockage
+	fault.Kind = yangpkg.OpenitsPerceptionTypes_PerceptionFaultEventKind_perception_fault_blockage
 	fault.Severity = yangpkg.OpenitsTypes_FaultSeverity_warning
 	fault.Description = strPtr("Partial lens blockage on the lower field of view")
 	fault.FirstObserved = strPtr("2026-04-19T11:45:00Z")
@@ -267,7 +267,7 @@ func subscribePerception(ctx context.Context, out chan<- tests.EventEnvelope, wi
 			// zones/zone entry in collectPerception leaf for leaf, which is the
 			// point: the state container is the digital-twin rollup of this
 			// stream, so a consumer that applied this event holds exactly what
-			// a poller would read. occurred-at equals that entry's measured-at
+			// a poller would read. occurred-at equals that entry's observed-at
 			// because the mock's state snapshot IS the reading that detected
 			// the transition.
 			Subject:  zocBase + ".zone-occupancy-changed",
@@ -298,8 +298,10 @@ func subscribePerception(ctx context.Context, out chan<- tests.EventEnvelope, wi
 			CEID:     "01HXYR3K9T8M2NAEQF5P4R7CCC",
 			CETime:   time.Now().UTC(),
 			Data: &commonv1.FaultRaised{
-				FaultId: "f-pcp-001",
-				Kind:    "openits-perception-types:perception-fault-blockage",
+				FirstObserved: timestamppb.New(time.Date(2026, 4, 19, 11, 45, 0, 0, time.UTC)),
+				FaultId:       "f-pcp-001",
+				Kind:          "openits-perception-types:perception-fault-blockage",
+				Severity:      commonv1.FaultSeverity_FAULT_SEVERITY_MAJOR,
 			},
 		},
 	}

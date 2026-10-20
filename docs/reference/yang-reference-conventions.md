@@ -419,7 +419,7 @@ container state {
 
 Where the config-false condition matters operationally, say so in the
 leaf or container `description` and name the notification or fault
-category that reports it (`fault-raised`, a specific
+kind that reports it (`fault-raised`, a specific
 `*-conflict-detected` event, etc.) instead of encoding it as a `must`.
 
 ### 1b. Leafrefs in config-false trees → `require-instance false`
@@ -649,7 +649,7 @@ rather than a datastore subscription — is recorded in
 - **The grouping holds the observation only** — not the key and not the
   timestamp. The state list declares its key as a leafref into
   `configuration` and carries the reading's own timestamp
-  (`measured-at`); the notification declares the key as the plain id
+  (`observed-at`); the notification declares the key as the plain id
   typedef and takes its time from `event-header`'s `occurred-at`. Those
   are the two things that legitimately differ between a stored reading
   and a reported transition, and putting either in the grouping would
@@ -838,9 +838,9 @@ on 2026-10-12.
 family by family, each in a cut that may be wire-breaking (the project is
 pre-1.0). Until a family's cut lands, **its current shape is not
 precedent**: copy the exemplar each rule names, not the nearest
-neighbour. Pieces that need new foundation definitions (marked
-*foundation*) land in `openits-types` first, and families adopt them in
-their cuts.
+neighbour. Pieces that need new foundation definitions land in
+`openits-types` first (the ones below are defined there now), and
+families adopt them in their cuts.
 
 ### 1. Every change event has a live-state mirror
 
@@ -871,7 +871,9 @@ forever.
 ### 2. Absent never means good
 
 - **Health.** Every device root `state` carries an operational status from
-  one *foundation* typedef with `unknown` at value 0, plus `last-change`.
+  the `openits-types:oper-status` typedef (`unknown` at value 0),
+  carried by the `openits-types:device-health` grouping with `last-change`
+  and `observed-at`.
   A sub-component that can fail on its own (a monitor, a radio, a lane
   sensor, a zone) carries its own status from the same typedef.
 - **Absence.** An absent health, fault or status leaf means *not known*.
@@ -879,14 +881,16 @@ forever.
   Where the device can report "read, nothing wrong", that is an explicit
   value.
 - **Freshness.** Every `config false` observation container carries one
-  timestamp of when it was read, under one *foundation* name, instead of
-  the four variants in use today.
+  timestamp of when it was read, named `observed-at`. The four earlier
+  variants (`measured-at`, `collected-at`, `last-update`, `computed-at`)
+  are gone.
 - **Comm loss.** After `comm-lost`, all live state for that
   `source-device-id` is stale as of the last contact, until `comm-restored`
   and a resync. Consumers MUST NOT present it as current.
 - **Status report.** Every service has one periodic status report with a
-  shared *foundation* shape: health, mode, control source, uptime and
-  active-fault count.
+  shared shape, the `openits-types:device-status-summary` grouping: health,
+  control source, uptime, active-fault count and `observed-at`. The mode
+  stays with the family. Families adopt the grouping in their cuts.
 
 ### 3. One axis per value
 
@@ -905,11 +909,14 @@ monitor while the controller keeps cycling is one example.
   not encoded as mode values.
 - Every mode base has an explicit unknown value. Family mode values
   dual-base onto the canonical cross-service modes (`mode-maintenance`,
-  `mode-standby-generic`, `mode-failed-generic`, and a canonical
-  *foundation* `mode-unknown`) wherever they mean the same thing, so a
+  `mode-standby-generic`, `mode-failed-generic`, and `openits-types:mode-unknown`) wherever they mean the same thing, so a
   fleet-wide filter works across services.
 - A `mode-changed` value MUST derive from the mode base of the family
-  that its `kind` names.
+  that its `kind` names. The `kind` carries `openits-types:mode-value-base`
+  naming that base; values must derive from it strictly (the base itself is
+  not a value). Conformance (`TestMode_ValueMatchesKind`) and
+  `make check-mode-kinds` enforce it. Bare `openits-types:mode-unknown` is
+  valid only through a family's own dual-based unknown.
 
 ### 4. Sub-components are addressed by type, not by string
 
@@ -917,8 +924,7 @@ monitor while the controller keeps cycling is one example.
   lane, gate, zone, radio, preset) has an **id typedef** in the family's
   `-types` module. The config key and every event use it. Exemplar:
   `occupancy-zone-id`.
-- Faults and mode changes name a sub-component through a *foundation*
-  **component reference**: a component-class identity, which each service
+- Faults and mode changes name a sub-component through the `openits-types:component-ref` **component reference**: a component-class identity, which each service
   derives, plus the id. They never encode it inside `fault-id`.
 - **One fault grouping** backs the live fault inventory, `fault-raised`
   and `fault-cleared`. Its classifier is `kind`, typed to

@@ -125,6 +125,61 @@ func (RateChangeCause) EnumDescriptor() ([]byte, []int) {
 	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{1}
 }
 
+type OperStatus int32
+
+const (
+	OperStatus_OPER_STATUS_UNKNOWN     OperStatus = 0
+	OperStatus_OPER_STATUS_OK          OperStatus = 1
+	OperStatus_OPER_STATUS_DEGRADED    OperStatus = 2
+	OperStatus_OPER_STATUS_FAILED      OperStatus = 3
+	OperStatus_OPER_STATUS_NOT_PRESENT OperStatus = 4
+)
+
+// Enum value maps for OperStatus.
+var (
+	OperStatus_name = map[int32]string{
+		0: "OPER_STATUS_UNKNOWN",
+		1: "OPER_STATUS_OK",
+		2: "OPER_STATUS_DEGRADED",
+		3: "OPER_STATUS_FAILED",
+		4: "OPER_STATUS_NOT_PRESENT",
+	}
+	OperStatus_value = map[string]int32{
+		"OPER_STATUS_UNKNOWN":     0,
+		"OPER_STATUS_OK":          1,
+		"OPER_STATUS_DEGRADED":    2,
+		"OPER_STATUS_FAILED":      3,
+		"OPER_STATUS_NOT_PRESENT": 4,
+	}
+)
+
+func (x OperStatus) Enum() *OperStatus {
+	p := new(OperStatus)
+	*p = x
+	return p
+}
+
+func (x OperStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OperStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_ramp_metering_v1_types_proto_enumTypes[2].Descriptor()
+}
+
+func (OperStatus) Type() protoreflect.EnumType {
+	return &file_openits_ramp_metering_v1_types_proto_enumTypes[2]
+}
+
+func (x OperStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OperStatus.Descriptor instead.
+func (OperStatus) EnumDescriptor() ([]byte, []int) {
+	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{2}
+}
+
 type NonMeteringDisplay int32
 
 const (
@@ -155,11 +210,11 @@ func (x NonMeteringDisplay) String() string {
 }
 
 func (NonMeteringDisplay) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_types_proto_enumTypes[2].Descriptor()
+	return file_openits_ramp_metering_v1_types_proto_enumTypes[3].Descriptor()
 }
 
 func (NonMeteringDisplay) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_types_proto_enumTypes[2]
+	return &file_openits_ramp_metering_v1_types_proto_enumTypes[3]
 }
 
 func (x NonMeteringDisplay) Number() protoreflect.EnumNumber {
@@ -168,7 +223,7 @@ func (x NonMeteringDisplay) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use NonMeteringDisplay.Descriptor instead.
 func (NonMeteringDisplay) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{2}
+	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{3}
 }
 
 type SequencePhase int32
@@ -210,11 +265,11 @@ func (x SequencePhase) String() string {
 }
 
 func (SequencePhase) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_types_proto_enumTypes[3].Descriptor()
+	return file_openits_ramp_metering_v1_types_proto_enumTypes[4].Descriptor()
 }
 
 func (SequencePhase) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_types_proto_enumTypes[3]
+	return &file_openits_ramp_metering_v1_types_proto_enumTypes[4]
 }
 
 func (x SequencePhase) Number() protoreflect.EnumNumber {
@@ -223,7 +278,7 @@ func (x SequencePhase) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SequencePhase.Descriptor instead.
 func (SequencePhase) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{3}
+	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{4}
 }
 
 type AwsFaultAction int32
@@ -256,11 +311,11 @@ func (x AwsFaultAction) String() string {
 }
 
 func (AwsFaultAction) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_types_proto_enumTypes[4].Descriptor()
+	return file_openits_ramp_metering_v1_types_proto_enumTypes[5].Descriptor()
 }
 
 func (AwsFaultAction) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_types_proto_enumTypes[4]
+	return &file_openits_ramp_metering_v1_types_proto_enumTypes[5]
 }
 
 func (x AwsFaultAction) Number() protoreflect.EnumNumber {
@@ -269,7 +324,7 @@ func (x AwsFaultAction) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AwsFaultAction.Descriptor instead.
 func (AwsFaultAction) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{4}
+	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{5}
 }
 
 type LampStatus int32
@@ -308,11 +363,11 @@ func (x LampStatus) String() string {
 }
 
 func (LampStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_types_proto_enumTypes[5].Descriptor()
+	return file_openits_ramp_metering_v1_types_proto_enumTypes[6].Descriptor()
 }
 
 func (LampStatus) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_types_proto_enumTypes[5]
+	return &file_openits_ramp_metering_v1_types_proto_enumTypes[6]
 }
 
 func (x LampStatus) Number() protoreflect.EnumNumber {
@@ -321,7 +376,7 @@ func (x LampStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use LampStatus.Descriptor instead.
 func (LampStatus) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{5}
+	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{6}
 }
 
 type DayOfWeek int32
@@ -372,11 +427,11 @@ func (x DayOfWeek) String() string {
 }
 
 func (DayOfWeek) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_types_proto_enumTypes[6].Descriptor()
+	return file_openits_ramp_metering_v1_types_proto_enumTypes[7].Descriptor()
 }
 
 func (DayOfWeek) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_types_proto_enumTypes[6]
+	return &file_openits_ramp_metering_v1_types_proto_enumTypes[7]
 }
 
 func (x DayOfWeek) Number() protoreflect.EnumNumber {
@@ -385,7 +440,7 @@ func (x DayOfWeek) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DayOfWeek.Descriptor instead.
 func (DayOfWeek) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{6}
+	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{7}
 }
 
 type Month int32
@@ -451,11 +506,11 @@ func (x Month) String() string {
 }
 
 func (Month) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_types_proto_enumTypes[7].Descriptor()
+	return file_openits_ramp_metering_v1_types_proto_enumTypes[8].Descriptor()
 }
 
 func (Month) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_types_proto_enumTypes[7]
+	return &file_openits_ramp_metering_v1_types_proto_enumTypes[8]
 }
 
 func (x Month) Number() protoreflect.EnumNumber {
@@ -464,7 +519,7 @@ func (x Month) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Month.Descriptor instead.
 func (Month) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{7}
+	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{8}
 }
 
 type ReleaseCoordination int32
@@ -497,11 +552,11 @@ func (x ReleaseCoordination) String() string {
 }
 
 func (ReleaseCoordination) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_types_proto_enumTypes[8].Descriptor()
+	return file_openits_ramp_metering_v1_types_proto_enumTypes[9].Descriptor()
 }
 
 func (ReleaseCoordination) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_types_proto_enumTypes[8]
+	return &file_openits_ramp_metering_v1_types_proto_enumTypes[9]
 }
 
 func (x ReleaseCoordination) Number() protoreflect.EnumNumber {
@@ -510,7 +565,7 @@ func (x ReleaseCoordination) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ReleaseCoordination.Descriptor instead.
 func (ReleaseCoordination) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{8}
+	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{9}
 }
 
 type BypassOperation int32
@@ -543,11 +598,11 @@ func (x BypassOperation) String() string {
 }
 
 func (BypassOperation) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_types_proto_enumTypes[9].Descriptor()
+	return file_openits_ramp_metering_v1_types_proto_enumTypes[10].Descriptor()
 }
 
 func (BypassOperation) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_types_proto_enumTypes[9]
+	return &file_openits_ramp_metering_v1_types_proto_enumTypes[10]
 }
 
 func (x BypassOperation) Number() protoreflect.EnumNumber {
@@ -556,7 +611,7 @@ func (x BypassOperation) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use BypassOperation.Descriptor instead.
 func (BypassOperation) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{9}
+	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{10}
 }
 
 type HeadState int32
@@ -595,11 +650,11 @@ func (x HeadState) String() string {
 }
 
 func (HeadState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_types_proto_enumTypes[10].Descriptor()
+	return file_openits_ramp_metering_v1_types_proto_enumTypes[11].Descriptor()
 }
 
 func (HeadState) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_types_proto_enumTypes[10]
+	return &file_openits_ramp_metering_v1_types_proto_enumTypes[11]
 }
 
 func (x HeadState) Number() protoreflect.EnumNumber {
@@ -608,7 +663,7 @@ func (x HeadState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HeadState.Descriptor instead.
 func (HeadState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{10}
+	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{11}
 }
 
 type DetectorRole int32
@@ -656,11 +711,11 @@ func (x DetectorRole) String() string {
 }
 
 func (DetectorRole) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_types_proto_enumTypes[11].Descriptor()
+	return file_openits_ramp_metering_v1_types_proto_enumTypes[12].Descriptor()
 }
 
 func (DetectorRole) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_types_proto_enumTypes[11]
+	return &file_openits_ramp_metering_v1_types_proto_enumTypes[12]
 }
 
 func (x DetectorRole) Number() protoreflect.EnumNumber {
@@ -669,7 +724,7 @@ func (x DetectorRole) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DetectorRole.Descriptor instead.
 func (DetectorRole) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{11}
+	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{12}
 }
 
 type FaultSeverity int32
@@ -711,11 +766,11 @@ func (x FaultSeverity) String() string {
 }
 
 func (FaultSeverity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_ramp_metering_v1_types_proto_enumTypes[12].Descriptor()
+	return file_openits_ramp_metering_v1_types_proto_enumTypes[13].Descriptor()
 }
 
 func (FaultSeverity) Type() protoreflect.EnumType {
-	return &file_openits_ramp_metering_v1_types_proto_enumTypes[12]
+	return &file_openits_ramp_metering_v1_types_proto_enumTypes[13]
 }
 
 func (x FaultSeverity) Number() protoreflect.EnumNumber {
@@ -724,7 +779,7 @@ func (x FaultSeverity) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use FaultSeverity.Descriptor instead.
 func (FaultSeverity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{12}
+	return file_openits_ramp_metering_v1_types_proto_rawDescGZIP(), []int{13}
 }
 
 var File_openits_ramp_metering_v1_types_proto protoreflect.FileDescriptor
@@ -741,7 +796,14 @@ const file_openits_ramp_metering_v1_types_proto_rawDesc = "" +
 	" RATE_CHANGE_CAUSE_QUEUE_OVERRIDE\x10\x02\x12'\n" +
 	"#RATE_CHANGE_CAUSE_OPERATOR_OVERRIDE\x10\x03\x12\x1e\n" +
 	"\x1aRATE_CHANGE_CAUSE_SCHEDULE\x10\x04\x12\x1b\n" +
-	"\x17RATE_CHANGE_CAUSE_OTHER\x10\x05*[\n" +
+	"\x17RATE_CHANGE_CAUSE_OTHER\x10\x05*\x88\x01\n" +
+	"\n" +
+	"OperStatus\x12\x17\n" +
+	"\x13OPER_STATUS_UNKNOWN\x10\x00\x12\x12\n" +
+	"\x0eOPER_STATUS_OK\x10\x01\x12\x18\n" +
+	"\x14OPER_STATUS_DEGRADED\x10\x02\x12\x16\n" +
+	"\x12OPER_STATUS_FAILED\x10\x03\x12\x1b\n" +
+	"\x17OPER_STATUS_NOT_PRESENT\x10\x04*[\n" +
 	"\x12NonMeteringDisplay\x12\x1d\n" +
 	"\x19NON_METERING_DISPLAY_DARK\x10\x00\x12&\n" +
 	"\"NON_METERING_DISPLAY_REST_IN_GREEN\x10\x01*\xb5\x01\n" +
@@ -824,21 +886,22 @@ func file_openits_ramp_metering_v1_types_proto_rawDescGZIP() []byte {
 	return file_openits_ramp_metering_v1_types_proto_rawDescData
 }
 
-var file_openits_ramp_metering_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 13)
+var file_openits_ramp_metering_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 14)
 var file_openits_ramp_metering_v1_types_proto_goTypes = []any{
 	(Trigger)(0),             // 0: openits.ramp_metering.v1.Trigger
 	(RateChangeCause)(0),     // 1: openits.ramp_metering.v1.RateChangeCause
-	(NonMeteringDisplay)(0),  // 2: openits.ramp_metering.v1.NonMeteringDisplay
-	(SequencePhase)(0),       // 3: openits.ramp_metering.v1.SequencePhase
-	(AwsFaultAction)(0),      // 4: openits.ramp_metering.v1.AwsFaultAction
-	(LampStatus)(0),          // 5: openits.ramp_metering.v1.LampStatus
-	(DayOfWeek)(0),           // 6: openits.ramp_metering.v1.DayOfWeek
-	(Month)(0),               // 7: openits.ramp_metering.v1.Month
-	(ReleaseCoordination)(0), // 8: openits.ramp_metering.v1.ReleaseCoordination
-	(BypassOperation)(0),     // 9: openits.ramp_metering.v1.BypassOperation
-	(HeadState)(0),           // 10: openits.ramp_metering.v1.HeadState
-	(DetectorRole)(0),        // 11: openits.ramp_metering.v1.DetectorRole
-	(FaultSeverity)(0),       // 12: openits.ramp_metering.v1.FaultSeverity
+	(OperStatus)(0),          // 2: openits.ramp_metering.v1.OperStatus
+	(NonMeteringDisplay)(0),  // 3: openits.ramp_metering.v1.NonMeteringDisplay
+	(SequencePhase)(0),       // 4: openits.ramp_metering.v1.SequencePhase
+	(AwsFaultAction)(0),      // 5: openits.ramp_metering.v1.AwsFaultAction
+	(LampStatus)(0),          // 6: openits.ramp_metering.v1.LampStatus
+	(DayOfWeek)(0),           // 7: openits.ramp_metering.v1.DayOfWeek
+	(Month)(0),               // 8: openits.ramp_metering.v1.Month
+	(ReleaseCoordination)(0), // 9: openits.ramp_metering.v1.ReleaseCoordination
+	(BypassOperation)(0),     // 10: openits.ramp_metering.v1.BypassOperation
+	(HeadState)(0),           // 11: openits.ramp_metering.v1.HeadState
+	(DetectorRole)(0),        // 12: openits.ramp_metering.v1.DetectorRole
+	(FaultSeverity)(0),       // 13: openits.ramp_metering.v1.FaultSeverity
 }
 var file_openits_ramp_metering_v1_types_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -858,7 +921,7 @@ func file_openits_ramp_metering_v1_types_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_ramp_metering_v1_types_proto_rawDesc), len(file_openits_ramp_metering_v1_types_proto_rawDesc)),
-			NumEnums:      13,
+			NumEnums:      14,
 			NumMessages:   0,
 			NumExtensions: 0,
 			NumServices:   0,

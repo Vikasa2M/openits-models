@@ -109,6 +109,8 @@ func All(kind string) []TestCase {
 		{"TestCESource_URN", TestCESource_URN},
 		{"TestCEID_Present", TestCEID_Present},
 		{"TestEvent_SequenceContiguousWithinEpoch", TestEvent_SequenceContiguousWithinEpoch},
+		{"TestFault_KindMatchesService", TestFault_KindMatchesService},
+		{"TestMode_ValueMatchesKind", TestMode_ValueMatchesKind},
 
 		// YANG validation — ygot struct must parse whatever the driver
 		// collected for the device under test
@@ -321,6 +323,11 @@ func All(kind string) []TestCase {
 			// events
 			TestCase{"TestReversibleLaneEvent_LcsConflictShape", TestReversibleLaneEvent_LcsConflictShape},
 			TestCase{"TestReversibleLaneEvent_FaultRaisedShape", TestReversibleLaneEvent_FaultRaisedShape},
+			TestCase{"TestReversibleLaneGate_HasIdentity", TestReversibleLaneGate_HasIdentity},
+			TestCase{"TestReversibleLaneFault_FeedbackLossPositionUnknown", TestReversibleLaneFault_FeedbackLossPositionUnknown},
+			TestCase{"TestReversibleLaneFault_GateFaultNamesExistingGate", TestReversibleLaneFault_GateFaultNamesExistingGate},
+			TestCase{"TestReversibleLaneEvent_GateFaultRaisedNamesGate", TestReversibleLaneEvent_GateFaultRaisedNamesGate},
+			TestCase{"TestReversibleLaneEvent_GateStatusChangedMirrorsLiveState", TestReversibleLaneEvent_GateStatusChangedMirrorsLiveState},
 		)
 	case "perception":
 		return append(common,
@@ -350,7 +357,7 @@ func All(kind string) []TestCase {
 			TestCase{"TestZoneOccupancy_ClassifiesGatesBreakdown", TestZoneOccupancy_ClassifiesGatesBreakdown},
 			TestCase{"TestZoneOccupancy_PresentClassSumsToCount", TestZoneOccupancy_PresentClassSumsToCount},
 			TestCase{"TestZoneOccupancy_OccupiedSinceOnlyWhenPresent", TestZoneOccupancy_OccupiedSinceOnlyWhenPresent},
-			TestCase{"TestZoneOccupancy_MeasuredAtPresent", TestZoneOccupancy_MeasuredAtPresent},
+			TestCase{"TestZoneOccupancy_ObservedAtPresent", TestZoneOccupancy_ObservedAtPresent},
 			TestCase{"TestZoneOccupancyEvent_IntervalReportShape", TestZoneOccupancyEvent_IntervalReportShape},
 			TestCase{"TestZoneOccupancyEvent_ObservedClassReconciles", TestZoneOccupancyEvent_ObservedClassReconciles},
 			TestCase{"TestZoneOccupancyEvent_PeakWithinObserved", TestZoneOccupancyEvent_PeakWithinObserved},
@@ -417,6 +424,7 @@ func All(kind string) []TestCase {
 			TestCase{"TestConflictMonitor_PermissiveResolvesChannels", TestConflictMonitor_PermissiveResolvesChannels},
 			TestCase{"TestConflictMonitor_PermissiveCanonicalOrder", TestConflictMonitor_PermissiveCanonicalOrder},
 			TestCase{"TestConflictMonitor_NoSameRingPermissive", TestConflictMonitor_NoSameRingPermissive},
+			TestCase{"TestMonitor_StatusReported", TestMonitor_StatusReported},
 
 			// coordination
 			TestCase{"TestCoordination_ActivePlan", TestCoordination_ActivePlan},
@@ -438,7 +446,10 @@ func All(kind string) []TestCase {
 
 			// health
 			TestCase{"TestHealth_OperationalStatus", TestHealth_OperationalStatus},
+			TestCase{"TestEvents_CabinetOutputChanged", TestEvents_CabinetOutputChanged},
+			TestCase{"TestEvents_StatusReportFlashCause", TestEvents_StatusReportFlashCause},
 			TestCase{"TestHealth_NotFlashing", TestHealth_NotFlashing},
+			TestCase{"TestOperation_ActiveFlagsMatchLists", TestOperation_ActiveFlagsMatchLists},
 
 			// cabinet power / UPS (platform capability)
 			TestCase{"TestCabinetPower_SourceReported", TestCabinetPower_SourceReported},

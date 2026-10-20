@@ -79,6 +79,10 @@ each such release owes consumers one document that collects them.
 
 - [v0.6.0](migration/v0.6.0.md) — field presence, seven enum-to-identity
   conversions, DMS activation errors, scalar retypes, enum name un-prefixing.
+- [v0.7.0](migration/v0.7.0.md) — `sequence-epoch` on every event;
+  `mode-changed` field names `previous-mode` and `mode`.
+- [v0.8.0](migration/v0.8.0.md) — one fault shape, device health and
+  `observed-at`, mode/value binding, signal-control operation split.
 
 ## Cutting a release
 

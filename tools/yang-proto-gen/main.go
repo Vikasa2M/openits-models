@@ -220,13 +220,20 @@ func Generate(yangDir, outDir, lockPath string) error {
 		rootsByPkg[gp] = append(rootsByPkg[gp], p.entry)
 	}
 	collisionsByPkg := make(map[string]map[string]bool, len(rootsByPkg))
+	enumNamesByPkg := make(map[string]map[string]bool, len(rootsByPkg))
 	for gp, roots := range rootsByPkg {
 		collisionsByPkg[gp] = collisionSetForRoots(roots)
+		names := map[string]bool{}
+		for _, root := range roots {
+			collectEnumNames(root, names)
+		}
+		enumNamesByPkg[gp] = names
 	}
 
 	for _, p := range pending {
 		of := p.of
 		of.pf.Collisions = collisionsByPkg[goPackageFor(of.pkg)]
+		of.pf.EnumNames = enumNamesByPkg[goPackageFor(of.pkg)]
 		before := of.pf.Body.Len()
 		EmitMessage(p.entry, p.msgName, lock, shared, of.pf)
 		added := of.pf.Body.String()[before:]

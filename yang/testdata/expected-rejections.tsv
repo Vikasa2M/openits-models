@@ -4,6 +4,9 @@
 # offending path. A notification missing a mandatory leaf: "MISSING <leaf>".
 # Deviation-tier fixtures (invalid-*-under-*.json) are checked by
 # make check-deviations instead and are not listed here.
+# Schema-valid mode-changed fixtures whose values lie outside their kind's
+# mode-value-base live in mode-kinds/ (not scanned here) and are rejected by
+# make check-mode-kinds instead.
 invalid-barrier-out-of-range.json	Unsatisfied range - value "5" is out of the allowed range. (Data location "/openits-signal-control:signal-controller/phases/phase[phase-number='2']/config/barrier"
 invalid-cctv-recall-unknown-preset.json	Invalid leafref value "9" - no target instance "../preset/preset-id" with the same value. (Data location "/openits-cctv:camera/ptz/presets/recall"
 invalid-cctv-velocity-out-of-range.json	Value "150" is out of type int8 min/max bounds. (Data location "/openits-cctv:camera/ptz/config/velocity/pan-speed"
@@ -55,6 +58,7 @@ invalid-reversible-lane-commanded-dual-green.json	A green-arrow or flashing-yell
 invalid-reversible-lane-directions-not-opposing.json	direction-b must be the opposing carriageway of direction-a (NB<->SB,
 invalid-reversible-open-without-direction.json	an open target-state must name target-direction
 invalid-reversible-target-direction-unconfigured.json	target-direction must be one of the facility's configured directions
+invalid-gate-status-changed-bad-kind.json	Invalid identityref "openits-reversible-lane-types:rl-lcs-conflict-detected" value - identity not derived from the base "openits-reversible-lane-types:rl-gate-status-change-event-kind". (Data location "/openits-reversible-lane-events:gate-status-changed/kind"
 invalid-rm-cycle-infeasible.json	min-green + yellow-change + red-clear must not exceed the feasible
 invalid-rm-metering-abstract-base.json	A ramp meter commanded into a metering mode must have its
 invalid-rm-metering-aws-disabled.json	A ramp meter commanded into a metering mode must have its
@@ -91,3 +95,12 @@ invalid-zone-occupancy-changed-bad-kind.json	Invalid identityref "openits-zone-o
 invalid-zone-occupancy-changed-missing-presence.json	MISSING presence
 invalid-zone-occupancy-changed-missing-zone-id.json	MISSING zone-id
 invalid-fault-raised-missing-sequence-epoch.json	MISSING sequence-epoch
+invalid-fault-raised-missing-first-observed.json	MISSING first-observed
+invalid-sc-fault-list-dms-kind.json	not derived from the base "openits-signal-control-types:sc-fault-event-kind"
+invalid-rsu-fault-component-no-class.json	Mandatory node "component-class" instance does not exist.
+invalid-reversible-lane-gate-entry-direction-unconfigured.json	controls-entry-for must be one of the facility's configured directions
+invalid-comm-lost-missing-last-contact.json	MISSING last-contact
+invalid-comm-lost-missing-observed-by.json	MISSING observed-by
+invalid-sc-monitor-fault-type-without-fault.json	monitor fault-type is present only when monitor status is fault
+invalid-sc-operation-flash-cause-not-flashing.json	flash-cause is present only when cabinet-output is flash
+invalid-cabinet-output-changed-missing-output.json	MISSING cabinet-output

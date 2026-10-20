@@ -71,6 +71,13 @@ notification's own depth, exactly like the min-elements refine below
 ignored), and `mandatory false` on a refine removes an inherited
 mandatory.
 
+A notification-level `openits-types:mandatory-for-kind "<leaf> <prefix:identity>"`
+extension statement makes <leaf> mandatory when the instance's `kind` is
+derived-from-or-self that identity (the leaf stays optional for every other
+kind). Used by openits-common-comm-health-events so comm-lost must carry
+last-contact and observed-by; reported as MISSING <leaf> like any other
+mandatory leaf.
+
 Extend the min-elements handling above if a future notification needs
 a floor this doesn't already cover.
 
@@ -87,7 +94,11 @@ Prints one result line per fixture file (same order given):
     MISSING <path> <leaf1>,<leaf2>,...
                             notification instance is missing one or more
                             mandatory leaves
-Always exits 0; the caller inspects the per-line verdicts.
+Exits 0 and the caller inspects the per-line verdicts, except that a
+malformed `mandatory-for-kind` statement (an argument that is not exactly
+two tokens, or an identity that does not resolve) is a schema error: it is
+reported on stderr naming the module and notification, and the script
+exits 2 before checking any fixture.
 """
 import json
 import re
@@ -256,6 +267,8 @@ class Schema:
                 self.groupings[(mod_name, arg)] = sub
             elif k == "notification" and sub is not None:
                 self.notifications[(mod_name, arg)] = sub
+            elif k == "identity" and sub is None:
+                self.identity_bases[(mod_name, arg)] = []
             elif k == "identity" and sub is not None:
                 bases = []
                 for ik, iarg, _isub in strip_and_split(sub):
@@ -471,6 +484,87 @@ class Schema:
             return sorted(reasons)
         return []
 
+    def top_level_children(self, module, body, visited=None):
+        """Names of the data nodes at a notification's own top level,
+        crossing `uses` (a transparent splice) but not descending into
+        containers, lists, choices or cases."""
+        if visited is None:
+            visited = frozenset()
+        out = set()
+        for kw, arg, sub in strip_and_split(body):
+            k = bare(kw)
+            if k in ("leaf", "leaf-list", "container", "list", "choice", "anydata", "anyxml"):
+                out.add(arg)
+            elif k == "uses":
+                target = self.resolve(module, arg)
+                if target and target in self.groupings and target not in visited:
+                    out |= self.top_level_children(target[0], self.groupings[target], visited | {target})
+        return out
+
+    def mandatory_for_kind_errors(self):
+        """Hard errors for malformed `mandatory-for-kind` statements: an
+        argument that is not exactly '<leaf> <prefix:identity>', or an
+        identity that does not resolve to one defined in the loaded
+        schemas, or a leaf that is not a child of the notification. A malformed statement must not silently stop enforcing
+        its leaf, so the caller exits non-zero on any of these."""
+        errors = []
+        for (module, name), body in sorted(self.notifications.items()):
+            for kw, arg, _sub in strip_and_split(body):
+                if bare(kw) != "mandatory-for-kind":
+                    continue
+                where = f"{module}: notification {name}: mandatory-for-kind {arg!r}"
+                parts = (arg or "").split()
+                if len(parts) != 2:
+                    errors.append(f"{where}: argument must be '<leaf> <prefix:identity>' (got {len(parts)} token(s))")
+                    continue
+                if parts[0] not in self.top_level_children(module, body):
+                    errors.append(f"{where}: leaf {parts[0]!r} is not a child of the notification")
+                target = self.resolve(module, parts[1])
+                if target is None:
+                    errors.append(f"{where}: prefix of {parts[1]!r} is not imported by {module}")
+                elif target not in self.identity_bases:
+                    errors.append(f"{where}: identity {target[0]}:{target[1]} is not defined in the loaded schemas")
+        return errors
+
+    def notification_kind_mandatory_missing(self, notif_name, instance):
+        """Leaves required by `mandatory-for-kind` statements on the
+        notification whose kind matches but which are absent."""
+        if not isinstance(instance, dict):
+            return []
+        for (module, name), body in self.notifications.items():
+            if name != notif_name:
+                continue
+            present = {k.split(":")[-1] for k in instance}
+            kind_val = None
+            for k, v in instance.items():
+                if k.split(":")[-1] == "kind":
+                    kind_val = v
+                    break
+            if not isinstance(kind_val, str):
+                return []
+            if ":" in kind_val:
+                pfx, iname = kind_val.split(":", 1)
+                kind_id = (self.prefix_map.get(module, {}).get(pfx, pfx), iname)
+            else:
+                kind_id = (module, kind_val)
+            missing = []
+            for kw, arg, _sub in strip_and_split(body):
+                if bare(kw) != "mandatory-for-kind" or not arg:
+                    continue
+                parts = arg.split()
+                if len(parts) != 2:
+                    continue
+                leaf, ref = parts
+                target = self.resolve(module, ref)
+                if (
+                    target
+                    and leaf not in present
+                    and self._derived_from_or_self(kind_id, target)
+                ):
+                    missing.append(leaf)
+            return sorted(set(missing))
+        return []
+
     def _top_level_min_elements(self, module, body, visited=None):
         """Collect min-elements floors reachable at a notification's own
         top level: {child-name: floor}. Two sources: a min-elements
@@ -550,6 +644,11 @@ def main(argv):
     schema = Schema()
     for path in schema_args:
         schema.load(path)
+    errors = schema.mandatory_for_kind_errors()
+    if errors:
+        for e in errors:
+            print(f"check-notif-mandatory: ERROR {e}", file=sys.stderr)
+        return 2
 
     for fpath in fixtures:
         with open(fpath, encoding="utf-8") as f:
@@ -572,6 +671,7 @@ def main(argv):
             continue
         problems = (
             list(missing)
+            + [m for m in schema.notification_kind_mandatory_missing(notif_name, instance) if m not in missing]
             + schema.notification_when_violations(notif_name, instance)
             + schema.notification_min_elements_violations(notif_name, instance)
         )

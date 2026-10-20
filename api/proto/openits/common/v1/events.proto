@@ -11,6 +11,7 @@ import "openits/types/v1/types.proto";
 message CommHealthEvent {
   string kind = 99;
   optional int64 drift_milliseconds = 3;
+  google.protobuf.Timestamp last_contact = 14;
   optional uint32 attempts_total = 4;
   optional uint32 attempts_failed = 5;
   optional uint32 percent_loss = 6;
@@ -29,6 +30,8 @@ message CommHealthEvent {
 message FaultCleared {
   string kind = 99;
   string fault_id = 2;
+  google.protobuf.Timestamp first_observed = 8;
+  openits.types.v1.ComponentRef component = 9;
   optional string observed_by = 4;
   google.protobuf.Timestamp occurred_at = 3;
   optional string owner = 5;
@@ -40,15 +43,17 @@ message FaultCleared {
 
 message FaultRaised {
   string kind = 99;
-  string fault_id = 2;
-  FaultSeverity severity = 3;
-  optional string description = 4;
+  openits.types.v1.ComponentRef component = 11;
   optional string correlates_with = 9;
+  optional string description = 4;
+  string fault_id = 2;
+  google.protobuf.Timestamp first_observed = 12;
   optional string observed_by = 6;
   google.protobuf.Timestamp occurred_at = 5;
   optional string owner = 7;
   uint64 sequence = 8;
   string sequence_epoch = 10;
+  FaultSeverity severity = 3;
   openits.types.v1.WireSource source = 100;
   string source_device_id = 1;
 }

@@ -1,0 +1,21 @@
+module test-fam-a {
+  yang-version 1.1;
+  namespace "urn:test:fam-a";
+  prefix fa;
+
+  import openits-types { prefix ot; }
+
+  identity a-mode-event-kind {
+    base ot:mode-event-kind;
+    ot:mode-value-base "fa:a-mode";
+  }
+  identity a-mode {
+    base ot:operational-mode;
+  }
+  identity a-on { base a-mode; }
+  identity a-off { base a-mode; }
+  identity a-unknown {
+    base a-mode;
+    base ot:mode-unknown;
+  }
+}

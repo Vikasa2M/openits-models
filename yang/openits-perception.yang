@@ -50,8 +50,21 @@ module openits-perception {
 
      Copyright (c) 2026.  Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.7.0";
+  openits-types:openits-version "0.9.0";
 
+  revision 2026-10-16 {
+    description
+      "Report health on the root state (shared device-health: oper-status, last-change, observed-at). The composed zone-occupancy readings now carry observed-at in place of measured-at. Breaking for those readings.";
+    reference "RFC 7950 §7.12.";
+  }
+  revision 2026-10-14 {
+    description
+      "The fault inventory classifies each entry with kind (renamed from
+       category, now mandatory), matching fault-raised, and picks up the
+       shared fault-entry shape: mandatory first-observed and an optional
+       component. Breaking: the category leaf is now kind.";
+    reference "RFC 7950 §11.";
+  }
   revision 2026-09-08 {
     description
       "Retype configuration/zone/function from a closed enum to an
@@ -294,6 +307,7 @@ module openits-perception {
       description "Applied identity (mirror) + device-reported hardware.";
       uses openits-types:device-identity-config;
       uses openits-types:device-hardware;
+      uses openits-types:device-health;
     }
 
     /* ----- associated devices ----- */
@@ -702,11 +716,15 @@ module openits-perception {
         description "One entry per active fault on the sensor.";
 
         uses openits-types:fault-entry;
-        leaf category {
-          type identityref {
-            base openits-perception-types:perception-fault-event-kind;
-          }
-          description "Fault class (blockage / pose-drift / processing / power / communication / temperature).";
+        leaf kind {
+          type identityref { base openits-perception-types:perception-fault-event-kind; }
+          mandatory true;
+          description
+            "Fault class, typed to this service's fault base so the
+             inventory accepts only this service's faults (including its
+             own identities for platform faults such as cabinet power).
+             Fleet-wide filters use
+             derived-from-or-self(kind, 'openits-types:fault-event-kind').";
         }
       }
     }

@@ -33,8 +33,21 @@ module openits-cctv {
 
   reference "NTCIP 1205.";
 
-  openits-types:openits-version "0.3.0";
+  openits-types:openits-version "0.5.0";
 
+  revision 2026-10-16 {
+    description
+      "Report health on the root state (shared device-health: oper-status, last-change, observed-at). State that the existing operational-status is family-specific and not interchangeable with oper-status. State that operational-status offline is reachability while oper-status keeps its last value when the camera is unreachable. Additive.";
+    reference "RFC 7950 §7.12.";
+  }
+  revision 2026-10-14 {
+    description
+      "The fault inventory classifies each entry with kind (renamed from
+       category, now mandatory), matching fault-raised, and picks up the
+       shared fault-entry shape: mandatory first-observed and an optional
+       component. Breaking: the category leaf is now kind.";
+    reference "RFC 7950 §11.";
+  }
   revision 2026-08-05 {
     description
       "Model-review remediation (2026-08). BREAKING(pre-v1): pan-degrees
@@ -97,12 +110,19 @@ module openits-cctv {
       description "Applied identity (mirror) plus device-reported hardware.";
       uses openits-types:device-identity-config;
       uses openits-types:device-hardware;
+      uses openits-types:device-health;
       leaf operational-status {
         type openits-cctv-types:operational-status;
         description
           "Device-level operational rollup: online / degraded / offline /
            unknown. degraded whenever a stream is down or a focus/iris/
-           position-feedback fault is active while the camera still reports.";
+           position-feedback fault is active while the camera still reports.
+           Family-specific status kept until the CCTV cut reconciles it
+           with the cross-service oper-status. They are not
+           interchangeable: oper-status uses the shared vocabulary.
+           Its offline value is reachability; oper-status excludes
+           reachability and keeps its last value while the camera is
+           unreachable.";
       }
     }
 
@@ -577,11 +597,15 @@ module openits-cctv {
         key "fault-id";
         description "One currently-active fault.";
         uses openits-types:fault-entry;
-        leaf category {
-          type identityref {
-            base openits-cctv-types:cctv-fault-event-kind;
-          }
-          description "Fault category (base cctv-fault-event-kind).";
+        leaf kind {
+          type identityref { base openits-cctv-types:cctv-fault-event-kind; }
+          mandatory true;
+          description
+            "Fault class, typed to this service's fault base so the
+             inventory accepts only this service's faults (including its
+             own identities for platform faults such as cabinet power).
+             Fleet-wide filters use
+             derived-from-or-self(kind, 'openits-types:fault-event-kind').";
         }
       }
     }

@@ -1,0 +1,21 @@
+module enum-message-collision-fixture {
+  namespace "urn:test:enum-message-collision";
+  prefix emc;
+
+  typedef gate-state {
+    type enumeration {
+      enum unknown;
+      enum open;
+    }
+  }
+
+  container gate {
+    leaf gate-state { type gate-state; }
+    container state {
+      leaf position { type string; }
+    }
+    container note {
+      leaf text { type string; }
+    }
+  }
+}

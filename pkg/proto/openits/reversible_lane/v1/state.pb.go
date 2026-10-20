@@ -7,6 +7,7 @@
 package reversiblelanev1
 
 import (
+	v1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/types/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -28,6 +29,7 @@ type ReversibleLane struct {
 	State         *ReversibleLaneState   `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
 	Control       *Control               `protobuf:"bytes,3,opt,name=control,proto3" json:"control,omitempty"`
 	Segments      *Segments              `protobuf:"bytes,4,opt,name=segments,proto3" json:"segments,omitempty"`
+	Gates         *Gates                 `protobuf:"bytes,7,opt,name=gates,proto3" json:"gates,omitempty"`
 	Interlocks    *Interlocks            `protobuf:"bytes,5,opt,name=interlocks,proto3" json:"interlocks,omitempty"`
 	Faults        *Faults                `protobuf:"bytes,6,opt,name=faults,proto3" json:"faults,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -88,6 +90,13 @@ func (x *ReversibleLane) GetControl() *Control {
 func (x *ReversibleLane) GetSegments() *Segments {
 	if x != nil {
 		return x.Segments
+	}
+	return nil
+}
+
+func (x *ReversibleLane) GetGates() *Gates {
+	if x != nil {
+		return x.Gates
 	}
 	return nil
 }
@@ -331,6 +340,7 @@ type ReversibleLaneState struct {
 	Heading         *uint32                             `protobuf:"varint,3,opt,name=heading,proto3,oneof" json:"heading,omitempty"`
 	Id              *string                             `protobuf:"bytes,4,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InstallDate     *timestamppb.Timestamp              `protobuf:"bytes,14,opt,name=install_date,json=installDate,proto3" json:"install_date,omitempty"`
+	LastChange      *timestamppb.Timestamp              `protobuf:"bytes,19,opt,name=last_change,json=lastChange,proto3" json:"last_change,omitempty"`
 	Latitude        *string                             `protobuf:"bytes,5,opt,name=latitude,proto3,oneof" json:"latitude,omitempty"`
 	LinearReference *ReversibleLaneStateLinearReference `protobuf:"bytes,15,opt,name=linear_reference,json=linearReference,proto3" json:"linear_reference,omitempty"`
 	Longitude       *string                             `protobuf:"bytes,6,opt,name=longitude,proto3,oneof" json:"longitude,omitempty"`
@@ -338,6 +348,8 @@ type ReversibleLaneState struct {
 	Make            *string                             `protobuf:"bytes,7,opt,name=make,proto3,oneof" json:"make,omitempty"`
 	Model           *string                             `protobuf:"bytes,8,opt,name=model,proto3,oneof" json:"model,omitempty"`
 	Name            *string                             `protobuf:"bytes,9,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	ObservedAt      *timestamppb.Timestamp              `protobuf:"bytes,20,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
+	OperStatus      *OperStatus                         `protobuf:"varint,21,opt,name=oper_status,json=operStatus,proto3,enum=openits.reversible_lane.v1.OperStatus,oneof" json:"oper_status,omitempty"`
 	Owner           *string                             `protobuf:"bytes,17,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
 	RoadReference   *string                             `protobuf:"bytes,10,opt,name=road_reference,json=roadReference,proto3,oneof" json:"road_reference,omitempty"`
 	Serial          *string                             `protobuf:"bytes,11,opt,name=serial,proto3,oneof" json:"serial,omitempty"`
@@ -425,6 +437,13 @@ func (x *ReversibleLaneState) GetInstallDate() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *ReversibleLaneState) GetLastChange() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastChange
+	}
+	return nil
+}
+
 func (x *ReversibleLaneState) GetLatitude() string {
 	if x != nil && x.Latitude != nil {
 		return *x.Latitude
@@ -472,6 +491,20 @@ func (x *ReversibleLaneState) GetName() string {
 		return *x.Name
 	}
 	return ""
+}
+
+func (x *ReversibleLaneState) GetObservedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ObservedAt
+	}
+	return nil
+}
+
+func (x *ReversibleLaneState) GetOperStatus() OperStatus {
+	if x != nil && x.OperStatus != nil {
+		return *x.OperStatus
+	}
+	return OperStatus_OPER_STATUS_UNKNOWN
 }
 
 func (x *ReversibleLaneState) GetOwner() string {
@@ -1210,6 +1243,278 @@ func (x *LaneState) GetGateState() GateState {
 	return GateState_GATE_STATE_UNKNOWN
 }
 
+type Gates struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Gate          []*Gate                `protobuf:"bytes,1,rep,name=gate,proto3" json:"gate,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Gates) Reset() {
+	*x = Gates{}
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Gates) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Gates) ProtoMessage() {}
+
+func (x *Gates) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Gates.ProtoReflect.Descriptor instead.
+func (*Gates) Descriptor() ([]byte, []int) {
+	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *Gates) GetGate() []*Gate {
+	if x != nil {
+		return x.Gate
+	}
+	return nil
+}
+
+type Gate struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	GateId        *string                `protobuf:"bytes,1,opt,name=gate_id,json=gateId,proto3,oneof" json:"gate_id,omitempty"`
+	Config        *GateConfig            `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
+	State         *GateGateState         `protobuf:"bytes,3,opt,name=state,proto3" json:"state,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Gate) Reset() {
+	*x = Gate{}
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Gate) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Gate) ProtoMessage() {}
+
+func (x *Gate) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Gate.ProtoReflect.Descriptor instead.
+func (*Gate) Descriptor() ([]byte, []int) {
+	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *Gate) GetGateId() string {
+	if x != nil && x.GateId != nil {
+		return *x.GateId
+	}
+	return ""
+}
+
+func (x *Gate) GetConfig() *GateConfig {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
+func (x *Gate) GetState() *GateGateState {
+	if x != nil {
+		return x.State
+	}
+	return nil
+}
+
+type GateConfig struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	GateId           *string                `protobuf:"bytes,1,opt,name=gate_id,json=gateId,proto3,oneof" json:"gate_id,omitempty"`
+	GateType         *string                `protobuf:"bytes,2,opt,name=gate_type,json=gateType,proto3,oneof" json:"gate_type,omitempty"`
+	Name             *string                `protobuf:"bytes,3,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	SegmentId        *string                `protobuf:"bytes,4,opt,name=segment_id,json=segmentId,proto3,oneof" json:"segment_id,omitempty"`
+	ControlsEntryFor *string                `protobuf:"bytes,5,opt,name=controls_entry_for,json=controlsEntryFor,proto3,oneof" json:"controls_entry_for,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *GateConfig) Reset() {
+	*x = GateConfig{}
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GateConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GateConfig) ProtoMessage() {}
+
+func (x *GateConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GateConfig.ProtoReflect.Descriptor instead.
+func (*GateConfig) Descriptor() ([]byte, []int) {
+	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *GateConfig) GetGateId() string {
+	if x != nil && x.GateId != nil {
+		return *x.GateId
+	}
+	return ""
+}
+
+func (x *GateConfig) GetGateType() string {
+	if x != nil && x.GateType != nil {
+		return *x.GateType
+	}
+	return ""
+}
+
+func (x *GateConfig) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *GateConfig) GetSegmentId() string {
+	if x != nil && x.SegmentId != nil {
+		return *x.SegmentId
+	}
+	return ""
+}
+
+func (x *GateConfig) GetControlsEntryFor() string {
+	if x != nil && x.ControlsEntryFor != nil {
+		return *x.ControlsEntryFor
+	}
+	return ""
+}
+
+type GateGateState struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	ObservedAt        *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
+	CloseInhibited    *bool                  `protobuf:"varint,2,opt,name=close_inhibited,json=closeInhibited,proto3,oneof" json:"close_inhibited,omitempty"`
+	ControlSource     *string                `protobuf:"bytes,3,opt,name=control_source,json=controlSource,proto3,oneof" json:"control_source,omitempty"`
+	InterlockBypassed *bool                  `protobuf:"varint,4,opt,name=interlock_bypassed,json=interlockBypassed,proto3,oneof" json:"interlock_bypassed,omitempty"`
+	OpenInhibited     *bool                  `protobuf:"varint,5,opt,name=open_inhibited,json=openInhibited,proto3,oneof" json:"open_inhibited,omitempty"`
+	OperatingMode     *string                `protobuf:"bytes,6,opt,name=operating_mode,json=operatingMode,proto3,oneof" json:"operating_mode,omitempty"`
+	Position          *GatePosition          `protobuf:"varint,7,opt,name=position,proto3,enum=openits.reversible_lane.v1.GatePosition,oneof" json:"position,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *GateGateState) Reset() {
+	*x = GateGateState{}
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GateGateState) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GateGateState) ProtoMessage() {}
+
+func (x *GateGateState) ProtoReflect() protoreflect.Message {
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GateGateState.ProtoReflect.Descriptor instead.
+func (*GateGateState) Descriptor() ([]byte, []int) {
+	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *GateGateState) GetObservedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ObservedAt
+	}
+	return nil
+}
+
+func (x *GateGateState) GetCloseInhibited() bool {
+	if x != nil && x.CloseInhibited != nil {
+		return *x.CloseInhibited
+	}
+	return false
+}
+
+func (x *GateGateState) GetControlSource() string {
+	if x != nil && x.ControlSource != nil {
+		return *x.ControlSource
+	}
+	return ""
+}
+
+func (x *GateGateState) GetInterlockBypassed() bool {
+	if x != nil && x.InterlockBypassed != nil {
+		return *x.InterlockBypassed
+	}
+	return false
+}
+
+func (x *GateGateState) GetOpenInhibited() bool {
+	if x != nil && x.OpenInhibited != nil {
+		return *x.OpenInhibited
+	}
+	return false
+}
+
+func (x *GateGateState) GetOperatingMode() string {
+	if x != nil && x.OperatingMode != nil {
+		return *x.OperatingMode
+	}
+	return ""
+}
+
+func (x *GateGateState) GetPosition() GatePosition {
+	if x != nil && x.Position != nil {
+		return *x.Position
+	}
+	return GatePosition_GATE_POSITION_UNKNOWN
+}
+
 type Interlocks struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Interlock     []*Interlock           `protobuf:"bytes,2,rep,name=interlock,proto3" json:"interlock,omitempty"`
@@ -1219,7 +1524,7 @@ type Interlocks struct {
 
 func (x *Interlocks) Reset() {
 	*x = Interlocks{}
-	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[15]
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1231,7 +1536,7 @@ func (x *Interlocks) String() string {
 func (*Interlocks) ProtoMessage() {}
 
 func (x *Interlocks) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[15]
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1244,7 +1549,7 @@ func (x *Interlocks) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Interlocks.ProtoReflect.Descriptor instead.
 func (*Interlocks) Descriptor() ([]byte, []int) {
-	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{15}
+	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *Interlocks) GetInterlock() []*Interlock {
@@ -1265,7 +1570,7 @@ type Interlock struct {
 
 func (x *Interlock) Reset() {
 	*x = Interlock{}
-	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[16]
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1277,7 +1582,7 @@ func (x *Interlock) String() string {
 func (*Interlock) ProtoMessage() {}
 
 func (x *Interlock) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[16]
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1290,7 +1595,7 @@ func (x *Interlock) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Interlock.ProtoReflect.Descriptor instead.
 func (*Interlock) Descriptor() ([]byte, []int) {
-	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{16}
+	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *Interlock) GetInterlockId() string {
@@ -1327,7 +1632,7 @@ type InterlockConfig struct {
 
 func (x *InterlockConfig) Reset() {
 	*x = InterlockConfig{}
-	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[17]
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1339,7 +1644,7 @@ func (x *InterlockConfig) String() string {
 func (*InterlockConfig) ProtoMessage() {}
 
 func (x *InterlockConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[17]
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1352,7 +1657,7 @@ func (x *InterlockConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InterlockConfig.ProtoReflect.Descriptor instead.
 func (*InterlockConfig) Descriptor() ([]byte, []int) {
-	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{17}
+	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *InterlockConfig) GetInterlockId() string {
@@ -1399,7 +1704,7 @@ type InterlockState struct {
 
 func (x *InterlockState) Reset() {
 	*x = InterlockState{}
-	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[18]
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1411,7 +1716,7 @@ func (x *InterlockState) String() string {
 func (*InterlockState) ProtoMessage() {}
 
 func (x *InterlockState) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[18]
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1424,7 +1729,7 @@ func (x *InterlockState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InterlockState.ProtoReflect.Descriptor instead.
 func (*InterlockState) Descriptor() ([]byte, []int) {
-	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{18}
+	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *InterlockState) GetSatisfied() bool {
@@ -1443,7 +1748,7 @@ type Faults struct {
 
 func (x *Faults) Reset() {
 	*x = Faults{}
-	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[19]
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1455,7 +1760,7 @@ func (x *Faults) String() string {
 func (*Faults) ProtoMessage() {}
 
 func (x *Faults) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[19]
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1468,7 +1773,7 @@ func (x *Faults) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Faults.ProtoReflect.Descriptor instead.
 func (*Faults) Descriptor() ([]byte, []int) {
-	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{19}
+	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *Faults) GetFault() []*Fault {
@@ -1480,7 +1785,8 @@ func (x *Faults) GetFault() []*Fault {
 
 type Fault struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Category       *string                `protobuf:"bytes,1,opt,name=category,proto3,oneof" json:"category,omitempty"`
+	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
+	Component      *v1.ComponentRef       `protobuf:"bytes,7,opt,name=component,proto3" json:"component,omitempty"`
 	CorrelatesWith *string                `protobuf:"bytes,6,opt,name=correlates_with,json=correlatesWith,proto3,oneof" json:"correlates_with,omitempty"`
 	Description    *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
 	FaultId        *string                `protobuf:"bytes,3,opt,name=fault_id,json=faultId,proto3,oneof" json:"fault_id,omitempty"`
@@ -1492,7 +1798,7 @@ type Fault struct {
 
 func (x *Fault) Reset() {
 	*x = Fault{}
-	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[20]
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1504,7 +1810,7 @@ func (x *Fault) String() string {
 func (*Fault) ProtoMessage() {}
 
 func (x *Fault) ProtoReflect() protoreflect.Message {
-	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[20]
+	mi := &file_openits_reversible_lane_v1_state_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1517,14 +1823,21 @@ func (x *Fault) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Fault.ProtoReflect.Descriptor instead.
 func (*Fault) Descriptor() ([]byte, []int) {
-	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{20}
+	return file_openits_reversible_lane_v1_state_proto_rawDescGZIP(), []int{24}
 }
 
-func (x *Fault) GetCategory() string {
-	if x != nil && x.Category != nil {
-		return *x.Category
+func (x *Fault) GetKind() string {
+	if x != nil {
+		return x.Kind
 	}
 	return ""
+}
+
+func (x *Fault) GetComponent() *v1.ComponentRef {
+	if x != nil {
+		return x.Component
+	}
+	return nil
 }
 
 func (x *Fault) GetCorrelatesWith() string {
@@ -1566,12 +1879,13 @@ var File_openits_reversible_lane_v1_state_proto protoreflect.FileDescriptor
 
 const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"\n" +
-	"&openits/reversible_lane/v1/state.proto\x12\x1aopenits.reversible_lane.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a&openits/reversible_lane/v1/types.proto\"\xa6\x03\n" +
+	"&openits/reversible_lane/v1/state.proto\x12\x1aopenits.reversible_lane.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a&openits/reversible_lane/v1/types.proto\x1a\x1copenits/types/v1/types.proto\"\xdf\x03\n" +
 	"\x0eReversibleLane\x12H\n" +
 	"\x06config\x18\x01 \x01(\v20.openits.reversible_lane.v1.ReversibleLaneConfigR\x06config\x12E\n" +
 	"\x05state\x18\x02 \x01(\v2/.openits.reversible_lane.v1.ReversibleLaneStateR\x05state\x12=\n" +
 	"\acontrol\x18\x03 \x01(\v2#.openits.reversible_lane.v1.ControlR\acontrol\x12@\n" +
-	"\bsegments\x18\x04 \x01(\v2$.openits.reversible_lane.v1.SegmentsR\bsegments\x12F\n" +
+	"\bsegments\x18\x04 \x01(\v2$.openits.reversible_lane.v1.SegmentsR\bsegments\x127\n" +
+	"\x05gates\x18\a \x01(\v2!.openits.reversible_lane.v1.GatesR\x05gates\x12F\n" +
 	"\n" +
 	"interlocks\x18\x05 \x01(\v2&.openits.reversible_lane.v1.InterlocksR\n" +
 	"interlocks\x12:\n" +
@@ -1622,7 +1936,7 @@ const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"_directionB\n" +
 	"\n" +
 	"\b_measureB\r\n" +
-	"\v_lrs_method\"\xa3\a\n" +
+	"\v_lrs_method\"\xfb\b\n" +
 	"\x13ReversibleLaneState\x12!\n" +
 	"\televation\x18\x01 \x01(\tH\x00R\televation\x88\x01\x01\x12\x1f\n" +
 	"\bfirmware\x18\x02 \x01(\tH\x01R\bfirmware\x88\x01\x01\x12*\n" +
@@ -1630,7 +1944,9 @@ const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"\x10hardware_version\x18\r \x01(\tH\x03R\x0fhardwareVersion\x88\x01\x01\x12\x1d\n" +
 	"\aheading\x18\x03 \x01(\rH\x04R\aheading\x88\x01\x01\x12\x13\n" +
 	"\x02id\x18\x04 \x01(\tH\x05R\x02id\x88\x01\x01\x12=\n" +
-	"\finstall_date\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12\x1f\n" +
+	"\finstall_date\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\vinstallDate\x12;\n" +
+	"\vlast_change\x18\x13 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"lastChange\x12\x1f\n" +
 	"\blatitude\x18\x05 \x01(\tH\x06R\blatitude\x88\x01\x01\x12i\n" +
 	"\x10linear_reference\x18\x0f \x01(\v2>.openits.reversible_lane.v1.ReversibleLaneStateLinearReferenceR\x0flinearReference\x12!\n" +
 	"\tlongitude\x18\x06 \x01(\tH\aR\tlongitude\x88\x01\x01\x12(\n" +
@@ -1638,12 +1954,16 @@ const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"\x04make\x18\a \x01(\tH\tR\x04make\x88\x01\x01\x12\x19\n" +
 	"\x05model\x18\b \x01(\tH\n" +
 	"R\x05model\x88\x01\x01\x12\x17\n" +
-	"\x04name\x18\t \x01(\tH\vR\x04name\x88\x01\x01\x12\x19\n" +
-	"\x05owner\x18\x11 \x01(\tH\fR\x05owner\x88\x01\x01\x12*\n" +
+	"\x04name\x18\t \x01(\tH\vR\x04name\x88\x01\x01\x12;\n" +
+	"\vobserved_at\x18\x14 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x12L\n" +
+	"\voper_status\x18\x15 \x01(\x0e2&.openits.reversible_lane.v1.OperStatusH\fR\n" +
+	"operStatus\x88\x01\x01\x12\x19\n" +
+	"\x05owner\x18\x11 \x01(\tH\rR\x05owner\x88\x01\x01\x12*\n" +
 	"\x0eroad_reference\x18\n" +
-	" \x01(\tH\rR\rroadReference\x88\x01\x01\x12\x1b\n" +
-	"\x06serial\x18\v \x01(\tH\x0eR\x06serial\x88\x01\x01\x12\x1c\n" +
-	"\asite_id\x18\x12 \x01(\tH\x0fR\x06siteId\x88\x01\x01B\f\n" +
+	" \x01(\tH\x0eR\rroadReference\x88\x01\x01\x12\x1b\n" +
+	"\x06serial\x18\v \x01(\tH\x0fR\x06serial\x88\x01\x01\x12\x1c\n" +
+	"\asite_id\x18\x12 \x01(\tH\x10R\x06siteId\x88\x01\x01B\f\n" +
 	"\n" +
 	"_elevationB\v\n" +
 	"\t_firmwareB\x11\n" +
@@ -1658,7 +1978,8 @@ const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"\x0e_maintained_byB\a\n" +
 	"\x05_makeB\b\n" +
 	"\x06_modelB\a\n" +
-	"\x05_nameB\b\n" +
+	"\x05_nameB\x0e\n" +
+	"\f_oper_statusB\b\n" +
 	"\x06_ownerB\x11\n" +
 	"\x0f_road_referenceB\t\n" +
 	"\a_serialB\n" +
@@ -1754,7 +2075,45 @@ const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"gate_state\x18\a \x01(\x0e2%.openits.reversible_lane.v1.GateStateH\x02R\tgateState\x88\x01\x01B\x12\n" +
 	"\x10_lcs_direction_aB\x12\n" +
 	"\x10_lcs_direction_bB\r\n" +
-	"\v_gate_state\"Q\n" +
+	"\v_gate_state\"=\n" +
+	"\x05Gates\x124\n" +
+	"\x04gate\x18\x01 \x03(\v2 .openits.reversible_lane.v1.GateR\x04gate\"\xb1\x01\n" +
+	"\x04Gate\x12\x1c\n" +
+	"\agate_id\x18\x01 \x01(\tH\x00R\x06gateId\x88\x01\x01\x12>\n" +
+	"\x06config\x18\x02 \x01(\v2&.openits.reversible_lane.v1.GateConfigR\x06config\x12?\n" +
+	"\x05state\x18\x03 \x01(\v2).openits.reversible_lane.v1.GateGateStateR\x05stateB\n" +
+	"\n" +
+	"\b_gate_id\"\x85\x02\n" +
+	"\n" +
+	"GateConfig\x12\x1c\n" +
+	"\agate_id\x18\x01 \x01(\tH\x00R\x06gateId\x88\x01\x01\x12 \n" +
+	"\tgate_type\x18\x02 \x01(\tH\x01R\bgateType\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x03 \x01(\tH\x02R\x04name\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"segment_id\x18\x04 \x01(\tH\x03R\tsegmentId\x88\x01\x01\x121\n" +
+	"\x12controls_entry_for\x18\x05 \x01(\tH\x04R\x10controlsEntryFor\x88\x01\x01B\n" +
+	"\n" +
+	"\b_gate_idB\f\n" +
+	"\n" +
+	"_gate_typeB\a\n" +
+	"\x05_nameB\r\n" +
+	"\v_segment_idB\x15\n" +
+	"\x13_controls_entry_for\"\x81\x04\n" +
+	"\rGateGateState\x12;\n" +
+	"\vobserved_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x12,\n" +
+	"\x0fclose_inhibited\x18\x02 \x01(\bH\x00R\x0ecloseInhibited\x88\x01\x01\x12*\n" +
+	"\x0econtrol_source\x18\x03 \x01(\tH\x01R\rcontrolSource\x88\x01\x01\x122\n" +
+	"\x12interlock_bypassed\x18\x04 \x01(\bH\x02R\x11interlockBypassed\x88\x01\x01\x12*\n" +
+	"\x0eopen_inhibited\x18\x05 \x01(\bH\x03R\ropenInhibited\x88\x01\x01\x12*\n" +
+	"\x0eoperating_mode\x18\x06 \x01(\tH\x04R\roperatingMode\x88\x01\x01\x12I\n" +
+	"\bposition\x18\a \x01(\x0e2(.openits.reversible_lane.v1.GatePositionH\x05R\bposition\x88\x01\x01B\x12\n" +
+	"\x10_close_inhibitedB\x11\n" +
+	"\x0f_control_sourceB\x15\n" +
+	"\x13_interlock_bypassedB\x11\n" +
+	"\x0f_open_inhibitedB\x11\n" +
+	"\x0f_operating_modeB\v\n" +
+	"\t_positionJ\x04\b\x01\x10\x02R\vmeasured_at\"Q\n" +
 	"\n" +
 	"Interlocks\x12C\n" +
 	"\tinterlock\x18\x02 \x03(\v2%.openits.reversible_lane.v1.InterlockR\tinterlock\"\xcb\x01\n" +
@@ -1777,19 +2136,19 @@ const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"\n" +
 	"_satisfied\"A\n" +
 	"\x06Faults\x127\n" +
-	"\x05fault\x18\x01 \x03(\v2!.openits.reversible_lane.v1.FaultR\x05fault\"\xf7\x02\n" +
-	"\x05Fault\x12\x1f\n" +
-	"\bcategory\x18\x01 \x01(\tH\x00R\bcategory\x88\x01\x01\x12,\n" +
-	"\x0fcorrelates_with\x18\x06 \x01(\tH\x01R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
-	"\vdescription\x18\x02 \x01(\tH\x02R\vdescription\x88\x01\x01\x12\x1e\n" +
-	"\bfault_id\x18\x03 \x01(\tH\x03R\afaultId\x88\x01\x01\x12A\n" +
+	"\x05fault\x18\x01 \x03(\v2!.openits.reversible_lane.v1.FaultR\x05fault\"\xab\x03\n" +
+	"\x05Fault\x12\x12\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12<\n" +
+	"\tcomponent\x18\a \x01(\v2\x1e.openits.types.v1.ComponentRefR\tcomponent\x12,\n" +
+	"\x0fcorrelates_with\x18\x06 \x01(\tH\x00R\x0ecorrelatesWith\x88\x01\x01\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x01R\vdescription\x88\x01\x01\x12\x1e\n" +
+	"\bfault_id\x18\x03 \x01(\tH\x02R\afaultId\x88\x01\x01\x12A\n" +
 	"\x0efirst_observed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rfirstObserved\x12J\n" +
-	"\bseverity\x18\x05 \x01(\x0e2).openits.reversible_lane.v1.FaultSeverityH\x04R\bseverity\x88\x01\x01B\v\n" +
-	"\t_categoryB\x12\n" +
+	"\bseverity\x18\x05 \x01(\x0e2).openits.reversible_lane.v1.FaultSeverityH\x03R\bseverity\x88\x01\x01B\x12\n" +
 	"\x10_correlates_withB\x0e\n" +
 	"\f_descriptionB\v\n" +
 	"\t_fault_idB\v\n" +
-	"\t_severityBZZXgithub.com/Vikasa2M/openits-models/pkg/proto/openits/reversible_lane/v1;reversiblelanev1b\x06proto3"
+	"\t_severityJ\x04\b\x01\x10\x02R\bcategoryBZZXgithub.com/Vikasa2M/openits-models/pkg/proto/openits/reversible_lane/v1;reversiblelanev1b\x06proto3"
 
 var (
 	file_openits_reversible_lane_v1_state_proto_rawDescOnce sync.Once
@@ -1803,7 +2162,7 @@ func file_openits_reversible_lane_v1_state_proto_rawDescGZIP() []byte {
 	return file_openits_reversible_lane_v1_state_proto_rawDescData
 }
 
-var file_openits_reversible_lane_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
+var file_openits_reversible_lane_v1_state_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
 var file_openits_reversible_lane_v1_state_proto_goTypes = []any{
 	(*ReversibleLane)(nil),                      // 0: openits.reversible_lane.v1.ReversibleLane
 	(*ReversibleLaneConfig)(nil),                // 1: openits.reversible_lane.v1.ReversibleLaneConfig
@@ -1820,62 +2179,79 @@ var file_openits_reversible_lane_v1_state_proto_goTypes = []any{
 	(*Lane)(nil),                                // 12: openits.reversible_lane.v1.Lane
 	(*LaneConfig)(nil),                          // 13: openits.reversible_lane.v1.LaneConfig
 	(*LaneState)(nil),                           // 14: openits.reversible_lane.v1.LaneState
-	(*Interlocks)(nil),                          // 15: openits.reversible_lane.v1.Interlocks
-	(*Interlock)(nil),                           // 16: openits.reversible_lane.v1.Interlock
-	(*InterlockConfig)(nil),                     // 17: openits.reversible_lane.v1.InterlockConfig
-	(*InterlockState)(nil),                      // 18: openits.reversible_lane.v1.InterlockState
-	(*Faults)(nil),                              // 19: openits.reversible_lane.v1.Faults
-	(*Fault)(nil),                               // 20: openits.reversible_lane.v1.Fault
-	(*timestamppb.Timestamp)(nil),               // 21: google.protobuf.Timestamp
-	(TargetState)(0),                            // 22: openits.reversible_lane.v1.TargetState
-	(LaneFlowState)(0),                          // 23: openits.reversible_lane.v1.LaneFlowState
-	(Phase)(0),                                  // 24: openits.reversible_lane.v1.Phase
-	(LcsIndication)(0),                          // 25: openits.reversible_lane.v1.LcsIndication
-	(GateState)(0),                              // 26: openits.reversible_lane.v1.GateState
-	(EvaluationPoint)(0),                        // 27: openits.reversible_lane.v1.EvaluationPoint
-	(FaultSeverity)(0),                          // 28: openits.reversible_lane.v1.FaultSeverity
+	(*Gates)(nil),                               // 15: openits.reversible_lane.v1.Gates
+	(*Gate)(nil),                                // 16: openits.reversible_lane.v1.Gate
+	(*GateConfig)(nil),                          // 17: openits.reversible_lane.v1.GateConfig
+	(*GateGateState)(nil),                       // 18: openits.reversible_lane.v1.GateGateState
+	(*Interlocks)(nil),                          // 19: openits.reversible_lane.v1.Interlocks
+	(*Interlock)(nil),                           // 20: openits.reversible_lane.v1.Interlock
+	(*InterlockConfig)(nil),                     // 21: openits.reversible_lane.v1.InterlockConfig
+	(*InterlockState)(nil),                      // 22: openits.reversible_lane.v1.InterlockState
+	(*Faults)(nil),                              // 23: openits.reversible_lane.v1.Faults
+	(*Fault)(nil),                               // 24: openits.reversible_lane.v1.Fault
+	(*timestamppb.Timestamp)(nil),               // 25: google.protobuf.Timestamp
+	(OperStatus)(0),                             // 26: openits.reversible_lane.v1.OperStatus
+	(TargetState)(0),                            // 27: openits.reversible_lane.v1.TargetState
+	(LaneFlowState)(0),                          // 28: openits.reversible_lane.v1.LaneFlowState
+	(Phase)(0),                                  // 29: openits.reversible_lane.v1.Phase
+	(LcsIndication)(0),                          // 30: openits.reversible_lane.v1.LcsIndication
+	(GateState)(0),                              // 31: openits.reversible_lane.v1.GateState
+	(GatePosition)(0),                           // 32: openits.reversible_lane.v1.GatePosition
+	(EvaluationPoint)(0),                        // 33: openits.reversible_lane.v1.EvaluationPoint
+	(*v1.ComponentRef)(nil),                     // 34: openits.types.v1.ComponentRef
+	(FaultSeverity)(0),                          // 35: openits.reversible_lane.v1.FaultSeverity
 }
 var file_openits_reversible_lane_v1_state_proto_depIdxs = []int32{
 	1,  // 0: openits.reversible_lane.v1.ReversibleLane.config:type_name -> openits.reversible_lane.v1.ReversibleLaneConfig
 	3,  // 1: openits.reversible_lane.v1.ReversibleLane.state:type_name -> openits.reversible_lane.v1.ReversibleLaneState
 	5,  // 2: openits.reversible_lane.v1.ReversibleLane.control:type_name -> openits.reversible_lane.v1.Control
 	9,  // 3: openits.reversible_lane.v1.ReversibleLane.segments:type_name -> openits.reversible_lane.v1.Segments
-	15, // 4: openits.reversible_lane.v1.ReversibleLane.interlocks:type_name -> openits.reversible_lane.v1.Interlocks
-	19, // 5: openits.reversible_lane.v1.ReversibleLane.faults:type_name -> openits.reversible_lane.v1.Faults
-	21, // 6: openits.reversible_lane.v1.ReversibleLaneConfig.install_date:type_name -> google.protobuf.Timestamp
-	2,  // 7: openits.reversible_lane.v1.ReversibleLaneConfig.linear_reference:type_name -> openits.reversible_lane.v1.ReversibleLaneConfigLinearReference
-	21, // 8: openits.reversible_lane.v1.ReversibleLaneState.install_date:type_name -> google.protobuf.Timestamp
-	4,  // 9: openits.reversible_lane.v1.ReversibleLaneState.linear_reference:type_name -> openits.reversible_lane.v1.ReversibleLaneStateLinearReference
-	6,  // 10: openits.reversible_lane.v1.Control.config:type_name -> openits.reversible_lane.v1.ControlConfig
-	7,  // 11: openits.reversible_lane.v1.Control.state:type_name -> openits.reversible_lane.v1.ControlState
-	22, // 12: openits.reversible_lane.v1.ControlConfig.target_state:type_name -> openits.reversible_lane.v1.TargetState
-	23, // 13: openits.reversible_lane.v1.ControlState.current_state:type_name -> openits.reversible_lane.v1.LaneFlowState
-	21, // 14: openits.reversible_lane.v1.ControlState.last_command_at:type_name -> google.protobuf.Timestamp
-	8,  // 15: openits.reversible_lane.v1.ControlState.transition:type_name -> openits.reversible_lane.v1.Transition
-	24, // 16: openits.reversible_lane.v1.Transition.phase:type_name -> openits.reversible_lane.v1.Phase
-	21, // 17: openits.reversible_lane.v1.Transition.started_at:type_name -> google.protobuf.Timestamp
-	10, // 18: openits.reversible_lane.v1.Segments.segment:type_name -> openits.reversible_lane.v1.Segment
-	11, // 19: openits.reversible_lane.v1.Segment.config:type_name -> openits.reversible_lane.v1.SegmentConfig
-	12, // 20: openits.reversible_lane.v1.Segment.lane:type_name -> openits.reversible_lane.v1.Lane
-	13, // 21: openits.reversible_lane.v1.Lane.config:type_name -> openits.reversible_lane.v1.LaneConfig
-	14, // 22: openits.reversible_lane.v1.Lane.state:type_name -> openits.reversible_lane.v1.LaneState
-	25, // 23: openits.reversible_lane.v1.LaneConfig.lcs_direction_a:type_name -> openits.reversible_lane.v1.LcsIndication
-	25, // 24: openits.reversible_lane.v1.LaneConfig.lcs_direction_b:type_name -> openits.reversible_lane.v1.LcsIndication
-	25, // 25: openits.reversible_lane.v1.LaneState.lcs_direction_a:type_name -> openits.reversible_lane.v1.LcsIndication
-	25, // 26: openits.reversible_lane.v1.LaneState.lcs_direction_b:type_name -> openits.reversible_lane.v1.LcsIndication
-	26, // 27: openits.reversible_lane.v1.LaneState.gate_state:type_name -> openits.reversible_lane.v1.GateState
-	16, // 28: openits.reversible_lane.v1.Interlocks.interlock:type_name -> openits.reversible_lane.v1.Interlock
-	17, // 29: openits.reversible_lane.v1.Interlock.config:type_name -> openits.reversible_lane.v1.InterlockConfig
-	18, // 30: openits.reversible_lane.v1.Interlock.state:type_name -> openits.reversible_lane.v1.InterlockState
-	27, // 31: openits.reversible_lane.v1.InterlockConfig.evaluation_point:type_name -> openits.reversible_lane.v1.EvaluationPoint
-	20, // 32: openits.reversible_lane.v1.Faults.fault:type_name -> openits.reversible_lane.v1.Fault
-	21, // 33: openits.reversible_lane.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
-	28, // 34: openits.reversible_lane.v1.Fault.severity:type_name -> openits.reversible_lane.v1.FaultSeverity
-	35, // [35:35] is the sub-list for method output_type
-	35, // [35:35] is the sub-list for method input_type
-	35, // [35:35] is the sub-list for extension type_name
-	35, // [35:35] is the sub-list for extension extendee
-	0,  // [0:35] is the sub-list for field type_name
+	15, // 4: openits.reversible_lane.v1.ReversibleLane.gates:type_name -> openits.reversible_lane.v1.Gates
+	19, // 5: openits.reversible_lane.v1.ReversibleLane.interlocks:type_name -> openits.reversible_lane.v1.Interlocks
+	23, // 6: openits.reversible_lane.v1.ReversibleLane.faults:type_name -> openits.reversible_lane.v1.Faults
+	25, // 7: openits.reversible_lane.v1.ReversibleLaneConfig.install_date:type_name -> google.protobuf.Timestamp
+	2,  // 8: openits.reversible_lane.v1.ReversibleLaneConfig.linear_reference:type_name -> openits.reversible_lane.v1.ReversibleLaneConfigLinearReference
+	25, // 9: openits.reversible_lane.v1.ReversibleLaneState.install_date:type_name -> google.protobuf.Timestamp
+	25, // 10: openits.reversible_lane.v1.ReversibleLaneState.last_change:type_name -> google.protobuf.Timestamp
+	4,  // 11: openits.reversible_lane.v1.ReversibleLaneState.linear_reference:type_name -> openits.reversible_lane.v1.ReversibleLaneStateLinearReference
+	25, // 12: openits.reversible_lane.v1.ReversibleLaneState.observed_at:type_name -> google.protobuf.Timestamp
+	26, // 13: openits.reversible_lane.v1.ReversibleLaneState.oper_status:type_name -> openits.reversible_lane.v1.OperStatus
+	6,  // 14: openits.reversible_lane.v1.Control.config:type_name -> openits.reversible_lane.v1.ControlConfig
+	7,  // 15: openits.reversible_lane.v1.Control.state:type_name -> openits.reversible_lane.v1.ControlState
+	27, // 16: openits.reversible_lane.v1.ControlConfig.target_state:type_name -> openits.reversible_lane.v1.TargetState
+	28, // 17: openits.reversible_lane.v1.ControlState.current_state:type_name -> openits.reversible_lane.v1.LaneFlowState
+	25, // 18: openits.reversible_lane.v1.ControlState.last_command_at:type_name -> google.protobuf.Timestamp
+	8,  // 19: openits.reversible_lane.v1.ControlState.transition:type_name -> openits.reversible_lane.v1.Transition
+	29, // 20: openits.reversible_lane.v1.Transition.phase:type_name -> openits.reversible_lane.v1.Phase
+	25, // 21: openits.reversible_lane.v1.Transition.started_at:type_name -> google.protobuf.Timestamp
+	10, // 22: openits.reversible_lane.v1.Segments.segment:type_name -> openits.reversible_lane.v1.Segment
+	11, // 23: openits.reversible_lane.v1.Segment.config:type_name -> openits.reversible_lane.v1.SegmentConfig
+	12, // 24: openits.reversible_lane.v1.Segment.lane:type_name -> openits.reversible_lane.v1.Lane
+	13, // 25: openits.reversible_lane.v1.Lane.config:type_name -> openits.reversible_lane.v1.LaneConfig
+	14, // 26: openits.reversible_lane.v1.Lane.state:type_name -> openits.reversible_lane.v1.LaneState
+	30, // 27: openits.reversible_lane.v1.LaneConfig.lcs_direction_a:type_name -> openits.reversible_lane.v1.LcsIndication
+	30, // 28: openits.reversible_lane.v1.LaneConfig.lcs_direction_b:type_name -> openits.reversible_lane.v1.LcsIndication
+	30, // 29: openits.reversible_lane.v1.LaneState.lcs_direction_a:type_name -> openits.reversible_lane.v1.LcsIndication
+	30, // 30: openits.reversible_lane.v1.LaneState.lcs_direction_b:type_name -> openits.reversible_lane.v1.LcsIndication
+	31, // 31: openits.reversible_lane.v1.LaneState.gate_state:type_name -> openits.reversible_lane.v1.GateState
+	16, // 32: openits.reversible_lane.v1.Gates.gate:type_name -> openits.reversible_lane.v1.Gate
+	17, // 33: openits.reversible_lane.v1.Gate.config:type_name -> openits.reversible_lane.v1.GateConfig
+	18, // 34: openits.reversible_lane.v1.Gate.state:type_name -> openits.reversible_lane.v1.GateGateState
+	25, // 35: openits.reversible_lane.v1.GateGateState.observed_at:type_name -> google.protobuf.Timestamp
+	32, // 36: openits.reversible_lane.v1.GateGateState.position:type_name -> openits.reversible_lane.v1.GatePosition
+	20, // 37: openits.reversible_lane.v1.Interlocks.interlock:type_name -> openits.reversible_lane.v1.Interlock
+	21, // 38: openits.reversible_lane.v1.Interlock.config:type_name -> openits.reversible_lane.v1.InterlockConfig
+	22, // 39: openits.reversible_lane.v1.Interlock.state:type_name -> openits.reversible_lane.v1.InterlockState
+	33, // 40: openits.reversible_lane.v1.InterlockConfig.evaluation_point:type_name -> openits.reversible_lane.v1.EvaluationPoint
+	24, // 41: openits.reversible_lane.v1.Faults.fault:type_name -> openits.reversible_lane.v1.Fault
+	34, // 42: openits.reversible_lane.v1.Fault.component:type_name -> openits.types.v1.ComponentRef
+	25, // 43: openits.reversible_lane.v1.Fault.first_observed:type_name -> google.protobuf.Timestamp
+	35, // 44: openits.reversible_lane.v1.Fault.severity:type_name -> openits.reversible_lane.v1.FaultSeverity
+	45, // [45:45] is the sub-list for method output_type
+	45, // [45:45] is the sub-list for method input_type
+	45, // [45:45] is the sub-list for extension type_name
+	45, // [45:45] is the sub-list for extension extendee
+	0,  // [0:45] is the sub-list for field type_name
 }
 
 func init() { file_openits_reversible_lane_v1_state_proto_init() }
@@ -1900,13 +2276,16 @@ func file_openits_reversible_lane_v1_state_proto_init() {
 	file_openits_reversible_lane_v1_state_proto_msgTypes[17].OneofWrappers = []any{}
 	file_openits_reversible_lane_v1_state_proto_msgTypes[18].OneofWrappers = []any{}
 	file_openits_reversible_lane_v1_state_proto_msgTypes[20].OneofWrappers = []any{}
+	file_openits_reversible_lane_v1_state_proto_msgTypes[21].OneofWrappers = []any{}
+	file_openits_reversible_lane_v1_state_proto_msgTypes[22].OneofWrappers = []any{}
+	file_openits_reversible_lane_v1_state_proto_msgTypes[24].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_reversible_lane_v1_state_proto_rawDesc), len(file_openits_reversible_lane_v1_state_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   21,
+			NumMessages:   25,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

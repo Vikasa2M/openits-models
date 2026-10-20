@@ -77,14 +77,6 @@ exceptions:
       module: openits-rsu-events
       path: /openits-rsu-events/rsu-tim-broadcast-state-changed/prior
       cut: rsu
-    - rule: before-after
-      module: openits-signal-control-events
-      path: /openits-signal-control-events/tsam-mode-changed/current
-      cut: signal-control
-    - rule: before-after
-      module: openits-signal-control-events
-      path: /openits-signal-control-events/tsam-mode-changed/prior
-      cut: signal-control
     - rule: counters
       module: openits-dms
       path: /openits-dms/sign/diagnostics/beacons-total
@@ -708,10 +700,6 @@ exceptions:
     - rule: units
       module: openits-signal-control-events
       path: /openits-signal-control-events/detector-report/detector/occupancy
-      cut: signal-control
-    - rule: units
-      module: openits-signal-control-events
-      path: /openits-signal-control-events/operational-status-report/uptime-seconds
       cut: signal-control
     - rule: units
       module: openits-signal-control-events

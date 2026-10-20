@@ -6,6 +6,7 @@ option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/cctv/v
 
 import "google/protobuf/timestamp.proto";
 import "openits/cctv/v1/types.proto";
+import "openits/types/v1/types.proto";
 
 message Camera {
   CameraConfig config = 1;
@@ -51,6 +52,7 @@ message CameraState {
   optional uint32 heading = 5;
   optional string id = 6;
   google.protobuf.Timestamp install_date = 15;
+  google.protobuf.Timestamp last_change = 20;
   optional string latitude = 7;
   CameraStateLinearReference linear_reference = 16;
   optional string longitude = 8;
@@ -58,6 +60,8 @@ message CameraState {
   optional string make = 9;
   optional string model = 10;
   optional string name = 11;
+  google.protobuf.Timestamp observed_at = 21;
+  optional OperStatus oper_status = 22;
   optional string owner = 18;
   optional string road_reference = 12;
   optional string serial = 13;
@@ -245,7 +249,10 @@ message Faults {
 }
 
 message Fault {
-  optional string category = 1;
+  reserved 1;
+  reserved "category";
+  string kind = 99;
+  openits.types.v1.ComponentRef component = 7;
   optional string correlates_with = 6;
   optional string description = 2;
   optional string fault_id = 3;

@@ -6,6 +6,7 @@ option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/percep
 
 import "google/protobuf/timestamp.proto";
 import "openits/perception/v1/types.proto";
+import "openits/types/v1/types.proto";
 
 message PerceptionSensor {
   PerceptionSensorConfig config = 1;
@@ -51,6 +52,7 @@ message PerceptionSensorState {
   optional uint32 heading = 3;
   optional string id = 12;
   google.protobuf.Timestamp install_date = 10;
+  google.protobuf.Timestamp last_change = 19;
   optional string latitude = 4;
   PerceptionSensorStateLinearReference linear_reference = 15;
   optional string longitude = 5;
@@ -58,6 +60,8 @@ message PerceptionSensorState {
   optional string make = 6;
   optional string model = 7;
   optional string name = 8;
+  google.protobuf.Timestamp observed_at = 20;
+  optional OperStatus oper_status = 21;
   optional string owner = 17;
   optional string road_reference = 9;
   optional string serial = 11;
@@ -178,7 +182,10 @@ message Faults {
 }
 
 message Fault {
-  optional string category = 1;
+  reserved 1;
+  reserved "category";
+  string kind = 99;
+  openits.types.v1.ComponentRef component = 7;
   optional string correlates_with = 6;
   optional string description = 2;
   optional string fault_id = 3;
@@ -209,8 +216,10 @@ message ZoneOccupancyZones {
 }
 
 message ZoneOccupancyZonesZone {
+  reserved 6;
+  reserved "measured_at";
   optional string zone_id = 1;
-  google.protobuf.Timestamp measured_at = 6;
+  google.protobuf.Timestamp observed_at = 8;
   optional uint32 occupancy_count = 3;
   google.protobuf.Timestamp occupied_since = 4;
   optional bool presence = 2;

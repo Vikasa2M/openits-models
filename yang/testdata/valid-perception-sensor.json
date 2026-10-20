@@ -9,6 +9,9 @@
       "road-reference": "Loop 12 EB @ Skillman"
     },
     "state": {
+      "oper-status": "ok",
+      "last-change": "2026-10-14T08:00:00Z",
+      "observed-at": "2026-10-14T16:00:00Z",
       "id": "loop12-lidar-04",
       "name": "Loop 12 @ Skillman LiDAR",
       "latitude": "32.8560000",

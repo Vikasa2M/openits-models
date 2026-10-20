@@ -10,7 +10,9 @@
         "2026-07-17",
         "2026-07-21",
         "2026-08-05",
-        "2026-10-13"
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-16"
       ],
       "events": [
         "openits.cctv.fault-cleared.v1",
@@ -23,7 +25,8 @@
       ],
       "refStd": [
         "NTCIP 1205",
-        "RFC 7950 §11"
+        "RFC 7950 §11",
+        "RFC 7950 §7.12"
       ],
       "modules": [
         {
@@ -32,10 +35,14 @@
           "revisions": [
             "2026-07-17",
             "2026-07-21",
-            "2026-08-05"
+            "2026-08-05",
+            "2026-10-14",
+            "2026-10-16"
           ],
           "refStd": [
-            "NTCIP 1205"
+            "NTCIP 1205",
+            "RFC 7950 §11",
+            "RFC 7950 §7.12"
           ]
         },
         {
@@ -57,10 +64,13 @@
           "namespace": "urn:openits:yang:cctv-types",
           "revisions": [
             "2026-07-17",
-            "2026-07-21"
+            "2026-07-21",
+            "2026-10-14",
+            "2026-10-16"
           ],
           "refStd": [
-            "NTCIP 1205"
+            "NTCIP 1205",
+            "RFC 7950 §11"
           ]
         }
       ]
@@ -87,7 +97,9 @@
         "2026-09-07",
         "2026-09-08",
         "2026-10-12",
-        "2026-10-13"
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-16"
       ],
       "events": [
         "openits.dms.fault-cleared.v1",
@@ -118,7 +130,10 @@
         "RFC 7950 section 11 (additive YANG evolution)",
         "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
         "RFC 7950 §11",
-        "RFC 7950 §7.13.2"
+        "RFC 7950 §7.12",
+        "RFC 7950 §7.13.2",
+        "RFC 7950 §7.18.2",
+        "RFC 7950 §7.19"
       ],
       "modules": [
         {
@@ -135,7 +150,9 @@
             "2026-08-05",
             "2026-08-23",
             "2026-09-08",
-            "2026-10-12"
+            "2026-10-12",
+            "2026-10-14",
+            "2026-10-16"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TI06 (Traffic Information Dissemination)",
@@ -151,6 +168,7 @@
             "RFC 7950 section 11 (additive YANG evolution)",
             "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
             "RFC 7950 §11",
+            "RFC 7950 §7.12",
             "RFC 7950 §7.13.2"
           ]
         },
@@ -196,7 +214,9 @@
             "2026-08-27",
             "2026-09-07",
             "2026-09-08",
-            "2026-10-13"
+            "2026-10-13",
+            "2026-10-14",
+            "2026-10-16"
           ],
           "refStd": [
             "NTCIP 1203 v03 (MULTI)",
@@ -207,7 +227,9 @@
             "NTCIP 1203:2010 (DMS functional reference; fault classes)",
             "RFC 7950 9.6.4.2",
             "RFC 7950 section 11",
-            "RFC 7950 §11"
+            "RFC 7950 §11",
+            "RFC 7950 §7.18.2",
+            "RFC 7950 §7.19"
           ]
         }
       ]
@@ -226,7 +248,9 @@
         "2026-07-16",
         "2026-07-21",
         "2026-08-05",
-        "2026-10-13"
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-16"
       ],
       "events": [
         "openits.ess.fault-cleared.v1",
@@ -245,7 +269,8 @@
         "RFC 7950 section 11",
         "RFC 7950 section 11 (additive YANG evolution)",
         "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
-        "RFC 7950 §11"
+        "RFC 7950 §11",
+        "RFC 7950 §7.12"
       ],
       "modules": [
         {
@@ -258,7 +283,9 @@
             "2026-07-13",
             "2026-07-16",
             "2026-07-21",
-            "2026-08-05"
+            "2026-08-05",
+            "2026-10-14",
+            "2026-10-16"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package MC01 (Environmental Monitoring Station)",
@@ -267,7 +294,9 @@
             "NTCIP 1204 v04 (essVisibilitySituation / essSurfaceStatus)",
             "NTCIP 1204 v04 (functional reference only; no wire compatibility)",
             "RFC 7950 section 11 (additive YANG evolution)",
-            "RFC 7950 section 11 (breaking YANG evolution: identity rename)"
+            "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
+            "RFC 7950 §11",
+            "RFC 7950 §7.12"
           ]
         },
         {
@@ -323,7 +352,9 @@
         "2026-08-15",
         "2026-09-07",
         "2026-09-08",
-        "2026-10-13"
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-16"
       ],
       "events": [
         "openits.perception.fault-cleared.v1",
@@ -342,6 +373,7 @@
         "RFC 7950 section 11 (additive YANG evolution)",
         "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
         "RFC 7950 §11",
+        "RFC 7950 §7.12",
         "docs/04-design-decisions.md (the model carries what is needed to interpret its data)",
         "docs/06-extension-model.md (core as an identity base)",
         "docs/08-capability-architecture.md"
@@ -360,7 +392,9 @@
             "2026-08-05",
             "2026-08-15",
             "2026-09-07",
-            "2026-09-08"
+            "2026-09-08",
+            "2026-10-14",
+            "2026-10-16"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Packages TM01 (Infrastructure-Based Traffic Surveillance) and TM08 (Traffic Incident Management System)",
@@ -369,6 +403,7 @@
             "RFC 7950 section 11 (additive YANG evolution)",
             "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
             "RFC 7950 §11",
+            "RFC 7950 §7.12",
             "docs/08-capability-architecture.md"
           ]
         },
@@ -436,7 +471,9 @@
         "2026-07-16",
         "2026-07-21",
         "2026-08-05",
-        "2026-10-13"
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-16"
       ],
       "events": [
         "openits.ramp-metering.fault-cleared.v1",
@@ -462,7 +499,9 @@
         "RFC 7950 section 11 (YANG identity evolution)",
         "RFC 7950 section 11 (additive YANG evolution)",
         "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
-        "RFC 7950 §11"
+        "RFC 7950 §11",
+        "RFC 7950 §7.12",
+        "RFC 7950 §7.19"
       ],
       "modules": [
         {
@@ -477,7 +516,9 @@
             "2026-07-15",
             "2026-07-16",
             "2026-07-21",
-            "2026-08-05"
+            "2026-08-05",
+            "2026-10-14",
+            "2026-10-16"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TI03 (Traffic Metering)",
@@ -491,7 +532,9 @@
             "NTCIP 1207 v02 (startup/shutdown objects)",
             "RFC 7950 9.6.4.2",
             "RFC 7950 section 11 (additive YANG evolution)",
-            "RFC 7950 section 11 (breaking YANG evolution: identity rename)"
+            "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
+            "RFC 7950 §11",
+            "RFC 7950 §7.12"
           ]
         },
         {
@@ -528,7 +571,8 @@
             "2026-07-16",
             "2026-07-21",
             "2026-08-05",
-            "2026-10-13"
+            "2026-10-13",
+            "2026-10-16"
           ],
           "refStd": [
             "ARC-IT TI03",
@@ -537,7 +581,8 @@
             "RFC 7950 9.6.4.2",
             "RFC 7950 section 11",
             "RFC 7950 section 11 (YANG identity evolution)",
-            "RFC 7950 §11"
+            "RFC 7950 §11",
+            "RFC 7950 §7.19"
           ]
         }
       ]
@@ -558,11 +603,15 @@
         "2026-07-23",
         "2026-08-05",
         "2026-09-08",
-        "2026-10-13"
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-15",
+        "2026-10-16"
       ],
       "events": [
         "openits.reversible-lane.fault-cleared.v1",
         "openits.reversible-lane.fault-raised.v1",
+        "openits.reversible-lane.gate-status-changed.v1",
         "openits.reversible-lane.lane-state-changed.v1",
         "openits.reversible-lane.lcs-conflict-detected.v1",
         "openits.reversible-lane.transition-timeout.v1"
@@ -576,7 +625,9 @@
         "RFC 7950 section 11",
         "RFC 7950 section 11 (additive YANG evolution)",
         "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
-        "RFC 7950 §11"
+        "RFC 7950 §11",
+        "RFC 7950 §7.12",
+        "RFC 7950 §7.19"
       ],
       "modules": [
         {
@@ -591,7 +642,10 @@
             "2026-07-15",
             "2026-07-21",
             "2026-08-05",
-            "2026-09-08"
+            "2026-09-08",
+            "2026-10-14",
+            "2026-10-15",
+            "2026-10-16"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TM16 (Reversible Lane Management)",
@@ -601,7 +655,8 @@
             "RFC 7950 9.6.4.2",
             "RFC 7950 section 11 (additive YANG evolution)",
             "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
-            "RFC 7950 §11"
+            "RFC 7950 §11",
+            "RFC 7950 §7.12"
           ]
         },
         {
@@ -617,7 +672,8 @@
             "2026-07-21",
             "2026-07-23",
             "2026-09-08",
-            "2026-10-13"
+            "2026-10-13",
+            "2026-10-15"
           ],
           "refStd": [
             "MUTCD 11th ed. Chapter 4M",
@@ -635,7 +691,9 @@
             "2026-07-14",
             "2026-07-15",
             "2026-07-21",
-            "2026-09-08"
+            "2026-09-08",
+            "2026-10-15",
+            "2026-10-16"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TM16 (Reversible Lane Management)",
@@ -643,7 +701,8 @@
             "MUTCD 11th Ed. Chapter 4M (Lane-Use Control Signals)",
             "MUTCD 11th ed. Chapter 4M",
             "RFC 7950 section 11",
-            "RFC 7950 §11"
+            "RFC 7950 §11",
+            "RFC 7950 §7.19"
           ]
         }
       ]
@@ -671,7 +730,9 @@
         "2026-08-05",
         "2026-09-08",
         "2026-10-12",
-        "2026-10-13"
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-16"
       ],
       "events": [
         "openits.rsu.fault-cleared.v1",
@@ -702,6 +763,8 @@
         "RFC 7950 section 11",
         "RFC 7950 §10.4.2",
         "RFC 7950 §11",
+        "RFC 7950 §7.12",
+        "RFC 7950 §7.19",
         "RFC 8407 section 4.3 (identifier naming)",
         "SAE J2735",
         "SAE J2735 (TIM broadcast emission)",
@@ -727,7 +790,9 @@
             "2026-07-21",
             "2026-08-05",
             "2026-09-08",
-            "2026-10-12"
+            "2026-10-12",
+            "2026-10-14",
+            "2026-10-16"
           ],
           "refStd": [
             "IEEE 1609",
@@ -740,6 +805,7 @@
             "RFC 7950 9.6.4.2",
             "RFC 7950 §10.4.2",
             "RFC 7950 §11",
+            "RFC 7950 §7.12",
             "RFC 8407 section 4.3 (identifier naming)",
             "SAE J2735 (TimeMark)",
             "SAE J2735 (V2X message types: BSM, SPaT, MAP, TIM, SRM, SSM, PSM)",
@@ -786,13 +852,15 @@
             "2026-07-21",
             "2026-08-05",
             "2026-09-08",
-            "2026-10-13"
+            "2026-10-13",
+            "2026-10-16"
           ],
           "refStd": [
             "NTCIP 1218:2020 (RSU functional reference; rsuMode, alarms)",
             "RFC 7950 9.6.4.2",
             "RFC 7950 section 11",
-            "RFC 7950 §11"
+            "RFC 7950 §11",
+            "RFC 7950 §7.19"
           ]
         }
       ]
@@ -819,9 +887,13 @@
         "2026-09-07",
         "2026-09-08",
         "2026-10-12",
-        "2026-10-13"
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-16",
+        "2026-10-17"
       ],
       "events": [
+        "openits.signal-control.cabinet-output-changed.v1",
         "openits.signal-control.comm-health-event.v1",
         "openits.signal-control.controller-fault-event.v1",
         "openits.signal-control.coordination-change.v1",
@@ -846,6 +918,7 @@
       "refStd": [
         "ARC-IT 9.1 Service Package TI01",
         "ARC-IT 9.1 Service Package: Traffic Signal Control (SU01) NTCIP 1202 v03 (functional reference only; no wire compat)",
+        "ATC Cabinet Standard",
         "ATC Cabinet Standard (CMU)",
         "ATSPM Indiana enumeration",
         "ATSPM Indiana enumeration (HR event-code vocabulary)",
@@ -869,6 +942,7 @@
         "NEMA TS-2 §4 (MMU)",
         "NEMA TS-2 §4 (conflict monitor / MMU)",
         "NEMA TS-2-2016 (FYA)",
+        "NEMA TS1 section 6",
         "NEMA TS2-2021 section 4",
         "NTCIP 1201",
         "NTCIP 1201 (global time / time-base)",
@@ -894,6 +968,9 @@
         "NTCIP 1211 (priority-type, PRS outcomes)",
         "RFC 7950 section 7.5.3",
         "RFC 7950 §11",
+        "RFC 7950 §7.12",
+        "RFC 7950 §7.18.2",
+        "RFC 7950 §7.19",
         "RFC 7950 §7.5.1",
         "docs/04-design-decisions.md (wire-source provenance is selective)"
       ],
@@ -914,7 +991,10 @@
             "2026-08-05",
             "2026-08-23",
             "2026-09-07",
-            "2026-09-08"
+            "2026-09-08",
+            "2026-10-14",
+            "2026-10-16",
+            "2026-10-17"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TI01",
@@ -952,6 +1032,7 @@
             "NTCIP 1211",
             "RFC 7950 section 7.5.3",
             "RFC 7950 §11",
+            "RFC 7950 §7.12",
             "RFC 7950 §7.5.1"
           ]
         },
@@ -963,7 +1044,8 @@
             "2026-07-21",
             "2026-09-07",
             "2026-09-08",
-            "2026-10-13"
+            "2026-10-13",
+            "2026-10-17"
           ],
           "refStd": [
             "ATSPM Indiana enumeration",
@@ -990,15 +1072,20 @@
             "2026-08-05",
             "2026-09-07",
             "2026-09-08",
-            "2026-10-12"
+            "2026-10-12",
+            "2026-10-14",
+            "2026-10-16",
+            "2026-10-17"
           ],
           "refStd": [
+            "ATC Cabinet Standard",
             "ATC Cabinet Standard (CMU)",
             "ATSPM Indiana enumeration (HR event-code vocabulary)",
             "Indiana 173 (fault-unit-flash-status)",
             "Li, H., A.M. Hainen, J.R. Sturdevant, et al. Indiana Traffic Signal Hi Resolution Data Logger Enumerations. Purdue TPF-5(377), Aug 2020 (doi: 10.5703/1288284316998), supersedes the Nov 2012 original (doi: 10.4231/K4RN35SH)",
             "MUTCD 11th ed. Ch. 8C",
             "NEMA TS-2 §4",
+            "NEMA TS1 section 6",
             "NEMA TS2-2021 section 4",
             "NTCIP 1201 (global time / time-base)",
             "NTCIP 1202 v03 (controller operating modes)",
@@ -1011,7 +1098,9 @@
             "NTCIP 1211",
             "NTCIP 1211 (priority-class / PRS request semantics)",
             "NTCIP 1211 (priority-type, PRS outcomes)",
-            "RFC 7950 §11"
+            "RFC 7950 §11",
+            "RFC 7950 §7.18.2",
+            "RFC 7950 §7.19"
           ]
         }
       ]
@@ -1032,7 +1121,9 @@
         "2026-07-21",
         "2026-08-05",
         "2026-08-23",
-        "2026-10-13"
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-16"
       ],
       "events": [
         "openits.traffic-sensor.fault-cleared.v1",
@@ -1056,7 +1147,8 @@
         "RFC 7950 section 11",
         "RFC 7950 section 11 (additive YANG evolution)",
         "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
-        "RFC 7950 §11"
+        "RFC 7950 §11",
+        "RFC 7950 §7.12"
       ],
       "modules": [
         {
@@ -1071,7 +1163,9 @@
             "2026-07-15",
             "2026-07-16",
             "2026-07-21",
-            "2026-08-05"
+            "2026-08-05",
+            "2026-10-14",
+            "2026-10-16"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TM01 (Infrastructure-Based Traffic Surveillance)",
@@ -1083,7 +1177,9 @@
             "NTCIP 1209 v02 (functional reference only; no wire compatibility)",
             "RFC 7950",
             "RFC 7950 section 11 (additive YANG evolution)",
-            "RFC 7950 section 11 (breaking YANG evolution: identity rename)"
+            "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
+            "RFC 7950 §11",
+            "RFC 7950 §7.12"
           ]
         },
         {
@@ -1188,7 +1284,8 @@
         "2026-08-15",
         "2026-08-23",
         "2026-09-05",
-        "2026-10-13"
+        "2026-10-13",
+        "2026-10-16"
       ],
       "events": [
         "openits.zone-occupancy.zone-occupancy-changed.v1",
@@ -1197,6 +1294,8 @@
       "refStd": [
         "RFC 7950 section 11",
         "RFC 7950 §11",
+        "RFC 7950 §7.19",
+        "RFC 7950 §7.6",
         "docs/04-design-decisions.md",
         "docs/08-capability-architecture.md",
         "docs/reference/yang-reference-conventions.md"
@@ -1208,10 +1307,12 @@
           "revisions": [
             "2026-08-15",
             "2026-08-23",
-            "2026-09-05"
+            "2026-09-05",
+            "2026-10-16"
           ],
           "refStd": [
             "RFC 7950 section 11",
+            "RFC 7950 §7.6",
             "docs/08-capability-architecture.md",
             "docs/reference/yang-reference-conventions.md"
           ]
@@ -1222,10 +1323,12 @@
           "revisions": [
             "2026-08-15",
             "2026-09-05",
-            "2026-10-13"
+            "2026-10-13",
+            "2026-10-16"
           ],
           "refStd": [
             "RFC 7950 §11",
+            "RFC 7950 §7.19",
             "docs/04-design-decisions.md",
             "docs/08-capability-architecture.md",
             "docs/reference/yang-reference-conventions.md"
@@ -1236,9 +1339,11 @@
           "namespace": "urn:openits:yang:zone-occupancy-types",
           "revisions": [
             "2026-08-15",
-            "2026-09-05"
+            "2026-09-05",
+            "2026-10-16"
           ],
           "refStd": [
+            "RFC 7950 §7.19",
             "docs/08-capability-architecture.md",
             "docs/reference/yang-reference-conventions.md"
           ]
@@ -1254,14 +1359,16 @@
         "2026-07-17",
         "2026-07-21",
         "2026-08-05",
-        "2026-08-23"
+        "2026-08-23",
+        "2026-10-14"
       ],
       "refStd": [
         "IEC 62040",
         "IEC 62040 (UPS)",
         "NEMA TS 2",
         "NEMA TS 2 (cabinet)",
-        "NTCIP 1203 v03 (dmsPowerSource)"
+        "NTCIP 1203 v03 (dmsPowerSource)",
+        "RFC 7950 §7.18.2"
       ]
     },
     {
@@ -1273,10 +1380,12 @@
         "2026-07-13",
         "2026-07-21",
         "2026-09-02",
-        "2026-10-13"
+        "2026-10-13",
+        "2026-10-16"
       ],
       "refStd": [
-        "RFC 7950 §11"
+        "RFC 7950 §11",
+        "RFC 7950 §7.19"
       ]
     },
     {
@@ -1292,10 +1401,12 @@
         "2026-07-13",
         "2026-07-14",
         "2026-07-21",
-        "2026-10-13"
+        "2026-10-13",
+        "2026-10-14"
       ],
       "refStd": [
-        "RFC 7950 §11"
+        "RFC 7950 §11",
+        "RFC 7950 §7.13"
       ]
     },
     {
@@ -1307,10 +1418,12 @@
         "2026-05-23",
         "2026-07-13",
         "2026-07-21",
-        "2026-10-13"
+        "2026-10-13",
+        "2026-10-17"
       ],
       "refStd": [
-        "RFC 7950 §11"
+        "RFC 7950 §11",
+        "RFC 7950 §7.21"
       ]
     },
     {
@@ -1391,7 +1504,9 @@
         "2026-09-02",
         "2026-09-08",
         "2026-10-12",
-        "2026-10-13"
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-16"
       ],
       "refStd": [
         "ATSPM Indiana enumeration",
@@ -1405,6 +1520,8 @@
         "RFC 7950 section 11 (breaking YANG evolution)",
         "RFC 7950 §11",
         "RFC 7950 §11 (additive YANG evolution)",
+        "RFC 7950 §7.12",
+        "RFC 7950 §7.19",
         "RFC 8407 section 4.3 (identifier naming)",
         "SAE J2735 ('j2735' case)",
         "SAE J2735 (position datum)",
@@ -1488,11 +1605,13 @@
         "2026-07-13",
         "2026-07-15",
         "2026-08-05",
-        "2026-08-23"
+        "2026-08-23",
+        "2026-10-16"
       ],
       "refStd": [
         "IEEE 1609.2 (BSM temporary-id rotation)",
         "RFC 7950 9.6.4.2",
+        "RFC 7950 §7.6",
         "SAE J2735 / J2945"
       ]
     },
@@ -1590,6 +1709,11 @@
         "openits-cabinet-power/2026-08-23/MANIFEST.json",
         "openits-cabinet-power/2026-08-23/README.md",
         "openits-cabinet-power/2026-08-23/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-cabinet-power/2026-10-14/MANIFEST.json",
+        "openits-cabinet-power/2026-10-14/README.md",
+        "openits-cabinet-power/2026-10-14/schema.yang"
       ]
     },
     "openits-cctv": {
@@ -1602,6 +1726,16 @@
         "openits-cctv/2026-08-05/MANIFEST.json",
         "openits-cctv/2026-08-05/README.md",
         "openits-cctv/2026-08-05/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-cctv/2026-10-14/MANIFEST.json",
+        "openits-cctv/2026-10-14/README.md",
+        "openits-cctv/2026-10-14/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-cctv/2026-10-16/MANIFEST.json",
+        "openits-cctv/2026-10-16/README.md",
+        "openits-cctv/2026-10-16/schema.yang"
       ]
     },
     "openits-cctv-events": {
@@ -1632,6 +1766,16 @@
         "openits-cctv-types/2026-07-21/MANIFEST.json",
         "openits-cctv-types/2026-07-21/README.md",
         "openits-cctv-types/2026-07-21/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-cctv-types/2026-10-14/MANIFEST.json",
+        "openits-cctv-types/2026-10-14/README.md",
+        "openits-cctv-types/2026-10-14/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-cctv-types/2026-10-16/MANIFEST.json",
+        "openits-cctv-types/2026-10-16/README.md",
+        "openits-cctv-types/2026-10-16/schema.yang"
       ]
     },
     "openits-common-comm-health-events": {
@@ -1662,6 +1806,13 @@
         "openits-common-comm-health-events/2026-10-13/schema.json",
         "openits-common-comm-health-events/2026-10-13/schema.proto",
         "openits-common-comm-health-events/2026-10-13/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-common-comm-health-events/2026-10-16/MANIFEST.json",
+        "openits-common-comm-health-events/2026-10-16/README.md",
+        "openits-common-comm-health-events/2026-10-16/schema.json",
+        "openits-common-comm-health-events/2026-10-16/schema.proto",
+        "openits-common-comm-health-events/2026-10-16/schema.yang"
       ]
     },
     "openits-common-fault-events": {
@@ -1692,6 +1843,13 @@
         "openits-common-fault-events/2026-10-13/schema.json",
         "openits-common-fault-events/2026-10-13/schema.proto",
         "openits-common-fault-events/2026-10-13/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-common-fault-events/2026-10-14/MANIFEST.json",
+        "openits-common-fault-events/2026-10-14/README.md",
+        "openits-common-fault-events/2026-10-14/schema.json",
+        "openits-common-fault-events/2026-10-14/schema.proto",
+        "openits-common-fault-events/2026-10-14/schema.yang"
       ]
     },
     "openits-common-mode-events": {
@@ -1715,6 +1873,13 @@
         "openits-common-mode-events/2026-10-13/schema.json",
         "openits-common-mode-events/2026-10-13/schema.proto",
         "openits-common-mode-events/2026-10-13/schema.yang"
+      ],
+      "2026-10-17": [
+        "openits-common-mode-events/2026-10-17/MANIFEST.json",
+        "openits-common-mode-events/2026-10-17/README.md",
+        "openits-common-mode-events/2026-10-17/schema.json",
+        "openits-common-mode-events/2026-10-17/schema.proto",
+        "openits-common-mode-events/2026-10-17/schema.yang"
       ]
     },
     "openits-device-diagnostics": {
@@ -1759,6 +1924,16 @@
         "openits-dms/2026-10-12/MANIFEST.json",
         "openits-dms/2026-10-12/README.md",
         "openits-dms/2026-10-12/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-dms/2026-10-14/MANIFEST.json",
+        "openits-dms/2026-10-14/README.md",
+        "openits-dms/2026-10-14/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-dms/2026-10-16/MANIFEST.json",
+        "openits-dms/2026-10-16/README.md",
+        "openits-dms/2026-10-16/schema.yang"
       ]
     },
     "openits-dms-events": {
@@ -1859,6 +2034,16 @@
         "openits-dms-types/2026-10-13/MANIFEST.json",
         "openits-dms-types/2026-10-13/README.md",
         "openits-dms-types/2026-10-13/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-dms-types/2026-10-14/MANIFEST.json",
+        "openits-dms-types/2026-10-14/README.md",
+        "openits-dms-types/2026-10-14/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-dms-types/2026-10-16/MANIFEST.json",
+        "openits-dms-types/2026-10-16/README.md",
+        "openits-dms-types/2026-10-16/schema.yang"
       ]
     },
     "openits-ess": {
@@ -1881,6 +2066,16 @@
         "openits-ess/2026-08-05/MANIFEST.json",
         "openits-ess/2026-08-05/README.md",
         "openits-ess/2026-08-05/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-ess/2026-10-14/MANIFEST.json",
+        "openits-ess/2026-10-14/README.md",
+        "openits-ess/2026-10-14/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-ess/2026-10-16/MANIFEST.json",
+        "openits-ess/2026-10-16/README.md",
+        "openits-ess/2026-10-16/schema.yang"
       ]
     },
     "openits-ess-events": {
@@ -1965,6 +2160,16 @@
         "openits-perception/2026-09-08/MANIFEST.json",
         "openits-perception/2026-09-08/README.md",
         "openits-perception/2026-09-08/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-perception/2026-10-14/MANIFEST.json",
+        "openits-perception/2026-10-14/README.md",
+        "openits-perception/2026-10-14/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-perception/2026-10-16/MANIFEST.json",
+        "openits-perception/2026-10-16/README.md",
+        "openits-perception/2026-10-16/schema.yang"
       ]
     },
     "openits-perception-events": {
@@ -2056,6 +2261,16 @@
         "openits-ramp-metering/2026-08-05/MANIFEST.json",
         "openits-ramp-metering/2026-08-05/README.md",
         "openits-ramp-metering/2026-08-05/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-ramp-metering/2026-10-14/MANIFEST.json",
+        "openits-ramp-metering/2026-10-14/README.md",
+        "openits-ramp-metering/2026-10-14/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-ramp-metering/2026-10-16/MANIFEST.json",
+        "openits-ramp-metering/2026-10-16/README.md",
+        "openits-ramp-metering/2026-10-16/schema.yang"
       ]
     },
     "openits-ramp-metering-events": {
@@ -2108,6 +2323,11 @@
         "openits-ramp-metering-types/2026-10-13/MANIFEST.json",
         "openits-ramp-metering-types/2026-10-13/README.md",
         "openits-ramp-metering-types/2026-10-13/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-ramp-metering-types/2026-10-16/MANIFEST.json",
+        "openits-ramp-metering-types/2026-10-16/README.md",
+        "openits-ramp-metering-types/2026-10-16/schema.yang"
       ]
     },
     "openits-reversible-lane": {
@@ -2135,6 +2355,21 @@
         "openits-reversible-lane/2026-09-08/MANIFEST.json",
         "openits-reversible-lane/2026-09-08/README.md",
         "openits-reversible-lane/2026-09-08/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-reversible-lane/2026-10-14/MANIFEST.json",
+        "openits-reversible-lane/2026-10-14/README.md",
+        "openits-reversible-lane/2026-10-14/schema.yang"
+      ],
+      "2026-10-15": [
+        "openits-reversible-lane/2026-10-15/MANIFEST.json",
+        "openits-reversible-lane/2026-10-15/README.md",
+        "openits-reversible-lane/2026-10-15/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-reversible-lane/2026-10-16/MANIFEST.json",
+        "openits-reversible-lane/2026-10-16/README.md",
+        "openits-reversible-lane/2026-10-16/schema.yang"
       ]
     },
     "openits-reversible-lane-events": {
@@ -2172,6 +2407,13 @@
         "openits-reversible-lane-events/2026-10-13/schema.json",
         "openits-reversible-lane-events/2026-10-13/schema.proto",
         "openits-reversible-lane-events/2026-10-13/schema.yang"
+      ],
+      "2026-10-15": [
+        "openits-reversible-lane-events/2026-10-15/MANIFEST.json",
+        "openits-reversible-lane-events/2026-10-15/README.md",
+        "openits-reversible-lane-events/2026-10-15/schema.json",
+        "openits-reversible-lane-events/2026-10-15/schema.proto",
+        "openits-reversible-lane-events/2026-10-15/schema.yang"
       ]
     },
     "openits-reversible-lane-types": {
@@ -2189,6 +2431,16 @@
         "openits-reversible-lane-types/2026-09-08/MANIFEST.json",
         "openits-reversible-lane-types/2026-09-08/README.md",
         "openits-reversible-lane-types/2026-09-08/schema.yang"
+      ],
+      "2026-10-15": [
+        "openits-reversible-lane-types/2026-10-15/MANIFEST.json",
+        "openits-reversible-lane-types/2026-10-15/README.md",
+        "openits-reversible-lane-types/2026-10-15/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-reversible-lane-types/2026-10-16/MANIFEST.json",
+        "openits-reversible-lane-types/2026-10-16/README.md",
+        "openits-reversible-lane-types/2026-10-16/schema.yang"
       ]
     },
     "openits-rsu": {
@@ -2216,6 +2468,16 @@
         "openits-rsu/2026-10-12/MANIFEST.json",
         "openits-rsu/2026-10-12/README.md",
         "openits-rsu/2026-10-12/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-rsu/2026-10-14/MANIFEST.json",
+        "openits-rsu/2026-10-14/README.md",
+        "openits-rsu/2026-10-14/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-rsu/2026-10-16/MANIFEST.json",
+        "openits-rsu/2026-10-16/README.md",
+        "openits-rsu/2026-10-16/schema.yang"
       ]
     },
     "openits-rsu-events": {
@@ -2278,6 +2540,11 @@
         "openits-rsu-types/2026-10-13/MANIFEST.json",
         "openits-rsu-types/2026-10-13/README.md",
         "openits-rsu-types/2026-10-13/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-rsu-types/2026-10-16/MANIFEST.json",
+        "openits-rsu-types/2026-10-16/README.md",
+        "openits-rsu-types/2026-10-16/schema.yang"
       ]
     },
     "openits-rsu-us-band-plan": {
@@ -2346,6 +2613,21 @@
         "openits-signal-control/2026-09-08/MANIFEST.json",
         "openits-signal-control/2026-09-08/README.md",
         "openits-signal-control/2026-09-08/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-signal-control/2026-10-14/MANIFEST.json",
+        "openits-signal-control/2026-10-14/README.md",
+        "openits-signal-control/2026-10-14/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-signal-control/2026-10-16/MANIFEST.json",
+        "openits-signal-control/2026-10-16/README.md",
+        "openits-signal-control/2026-10-16/schema.yang"
+      ],
+      "2026-10-17": [
+        "openits-signal-control/2026-10-17/MANIFEST.json",
+        "openits-signal-control/2026-10-17/README.md",
+        "openits-signal-control/2026-10-17/schema.yang"
       ]
     },
     "openits-signal-control-coordination-events": {
@@ -2408,6 +2690,13 @@
         "openits-signal-control-events/2026-10-13/schema.json",
         "openits-signal-control-events/2026-10-13/schema.proto",
         "openits-signal-control-events/2026-10-13/schema.yang"
+      ],
+      "2026-10-17": [
+        "openits-signal-control-events/2026-10-17/MANIFEST.json",
+        "openits-signal-control-events/2026-10-17/README.md",
+        "openits-signal-control-events/2026-10-17/schema.json",
+        "openits-signal-control-events/2026-10-17/schema.proto",
+        "openits-signal-control-events/2026-10-17/schema.yang"
       ]
     },
     "openits-signal-control-fault-events": {
@@ -2555,6 +2844,21 @@
         "openits-signal-control-types/2026-10-12/MANIFEST.json",
         "openits-signal-control-types/2026-10-12/README.md",
         "openits-signal-control-types/2026-10-12/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-signal-control-types/2026-10-14/MANIFEST.json",
+        "openits-signal-control-types/2026-10-14/README.md",
+        "openits-signal-control-types/2026-10-14/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-signal-control-types/2026-10-16/MANIFEST.json",
+        "openits-signal-control-types/2026-10-16/README.md",
+        "openits-signal-control-types/2026-10-16/schema.yang"
+      ],
+      "2026-10-17": [
+        "openits-signal-control-types/2026-10-17/MANIFEST.json",
+        "openits-signal-control-types/2026-10-17/README.md",
+        "openits-signal-control-types/2026-10-17/schema.yang"
       ]
     },
     "openits-traffic-sensor": {
@@ -2577,6 +2881,16 @@
         "openits-traffic-sensor/2026-08-05/MANIFEST.json",
         "openits-traffic-sensor/2026-08-05/README.md",
         "openits-traffic-sensor/2026-08-05/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-traffic-sensor/2026-10-14/MANIFEST.json",
+        "openits-traffic-sensor/2026-10-14/README.md",
+        "openits-traffic-sensor/2026-10-14/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-traffic-sensor/2026-10-16/MANIFEST.json",
+        "openits-traffic-sensor/2026-10-16/README.md",
+        "openits-traffic-sensor/2026-10-16/schema.yang"
       ]
     },
     "openits-traffic-sensor-events": {
@@ -2664,6 +2978,16 @@
         "openits-types/2026-10-13/MANIFEST.json",
         "openits-types/2026-10-13/README.md",
         "openits-types/2026-10-13/schema.yang"
+      ],
+      "2026-10-14": [
+        "openits-types/2026-10-14/MANIFEST.json",
+        "openits-types/2026-10-14/README.md",
+        "openits-types/2026-10-14/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-types/2026-10-16/MANIFEST.json",
+        "openits-types/2026-10-16/README.md",
+        "openits-types/2026-10-16/schema.yang"
       ]
     },
     "openits-v2x-messaging": {
@@ -2734,6 +3058,11 @@
         "openits-vehicle-detection/2026-08-23/MANIFEST.json",
         "openits-vehicle-detection/2026-08-23/README.md",
         "openits-vehicle-detection/2026-08-23/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-vehicle-detection/2026-10-16/MANIFEST.json",
+        "openits-vehicle-detection/2026-10-16/README.md",
+        "openits-vehicle-detection/2026-10-16/schema.yang"
       ]
     },
     "openits-vendor-econolite-signal-control-types": {
@@ -2859,6 +3188,11 @@
         "openits-zone-occupancy/2026-09-05/MANIFEST.json",
         "openits-zone-occupancy/2026-09-05/README.md",
         "openits-zone-occupancy/2026-09-05/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-zone-occupancy/2026-10-16/MANIFEST.json",
+        "openits-zone-occupancy/2026-10-16/README.md",
+        "openits-zone-occupancy/2026-10-16/schema.yang"
       ]
     },
     "openits-zone-occupancy-events": {
@@ -2882,6 +3216,13 @@
         "openits-zone-occupancy-events/2026-10-13/schema.json",
         "openits-zone-occupancy-events/2026-10-13/schema.proto",
         "openits-zone-occupancy-events/2026-10-13/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-zone-occupancy-events/2026-10-16/MANIFEST.json",
+        "openits-zone-occupancy-events/2026-10-16/README.md",
+        "openits-zone-occupancy-events/2026-10-16/schema.json",
+        "openits-zone-occupancy-events/2026-10-16/schema.proto",
+        "openits-zone-occupancy-events/2026-10-16/schema.yang"
       ]
     },
     "openits-zone-occupancy-types": {
@@ -2894,6 +3235,11 @@
         "openits-zone-occupancy-types/2026-09-05/MANIFEST.json",
         "openits-zone-occupancy-types/2026-09-05/README.md",
         "openits-zone-occupancy-types/2026-09-05/schema.yang"
+      ],
+      "2026-10-16": [
+        "openits-zone-occupancy-types/2026-10-16/MANIFEST.json",
+        "openits-zone-occupancy-types/2026-10-16/README.md",
+        "openits-zone-occupancy-types/2026-10-16/schema.yang"
       ]
     },
     "trafficvision-perception-incident-media": {

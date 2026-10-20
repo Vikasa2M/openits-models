@@ -42,8 +42,21 @@ module openits-ramp-metering {
 
      Copyright (c) 2026.  Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.9.0";
+  openits-types:openits-version "0.11.0";
 
+  revision 2026-10-16 {
+    description
+      "Report health on the root state (shared device-health: oper-status, last-change, observed-at) and rename the detector timestamp last-update to observed-at. Breaking: consumers must read observed-at.";
+    reference "RFC 7950 §7.12.";
+  }
+  revision 2026-10-14 {
+    description
+      "The fault inventory classifies each entry with kind (renamed from
+       category, now mandatory), matching fault-raised, and picks up the
+       shared fault-entry shape: mandatory first-observed and an optional
+       component. Breaking: the category leaf is now kind.";
+    reference "RFC 7950 §11.";
+  }
   revision 2026-08-05 {
     description
       "Model-review remediation (2026-08): source the time-of-day typedef
@@ -363,7 +376,7 @@ module openits-ramp-metering {
     leaf count-vph     { type uint16; description "Vehicles-per-hour rate observed by this detector."; }
     leaf occupancy-pct { type openits-types:percentage; description "Detector occupancy percentage (0-100)."; }
     leaf speed-kmh     { type openits-types:speed-kmh; description "Average speed observed by this detector, where measurable."; }
-    leaf last-update   { type yang:date-and-time; description "Wall-clock time of the most recent detector reading."; }
+    leaf observed-at   { type yang:date-and-time; description "The time of this reading: wall-clock time of the most recent detector reading."; }
   }
 
   /* --------------------------------------------------------------
@@ -386,6 +399,7 @@ module openits-ramp-metering {
       description "Applied identity (mirror) + device-reported hardware.";
       uses openits-types:device-identity-config;
       uses openits-types:device-hardware;
+      uses openits-types:device-health;
     }
 
     // -----------------------------------------------------------------
@@ -952,9 +966,15 @@ module openits-ramp-metering {
         key "fault-id";
         description "One entry per active fault on the meter.";
         uses openits-types:fault-entry;
-        leaf category {
+        leaf kind {
           type identityref { base openits-rm-types:ramp-meter-fault-event-kind; }
-          description "Fault class (sensor / communication / controller / etc.).";
+          mandatory true;
+          description
+            "Fault class, typed to this service's fault base so the
+             inventory accepts only this service's faults (including its
+             own identities for platform faults such as cabinet power).
+             Fleet-wide filters use
+             derived-from-or-self(kind, 'openits-types:fault-event-kind').";
         }
       }
     }

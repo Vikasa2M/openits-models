@@ -21,6 +21,64 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type GatePosition int32
+
+const (
+	GatePosition_GATE_POSITION_UNKNOWN      GatePosition = 0
+	GatePosition_GATE_POSITION_CLOSING      GatePosition = 1
+	GatePosition_GATE_POSITION_CLOSED       GatePosition = 2
+	GatePosition_GATE_POSITION_OPENING      GatePosition = 3
+	GatePosition_GATE_POSITION_OPEN         GatePosition = 4
+	GatePosition_GATE_POSITION_INTERMEDIATE GatePosition = 5
+)
+
+// Enum value maps for GatePosition.
+var (
+	GatePosition_name = map[int32]string{
+		0: "GATE_POSITION_UNKNOWN",
+		1: "GATE_POSITION_CLOSING",
+		2: "GATE_POSITION_CLOSED",
+		3: "GATE_POSITION_OPENING",
+		4: "GATE_POSITION_OPEN",
+		5: "GATE_POSITION_INTERMEDIATE",
+	}
+	GatePosition_value = map[string]int32{
+		"GATE_POSITION_UNKNOWN":      0,
+		"GATE_POSITION_CLOSING":      1,
+		"GATE_POSITION_CLOSED":       2,
+		"GATE_POSITION_OPENING":      3,
+		"GATE_POSITION_OPEN":         4,
+		"GATE_POSITION_INTERMEDIATE": 5,
+	}
+)
+
+func (x GatePosition) Enum() *GatePosition {
+	p := new(GatePosition)
+	*p = x
+	return p
+}
+
+func (x GatePosition) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (GatePosition) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_reversible_lane_v1_types_proto_enumTypes[0].Descriptor()
+}
+
+func (GatePosition) Type() protoreflect.EnumType {
+	return &file_openits_reversible_lane_v1_types_proto_enumTypes[0]
+}
+
+func (x GatePosition) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use GatePosition.Descriptor instead.
+func (GatePosition) EnumDescriptor() ([]byte, []int) {
+	return file_openits_reversible_lane_v1_types_proto_rawDescGZIP(), []int{0}
+}
+
 type LaneFlowState int32
 
 const (
@@ -57,11 +115,11 @@ func (x LaneFlowState) String() string {
 }
 
 func (LaneFlowState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_reversible_lane_v1_types_proto_enumTypes[0].Descriptor()
+	return file_openits_reversible_lane_v1_types_proto_enumTypes[1].Descriptor()
 }
 
 func (LaneFlowState) Type() protoreflect.EnumType {
-	return &file_openits_reversible_lane_v1_types_proto_enumTypes[0]
+	return &file_openits_reversible_lane_v1_types_proto_enumTypes[1]
 }
 
 func (x LaneFlowState) Number() protoreflect.EnumNumber {
@@ -70,7 +128,7 @@ func (x LaneFlowState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use LaneFlowState.Descriptor instead.
 func (LaneFlowState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_reversible_lane_v1_types_proto_rawDescGZIP(), []int{0}
+	return file_openits_reversible_lane_v1_types_proto_rawDescGZIP(), []int{1}
 }
 
 type LcsIndication int32
@@ -115,11 +173,11 @@ func (x LcsIndication) String() string {
 }
 
 func (LcsIndication) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_reversible_lane_v1_types_proto_enumTypes[1].Descriptor()
+	return file_openits_reversible_lane_v1_types_proto_enumTypes[2].Descriptor()
 }
 
 func (LcsIndication) Type() protoreflect.EnumType {
-	return &file_openits_reversible_lane_v1_types_proto_enumTypes[1]
+	return &file_openits_reversible_lane_v1_types_proto_enumTypes[2]
 }
 
 func (x LcsIndication) Number() protoreflect.EnumNumber {
@@ -128,7 +186,62 @@ func (x LcsIndication) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use LcsIndication.Descriptor instead.
 func (LcsIndication) EnumDescriptor() ([]byte, []int) {
-	return file_openits_reversible_lane_v1_types_proto_rawDescGZIP(), []int{1}
+	return file_openits_reversible_lane_v1_types_proto_rawDescGZIP(), []int{2}
+}
+
+type OperStatus int32
+
+const (
+	OperStatus_OPER_STATUS_UNKNOWN     OperStatus = 0
+	OperStatus_OPER_STATUS_OK          OperStatus = 1
+	OperStatus_OPER_STATUS_DEGRADED    OperStatus = 2
+	OperStatus_OPER_STATUS_FAILED      OperStatus = 3
+	OperStatus_OPER_STATUS_NOT_PRESENT OperStatus = 4
+)
+
+// Enum value maps for OperStatus.
+var (
+	OperStatus_name = map[int32]string{
+		0: "OPER_STATUS_UNKNOWN",
+		1: "OPER_STATUS_OK",
+		2: "OPER_STATUS_DEGRADED",
+		3: "OPER_STATUS_FAILED",
+		4: "OPER_STATUS_NOT_PRESENT",
+	}
+	OperStatus_value = map[string]int32{
+		"OPER_STATUS_UNKNOWN":     0,
+		"OPER_STATUS_OK":          1,
+		"OPER_STATUS_DEGRADED":    2,
+		"OPER_STATUS_FAILED":      3,
+		"OPER_STATUS_NOT_PRESENT": 4,
+	}
+)
+
+func (x OperStatus) Enum() *OperStatus {
+	p := new(OperStatus)
+	*p = x
+	return p
+}
+
+func (x OperStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OperStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_openits_reversible_lane_v1_types_proto_enumTypes[3].Descriptor()
+}
+
+func (OperStatus) Type() protoreflect.EnumType {
+	return &file_openits_reversible_lane_v1_types_proto_enumTypes[3]
+}
+
+func (x OperStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OperStatus.Descriptor instead.
+func (OperStatus) EnumDescriptor() ([]byte, []int) {
+	return file_openits_reversible_lane_v1_types_proto_rawDescGZIP(), []int{3}
 }
 
 type TargetState int32
@@ -164,11 +277,11 @@ func (x TargetState) String() string {
 }
 
 func (TargetState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_reversible_lane_v1_types_proto_enumTypes[2].Descriptor()
+	return file_openits_reversible_lane_v1_types_proto_enumTypes[4].Descriptor()
 }
 
 func (TargetState) Type() protoreflect.EnumType {
-	return &file_openits_reversible_lane_v1_types_proto_enumTypes[2]
+	return &file_openits_reversible_lane_v1_types_proto_enumTypes[4]
 }
 
 func (x TargetState) Number() protoreflect.EnumNumber {
@@ -177,7 +290,7 @@ func (x TargetState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use TargetState.Descriptor instead.
 func (TargetState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_reversible_lane_v1_types_proto_rawDescGZIP(), []int{2}
+	return file_openits_reversible_lane_v1_types_proto_rawDescGZIP(), []int{4}
 }
 
 type Phase int32
@@ -222,11 +335,11 @@ func (x Phase) String() string {
 }
 
 func (Phase) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_reversible_lane_v1_types_proto_enumTypes[3].Descriptor()
+	return file_openits_reversible_lane_v1_types_proto_enumTypes[5].Descriptor()
 }
 
 func (Phase) Type() protoreflect.EnumType {
-	return &file_openits_reversible_lane_v1_types_proto_enumTypes[3]
+	return &file_openits_reversible_lane_v1_types_proto_enumTypes[5]
 }
 
 func (x Phase) Number() protoreflect.EnumNumber {
@@ -235,7 +348,7 @@ func (x Phase) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Phase.Descriptor instead.
 func (Phase) EnumDescriptor() ([]byte, []int) {
-	return file_openits_reversible_lane_v1_types_proto_rawDescGZIP(), []int{3}
+	return file_openits_reversible_lane_v1_types_proto_rawDescGZIP(), []int{5}
 }
 
 type GateState int32
@@ -283,11 +396,11 @@ func (x GateState) String() string {
 }
 
 func (GateState) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_reversible_lane_v1_types_proto_enumTypes[4].Descriptor()
+	return file_openits_reversible_lane_v1_types_proto_enumTypes[6].Descriptor()
 }
 
 func (GateState) Type() protoreflect.EnumType {
-	return &file_openits_reversible_lane_v1_types_proto_enumTypes[4]
+	return &file_openits_reversible_lane_v1_types_proto_enumTypes[6]
 }
 
 func (x GateState) Number() protoreflect.EnumNumber {
@@ -296,7 +409,7 @@ func (x GateState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use GateState.Descriptor instead.
 func (GateState) EnumDescriptor() ([]byte, []int) {
-	return file_openits_reversible_lane_v1_types_proto_rawDescGZIP(), []int{4}
+	return file_openits_reversible_lane_v1_types_proto_rawDescGZIP(), []int{6}
 }
 
 type EvaluationPoint int32
@@ -329,11 +442,11 @@ func (x EvaluationPoint) String() string {
 }
 
 func (EvaluationPoint) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_reversible_lane_v1_types_proto_enumTypes[5].Descriptor()
+	return file_openits_reversible_lane_v1_types_proto_enumTypes[7].Descriptor()
 }
 
 func (EvaluationPoint) Type() protoreflect.EnumType {
-	return &file_openits_reversible_lane_v1_types_proto_enumTypes[5]
+	return &file_openits_reversible_lane_v1_types_proto_enumTypes[7]
 }
 
 func (x EvaluationPoint) Number() protoreflect.EnumNumber {
@@ -342,7 +455,7 @@ func (x EvaluationPoint) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use EvaluationPoint.Descriptor instead.
 func (EvaluationPoint) EnumDescriptor() ([]byte, []int) {
-	return file_openits_reversible_lane_v1_types_proto_rawDescGZIP(), []int{5}
+	return file_openits_reversible_lane_v1_types_proto_rawDescGZIP(), []int{7}
 }
 
 type FaultSeverity int32
@@ -384,11 +497,11 @@ func (x FaultSeverity) String() string {
 }
 
 func (FaultSeverity) Descriptor() protoreflect.EnumDescriptor {
-	return file_openits_reversible_lane_v1_types_proto_enumTypes[6].Descriptor()
+	return file_openits_reversible_lane_v1_types_proto_enumTypes[8].Descriptor()
 }
 
 func (FaultSeverity) Type() protoreflect.EnumType {
-	return &file_openits_reversible_lane_v1_types_proto_enumTypes[6]
+	return &file_openits_reversible_lane_v1_types_proto_enumTypes[8]
 }
 
 func (x FaultSeverity) Number() protoreflect.EnumNumber {
@@ -397,14 +510,21 @@ func (x FaultSeverity) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use FaultSeverity.Descriptor instead.
 func (FaultSeverity) EnumDescriptor() ([]byte, []int) {
-	return file_openits_reversible_lane_v1_types_proto_rawDescGZIP(), []int{6}
+	return file_openits_reversible_lane_v1_types_proto_rawDescGZIP(), []int{8}
 }
 
 var File_openits_reversible_lane_v1_types_proto protoreflect.FileDescriptor
 
 const file_openits_reversible_lane_v1_types_proto_rawDesc = "" +
 	"\n" +
-	"&openits/reversible_lane/v1/types.proto\x12\x1aopenits.reversible_lane.v1*\x85\x01\n" +
+	"&openits/reversible_lane/v1/types.proto\x12\x1aopenits.reversible_lane.v1*\xb1\x01\n" +
+	"\fGatePosition\x12\x19\n" +
+	"\x15GATE_POSITION_UNKNOWN\x10\x00\x12\x19\n" +
+	"\x15GATE_POSITION_CLOSING\x10\x01\x12\x18\n" +
+	"\x14GATE_POSITION_CLOSED\x10\x02\x12\x19\n" +
+	"\x15GATE_POSITION_OPENING\x10\x03\x12\x16\n" +
+	"\x12GATE_POSITION_OPEN\x10\x04\x12\x1e\n" +
+	"\x1aGATE_POSITION_INTERMEDIATE\x10\x05*\x85\x01\n" +
 	"\rLaneFlowState\x12\x1b\n" +
 	"\x17LANE_FLOW_STATE_UNKNOWN\x10\x00\x12\x1a\n" +
 	"\x16LANE_FLOW_STATE_CLOSED\x10\x01\x12\x18\n" +
@@ -416,7 +536,14 @@ const file_openits_reversible_lane_v1_types_proto_rawDesc = "" +
 	"\x14LCS_INDICATION_RED_X\x10\x02\x12\x1b\n" +
 	"\x17LCS_INDICATION_YELLOW_X\x10\x03\x12$\n" +
 	" LCS_INDICATION_FLASHING_YELLOW_X\x10\x04\x12\x1e\n" +
-	"\x1aLCS_INDICATION_GREEN_ARROW\x10\x05*[\n" +
+	"\x1aLCS_INDICATION_GREEN_ARROW\x10\x05*\x88\x01\n" +
+	"\n" +
+	"OperStatus\x12\x17\n" +
+	"\x13OPER_STATUS_UNKNOWN\x10\x00\x12\x12\n" +
+	"\x0eOPER_STATUS_OK\x10\x01\x12\x18\n" +
+	"\x14OPER_STATUS_DEGRADED\x10\x02\x12\x16\n" +
+	"\x12OPER_STATUS_FAILED\x10\x03\x12\x1b\n" +
+	"\x17OPER_STATUS_NOT_PRESENT\x10\x04*[\n" +
 	"\vTargetState\x12\x1c\n" +
 	"\x18TARGET_STATE_UNSPECIFIED\x10\x00\x12\x17\n" +
 	"\x13TARGET_STATE_CLOSED\x10\x01\x12\x15\n" +
@@ -458,15 +585,17 @@ func file_openits_reversible_lane_v1_types_proto_rawDescGZIP() []byte {
 	return file_openits_reversible_lane_v1_types_proto_rawDescData
 }
 
-var file_openits_reversible_lane_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 7)
+var file_openits_reversible_lane_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 9)
 var file_openits_reversible_lane_v1_types_proto_goTypes = []any{
-	(LaneFlowState)(0),   // 0: openits.reversible_lane.v1.LaneFlowState
-	(LcsIndication)(0),   // 1: openits.reversible_lane.v1.LcsIndication
-	(TargetState)(0),     // 2: openits.reversible_lane.v1.TargetState
-	(Phase)(0),           // 3: openits.reversible_lane.v1.Phase
-	(GateState)(0),       // 4: openits.reversible_lane.v1.GateState
-	(EvaluationPoint)(0), // 5: openits.reversible_lane.v1.EvaluationPoint
-	(FaultSeverity)(0),   // 6: openits.reversible_lane.v1.FaultSeverity
+	(GatePosition)(0),    // 0: openits.reversible_lane.v1.GatePosition
+	(LaneFlowState)(0),   // 1: openits.reversible_lane.v1.LaneFlowState
+	(LcsIndication)(0),   // 2: openits.reversible_lane.v1.LcsIndication
+	(OperStatus)(0),      // 3: openits.reversible_lane.v1.OperStatus
+	(TargetState)(0),     // 4: openits.reversible_lane.v1.TargetState
+	(Phase)(0),           // 5: openits.reversible_lane.v1.Phase
+	(GateState)(0),       // 6: openits.reversible_lane.v1.GateState
+	(EvaluationPoint)(0), // 7: openits.reversible_lane.v1.EvaluationPoint
+	(FaultSeverity)(0),   // 8: openits.reversible_lane.v1.FaultSeverity
 }
 var file_openits_reversible_lane_v1_types_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -486,7 +615,7 @@ func file_openits_reversible_lane_v1_types_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_openits_reversible_lane_v1_types_proto_rawDesc), len(file_openits_reversible_lane_v1_types_proto_rawDesc)),
-			NumEnums:      7,
+			NumEnums:      9,
 			NumMessages:   0,
 			NumExtensions: 0,
 			NumServices:   0,

@@ -46,8 +46,36 @@ module openits-signal-control {
 
      Copyright (c) 2026.  Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.18.0";
+  openits-types:openits-version "0.20.0";
 
+  revision 2026-10-17 {
+    description
+      "Report the cabinet monitor's read status, kind and read time;
+       fault-type is present only when the status is fault. Breaking: a
+       fault-type without status fault is rejected.
+
+       Split operation into independent leaves: cabinet-output, mode
+       (coordinated / free / unknown), control-source, preempt-active
+       and priority-active; flash-cause is present only while flashing;
+       last-mode-change is renamed mode-since and flash-active is
+       removed. Breaking: flash-active and last-mode-change are gone and
+       mode no longer carries flash, off, manual, preempt or priority.
+       Add cabinet-output-since, when cabinet-output last changed.";
+    reference "NEMA TS2-2021 section 4.";
+  }
+  revision 2026-10-16 {
+    description
+      "Report health on the root state (shared device-health: oper-status, last-change, observed-at) and rename the detector measurement timestamp collected-at to observed-at. Breaking: consumers must read observed-at.";
+    reference "RFC 7950 §7.12.";
+  }
+  revision 2026-10-14 {
+    description
+      "The fault inventory classifies each entry with kind (renamed from
+       category, now mandatory), matching fault-raised, and picks up the
+       shared fault-entry shape: mandatory first-observed and an optional
+       component. Breaking: the category leaf is now kind.";
+    reference "RFC 7950 §11.";
+  }
   revision 2026-09-08 {
     description
       "Repoint two leaves onto identity axes (breaking, pre-1.0).
@@ -716,6 +744,7 @@ module openits-signal-control {
       description "Applied controller identity (mirror) + device-reported hardware.";
       uses openits-types:device-identity-config;
       uses openits-types:device-hardware;
+      uses openits-types:device-health;
     }
 
     /* ----- start-up behavior ----- */
@@ -1064,9 +1093,9 @@ module openits-signal-control {
               units "seconds";
               description "Length of the collection period the V/O/S values cover.";
             }
-            leaf collected-at {
+            leaf observed-at {
               type yang:date-and-time;
-              description "Wall-clock time this measurement was collected.";
+              description "The time of this reading: wall-clock time this measurement was collected.";
             }
           }
         }
@@ -1754,22 +1783,55 @@ module openits-signal-control {
       openits-types:arc-it-flow
         "Roadway Signal Controller -> TMC : signal system operational status";
       description
-        "Controller-wide operational rollup: current mode, flash state,
-         and Malfunction Management Unit detail. State-only — the MMU
-         forces flash as a safety response; nothing writes this subtree.";
+        "Controller-wide operating state, one independent fact per leaf:
+         what the field displays show, the coordination mode, who
+         controls the controller, whether preemption or priority is
+         active, and the cabinet monitor. State-only; nothing writes
+         this subtree.";
 
-      leaf mode {
-        type identityref { base openits-sc-types:controller-mode; }
-        description "Top-level operational mode of the controller (coordinated / free / flash / preempt / priority / manual / off).";
+      leaf cabinet-output {
+        type openits-sc-types:cabinet-output;
+        description "What the field displays show. Absent means unknown.";
       }
-      leaf flash-active {
-        type boolean;
-        description "The intersection is in a flashing state.";
+      leaf cabinet-output-since {
+        type yang:date-and-time;
+        description
+          "When cabinet-output last changed (for example when the
+           cabinet entered flash).";
       }
       leaf flash-cause {
         type identityref { base openits-sc-types:flash-cause; }
-        description "Why it is flashing — MMU conflict, programmed TOD, startup, etc.";
-        reference "NEMA TS-2 §4 (MMU); Indiana 173 (fault-unit-flash-status).";
+        must "../cabinet-output = 'flash'" {
+          error-message "flash-cause is present only when cabinet-output is flash";
+        }
+        description "Why the cabinet is flashing; present only when cabinet-output is flash.";
+        reference "NTCIP 1202 v04 section 5.4.6 (unitFlashStatus).";
+      }
+      leaf mode {
+        type identityref { base openits-sc-types:controller-mode; }
+        description "Coordination mode: coordinated, free, or unknown.";
+      }
+      leaf control-source {
+        type identityref { base openits-types:control-source; }
+        description
+          "Which authority is driving the controller; manual control is
+           openits-types:control-manual.";
+      }
+      leaf preempt-active {
+        type boolean;
+        description
+          "True if and only if at least one preemption/preemptor has
+           state/active true.";
+      }
+      leaf priority-active {
+        type boolean;
+        description
+          "True if and only if at least one priority/state/active-request
+           is in stage granted or active.";
+      }
+      leaf mode-since {
+        type yang:date-and-time;
+        description "When mode last changed.";
       }
       container monitor {
         description
@@ -1779,12 +1841,28 @@ module openits-signal-control {
            function rather than for one cabinet family's unit, because
            all three report the same monitored conditions and a
            consumer should not have to know which is installed to read
-           the fault. An absent fault-type means no active monitor
-           fault.";
+           the fault. An absent status means unknown, never ok.";
         reference "NEMA TS2-2021 section 4; NEMA TS1 section 6; ATC Cabinet Standard (CMU).";
+        leaf status {
+          type openits-sc-types:monitor-status;
+          description
+            "Read status of the monitor. Absent means unknown, never ok;
+             not-read means a fitted monitor could not be read.";
+        }
+        leaf monitor-kind {
+          type identityref { base openits-sc-types:monitor-kind; }
+          description "Which monitor function is fitted.";
+        }
+        leaf observed-at {
+          type yang:date-and-time;
+          description "When the controller last read the monitor.";
+        }
         leaf fault-type {
           type identityref { base openits-sc-types:monitor-fault-type; }
-          description "Active monitor fault class; absent when the monitor reports no fault.";
+          must "../status = 'fault'" {
+            error-message "monitor fault-type is present only when monitor status is fault";
+          }
+          description "Active monitor fault class; present only when status is fault.";
         }
         leaf-list faulting-channels {
           type channel-number;
@@ -1796,10 +1874,6 @@ module openits-signal-control {
           type boolean;
           description "True when the monitor flash is latched and requires an on-site manual reset.";
         }
-      }
-      leaf last-mode-change {
-        type yang:date-and-time;
-        description "Wall-clock time of the most recent controller-mode transition.";
       }
     }
 
@@ -1853,14 +1927,15 @@ module openits-signal-control {
         description "One entry per active fault on the controller.";
 
         uses openits-types:fault-entry;
-        leaf category {
+        leaf kind {
           type identityref { base openits-sc-types:sc-fault-event-kind; }
+          mandatory true;
           description
-            "Fault class (detector / lamp / conflict / communication /
-             power / cabinet / software). An identityref off
-             sc-fault-event-kind so a signal-controller fault is
-             filterable fleet-wide via
-             derived-from-or-self(openits-types:fault-event-kind).";
+            "Fault class, typed to this service's fault base so the
+             inventory accepts only this service's faults (including its
+             own identities for platform faults such as cabinet power).
+             Fleet-wide filters use
+             derived-from-or-self(kind, 'openits-types:fault-event-kind').";
         }
       }
     }

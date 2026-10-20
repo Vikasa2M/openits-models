@@ -1,0 +1,43 @@
+{
+  "openits-reversible-lane:reversible-lane": {
+    "config": {
+      "id": "rl-facility-1",
+      "direction-a": "openits-types:direction-northbound",
+      "direction-b": "openits-types:direction-southbound"
+    },
+    "segments": {
+      "segment": [
+        {
+          "segment-id": "seg-1",
+          "config": {
+            "segment-id": "seg-1",
+            "name": "Segment 1"
+          }
+        }
+      ]
+    },
+    "gates": {
+      "gate": [
+        {
+          "gate-id": "WG-1",
+          "config": {
+            "gate-id": "WG-1",
+            "gate-type": "openits-reversible-lane-types:gate-type-warning",
+            "name": "Warning gate 1",
+            "segment-id": "seg-1",
+            "controls-entry-for": "openits-types:direction-eastbound"
+          },
+          "state": {
+            "position": "open",
+            "operating-mode": "openits-reversible-lane-types:reversible-lane-gate-mode-automatic",
+            "control-source": "openits-types:control-central",
+            "interlock-bypassed": false,
+            "open-inhibited": false,
+            "close-inhibited": true,
+            "observed-at": "2026-10-14T16:00:00Z"
+          }
+        }
+      ]
+    }
+  }
+}

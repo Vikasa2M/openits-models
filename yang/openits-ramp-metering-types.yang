@@ -29,8 +29,16 @@ module openits-ramp-metering-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.5.1";
+  openits-types:openits-version "0.6.0";
 
+  revision 2026-10-16 {
+    description
+      "Bind ramp-meter-mode-event-kind to meter-mode with
+       openits-types:mode-value-base, so a mode-changed of this kind
+       carries only meter-mode values. mode-unknown gains a second base,
+       the canonical openits-types:mode-unknown. Additive.";
+    reference "RFC 7950 §7.19.";
+  }
   revision 2026-10-13 {
     description
       "Update descriptions that referred to mode-changed's prior/current
@@ -177,11 +185,11 @@ module openits-ramp-metering-types {
   identity ramp-meter-mode-event-kind {
     base openits-types:mode-event-kind;
     base ramp-meter-event-kind;
+    openits-types:mode-value-base "openits-rm-types:meter-mode";
     description
       "Ramp-meter operational-mode transitions (off / on-standby /
-       active / fault / manual). The mode-changed
-       notification's previous-mode/mode strings are interpreted in
-       this mode-space.";
+       active / fault / manual). The previous-mode and mode of a
+       mode-changed of this kind derive from meter-mode.";
     reference "NTCIP 1207:2017 (metering modes).";
   }
 
@@ -240,7 +248,11 @@ module openits-ramp-metering-types {
   }
   identity mode-unknown {
     base meter-mode;
-    description "Operating mode is unknown or not reported.";
+    base openits-types:mode-unknown;
+    description
+      "Operating mode is unknown or not reported. Also derives from the
+       canonical openits-types:mode-unknown, so a cross-service filter on
+       that identity finds it.";
   }
   identity mode-off {
     base meter-mode;
