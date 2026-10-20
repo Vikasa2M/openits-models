@@ -7,6 +7,29 @@ for the Go module. See [`docs/versioning.md`](docs/versioning.md) for how the
 Go module version, per-module YANG revision dates, and protobuf wire
 compatibility relate.
 
+## [0.8.0](https://github.com/Vikasa2M/openits-models/compare/v0.7.0...v0.8.0) (2026-10-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* **faults:** every service fault inventory classifies entries with a mandatory `kind` (renamed from `category`; the old proto tag is reserved). `first-observed` is mandatory on inventory entries and on fault-raised and fault-cleared, and fault ids are limited to 128 characters.
+* **freshness:** the reading timestamps measured-at (zone-occupancy zones), collected-at (signal-control detector measurement), last-update (ramp-metering lane and mainline detectors) and computed-at (vehicle-detection sample basis, also composed into RSU) are renamed observed-at; in protobuf each moves to a new field number and the old number and name are reserved, so stored or in-flight data carrying the old field decodes it as unknown and must be re-encoded.
+* **comm-health:** comm-lost events must carry last-contact and observed-by.
+* **modes:** a mode-changed mode and previous-mode must derive strictly from the mode-value-base named by its kind (enforced by conformance), so DMS control-mode transitions no longer ride mode-changed and a bare openits-types:mode-unknown is accepted only through a family's own unknown.
+* **signal-control:** operation drops flash-active (proto 2) and last-mode-change (proto 5); both numbers and names are reserved. mode-since tracks coordination-mode changes only, and cabinet-output-since tracks entry into flash or dark. monitor/fault-type is valid only when monitor status is fault. controller-mode loses mode-flash, mode-off, mode-manual, mode-preempt and mode-priority and gains openits-signal-control-types:mode-unknown: flash and dark are now cabinet-output values, manual control is control-source control-manual, and preemption and priority are the preempt-active and priority-active flags. The flash-cause identities flash-mmu-conflict and flash-fault-monitor are renamed flash-monitor and flash-controller-fault; identityref values travel as strings, so producers and consumers must change the emitted strings. operational-status-report is rebuilt on device-status-summary: flash-active (10), last-mode-change (4) and uptime-seconds (5) are removed and reserved, and uptime-s and the new fields take fresh numbers. tsam-mode-changed prior/current (2/3, reserved) become previous-mode/mode. Flash is signalled by the new cabinet-output-changed event instead of mode-changed, and a change of control authority with an unchanged mode is reported as mode-changed with mode equal to previous-mode.
+
+### Features
+
+* one fault shape for inventories and fault events, with a shared component reference ([2550e83](https://github.com/Vikasa2M/openits-models/commit/2550e834c3b15b5312af80d30acc443e6cce103d))
+* classify fault inventory entries with kind in every service ([2611967](https://github.com/Vikasa2M/openits-models/commit/26119677abaca04f197275c147f625c1e0a2ff5f))
+* let cabinet-power faults sit in signal-control and DMS fault inventories ([3afd181](https://github.com/Vikasa2M/openits-models/commit/3afd1811889ea5fe694c05009fc1e73ec040ed6f))
+* add foundation health, status-summary and canonical unknown definitions ([571df4b](https://github.com/Vikasa2M/openits-models/commit/571df4bb5dd4f5a01dfef0e910063998d0225435))
+* report health on every device root and name freshness observed-at everywhere ([dffc6b7](https://github.com/Vikasa2M/openits-models/commit/dffc6b7e1eb8ceb8ed6bef3afb12a8d769cb65e1))
+* make comm-lost carry last-contact and its observer, and define comm-loss staleness ([26bd60c](https://github.com/Vikasa2M/openits-models/commit/26bd60cffd964a20a0d21dde60d3fa6f03dabd4a))
+* check mode-changed values against their family's mode base ([df253b2](https://github.com/Vikasa2M/openits-models/commit/df253b28e58f2f9a6c1b40054b09238647ee4540))
+* **reversible-lane:** add per-gate live state and the gate-status-changed notification ([95638fc](https://github.com/Vikasa2M/openits-models/commit/95638fc5a57978b385655dcbc8c61baf371ceb1e))
+* split signal-control live state into cabinet output, mode, control source and monitor read status ([92e7943](https://github.com/Vikasa2M/openits-models/commit/92e79431bdfcf7205969c1172464221d43fccccd))
+
 ## [0.7.0](https://github.com/Vikasa2M/openits-models/compare/v0.6.0...v0.7.0) (2026-10-13)
 
 
