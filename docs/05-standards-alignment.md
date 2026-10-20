@@ -20,7 +20,7 @@ roadside infrastructure.
 | `ess`            | NTCIP 1204 | Functional. |
 | `cctv`           | NTCIP 1205 | Functional. |
 | `ramp-metering`  | NTCIP 1207 | Functional. |
-| `parking`        | NTCIP 1208 | Reference (no OpenITS service yet; future augment territory). |
+| (CCTV switching) | NTCIP 1208 | Reference (no OpenITS service; video switching sits beside `cctv`, NTCIP 1205, and is future augment territory). |
 | `rsu`            | NTCIP 1218, NTCIP 1211 | Functional, with SAE J2735 message types as broadcast payloads; signal request / priority handling follows NTCIP 1211. |
 | `traffic-sensor` | NTCIP 1209 | Functional. |
 | `perception`     | — | No NTCIP object set for video incident detection; the model is OpenITS-native, annotated against ARC-IT. |

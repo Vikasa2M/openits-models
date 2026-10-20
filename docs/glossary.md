@@ -134,7 +134,7 @@ public adoption of an augment. Drives the graduation rule.
 **NTCIP** — National Transportation Communications for ITS
 Protocol. Family of standards governing device-level ITS
 communication. NTCIP 1202 (signal control), 1203 (DMS), 1204 (ESS),
-1205 (CCTV), 1207 (ramp meter), 1208 (parking), 1218 (RSU).
+1205 (CCTV), 1207 (ramp meter), 1208 (CCTV switching), 1218 (RSU).
 
 **OpenITS** — This project. Single authority prefix used across
 all layers (CE, subject, URN, YANG namespace, module name).
