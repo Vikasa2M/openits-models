@@ -89,7 +89,14 @@ Instance-data fixtures live in `yang/testdata/`:
 - `invalid-<scenario>.json` — must be REJECTED (schema or must violation).
 
 For every new constraint add both: a valid fixture exercising the feature
-and an invalid one proving the constraint fires. Fixtures are RFC 7951
+and an invalid one proving the constraint fires. Register each new base
+`invalid-*` fixture in `yang/testdata/expected-rejections.tsv`, one line
+of `<fixture><TAB><substring of the error>`: for a `must`, quote the start
+of its `error-message`; for a type error, include the offending path; for
+a notification missing a mandatory leaf, `MISSING <leaf>`.
+`validate-yang` fails a fixture with no line, or one rejected for a
+different reason. (Deviation-tier `invalid-*-under-*.json` fixtures are
+checked by `make check-deviations` and are not listed.) Fixtures are RFC 7951
 JSON — top-level members are keyed by the module that DEFINES the node.
 Never put personal names, real agency data, or issue-tracker IDs in
 fixture content; use neutral placeholder values like `field-tech-07`.

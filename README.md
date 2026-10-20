@@ -1,9 +1,8 @@
 # openits-models
 
-The OpenITS data-model layer, extracted from the Vikasa monorepo as a
-standalone, importable Go module. This repo owns the vendor-neutral model
-definitions and the code generated from them; downstream components
-(e.g. `openits-collector`) consume it as a dependency.
+The OpenITS data-model layer: vendor-neutral model definitions and the code
+generated from them, published as a standalone Go module. Components such as
+collectors consume it as a dependency.
 
 Module path: `github.com/Vikasa2M/openits-models`
 
@@ -12,8 +11,8 @@ Module path: `github.com/Vikasa2M/openits-models`
 | Path | Contents |
 |------|----------|
 | `yang/` | YANG source modules (the source of truth for the model). |
-| `api/proto/` | Protobuf sources: hand-authored `command.proto`/`device.proto` plus generated `openits/v1/*.proto` (event payloads + shared types), produced from `yang/` by the in-repo YANG→proto generator (`tools/yang-proto-gen`). |
-| `pkg/proto/openits/v1/` | Generated Go protobuf types (package `openitspb`). |
+| `api/proto/` | Protobuf sources: hand-authored `command.proto`/`device.proto` plus generated per-service protos under `openits/<service>/v1/` (`events.proto`, `state.proto`, `types.proto`, and per-event JSON Schemas), produced from `yang/` by the in-repo YANG→proto generator (`tools/yang-proto-gen`). |
+| `pkg/proto/openits/<service>/v1/` | Generated Go protobuf types per service (e.g. package `dmsv1`); `pkg/proto/openits/v1/` holds only the `command`/`device` types (package `openitspb`). |
 | `pkg/yang/openits/` | Generated ygot Go types (package `openits`). |
 | `schema-registry/` | AsyncAPI/JSON-schema registry entries per service. |
 | `bindings/nats/` | NATS reference profile: subject grammar, CloudEvents envelope, JetStream notes (`README.md`) and the generated `asyncapi.yaml` (see note below). The transport-neutral model layer above does not depend on it. |
@@ -53,7 +52,8 @@ go get github.com/Vikasa2M/openits-models@latest
 
 ```go
 import (
-    openitspb "github.com/Vikasa2M/openits-models/pkg/proto/openits/v1"
+    openitspb "github.com/Vikasa2M/openits-models/pkg/proto/openits/v1"     // command / device
+    dmsv1     "github.com/Vikasa2M/openits-models/pkg/proto/openits/dms/v1" // one service's events + state
     openits   "github.com/Vikasa2M/openits-models/pkg/yang/openits"
 )
 ```
@@ -65,13 +65,15 @@ Non-Go implementers should start from the curated release bundle instead
 ## Regeneration
 
 ```
-make gen             # yang -> proto (tools/yang-proto-gen) -> pkg/proto (protoc); yang -> pkg/yang (ygot)
-make check-gen       # gen, then fail if output drifts from what's committed (freshness gate)
-make yang-proto-gen  # yang -> api/proto/openits/v1/*.proto (event payloads + shared types) + field-numbers.yaml lock
+make gen             # all of the below: proto, Go, AsyncAPI and the ce-type catalog
+make yang-proto-gen  # yang -> api/proto/openits/<service>/v1/*.proto + field-numbers.yaml lock
 make proto           # api/proto -> pkg/proto (protoc)
 make yang            # yang -> pkg/yang (ygot fakeroot structs)
-make validate-yang check-revisions check-naming
-make validate-noi check-graduation check-augment-collisions
+make asyncapi        # yang -> bindings/nats/asyncapi.yaml
+make catalog         # yang -> schema-registry/index.json (ce-type catalog)
+./scripts/update-schema-registry.sh  # snapshot changed modules into schema-registry/
+make check-gen       # gen, then fail if output drifts from what's committed (freshness gate)
+make ci              # the full local gate, mirroring CI (run on a committed tree)
 ```
 
 `command.proto`/`device.proto` under `api/proto/` are hand-curated and
@@ -104,10 +106,14 @@ consumers depend on this module; this module depends on none of them.
   step-by-step release process.
 - [`CHANGELOG.md`](CHANGELOG.md) — notable changes per release.
 
-CI (`.github/workflows/ci.yml`) runs the full gate on every pull request:
-generation freshness, `go build`/`vet`/`test`, `buf` lint + breaking-change
-detection, YANG governance checks, `yanglint` instance-data validation, and the
-conformance harness across all device kinds.
+CI (`.github/workflows/ci.yml`) runs the gate on every pull request as
+grouped jobs — `go` (generation freshness, `go build`/`vet`/`test`), `buf`
+(lint + breaking-change detection), `yang` (governance checks, `yang-lint`,
+`yanglint` instance-data validation) and `conformance` (every device kind) —
+after a `changes` job classifies the diff. The required check `ci-ok` rolls
+them up. A docs-only PR skips `go`, `buf` and `conformance` but still runs
+`yang`; the release-please PR skips every gate; a push to `main` runs only
+the `go` job's build, vet and test steps.
 
 ## License
 

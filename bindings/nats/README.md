@@ -66,8 +66,10 @@ subscribes across the `{service}` token
 (`openits.us-tx.txdot.d07.*.cam-214.>`) rather than naming one service.
 
 Each token is lowercase alphanumeric with hyphens (`^[a-z0-9][a-z0-9-]*$`).
-The `{region}`, `{agency}`, and `{agency-unit}` tokens are validated
-against the **agency registry** — they are not free-form. A consumer
+The `{region}`, `{agency}`, and `{agency-unit}` tokens come from the
+deployment's **agency registry** — they are not free-form. The registry
+is deployment-defined; the conformance kit checks only the token shape
+and the `openits.` prefix, not registry membership. A consumer
 subscribes with NATS wildcards over this hierarchy, e.g. `openits.>`
 for everything, or
 `openits.us-tx.txdot.d07.signal-control.>` for one district's signals.
@@ -139,7 +141,11 @@ Schema (not a URL pointer). It is generated in-repo from the same
 YANG-derived ce-type catalog as the reference binding — `make asyncapi`
 — so it never drifts from the schema. It is a NATS-profile artifact:
 the channels correspond to the subject grammar above, and the messages
-carry the CloudEvents headers described here. See
+carry the CloudEvents headers described here. Channels are keyed by
+ce-type (`openits.<service>.<event>.v<major>`), not by the seven-token
+subject. A message of a given ce-type is published on the seven-token
+subject above, whose `{service}` and `{event}` tokens are the ce-type's
+service and event tokens. See
 [Design decisions](../../docs/04-design-decisions.md#generated-asyncapi-not-hand-maintained)
 for why it is generated rather than hand-maintained.
 

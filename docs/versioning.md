@@ -14,17 +14,19 @@ release.
 
 The **Go module version is the release**. There is no binary artifact — Go
 consumers pull the tag directly (`go get github.com/Vikasa2M/openits-models@vX.Y.Z`),
-so cutting a release is: land the changes, update the changelog, push a tag.
-The module path is the repo URL, so the tag is immediately consumable.
+so cutting a release is: land the changes, then merge the release PR that
+release-please maintains (see [Cutting a release](#cutting-a-release)); that
+merge writes the changelog and pushes the tag. The module path is the repo
+URL, so the tag is immediately consumable.
 
 ## Go module semver
 
 We follow [Semantic Versioning](https://semver.org/):
 
 - **v0.x (current).** Pre-1.0. The public Go API and the model contract may
-  still change between minor versions. Breaking changes bump the **minor**
-  (`0.1.0 → 0.2.0`); backward-compatible additions and fixes bump the
-  **patch** (`0.1.0 → 0.1.1`). This signals to consumers that the standard is
+  still change between minor versions. Breaking changes and new features
+  bump the **minor** (`0.7.0 → 0.8.0`); fixes bump the **patch**
+  (`0.8.0 → 0.8.1`). This signals to consumers that the standard is
   still stabilizing.
 - **v1.0.0 and beyond.** Once the model is stable, `v1.0.0` commits to the
   usual semver guarantees. A breaking Go API change then requires a new major
@@ -38,7 +40,7 @@ A module's `revision` date is *not* the release version. It records when that
 module's schema last changed and is enforced by `make check-revisions`: if a
 module's content differs from its last snapshot under
 `schema-registry/<module>/<revision>/`, CI fails until the revision is bumped
-(or the change is deliberately re-snapshotted). So a single `v0.2.0` release
+(or the change is deliberately re-snapshotted). So a single `v0.8.0` release
 may contain modules at many different revision dates — that is expected. The
 tag versions *the collection*; the revision versions *each module*.
 
@@ -101,8 +103,11 @@ tag or edit the changelog by hand for the normal cadence.
 3. When the changelog and version look right, **merge the release PR**. Merging
    it is what tags `vX.Y.Z` and creates the GitHub Release with generated notes;
    the `upload-assets` job in the same workflow then builds the curated bundle
-   from the tagged tree and attaches it (below). Verified on `v0.1.0`: the
-   Release carried `.tar.gz`, `.zip`, and `SHA256SUMS`.
+   from the tagged tree and attaches it (below): `.tar.gz`, `.zip`, and
+   `SHA256SUMS`.
+
+Maintainers do not hand-tag normal releases: merging the release PR is the
+only routine way a version is cut.
 
 The release PR is authored by the release-please bot. Depending on the org's
 GitHub Actions policy for bot/first-time-contributor PRs, the CI runs on it may
@@ -114,16 +119,17 @@ Config lives in [`release-please-config.json`](../release-please-config.json)
 (`release-type: go`, `bump-minor-pre-major`).
 
 **Only model-contract changes drive versions.** The config's `exclude-paths`
-ignores commits that touch nothing but `.github/`, `docs/`, `scripts/`,
-`tools/`, or root meta/build files (README, LICENSE, Makefile, buf configs,
-the changelog, release-please's own files). The tracked surface is what a
-consumer's version pin actually protects: `yang/`, `api/`, `bindings/`,
-`pkg/`, `schema-registry/`, `field-numbers.yaml`, and `go.mod`/`go.sum`.
-Note the sources-vs-artifacts distinction: a generator fix in `tools/`
-releases not because `tools/` changed but because its regenerated output
-under `api/`/`pkg/` did.
+ignores commits that touch nothing but `.claude/`, `.github/`, `docs/`,
+`scripts/`, `tools/`, or root meta/build files (`AGENTS.md`, `CLAUDE.md`,
+README, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, LICENSE, NOTICE, Makefile,
+buf configs, `.gitignore`, the changelog, release-please's own files). The
+tracked surface is what a consumer's version pin actually protects: `yang/`,
+`api/`, `bindings/`, `pkg/`, `schema-registry/`, `field-numbers.yaml`, and
+`go.mod`/`go.sum`. Note the sources-vs-artifacts distinction: a generator fix
+in `tools/` releases not because `tools/` changed but because its regenerated
+output under `api/`/`pkg/` did.
 
-### Pinning an exact version / bootstrap
+### Pinning an exact version
 
 release-please derives its baseline from
 [`.release-please-manifest.json`](../.release-please-manifest.json), **not** from
@@ -131,19 +137,21 @@ git tags. If the manifest names a version that has no corresponding tag,
 release-please assumes that version already shipped and proposes the *next* one.
 So the manifest — not any tag — is the source of truth for "where we are."
 
-To pin an exact next version (the first release, or any deliberate jump), land
-an **empty commit with a `Release-As: X.Y.Z` footer**; release-please then
-proposes exactly that version in the release PR. This is how `v0.1.0` was
-actually cut:
+To pin an exact next version (a deliberate jump), put a `Release-As: X.Y.Z`
+footer on a commit that touches the tracked surface; release-please then
+proposes exactly that version in the release PR. An empty commit, or one that
+touches only excluded paths, does **not** work: `exclude-paths` drops commits
+with no tracked files before release-please reads their footers.
 
-```
-git commit --allow-empty -m "chore: release 0.1.0" -m "Release-As: 0.1.0"
-```
+### Emergency manual tag (maintainers only)
 
-A hand-pushed semver tag remains available as an escape hatch: the
-[`release`](../.github/workflows/release.yml) workflow re-runs the gate, creates
-the Release from the matching `CHANGELOG.md` section, and attaches the bundle
-(`-rc` / pre-release suffixes are marked pre-release automatically):
+This is not a release path for normal use. If release-please itself is broken
+and a release cannot wait, a maintainer can push a semver tag by hand: the
+[`release`](../.github/workflows/release.yml) workflow re-runs the gate,
+creates the Release from the matching `CHANGELOG.md` section, and attaches the
+bundle (`-rc` / pre-release suffixes are marked pre-release automatically).
+The changelog section and the manifest must already name that version, or
+release-please will propose it again afterwards.
 
 ```
 git tag vX.Y.Z

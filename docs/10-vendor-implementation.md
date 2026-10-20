@@ -299,8 +299,10 @@ shipped, rather than take your word for it.
 Named here as an invitation, not a commitment — none of the
 following exists yet:
 
-- **A binding-neutral Tier 1 conformance harness.** Today's kit
-  verifies Tier 1 and Tier 2 together against a NATS endpoint. A
+- **A live-device, binding-neutral Tier 1 conformance harness.**
+  Today's kit verifies Tier 1 and Tier 2 together against an
+  in-process mock device and a synthetic event stream; it has no
+  live-device driver yet. A
   deployment claiming Tier 1 only, over some other transport, has no
   in-tree harness yet — it validates the same model rules against its
   own transport by hand.

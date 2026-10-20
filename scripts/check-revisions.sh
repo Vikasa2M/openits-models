@@ -13,7 +13,7 @@
 #     - different  → FAIL (bump the revision, or if the change really
 #                    is a same-revision edit, re-snapshot deliberately)
 #   - if no snapshot exists for this revision → OK (first time for
-#     this revision; next `make update-schema-registry` will snapshot)
+#     this revision; next `./scripts/update-schema-registry.sh` will snapshot)
 #   - FAIL if the module carries two (or more) revision statements
 #     for the same date — the revision log is the compatibility
 #     contract and must stay lintable and legible
@@ -97,7 +97,7 @@ for src in "${ROOT_DIR}"/yang/*.yang "${ROOT_DIR}"/yang/augments/*.yang "${ROOT_
 
     snap="${REGISTRY}/${m}/${rev}/schema.yang"
     if [ ! -f "$snap" ]; then
-        echo "NEW   $m@$rev (no snapshot yet — run make update-schema-registry)"
+        echo "NEW   $m@$rev (no snapshot yet — run ./scripts/update-schema-registry.sh)"
         continue
     fi
 

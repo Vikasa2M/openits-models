@@ -222,7 +222,7 @@ became obvious in the first months of integration:
    shouldn't force a re-snapshot of every other event family's
    schema. Per-event messages decouple revisions.
 
-The cost is a longer ce-type catalog (62 ce-types as of writing)
+The cost is a longer ce-type catalog (79 ce-types at v0.8.0)
 and a wider Protobuf source tree. That cost is borne by the
 project; consumers see a cleaner subscription model.
 
@@ -259,8 +259,8 @@ plain HTTP webhooks.
    address-space isolation. This is exactly the shape ITS needs.
 
 2. **Subject hierarchy is native.** Kafka has topics, not
-   hierarchies. The seven-token OpenITS subject would map to
-   29 of the wildcards Kafka doesn't have. NATS' wildcard
+   hierarchies, and has no equivalent of the `*` / `>` wildcard
+   hierarchy over the seven-token OpenITS subject. NATS' wildcard
    filtering — `>` for "rest of subject", `*` for "one token" —
    is exactly the dispatch tool consumers want.
 
@@ -465,7 +465,7 @@ reference deployment includes ClickHouse because it's the
 shortest path to dashboards for new POCs; production deployments
 should choose deliberately.
 
-## Imutable schema registry, no `latest` alias
+## Immutable schema registry, no `latest` alias
 
 **What we chose.** Every YANG revision lives at
 `schema-registry/<module>/<YYYY-MM-DD>/`. Once published, the
@@ -508,7 +508,7 @@ generated in-repo by `make asyncapi`
 from the YANG event-kind taxonomy (`BuildCatalog` — the identity
 graph plus each service's notifications, not a hand-maintained list
 imported from the collector), and each ce-type's message payload is
-its notification's JSON Schema (`EmitJSONSchema`, the P2b-1 backend),
+its notification's JSON Schema (`EmitJSONSchema`, the JSON Schema backend),
 embedded directly rather than referenced by URL
 (`schemaFormat: application/schema+json;version=draft-2020-12`).
 `make asyncapi-check` (`make asyncapi` plus `git diff --exit-code --
@@ -591,10 +591,12 @@ not the specific string.
 **What we chose.** Every openits event is its own typed YANG
 notification with its own ce-type. There is no universal
 "fact-envelope" or base grouping that other notifications inherit
-from. Universal scalars live in `openits-types`, but no inheritance
-discipline is required of new modules. Cross-event metadata
-(observer, occurred-at, causality) rides in CloudEvents extension
-attributes, not in the per-event payload.
+from beyond one small, fixed header. Universal scalars live in
+`openits-types`, and every notification `uses` its `event-header`
+grouping (`source-device-id`, `occurred-at`, `sequence`,
+`sequence-epoch`, optional `observed-by` and `owner`). Everything
+else in a payload is the event's own typed content; CloudEvents
+headers carry only the standard envelope attributes.
 
 **What we considered.** Early in the design we proposed an
 `openits-fact` module with a `fact-envelope` grouping that every
@@ -676,25 +678,28 @@ implementers in [the data model](data-model.md).)
 - Each per-event message gets its own YANG notification (`fault-raised`,
   `phase-state-change`, `detector-transition`, ...) and its own
   ce-type (`openits.<service>.<event-name>.v1`).
-- CloudEvents headers carry universal metadata: `ce-id` (replay-safe),
-  `ce-source` (URN), `ce-subject` (NATS-subject mirror), `ce-time`,
-  `ce-traceparent`.
-- Two opinionated CE extension attributes (added 2026-05-15) carry
-  the things CE doesn't natively express:
-  - `ce-occurred-at` — wall-clock time in the world (separate from
-    `ce-time` which becomes "observed-at by the emitter")
-  - `ce-observer` — narrower attribution than `ce-source`
-    ("cabinet-001-poller" vs "central-tsam-classifier-v3.2")
-- New CE extensions (`ce-caused-by`, `ce-confidence`,
-  `ce-classification`) land when consumers actually pull them.
-  Not before.
+- CloudEvents headers carry the standard envelope only:
+  `ce-specversion`, `ce-type`, `ce-source` (URN), `ce-id`
+  (deterministic, replay-safe), `ce-time`, `ce-dataschema`,
+  `ce-datacontenttype`, plus the optional W3C `traceparent` (see
+  [the NATS binding](../bindings/nats/README.md)). There are no
+  OpenITS-specific CE extension attributes.
+- The payload's `event-header` carries the cross-event metadata CE
+  doesn't natively express: `occurred-at` (wall-clock time at the
+  device, distinct from `ce-time`, when the publisher observed it),
+  `observed-by` (the poller or collector that observed a synthesized
+  event, when different from the source device), and the
+  (`sequence-epoch`, `sequence`) pair for ordering and loss detection.
+  Because it lives in the payload, it survives every transport.
+- Speculative metadata (`caused-by`, `confidence`, `classification`)
+  lands when consumers actually pull it. Not before.
 
 **What we'd revisit.** If a real federation use case requires
-cross-event correlation that CE headers can't express (e.g., V2X
-trust chains with cryptographic provenance per event), we add the
-extension attribute, not a universal grouping. The unit of change
-is "one new CE extension"; the unit isn't "redesign every YANG
-module."
+cross-event correlation that neither CE headers nor the event header
+can express (e.g., V2X trust chains with cryptographic provenance per
+event), we add one optional leaf to `event-header` or one CE
+extension attribute, not a universal envelope. The unit of change is
+"one new field"; the unit isn't "redesign every YANG module."
 
 ## Event notifications live in a per-service companion module
 

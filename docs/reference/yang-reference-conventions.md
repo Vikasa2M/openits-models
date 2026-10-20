@@ -46,8 +46,10 @@ For node-level references, use the formats in [§ Normative-source
 citation formats](#normative-source-citation-formats) below. For
 revision-block references, allow both normative-source and OpenITS
 PR citations (see [§ Revision-block references](#revision-block-references)).
-This document is the convention; applying it codebase-wide is
-tracked follow-up work.
+Node-level references cite standards and RFCs, never repository paths
+(the "References" row of the house contract's lint table);
+`make check-conventions` enforces the no-repo-path part, while the
+exact citation form is still a review item.
 
 ## Why have a convention
 
@@ -357,15 +359,18 @@ revision 2026-04-19 {
 
 ## Tooling
 
-A future audit/lint script can verify:
+`make check-conventions` (`tools/check-conventions/references.go`,
+rule id `references`) flags node-level `reference` statements that cite
+a repository path instead of a standard; revision blocks are skipped,
+since their text is immutable once published.
+
+Not yet automated, and tracked as follow-up:
 
 - Every cited spec revision is current (compares against a maintained
   list of published revisions per spec family).
 - Every `reference` string matches one of the canonical forms above.
 - Every cite-worthy node (typedef, identity, etc. with a `description`
   citing a spec in prose) has a corresponding `reference` substatement.
-
-The audit script doesn't exist yet; it's tracked follow-up work.
 
 ## Constraint placement (`must`) doctrine
 
@@ -839,8 +844,19 @@ family by family, each in a cut that may be wire-breaking (the project is
 pre-1.0). Until a family's cut lands, **its current shape is not
 precedent**: copy the exemplar each rule names, not the nearest
 neighbour. Pieces that need new foundation definitions land in
-`openits-types` first (the ones below are defined there now), and
-families adopt them in their cuts.
+`openits-types` first, and families adopt them in their cuts.
+
+Where it stands at v0.8.0: the foundation has landed in `openits-types`
+(`sequence-epoch` on the event header, `fault-entry`, `component-ref`,
+`device-health` and `device-status-summary` with their `observed-at`
+freshness leaf, and the `mode-value-base` extension). `fault-entry` backs
+the fault inventory of all nine device services (signal-control, dms, ess,
+rsu, ramp-metering, traffic-sensor, reversible-lane, perception, cctv) and
+both shared fault events, and `device-health` is on all nine device roots.
+The signal-control live-state cut shipped in v0.8.0 (see [the v0.8.0
+migration note](../migration/v0.8.0.md)). The other families' cuts are
+pending; their remaining deviations from these rules are listed per family
+in `conventions-exceptions.yaml`.
 
 ### 1. Every change event has a live-state mirror
 
@@ -870,7 +886,9 @@ forever.
 
 ### 2. Absent never means good
 
-- **Health.** Every device root `state` carries an operational status from
+- **Health.** Every device root `state` (the nine device services:
+  signal-control, dms, ess, rsu, ramp-metering, traffic-sensor,
+  reversible-lane, perception, cctv) carries an operational status from
   the `openits-types:oper-status` typedef (`unknown` at value 0),
   carried by the `openits-types:device-health` grouping with `last-change`
   and `observed-at`.
@@ -901,8 +919,10 @@ monitor while the controller keeps cycling is one example.
 
 - **Mode** is what the device is doing. **Who is driving it** is a
   separate leaf typed `openits-types:control-source`, in live state as
-  well as on `mode-changed`. Exemplar: ramp metering (`meter-mode` plus
-  `command-source`).
+  well as on `mode-changed`. Exemplars: ramp metering (`mode`, based
+  on `meter-mode`, plus `command-source`), and signal-control's
+  `operation` container (`cabinet-output`, `mode`, `control-source`,
+  `preempt-active`, `priority-active`), each one fact per leaf.
 - **What the field equipment shows** (cabinet output, sign face, head
   display) is separate from mode.
 - **Overrides** (preemption, priority) are derived from their own lists,
@@ -955,8 +975,9 @@ subjects cannot infer loss from gaps. The YANG, `ce-id-spec.md`,
 | `wire-source` | on every event decoded from a device wire protocol, including SNMP-decoded NTCIP families |
 | References | `<Standard> <number>:<year> §<clause>`; standards and RFCs, not repo paths |
 
-`make check-conventions` lints the before/after, unknown, units, counters,
-event `kind` and repository-path parts of these rows, against
+`make check-conventions` lints these rows under the rule ids
+`before-after`, `unknown-zero`, `units`, `counters`, `kind-base` and
+`references` (the repository-path part), against
 `conventions-exceptions.yaml`, which lists today's violations with the family
 cut that removes each and may only shrink. The lint covers less than the
 table states in three places. The unknown check covers enumerations only;

@@ -20,6 +20,9 @@ Flags:
 | `-inventory` | `arcit_inventory.json` | Path to inventory JSON |
 | `-yang-dir`  | `../../yang` | Directory containing `*.yang` files |
 
+The defaults are relative to `tools/arcit-coverage/`; from the repo root,
+pass both flags as in the usage example above.
+
 ## Inventory
 
 `arcit_inventory.json` holds the ARC-IT service packages we claim
@@ -27,9 +30,16 @@ coverage on, each with the canonical flow names from arc-it.net. Flow
 names must match the annotation argument on the YANG node exactly —
 they are compared case- and whitespace-sensitive (after trimming).
 
+It curates five service packages today: TI01 (Traffic Signal Control),
+TI06 (Traffic Information Dissemination), MC01 (Environmental Monitoring
+Station), TI03 (Traffic Metering) and VS06 (Infrastructure-Based Safety
+Broadcast).
+
 Extend the inventory by adding new service-package objects and flow
 entries. Flows present in YANG but missing from the inventory appear
-under **Orphan Annotations** in the report.
+under **Orphan Annotations** in the report — today that includes the
+annotations on cctv, perception, traffic-sensor, reversible-lane,
+zone-occupancy, work-zone and the common events.
 
 ## Output
 

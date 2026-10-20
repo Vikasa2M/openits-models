@@ -48,9 +48,11 @@ independent organizations adopt them.
 **BSM** — Basic Safety Message. SAE J2735 V2X message broadcast
 by vehicles; received by RSUs.
 
-**ce-id, ce-type, ce-source, ce-dataschema, ce-time** —
-CloudEvents 1.0 attributes. In OpenITS, they ride in NATS message
-headers (binary mode).
+**ce-id, ce-type, ce-source, ce-dataschema, ce-time,
+ce-datacontenttype** — CloudEvents 1.0 attributes. In OpenITS, they
+ride in NATS message headers (binary mode); `ce-datacontenttype`
+names the body's media type (`application/protobuf` in the
+reference binding).
 
 **ClickHouse** — Column-oriented database. OpenITS' default
 history / analytics backend.
@@ -59,9 +61,10 @@ history / analytics backend.
 event data. OpenITS uses CloudEvents 1.0 binary mode.
 
 **Conformance kit** — `tools/conformance/`. Validates an
-implementation against the OpenITS contract by subscribing to its
-NATS endpoint, checking subject hierarchy, envelope shape, and
-per-service assertions.
+implementation against the OpenITS contract: state-tree validity,
+envelope shape (ce-type, ce-source, ce-id) and per-service
+assertions. Today it runs against an in-process mock device and a
+synthetic event stream; a live-device driver does not exist yet.
 
 **Core** — Tier 1 of the extension model. TSC-controlled YANG
 modules at `yang/openits-<service>.yang`.
@@ -131,7 +134,7 @@ public adoption of an augment. Drives the graduation rule.
 **NTCIP** — National Transportation Communications for ITS
 Protocol. Family of standards governing device-level ITS
 communication. NTCIP 1202 (signal control), 1203 (DMS), 1204 (ESS),
-1205 (CCTV), 1207 (ramp meter), 1208 (parking), 1218 (RSU).
+1205 (CCTV), 1207 (ramp meter), 1208 (CCTV switching), 1218 (RSU).
 
 **OpenITS** — This project. Single authority prefix used across
 all layers (CE, subject, URN, YANG namespace, module name).
@@ -182,8 +185,8 @@ events are part of OpenITS' RSU service.
 
 **Service** — In OpenITS, a category of field infrastructure:
 signal-control, dms, ess, rsu, ramp-metering, perception,
-traffic-sensor, reversible-lane. The `{service}` token in OpenITS
-subjects.
+traffic-sensor, reversible-lane, cctv, zone-occupancy, work-zone.
+The `{service}` token in OpenITS subjects and ce-types.
 
 **SPaT** — Signal Phase and Timing. SAE J2735 V2X message
 broadcast by RSUs (and originating from signal controllers).

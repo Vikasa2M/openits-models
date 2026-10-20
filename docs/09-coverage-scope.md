@@ -6,9 +6,13 @@ scope for now. The gaps below are choices, not oversights: OpenITS is a
 **device-model-first, center-to-field (C2F)** effort, so back-office and
 center-to-center concerns are intentionally excluded.
 
-Service-package identifiers are ARC-IT 9.1. Each in-tree service is
-annotated with the `arc-it-flow` extension so tooling can emit an ARC-IT
-coverage report (see [05 — Standards alignment](05-standards-alignment.md)).
+Service-package identifiers are ARC-IT 9.1. Notifications and key state
+containers carry the `arc-it-flow` extension, and `tools/arcit-coverage`
+reports them against a curated inventory. That inventory covers five
+packages today (TI01, TI06, MC01, TI03, VS06); the TM-series packages
+named below are mapped here but not yet in the inventory, so their
+annotations report as orphans (see
+[05 — Standards alignment](05-standards-alignment.md)).
 
 ## Covered today
 
@@ -22,7 +26,9 @@ coverage report (see [05 — Standards alignment](05-standards-alignment.md)).
 | Traffic sensor / vehicle detection | `openits-traffic-sensor`, `-types`, `-events`, `openits-vehicle-detection` | TM01 (Infrastructure-Based Traffic Surveillance) |
 | Roadside perception / AID | `openits-perception`, `-types`, `-events` | TM01 (Infrastructure-Based Traffic Surveillance) |
 | CCTV / PTZ | `openits-cctv`, `-types`, `-events` | Roadway surveillance (NTCIP 1205) |
-| RSU / V2X | `openits-rsu`, `-types`, `-events`, `openits-v2x-messaging(-types)`, `openits-v2x-radio(-types)`, `openits-scms` | Connected-vehicle / V2X infrastructure |
+| RSU / V2X | `openits-rsu`, `-types`, `-events`, `openits-v2x-messaging(-types)`, `openits-v2x-radio(-types)`, `openits-scms` | VS06 (Infrastructure-Based Safety Broadcast); connected-vehicle / V2X infrastructure |
+| Zone occupancy | `openits-zone-occupancy`, `-types`, `-events` | Capability (composed into perception; presence / dwell per defined zone) |
+| Work zones | `openits-work-zone-types`, `openits-work-zone-events` | Roadway fact, not a device: one `zone-state-changed` event, no state tree |
 | Cabinet power / UPS | `openits-cabinet-power` | Platform (composed into device profiles; telemetry grouping + writable on-battery policy grouping) |
 | Time-of-day scheduling | `openits-schedule` | Platform (shared time-of-day typedef + calendar-selector grouping for NTCIP 1201-style day-plan schedulers) |
 | Common device telemetry | `openits-common-fault-events`, `openits-common-mode-events`, `openits-common-comm-health-events`, `openits-device-diagnostics` | Cross-service (fault / mode / comm-health / diagnostics) |
@@ -34,8 +40,9 @@ The model is shaped for these near-term extensions; they reuse the same
 device-profile idiom (config/state pair, shared fault/mode/comm-health
 events, `device-identity-config`) and add no new architecture:
 
-- **Work-zone / portable ITS** — portable devices; depends on the
-  portable-location work noted below.
+- **Portable ITS devices** (work-zone trailers, portable DMS) —
+  depends on the portable-location work noted below. Work zones
+  themselves are already covered as events (above).
 - **Highway advisory radio (HAR)**.
 - **Standalone gate / barrier control** and **flood / high-water
   warning** (beyond the reversible-lane interlocks already modeled).
@@ -61,7 +68,7 @@ systems; OpenITS simply does not model the systems themselves.
 The identity model today assumes a **static location**: a device is
 provisioned with a fixed geographic point and (now) an optional structured
 `linear-reference` (route + milepost / LRS measure) and `site-id`
-(added on `device-identity-config` this cycle). Genuinely portable devices
+(on `device-identity-config`). Genuinely portable devices
 (work-zone trailers, portable DMS/CMS, temporary sensors) need a
 **time-varying** location surface. That is planned work, not a limitation
 of the event model — a portable device already emits the same

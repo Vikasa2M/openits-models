@@ -16,7 +16,10 @@ ce-id    = ULID(timestamp = stable-time-ms, randomness = digest[0:10])
 - `‖` is byte concatenation with a `0x1f` unit separator **between** fields —
   three separators, none trailing.
 - `ce-source` and `ce-type` are the CloudEvents attribute values (UTF-8).
-- `stable-time` is `occurred-at` when present, else `ce-time`, encoded as
+- `stable-time` is `occurred-at` when present, else `ce-time`. Every
+  OpenITS notification carries `occurred-at` (it is mandatory in
+  `openits-types:event-header`), so the `ce-time` fallback applies only to
+  non-OpenITS payloads. It is encoded as
   RFC 3339 with millisecond precision (UTC `Z`). It is the **only** time that
   feeds the id — both the digest and the ULID timestamp. `ce-time` is when a
   publisher *observed* the event and MUST NOT influence the id; using it would
@@ -83,7 +86,9 @@ to any consumer deduplicating on `ce-id`.
 ## Test vectors
 
 Both use the payload `openits.dms.v1.MessageActivationFailed{reason:
-"validation"}`, whose deterministic proto3 encoding is
+"validation"}` — a minimal illustration that sets one field only, not a
+complete conforming event (a real one also carries the event header) — whose
+deterministic proto3 encoding is
 `1a0a76616c69646174696f6e`, and the `ce-type`
 `openits.dms.message-activation-failed.v1`. Any implementation must reproduce
 both exactly.

@@ -71,8 +71,14 @@ RFC 7951 keys a top-level notification by its DEFINING module — for a
 consolidated events module the fixture's top-level member is
 `<events-module-name>:<notification>`, not the service core module. Add a
 `valid-*` fixture per new notification and `invalid-*` fixtures for any
-constraint. Mandatory event fields are additionally checked by
-`scripts/check-notif-mandatory.py`.
+constraint. Register every new base `invalid-*` fixture in
+`yang/testdata/expected-rejections.tsv` as
+`<fixture><TAB><substring of the error>` (for a missing mandatory
+notification leaf the substring is `MISSING <leaf>`); `validate-yang`
+fails a rejected fixture whose reason is not listed. Mandatory event
+fields are additionally checked by `scripts/check-notif-mandatory.py`,
+which runs inside `scripts/validate-yang.sh`, so its failures surface as
+a `validate-yang` failure.
 
 ## Pipeline
 

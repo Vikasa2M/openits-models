@@ -40,8 +40,8 @@ when:
    binding carries.
 
 2. **Per-service shape rules hold.** Each service has additional
-   assertions: signal-control's `OperationalStatus` emits at the
-   configured cadence; RSU's TIM-broadcast events follow the
+   assertions: signal-control emits its `operational-status-report`
+   heartbeat; RSU's TIM-broadcast events follow the
    declared lifecycle; traffic-sensor interval reports arrive within
    their configured data interval; and so on.
 
@@ -137,18 +137,24 @@ the mechanics and the floor that must not be deviated.
 ## How to claim conformance
 
 The conformance kit lives in `tools/conformance/` in the
-reference repository. It runs against a NATS endpoint and verifies
-both tiers in one pass, so it certifies the Tier 1 + Tier 2 claim that
-"OpenITS-compatible" means today. A deployment claiming **Tier 1 only**
-over a non-NATS binding validates the same model rules — payloads
-against the declared schema-registry snapshot, per-service shape rules,
+reference repository. It verifies both tiers in one pass, so it
+certifies the Tier 1 + Tier 2 claim that "OpenITS-compatible" means
+today. Its only working driver today is `mock`: an in-process mock
+device plus a synthetic event stream for each kind. A live-device
+driver (a NATS subscriber, or SNMP/gNMI collection) does not exist
+yet; `-driver snmp` is reserved and returns "not implemented". Until
+it lands, a vendor wires its implementation in as a driver that
+satisfies the kit's `Driver` interface (`Collect` the YANG state,
+`Subscribe` to the CloudEvents envelopes the device emits). A
+deployment claiming **Tier 1 only** over a non-NATS binding validates
+the same model rules — state-tree validity, per-service shape rules,
 event identity — against its own transport; a binding-specific harness
-is the sibling of the NATS kit's Tier 2 checks. To claim conformance
-with the reference profile:
+is the sibling of the kit's Tier 2 checks. To claim conformance with
+the reference profile:
 
-1. **Stand up your implementation against a test NATS endpoint.**
-   The kit subscribes to `openits.>` on your endpoint and
-   listens for events for a configurable window.
+1. **Connect your implementation to the kit.** Provide a driver
+   that collects your device's state tree and delivers the events
+   it emits during a configurable observation window.
 
 2. **Run the conformance kit:**
 
@@ -162,8 +168,10 @@ with the reference profile:
    (`mock` is the in-tree test driver; replace with your driver
    when running against your real implementation. `-kind` selects
    the device suite — `asc` (signal-control), `rsu`, `dms`, `ess`,
-   or `ramp-metering`. The standalone binary release is upcoming
-   follow-up work; today the kit runs in-tree.)
+   `ramp-metering`, `traffic-sensor`, `reversible-lane`,
+   `perception`, or `cctv`. `-window` is how long the kit collects
+   events. The standalone binary release is upcoming follow-up
+   work; today the kit runs in-tree.)
 
 3. **Inspect the report.** The kit prints a `PASS`/`FAIL` line per
    test case followed by a summary count (`N passed, M failed`) to
@@ -217,8 +225,8 @@ When a vendor claims conformance and gives you a report:
    format wrong); others are partial (one event type
    misimplemented).
 3. **Check the report against your own kit run.** Optionally,
-   subscribe to the vendor's test NATS endpoint with your own
-   conformance kit and compare. If your run passes where theirs
+   run your own copy of the kit against the vendor's test
+   implementation and compare. If your run passes where theirs
    passed, the claim is real. If your run fails where theirs
    passed, the report is suspect — escalate to the TSC dispute
    process.
@@ -232,18 +240,26 @@ When a vendor claims conformance and gives you a report:
 
 ## What the kit checks today
 
-The conformance kit exercises both tiers in one run against the test
-NATS endpoint. Its current checks include:
+The conformance kit exercises both tiers in one run against the
+driver's collected state and event stream. Its current checks
+include:
 
 **Tier 1 — model checks (transport-neutral):**
 
-- **Per-event payload.** Body parses cleanly against the
-  schema-registry copy at the declared revision (Protobuf, where
-  that snapshot ships a `schema.proto`; validated against the
-  snapshot's `schema.yang` otherwise).
-- **Per-service shape rules.** Cadence, lifecycle, and interval
-  assertions. See `tools/conformance/tests/<service>.go` for the
-  assertion list per service.
+- **State-tree validity.** The collected state tree passes ygot
+  schema validation (`TestYANG_Validate`). Event bodies are not
+  yet parsed against the declared schema-registry snapshot.
+- **Per-service shape rules.** Identity, lifecycle, interval and
+  event-shape assertions. The registry in
+  `tools/conformance/tests/tests.go` (`All(kind)`) lists the checks
+  per kind; the functions live in per-concern files under
+  `tools/conformance/tests/` (for signal-control, `identity.go`,
+  `phase_timing.go`, `coordination.go`, `operation.go`, …).
+- **Universal event rules.** A fault's `kind` belongs to the
+  emitting service (`TestFault_KindMatchesService`); a
+  `mode-changed` value belongs to its kind's mode family
+  (`TestMode_ValueMatchesKind`); `sequence` is contiguous within an
+  epoch (`TestEvent_SequenceContiguousWithinEpoch`).
 - **Event identity present.** `ce-id` is present so replay can
   deduplicate (`TestCEID_Present`).
 
@@ -252,10 +268,12 @@ NATS endpoint. Its current checks include:
 - **Subject hierarchy.** Every published event lives on the
   seven-token shape with valid tokens
   (`tools/conformance/tests/subject.go`).
-- **CloudEvents envelope.** `ce-type` matches the configured
-  service; `ce-source` is a well-formed `urn:openits:` URN
-  (`tools/conformance/tests/cetype.go`); `ce-dataschema` points
-  at a snapshotted revision.
+- **CloudEvents envelope.** `ce-type` has the
+  `openits.<service>.<event>.v<major>` form
+  (`TestCEType_OpenitsFormat`); `ce-source` is a well-formed
+  `urn:openits:` URN (`TestCESource_URN`), both in
+  `tools/conformance/tests/cetype.go`. A `ce-dataschema` check is
+  planned.
 
 The Tier 1 shape checks select events by the subject's last token — the
 model-level event name — so they hold under any binding. The Tier 2
@@ -268,6 +286,10 @@ checks are shared.
 
 A few things on the deferred list, captured for transparency:
 
+- **A live-device driver.** Planned; today only the in-process
+  `mock` driver runs.
+- **Event bodies against the schema-registry snapshot** and a
+  **`ce-dataschema` check.** Planned.
 - **Wire-level idempotency of retries.** Planned. Currently
   validated by inspection of the deterministic-`ce-id` policy.
 - **`ce-id` determinism across cold-restart.** Planned.
