@@ -2676,6 +2676,7 @@ messages:
         transition_at_soc_pct: 2
     openits.signal_control.v1.Operation:
         cabinet_output: 7
+        cabinet_output_since: 12
         control_source: 8
         flash_active: 2
         flash_cause: 3
@@ -2689,6 +2690,7 @@ messages:
     openits.signal_control.v1.OperationalStatusReport:
         active_fault_count: 17
         cabinet_output: 12
+        cabinet_output_since: 22
         control_source: 18
         flash_active: 10
         flash_cause: 11

@@ -447,6 +447,7 @@ func All(kind string) []TestCase {
 			// health
 			TestCase{"TestHealth_OperationalStatus", TestHealth_OperationalStatus},
 			TestCase{"TestEvents_CabinetOutputChanged", TestEvents_CabinetOutputChanged},
+			TestCase{"TestEvents_StatusReportFlashCause", TestEvents_StatusReportFlashCause},
 			TestCase{"TestHealth_NotFlashing", TestHealth_NotFlashing},
 			TestCase{"TestOperation_ActiveFlagsMatchLists", TestOperation_ActiveFlagsMatchLists},
 

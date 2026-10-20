@@ -64,3 +64,39 @@ func TestCabinetOutput_WrongPayloadFails(t *testing.T) {
 		t.Fatal("wrong payload type passed")
 	}
 }
+
+const statusSubject = "openits.us-xx.agency.d01.signal-control.dev-1.operational-status-report"
+
+func runStatusFlash(r *signalcontrolv1.OperationalStatusReport) Result {
+	ev := EventEnvelope{Subject: statusSubject, CEType: "openits.signal-control.operational-status-report.v1", Data: r}
+	return Run("status", TestEvents_StatusReportFlashCause, &Observation{Events: []EventEnvelope{ev}})
+}
+
+func TestStatusReportFlashCause_FlashWithCausePasses(t *testing.T) {
+	r := runStatusFlash(&signalcontrolv1.OperationalStatusReport{
+		CabinetOutput: signalcontrolv1.CabinetOutput_CABINET_OUTPUT_FLASH.Enum(),
+		FlashCause:    proto.String("openits-signal-control-types:flash-monitor"),
+	})
+	if !r.Pass {
+		t.Fatalf("flash with cause failed: %s", r.Message)
+	}
+}
+
+func TestStatusReportFlashCause_NormalWithCauseFails(t *testing.T) {
+	r := runStatusFlash(&signalcontrolv1.OperationalStatusReport{
+		CabinetOutput: signalcontrolv1.CabinetOutput_CABINET_OUTPUT_NORMAL.Enum(),
+		FlashCause:    proto.String("openits-signal-control-types:flash-monitor"),
+	})
+	if r.Pass {
+		t.Fatal("normal output with flash-cause passed")
+	}
+}
+
+func TestStatusReportFlashCause_NormalWithoutCausePasses(t *testing.T) {
+	r := runStatusFlash(&signalcontrolv1.OperationalStatusReport{
+		CabinetOutput: signalcontrolv1.CabinetOutput_CABINET_OUTPUT_NORMAL.Enum(),
+	})
+	if !r.Pass {
+		t.Fatalf("normal without cause failed: %s", r.Message)
+	}
+}

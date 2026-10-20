@@ -776,28 +776,29 @@ func (x *DetectorTransition) GetSourceDeviceId() string {
 }
 
 type OperationalStatusReport struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	Kind             string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	CabinetOutput    *CabinetOutput         `protobuf:"varint,12,opt,name=cabinet_output,json=cabinetOutput,proto3,enum=openits.signal_control.v1.CabinetOutput,oneof" json:"cabinet_output,omitempty"`
-	FlashCause       *string                `protobuf:"bytes,11,opt,name=flash_cause,json=flashCause,proto3,oneof" json:"flash_cause,omitempty"`
-	Mode             *string                `protobuf:"bytes,2,opt,name=mode,proto3,oneof" json:"mode,omitempty"`
-	PreemptActive    *bool                  `protobuf:"varint,13,opt,name=preempt_active,json=preemptActive,proto3,oneof" json:"preempt_active,omitempty"`
-	PriorityActive   *bool                  `protobuf:"varint,14,opt,name=priority_active,json=priorityActive,proto3,oneof" json:"priority_active,omitempty"`
-	MonitorStatus    *MonitorStatus         `protobuf:"varint,15,opt,name=monitor_status,json=monitorStatus,proto3,enum=openits.signal_control.v1.MonitorStatus,oneof" json:"monitor_status,omitempty"`
-	ModeSince        *timestamppb.Timestamp `protobuf:"bytes,16,opt,name=mode_since,json=modeSince,proto3" json:"mode_since,omitempty"`
-	ActiveFaultCount *uint32                `protobuf:"varint,17,opt,name=active_fault_count,json=activeFaultCount,proto3,oneof" json:"active_fault_count,omitempty"`
-	ControlSource    *string                `protobuf:"bytes,18,opt,name=control_source,json=controlSource,proto3,oneof" json:"control_source,omitempty"`
-	ObservedAt       *timestamppb.Timestamp `protobuf:"bytes,19,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
-	ObservedBy       *string                `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
-	OccurredAt       *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	OperStatus       *OperStatus            `protobuf:"varint,20,opt,name=oper_status,json=operStatus,proto3,enum=openits.signal_control.v1.OperStatus,oneof" json:"oper_status,omitempty"`
-	Owner            *string                `protobuf:"bytes,8,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
-	Sequence         uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
-	SequenceEpoch    string                 `protobuf:"bytes,3,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
-	SourceDeviceId   string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
-	UptimeS          *uint64                `protobuf:"varint,21,opt,name=uptime_s,json=uptimeS,proto3,oneof" json:"uptime_s,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Kind               string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
+	CabinetOutput      *CabinetOutput         `protobuf:"varint,12,opt,name=cabinet_output,json=cabinetOutput,proto3,enum=openits.signal_control.v1.CabinetOutput,oneof" json:"cabinet_output,omitempty"`
+	CabinetOutputSince *timestamppb.Timestamp `protobuf:"bytes,22,opt,name=cabinet_output_since,json=cabinetOutputSince,proto3" json:"cabinet_output_since,omitempty"`
+	FlashCause         *string                `protobuf:"bytes,11,opt,name=flash_cause,json=flashCause,proto3,oneof" json:"flash_cause,omitempty"`
+	Mode               *string                `protobuf:"bytes,2,opt,name=mode,proto3,oneof" json:"mode,omitempty"`
+	PreemptActive      *bool                  `protobuf:"varint,13,opt,name=preempt_active,json=preemptActive,proto3,oneof" json:"preempt_active,omitempty"`
+	PriorityActive     *bool                  `protobuf:"varint,14,opt,name=priority_active,json=priorityActive,proto3,oneof" json:"priority_active,omitempty"`
+	MonitorStatus      *MonitorStatus         `protobuf:"varint,15,opt,name=monitor_status,json=monitorStatus,proto3,enum=openits.signal_control.v1.MonitorStatus,oneof" json:"monitor_status,omitempty"`
+	ModeSince          *timestamppb.Timestamp `protobuf:"bytes,16,opt,name=mode_since,json=modeSince,proto3" json:"mode_since,omitempty"`
+	ActiveFaultCount   *uint32                `protobuf:"varint,17,opt,name=active_fault_count,json=activeFaultCount,proto3,oneof" json:"active_fault_count,omitempty"`
+	ControlSource      *string                `protobuf:"bytes,18,opt,name=control_source,json=controlSource,proto3,oneof" json:"control_source,omitempty"`
+	ObservedAt         *timestamppb.Timestamp `protobuf:"bytes,19,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
+	ObservedBy         *string                `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
+	OccurredAt         *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
+	OperStatus         *OperStatus            `protobuf:"varint,20,opt,name=oper_status,json=operStatus,proto3,enum=openits.signal_control.v1.OperStatus,oneof" json:"oper_status,omitempty"`
+	Owner              *string                `protobuf:"bytes,8,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	Sequence           uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch      string                 `protobuf:"bytes,3,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
+	SourceDeviceId     string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
+	UptimeS            *uint64                `protobuf:"varint,21,opt,name=uptime_s,json=uptimeS,proto3,oneof" json:"uptime_s,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *OperationalStatusReport) Reset() {
@@ -842,6 +843,13 @@ func (x *OperationalStatusReport) GetCabinetOutput() CabinetOutput {
 		return *x.CabinetOutput
 	}
 	return CabinetOutput_CABINET_OUTPUT_UNKNOWN
+}
+
+func (x *OperationalStatusReport) GetCabinetOutputSince() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CabinetOutputSince
+	}
+	return nil
 }
 
 func (x *OperationalStatusReport) GetFlashCause() string {
@@ -2424,10 +2432,11 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x0f\n" +
 	"\r_phase_servedB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_ownerJ\x04\b\x04\x10\x05J\x04\b\x05\x10\x06R\x04laneR\bapproach\"\xaa\t\n" +
+	"\x06_ownerJ\x04\b\x04\x10\x05J\x04\b\x05\x10\x06R\x04laneR\bapproach\"\xf8\t\n" +
 	"\x17OperationalStatusReport\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12T\n" +
-	"\x0ecabinet_output\x18\f \x01(\x0e2(.openits.signal_control.v1.CabinetOutputH\x00R\rcabinetOutput\x88\x01\x01\x12$\n" +
+	"\x0ecabinet_output\x18\f \x01(\x0e2(.openits.signal_control.v1.CabinetOutputH\x00R\rcabinetOutput\x88\x01\x01\x12L\n" +
+	"\x14cabinet_output_since\x18\x16 \x01(\v2\x1a.google.protobuf.TimestampR\x12cabinetOutputSince\x12$\n" +
 	"\vflash_cause\x18\v \x01(\tH\x01R\n" +
 	"flashCause\x88\x01\x01\x12\x17\n" +
 	"\x04mode\x18\x02 \x01(\tH\x02R\x04mode\x88\x01\x01\x12*\n" +
@@ -2734,39 +2743,40 @@ var file_openits_signal_control_v1_events_proto_depIdxs = []int32{
 	19, // 12: openits.signal_control.v1.DetectorTransition.occurred_at:type_name -> google.protobuf.Timestamp
 	20, // 13: openits.signal_control.v1.DetectorTransition.source:type_name -> openits.types.v1.WireSource
 	18, // 14: openits.signal_control.v1.OperationalStatusReport.cabinet_output:type_name -> openits.signal_control.v1.CabinetOutput
-	22, // 15: openits.signal_control.v1.OperationalStatusReport.monitor_status:type_name -> openits.signal_control.v1.MonitorStatus
-	19, // 16: openits.signal_control.v1.OperationalStatusReport.mode_since:type_name -> google.protobuf.Timestamp
-	19, // 17: openits.signal_control.v1.OperationalStatusReport.observed_at:type_name -> google.protobuf.Timestamp
-	19, // 18: openits.signal_control.v1.OperationalStatusReport.occurred_at:type_name -> google.protobuf.Timestamp
-	23, // 19: openits.signal_control.v1.OperationalStatusReport.oper_status:type_name -> openits.signal_control.v1.OperStatus
-	19, // 20: openits.signal_control.v1.OverlapChange.occurred_at:type_name -> google.protobuf.Timestamp
-	20, // 21: openits.signal_control.v1.OverlapChange.source:type_name -> openits.types.v1.WireSource
-	19, // 22: openits.signal_control.v1.PedestrianEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	20, // 23: openits.signal_control.v1.PedestrianEvent.source:type_name -> openits.types.v1.WireSource
-	19, // 24: openits.signal_control.v1.PhaseStateChange.occurred_at:type_name -> google.protobuf.Timestamp
-	20, // 25: openits.signal_control.v1.PhaseStateChange.source:type_name -> openits.types.v1.WireSource
-	19, // 26: openits.signal_control.v1.PlanApplied.occurred_at:type_name -> google.protobuf.Timestamp
-	19, // 27: openits.signal_control.v1.PreemptionActivated.occurred_at:type_name -> google.protobuf.Timestamp
-	20, // 28: openits.signal_control.v1.PreemptionActivated.source:type_name -> openits.types.v1.WireSource
-	19, // 29: openits.signal_control.v1.PreemptionCleared.occurred_at:type_name -> google.protobuf.Timestamp
-	20, // 30: openits.signal_control.v1.PreemptionCleared.source:type_name -> openits.types.v1.WireSource
-	19, // 31: openits.signal_control.v1.PreemptionEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	20, // 32: openits.signal_control.v1.PreemptionEvent.source:type_name -> openits.types.v1.WireSource
-	24, // 33: openits.signal_control.v1.TsamModeChanged.previous_mode:type_name -> openits.signal_control.v1.TsamEngagementState
-	24, // 34: openits.signal_control.v1.TsamModeChanged.mode:type_name -> openits.signal_control.v1.TsamEngagementState
-	19, // 35: openits.signal_control.v1.TsamModeChanged.occurred_at:type_name -> google.protobuf.Timestamp
-	25, // 36: openits.signal_control.v1.TsamRecommendationApplied.adjustment_type:type_name -> openits.signal_control.v1.AdjustmentType
-	19, // 37: openits.signal_control.v1.TsamRecommendationApplied.occurred_at:type_name -> google.protobuf.Timestamp
-	26, // 38: openits.signal_control.v1.TspEvent.denial_reason:type_name -> openits.signal_control.v1.DenialReason
-	19, // 39: openits.signal_control.v1.TspEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	20, // 40: openits.signal_control.v1.TspEvent.source:type_name -> openits.types.v1.WireSource
-	19, // 41: openits.signal_control.v1.UnmappedEvent.occurred_at:type_name -> google.protobuf.Timestamp
-	20, // 42: openits.signal_control.v1.UnmappedEvent.source:type_name -> openits.types.v1.WireSource
-	43, // [43:43] is the sub-list for method output_type
-	43, // [43:43] is the sub-list for method input_type
-	43, // [43:43] is the sub-list for extension type_name
-	43, // [43:43] is the sub-list for extension extendee
-	0,  // [0:43] is the sub-list for field type_name
+	19, // 15: openits.signal_control.v1.OperationalStatusReport.cabinet_output_since:type_name -> google.protobuf.Timestamp
+	22, // 16: openits.signal_control.v1.OperationalStatusReport.monitor_status:type_name -> openits.signal_control.v1.MonitorStatus
+	19, // 17: openits.signal_control.v1.OperationalStatusReport.mode_since:type_name -> google.protobuf.Timestamp
+	19, // 18: openits.signal_control.v1.OperationalStatusReport.observed_at:type_name -> google.protobuf.Timestamp
+	19, // 19: openits.signal_control.v1.OperationalStatusReport.occurred_at:type_name -> google.protobuf.Timestamp
+	23, // 20: openits.signal_control.v1.OperationalStatusReport.oper_status:type_name -> openits.signal_control.v1.OperStatus
+	19, // 21: openits.signal_control.v1.OverlapChange.occurred_at:type_name -> google.protobuf.Timestamp
+	20, // 22: openits.signal_control.v1.OverlapChange.source:type_name -> openits.types.v1.WireSource
+	19, // 23: openits.signal_control.v1.PedestrianEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	20, // 24: openits.signal_control.v1.PedestrianEvent.source:type_name -> openits.types.v1.WireSource
+	19, // 25: openits.signal_control.v1.PhaseStateChange.occurred_at:type_name -> google.protobuf.Timestamp
+	20, // 26: openits.signal_control.v1.PhaseStateChange.source:type_name -> openits.types.v1.WireSource
+	19, // 27: openits.signal_control.v1.PlanApplied.occurred_at:type_name -> google.protobuf.Timestamp
+	19, // 28: openits.signal_control.v1.PreemptionActivated.occurred_at:type_name -> google.protobuf.Timestamp
+	20, // 29: openits.signal_control.v1.PreemptionActivated.source:type_name -> openits.types.v1.WireSource
+	19, // 30: openits.signal_control.v1.PreemptionCleared.occurred_at:type_name -> google.protobuf.Timestamp
+	20, // 31: openits.signal_control.v1.PreemptionCleared.source:type_name -> openits.types.v1.WireSource
+	19, // 32: openits.signal_control.v1.PreemptionEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	20, // 33: openits.signal_control.v1.PreemptionEvent.source:type_name -> openits.types.v1.WireSource
+	24, // 34: openits.signal_control.v1.TsamModeChanged.previous_mode:type_name -> openits.signal_control.v1.TsamEngagementState
+	24, // 35: openits.signal_control.v1.TsamModeChanged.mode:type_name -> openits.signal_control.v1.TsamEngagementState
+	19, // 36: openits.signal_control.v1.TsamModeChanged.occurred_at:type_name -> google.protobuf.Timestamp
+	25, // 37: openits.signal_control.v1.TsamRecommendationApplied.adjustment_type:type_name -> openits.signal_control.v1.AdjustmentType
+	19, // 38: openits.signal_control.v1.TsamRecommendationApplied.occurred_at:type_name -> google.protobuf.Timestamp
+	26, // 39: openits.signal_control.v1.TspEvent.denial_reason:type_name -> openits.signal_control.v1.DenialReason
+	19, // 40: openits.signal_control.v1.TspEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	20, // 41: openits.signal_control.v1.TspEvent.source:type_name -> openits.types.v1.WireSource
+	19, // 42: openits.signal_control.v1.UnmappedEvent.occurred_at:type_name -> google.protobuf.Timestamp
+	20, // 43: openits.signal_control.v1.UnmappedEvent.source:type_name -> openits.types.v1.WireSource
+	44, // [44:44] is the sub-list for method output_type
+	44, // [44:44] is the sub-list for method input_type
+	44, // [44:44] is the sub-list for extension type_name
+	44, // [44:44] is the sub-list for extension extendee
+	0,  // [0:44] is the sub-list for field type_name
 }
 
 func init() { file_openits_signal_control_v1_events_proto_init() }

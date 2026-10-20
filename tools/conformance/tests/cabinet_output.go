@@ -30,3 +30,23 @@ func TestEvents_CabinetOutputChanged(t *T, obs *Observation) {
 		}
 	}
 }
+
+// TestEvents_StatusReportFlashCause checks each operational-status-report:
+// flash-cause is present only while cabinet-output is flash. yanglint does
+// not enforce notification constraints, so the sibling of the
+// cabinet-output-changed check is enforced here.
+func TestEvents_StatusReportFlashCause(t *T, obs *Observation) {
+	for _, e := range obs.Events {
+		if !strings.HasSuffix(e.Subject, ".operational-status-report") {
+			continue
+		}
+		ev, ok := e.Data.(*signalcontrolv1.OperationalStatusReport)
+		if !ok {
+			t.Errorf("operational-status-report on %s has payload %T", e.Subject, e.Data)
+			continue
+		}
+		if ev.FlashCause != nil && ev.GetCabinetOutput() != cabinetOutputFlash {
+			t.Errorf("operational-status-report on %s carries flash-cause %q while cabinet-output is %v", e.Subject, ev.GetFlashCause(), ev.GetCabinetOutput())
+		}
+	}
+}

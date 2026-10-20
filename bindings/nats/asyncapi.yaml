@@ -6772,6 +6772,9 @@ components:
                                 - normal
                                 - unknown
                             type: string
+                        cabinet-output-since:
+                            format: date-time
+                            type: string
                         control-source:
                             type: string
                         flash-cause:

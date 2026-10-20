@@ -26,6 +26,15 @@ module openits-common-mode-events {
 
   openits-types:openits-version "0.3.0";
 
+  revision 2026-10-17 {
+    description
+      "Report a change of control authority as mode-changed: the
+       notification fires when the mode or the control-source changes.
+       When only the control-source changed, mode equals previous-mode
+       and control-source carries the new authority. Description only;
+       the wire is unchanged.";
+    reference "RFC 7950 §7.21.";
+  }
   revision 2026-10-13 {
     description
       "Rename mode-changed's prior and current to previous-mode and
@@ -89,7 +98,10 @@ module openits-common-mode-events {
     openits-types:arc-it-flow
       "Device -> NMS : operational status";
     description
-      "A device transitioned between operational modes. The 'kind'
+      "A device transitioned between operational modes, or the control
+       authority driving the device changed. When only the
+       control-source changed, 'mode' equals 'previous-mode' and
+       'control-source' carries the new authority. The 'kind'
        identityref names the mode-space (e.g., signal-controller mode,
        ramp-meter mode); 'previous-mode' and 'mode' are concrete
        operating-mode identities (openits-types:operational-mode
@@ -136,7 +148,9 @@ module openits-common-mode-events {
       type identityref { base openits-types:control-source; }
       description
         "Which control authority is driving the new mode (orthogonal to
-         the mode value).";
+         the mode value). A change of this authority alone also fires
+         mode-changed, with mode equal to previous-mode and this leaf
+         carrying the new authority.";
     }
 
     leaf trigger {

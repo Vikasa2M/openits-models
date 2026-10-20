@@ -59,7 +59,8 @@ module openits-signal-control {
        and priority-active; flash-cause is present only while flashing;
        last-mode-change is renamed mode-since and flash-active is
        removed. Breaking: flash-active and last-mode-change are gone and
-       mode no longer carries flash, off, manual, preempt or priority.";
+       mode no longer carries flash, off, manual, preempt or priority.
+       Add cabinet-output-since, when cabinet-output last changed.";
     reference "NEMA TS2-2021 section 4.";
   }
   revision 2026-10-16 {
@@ -1791,6 +1792,12 @@ module openits-signal-control {
       leaf cabinet-output {
         type openits-sc-types:cabinet-output;
         description "What the field displays show. Absent means unknown.";
+      }
+      leaf cabinet-output-since {
+        type yang:date-and-time;
+        description
+          "When cabinet-output last changed (for example when the
+           cabinet entered flash).";
       }
       leaf flash-cause {
         type identityref { base openits-sc-types:flash-cause; }

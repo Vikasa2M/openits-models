@@ -1418,10 +1418,12 @@
         "2026-05-23",
         "2026-07-13",
         "2026-07-21",
-        "2026-10-13"
+        "2026-10-13",
+        "2026-10-17"
       ],
       "refStd": [
-        "RFC 7950 §11"
+        "RFC 7950 §11",
+        "RFC 7950 §7.21"
       ]
     },
     {
@@ -1871,6 +1873,13 @@
         "openits-common-mode-events/2026-10-13/schema.json",
         "openits-common-mode-events/2026-10-13/schema.proto",
         "openits-common-mode-events/2026-10-13/schema.yang"
+      ],
+      "2026-10-17": [
+        "openits-common-mode-events/2026-10-17/MANIFEST.json",
+        "openits-common-mode-events/2026-10-17/README.md",
+        "openits-common-mode-events/2026-10-17/schema.json",
+        "openits-common-mode-events/2026-10-17/schema.proto",
+        "openits-common-mode-events/2026-10-17/schema.yang"
       ]
     },
     "openits-device-diagnostics": {

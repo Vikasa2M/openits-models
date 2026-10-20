@@ -27,7 +27,7 @@ func TestHealth_OperationalStatus(t *T, obs *Observation) {
 			return
 		}
 	}
-	t.Errorf("no operational-status heartbeat observed during %s window", obs.Window)
+	t.Errorf("no operational-status-report heartbeat observed during %s window", obs.Window)
 }
 
 func TestHealth_NotFlashing(t *T, obs *Observation) {

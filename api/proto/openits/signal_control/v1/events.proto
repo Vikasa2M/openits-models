@@ -102,6 +102,7 @@ message OperationalStatusReport {
   reserved "last_mode_change", "uptime_seconds", "flash_active";
   string kind = 99;
   optional CabinetOutput cabinet_output = 12;
+  google.protobuf.Timestamp cabinet_output_since = 22;
   optional string flash_cause = 11;
   optional string mode = 2;
   optional bool preempt_active = 13;

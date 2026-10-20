@@ -407,6 +407,7 @@ message Operation {
   reserved 2, 4, 5;
   reserved "flash_active", "mmu", "last_mode_change";
   optional CabinetOutput cabinet_output = 7;
+  google.protobuf.Timestamp cabinet_output_since = 12;
   optional string flash_cause = 3;
   optional string mode = 1;
   optional string control_source = 8;

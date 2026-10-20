@@ -9,6 +9,7 @@
     "uptime-s": "431980",
     "active-fault-count": 0,
     "cabinet-output": "normal",
+    "cabinet-output-since": "2026-07-10T08:00:00Z",
     "mode": "openits-signal-control-types:mode-coordinated",
     "preempt-active": false,
     "priority-active": false,

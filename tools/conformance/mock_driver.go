@@ -88,6 +88,7 @@ func collectASC() (*yangpkg.Device, error) {
 	op.PreemptActive = boolPtr(false)
 	op.PriorityActive = boolPtr(false)
 	op.ModeSince = strPtr("2026-04-18T14:00:00Z")
+	op.CabinetOutputSince = strPtr("2026-04-18T14:00:00Z")
 
 	// Coordination: config-only timing-plan library + state readback
 	// naming the active plan. Plan 3 carries the cut-2c coordination-
@@ -378,6 +379,8 @@ func subscribeASC(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 				OperStatus:     signalcontrolv1.OperStatus_OPER_STATUS_OK.Enum(),
 				MonitorStatus:  signalcontrolv1.MonitorStatus_MONITOR_STATUS_OK.Enum(),
 				UptimeS:        proto.Uint64(431980),
+
+				CabinetOutputSince: timestamppb.New(time.Date(2026, 4, 18, 14, 0, 0, 0, time.UTC)),
 			},
 		},
 		{
@@ -393,8 +396,24 @@ func subscribeASC(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 				ControlSource: proto.String("openits-types:control-central"),
 			},
 		},
-		// The cabinet-output-changed event is a separate stream from the
-		// device state, which reports cabinet-output normal.
+		// A control-authority change alone is reported as mode-changed with
+		// the mode unchanged and the new control-source.
+		{
+			Subject:  base + ".mode-changed",
+			CEType:   "openits.signal-control.mode-changed.v1",
+			CESource: "urn:openits:controller:us-tx:txdot:d07:i35-exit-214",
+			CEID:     "01HXYR3K9T8M2NAEQF5P4R6V92",
+			CETime:   time.Now().UTC(),
+			Data: &commonv1.ModeChanged{
+				Kind:          "openits-signal-control-types:sc-mode-event-kind",
+				PreviousMode:  proto.String("openits-signal-control-types:mode-coordinated"),
+				Mode:          "openits-signal-control-types:mode-coordinated",
+				ControlSource: proto.String("openits-types:control-manual"),
+			},
+		},
+		// The cabinet-output-changed stream goes normal -> flash -> normal,
+		// so it ends coherent with the device state, which reports
+		// cabinet-output normal.
 		{
 			Subject:  base + ".cabinet-output-changed",
 			CEType:   "openits.signal-control.cabinet-output-changed.v1",
@@ -406,6 +425,18 @@ func subscribeASC(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 				PreviousCabinetOutput: signalcontrolv1.CabinetOutput_CABINET_OUTPUT_NORMAL.Enum(),
 				CabinetOutput:         signalcontrolv1.CabinetOutput_CABINET_OUTPUT_FLASH,
 				FlashCause:            proto.String("openits-signal-control-types:flash-monitor"),
+			},
+		},
+		{
+			Subject:  base + ".cabinet-output-changed",
+			CEType:   "openits.signal-control.cabinet-output-changed.v1",
+			CESource: "urn:openits:controller:us-tx:txdot:d07:i35-exit-214",
+			CEID:     "01HXYR3K9T8M2NAEQF5P4R6V93",
+			CETime:   time.Now().UTC(),
+			Data: &signalcontrolv1.CabinetOutputChanged{
+				Kind:                  "openits-signal-control-types:sc-cabinet-output-changed",
+				PreviousCabinetOutput: signalcontrolv1.CabinetOutput_CABINET_OUTPUT_FLASH.Enum(),
+				CabinetOutput:         signalcontrolv1.CabinetOutput_CABINET_OUTPUT_NORMAL,
 			},
 		},
 		{

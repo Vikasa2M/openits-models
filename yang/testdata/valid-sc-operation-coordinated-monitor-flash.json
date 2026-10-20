@@ -35,6 +35,7 @@
     },
     "operation": {
       "cabinet-output": "flash",
+      "cabinet-output-since": "2026-07-12T08:15:00Z",
       "flash-cause": "openits-signal-control-types:flash-monitor",
       "mode": "openits-signal-control-types:mode-coordinated",
       "control-source": "openits-types:control-central",
