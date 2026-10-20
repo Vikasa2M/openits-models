@@ -91,7 +91,8 @@ generate_go() {
     log_info "Generating Go code from openits YANG modules..."
     mkdir -p "$OUT_GO_DIR"
 
-    # .gitattributes forces LF on checkout, so ygot reads yang/ directly.
+    # Read yang/ in place: .gitattributes keeps YANG sources LF on every
+    # checkout, so no CRLF-stripped staging copy is needed.
     local yang_paths="$YANG_DIR:$YANG_DIR/ietf"
 
     generator \

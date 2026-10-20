@@ -178,7 +178,7 @@ fi
 mount_src=$PWD
 if command -v cygpath >/dev/null 2>&1; then
     mount_src=$(cygpath -w "$PWD")
-elif [[ "$(uname -s)" == MINGW* || "$(uname -s)" == MSYS* ]] && command -v pwd >/dev/null 2>&1; then
+elif [[ "$(uname -s)" == MINGW* || "$(uname -s)" == MSYS* ]]; then
     mount_src=$(pwd -W 2>/dev/null || echo "$PWD")
 fi
 MSYS_NO_PATHCONV=1 MSYS2_ARG_CONV_EXCL='*' docker run --rm \
