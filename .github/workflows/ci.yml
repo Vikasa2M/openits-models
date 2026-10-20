@@ -120,7 +120,9 @@ jobs:
             echo "release=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          files="$(git diff --name-only HEAD^1 HEAD)"
+          # --no-renames: a move lists both paths, so moving a file out of
+          # yang/ into docs/ cannot pass as docs-only.
+          files="$(git diff --no-renames --name-only HEAD^1 HEAD)"
           echo "Changed files:"
           printf '%s\n' "$files"
           # An empty diff counts as code and not as a release (safe default).
