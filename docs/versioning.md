@@ -85,6 +85,8 @@ each such release owes consumers one document that collects them.
   `mode-changed` field names `previous-mode` and `mode`.
 - [v0.8.0](migration/v0.8.0.md) — one fault shape, device health and
   `observed-at`, mode/value binding, signal-control operation split.
+- [v0.9.0](migration/v0.9.0.md) — signal-control pedestrian detector table,
+  detector event field renames, unit-suffixed duration and percentage names.
 
 ## Cutting a release
 
