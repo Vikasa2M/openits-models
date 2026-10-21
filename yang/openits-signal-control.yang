@@ -69,7 +69,14 @@ module openits-signal-control {
        max-green-extension-s, reservice-interval-s; startup
        all-red-duration-s, flash-duration-s; on-battery policy
        transition-at-runtime-min. Breaking: timing leaves and the
-       leaves above are renamed.";
+       leaves above are renamed.
+
+       Add the pedestrian-detectors table (NTCIP pedestrianDetectorTable),
+       numbered independently of vehicle detectors, each calling exactly
+       one phase. The vehicle detector diagnostics container now uses
+       the shared detector-diagnostics grouping with the same leaves.
+       Breaking: pedestrian detection is no longer a vehicle detector
+       type.";
   }
   revision 2026-10-17 {
     description
@@ -714,6 +721,42 @@ module openits-signal-control {
   // record.  Callers should `uses openits-nema:phase-timing` where
   // they previously used a local phase-timing grouping.
 
+  grouping sc-pedestrian-detector-config {
+    description "Pedestrian detector configuration (config and its state mirror).";
+    leaf pedestrian-detector-id {
+      type openits-sc-types:pedestrian-detector-number;
+      description "Pedestrian detector number.";
+    }
+    leaf name {
+      type string;
+      description "Operator label, e.g. 'NE corner button'.";
+    }
+    leaf enabled {
+      type boolean;
+      description "Whether this pedestrian detector is in service.";
+    }
+    leaf type {
+      type identityref { base openits-sc-types:pedestrian-detector-type; }
+      description "Kind of pedestrian detector.";
+    }
+    leaf call-phase {
+      type leafref {
+        path "../../../../phases/phase/phase-number";
+        require-instance true;
+      }
+      mandatory true;
+      description "The one phase this detector calls (NTCIP pedestrianDetectorCallPhase).";
+    }
+    container diagnostic-thresholds {
+      description
+        "Detector health thresholds. Named apart from the vehicle
+         detector diagnostics container so the two generate distinct
+         protobuf messages and the vehicle message keeps its field
+         numbers.";
+      uses openits-sc-types:detector-diagnostics;
+    }
+  }
+
   grouping phase-runtime-state {
     description "Runtime state of a single phase (vehicle + pedestrian displays reported separately).";
 
@@ -981,7 +1024,7 @@ module openits-signal-control {
             mandatory true;
             description
               "Detector technology (inductive-loop, video, radar,
-               ped-pushbutton, etc.). An identity so a vendor can derive a
+               magnetometer, etc.). An identity so a vendor can derive a
                newer technology without a core change.";
             reference "NTCIP 1202:2019 §5 (vehicleDetectorTable).";
           }
@@ -1052,21 +1095,7 @@ module openits-signal-control {
             + "failed (the fail-action is then applied). Present iff automatic "
             + "diagnosis is enabled.";
             reference "NTCIP 1202:2019 §5 (vehicleDetectorTable diagnostics).";
-            leaf no-activity-min {
-              type uint16;
-              units "minutes";
-              description "Diagnose 'no-activity' if no actuation for this long.";
-            }
-            leaf max-presence-min {
-              type uint16;
-              units "minutes";
-              description "Diagnose 'stuck-on' if presence held continuously for this long.";
-            }
-            leaf erratic-counts-per-minute {
-              type uint16;
-              units "counts/minute";
-              description "Diagnose 'erratic' above this actuation rate.";
-            }
+            uses openits-sc-types:detector-diagnostics;
           }
         }
         container state {
@@ -1120,6 +1149,48 @@ module openits-signal-control {
               type yang:date-and-time;
               description "The time of this reading: wall-clock time this measurement was collected.";
             }
+          }
+        }
+      }
+    }
+
+    container pedestrian-detectors {
+      description
+        "Pedestrian detectors, numbered independently of vehicle
+         detectors (NTCIP 1202 pedestrianDetectorTable). A pedestrian
+         detector calls exactly one phase and carries no vehicle
+         measurement.";
+      reference "NTCIP 1202:2019 §5 (pedestrianDetectorTable).";
+      list pedestrian-detector {
+        key "pedestrian-detector-id";
+        description "One entry per pedestrian detector input.";
+        leaf pedestrian-detector-id {
+          type leafref { path "../config/pedestrian-detector-id"; }
+          description "Pedestrian detector number (key).";
+        }
+        container config {
+          description "Intended pedestrian detector configuration.";
+          uses sc-pedestrian-detector-config;
+        }
+        container state {
+          config false;
+          description "Configuration mirror and observed activity.";
+          uses sc-pedestrian-detector-config;
+          leaf active {
+            type boolean;
+            description "The detector is currently calling.";
+          }
+          leaf last-activation {
+            type yang:date-and-time;
+            description "When the detector last turned on.";
+          }
+          leaf actuation-count {
+            type yang:counter64;
+            description "Activations since the controller started.";
+          }
+          leaf fault {
+            type boolean;
+            description "The controller reports a fault on this detector.";
           }
         }
       }

@@ -219,6 +219,22 @@ func collectASC() (*yangpkg.Device, error) {
 	meas.OccupancyPct = f64Ptr(12.5)
 	meas.SpeedKmh = f64Ptr(61)
 
+	// Pedestrian detectors: numbered independently of the vehicle
+	// detectors above; each calls exactly one existing phase.
+	pd, err := sc.GetOrCreatePedestrianDetectors().NewPedestrianDetector(1)
+	if err != nil {
+		return nil, err
+	}
+	pdCfg := pd.GetOrCreateConfig()
+	pdCfg.PedestrianDetectorId = u8Ptr(1)
+	pdCfg.Name = strPtr("NE corner button")
+	pdCfg.Enabled = boolPtr(true)
+	pdCfg.Type = yangpkg.OpenitsSignalControlTypes_PedestrianDetectorType_ped_detector_pushbutton
+	pdCfg.CallPhase = u8Ptr(2)
+	pdSt := pd.GetOrCreateState()
+	pdSt.Active = boolPtr(false)
+	pdSt.Fault = boolPtr(false)
+
 	// Overlaps: config/state split (NTCIP overlapTable). One FYA
 	// (flashing-yellow-arrow) left-turn overlap: included-phases names the
 	// protected left phase, and the fya presence container adds the

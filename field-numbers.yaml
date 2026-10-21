@@ -2766,6 +2766,38 @@ messages:
         current_interval: 1
     openits.signal_control.v1.Overlaps:
         overlap: 1
+    openits.signal_control.v1.PedestrianDetector:
+        config: 2
+        pedestrian_detector_id: 1
+        state: 3
+    openits.signal_control.v1.PedestrianDetectorConfig:
+        call_phase: 1
+        diagnostic_thresholds: 2
+        enabled: 3
+        name: 4
+        pedestrian_detector_id: 5
+        type: 6
+    openits.signal_control.v1.PedestrianDetectorConfigDiagnosticThresholds:
+        erratic_counts_per_minute: 1
+        max_presence_min: 2
+        no_activity_min: 3
+    openits.signal_control.v1.PedestrianDetectorState:
+        active: 1
+        actuation_count: 3
+        call_phase: 5
+        diagnostic_thresholds: 6
+        enabled: 7
+        fault: 4
+        last_activation: 2
+        name: 8
+        pedestrian_detector_id: 9
+        type: 10
+    openits.signal_control.v1.PedestrianDetectorStateDiagnosticThresholds:
+        erratic_counts_per_minute: 1
+        max_presence_min: 2
+        no_activity_min: 3
+    openits.signal_control.v1.PedestrianDetectors:
+        pedestrian_detector: 1
     openits.signal_control.v1.PedestrianEvent:
         detector_channel: 3
         kind: 99
@@ -2930,6 +2962,7 @@ messages:
         faults: 8
         operation: 7
         overlaps: 9
+        pedestrian_detectors: 17
         phases: 3
         preemption: 6
         priority: 16

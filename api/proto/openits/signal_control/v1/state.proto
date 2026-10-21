@@ -14,6 +14,7 @@ message SignalController {
   Startup startup = 14;
   Phases phases = 3;
   Detectors detectors = 4;
+  PedestrianDetectors pedestrian_detectors = 17;
   Overlaps overlaps = 9;
   Channels channels = 10;
   ConflictMonitor conflict_monitor = 11;
@@ -184,9 +185,9 @@ message DetectorsDetectorConfig {
 message Diagnostics {
   reserved 1, 2;
   reserved "no_activity_minutes", "max_presence_minutes";
-  optional uint32 no_activity_min = 4;
-  optional uint32 max_presence_min = 5;
   optional uint32 erratic_counts_per_minute = 3;
+  optional uint32 max_presence_min = 5;
+  optional uint32 no_activity_min = 4;
 }
 
 message DetectorsDetectorState {
@@ -205,6 +206,50 @@ message Measurement {
   optional string speed_kmh = 3;
   optional uint32 collection_period_s = 8;
   google.protobuf.Timestamp observed_at = 6;
+}
+
+message PedestrianDetectors {
+  repeated PedestrianDetector pedestrian_detector = 1;
+}
+
+message PedestrianDetector {
+  optional uint32 pedestrian_detector_id = 1;
+  PedestrianDetectorConfig config = 2;
+  PedestrianDetectorState state = 3;
+}
+
+message PedestrianDetectorConfig {
+  uint32 call_phase = 1;
+  PedestrianDetectorConfigDiagnosticThresholds diagnostic_thresholds = 2;
+  optional bool enabled = 3;
+  optional string name = 4;
+  optional uint32 pedestrian_detector_id = 5;
+  optional string type = 6;
+}
+
+message PedestrianDetectorConfigDiagnosticThresholds {
+  optional uint32 erratic_counts_per_minute = 1;
+  optional uint32 max_presence_min = 2;
+  optional uint32 no_activity_min = 3;
+}
+
+message PedestrianDetectorState {
+  optional bool active = 1;
+  google.protobuf.Timestamp last_activation = 2;
+  optional uint64 actuation_count = 3;
+  optional bool fault = 4;
+  uint32 call_phase = 5;
+  PedestrianDetectorStateDiagnosticThresholds diagnostic_thresholds = 6;
+  optional bool enabled = 7;
+  optional string name = 8;
+  optional uint32 pedestrian_detector_id = 9;
+  optional string type = 10;
+}
+
+message PedestrianDetectorStateDiagnosticThresholds {
+  optional uint32 erratic_counts_per_minute = 1;
+  optional uint32 max_presence_min = 2;
+  optional uint32 no_activity_min = 3;
 }
 
 message Overlaps {

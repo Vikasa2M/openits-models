@@ -34,7 +34,15 @@ module openits-signal-control-types {
   revision 2026-10-20 {
     description
       "Follow the signal-control no-activity-min rename in the
-       detector no-activity fault description; no semantic change.";
+       detector no-activity fault description; no semantic change.
+
+       Add the pedestrian-detector-number typedef and the
+       pedestrian-detector-type identity (ped-detector-pushbutton,
+       ped-detector-passive) for the new pedestrian detector table, and
+       the shared detector-diagnostics grouping. Remove
+       detector-ped-pushbutton and detector-ped-passive from the vehicle
+       detector-type hierarchy. Breaking: the removed identity values
+       are no longer accepted on vehicle detectors.";
   }
   revision 2026-10-17 {
     description
@@ -1307,8 +1315,50 @@ module openits-signal-control-types {
 
   typedef detector-channel {
     type uint16 { range "1..65535"; }
-    description "Controller-local detector channel number. Shared by the core detector list key and the detector/pedestrian event surfaces.";
+    description "Controller-local vehicle detector number. Shared by the core detector list key and the detector/pedestrian event surfaces.";
     reference "NTCIP 1202:2019 §5 (vehicleDetectorTable).";
+  }
+  typedef pedestrian-detector-number {
+    type uint8 { range "1..255"; }
+    description
+      "Controller-local pedestrian detector number. Numbered
+       independently of vehicle detectors, as in NTCIP 1202.";
+    reference "NTCIP 1202:2019 §5 (pedestrianDetectorTable).";
+  }
+
+  identity pedestrian-detector-type {
+    description
+      "Kind of pedestrian detector. An identity so new kinds (for
+       example accessible push-buttons) are additive.";
+  }
+  identity ped-detector-pushbutton {
+    base pedestrian-detector-type;
+    description "Pedestrian push-button.";
+  }
+  identity ped-detector-passive {
+    base pedestrian-detector-type;
+    description "Passive pedestrian-presence detector.";
+  }
+
+  grouping detector-diagnostics {
+    description
+      "Thresholds a controller uses to diagnose a detector as failed.
+       Shared by the vehicle and pedestrian detector tables.";
+    leaf no-activity-min {
+      type uint16;
+      units "minutes";
+      description "Diagnose 'no-activity' if no actuation for this long.";
+    }
+    leaf max-presence-min {
+      type uint16;
+      units "minutes";
+      description "Diagnose 'stuck-on' if presence held continuously for this long.";
+    }
+    leaf erratic-counts-per-minute {
+      type uint16;
+      units "counts/minute";
+      description "Diagnose 'erratic' above this actuation rate.";
+    }
   }
   typedef preempt-slot {
     type uint8 { range "1..255"; }
@@ -1689,14 +1739,6 @@ module openits-signal-control-types {
   identity detector-magnetometer {
     base detector-type;
     description "Magnetometer vehicle detector.";
-  }
-  identity detector-ped-pushbutton {
-    base detector-type;
-    description "Pedestrian push-button (actuated) detector.";
-  }
-  identity detector-ped-passive {
-    base detector-type;
-    description "Passive pedestrian-presence detector.";
   }
   identity detector-bicycle {
     base detector-type;
