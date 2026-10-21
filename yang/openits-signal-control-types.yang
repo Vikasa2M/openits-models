@@ -37,8 +37,8 @@ module openits-signal-control-types {
        detector no-activity fault description; no semantic change.
 
        Add the pedestrian-detector-number typedef and the
-       pedestrian-detector-type identity (ped-detector-pushbutton,
-       ped-detector-passive) for the new pedestrian detector table, and
+       pedestrian-detector-type identity (pedestrian-pushbutton,
+       pedestrian-passive) for the new pedestrian detector table, and
        the shared detector-diagnostics grouping. Remove
        detector-ped-pushbutton and detector-ped-passive from the vehicle
        detector-type hierarchy. Breaking: the removed identity values
@@ -1315,7 +1315,7 @@ module openits-signal-control-types {
 
   typedef detector-channel {
     type uint16 { range "1..65535"; }
-    description "Controller-local vehicle detector number. Shared by the core detector list key and the detector/pedestrian event surfaces.";
+    description "Controller-local vehicle detector number. Shared by the core detector list key and the detector-transition event.";
     reference "NTCIP 1202:2019 §5 (vehicleDetectorTable).";
   }
   typedef pedestrian-detector-number {
@@ -1331,11 +1331,11 @@ module openits-signal-control-types {
       "Kind of pedestrian detector. An identity so new kinds (for
        example accessible push-buttons) are additive.";
   }
-  identity ped-detector-pushbutton {
+  identity pedestrian-pushbutton {
     base pedestrian-detector-type;
     description "Pedestrian push-button.";
   }
-  identity ped-detector-passive {
+  identity pedestrian-passive {
     base pedestrian-detector-type;
     description "Passive pedestrian-presence detector.";
   }

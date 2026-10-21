@@ -56,7 +56,7 @@ module openits-signal-control {
        descriptions. Name every remaining timing, duration and
        percentage leaf with its unit: coordination/timing-plan
        cycle-length-s, offset-s, split/split-s; detectors detector
-       config delay-s, extend-s, diagnostics no-activity-min and
+       config delay-s, extend-s, diagnostic-thresholds no-activity-min and
        max-presence-min, state measurement collection-period-s and
        occupancy-pct; overlap trailing-green-s, trailing-yellow-s,
        trailing-red-clear-s; phase leading-ped-interval-s,
@@ -73,8 +73,13 @@ module openits-signal-control {
 
        Add the pedestrian-detectors table (NTCIP pedestrianDetectorTable),
        numbered independently of vehicle detectors, each calling exactly
-       one phase. The vehicle detector diagnostics container now uses
-       the shared detector-diagnostics grouping with the same leaves.
+       one phase. The vehicle detector diagnostics container is renamed
+       diagnostic-thresholds and, like the pedestrian one, uses the
+       shared detector-diagnostics grouping; pedestrian detector state
+       carries only the observed activity, with no config mirror.
+       Both detector tables carry the ARC-IT Vehicle/Pedestrian detection
+       flow; the detectors description is now vehicle (and bicycle) detection
+       only.
        Breaking: pedestrian detection is no longer a vehicle detector
        type.";
   }
@@ -722,7 +727,7 @@ module openits-signal-control {
   // they previously used a local phase-timing grouping.
 
   grouping sc-pedestrian-detector-config {
-    description "Pedestrian detector configuration (config and its state mirror).";
+    description "Pedestrian detector configuration.";
     leaf pedestrian-detector-id {
       type openits-sc-types:pedestrian-detector-number;
       description "Pedestrian detector number.";
@@ -749,10 +754,8 @@ module openits-signal-control {
     }
     container diagnostic-thresholds {
       description
-        "Detector health thresholds. Named apart from the vehicle
-         detector diagnostics container so the two generate distinct
-         protobuf messages and the vehicle message keeps its field
-         numbers.";
+        "Thresholds the controller uses to diagnose this pedestrian
+         detector as failed.";
       uses openits-sc-types:detector-diagnostics;
     }
   }
@@ -1002,8 +1005,9 @@ module openits-signal-control {
       openits-types:arc-it-flow
         "Vehicle/Pedestrian -> Roadway Signal Controller : vehicle detection";
       description
-        "Detector configuration + runtime state. Implements the inbound
-         detection flow from vehicles and pedestrians.";
+        "Vehicle (and bicycle) detector configuration + runtime state.
+         Implements the inbound vehicle detection flow. Pedestrian
+         detection is the sibling pedestrian-detectors table.";
 
       list detector {
         key "detector-id";
@@ -1088,7 +1092,7 @@ module openits-signal-control {
             type detector-fail-action;
             description "Recall action applied to the assigned phases when this detector is diagnosed failed.";
           }
-          container diagnostics {
+          container diagnostic-thresholds {
             presence "Automatic detector fault diagnosis is enabled for this channel.";
             description
               "Thresholds the controller uses to DIAGNOSE this detector as "
@@ -1155,6 +1159,8 @@ module openits-signal-control {
     }
 
     container pedestrian-detectors {
+      openits-types:arc-it-flow
+        "Vehicle/Pedestrian -> Roadway Signal Controller : vehicle detection";
       description
         "Pedestrian detectors, numbered independently of vehicle
          detectors (NTCIP 1202 pedestrianDetectorTable). A pedestrian
@@ -1174,8 +1180,7 @@ module openits-signal-control {
         }
         container state {
           config false;
-          description "Configuration mirror and observed activity.";
-          uses sc-pedestrian-detector-config;
+          description "Observed activity of this pedestrian detector.";
           leaf active {
             type boolean;
             description "The detector is currently calling.";

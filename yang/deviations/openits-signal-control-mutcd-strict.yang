@@ -20,7 +20,7 @@ module openits-signal-control-mutcd-strict {
   revision 2026-10-20 {
     description
       "Target the renamed openits-signal-control phase-timing leaves
-       (yellow-change-s, red-clear-s, walk-s, ped-clear-s) and
+       (yellow-change-s, red-clear-s) and
        overlap leaves (trailing-yellow-s, trailing-red-clear-s).";
   }
   revision 2026-07-23 {

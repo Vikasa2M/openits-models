@@ -3,7 +3,8 @@ package tests
 // Pedestrian detectors are numbered independently of vehicle detectors and
 // each calls exactly one phase. The model's leafref already rejects a
 // call-phase with no matching phase in instance data; this check gives a
-// live device the same guarantee on its observed state.
+// live device the same guarantee on its configured call-phase (the state
+// container carries only observed activity).
 
 func TestPedestrianDetectors_CallPhaseResolves(t *T, obs *Observation) {
 	sc := obs.Device.GetSignalController()

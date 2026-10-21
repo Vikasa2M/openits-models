@@ -20,6 +20,8 @@ var pedDetectorSideKinds = map[string]bool{
 // and that a detector-side pedestrian-event names a configured pedestrian
 // detector (pedestrian-detector-id). yanglint does not enforce
 // notification constraints, so the reference rule is enforced here.
+// Pedestrian-event kinds outside pedDetectorSideKinds (vendor-module kinds)
+// are skipped: only the core detector-side kinds must name a detector.
 func TestDetectorEvents_ReferenceConfiguredDetectors(t *T, obs *Observation) {
 	sc := obs.Device.GetSignalController()
 	vehicle := map[uint32]bool{}

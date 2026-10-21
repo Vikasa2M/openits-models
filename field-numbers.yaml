@@ -2625,6 +2625,7 @@ messages:
         delay: 5
         delay_s: 12
         detector_id: 1
+        diagnostic_thresholds: 14
         diagnostics: 10
         enabled: 4
         extend: 6
@@ -2634,6 +2635,10 @@ messages:
         mode: 7
         name: 11
         type: 2
+    openits.signal_control.v1.DetectorsDetectorConfigDiagnosticThresholds:
+        erratic_counts_per_minute: 1
+        max_presence_min: 2
+        no_activity_min: 3
     openits.signal_control.v1.DetectorsDetectorState:
         active: 1
         actuation_count: 3

@@ -167,8 +167,8 @@ message DetectorsDetector {
 }
 
 message DetectorsDetectorConfig {
-  reserved 5, 6;
-  reserved "delay", "extend";
+  reserved 5, 6, 10;
+  reserved "delay", "extend", "diagnostics";
   optional uint32 detector_id = 1;
   string type = 2;
   repeated uint32 assigned_phases = 3;
@@ -179,15 +179,13 @@ message DetectorsDetectorConfig {
   optional DetectorMode mode = 7;
   repeated uint32 extend_phases = 8;
   optional DetectorFailAction fail_action = 9;
-  Diagnostics diagnostics = 10;
+  DetectorsDetectorConfigDiagnosticThresholds diagnostic_thresholds = 14;
 }
 
-message Diagnostics {
-  reserved 1, 2;
-  reserved "no_activity_minutes", "max_presence_minutes";
-  optional uint32 erratic_counts_per_minute = 3;
-  optional uint32 max_presence_min = 5;
-  optional uint32 no_activity_min = 4;
+message DetectorsDetectorConfigDiagnosticThresholds {
+  optional uint32 erratic_counts_per_minute = 1;
+  optional uint32 max_presence_min = 2;
+  optional uint32 no_activity_min = 3;
 }
 
 message DetectorsDetectorState {
@@ -234,22 +232,12 @@ message PedestrianDetectorConfigDiagnosticThresholds {
 }
 
 message PedestrianDetectorState {
+  reserved 5, 6, 7, 8, 9, 10;
+  reserved "call_phase", "diagnostic_thresholds", "enabled", "name", "pedestrian_detector_id", "type";
   optional bool active = 1;
   google.protobuf.Timestamp last_activation = 2;
   optional uint64 actuation_count = 3;
   optional bool fault = 4;
-  uint32 call_phase = 5;
-  PedestrianDetectorStateDiagnosticThresholds diagnostic_thresholds = 6;
-  optional bool enabled = 7;
-  optional string name = 8;
-  optional uint32 pedestrian_detector_id = 9;
-  optional string type = 10;
-}
-
-message PedestrianDetectorStateDiagnosticThresholds {
-  optional uint32 erratic_counts_per_minute = 1;
-  optional uint32 max_presence_min = 2;
-  optional uint32 no_activity_min = 3;
 }
 
 message Overlaps {

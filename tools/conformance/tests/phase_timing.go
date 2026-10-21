@@ -34,7 +34,7 @@ func TestPhaseTiming_YellowChangeMinimum(t *T, obs *Observation) {
 		}
 		y := p.GetConfig().GetTiming().GetYellowChangeS()
 		if y < MinYellowChange {
-			t.Errorf("phase %d yellow-change %.2fs < MUTCD minimum %.2fs", n, y, MinYellowChange)
+			t.Errorf("phase %d yellow-change-s %.2fs < MUTCD minimum %.2fs", n, y, MinYellowChange)
 		}
 	}
 }
@@ -50,7 +50,7 @@ func TestPhaseTiming_RedClearNonNegative(t *T, obs *Observation) {
 		}
 		r := p.GetConfig().GetTiming().GetRedClearS()
 		if r < 0 {
-			t.Errorf("phase %d red-clear %.2fs is negative", n, r)
+			t.Errorf("phase %d red-clear-s %.2fs is negative", n, r)
 		}
 	}
 }
@@ -66,7 +66,7 @@ func TestPhaseTiming_MinGreenMinimum(t *T, obs *Observation) {
 		}
 		g := int(p.GetConfig().GetTiming().GetMinGreenS())
 		if g < MinGreenMinimum {
-			t.Errorf("phase %d min-green %ds < operational floor %ds", n, g, MinGreenMinimum)
+			t.Errorf("phase %d min-green-s %ds < operational floor %ds", n, g, MinGreenMinimum)
 		}
 	}
 }
@@ -82,10 +82,10 @@ func TestPhaseTiming_MaxGreenSane(t *T, obs *Observation) {
 		}
 		g := int(p.GetConfig().GetTiming().GetMaxGreenS())
 		if g > MaxGreenSaneHi {
-			t.Errorf("phase %d max-green %ds exceeds %ds (almost certainly misconfigured)", n, g, MaxGreenSaneHi)
+			t.Errorf("phase %d max-green-s %ds exceeds %ds (almost certainly misconfigured)", n, g, MaxGreenSaneHi)
 		}
 		if g == 0 {
-			t.Errorf("phase %d max-green is zero; phase can never terminate on gap-out", n)
+			t.Errorf("phase %d max-green-s is zero; phase can never terminate on gap-out", n)
 		}
 	}
 }
@@ -101,7 +101,7 @@ func TestPhaseTiming_PedClearSane(t *T, obs *Observation) {
 		}
 		c := int(p.GetConfig().GetTiming().GetPedClearS())
 		if c > PedClearSaneHi {
-			t.Errorf("phase %d ped-clear %ds exceeds %ds", n, c, PedClearSaneHi)
+			t.Errorf("phase %d ped-clear-s %ds exceeds %ds", n, c, PedClearSaneHi)
 		}
 	}
 }

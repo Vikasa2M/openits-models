@@ -229,7 +229,7 @@ func collectASC() (*yangpkg.Device, error) {
 	pdCfg.PedestrianDetectorId = u8Ptr(1)
 	pdCfg.Name = strPtr("NE corner button")
 	pdCfg.Enabled = boolPtr(true)
-	pdCfg.Type = yangpkg.OpenitsSignalControlTypes_PedestrianDetectorType_ped_detector_pushbutton
+	pdCfg.Type = yangpkg.OpenitsSignalControlTypes_PedestrianDetectorType_pedestrian_pushbutton
 	pdCfg.CallPhase = u8Ptr(2)
 	pdSt := pd.GetOrCreateState()
 	pdSt.Active = boolPtr(false)

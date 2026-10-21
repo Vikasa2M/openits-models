@@ -70,15 +70,13 @@
             "pedestrian-detector-id": 1,
             "name": "NE corner button",
             "enabled": true,
-            "type": "openits-signal-control-types:ped-detector-pushbutton",
+            "type": "openits-signal-control-types:pedestrian-pushbutton",
             "call-phase": 2,
             "diagnostic-thresholds": {
               "max-presence-min": 10
             }
           },
           "state": {
-            "pedestrian-detector-id": 1,
-            "call-phase": 2,
             "active": false,
             "fault": false
           }
