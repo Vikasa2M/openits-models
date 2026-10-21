@@ -1,7 +1,7 @@
 package tests
 
 // TestCoordination_SplitsWithinCycle re-implements, in Go, the cut-2c
-// config-true must "sum(split[ring=N]/split-seconds) <= cycle-length"
+// config-true must "sum(split[ring=N]/split-s) <= cycle-length-s"
 // (ygot's Validate() does not evaluate XPath `must` statements, so this
 // is the only place that invariant is actually checked end-to-end). A
 // mutation that over-allocates any ring's splits past the plan's cycle
@@ -19,12 +19,12 @@ func TestCoordination_SplitsWithinCycle(t *T, obs *Observation) {
 	for _, tp := range c.TimingPlan {
 		sum := map[uint8]uint32{}
 		for _, s := range tp.Split {
-			sum[ringOf[s.GetPhaseNumber()]] += uint32(s.GetSplitSeconds())
+			sum[ringOf[s.GetPhaseNumber()]] += uint32(s.GetSplitS())
 		}
 		for ring, total := range sum {
-			if total > uint32(tp.GetCycleLength()) {
+			if total > uint32(tp.GetCycleLengthS()) {
 				t.Errorf("plan %d ring %d splits sum %ds > cycle %ds",
-					tp.GetPlanId(), ring, total, tp.GetCycleLength())
+					tp.GetPlanId(), ring, total, tp.GetCycleLengthS())
 			}
 		}
 	}
@@ -60,7 +60,7 @@ func TestCoordination_BarrierCrossingAlignment(t *T, obs *Observation) {
 			if sum[b] == nil {
 				sum[b] = map[uint8]uint32{}
 			}
-			sum[b][r] += uint32(s.GetSplitSeconds())
+			sum[b][r] += uint32(s.GetSplitS())
 		}
 		for b, byRing := range sum {
 			if len(byRing) < 2 {

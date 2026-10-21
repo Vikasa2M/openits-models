@@ -3,7 +3,7 @@
     "config": { "id": "c1", "name": "c1" },
     "phases": { "phase": [
       { "phase-number": 2, "config": { "phase-number": 2, "ring": 1, "barrier": 1,
-        "leading-ped-interval-seconds": "3.0",
+        "leading-ped-interval-s": "3.0",
         "timing": { "min-green-s": "5.0", "max-green-s": "45.0", "yellow-change-s": "3.5", "red-clear-s": "1.5", "walk-s": 7, "ped-clear-s": 15 } } }
     ] }
   }

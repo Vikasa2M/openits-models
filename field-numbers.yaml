@@ -2597,6 +2597,7 @@ messages:
     openits.signal_control.v1.DetectorReportDetector:
         detector_id: 1
         occupancy: 4
+        occupancy_pct: 5
         phase_served: 2
         volume: 3
     openits.signal_control.v1.DetectorTransition:
@@ -2621,11 +2622,13 @@ messages:
     openits.signal_control.v1.DetectorsDetectorConfig:
         assigned_phases: 3
         delay: 5
+        delay_s: 12
         detector_id: 1
         diagnostics: 10
         enabled: 4
         extend: 6
         extend_phases: 8
+        extend_s: 13
         fail_action: 9
         mode: 7
         name: 11
@@ -2638,7 +2641,9 @@ messages:
         measurement: 5
     openits.signal_control.v1.Diagnostics:
         erratic_counts_per_minute: 3
+        max_presence_min: 5
         max_presence_minutes: 2
+        no_activity_min: 4
         no_activity_minutes: 1
     openits.signal_control.v1.Fault:
         category: 1
@@ -2659,9 +2664,11 @@ messages:
         running: 1
     openits.signal_control.v1.Measurement:
         collected_at: 5
+        collection_period_s: 8
         collection_period_seconds: 4
         observed_at: 6
         occupancy: 2
+        occupancy_pct: 7
         speed_kmh: 3
         volume: 1
     openits.signal_control.v1.Mmu:
@@ -2748,8 +2755,11 @@ messages:
         overlap_id: 1
         overlap_number: 9
         trailing_green: 5
+        trailing_green_s: 11
         trailing_red_clear: 7
+        trailing_red_clear_s: 13
         trailing_yellow: 6
+        trailing_yellow_s: 12
         type: 3
     openits.signal_control.v1.OverlapState:
         active: 2
@@ -2778,11 +2788,14 @@ messages:
         barrier: 4
         crossing_distance_m: 10
         enabled: 2
+        leading_ped_interval_s: 14
         leading_ped_interval_seconds: 11
         max_green_2: 6
+        max_green_2_s: 12
         options: 7
         phase_number: 1
         red_revert: 9
+        red_revert_s: 13
         ring: 3
         timing: 5
         volume_density: 8
@@ -2862,15 +2875,22 @@ messages:
         preemptor_id: 1
         state: 3
     openits.signal_control.v1.PreemptorConfig:
+        delay_s: 14
         delay_seconds: 4
         dwell_phases: 8
         exit_phases: 10
+        flash_dwell_s: 19
         flash_dwell_seconds: 13
+        max_presence_s: 20
         max_presence_seconds: 11
+        min_dwell_s: 18
         min_dwell_seconds: 9
         min_green_before_entry: 5
+        min_green_before_entry_s: 15
         min_ped_clear_before_entry: 12
+        min_ped_clear_before_entry_s: 17
         min_walk_before_entry: 6
+        min_walk_before_entry_s: 16
         preemptor_id: 1
         priority_order: 3
         track_clearance: 7
@@ -2965,18 +2985,24 @@ messages:
     openits.signal_control.v1.Split:
         phase_number: 1
         split_mode: 3
+        split_s: 4
         split_seconds: 2
     openits.signal_control.v1.Startup:
+        all_red_duration_s: 5
         all_red_duration_seconds: 3
+        flash_duration_s: 4
         flash_duration_seconds: 1
         flash_phases: 2
     openits.signal_control.v1.Strategy:
         config: 2
         strategy_id: 1
     openits.signal_control.v1.StrategyConfig:
+        max_early_green_s: 7
         max_early_green_seconds: 3
+        max_green_extension_s: 8
         max_green_extension_seconds: 4
         priority_class: 2
+        reservice_interval_s: 9
         reservice_interval_seconds: 5
         served_phases: 6
         strategy_id: 1
@@ -3004,14 +3030,17 @@ messages:
     openits.signal_control.v1.TimingPlan:
         coordinated_phases: 5
         cycle_length: 2
+        cycle_length_s: 10
         force_off_mode: 8
         offset: 3
         offset_reference: 6
+        offset_s: 11
         plan_id: 1
         sequence_id: 9
         split: 4
         transition_mode: 7
     openits.signal_control.v1.TrackClearance:
+        green_s: 3
         green_seconds: 2
         phases: 1
     openits.signal_control.v1.TsamModeChanged:
@@ -3031,6 +3060,7 @@ messages:
     openits.signal_control.v1.TsamRecommendationApplied:
         adjustment_type: 3
         kind: 99
+        magnitude_s: 12
         magnitude_seconds: 4
         observed_by: 9
         occurred_at: 8
@@ -3043,6 +3073,7 @@ messages:
         source: 100
         source_device_id: 1
     openits.signal_control.v1.TspEvent:
+        adjustment_s: 12
         adjustment_seconds: 5
         denial_reason: 11
         kind: 99
@@ -3067,10 +3098,15 @@ messages:
         source_device_id: 6
     openits.signal_control.v1.VolumeDensity:
         added_initial: 1
+        added_initial_s: 6
         max_initial: 2
+        max_initial_s: 7
         min_gap: 5
+        min_gap_s: 10
         time_before_reduction: 3
+        time_before_reduction_s: 8
         time_to_reduce: 4
+        time_to_reduce_s: 9
     openits.traffic_sensor.v1.AssociatedDevice:
         device_id: 1
         note: 3
@@ -3315,6 +3351,7 @@ messages:
         register_value: 2
     openits.types.v1.ScOnBatteryPolicy:
         mode: 1
+        transition_at_runtime_min: 4
         transition_at_runtime_minutes: 3
         transition_at_soc_pct: 2
     openits.types.v1.WireSource:

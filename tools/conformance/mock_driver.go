@@ -104,7 +104,7 @@ func collectASC() (*yangpkg.Device, error) {
 	if err != nil {
 		return nil, err
 	}
-	tp.CycleLength = u16Ptr(120)
+	tp.CycleLengthS = u16Ptr(120)
 	tp.CoordinatedPhases = []uint8{2, 6}
 	tp.OffsetReference = yangpkg.OpenitsSignalControl_SignalController_Coordination_TimingPlan_OffsetReference_begin_of_green
 	tp.TransitionMode = yangpkg.OpenitsSignalControl_SignalController_Coordination_TimingPlan_TransitionMode_shortway
@@ -114,7 +114,7 @@ func collectASC() (*yangpkg.Device, error) {
 		if err != nil {
 			return nil, err
 		}
-		s.SplitSeconds = u16Ptr(30) // 4 phases/ring * 30s = 120s = cycle-length
+		s.SplitS = u16Ptr(30) // 4 phases/ring * 30s = 120s = cycle-length
 		if n == 2 || n == 6 {
 			s.SplitMode = yangpkg.OpenitsSignalControl_SignalController_Coordination_TimingPlan_Split_SplitMode_coordinated_fixed
 		} else {
@@ -205,8 +205,8 @@ func collectASC() (*yangpkg.Device, error) {
 	detCfg.Type = yangpkg.OpenitsSignalControlTypes_DetectorType_detector_inductive_loop
 	detCfg.AssignedPhases = []uint8{2}
 	detCfg.Enabled = boolPtr(true)
-	detCfg.Delay = f64Ptr(3.0)
-	detCfg.Extend = f64Ptr(1.5)
+	detCfg.DelayS = f64Ptr(3.0)
+	detCfg.ExtendS = f64Ptr(1.5)
 	detCfg.Mode = yangpkg.OpenitsSignalControl_DetectorMode_presence
 	detCfg.FailAction = yangpkg.OpenitsSignalControl_DetectorFailAction_max_recall
 	detSt := det.GetOrCreateState()
@@ -216,7 +216,7 @@ func collectASC() (*yangpkg.Device, error) {
 	detSt.Fault = boolPtr(false)
 	meas := detSt.GetOrCreateMeasurement()
 	meas.Volume = u32Ptr(842)
-	meas.Occupancy = f64Ptr(12.5)
+	meas.OccupancyPct = f64Ptr(12.5)
 	meas.SpeedKmh = f64Ptr(61)
 
 	// Overlaps: config/state split (NTCIP overlapTable). One FYA
@@ -235,9 +235,9 @@ func collectASC() (*yangpkg.Device, error) {
 	olCfg.Name = strPtr("NB left FYA")
 	olCfg.Type = yangpkg.OpenitsSignalControlTypes_OverlapType_overlap_fya
 	olCfg.IncludedPhases = []uint8{5}
-	olCfg.TrailingGreen = f64Ptr(0.0)
-	olCfg.TrailingYellow = f64Ptr(3.0)
-	olCfg.TrailingRedClear = f64Ptr(1.0)
+	olCfg.TrailingGreenS = f64Ptr(0.0)
+	olCfg.TrailingYellowS = f64Ptr(3.0)
+	olCfg.TrailingRedClearS = f64Ptr(1.0)
 	fya := olCfg.GetOrCreateFya()
 	fya.ProtectedLeftPhase = u8Ptr(5)
 	fya.OpposingThroughPhase = u8Ptr(2)
@@ -288,15 +288,15 @@ func collectASC() (*yangpkg.Device, error) {
 	prc.PreemptorId = u8Ptr(1)
 	prc.Type = yangpkg.OpenitsSignalControlTypes_PreemptionType_preempt_railroad
 	prc.PriorityOrder = u8Ptr(1)
-	prc.DelaySeconds = u16Ptr(0)
-	prc.MinGreenBeforeEntry = u16Ptr(5)
+	prc.DelayS = u16Ptr(0)
+	prc.MinGreenBeforeEntryS = u16Ptr(5)
 	tc := prc.GetOrCreateTrackClearance()
 	tc.Phases = []uint8{2, 6}
-	tc.GreenSeconds = u16Ptr(8)
+	tc.GreenS = u16Ptr(8)
 	prc.DwellPhases = []uint8{2, 6}
-	prc.MinDwellSeconds = u16Ptr(10)
+	prc.MinDwellS = u16Ptr(10)
 	prc.ExitPhases = []uint8{2, 6}
-	prc.MaxPresenceSeconds = u16Ptr(180)
+	prc.MaxPresenceS = u16Ptr(180)
 	prSt := pr.GetOrCreateState()
 	prSt.Active = boolPtr(false)
 	prSt.CurrentStage = yangpkg.OpenitsSignalControl_PreemptStage_none

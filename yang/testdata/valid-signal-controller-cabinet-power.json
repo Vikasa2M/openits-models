@@ -6,14 +6,14 @@
         "on-battery-policy": {
           "mode": "flash",
           "transition-at-soc-pct": 40,
-          "transition-at-runtime-minutes": 60
+          "transition-at-runtime-min": 60
         }
       },
       "state": {
         "on-battery-policy": {
           "mode": "flash",
           "transition-at-soc-pct": 40,
-          "transition-at-runtime-minutes": 60
+          "transition-at-runtime-min": 60
         },
         "power-source": "on-line",
         "transfer-count": 4,

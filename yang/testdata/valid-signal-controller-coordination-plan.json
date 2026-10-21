@@ -8,12 +8,12 @@
         "timing": { "min-green-s": "5.0", "max-green-s": "40.0", "yellow-change-s": "3.5", "red-clear-s": "1.5" } } }
     ] },
     "coordination": { "timing-plan": [
-      { "plan-id": 1, "cycle-length": 60, "offset": 0,
+      { "plan-id": 1, "cycle-length-s": 60, "offset-s": 0,
         "coordinated-phases": [1], "offset-reference": "begin-of-green",
         "transition-mode": "shortway", "force-off-mode": "floating",
         "split": [
-          { "phase-number": 1, "split-seconds": 30, "split-mode": "coordinated-fixed" },
-          { "phase-number": 2, "split-seconds": 30, "split-mode": "other" }
+          { "phase-number": 1, "split-s": 30, "split-mode": "coordinated-fixed" },
+          { "phase-number": 2, "split-s": 30, "split-mode": "other" }
         ] }
     ] }
   }

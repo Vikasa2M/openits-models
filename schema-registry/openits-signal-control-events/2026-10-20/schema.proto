@@ -1,0 +1,284 @@
+syntax = "proto3";
+
+package openits.signal_control.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/signal_control/v1;signalcontrolv1";
+
+import "google/protobuf/timestamp.proto";
+import "openits/signal_control/v1/types.proto";
+import "openits/types/v1/types.proto";
+
+message CabinetOutputChanged {
+  string kind = 99;
+  optional CabinetOutput previous_cabinet_output = 1;
+  CabinetOutput cabinet_output = 2;
+  optional string flash_cause = 3;
+  optional string observed_by = 4;
+  google.protobuf.Timestamp occurred_at = 5;
+  optional string owner = 6;
+  uint64 sequence = 7;
+  string sequence_epoch = 8;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 9;
+}
+
+message ControllerFaultEvent {
+  string kind = 99;
+  string fault_id = 2;
+  FaultSeverity severity = 3;
+  optional string description = 4;
+  bool raised = 5;
+  optional string flash_cause = 10;
+  optional string observed_by = 7;
+  google.protobuf.Timestamp occurred_at = 6;
+  optional string owner = 8;
+  uint64 sequence = 9;
+  string sequence_epoch = 11;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message CoordinationChange {
+  reserved 3, 4, 5;
+  reserved "new_value", "split_number", "previous_value";
+  string kind = 99;
+  optional uint32 phase_number = 2;
+  optional uint32 pattern = 10;
+  optional uint32 previous_pattern = 11;
+  optional uint32 cycle_length_s = 12;
+  optional uint32 previous_cycle_length_s = 13;
+  optional uint32 offset_s = 14;
+  optional uint32 previous_offset_s = 15;
+  optional uint32 split_s = 16;
+  optional uint32 previous_split_s = 17;
+  optional string cycle_state = 18;
+  optional string previous_cycle_state = 19;
+  optional string observed_by = 7;
+  google.protobuf.Timestamp occurred_at = 6;
+  optional string owner = 8;
+  uint64 sequence = 9;
+  string sequence_epoch = 20;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message DetectorReport {
+  string kind = 99;
+  google.protobuf.Timestamp interval_start = 2;
+  optional uint32 interval_duration_s = 3;
+  repeated DetectorReportDetector detector = 4;
+  optional string observed_by = 6;
+  google.protobuf.Timestamp occurred_at = 5;
+  optional string owner = 7;
+  uint64 sequence = 8;
+  string sequence_epoch = 9;
+  string source_device_id = 1;
+}
+
+message DetectorReportDetector {
+  reserved 4;
+  reserved "occupancy";
+  optional uint32 detector_id = 1;
+  optional uint32 phase_served = 2;
+  optional uint32 volume = 3;
+  optional string occupancy_pct = 5;
+}
+
+message DetectorTransition {
+  reserved 4, 5;
+  reserved "lane", "approach";
+  string kind = 99;
+  uint32 channel = 2;
+  optional uint32 phase_served = 6;
+  optional string observed_by = 8;
+  google.protobuf.Timestamp occurred_at = 7;
+  optional string owner = 9;
+  uint64 sequence = 10;
+  string sequence_epoch = 3;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message OperationalStatusReport {
+  reserved 4, 5, 10;
+  reserved "last_mode_change", "uptime_seconds", "flash_active";
+  string kind = 99;
+  optional CabinetOutput cabinet_output = 12;
+  google.protobuf.Timestamp cabinet_output_since = 22;
+  optional string flash_cause = 11;
+  optional string mode = 2;
+  optional bool preempt_active = 13;
+  optional bool priority_active = 14;
+  optional MonitorStatus monitor_status = 15;
+  google.protobuf.Timestamp mode_since = 16;
+  optional uint32 active_fault_count = 17;
+  optional string control_source = 18;
+  google.protobuf.Timestamp observed_at = 19;
+  optional string observed_by = 7;
+  google.protobuf.Timestamp occurred_at = 6;
+  optional OperStatus oper_status = 20;
+  optional string owner = 8;
+  uint64 sequence = 9;
+  string sequence_epoch = 3;
+  string source_device_id = 1;
+  optional uint64 uptime_s = 21;
+}
+
+message OverlapChange {
+  string kind = 99;
+  uint32 overlap_number = 2;
+  optional string observed_by = 5;
+  google.protobuf.Timestamp occurred_at = 4;
+  optional string owner = 6;
+  uint64 sequence = 7;
+  string sequence_epoch = 3;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message PedestrianEvent {
+  string kind = 99;
+  optional uint32 phase_number = 2;
+  optional uint32 detector_channel = 3;
+  optional string observed_by = 6;
+  google.protobuf.Timestamp occurred_at = 5;
+  optional string owner = 7;
+  uint64 sequence = 8;
+  string sequence_epoch = 4;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message PhaseStateChange {
+  string kind = 99;
+  uint32 phase_number = 2;
+  optional bool hold_active = 5;
+  optional bool call_registered = 6;
+  optional string observed_by = 8;
+  google.protobuf.Timestamp occurred_at = 7;
+  optional string owner = 9;
+  uint64 sequence = 10;
+  string sequence_epoch = 3;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message PlanApplied {
+  reserved 6;
+  reserved "source";
+  string kind = 99;
+  optional uint32 plan_id = 2;
+  optional uint32 cycle_length_s = 3;
+  optional uint32 offset_s = 4;
+  optional uint32 split_set = 5;
+  optional string trigger = 11;
+  optional string observed_by = 8;
+  google.protobuf.Timestamp occurred_at = 7;
+  optional string owner = 9;
+  uint64 sequence = 10;
+  string sequence_epoch = 12;
+  string source_device_id = 1;
+}
+
+message PreemptionActivated {
+  string kind = 99;
+  uint32 preempt_number = 8;
+  string type = 2;
+  optional string source_id = 3;
+  optional string observed_by = 5;
+  google.protobuf.Timestamp occurred_at = 4;
+  optional string owner = 6;
+  uint64 sequence = 7;
+  string sequence_epoch = 9;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message PreemptionCleared {
+  string kind = 99;
+  uint32 preempt_number = 8;
+  string type = 2;
+  optional string source_id = 3;
+  optional string observed_by = 5;
+  google.protobuf.Timestamp occurred_at = 4;
+  optional string owner = 6;
+  uint64 sequence = 7;
+  string sequence_epoch = 9;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message PreemptionEvent {
+  string kind = 99;
+  optional uint32 preempt_number = 2;
+  optional string source_id = 4;
+  optional string observed_by = 6;
+  google.protobuf.Timestamp occurred_at = 5;
+  optional string owner = 7;
+  uint64 sequence = 8;
+  string sequence_epoch = 3;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message TsamModeChanged {
+  reserved 2, 3, 100;
+  reserved "prior", "current", "source";
+  string kind = 99;
+  optional TsamEngagementState previous_mode = 10;
+  TsamEngagementState mode = 11;
+  optional string reason = 4;
+  optional string observed_by = 7;
+  google.protobuf.Timestamp occurred_at = 6;
+  optional string owner = 8;
+  uint64 sequence = 9;
+  string sequence_epoch = 5;
+  string source_device_id = 1;
+}
+
+message TsamRecommendationApplied {
+  reserved 4, 100;
+  reserved "magnitude_seconds", "source";
+  string kind = 99;
+  optional string recommendation_id = 2;
+  AdjustmentType adjustment_type = 3;
+  optional string magnitude_s = 12;
+  optional uint32 phase_number = 5;
+  optional string rationale = 6;
+  optional string observed_by = 9;
+  google.protobuf.Timestamp occurred_at = 8;
+  optional string owner = 10;
+  uint64 sequence = 11;
+  string sequence_epoch = 7;
+  string source_device_id = 1;
+}
+
+message TspEvent {
+  reserved 5;
+  reserved "adjustment_seconds";
+  string kind = 99;
+  uint32 tsp_number = 10;
+  optional string vehicle_id = 3;
+  optional uint32 priority_class = 4;
+  optional string adjustment_s = 12;
+  optional DenialReason denial_reason = 11;
+  optional string observed_by = 7;
+  google.protobuf.Timestamp occurred_at = 6;
+  optional string owner = 8;
+  uint64 sequence = 9;
+  string sequence_epoch = 2;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 1;
+}
+
+message UnmappedEvent {
+  string kind = 99;
+  optional string observed_by = 3;
+  google.protobuf.Timestamp occurred_at = 1;
+  optional string owner = 4;
+  uint64 sequence = 5;
+  string sequence_epoch = 2;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 6;
+}
+

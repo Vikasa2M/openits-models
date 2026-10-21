@@ -81,9 +81,11 @@ message SignalControllerStateLinearReference {
 }
 
 message Startup {
-  optional uint32 flash_duration_seconds = 1;
+  reserved 1, 3;
+  reserved "flash_duration_seconds", "all_red_duration_seconds";
+  optional uint32 flash_duration_s = 4;
   repeated uint32 flash_phases = 2;
-  optional uint32 all_red_duration_seconds = 3;
+  optional uint32 all_red_duration_s = 5;
 }
 
 message Phases {
@@ -97,15 +99,17 @@ message Phase {
 }
 
 message PhaseConfig {
+  reserved 6, 9, 11;
+  reserved "max_green_2", "red_revert", "leading_ped_interval_seconds";
   optional uint32 phase_number = 1;
   optional bool enabled = 2;
   uint32 ring = 3;
   uint32 barrier = 4;
   Timing timing = 5;
-  optional string max_green_2 = 6;
-  optional string red_revert = 9;
+  optional string max_green_2_s = 12;
+  optional string red_revert_s = 13;
   optional string crossing_distance_m = 10;
-  optional string leading_ped_interval_seconds = 11;
+  optional string leading_ped_interval_s = 14;
   Options options = 7;
   VolumeDensity volume_density = 8;
 }
@@ -134,11 +138,13 @@ message Options {
 }
 
 message VolumeDensity {
-  optional string added_initial = 1;
-  optional uint32 max_initial = 2;
-  optional uint32 time_before_reduction = 3;
-  optional uint32 time_to_reduce = 4;
-  optional string min_gap = 5;
+  reserved 1, 2, 3, 4, 5;
+  reserved "added_initial", "max_initial", "time_before_reduction", "time_to_reduce", "min_gap";
+  optional string added_initial_s = 6;
+  optional uint32 max_initial_s = 7;
+  optional uint32 time_before_reduction_s = 8;
+  optional uint32 time_to_reduce_s = 9;
+  optional string min_gap_s = 10;
 }
 
 message PhaseState {
@@ -160,13 +166,15 @@ message DetectorsDetector {
 }
 
 message DetectorsDetectorConfig {
+  reserved 5, 6;
+  reserved "delay", "extend";
   optional uint32 detector_id = 1;
   string type = 2;
   repeated uint32 assigned_phases = 3;
   optional bool enabled = 4;
   optional string name = 11;
-  optional string delay = 5;
-  optional string extend = 6;
+  optional string delay_s = 12;
+  optional string extend_s = 13;
   optional DetectorMode mode = 7;
   repeated uint32 extend_phases = 8;
   optional DetectorFailAction fail_action = 9;
@@ -174,8 +182,10 @@ message DetectorsDetectorConfig {
 }
 
 message Diagnostics {
-  optional uint32 no_activity_minutes = 1;
-  optional uint32 max_presence_minutes = 2;
+  reserved 1, 2;
+  reserved "no_activity_minutes", "max_presence_minutes";
+  optional uint32 no_activity_min = 4;
+  optional uint32 max_presence_min = 5;
   optional uint32 erratic_counts_per_minute = 3;
 }
 
@@ -188,12 +198,12 @@ message DetectorsDetectorState {
 }
 
 message Measurement {
-  reserved 5;
-  reserved "collected_at";
+  reserved 2, 4, 5;
+  reserved "occupancy", "collection_period_seconds", "collected_at";
   optional uint32 volume = 1;
-  optional string occupancy = 2;
+  optional string occupancy_pct = 7;
   optional string speed_kmh = 3;
-  optional uint32 collection_period_seconds = 4;
+  optional uint32 collection_period_s = 8;
   google.protobuf.Timestamp observed_at = 6;
 }
 
@@ -210,16 +220,16 @@ message Overlap {
 }
 
 message OverlapConfig {
-  reserved 1;
-  reserved "overlap_id";
+  reserved 1, 5, 6, 7;
+  reserved "overlap_id", "trailing_green", "trailing_yellow", "trailing_red_clear";
   optional uint32 overlap_number = 9;
   optional string name = 2;
   string type = 3;
   repeated uint32 included_phases = 4;
   repeated uint32 modifier_phases = 10;
-  optional string trailing_green = 5;
-  optional string trailing_yellow = 6;
-  optional string trailing_red_clear = 7;
+  optional string trailing_green_s = 11;
+  optional string trailing_yellow_s = 12;
+  optional string trailing_red_clear_s = 13;
   Fya fya = 8;
 }
 
@@ -262,9 +272,11 @@ message Coordination {
 }
 
 message TimingPlan {
+  reserved 2, 3;
+  reserved "cycle_length", "offset";
   optional uint32 plan_id = 1;
-  uint32 cycle_length = 2;
-  optional uint32 offset = 3;
+  uint32 cycle_length_s = 10;
+  optional uint32 offset_s = 11;
   repeated uint32 coordinated_phases = 5;
   optional OffsetReference offset_reference = 6;
   optional TransitionMode transition_mode = 7;
@@ -274,8 +286,10 @@ message TimingPlan {
 }
 
 message Split {
+  reserved 2;
+  reserved "split_seconds";
   optional uint32 phase_number = 1;
-  optional uint32 split_seconds = 2;
+  optional uint32 split_s = 4;
   optional SplitMode split_mode = 3;
 }
 
@@ -347,24 +361,28 @@ message Preemptor {
 }
 
 message PreemptorConfig {
+  reserved 4, 5, 6, 9, 11, 12, 13;
+  reserved "delay_seconds", "min_green_before_entry", "min_walk_before_entry", "min_dwell_seconds", "max_presence_seconds", "min_ped_clear_before_entry", "flash_dwell_seconds";
   optional uint32 preemptor_id = 1;
   string type = 2;
   optional uint32 priority_order = 3;
-  optional uint32 delay_seconds = 4;
-  optional uint32 min_green_before_entry = 5;
-  optional uint32 min_walk_before_entry = 6;
-  optional uint32 min_ped_clear_before_entry = 12;
+  optional uint32 delay_s = 14;
+  optional uint32 min_green_before_entry_s = 15;
+  optional uint32 min_walk_before_entry_s = 16;
+  optional uint32 min_ped_clear_before_entry_s = 17;
   TrackClearance track_clearance = 7;
   repeated uint32 dwell_phases = 8;
-  optional uint32 min_dwell_seconds = 9;
-  optional uint32 flash_dwell_seconds = 13;
+  optional uint32 min_dwell_s = 18;
+  optional uint32 flash_dwell_s = 19;
   repeated uint32 exit_phases = 10;
-  optional uint32 max_presence_seconds = 11;
+  optional uint32 max_presence_s = 20;
 }
 
 message TrackClearance {
+  reserved 2;
+  reserved "green_seconds";
   repeated uint32 phases = 1;
-  uint32 green_seconds = 2;
+  uint32 green_s = 3;
 }
 
 message PreemptorState {
@@ -385,11 +403,13 @@ message Strategy {
 }
 
 message StrategyConfig {
+  reserved 3, 4, 5;
+  reserved "max_early_green_seconds", "max_green_extension_seconds", "reservice_interval_seconds";
   optional uint32 strategy_id = 1;
   optional string priority_class = 2;
-  optional uint32 max_early_green_seconds = 3;
-  optional uint32 max_green_extension_seconds = 4;
-  optional uint32 reservice_interval_seconds = 5;
+  optional uint32 max_early_green_s = 7;
+  optional uint32 max_green_extension_s = 8;
+  optional uint32 reservice_interval_s = 9;
   repeated uint32 served_phases = 6;
 }
 

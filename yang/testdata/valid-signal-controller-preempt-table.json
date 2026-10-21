@@ -8,9 +8,9 @@
     "preemption": { "preemptor": [
       { "preemptor-id": 1, "config": {
           "preemptor-id": 1, "type": "openits-signal-control-types:preempt-railroad", "priority-order": 1,
-          "delay-seconds": 0, "min-green-before-entry": 5,
-          "track-clearance": { "phases": [2], "green-seconds": 8 },
-          "exit-phases": [2], "max-presence-seconds": 600 },
+          "delay-s": 0, "min-green-before-entry-s": 5,
+          "track-clearance": { "phases": [2], "green-s": 8 },
+          "exit-phases": [2], "max-presence-s": 600 },
         "state": { "active": false, "current-stage": "none" } }
     ] }
   }

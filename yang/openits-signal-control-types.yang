@@ -31,6 +31,11 @@ module openits-signal-control-types {
 
   openits-types:openits-version "0.17.0";
 
+  revision 2026-10-20 {
+    description
+      "Follow the signal-control no-activity-min rename in the
+       detector no-activity fault description; no semantic change.";
+  }
   revision 2026-10-17 {
     description
       "Add the monitor-status typedef and monitor-kind identities for
@@ -1195,7 +1200,7 @@ module openits-signal-control-types {
     description
       "The detector reported no actuation for longer than its configured
        no-activity interval. The controller diagnoses this itself from
-       detectors/detector/config/no-activity-minutes; it is the most
+       detectors/detector/config/no-activity-min; it is the most
        common detector work order and previously had no identity, so it
        could only be raised as the coarse sc-fault-detector.";
     reference "NTCIP 1202:2019 §5 (vehicleDetectorReportedAlarms noActivity).";

@@ -19,12 +19,12 @@
         ] }
     ] },
     "coordination": { "timing-plan": [
-      { "plan-id": 1, "cycle-length": 60, "sequence-id": 1,
+      { "plan-id": 1, "cycle-length-s": 60, "sequence-id": 1,
         "split": [
-          { "phase-number": 1, "split-seconds": 30 },
-          { "phase-number": 2, "split-seconds": 30 },
-          { "phase-number": 5, "split-seconds": 30 },
-          { "phase-number": 6, "split-seconds": 30 }
+          { "phase-number": 1, "split-s": 30 },
+          { "phase-number": 2, "split-s": 30 },
+          { "phase-number": 5, "split-s": 30 },
+          { "phase-number": 6, "split-s": 30 }
         ] }
     ] }
   }

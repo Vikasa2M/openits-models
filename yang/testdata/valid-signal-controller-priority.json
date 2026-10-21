@@ -10,9 +10,9 @@
         { "strategy-id": 1, "config": {
           "strategy-id": 1,
           "priority-class": "openits-signal-control-types:priority-transit",
-          "max-early-green-seconds": 10,
-          "max-green-extension-seconds": 15,
-          "reservice-interval-seconds": 120,
+          "max-early-green-s": 10,
+          "max-green-extension-s": 15,
+          "reservice-interval-s": 120,
           "served-phases": [2] } }
       ],
       "state": {

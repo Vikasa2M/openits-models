@@ -1049,7 +1049,8 @@
             "2026-09-07",
             "2026-09-08",
             "2026-10-13",
-            "2026-10-17"
+            "2026-10-17",
+            "2026-10-20"
           ],
           "refStd": [
             "ATSPM Indiana enumeration",
@@ -1079,7 +1080,8 @@
             "2026-10-12",
             "2026-10-14",
             "2026-10-16",
-            "2026-10-17"
+            "2026-10-17",
+            "2026-10-20"
           ],
           "refStd": [
             "ATC Cabinet Standard",
@@ -2717,6 +2719,13 @@
         "openits-signal-control-events/2026-10-17/schema.json",
         "openits-signal-control-events/2026-10-17/schema.proto",
         "openits-signal-control-events/2026-10-17/schema.yang"
+      ],
+      "2026-10-20": [
+        "openits-signal-control-events/2026-10-20/MANIFEST.json",
+        "openits-signal-control-events/2026-10-20/README.md",
+        "openits-signal-control-events/2026-10-20/schema.json",
+        "openits-signal-control-events/2026-10-20/schema.proto",
+        "openits-signal-control-events/2026-10-20/schema.yang"
       ]
     },
     "openits-signal-control-fault-events": {
@@ -2889,6 +2898,11 @@
         "openits-signal-control-types/2026-10-17/MANIFEST.json",
         "openits-signal-control-types/2026-10-17/README.md",
         "openits-signal-control-types/2026-10-17/schema.yang"
+      ],
+      "2026-10-20": [
+        "openits-signal-control-types/2026-10-20/MANIFEST.json",
+        "openits-signal-control-types/2026-10-20/README.md",
+        "openits-signal-control-types/2026-10-20/schema.yang"
       ]
     },
     "openits-traffic-sensor": {

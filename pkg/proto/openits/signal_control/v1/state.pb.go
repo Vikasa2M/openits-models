@@ -660,12 +660,12 @@ func (x *SignalControllerStateLinearReference) GetLrsMethod() string {
 }
 
 type Startup struct {
-	state                 protoimpl.MessageState `protogen:"open.v1"`
-	FlashDurationSeconds  *uint32                `protobuf:"varint,1,opt,name=flash_duration_seconds,json=flashDurationSeconds,proto3,oneof" json:"flash_duration_seconds,omitempty"`
-	FlashPhases           []uint32               `protobuf:"varint,2,rep,packed,name=flash_phases,json=flashPhases,proto3" json:"flash_phases,omitempty"`
-	AllRedDurationSeconds *uint32                `protobuf:"varint,3,opt,name=all_red_duration_seconds,json=allRedDurationSeconds,proto3,oneof" json:"all_red_duration_seconds,omitempty"`
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	FlashDurationS  *uint32                `protobuf:"varint,4,opt,name=flash_duration_s,json=flashDurationS,proto3,oneof" json:"flash_duration_s,omitempty"`
+	FlashPhases     []uint32               `protobuf:"varint,2,rep,packed,name=flash_phases,json=flashPhases,proto3" json:"flash_phases,omitempty"`
+	AllRedDurationS *uint32                `protobuf:"varint,5,opt,name=all_red_duration_s,json=allRedDurationS,proto3,oneof" json:"all_red_duration_s,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *Startup) Reset() {
@@ -698,9 +698,9 @@ func (*Startup) Descriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *Startup) GetFlashDurationSeconds() uint32 {
-	if x != nil && x.FlashDurationSeconds != nil {
-		return *x.FlashDurationSeconds
+func (x *Startup) GetFlashDurationS() uint32 {
+	if x != nil && x.FlashDurationS != nil {
+		return *x.FlashDurationS
 	}
 	return 0
 }
@@ -712,9 +712,9 @@ func (x *Startup) GetFlashPhases() []uint32 {
 	return nil
 }
 
-func (x *Startup) GetAllRedDurationSeconds() uint32 {
-	if x != nil && x.AllRedDurationSeconds != nil {
-		return *x.AllRedDurationSeconds
+func (x *Startup) GetAllRedDurationS() uint32 {
+	if x != nil && x.AllRedDurationS != nil {
+		return *x.AllRedDurationS
 	}
 	return 0
 }
@@ -824,20 +824,20 @@ func (x *Phase) GetState() *PhaseState {
 }
 
 type PhaseConfig struct {
-	state                     protoimpl.MessageState `protogen:"open.v1"`
-	PhaseNumber               *uint32                `protobuf:"varint,1,opt,name=phase_number,json=phaseNumber,proto3,oneof" json:"phase_number,omitempty"`
-	Enabled                   *bool                  `protobuf:"varint,2,opt,name=enabled,proto3,oneof" json:"enabled,omitempty"`
-	Ring                      uint32                 `protobuf:"varint,3,opt,name=ring,proto3" json:"ring,omitempty"`
-	Barrier                   uint32                 `protobuf:"varint,4,opt,name=barrier,proto3" json:"barrier,omitempty"`
-	Timing                    *Timing                `protobuf:"bytes,5,opt,name=timing,proto3" json:"timing,omitempty"`
-	MaxGreen_2                *string                `protobuf:"bytes,6,opt,name=max_green_2,json=maxGreen2,proto3,oneof" json:"max_green_2,omitempty"`
-	RedRevert                 *string                `protobuf:"bytes,9,opt,name=red_revert,json=redRevert,proto3,oneof" json:"red_revert,omitempty"`
-	CrossingDistanceM         *string                `protobuf:"bytes,10,opt,name=crossing_distance_m,json=crossingDistanceM,proto3,oneof" json:"crossing_distance_m,omitempty"`
-	LeadingPedIntervalSeconds *string                `protobuf:"bytes,11,opt,name=leading_ped_interval_seconds,json=leadingPedIntervalSeconds,proto3,oneof" json:"leading_ped_interval_seconds,omitempty"`
-	Options                   *Options               `protobuf:"bytes,7,opt,name=options,proto3" json:"options,omitempty"`
-	VolumeDensity             *VolumeDensity         `protobuf:"bytes,8,opt,name=volume_density,json=volumeDensity,proto3" json:"volume_density,omitempty"`
-	unknownFields             protoimpl.UnknownFields
-	sizeCache                 protoimpl.SizeCache
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	PhaseNumber         *uint32                `protobuf:"varint,1,opt,name=phase_number,json=phaseNumber,proto3,oneof" json:"phase_number,omitempty"`
+	Enabled             *bool                  `protobuf:"varint,2,opt,name=enabled,proto3,oneof" json:"enabled,omitempty"`
+	Ring                uint32                 `protobuf:"varint,3,opt,name=ring,proto3" json:"ring,omitempty"`
+	Barrier             uint32                 `protobuf:"varint,4,opt,name=barrier,proto3" json:"barrier,omitempty"`
+	Timing              *Timing                `protobuf:"bytes,5,opt,name=timing,proto3" json:"timing,omitempty"`
+	MaxGreen_2S         *string                `protobuf:"bytes,12,opt,name=max_green_2_s,json=maxGreen2S,proto3,oneof" json:"max_green_2_s,omitempty"`
+	RedRevertS          *string                `protobuf:"bytes,13,opt,name=red_revert_s,json=redRevertS,proto3,oneof" json:"red_revert_s,omitempty"`
+	CrossingDistanceM   *string                `protobuf:"bytes,10,opt,name=crossing_distance_m,json=crossingDistanceM,proto3,oneof" json:"crossing_distance_m,omitempty"`
+	LeadingPedIntervalS *string                `protobuf:"bytes,14,opt,name=leading_ped_interval_s,json=leadingPedIntervalS,proto3,oneof" json:"leading_ped_interval_s,omitempty"`
+	Options             *Options               `protobuf:"bytes,7,opt,name=options,proto3" json:"options,omitempty"`
+	VolumeDensity       *VolumeDensity         `protobuf:"bytes,8,opt,name=volume_density,json=volumeDensity,proto3" json:"volume_density,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *PhaseConfig) Reset() {
@@ -905,16 +905,16 @@ func (x *PhaseConfig) GetTiming() *Timing {
 	return nil
 }
 
-func (x *PhaseConfig) GetMaxGreen_2() string {
-	if x != nil && x.MaxGreen_2 != nil {
-		return *x.MaxGreen_2
+func (x *PhaseConfig) GetMaxGreen_2S() string {
+	if x != nil && x.MaxGreen_2S != nil {
+		return *x.MaxGreen_2S
 	}
 	return ""
 }
 
-func (x *PhaseConfig) GetRedRevert() string {
-	if x != nil && x.RedRevert != nil {
-		return *x.RedRevert
+func (x *PhaseConfig) GetRedRevertS() string {
+	if x != nil && x.RedRevertS != nil {
+		return *x.RedRevertS
 	}
 	return ""
 }
@@ -926,9 +926,9 @@ func (x *PhaseConfig) GetCrossingDistanceM() string {
 	return ""
 }
 
-func (x *PhaseConfig) GetLeadingPedIntervalSeconds() string {
-	if x != nil && x.LeadingPedIntervalSeconds != nil {
-		return *x.LeadingPedIntervalSeconds
+func (x *PhaseConfig) GetLeadingPedIntervalS() string {
+	if x != nil && x.LeadingPedIntervalS != nil {
+		return *x.LeadingPedIntervalS
 	}
 	return ""
 }
@@ -1140,14 +1140,14 @@ func (x *Options) GetCallToNonactuated() bool {
 }
 
 type VolumeDensity struct {
-	state               protoimpl.MessageState `protogen:"open.v1"`
-	AddedInitial        *string                `protobuf:"bytes,1,opt,name=added_initial,json=addedInitial,proto3,oneof" json:"added_initial,omitempty"`
-	MaxInitial          *uint32                `protobuf:"varint,2,opt,name=max_initial,json=maxInitial,proto3,oneof" json:"max_initial,omitempty"`
-	TimeBeforeReduction *uint32                `protobuf:"varint,3,opt,name=time_before_reduction,json=timeBeforeReduction,proto3,oneof" json:"time_before_reduction,omitempty"`
-	TimeToReduce        *uint32                `protobuf:"varint,4,opt,name=time_to_reduce,json=timeToReduce,proto3,oneof" json:"time_to_reduce,omitempty"`
-	MinGap              *string                `protobuf:"bytes,5,opt,name=min_gap,json=minGap,proto3,oneof" json:"min_gap,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	AddedInitialS        *string                `protobuf:"bytes,6,opt,name=added_initial_s,json=addedInitialS,proto3,oneof" json:"added_initial_s,omitempty"`
+	MaxInitialS          *uint32                `protobuf:"varint,7,opt,name=max_initial_s,json=maxInitialS,proto3,oneof" json:"max_initial_s,omitempty"`
+	TimeBeforeReductionS *uint32                `protobuf:"varint,8,opt,name=time_before_reduction_s,json=timeBeforeReductionS,proto3,oneof" json:"time_before_reduction_s,omitempty"`
+	TimeToReduceS        *uint32                `protobuf:"varint,9,opt,name=time_to_reduce_s,json=timeToReduceS,proto3,oneof" json:"time_to_reduce_s,omitempty"`
+	MinGapS              *string                `protobuf:"bytes,10,opt,name=min_gap_s,json=minGapS,proto3,oneof" json:"min_gap_s,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *VolumeDensity) Reset() {
@@ -1180,37 +1180,37 @@ func (*VolumeDensity) Descriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *VolumeDensity) GetAddedInitial() string {
-	if x != nil && x.AddedInitial != nil {
-		return *x.AddedInitial
+func (x *VolumeDensity) GetAddedInitialS() string {
+	if x != nil && x.AddedInitialS != nil {
+		return *x.AddedInitialS
 	}
 	return ""
 }
 
-func (x *VolumeDensity) GetMaxInitial() uint32 {
-	if x != nil && x.MaxInitial != nil {
-		return *x.MaxInitial
+func (x *VolumeDensity) GetMaxInitialS() uint32 {
+	if x != nil && x.MaxInitialS != nil {
+		return *x.MaxInitialS
 	}
 	return 0
 }
 
-func (x *VolumeDensity) GetTimeBeforeReduction() uint32 {
-	if x != nil && x.TimeBeforeReduction != nil {
-		return *x.TimeBeforeReduction
+func (x *VolumeDensity) GetTimeBeforeReductionS() uint32 {
+	if x != nil && x.TimeBeforeReductionS != nil {
+		return *x.TimeBeforeReductionS
 	}
 	return 0
 }
 
-func (x *VolumeDensity) GetTimeToReduce() uint32 {
-	if x != nil && x.TimeToReduce != nil {
-		return *x.TimeToReduce
+func (x *VolumeDensity) GetTimeToReduceS() uint32 {
+	if x != nil && x.TimeToReduceS != nil {
+		return *x.TimeToReduceS
 	}
 	return 0
 }
 
-func (x *VolumeDensity) GetMinGap() string {
-	if x != nil && x.MinGap != nil {
-		return *x.MinGap
+func (x *VolumeDensity) GetMinGapS() string {
+	if x != nil && x.MinGapS != nil {
+		return *x.MinGapS
 	}
 	return ""
 }
@@ -1402,8 +1402,8 @@ type DetectorsDetectorConfig struct {
 	AssignedPhases []uint32               `protobuf:"varint,3,rep,packed,name=assigned_phases,json=assignedPhases,proto3" json:"assigned_phases,omitempty"`
 	Enabled        *bool                  `protobuf:"varint,4,opt,name=enabled,proto3,oneof" json:"enabled,omitempty"`
 	Name           *string                `protobuf:"bytes,11,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	Delay          *string                `protobuf:"bytes,5,opt,name=delay,proto3,oneof" json:"delay,omitempty"`
-	Extend         *string                `protobuf:"bytes,6,opt,name=extend,proto3,oneof" json:"extend,omitempty"`
+	DelayS         *string                `protobuf:"bytes,12,opt,name=delay_s,json=delayS,proto3,oneof" json:"delay_s,omitempty"`
+	ExtendS        *string                `protobuf:"bytes,13,opt,name=extend_s,json=extendS,proto3,oneof" json:"extend_s,omitempty"`
 	Mode           *DetectorMode          `protobuf:"varint,7,opt,name=mode,proto3,enum=openits.signal_control.v1.DetectorMode,oneof" json:"mode,omitempty"`
 	ExtendPhases   []uint32               `protobuf:"varint,8,rep,packed,name=extend_phases,json=extendPhases,proto3" json:"extend_phases,omitempty"`
 	FailAction     *DetectorFailAction    `protobuf:"varint,9,opt,name=fail_action,json=failAction,proto3,enum=openits.signal_control.v1.DetectorFailAction,oneof" json:"fail_action,omitempty"`
@@ -1477,16 +1477,16 @@ func (x *DetectorsDetectorConfig) GetName() string {
 	return ""
 }
 
-func (x *DetectorsDetectorConfig) GetDelay() string {
-	if x != nil && x.Delay != nil {
-		return *x.Delay
+func (x *DetectorsDetectorConfig) GetDelayS() string {
+	if x != nil && x.DelayS != nil {
+		return *x.DelayS
 	}
 	return ""
 }
 
-func (x *DetectorsDetectorConfig) GetExtend() string {
-	if x != nil && x.Extend != nil {
-		return *x.Extend
+func (x *DetectorsDetectorConfig) GetExtendS() string {
+	if x != nil && x.ExtendS != nil {
+		return *x.ExtendS
 	}
 	return ""
 }
@@ -1521,8 +1521,8 @@ func (x *DetectorsDetectorConfig) GetDiagnostics() *Diagnostics {
 
 type Diagnostics struct {
 	state                  protoimpl.MessageState `protogen:"open.v1"`
-	NoActivityMinutes      *uint32                `protobuf:"varint,1,opt,name=no_activity_minutes,json=noActivityMinutes,proto3,oneof" json:"no_activity_minutes,omitempty"`
-	MaxPresenceMinutes     *uint32                `protobuf:"varint,2,opt,name=max_presence_minutes,json=maxPresenceMinutes,proto3,oneof" json:"max_presence_minutes,omitempty"`
+	NoActivityMin          *uint32                `protobuf:"varint,4,opt,name=no_activity_min,json=noActivityMin,proto3,oneof" json:"no_activity_min,omitempty"`
+	MaxPresenceMin         *uint32                `protobuf:"varint,5,opt,name=max_presence_min,json=maxPresenceMin,proto3,oneof" json:"max_presence_min,omitempty"`
 	ErraticCountsPerMinute *uint32                `protobuf:"varint,3,opt,name=erratic_counts_per_minute,json=erraticCountsPerMinute,proto3,oneof" json:"erratic_counts_per_minute,omitempty"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
@@ -1558,16 +1558,16 @@ func (*Diagnostics) Descriptor() ([]byte, []int) {
 	return file_openits_signal_control_v1_state_proto_rawDescGZIP(), []int{16}
 }
 
-func (x *Diagnostics) GetNoActivityMinutes() uint32 {
-	if x != nil && x.NoActivityMinutes != nil {
-		return *x.NoActivityMinutes
+func (x *Diagnostics) GetNoActivityMin() uint32 {
+	if x != nil && x.NoActivityMin != nil {
+		return *x.NoActivityMin
 	}
 	return 0
 }
 
-func (x *Diagnostics) GetMaxPresenceMinutes() uint32 {
-	if x != nil && x.MaxPresenceMinutes != nil {
-		return *x.MaxPresenceMinutes
+func (x *Diagnostics) GetMaxPresenceMin() uint32 {
+	if x != nil && x.MaxPresenceMin != nil {
+		return *x.MaxPresenceMin
 	}
 	return 0
 }
@@ -1656,14 +1656,14 @@ func (x *DetectorsDetectorState) GetMeasurement() *Measurement {
 }
 
 type Measurement struct {
-	state                   protoimpl.MessageState `protogen:"open.v1"`
-	Volume                  *uint32                `protobuf:"varint,1,opt,name=volume,proto3,oneof" json:"volume,omitempty"`
-	Occupancy               *string                `protobuf:"bytes,2,opt,name=occupancy,proto3,oneof" json:"occupancy,omitempty"`
-	SpeedKmh                *string                `protobuf:"bytes,3,opt,name=speed_kmh,json=speedKmh,proto3,oneof" json:"speed_kmh,omitempty"`
-	CollectionPeriodSeconds *uint32                `protobuf:"varint,4,opt,name=collection_period_seconds,json=collectionPeriodSeconds,proto3,oneof" json:"collection_period_seconds,omitempty"`
-	ObservedAt              *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Volume            *uint32                `protobuf:"varint,1,opt,name=volume,proto3,oneof" json:"volume,omitempty"`
+	OccupancyPct      *string                `protobuf:"bytes,7,opt,name=occupancy_pct,json=occupancyPct,proto3,oneof" json:"occupancy_pct,omitempty"`
+	SpeedKmh          *string                `protobuf:"bytes,3,opt,name=speed_kmh,json=speedKmh,proto3,oneof" json:"speed_kmh,omitempty"`
+	CollectionPeriodS *uint32                `protobuf:"varint,8,opt,name=collection_period_s,json=collectionPeriodS,proto3,oneof" json:"collection_period_s,omitempty"`
+	ObservedAt        *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *Measurement) Reset() {
@@ -1703,9 +1703,9 @@ func (x *Measurement) GetVolume() uint32 {
 	return 0
 }
 
-func (x *Measurement) GetOccupancy() string {
-	if x != nil && x.Occupancy != nil {
-		return *x.Occupancy
+func (x *Measurement) GetOccupancyPct() string {
+	if x != nil && x.OccupancyPct != nil {
+		return *x.OccupancyPct
 	}
 	return ""
 }
@@ -1717,9 +1717,9 @@ func (x *Measurement) GetSpeedKmh() string {
 	return ""
 }
 
-func (x *Measurement) GetCollectionPeriodSeconds() uint32 {
-	if x != nil && x.CollectionPeriodSeconds != nil {
-		return *x.CollectionPeriodSeconds
+func (x *Measurement) GetCollectionPeriodS() uint32 {
+	if x != nil && x.CollectionPeriodS != nil {
+		return *x.CollectionPeriodS
 	}
 	return 0
 }
@@ -1836,18 +1836,18 @@ func (x *Overlap) GetState() *OverlapState {
 }
 
 type OverlapConfig struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	OverlapNumber    *uint32                `protobuf:"varint,9,opt,name=overlap_number,json=overlapNumber,proto3,oneof" json:"overlap_number,omitempty"`
-	Name             *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	Type             string                 `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
-	IncludedPhases   []uint32               `protobuf:"varint,4,rep,packed,name=included_phases,json=includedPhases,proto3" json:"included_phases,omitempty"`
-	ModifierPhases   []uint32               `protobuf:"varint,10,rep,packed,name=modifier_phases,json=modifierPhases,proto3" json:"modifier_phases,omitempty"`
-	TrailingGreen    *string                `protobuf:"bytes,5,opt,name=trailing_green,json=trailingGreen,proto3,oneof" json:"trailing_green,omitempty"`
-	TrailingYellow   *string                `protobuf:"bytes,6,opt,name=trailing_yellow,json=trailingYellow,proto3,oneof" json:"trailing_yellow,omitempty"`
-	TrailingRedClear *string                `protobuf:"bytes,7,opt,name=trailing_red_clear,json=trailingRedClear,proto3,oneof" json:"trailing_red_clear,omitempty"`
-	Fya              *Fya                   `protobuf:"bytes,8,opt,name=fya,proto3" json:"fya,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	OverlapNumber     *uint32                `protobuf:"varint,9,opt,name=overlap_number,json=overlapNumber,proto3,oneof" json:"overlap_number,omitempty"`
+	Name              *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Type              string                 `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
+	IncludedPhases    []uint32               `protobuf:"varint,4,rep,packed,name=included_phases,json=includedPhases,proto3" json:"included_phases,omitempty"`
+	ModifierPhases    []uint32               `protobuf:"varint,10,rep,packed,name=modifier_phases,json=modifierPhases,proto3" json:"modifier_phases,omitempty"`
+	TrailingGreenS    *string                `protobuf:"bytes,11,opt,name=trailing_green_s,json=trailingGreenS,proto3,oneof" json:"trailing_green_s,omitempty"`
+	TrailingYellowS   *string                `protobuf:"bytes,12,opt,name=trailing_yellow_s,json=trailingYellowS,proto3,oneof" json:"trailing_yellow_s,omitempty"`
+	TrailingRedClearS *string                `protobuf:"bytes,13,opt,name=trailing_red_clear_s,json=trailingRedClearS,proto3,oneof" json:"trailing_red_clear_s,omitempty"`
+	Fya               *Fya                   `protobuf:"bytes,8,opt,name=fya,proto3" json:"fya,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *OverlapConfig) Reset() {
@@ -1915,23 +1915,23 @@ func (x *OverlapConfig) GetModifierPhases() []uint32 {
 	return nil
 }
 
-func (x *OverlapConfig) GetTrailingGreen() string {
-	if x != nil && x.TrailingGreen != nil {
-		return *x.TrailingGreen
+func (x *OverlapConfig) GetTrailingGreenS() string {
+	if x != nil && x.TrailingGreenS != nil {
+		return *x.TrailingGreenS
 	}
 	return ""
 }
 
-func (x *OverlapConfig) GetTrailingYellow() string {
-	if x != nil && x.TrailingYellow != nil {
-		return *x.TrailingYellow
+func (x *OverlapConfig) GetTrailingYellowS() string {
+	if x != nil && x.TrailingYellowS != nil {
+		return *x.TrailingYellowS
 	}
 	return ""
 }
 
-func (x *OverlapConfig) GetTrailingRedClear() string {
-	if x != nil && x.TrailingRedClear != nil {
-		return *x.TrailingRedClear
+func (x *OverlapConfig) GetTrailingRedClearS() string {
+	if x != nil && x.TrailingRedClearS != nil {
+		return *x.TrailingRedClearS
 	}
 	return ""
 }
@@ -2348,8 +2348,8 @@ func (x *Coordination) GetState() *CoordinationState {
 type TimingPlan struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	PlanId            *uint32                `protobuf:"varint,1,opt,name=plan_id,json=planId,proto3,oneof" json:"plan_id,omitempty"`
-	CycleLength       uint32                 `protobuf:"varint,2,opt,name=cycle_length,json=cycleLength,proto3" json:"cycle_length,omitempty"`
-	Offset            *uint32                `protobuf:"varint,3,opt,name=offset,proto3,oneof" json:"offset,omitempty"`
+	CycleLengthS      uint32                 `protobuf:"varint,10,opt,name=cycle_length_s,json=cycleLengthS,proto3" json:"cycle_length_s,omitempty"`
+	OffsetS           *uint32                `protobuf:"varint,11,opt,name=offset_s,json=offsetS,proto3,oneof" json:"offset_s,omitempty"`
 	CoordinatedPhases []uint32               `protobuf:"varint,5,rep,packed,name=coordinated_phases,json=coordinatedPhases,proto3" json:"coordinated_phases,omitempty"`
 	OffsetReference   *OffsetReference       `protobuf:"varint,6,opt,name=offset_reference,json=offsetReference,proto3,enum=openits.signal_control.v1.OffsetReference,oneof" json:"offset_reference,omitempty"`
 	TransitionMode    *TransitionMode        `protobuf:"varint,7,opt,name=transition_mode,json=transitionMode,proto3,enum=openits.signal_control.v1.TransitionMode,oneof" json:"transition_mode,omitempty"`
@@ -2397,16 +2397,16 @@ func (x *TimingPlan) GetPlanId() uint32 {
 	return 0
 }
 
-func (x *TimingPlan) GetCycleLength() uint32 {
+func (x *TimingPlan) GetCycleLengthS() uint32 {
 	if x != nil {
-		return x.CycleLength
+		return x.CycleLengthS
 	}
 	return 0
 }
 
-func (x *TimingPlan) GetOffset() uint32 {
-	if x != nil && x.Offset != nil {
-		return *x.Offset
+func (x *TimingPlan) GetOffsetS() uint32 {
+	if x != nil && x.OffsetS != nil {
+		return *x.OffsetS
 	}
 	return 0
 }
@@ -2456,7 +2456,7 @@ func (x *TimingPlan) GetSplit() []*Split {
 type Split struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	PhaseNumber   *uint32                `protobuf:"varint,1,opt,name=phase_number,json=phaseNumber,proto3,oneof" json:"phase_number,omitempty"`
-	SplitSeconds  *uint32                `protobuf:"varint,2,opt,name=split_seconds,json=splitSeconds,proto3,oneof" json:"split_seconds,omitempty"`
+	SplitS        *uint32                `protobuf:"varint,4,opt,name=split_s,json=splitS,proto3,oneof" json:"split_s,omitempty"`
 	SplitMode     *SplitMode             `protobuf:"varint,3,opt,name=split_mode,json=splitMode,proto3,enum=openits.signal_control.v1.SplitMode,oneof" json:"split_mode,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -2499,9 +2499,9 @@ func (x *Split) GetPhaseNumber() uint32 {
 	return 0
 }
 
-func (x *Split) GetSplitSeconds() uint32 {
-	if x != nil && x.SplitSeconds != nil {
-		return *x.SplitSeconds
+func (x *Split) GetSplitS() uint32 {
+	if x != nil && x.SplitS != nil {
+		return *x.SplitS
 	}
 	return 0
 }
@@ -3196,22 +3196,22 @@ func (x *Preemptor) GetState() *PreemptorState {
 }
 
 type PreemptorConfig struct {
-	state                  protoimpl.MessageState `protogen:"open.v1"`
-	PreemptorId            *uint32                `protobuf:"varint,1,opt,name=preemptor_id,json=preemptorId,proto3,oneof" json:"preemptor_id,omitempty"`
-	Type                   string                 `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
-	PriorityOrder          *uint32                `protobuf:"varint,3,opt,name=priority_order,json=priorityOrder,proto3,oneof" json:"priority_order,omitempty"`
-	DelaySeconds           *uint32                `protobuf:"varint,4,opt,name=delay_seconds,json=delaySeconds,proto3,oneof" json:"delay_seconds,omitempty"`
-	MinGreenBeforeEntry    *uint32                `protobuf:"varint,5,opt,name=min_green_before_entry,json=minGreenBeforeEntry,proto3,oneof" json:"min_green_before_entry,omitempty"`
-	MinWalkBeforeEntry     *uint32                `protobuf:"varint,6,opt,name=min_walk_before_entry,json=minWalkBeforeEntry,proto3,oneof" json:"min_walk_before_entry,omitempty"`
-	MinPedClearBeforeEntry *uint32                `protobuf:"varint,12,opt,name=min_ped_clear_before_entry,json=minPedClearBeforeEntry,proto3,oneof" json:"min_ped_clear_before_entry,omitempty"`
-	TrackClearance         *TrackClearance        `protobuf:"bytes,7,opt,name=track_clearance,json=trackClearance,proto3" json:"track_clearance,omitempty"`
-	DwellPhases            []uint32               `protobuf:"varint,8,rep,packed,name=dwell_phases,json=dwellPhases,proto3" json:"dwell_phases,omitempty"`
-	MinDwellSeconds        *uint32                `protobuf:"varint,9,opt,name=min_dwell_seconds,json=minDwellSeconds,proto3,oneof" json:"min_dwell_seconds,omitempty"`
-	FlashDwellSeconds      *uint32                `protobuf:"varint,13,opt,name=flash_dwell_seconds,json=flashDwellSeconds,proto3,oneof" json:"flash_dwell_seconds,omitempty"`
-	ExitPhases             []uint32               `protobuf:"varint,10,rep,packed,name=exit_phases,json=exitPhases,proto3" json:"exit_phases,omitempty"`
-	MaxPresenceSeconds     *uint32                `protobuf:"varint,11,opt,name=max_presence_seconds,json=maxPresenceSeconds,proto3,oneof" json:"max_presence_seconds,omitempty"`
-	unknownFields          protoimpl.UnknownFields
-	sizeCache              protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"open.v1"`
+	PreemptorId             *uint32                `protobuf:"varint,1,opt,name=preemptor_id,json=preemptorId,proto3,oneof" json:"preemptor_id,omitempty"`
+	Type                    string                 `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
+	PriorityOrder           *uint32                `protobuf:"varint,3,opt,name=priority_order,json=priorityOrder,proto3,oneof" json:"priority_order,omitempty"`
+	DelayS                  *uint32                `protobuf:"varint,14,opt,name=delay_s,json=delayS,proto3,oneof" json:"delay_s,omitempty"`
+	MinGreenBeforeEntryS    *uint32                `protobuf:"varint,15,opt,name=min_green_before_entry_s,json=minGreenBeforeEntryS,proto3,oneof" json:"min_green_before_entry_s,omitempty"`
+	MinWalkBeforeEntryS     *uint32                `protobuf:"varint,16,opt,name=min_walk_before_entry_s,json=minWalkBeforeEntryS,proto3,oneof" json:"min_walk_before_entry_s,omitempty"`
+	MinPedClearBeforeEntryS *uint32                `protobuf:"varint,17,opt,name=min_ped_clear_before_entry_s,json=minPedClearBeforeEntryS,proto3,oneof" json:"min_ped_clear_before_entry_s,omitempty"`
+	TrackClearance          *TrackClearance        `protobuf:"bytes,7,opt,name=track_clearance,json=trackClearance,proto3" json:"track_clearance,omitempty"`
+	DwellPhases             []uint32               `protobuf:"varint,8,rep,packed,name=dwell_phases,json=dwellPhases,proto3" json:"dwell_phases,omitempty"`
+	MinDwellS               *uint32                `protobuf:"varint,18,opt,name=min_dwell_s,json=minDwellS,proto3,oneof" json:"min_dwell_s,omitempty"`
+	FlashDwellS             *uint32                `protobuf:"varint,19,opt,name=flash_dwell_s,json=flashDwellS,proto3,oneof" json:"flash_dwell_s,omitempty"`
+	ExitPhases              []uint32               `protobuf:"varint,10,rep,packed,name=exit_phases,json=exitPhases,proto3" json:"exit_phases,omitempty"`
+	MaxPresenceS            *uint32                `protobuf:"varint,20,opt,name=max_presence_s,json=maxPresenceS,proto3,oneof" json:"max_presence_s,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *PreemptorConfig) Reset() {
@@ -3265,30 +3265,30 @@ func (x *PreemptorConfig) GetPriorityOrder() uint32 {
 	return 0
 }
 
-func (x *PreemptorConfig) GetDelaySeconds() uint32 {
-	if x != nil && x.DelaySeconds != nil {
-		return *x.DelaySeconds
+func (x *PreemptorConfig) GetDelayS() uint32 {
+	if x != nil && x.DelayS != nil {
+		return *x.DelayS
 	}
 	return 0
 }
 
-func (x *PreemptorConfig) GetMinGreenBeforeEntry() uint32 {
-	if x != nil && x.MinGreenBeforeEntry != nil {
-		return *x.MinGreenBeforeEntry
+func (x *PreemptorConfig) GetMinGreenBeforeEntryS() uint32 {
+	if x != nil && x.MinGreenBeforeEntryS != nil {
+		return *x.MinGreenBeforeEntryS
 	}
 	return 0
 }
 
-func (x *PreemptorConfig) GetMinWalkBeforeEntry() uint32 {
-	if x != nil && x.MinWalkBeforeEntry != nil {
-		return *x.MinWalkBeforeEntry
+func (x *PreemptorConfig) GetMinWalkBeforeEntryS() uint32 {
+	if x != nil && x.MinWalkBeforeEntryS != nil {
+		return *x.MinWalkBeforeEntryS
 	}
 	return 0
 }
 
-func (x *PreemptorConfig) GetMinPedClearBeforeEntry() uint32 {
-	if x != nil && x.MinPedClearBeforeEntry != nil {
-		return *x.MinPedClearBeforeEntry
+func (x *PreemptorConfig) GetMinPedClearBeforeEntryS() uint32 {
+	if x != nil && x.MinPedClearBeforeEntryS != nil {
+		return *x.MinPedClearBeforeEntryS
 	}
 	return 0
 }
@@ -3307,16 +3307,16 @@ func (x *PreemptorConfig) GetDwellPhases() []uint32 {
 	return nil
 }
 
-func (x *PreemptorConfig) GetMinDwellSeconds() uint32 {
-	if x != nil && x.MinDwellSeconds != nil {
-		return *x.MinDwellSeconds
+func (x *PreemptorConfig) GetMinDwellS() uint32 {
+	if x != nil && x.MinDwellS != nil {
+		return *x.MinDwellS
 	}
 	return 0
 }
 
-func (x *PreemptorConfig) GetFlashDwellSeconds() uint32 {
-	if x != nil && x.FlashDwellSeconds != nil {
-		return *x.FlashDwellSeconds
+func (x *PreemptorConfig) GetFlashDwellS() uint32 {
+	if x != nil && x.FlashDwellS != nil {
+		return *x.FlashDwellS
 	}
 	return 0
 }
@@ -3328,9 +3328,9 @@ func (x *PreemptorConfig) GetExitPhases() []uint32 {
 	return nil
 }
 
-func (x *PreemptorConfig) GetMaxPresenceSeconds() uint32 {
-	if x != nil && x.MaxPresenceSeconds != nil {
-		return *x.MaxPresenceSeconds
+func (x *PreemptorConfig) GetMaxPresenceS() uint32 {
+	if x != nil && x.MaxPresenceS != nil {
+		return *x.MaxPresenceS
 	}
 	return 0
 }
@@ -3338,7 +3338,7 @@ func (x *PreemptorConfig) GetMaxPresenceSeconds() uint32 {
 type TrackClearance struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Phases        []uint32               `protobuf:"varint,1,rep,packed,name=phases,proto3" json:"phases,omitempty"`
-	GreenSeconds  uint32                 `protobuf:"varint,2,opt,name=green_seconds,json=greenSeconds,proto3" json:"green_seconds,omitempty"`
+	GreenS        uint32                 `protobuf:"varint,3,opt,name=green_s,json=greenS,proto3" json:"green_s,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3380,9 +3380,9 @@ func (x *TrackClearance) GetPhases() []uint32 {
 	return nil
 }
 
-func (x *TrackClearance) GetGreenSeconds() uint32 {
+func (x *TrackClearance) GetGreenS() uint32 {
 	if x != nil {
-		return x.GreenSeconds
+		return x.GreenS
 	}
 	return 0
 }
@@ -3560,15 +3560,15 @@ func (x *Strategy) GetConfig() *StrategyConfig {
 }
 
 type StrategyConfig struct {
-	state                    protoimpl.MessageState `protogen:"open.v1"`
-	StrategyId               *uint32                `protobuf:"varint,1,opt,name=strategy_id,json=strategyId,proto3,oneof" json:"strategy_id,omitempty"`
-	PriorityClass            *string                `protobuf:"bytes,2,opt,name=priority_class,json=priorityClass,proto3,oneof" json:"priority_class,omitempty"`
-	MaxEarlyGreenSeconds     *uint32                `protobuf:"varint,3,opt,name=max_early_green_seconds,json=maxEarlyGreenSeconds,proto3,oneof" json:"max_early_green_seconds,omitempty"`
-	MaxGreenExtensionSeconds *uint32                `protobuf:"varint,4,opt,name=max_green_extension_seconds,json=maxGreenExtensionSeconds,proto3,oneof" json:"max_green_extension_seconds,omitempty"`
-	ReserviceIntervalSeconds *uint32                `protobuf:"varint,5,opt,name=reservice_interval_seconds,json=reserviceIntervalSeconds,proto3,oneof" json:"reservice_interval_seconds,omitempty"`
-	ServedPhases             []uint32               `protobuf:"varint,6,rep,packed,name=served_phases,json=servedPhases,proto3" json:"served_phases,omitempty"`
-	unknownFields            protoimpl.UnknownFields
-	sizeCache                protoimpl.SizeCache
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	StrategyId         *uint32                `protobuf:"varint,1,opt,name=strategy_id,json=strategyId,proto3,oneof" json:"strategy_id,omitempty"`
+	PriorityClass      *string                `protobuf:"bytes,2,opt,name=priority_class,json=priorityClass,proto3,oneof" json:"priority_class,omitempty"`
+	MaxEarlyGreenS     *uint32                `protobuf:"varint,7,opt,name=max_early_green_s,json=maxEarlyGreenS,proto3,oneof" json:"max_early_green_s,omitempty"`
+	MaxGreenExtensionS *uint32                `protobuf:"varint,8,opt,name=max_green_extension_s,json=maxGreenExtensionS,proto3,oneof" json:"max_green_extension_s,omitempty"`
+	ReserviceIntervalS *uint32                `protobuf:"varint,9,opt,name=reservice_interval_s,json=reserviceIntervalS,proto3,oneof" json:"reservice_interval_s,omitempty"`
+	ServedPhases       []uint32               `protobuf:"varint,6,rep,packed,name=served_phases,json=servedPhases,proto3" json:"served_phases,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *StrategyConfig) Reset() {
@@ -3615,23 +3615,23 @@ func (x *StrategyConfig) GetPriorityClass() string {
 	return ""
 }
 
-func (x *StrategyConfig) GetMaxEarlyGreenSeconds() uint32 {
-	if x != nil && x.MaxEarlyGreenSeconds != nil {
-		return *x.MaxEarlyGreenSeconds
+func (x *StrategyConfig) GetMaxEarlyGreenS() uint32 {
+	if x != nil && x.MaxEarlyGreenS != nil {
+		return *x.MaxEarlyGreenS
 	}
 	return 0
 }
 
-func (x *StrategyConfig) GetMaxGreenExtensionSeconds() uint32 {
-	if x != nil && x.MaxGreenExtensionSeconds != nil {
-		return *x.MaxGreenExtensionSeconds
+func (x *StrategyConfig) GetMaxGreenExtensionS() uint32 {
+	if x != nil && x.MaxGreenExtensionS != nil {
+		return *x.MaxGreenExtensionS
 	}
 	return 0
 }
 
-func (x *StrategyConfig) GetReserviceIntervalSeconds() uint32 {
-	if x != nil && x.ReserviceIntervalSeconds != nil {
-		return *x.ReserviceIntervalSeconds
+func (x *StrategyConfig) GetReserviceIntervalS() uint32 {
+	if x != nil && x.ReserviceIntervalS != nil {
+		return *x.ReserviceIntervalS
 	}
 	return 0
 }
@@ -4571,41 +4571,44 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"_directionB\n" +
 	"\n" +
 	"\b_measureB\r\n" +
-	"\v_lrs_method\"\xdd\x01\n" +
-	"\aStartup\x129\n" +
-	"\x16flash_duration_seconds\x18\x01 \x01(\rH\x00R\x14flashDurationSeconds\x88\x01\x01\x12!\n" +
-	"\fflash_phases\x18\x02 \x03(\rR\vflashPhases\x12<\n" +
-	"\x18all_red_duration_seconds\x18\x03 \x01(\rH\x01R\x15allRedDurationSeconds\x88\x01\x01B\x19\n" +
-	"\x17_flash_duration_secondsB\x1b\n" +
-	"\x19_all_red_duration_seconds\"@\n" +
+	"\v_lrs_method\"\xf7\x01\n" +
+	"\aStartup\x12-\n" +
+	"\x10flash_duration_s\x18\x04 \x01(\rH\x00R\x0eflashDurationS\x88\x01\x01\x12!\n" +
+	"\fflash_phases\x18\x02 \x03(\rR\vflashPhases\x120\n" +
+	"\x12all_red_duration_s\x18\x05 \x01(\rH\x01R\x0fallRedDurationS\x88\x01\x01B\x13\n" +
+	"\x11_flash_duration_sB\x15\n" +
+	"\x13_all_red_duration_sJ\x04\b\x01\x10\x02J\x04\b\x03\x10\x04R\x16flash_duration_secondsR\x18all_red_duration_seconds\"@\n" +
 	"\x06Phases\x126\n" +
 	"\x05phase\x18\x01 \x03(\v2 .openits.signal_control.v1.PhaseR\x05phase\"\xbd\x01\n" +
 	"\x05Phase\x12&\n" +
 	"\fphase_number\x18\x01 \x01(\rH\x00R\vphaseNumber\x88\x01\x01\x12>\n" +
 	"\x06config\x18\x02 \x01(\v2&.openits.signal_control.v1.PhaseConfigR\x06config\x12;\n" +
 	"\x05state\x18\x03 \x01(\v2%.openits.signal_control.v1.PhaseStateR\x05stateB\x0f\n" +
-	"\r_phase_number\"\x85\x05\n" +
+	"\r_phase_number\"\xc6\x05\n" +
 	"\vPhaseConfig\x12&\n" +
 	"\fphase_number\x18\x01 \x01(\rH\x00R\vphaseNumber\x88\x01\x01\x12\x1d\n" +
 	"\aenabled\x18\x02 \x01(\bH\x01R\aenabled\x88\x01\x01\x12\x12\n" +
 	"\x04ring\x18\x03 \x01(\rR\x04ring\x12\x18\n" +
 	"\abarrier\x18\x04 \x01(\rR\abarrier\x129\n" +
-	"\x06timing\x18\x05 \x01(\v2!.openits.signal_control.v1.TimingR\x06timing\x12#\n" +
-	"\vmax_green_2\x18\x06 \x01(\tH\x02R\tmaxGreen2\x88\x01\x01\x12\"\n" +
-	"\n" +
-	"red_revert\x18\t \x01(\tH\x03R\tredRevert\x88\x01\x01\x123\n" +
+	"\x06timing\x18\x05 \x01(\v2!.openits.signal_control.v1.TimingR\x06timing\x12&\n" +
+	"\rmax_green_2_s\x18\f \x01(\tH\x02R\n" +
+	"maxGreen2S\x88\x01\x01\x12%\n" +
+	"\fred_revert_s\x18\r \x01(\tH\x03R\n" +
+	"redRevertS\x88\x01\x01\x123\n" +
 	"\x13crossing_distance_m\x18\n" +
-	" \x01(\tH\x04R\x11crossingDistanceM\x88\x01\x01\x12D\n" +
-	"\x1cleading_ped_interval_seconds\x18\v \x01(\tH\x05R\x19leadingPedIntervalSeconds\x88\x01\x01\x12<\n" +
+	" \x01(\tH\x04R\x11crossingDistanceM\x88\x01\x01\x128\n" +
+	"\x16leading_ped_interval_s\x18\x0e \x01(\tH\x05R\x13leadingPedIntervalS\x88\x01\x01\x12<\n" +
 	"\aoptions\x18\a \x01(\v2\".openits.signal_control.v1.OptionsR\aoptions\x12O\n" +
 	"\x0evolume_density\x18\b \x01(\v2(.openits.signal_control.v1.VolumeDensityR\rvolumeDensityB\x0f\n" +
 	"\r_phase_numberB\n" +
 	"\n" +
-	"\b_enabledB\x0e\n" +
-	"\f_max_green_2B\r\n" +
-	"\v_red_revertB\x16\n" +
-	"\x14_crossing_distance_mB\x1f\n" +
-	"\x1d_leading_ped_interval_seconds\"\xe8\x03\n" +
+	"\b_enabledB\x10\n" +
+	"\x0e_max_green_2_sB\x0f\n" +
+	"\r_red_revert_sB\x16\n" +
+	"\x14_crossing_distance_mB\x19\n" +
+	"\x17_leading_ped_interval_sJ\x04\b\x06\x10\aJ\x04\b\t\x10\n" +
+	"J\x04\b\v\x10\fR\vmax_green_2R\n" +
+	"red_revertR\x1cleading_ped_interval_seconds\"\xe8\x03\n" +
 	"\x06Timing\x12#\n" +
 	"\vmax_green_s\x18\b \x01(\tH\x00R\tmaxGreenS\x88\x01\x01\x12#\n" +
 	"\vmin_green_s\x18\t \x01(\tH\x01R\tminGreenS\x88\x01\x01\x12 \n" +
@@ -4645,20 +4648,20 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\v_dual_entryB\x0f\n" +
 	"\r_rest_in_walkB\x13\n" +
 	"\x11_simultaneous_gapB\x16\n" +
-	"\x14_call_to_nonactuated\"\xbc\x02\n" +
-	"\rVolumeDensity\x12(\n" +
-	"\radded_initial\x18\x01 \x01(\tH\x00R\faddedInitial\x88\x01\x01\x12$\n" +
-	"\vmax_initial\x18\x02 \x01(\rH\x01R\n" +
-	"maxInitial\x88\x01\x01\x127\n" +
-	"\x15time_before_reduction\x18\x03 \x01(\rH\x02R\x13timeBeforeReduction\x88\x01\x01\x12)\n" +
-	"\x0etime_to_reduce\x18\x04 \x01(\rH\x03R\ftimeToReduce\x88\x01\x01\x12\x1c\n" +
-	"\amin_gap\x18\x05 \x01(\tH\x04R\x06minGap\x88\x01\x01B\x10\n" +
-	"\x0e_added_initialB\x0e\n" +
-	"\f_max_initialB\x18\n" +
-	"\x16_time_before_reductionB\x11\n" +
-	"\x0f_time_to_reduceB\n" +
+	"\x14_call_to_nonactuated\"\xbf\x03\n" +
+	"\rVolumeDensity\x12+\n" +
+	"\x0fadded_initial_s\x18\x06 \x01(\tH\x00R\raddedInitialS\x88\x01\x01\x12'\n" +
+	"\rmax_initial_s\x18\a \x01(\rH\x01R\vmaxInitialS\x88\x01\x01\x12:\n" +
+	"\x17time_before_reduction_s\x18\b \x01(\rH\x02R\x14timeBeforeReductionS\x88\x01\x01\x12,\n" +
+	"\x10time_to_reduce_s\x18\t \x01(\rH\x03R\rtimeToReduceS\x88\x01\x01\x12\x1f\n" +
+	"\tmin_gap_s\x18\n" +
+	" \x01(\tH\x04R\aminGapS\x88\x01\x01B\x12\n" +
+	"\x10_added_initial_sB\x10\n" +
+	"\x0e_max_initial_sB\x1a\n" +
+	"\x18_time_before_reduction_sB\x13\n" +
+	"\x11_time_to_reduce_sB\f\n" +
 	"\n" +
-	"\b_min_gap\"\xd1\x03\n" +
+	"_min_gap_sJ\x04\b\x01\x10\x02J\x04\b\x02\x10\x03J\x04\b\x03\x10\x04J\x04\b\x04\x10\x05J\x04\b\x05\x10\x06R\radded_initialR\vmax_initialR\x15time_before_reductionR\x0etime_to_reduceR\amin_gap\"\xd1\x03\n" +
 	"\n" +
 	"PhaseState\x12\"\n" +
 	"\n" +
@@ -4679,16 +4682,16 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"detectorId\x88\x01\x01\x12J\n" +
 	"\x06config\x18\x02 \x01(\v22.openits.signal_control.v1.DetectorsDetectorConfigR\x06config\x12G\n" +
 	"\x05state\x18\x03 \x01(\v21.openits.signal_control.v1.DetectorsDetectorStateR\x05stateB\x0e\n" +
-	"\f_detector_id\"\xc5\x04\n" +
+	"\f_detector_id\"\xea\x04\n" +
 	"\x17DetectorsDetectorConfig\x12$\n" +
 	"\vdetector_id\x18\x01 \x01(\rH\x00R\n" +
 	"detectorId\x88\x01\x01\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\tR\x04type\x12'\n" +
 	"\x0fassigned_phases\x18\x03 \x03(\rR\x0eassignedPhases\x12\x1d\n" +
 	"\aenabled\x18\x04 \x01(\bH\x01R\aenabled\x88\x01\x01\x12\x17\n" +
-	"\x04name\x18\v \x01(\tH\x02R\x04name\x88\x01\x01\x12\x19\n" +
-	"\x05delay\x18\x05 \x01(\tH\x03R\x05delay\x88\x01\x01\x12\x1b\n" +
-	"\x06extend\x18\x06 \x01(\tH\x04R\x06extend\x88\x01\x01\x12@\n" +
+	"\x04name\x18\v \x01(\tH\x02R\x04name\x88\x01\x01\x12\x1c\n" +
+	"\adelay_s\x18\f \x01(\tH\x03R\x06delayS\x88\x01\x01\x12\x1e\n" +
+	"\bextend_s\x18\r \x01(\tH\x04R\aextendS\x88\x01\x01\x12@\n" +
 	"\x04mode\x18\a \x01(\x0e2'.openits.signal_control.v1.DetectorModeH\x05R\x04mode\x88\x01\x01\x12#\n" +
 	"\rextend_phases\x18\b \x03(\rR\fextendPhases\x12S\n" +
 	"\vfail_action\x18\t \x01(\x0e2-.openits.signal_control.v1.DetectorFailActionH\x06R\n" +
@@ -4698,18 +4701,19 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\f_detector_idB\n" +
 	"\n" +
 	"\b_enabledB\a\n" +
-	"\x05_nameB\b\n" +
-	"\x06_delayB\t\n" +
-	"\a_extendB\a\n" +
+	"\x05_nameB\n" +
+	"\n" +
+	"\b_delay_sB\v\n" +
+	"\t_extend_sB\a\n" +
 	"\x05_modeB\x0e\n" +
-	"\f_fail_action\"\x88\x02\n" +
-	"\vDiagnostics\x123\n" +
-	"\x13no_activity_minutes\x18\x01 \x01(\rH\x00R\x11noActivityMinutes\x88\x01\x01\x125\n" +
-	"\x14max_presence_minutes\x18\x02 \x01(\rH\x01R\x12maxPresenceMinutes\x88\x01\x01\x12>\n" +
-	"\x19erratic_counts_per_minute\x18\x03 \x01(\rH\x02R\x16erraticCountsPerMinute\x88\x01\x01B\x16\n" +
-	"\x14_no_activity_minutesB\x17\n" +
-	"\x15_max_presence_minutesB\x1c\n" +
-	"\x1a_erratic_counts_per_minute\"\xb6\x02\n" +
+	"\f_fail_actionJ\x04\b\x05\x10\x06J\x04\b\x06\x10\aR\x05delayR\x06extend\"\xa7\x02\n" +
+	"\vDiagnostics\x12+\n" +
+	"\x0fno_activity_min\x18\x04 \x01(\rH\x00R\rnoActivityMin\x88\x01\x01\x12-\n" +
+	"\x10max_presence_min\x18\x05 \x01(\rH\x01R\x0emaxPresenceMin\x88\x01\x01\x12>\n" +
+	"\x19erratic_counts_per_minute\x18\x03 \x01(\rH\x02R\x16erraticCountsPerMinute\x88\x01\x01B\x12\n" +
+	"\x10_no_activity_minB\x13\n" +
+	"\x11_max_presence_minB\x1c\n" +
+	"\x1a_erratic_counts_per_minuteJ\x04\b\x01\x10\x02J\x04\b\x02\x10\x03R\x13no_activity_minutesR\x14max_presence_minutes\"\xb6\x02\n" +
 	"\x16DetectorsDetectorState\x12\x1b\n" +
 	"\x06active\x18\x01 \x01(\bH\x00R\x06active\x88\x01\x01\x12C\n" +
 	"\x0flast_activation\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x0elastActivation\x12,\n" +
@@ -4718,20 +4722,19 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\vmeasurement\x18\x05 \x01(\v2&.openits.signal_control.v1.MeasurementR\vmeasurementB\t\n" +
 	"\a_activeB\x12\n" +
 	"\x10_actuation_countB\b\n" +
-	"\x06_fault\"\xc6\x02\n" +
+	"\x06_fault\"\xf1\x02\n" +
 	"\vMeasurement\x12\x1b\n" +
-	"\x06volume\x18\x01 \x01(\rH\x00R\x06volume\x88\x01\x01\x12!\n" +
-	"\toccupancy\x18\x02 \x01(\tH\x01R\toccupancy\x88\x01\x01\x12 \n" +
-	"\tspeed_kmh\x18\x03 \x01(\tH\x02R\bspeedKmh\x88\x01\x01\x12?\n" +
-	"\x19collection_period_seconds\x18\x04 \x01(\rH\x03R\x17collectionPeriodSeconds\x88\x01\x01\x12;\n" +
+	"\x06volume\x18\x01 \x01(\rH\x00R\x06volume\x88\x01\x01\x12(\n" +
+	"\roccupancy_pct\x18\a \x01(\tH\x01R\foccupancyPct\x88\x01\x01\x12 \n" +
+	"\tspeed_kmh\x18\x03 \x01(\tH\x02R\bspeedKmh\x88\x01\x01\x123\n" +
+	"\x13collection_period_s\x18\b \x01(\rH\x03R\x11collectionPeriodS\x88\x01\x01\x12;\n" +
 	"\vobserved_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"observedAtB\t\n" +
-	"\a_volumeB\f\n" +
+	"\a_volumeB\x10\n" +
+	"\x0e_occupancy_pctB\f\n" +
 	"\n" +
-	"_occupancyB\f\n" +
-	"\n" +
-	"_speed_kmhB\x1c\n" +
-	"\x1a_collection_period_secondsJ\x04\b\x05\x10\x06R\fcollected_at\"H\n" +
+	"_speed_kmhB\x16\n" +
+	"\x14_collection_period_sJ\x04\b\x02\x10\x03J\x04\b\x04\x10\x05J\x04\b\x05\x10\x06R\toccupancyR\x19collection_period_secondsR\fcollected_at\"H\n" +
 	"\bOverlaps\x12<\n" +
 	"\aoverlap\x18\x01 \x03(\v2\".openits.signal_control.v1.OverlapR\aoverlap\"\xdb\x01\n" +
 	"\aOverlap\x12*\n" +
@@ -4739,24 +4742,24 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\x06config\x18\x02 \x01(\v2(.openits.signal_control.v1.OverlapConfigR\x06config\x12=\n" +
 	"\x05state\x18\x03 \x01(\v2'.openits.signal_control.v1.OverlapStateR\x05stateB\x11\n" +
 	"\x0f_overlap_numberJ\x04\b\x01\x10\x02R\n" +
-	"overlap_id\"\xe5\x03\n" +
+	"overlap_id\"\xbb\x04\n" +
 	"\rOverlapConfig\x12*\n" +
 	"\x0eoverlap_number\x18\t \x01(\rH\x00R\roverlapNumber\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x12\n" +
 	"\x04type\x18\x03 \x01(\tR\x04type\x12'\n" +
 	"\x0fincluded_phases\x18\x04 \x03(\rR\x0eincludedPhases\x12'\n" +
 	"\x0fmodifier_phases\x18\n" +
-	" \x03(\rR\x0emodifierPhases\x12*\n" +
-	"\x0etrailing_green\x18\x05 \x01(\tH\x02R\rtrailingGreen\x88\x01\x01\x12,\n" +
-	"\x0ftrailing_yellow\x18\x06 \x01(\tH\x03R\x0etrailingYellow\x88\x01\x01\x121\n" +
-	"\x12trailing_red_clear\x18\a \x01(\tH\x04R\x10trailingRedClear\x88\x01\x01\x120\n" +
+	" \x03(\rR\x0emodifierPhases\x12-\n" +
+	"\x10trailing_green_s\x18\v \x01(\tH\x02R\x0etrailingGreenS\x88\x01\x01\x12/\n" +
+	"\x11trailing_yellow_s\x18\f \x01(\tH\x03R\x0ftrailingYellowS\x88\x01\x01\x124\n" +
+	"\x14trailing_red_clear_s\x18\r \x01(\tH\x04R\x11trailingRedClearS\x88\x01\x01\x120\n" +
 	"\x03fya\x18\b \x01(\v2\x1e.openits.signal_control.v1.FyaR\x03fyaB\x11\n" +
 	"\x0f_overlap_numberB\a\n" +
-	"\x05_nameB\x11\n" +
-	"\x0f_trailing_greenB\x12\n" +
-	"\x10_trailing_yellowB\x15\n" +
-	"\x13_trailing_red_clearJ\x04\b\x01\x10\x02R\n" +
-	"overlap_id\"\xab\x01\n" +
+	"\x05_nameB\x13\n" +
+	"\x11_trailing_green_sB\x14\n" +
+	"\x12_trailing_yellow_sB\x17\n" +
+	"\x15_trailing_red_clear_sJ\x04\b\x01\x10\x02J\x04\b\x05\x10\x06J\x04\b\x06\x10\aJ\x04\b\a\x10\bR\n" +
+	"overlap_idR\x0etrailing_greenR\x0ftrailing_yellowR\x12trailing_red_clear\"\xab\x01\n" +
 	"\x03Fya\x125\n" +
 	"\x14protected_left_phase\x18\x01 \x01(\rH\x00R\x12protectedLeftPhase\x88\x01\x01\x129\n" +
 	"\x16opposing_through_phase\x18\x02 \x01(\rH\x01R\x14opposingThroughPhase\x88\x01\x01B\x17\n" +
@@ -4795,12 +4798,13 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\fCoordination\x12F\n" +
 	"\vtiming_plan\x18\x01 \x03(\v2%.openits.signal_control.v1.TimingPlanR\n" +
 	"timingPlan\x12B\n" +
-	"\x05state\x18\x02 \x01(\v2,.openits.signal_control.v1.CoordinationStateR\x05state\"\xe3\x04\n" +
+	"\x05state\x18\x02 \x01(\v2,.openits.signal_control.v1.CoordinationStateR\x05state\"\x8d\x05\n" +
 	"\n" +
 	"TimingPlan\x12\x1c\n" +
-	"\aplan_id\x18\x01 \x01(\rH\x00R\x06planId\x88\x01\x01\x12!\n" +
-	"\fcycle_length\x18\x02 \x01(\rR\vcycleLength\x12\x1b\n" +
-	"\x06offset\x18\x03 \x01(\rH\x01R\x06offset\x88\x01\x01\x12-\n" +
+	"\aplan_id\x18\x01 \x01(\rH\x00R\x06planId\x88\x01\x01\x12$\n" +
+	"\x0ecycle_length_s\x18\n" +
+	" \x01(\rR\fcycleLengthS\x12\x1e\n" +
+	"\boffset_s\x18\v \x01(\rH\x01R\aoffsetS\x88\x01\x01\x12-\n" +
 	"\x12coordinated_phases\x18\x05 \x03(\rR\x11coordinatedPhases\x12Z\n" +
 	"\x10offset_reference\x18\x06 \x01(\x0e2*.openits.signal_control.v1.OffsetReferenceH\x02R\x0foffsetReference\x88\x01\x01\x12W\n" +
 	"\x0ftransition_mode\x18\a \x01(\x0e2).openits.signal_control.v1.TransitionModeH\x03R\x0etransitionMode\x88\x01\x01\x12R\n" +
@@ -4809,20 +4813,21 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"sequenceId\x88\x01\x01\x126\n" +
 	"\x05split\x18\x04 \x03(\v2 .openits.signal_control.v1.SplitR\x05splitB\n" +
 	"\n" +
-	"\b_plan_idB\t\n" +
-	"\a_offsetB\x13\n" +
+	"\b_plan_idB\v\n" +
+	"\t_offset_sB\x13\n" +
 	"\x11_offset_referenceB\x12\n" +
 	"\x10_transition_modeB\x11\n" +
 	"\x0f_force_off_modeB\x0e\n" +
-	"\f_sequence_id\"\xd5\x01\n" +
+	"\f_sequence_idJ\x04\b\x02\x10\x03J\x04\b\x03\x10\x04R\fcycle_lengthR\x06offset\"\xd8\x01\n" +
 	"\x05Split\x12&\n" +
-	"\fphase_number\x18\x01 \x01(\rH\x00R\vphaseNumber\x88\x01\x01\x12(\n" +
-	"\rsplit_seconds\x18\x02 \x01(\rH\x01R\fsplitSeconds\x88\x01\x01\x12H\n" +
+	"\fphase_number\x18\x01 \x01(\rH\x00R\vphaseNumber\x88\x01\x01\x12\x1c\n" +
+	"\asplit_s\x18\x04 \x01(\rH\x01R\x06splitS\x88\x01\x01\x12H\n" +
 	"\n" +
 	"split_mode\x18\x03 \x01(\x0e2$.openits.signal_control.v1.SplitModeH\x02R\tsplitMode\x88\x01\x01B\x0f\n" +
-	"\r_phase_numberB\x10\n" +
-	"\x0e_split_secondsB\r\n" +
-	"\v_split_mode\"\x7f\n" +
+	"\r_phase_numberB\n" +
+	"\n" +
+	"\b_split_sB\r\n" +
+	"\v_split_modeJ\x04\b\x02\x10\x03R\rsplit_seconds\"\x7f\n" +
 	"\x11CoordinationState\x12$\n" +
 	"\vactive_plan\x18\x01 \x01(\rH\x00R\n" +
 	"activePlan\x88\x01\x01\x12$\n" +
@@ -4895,35 +4900,37 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\fpreemptor_id\x18\x01 \x01(\rH\x00R\vpreemptorId\x88\x01\x01\x12B\n" +
 	"\x06config\x18\x02 \x01(\v2*.openits.signal_control.v1.PreemptorConfigR\x06config\x12?\n" +
 	"\x05state\x18\x03 \x01(\v2).openits.signal_control.v1.PreemptorStateR\x05stateB\x0f\n" +
-	"\r_preemptor_id\"\xdc\x06\n" +
+	"\r_preemptor_id\"\xe5\a\n" +
 	"\x0fPreemptorConfig\x12&\n" +
 	"\fpreemptor_id\x18\x01 \x01(\rH\x00R\vpreemptorId\x88\x01\x01\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\tR\x04type\x12*\n" +
-	"\x0epriority_order\x18\x03 \x01(\rH\x01R\rpriorityOrder\x88\x01\x01\x12(\n" +
-	"\rdelay_seconds\x18\x04 \x01(\rH\x02R\fdelaySeconds\x88\x01\x01\x128\n" +
-	"\x16min_green_before_entry\x18\x05 \x01(\rH\x03R\x13minGreenBeforeEntry\x88\x01\x01\x126\n" +
-	"\x15min_walk_before_entry\x18\x06 \x01(\rH\x04R\x12minWalkBeforeEntry\x88\x01\x01\x12?\n" +
-	"\x1amin_ped_clear_before_entry\x18\f \x01(\rH\x05R\x16minPedClearBeforeEntry\x88\x01\x01\x12R\n" +
+	"\x0epriority_order\x18\x03 \x01(\rH\x01R\rpriorityOrder\x88\x01\x01\x12\x1c\n" +
+	"\adelay_s\x18\x0e \x01(\rH\x02R\x06delayS\x88\x01\x01\x12;\n" +
+	"\x18min_green_before_entry_s\x18\x0f \x01(\rH\x03R\x14minGreenBeforeEntryS\x88\x01\x01\x129\n" +
+	"\x17min_walk_before_entry_s\x18\x10 \x01(\rH\x04R\x13minWalkBeforeEntryS\x88\x01\x01\x12B\n" +
+	"\x1cmin_ped_clear_before_entry_s\x18\x11 \x01(\rH\x05R\x17minPedClearBeforeEntryS\x88\x01\x01\x12R\n" +
 	"\x0ftrack_clearance\x18\a \x01(\v2).openits.signal_control.v1.TrackClearanceR\x0etrackClearance\x12!\n" +
-	"\fdwell_phases\x18\b \x03(\rR\vdwellPhases\x12/\n" +
-	"\x11min_dwell_seconds\x18\t \x01(\rH\x06R\x0fminDwellSeconds\x88\x01\x01\x123\n" +
-	"\x13flash_dwell_seconds\x18\r \x01(\rH\aR\x11flashDwellSeconds\x88\x01\x01\x12\x1f\n" +
+	"\fdwell_phases\x18\b \x03(\rR\vdwellPhases\x12#\n" +
+	"\vmin_dwell_s\x18\x12 \x01(\rH\x06R\tminDwellS\x88\x01\x01\x12'\n" +
+	"\rflash_dwell_s\x18\x13 \x01(\rH\aR\vflashDwellS\x88\x01\x01\x12\x1f\n" +
 	"\vexit_phases\x18\n" +
 	" \x03(\rR\n" +
-	"exitPhases\x125\n" +
-	"\x14max_presence_seconds\x18\v \x01(\rH\bR\x12maxPresenceSeconds\x88\x01\x01B\x0f\n" +
+	"exitPhases\x12)\n" +
+	"\x0emax_presence_s\x18\x14 \x01(\rH\bR\fmaxPresenceS\x88\x01\x01B\x0f\n" +
 	"\r_preemptor_idB\x11\n" +
-	"\x0f_priority_orderB\x10\n" +
-	"\x0e_delay_secondsB\x19\n" +
-	"\x17_min_green_before_entryB\x18\n" +
-	"\x16_min_walk_before_entryB\x1d\n" +
-	"\x1b_min_ped_clear_before_entryB\x14\n" +
-	"\x12_min_dwell_secondsB\x16\n" +
-	"\x14_flash_dwell_secondsB\x17\n" +
-	"\x15_max_presence_seconds\"M\n" +
+	"\x0f_priority_orderB\n" +
+	"\n" +
+	"\b_delay_sB\x1b\n" +
+	"\x19_min_green_before_entry_sB\x1a\n" +
+	"\x18_min_walk_before_entry_sB\x1f\n" +
+	"\x1d_min_ped_clear_before_entry_sB\x0e\n" +
+	"\f_min_dwell_sB\x10\n" +
+	"\x0e_flash_dwell_sB\x11\n" +
+	"\x0f_max_presence_sJ\x04\b\x04\x10\x05J\x04\b\x05\x10\x06J\x04\b\x06\x10\aJ\x04\b\t\x10\n" +
+	"J\x04\b\v\x10\fJ\x04\b\f\x10\rJ\x04\b\r\x10\x0eR\rdelay_secondsR\x16min_green_before_entryR\x15min_walk_before_entryR\x11min_dwell_secondsR\x14max_presence_secondsR\x1amin_ped_clear_before_entryR\x13flash_dwell_seconds\"V\n" +
 	"\x0eTrackClearance\x12\x16\n" +
-	"\x06phases\x18\x01 \x03(\rR\x06phases\x12#\n" +
-	"\rgreen_seconds\x18\x02 \x01(\rR\fgreenSeconds\"\x8c\x02\n" +
+	"\x06phases\x18\x01 \x03(\rR\x06phases\x12\x17\n" +
+	"\agreen_s\x18\x03 \x01(\rR\x06greenSJ\x04\b\x02\x10\x03R\rgreen_seconds\"\x8c\x02\n" +
 	"\x0ePreemptorState\x12\x1b\n" +
 	"\x06active\x18\x01 \x01(\bH\x00R\x06active\x88\x01\x01\x12=\n" +
 	"\factive_since\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\vactiveSince\x12Q\n" +
@@ -4940,20 +4947,20 @@ const file_openits_signal_control_v1_state_proto_rawDesc = "" +
 	"\vstrategy_id\x18\x01 \x01(\rH\x00R\n" +
 	"strategyId\x88\x01\x01\x12A\n" +
 	"\x06config\x18\x02 \x01(\v2).openits.signal_control.v1.StrategyConfigR\x06configB\x0e\n" +
-	"\f_strategy_id\"\xc8\x03\n" +
+	"\f_strategy_id\"\xf6\x03\n" +
 	"\x0eStrategyConfig\x12$\n" +
 	"\vstrategy_id\x18\x01 \x01(\rH\x00R\n" +
 	"strategyId\x88\x01\x01\x12*\n" +
-	"\x0epriority_class\x18\x02 \x01(\tH\x01R\rpriorityClass\x88\x01\x01\x12:\n" +
-	"\x17max_early_green_seconds\x18\x03 \x01(\rH\x02R\x14maxEarlyGreenSeconds\x88\x01\x01\x12B\n" +
-	"\x1bmax_green_extension_seconds\x18\x04 \x01(\rH\x03R\x18maxGreenExtensionSeconds\x88\x01\x01\x12A\n" +
-	"\x1areservice_interval_seconds\x18\x05 \x01(\rH\x04R\x18reserviceIntervalSeconds\x88\x01\x01\x12#\n" +
+	"\x0epriority_class\x18\x02 \x01(\tH\x01R\rpriorityClass\x88\x01\x01\x12.\n" +
+	"\x11max_early_green_s\x18\a \x01(\rH\x02R\x0emaxEarlyGreenS\x88\x01\x01\x126\n" +
+	"\x15max_green_extension_s\x18\b \x01(\rH\x03R\x12maxGreenExtensionS\x88\x01\x01\x125\n" +
+	"\x14reservice_interval_s\x18\t \x01(\rH\x04R\x12reserviceIntervalS\x88\x01\x01\x12#\n" +
 	"\rserved_phases\x18\x06 \x03(\rR\fservedPhasesB\x0e\n" +
 	"\f_strategy_idB\x11\n" +
-	"\x0f_priority_classB\x1a\n" +
-	"\x18_max_early_green_secondsB\x1e\n" +
-	"\x1c_max_green_extension_secondsB\x1d\n" +
-	"\x1b_reservice_interval_seconds\"`\n" +
+	"\x0f_priority_classB\x14\n" +
+	"\x12_max_early_green_sB\x18\n" +
+	"\x16_max_green_extension_sB\x17\n" +
+	"\x15_reservice_interval_sJ\x04\b\x03\x10\x04J\x04\b\x04\x10\x05J\x04\b\x05\x10\x06R\x17max_early_green_secondsR\x1bmax_green_extension_secondsR\x1areservice_interval_seconds\"`\n" +
 	"\rPriorityState\x12O\n" +
 	"\x0eactive_request\x18\x01 \x03(\v2(.openits.signal_control.v1.ActiveRequestR\ractiveRequest\"\xae\x02\n" +
 	"\rActiveRequest\x12\"\n" +

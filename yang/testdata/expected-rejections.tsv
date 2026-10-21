@@ -29,13 +29,13 @@ invalid-incident-severity-fault-axis.json	Invalid enumeration value "warning". (
 invalid-latitude-out-of-range.json	Unsatisfied range - value "95.0" is out of the allowed range. (Data location "/openits-perception:perception-sensor/config/latitude"
 invalid-ledstar-max-below-min.json	max-display-minutes, when min-display-minutes is set, must be >= it
 invalid-map-broadcast-interval-out-of-range.json	Unsatisfied range - value "100" is out of the allowed range. (Data location "/openits-rsu:rsu/messages/map/config/broadcast-interval"
-invalid-max-green-2-without-max-green.json	max-green-2 (dynamic / second maximum green) is meaningful only when
+invalid-max-green-2-without-max-green.json	max-green-2-s (dynamic / second maximum green) is meaningful only when
 invalid-max-green-less-than-min.json	Maximum green must be non-zero and, when min-green-s is present, >=
-invalid-min-gap-exceeds-passage.json	The reducing gap floor (min-gap) must not exceed the passage-s time it
+invalid-min-gap-exceeds-passage.json	The reducing gap floor (min-gap-s) must not exceed the passage-s time it
 invalid-min-green-zero.json	Minimum green must be at least 1 second (operational floor forbidding
-invalid-offset-exceeds-cycle.json	The coordination offset must be less than the cycle length (offset is
-invalid-overlap-trailing-red-clear-negative.json	Overlap trailing-red-clear must be non-negative when specified.
-invalid-overlap-trailing-yellow-zero.json	An overlap that specifies a trailing-yellow interval must make it
+invalid-offset-exceeds-cycle.json	The coordination offset must be less than the cycle length (offset-s is
+invalid-overlap-trailing-red-clear-negative.json	Overlap trailing-red-clear-s must be non-negative when specified.
+invalid-overlap-trailing-yellow-zero.json	An overlap that specifies a trailing-yellow-s interval must make it
 invalid-ped-channel-flashes.json	A pedestrian channel must be dark (flash-state 'none') during cabinet
 invalid-ped-recall-without-walk.json	A phase with pedestrian recall or rest-in-walk must serve a
 invalid-perception-wrongway-no-legal-heading.json	a zone whose function is wrong-way requires legal-heading to detect

@@ -17,7 +17,7 @@
             "name": "NB left FYA",
             "type": "openits-signal-control-types:overlap-fya",
             "included-phases": [5],
-            "trailing-green": "0.0", "trailing-yellow": "3.0", "trailing-red-clear": "1.0",
+            "trailing-green-s": "0.0", "trailing-yellow-s": "3.0", "trailing-red-clear-s": "1.0",
             "fya": { "protected-left-phase": 5, "opposing-through-phase": 2 }
           },
           "state": { "current-interval": "flashing-yellow-arrow", "active": true }

@@ -6210,7 +6210,7 @@ components:
                                         maximum: 65535
                                         minimum: 1
                                         type: integer
-                                    occupancy:
+                                    occupancy-pct:
                                         type: string
                                     phase-served:
                                         maximum: 40
@@ -7675,7 +7675,7 @@ components:
                             type: string
                         kind:
                             type: string
-                        magnitude-seconds:
+                        magnitude-s:
                             type: string
                         observed-by:
                             maxLength: 64
@@ -7778,7 +7778,7 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
-                        adjustment-seconds:
+                        adjustment-s:
                             type: string
                         denial-reason:
                             enum:

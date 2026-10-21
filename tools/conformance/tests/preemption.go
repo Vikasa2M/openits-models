@@ -11,7 +11,7 @@ import (
 // preemptor data tree (ygot's Validate() does not evaluate XPath `must`
 // statements, so this is the only place the MUTCD Ch. 8C invariant is
 // actually checked end-to-end). A mutation that drops the track-
-// clearance container, or zeros its green-seconds, on a railroad
+// clearance container, or zeros its green-s, on a railroad
 // preemptor fails this check. This is a data-tree check, distinct from
 // TestPreemption_EventFired/EventTypeShape below, which check the
 // preemption-activated notification event, not the commanded table.
@@ -25,7 +25,7 @@ func TestPreemption_RailTrackClearance(t *T, obs *Observation) {
 		if cfg.GetType() != yangpkg.OpenitsSignalControlTypes_PreemptionType_preempt_railroad {
 			continue
 		}
-		if cfg.GetTrackClearance() == nil || cfg.GetTrackClearance().GetGreenSeconds() == 0 {
+		if cfg.GetTrackClearance() == nil || cfg.GetTrackClearance().GetGreenS() == 0 {
 			t.Errorf("railroad preemptor %d has no track-clearance green time", pr.GetPreemptorId())
 		}
 	}

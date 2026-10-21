@@ -26,7 +26,9 @@ module openits-signal-control-mutcd {
   revision 2026-10-20 {
     description
       "Target the renamed openits-signal-control phase-timing leaves
-       (yellow-change-s, red-clear-s, walk-s, ped-clear-s).";
+       (yellow-change-s, red-clear-s, walk-s, ped-clear-s) and
+       overlap and leading-pedestrian-interval leaves (trailing-yellow-s,
+       trailing-red-clear-s, leading-ped-interval-s).";
   }
   revision 2026-08-05 {
     description
@@ -124,7 +126,7 @@ module openits-signal-control-mutcd {
     }
   }
 
-  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:leading-ped-interval-seconds" {
+  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:leading-ped-interval-s" {
     deviate add {
       must ". = 0.0 or . >= 3.0" {
         error-message
@@ -144,7 +146,7 @@ module openits-signal-control-mutcd {
     }
   }
 
-  deviation "/openits-sc:signal-controller/openits-sc:overlaps/openits-sc:overlap/openits-sc:config/openits-sc:trailing-yellow" {
+  deviation "/openits-sc:signal-controller/openits-sc:overlaps/openits-sc:overlap/openits-sc:config/openits-sc:trailing-yellow-s" {
     deviate add {
       must ". >= 3.0 and . <= 6.0" {
         error-message
@@ -154,7 +156,7 @@ module openits-signal-control-mutcd {
     }
   }
 
-  deviation "/openits-sc:signal-controller/openits-sc:overlaps/openits-sc:overlap/openits-sc:config/openits-sc:trailing-red-clear" {
+  deviation "/openits-sc:signal-controller/openits-sc:overlaps/openits-sc:overlap/openits-sc:config/openits-sc:trailing-red-clear-s" {
     deviate add {
       must ". <= 6.0" {
         error-message
