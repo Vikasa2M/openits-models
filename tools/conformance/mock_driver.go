@@ -465,6 +465,31 @@ func subscribeASC(ctx context.Context, out chan<- tests.EventEnvelope, window ti
 				Type: "openits-signal-control-types:preempt-emergency-vehicle",
 			},
 		},
+		// Detector events name the detector by its own table: vehicle
+		// detector 1 and pedestrian detector 1 above.
+		{
+			Subject:  base + ".detector-transition",
+			CEType:   "openits.signal-control.detector-transition.v1",
+			CESource: "urn:openits:controller:us-tx:txdot:d07:i35-exit-214",
+			CEID:     "01HXYR3K9T8M2NAEQF5P4R6V94",
+			CETime:   time.Now().UTC(),
+			Data: &signalcontrolv1.DetectorTransition{
+				Kind:       "openits-signal-control-types:vehicle-detector-on",
+				DetectorId: 1,
+			},
+		},
+		{
+			Subject:  base + ".pedestrian-event",
+			CEType:   "openits.signal-control.pedestrian-event.v1",
+			CESource: "urn:openits:controller:us-tx:txdot:d07:i35-exit-214",
+			CEID:     "01HXYR3K9T8M2NAEQF5P4R6V95",
+			CETime:   time.Now().UTC(),
+			Data: &signalcontrolv1.PedestrianEvent{
+				Kind:                 "openits-signal-control-types:ped-detector-on",
+				PhaseNumber:          proto.Uint32(2),
+				PedestrianDetectorId: proto.Uint32(1),
+			},
+		},
 	}
 	stampHeaders(events, "mock-boot-1")
 	for _, e := range events {

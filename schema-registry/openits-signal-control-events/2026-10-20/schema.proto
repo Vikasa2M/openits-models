@@ -85,10 +85,10 @@ message DetectorReportDetector {
 }
 
 message DetectorTransition {
-  reserved 4, 5;
-  reserved "lane", "approach";
+  reserved 2, 4, 5;
+  reserved "channel", "lane", "approach";
   string kind = 99;
-  uint32 channel = 2;
+  uint32 detector_id = 11;
   optional uint32 phase_served = 6;
   optional string observed_by = 8;
   google.protobuf.Timestamp occurred_at = 7;
@@ -137,9 +137,11 @@ message OverlapChange {
 }
 
 message PedestrianEvent {
+  reserved 3;
+  reserved "detector_channel";
   string kind = 99;
   optional uint32 phase_number = 2;
-  optional uint32 detector_channel = 3;
+  optional uint32 pedestrian_detector_id = 9;
   optional string observed_by = 6;
   google.protobuf.Timestamp occurred_at = 5;
   optional string owner = 7;

@@ -662,7 +662,7 @@ func (x *DetectorReportDetector) GetOccupancyPct() string {
 type DetectorTransition struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	Channel        uint32                 `protobuf:"varint,2,opt,name=channel,proto3" json:"channel,omitempty"`
+	DetectorId     uint32                 `protobuf:"varint,11,opt,name=detector_id,json=detectorId,proto3" json:"detector_id,omitempty"`
 	PhaseServed    *uint32                `protobuf:"varint,6,opt,name=phase_served,json=phaseServed,proto3,oneof" json:"phase_served,omitempty"`
 	ObservedBy     *string                `protobuf:"bytes,8,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
@@ -712,9 +712,9 @@ func (x *DetectorTransition) GetKind() string {
 	return ""
 }
 
-func (x *DetectorTransition) GetChannel() uint32 {
+func (x *DetectorTransition) GetDetectorId() uint32 {
 	if x != nil {
-		return x.Channel
+		return x.DetectorId
 	}
 	return 0
 }
@@ -1080,19 +1080,19 @@ func (x *OverlapChange) GetSourceDeviceId() string {
 }
 
 type PedestrianEvent struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	Kind            string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	PhaseNumber     *uint32                `protobuf:"varint,2,opt,name=phase_number,json=phaseNumber,proto3,oneof" json:"phase_number,omitempty"`
-	DetectorChannel *uint32                `protobuf:"varint,3,opt,name=detector_channel,json=detectorChannel,proto3,oneof" json:"detector_channel,omitempty"`
-	ObservedBy      *string                `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
-	OccurredAt      *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner           *string                `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
-	Sequence        uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
-	SequenceEpoch   string                 `protobuf:"bytes,4,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
-	Source          *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
-	SourceDeviceId  string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Kind                 string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
+	PhaseNumber          *uint32                `protobuf:"varint,2,opt,name=phase_number,json=phaseNumber,proto3,oneof" json:"phase_number,omitempty"`
+	PedestrianDetectorId *uint32                `protobuf:"varint,9,opt,name=pedestrian_detector_id,json=pedestrianDetectorId,proto3,oneof" json:"pedestrian_detector_id,omitempty"`
+	ObservedBy           *string                `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
+	OccurredAt           *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
+	Owner                *string                `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	Sequence             uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch        string                 `protobuf:"bytes,4,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
+	Source               *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
+	SourceDeviceId       string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *PedestrianEvent) Reset() {
@@ -1139,9 +1139,9 @@ func (x *PedestrianEvent) GetPhaseNumber() uint32 {
 	return 0
 }
 
-func (x *PedestrianEvent) GetDetectorChannel() uint32 {
-	if x != nil && x.DetectorChannel != nil {
-		return *x.DetectorChannel
+func (x *PedestrianEvent) GetPedestrianDetectorId() uint32 {
+	if x != nil && x.PedestrianDetectorId != nil {
+		return *x.PedestrianDetectorId
 	}
 	return 0
 }
@@ -2414,10 +2414,11 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"\f_detector_idB\x0f\n" +
 	"\r_phase_servedB\t\n" +
 	"\a_volumeB\x10\n" +
-	"\x0e_occupancy_pctJ\x04\b\x04\x10\x05R\toccupancy\"\xd2\x03\n" +
+	"\x0e_occupancy_pctJ\x04\b\x04\x10\x05R\toccupancy\"\xe8\x03\n" +
 	"\x12DetectorTransition\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12\x18\n" +
-	"\achannel\x18\x02 \x01(\rR\achannel\x12&\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12\x1f\n" +
+	"\vdetector_id\x18\v \x01(\rR\n" +
+	"detectorId\x12&\n" +
 	"\fphase_served\x18\x06 \x01(\rH\x00R\vphaseServed\x88\x01\x01\x12$\n" +
 	"\vobserved_by\x18\b \x01(\tH\x01R\n" +
 	"observedBy\x88\x01\x01\x12;\n" +
@@ -2431,7 +2432,7 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x0f\n" +
 	"\r_phase_servedB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_ownerJ\x04\b\x04\x10\x05J\x04\b\x05\x10\x06R\x04laneR\bapproach\"\xf8\t\n" +
+	"\x06_ownerJ\x04\b\x02\x10\x03J\x04\b\x04\x10\x05J\x04\b\x05\x10\x06R\achannelR\x04laneR\bapproach\"\xf8\t\n" +
 	"\x17OperationalStatusReport\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12T\n" +
 	"\x0ecabinet_output\x18\f \x01(\x0e2(.openits.signal_control.v1.CabinetOutputH\x00R\rcabinetOutput\x88\x01\x01\x12L\n" +
@@ -2486,11 +2487,11 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xde\x03\n" +
+	"\x06_owner\"\x87\x04\n" +
 	"\x0fPedestrianEvent\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12&\n" +
-	"\fphase_number\x18\x02 \x01(\rH\x00R\vphaseNumber\x88\x01\x01\x12.\n" +
-	"\x10detector_channel\x18\x03 \x01(\rH\x01R\x0fdetectorChannel\x88\x01\x01\x12$\n" +
+	"\fphase_number\x18\x02 \x01(\rH\x00R\vphaseNumber\x88\x01\x01\x129\n" +
+	"\x16pedestrian_detector_id\x18\t \x01(\rH\x01R\x14pedestrianDetectorId\x88\x01\x01\x12$\n" +
 	"\vobserved_by\x18\x06 \x01(\tH\x02R\n" +
 	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
@@ -2500,10 +2501,10 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"\x0esequence_epoch\x18\x04 \x01(\tR\rsequenceEpoch\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x0f\n" +
-	"\r_phase_numberB\x13\n" +
-	"\x11_detector_channelB\x0e\n" +
+	"\r_phase_numberB\x19\n" +
+	"\x17_pedestrian_detector_idB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xfc\x03\n" +
+	"\x06_ownerJ\x04\b\x03\x10\x04R\x10detector_channel\"\xfc\x03\n" +
 	"\x10PhaseStateChange\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12!\n" +
 	"\fphase_number\x18\x02 \x01(\rR\vphaseNumber\x12$\n" +

@@ -31,7 +31,11 @@ module openits-signal-control-events {
       "Name every remaining timing and percentage leaf with its unit:
        detector-report occupancy-pct, tsam-recommendation-applied
        magnitude-s, tsp-event adjustment-s (which also gains a seconds
-       units statement). Breaking: the leaves are renamed.";
+       units statement). Name the detector in detector events by its own
+       table: pedestrian-event detector-channel becomes
+       pedestrian-detector-id (a pedestrian-detectors key) and
+       detector-transition channel becomes detector-id (a detectors key).
+       Breaking: the leaves are renamed.";
   }
   revision 2026-10-17 {
     description
@@ -197,7 +201,12 @@ module openits-signal-control-events {
     uses openits-types:event-header;
 
     leaf phase-number     { type openits-nema:phase-number; description "Pedestrian phase the event belongs to."; }
-    leaf detector-channel { type openits-sc-types:detector-channel; description "Ped-detector channel, when the event is detector-side."; }
+    leaf pedestrian-detector-id {
+      type openits-sc-types:pedestrian-detector-number;
+      description
+        "Pedestrian detector (pedestrian-detectors table) for detector-side
+         kinds: ped-detector-on, -off, -failed, -restored.";
+    }
     uses openits-types:wire-source;
   }
 
@@ -218,7 +227,11 @@ module openits-signal-control-events {
     }
     uses openits-types:event-header;
 
-    leaf channel { type openits-sc-types:detector-channel; mandatory true; description "Detector channel number on the controller."; }
+    leaf detector-id {
+      type openits-sc-types:detector-channel;
+      mandatory true;
+      description "Vehicle detector (detectors table) this transition is for.";
+    }
     leaf phase-served { type openits-nema:phase-number; description "Phase this detector calls; omitted when the detector calls no phase."; }
     uses openits-types:wire-source;
   }

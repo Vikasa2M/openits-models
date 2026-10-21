@@ -43,11 +43,6 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
-    "detector-channel": {
-      "maximum": 65535,
-      "minimum": 1,
-      "type": "integer"
-    },
     "kind": {
       "type": "string"
     },
@@ -63,6 +58,11 @@
     },
     "owner": {
       "type": "string"
+    },
+    "pedestrian-detector-id": {
+      "maximum": 255,
+      "minimum": 1,
+      "type": "integer"
     },
     "phase-number": {
       "maximum": 40,

@@ -6323,7 +6323,7 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
-                        channel:
+                        detector-id:
                             maximum: 65535
                             minimum: 1
                             type: integer
@@ -6357,7 +6357,7 @@ components:
                             pattern: ^([a-zA-Z0-9_-]+)$
                             type: string
                     required:
-                        - channel
+                        - detector-id
                         - kind
                         - occurred-at
                         - sequence
@@ -7004,10 +7004,6 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
-                        detector-channel:
-                            maximum: 65535
-                            minimum: 1
-                            type: integer
                         kind:
                             type: string
                         observed-by:
@@ -7020,6 +7016,10 @@ components:
                             type: string
                         owner:
                             type: string
+                        pedestrian-detector-id:
+                            maximum: 255
+                            minimum: 1
+                            type: integer
                         phase-number:
                             maximum: 40
                             minimum: 1

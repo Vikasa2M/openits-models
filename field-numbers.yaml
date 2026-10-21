@@ -2603,6 +2603,7 @@ messages:
     openits.signal_control.v1.DetectorTransition:
         approach: 5
         channel: 2
+        detector_id: 11
         kind: 99
         lane: 4
         observed_by: 8
@@ -2804,6 +2805,7 @@ messages:
         observed_by: 6
         occurred_at: 5
         owner: 7
+        pedestrian_detector_id: 9
         phase_number: 2
         sequence: 8
         sequence_epoch: 4
