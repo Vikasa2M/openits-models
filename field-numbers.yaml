@@ -1527,6 +1527,7 @@ messages:
         current_state: 13
         direction_open_permitted: 1
         last_command_at: 16
+        last_command_by: 3
         last_command_source: 15
         open_direction: 14
         transition: 17

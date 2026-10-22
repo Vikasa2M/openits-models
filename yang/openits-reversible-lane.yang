@@ -78,7 +78,7 @@ module openits-reversible-lane {
 
   revision 2026-10-22 {
     description
-      "Commanded lane-use signals follow MUTCD Chapter 4T. Replace the green-arrow/flashing-yellow-X musts on lane/config with the 4T.04 prohibitions (downward green arrow needs the opposing red X; no yellow X, white one-way arrow, white two-way with one-way, or white one-way with yellow X over one lane to both directions) and refuse commanding the legacy flashing-yellow-x. Readback in state stays unconstrained. Rename control/state/last-command-source to control-source and retype it from a free-form string to an identityref based on openits-types:control-source. Breaking: lcs-indication green-arrow is now downward-green-arrow; consumers read control-source instead of last-command-source.";
+      "Commanded lane-use signals follow MUTCD Chapter 4T. Replace the green-arrow/flashing-yellow-X musts on lane/config with the 4T.04 prohibitions (downward green arrow needs the opposing red X; no yellow X, white one-way arrow, white two-way with one-way, or white one-way with yellow X over one lane to both directions) and refuse commanding the legacy flashing-yellow-x. Readback in state stays unconstrained. Rename control/state/last-command-source to control-source and retype it from a free-form string to an identityref based on openits-types:control-source. Breaking: lcs-indication green-arrow is now downward-green-arrow; consumers read control-source (authority) and last-command-by (issuing actor) instead of last-command-source.";
     reference "MUTCD 11th Edition (2023) Sections 4T.02, 4T.04.";
   }
   revision 2026-10-16 {
@@ -424,11 +424,18 @@ module openits-reversible-lane {
             "Authority class that issued the most recent state command
              (central, local backup, manual, schedule, ...). Replaces
              last-command-source, a free-form actor id; the issuing
-             actor's identifier is not carried here.";
+             actor's identifier is carried by last-command-by.";
         }
         leaf last-command-at {
           type yang:date-and-time;
           description "Wall-clock time of the most recent state command.";
+        }
+        leaf last-command-by {
+          type string;
+          description
+            "Operator or system that issued the most recent command
+             (free-form id, as reported by the device). Pairs with
+             control-source, which names the authority.";
         }
         leaf changeover-permitted {
           type boolean;

@@ -49,15 +49,54 @@ func TestReversibleLane_IndicationSequence_Table(t *testing.T) {
 			}
 		})
 	}
-	t.Run("absent previous is skipped", func(t *testing.T) {
+	t.Run("absent previous with no history passes", func(t *testing.T) {
 		r := Run("seq", TestReversibleLane_IndicationSequence, &Observation{Events: []EventEnvelope{lcsChange(nil, pDark)}})
 		if !r.Pass {
 			t.Fatalf("want pass: %s", r.Message)
 		}
 	})
-	t.Run("no event fails", func(t *testing.T) {
-		if Run("seq", TestReversibleLane_IndicationSequence, &Observation{}).Pass {
-			t.Fatal("want fail with no events")
+	t.Run("unknown to X passes", func(t *testing.T) {
+		u := reversiblelanev1.LcsIndication_LCS_INDICATION_UNKNOWN
+		r := Run("seq", TestReversibleLane_IndicationSequence, &Observation{Events: []EventEnvelope{lcsChange(&u, pRed)}})
+		if !r.Pass {
+			t.Fatalf("want pass: %s", r.Message)
+		}
+	})
+	t.Run("chain break fails", func(t *testing.T) {
+		y := pYel
+		r := Run("seq", TestReversibleLane_IndicationSequence, &Observation{Events: []EventEnvelope{
+			lcsChange(nil, pGreen), lcsChange(&y, pRed),
+		}})
+		if r.Pass {
+			t.Fatal("want fail: second event's previous (yellow) differs from remembered green")
+		}
+	})
+	t.Run("absent previous uses remembered value", func(t *testing.T) {
+		r := Run("seq", TestReversibleLane_IndicationSequence, &Observation{Events: []EventEnvelope{
+			lcsChange(nil, pGreen), lcsChange(nil, pDark),
+		}})
+		if r.Pass {
+			t.Fatal("want fail: green then dark with absent previous")
+		}
+		r = Run("seq", TestReversibleLane_IndicationSequence, &Observation{Events: []EventEnvelope{
+			lcsChange(nil, pGreen), lcsChange(nil, pYel), lcsChange(nil, pRed),
+		}})
+		if !r.Pass {
+			t.Fatalf("want pass for green, yellow, red: %s", r.Message)
+		}
+	})
+	t.Run("same-value repeat is no change", func(t *testing.T) {
+		g := pGreen
+		r := Run("seq", TestReversibleLane_IndicationSequence, &Observation{Events: []EventEnvelope{
+			lcsChange(nil, pGreen), lcsChange(&g, pGreen),
+		}})
+		if !r.Pass {
+			t.Fatalf("want pass: %s", r.Message)
+		}
+	})
+	t.Run("no events passes", func(t *testing.T) {
+		if !Run("seq", TestReversibleLane_IndicationSequence, &Observation{}).Pass {
+			t.Fatal("want pass: a quiet window has no changes")
 		}
 	})
 }

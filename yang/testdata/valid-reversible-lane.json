@@ -34,6 +34,7 @@
         "current-state": "open",
         "open-direction": "openits-types:direction-northbound",
         "control-source": "openits-types:control-central",
+        "last-command-by": "operator-12",
         "last-command-at": "2026-07-07T06:30:00Z",
         "changeover-permitted": true,
         "direction-open-permitted": true

@@ -523,27 +523,40 @@ func lcsTransitionLegal(prev, cur reversiblelanev1.LcsIndication) bool {
 // TestReversibleLane_IndicationSequence walks lcs-indication-changed events in
 // observed order and refuses a head that leaves a downward green arrow or a
 // yellow X for anything other than the closing sequence MUTCD 4T.04 requires.
-// Each (segment, lane, face) is one head; an event with no previous-indication
-// carries nothing to compare and is skipped.
+// Each (segment, lane, face) is one head and the check is stateful per head:
+// the last observed indication is remembered. An event whose previous-indication
+// is present but differs from the remembered value is a chain break and fails.
+// An event with no previous-indication takes the remembered value (if any) as
+// its previous. A repeat of the same value is treated as no change and passes.
+// A window with no lcs-indication-changed event passes: a quiet window has no
+// changes to check.
 func TestReversibleLane_IndicationSequence(t *T, obs *Observation) {
-	seen := 0
+	type head struct{ seg, lane, face string }
+	last := map[head]reversiblelanev1.LcsIndication{}
 	for _, e := range obs.Events {
 		ev, ok := e.Data.(*reversiblelanev1.LcsIndicationChanged)
 		if !ok {
 			continue
 		}
-		seen++
-		if ev.PreviousIndication == nil {
-			continue
+		h := head{ev.GetSegmentId(), ev.GetLaneId(), ev.GetFace()}
+		cur := ev.GetIndication()
+		remembered, have := last[h]
+		var prev reversiblelanev1.LcsIndication
+		known := false
+		if ev.PreviousIndication != nil {
+			prev, known = ev.GetPreviousIndication(), true
+			if have && prev != remembered {
+				t.Errorf("segment %q lane %q face %q: chain break: event says previous %v but the last observed indication was %v",
+					h.seg, h.lane, h.face, prev, remembered)
+			}
+		} else if have {
+			prev, known = remembered, true
 		}
-		prev, cur := ev.GetPreviousIndication(), ev.GetIndication()
-		if !lcsTransitionLegal(prev, cur) {
+		last[h] = cur
+		if known && prev != cur && !lcsTransitionLegal(prev, cur) {
 			t.Errorf("segment %q lane %q face %q: %v -> %v violates the MUTCD 4T.04 closing sequence (green arrow -> yellow X or red X; yellow X -> red X)",
-				ev.GetSegmentId(), ev.GetLaneId(), ev.GetFace(), prev, cur)
+				h.seg, h.lane, h.face, prev, cur)
 		}
-	}
-	if seen == 0 {
-		t.Errorf("no lcs-indication-changed event observed during %s window", obs.Window)
 	}
 }
 

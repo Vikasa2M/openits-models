@@ -737,6 +737,7 @@ type ControlState struct {
 	OpenDirection          *string                `protobuf:"bytes,14,opt,name=open_direction,json=openDirection,proto3,oneof" json:"open_direction,omitempty"`
 	ControlSource          *string                `protobuf:"bytes,2,opt,name=control_source,json=controlSource,proto3,oneof" json:"control_source,omitempty"`
 	LastCommandAt          *timestamppb.Timestamp `protobuf:"bytes,16,opt,name=last_command_at,json=lastCommandAt,proto3" json:"last_command_at,omitempty"`
+	LastCommandBy          *string                `protobuf:"bytes,3,opt,name=last_command_by,json=lastCommandBy,proto3,oneof" json:"last_command_by,omitempty"`
 	ChangeoverPermitted    *bool                  `protobuf:"varint,19,opt,name=changeover_permitted,json=changeoverPermitted,proto3,oneof" json:"changeover_permitted,omitempty"`
 	DirectionOpenPermitted *bool                  `protobuf:"varint,1,opt,name=direction_open_permitted,json=directionOpenPermitted,proto3,oneof" json:"direction_open_permitted,omitempty"`
 	BlockingInterlocks     []string               `protobuf:"bytes,20,rep,name=blocking_interlocks,json=blockingInterlocks,proto3" json:"blocking_interlocks,omitempty"`
@@ -801,6 +802,13 @@ func (x *ControlState) GetLastCommandAt() *timestamppb.Timestamp {
 		return x.LastCommandAt
 	}
 	return nil
+}
+
+func (x *ControlState) GetLastCommandBy() string {
+	if x != nil && x.LastCommandBy != nil {
+		return *x.LastCommandBy
+	}
+	return ""
 }
 
 func (x *ControlState) GetChangeoverPermitted() bool {
@@ -2010,21 +2018,23 @@ const file_openits_reversible_lane_v1_state_proto_rawDesc = "" +
 	"\x11_target_directionB\x17\n" +
 	"\x15_transition_timeout_sB\x1b\n" +
 	"\x19_min_clearance_duration_sB\x1b\n" +
-	"\x19_min_verification_dwell_s\"\xf8\x04\n" +
+	"\x19_min_verification_dwell_s\"\xb9\x05\n" +
 	"\fControlState\x12S\n" +
 	"\rcurrent_state\x18\r \x01(\x0e2).openits.reversible_lane.v1.LaneFlowStateH\x00R\fcurrentState\x88\x01\x01\x12*\n" +
 	"\x0eopen_direction\x18\x0e \x01(\tH\x01R\ropenDirection\x88\x01\x01\x12*\n" +
 	"\x0econtrol_source\x18\x02 \x01(\tH\x02R\rcontrolSource\x88\x01\x01\x12B\n" +
-	"\x0flast_command_at\x18\x10 \x01(\v2\x1a.google.protobuf.TimestampR\rlastCommandAt\x126\n" +
-	"\x14changeover_permitted\x18\x13 \x01(\bH\x03R\x13changeoverPermitted\x88\x01\x01\x12=\n" +
-	"\x18direction_open_permitted\x18\x01 \x01(\bH\x04R\x16directionOpenPermitted\x88\x01\x01\x12/\n" +
+	"\x0flast_command_at\x18\x10 \x01(\v2\x1a.google.protobuf.TimestampR\rlastCommandAt\x12+\n" +
+	"\x0flast_command_by\x18\x03 \x01(\tH\x03R\rlastCommandBy\x88\x01\x01\x126\n" +
+	"\x14changeover_permitted\x18\x13 \x01(\bH\x04R\x13changeoverPermitted\x88\x01\x01\x12=\n" +
+	"\x18direction_open_permitted\x18\x01 \x01(\bH\x05R\x16directionOpenPermitted\x88\x01\x01\x12/\n" +
 	"\x13blocking_interlocks\x18\x14 \x03(\tR\x12blockingInterlocks\x12F\n" +
 	"\n" +
 	"transition\x18\x11 \x01(\v2&.openits.reversible_lane.v1.TransitionR\n" +
 	"transitionB\x10\n" +
 	"\x0e_current_stateB\x11\n" +
 	"\x0f_open_directionB\x11\n" +
-	"\x0f_control_sourceB\x17\n" +
+	"\x0f_control_sourceB\x12\n" +
+	"\x10_last_command_byB\x17\n" +
 	"\x15_changeover_permittedB\x1b\n" +
 	"\x19_direction_open_permittedJ\x04\b\x0f\x10\x10R\x13last_command_source\"\xc3\x02\n" +
 	"\n" +

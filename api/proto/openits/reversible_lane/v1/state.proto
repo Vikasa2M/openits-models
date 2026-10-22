@@ -93,6 +93,7 @@ message ControlState {
   optional string open_direction = 14;
   optional string control_source = 2;
   google.protobuf.Timestamp last_command_at = 16;
+  optional string last_command_by = 3;
   optional bool changeover_permitted = 19;
   optional bool direction_open_permitted = 1;
   repeated string blocking_interlocks = 20;
