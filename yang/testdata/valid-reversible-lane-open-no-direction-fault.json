@@ -8,7 +8,7 @@
     "control": {
       "state": {
         "current-state": "open",
-        "last-command-source": "tmc-ops"
+        "control-source": "openits-types:control-central"
       }
     }
   }

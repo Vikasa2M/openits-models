@@ -31,7 +31,7 @@ module openits-reversible-lane-events {
 
   revision 2026-10-22 {
     description
-      "Add lcs-indication-changed, one lane-use signal head changing indication, so a consumer can audit a changeover against MUTCD 4T.04. Widen lcs-conflict-detected to any 4T.04 prohibited read-back pair, or a downward green arrow without an opposing red X, and name downward-green-arrow in it. Additive.";
+      "Add lcs-indication-changed, one lane-use signal head changing indication, so a consumer can audit a changeover against MUTCD 4T.04. Widen lcs-conflict-detected to any 4T.04 prohibited read-back pair, or a downward green arrow without an opposing red X, and name downward-green-arrow in it. Rename lane-state-changed new-state and new-direction to state and direction. Constrain kind on lane-state-changed, lcs-conflict-detected and transition-timeout to a sub-base per notification (concrete kind identities unchanged). Breaking: lane-state-changed new-state/new-direction are now state/direction.";
     reference "MUTCD 11th Edition (2023) Section 4T.04.";
   }
   revision 2026-10-15 {
@@ -152,7 +152,7 @@ module openits-reversible-lane-events {
 
     leaf kind {
       type identityref {
-        base openits-reversible-lane-types:reversible-lane-event-kind;
+        base openits-reversible-lane-types:rl-lane-state-change-event-kind;
       }
       mandatory true;
       description
@@ -169,13 +169,13 @@ module openits-reversible-lane-events {
       type identityref { base openits-types:carriageway-direction; }
       description "Open direction before the change, when previous-state was open.";
     }
-    leaf new-state {
+    leaf state {
       type openits-reversible-lane-types:lane-flow-state;
       description "State after the change.";
     }
-    leaf new-direction {
+    leaf direction {
       type identityref { base openits-types:carriageway-direction; }
-      description "Open direction after the change, when new-state is open.";
+      description "Open direction after the change, when state is open.";
     }
     leaf initiated-by {
       type string;
@@ -199,7 +199,7 @@ module openits-reversible-lane-events {
 
     leaf kind {
       type identityref {
-        base openits-reversible-lane-types:reversible-lane-event-kind;
+        base openits-reversible-lane-types:rl-transition-timeout-event-kind;
       }
       mandatory true;
       description
@@ -246,7 +246,7 @@ module openits-reversible-lane-events {
 
     leaf kind {
       type identityref {
-        base openits-reversible-lane-types:reversible-lane-event-kind;
+        base openits-reversible-lane-types:rl-lcs-conflict-event-kind;
       }
       mandatory true;
       description

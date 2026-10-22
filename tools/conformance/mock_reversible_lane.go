@@ -195,8 +195,8 @@ func subscribeReversibleLane(ctx context.Context, out chan<- tests.EventEnvelope
 			Data: &reversiblelanev1.LaneStateChanged{
 				Kind:          "openits-reversible-lane-types:rl-lane-state-changed",
 				PreviousState: reversiblelanev1.LaneFlowState_LANE_FLOW_STATE_CLOSED.Enum(),
-				NewState:      reversiblelanev1.LaneFlowState_LANE_FLOW_STATE_OPEN.Enum(),
-				NewDirection:  proto.String("openits-types:direction-northbound"),
+				State:         reversiblelanev1.LaneFlowState_LANE_FLOW_STATE_OPEN.Enum(),
+				Direction:     proto.String("openits-types:direction-northbound"),
 				InitiatedBy:   proto.String("tmc-ops"),
 			},
 		},

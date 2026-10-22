@@ -6,8 +6,8 @@
     "occurred-at": "2026-07-13T12:00:00Z",
     "sequence": "1",
     "previous-state": "closed",
-    "new-state": "open",
-    "new-direction": "openits-types:direction-southbound",
+    "state": "open",
+    "direction": "openits-types:direction-southbound",
     "initiated-by": "operator:jsmith"
   }
 }

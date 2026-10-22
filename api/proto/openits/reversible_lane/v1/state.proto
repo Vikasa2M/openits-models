@@ -87,9 +87,11 @@ message ControlConfig {
 }
 
 message ControlState {
+  reserved 15;
+  reserved "last_command_source";
   optional LaneFlowState current_state = 13;
   optional string open_direction = 14;
-  optional string last_command_source = 15;
+  optional string control_source = 2;
   google.protobuf.Timestamp last_command_at = 16;
   optional bool changeover_permitted = 19;
   optional bool direction_open_permitted = 1;

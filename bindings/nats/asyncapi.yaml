@@ -3998,18 +3998,11 @@ components:
                     $schema: https://json-schema.org/draft/2020-12/schema
                     additionalProperties: false
                     properties:
+                        direction:
+                            type: string
                         initiated-by:
                             type: string
                         kind:
-                            type: string
-                        new-direction:
-                            type: string
-                        new-state:
-                            enum:
-                                - closed
-                                - in-transition
-                                - open
-                                - unknown
                             type: string
                         observed-by:
                             maxLength: 64
@@ -4042,6 +4035,13 @@ components:
                             maxLength: 64
                             minLength: 1
                             pattern: ^([a-zA-Z0-9_-]+)$
+                            type: string
+                        state:
+                            enum:
+                                - closed
+                                - in-transition
+                                - open
+                                - unknown
                             type: string
                     required:
                         - kind

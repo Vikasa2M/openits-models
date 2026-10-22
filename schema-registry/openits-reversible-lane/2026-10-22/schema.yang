@@ -78,7 +78,7 @@ module openits-reversible-lane {
 
   revision 2026-10-22 {
     description
-      "Commanded lane-use signals follow MUTCD Chapter 4T. Replace the green-arrow/flashing-yellow-X musts on lane/config with the 4T.04 prohibitions (downward green arrow needs the opposing red X; no yellow X, white one-way arrow, white two-way with one-way, or white one-way with yellow X over one lane to both directions) and refuse commanding the legacy flashing-yellow-x. Readback in state stays unconstrained. Breaking: lcs-indication green-arrow is now downward-green-arrow.";
+      "Commanded lane-use signals follow MUTCD Chapter 4T. Replace the green-arrow/flashing-yellow-X musts on lane/config with the 4T.04 prohibitions (downward green arrow needs the opposing red X; no yellow X, white one-way arrow, white two-way with one-way, or white one-way with yellow X over one lane to both directions) and refuse commanding the legacy flashing-yellow-x. Readback in state stays unconstrained. Rename control/state/last-command-source to control-source and retype it from a free-form string to an identityref based on openits-types:control-source. Breaking: lcs-indication green-arrow is now downward-green-arrow; consumers read control-source instead of last-command-source.";
     reference "MUTCD 11th Edition (2023) Sections 4T.02, 4T.04.";
   }
   revision 2026-10-16 {
@@ -418,13 +418,13 @@ module openits-reversible-lane {
             "Direction currently open to traffic.  Present iff
              current-state is `open`.";
         }
-        leaf last-command-source {
-          type string;
+        leaf control-source {
+          type identityref { base openits-types:control-source; }
           description
-            "Actor that issued the most recent state command — the
-             command-provenance actor-id (operator id, automation workflow),
-             NOT a control-authority class. Full 'uses
-             openits-types:command-provenance' adoption is follow-up.";
+            "Authority class that issued the most recent state command
+             (central, local backup, manual, schedule, ...). Replaces
+             last-command-source, a free-form actor id; the issuing
+             actor's identifier is not carried here.";
         }
         leaf last-command-at {
           type yang:date-and-time;

@@ -35,7 +35,7 @@ module openits-reversible-lane-types {
 
   revision 2026-10-22 {
     description
-      "Align lcs-indication with MUTCD Chapter 4T: rename green-arrow to downward-green-arrow, add the white two-way and one-way left-turn arrows, mark flashing-yellow-x as legacy. Add the rl-lcs-indication-change-event-kind sub-base and the rl-lcs-indication-changed kind for the new lcs-indication-changed event. Breaking: green-arrow is now downward-green-arrow.";
+      "Align lcs-indication with MUTCD Chapter 4T: rename green-arrow to downward-green-arrow, add the white two-way and one-way left-turn arrows, mark flashing-yellow-x as legacy. Add the rl-lcs-indication-change-event-kind sub-base and the rl-lcs-indication-changed kind for the new lcs-indication-changed event. Add the rl-lane-state-change-event-kind, rl-transition-timeout-event-kind and rl-lcs-conflict-event-kind sub-bases and re-base rl-lane-state-changed, rl-transition-timeout and rl-lcs-conflict-detected on them (identity names unchanged). Breaking: green-arrow is now downward-green-arrow.";
     reference "MUTCD 11th Edition (2023) Sections 4T.02, 4T.04.";
   }
   revision 2026-10-16 {
@@ -444,16 +444,34 @@ module openits-reversible-lane-types {
    * openits-reversible-lane-events notifications)
    * -------------------------------------------------------------- */
 
-  identity rl-lane-state-changed {
+  identity rl-lane-state-change-event-kind {
     base reversible-lane-event-kind;
+    description
+      "Sub-base for lane-state-changed. The facility state machine moved. The notification constrains kind to this
+       base.";
+  }
+  identity rl-lane-state-changed {
+    base rl-lane-state-change-event-kind;
     description "Reversible-lane flow state/direction changed.";
   }
-  identity rl-transition-timeout {
+  identity rl-transition-timeout-event-kind {
     base reversible-lane-event-kind;
+    description
+      "Sub-base for transition-timeout. A changeover exceeded its timeout. The notification constrains kind to this
+       base.";
+  }
+  identity rl-transition-timeout {
+    base rl-transition-timeout-event-kind;
     description "A direction-change transition timed out.";
   }
-  identity rl-lcs-conflict-detected {
+  identity rl-lcs-conflict-event-kind {
     base reversible-lane-event-kind;
+    description
+      "Sub-base for lcs-conflict-detected. Conflicting indications were read back. The notification constrains kind to this
+       base.";
+  }
+  identity rl-lcs-conflict-detected {
+    base rl-lcs-conflict-event-kind;
     description "Conflicting LCS indications detected.";
   }
   identity rl-lcs-indication-change-event-kind {
