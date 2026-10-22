@@ -11,7 +11,7 @@ const (
 	pDark  = reversiblelanev1.LcsIndication_LCS_INDICATION_DARK
 	pRed   = reversiblelanev1.LcsIndication_LCS_INDICATION_RED_X
 	pYel   = reversiblelanev1.LcsIndication_LCS_INDICATION_YELLOW_X
-	pGreen = reversiblelanev1.LcsIndication_LCS_INDICATION_DOWNWARD_GREEN_ARROW
+	pGreen = reversiblelanev1.LcsIndication_LCS_INDICATION_GREEN_ARROW
 	pTwo   = reversiblelanev1.LcsIndication_LCS_INDICATION_WHITE_TWO_WAY_LEFT_TURN_ARROW
 )
 
@@ -173,7 +173,7 @@ func TestReversibleLane_NoProhibitedCommand_Table(t *testing.T) {
 		red   = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_red_x
 		yel   = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_yellow_x
 		fl    = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_flashing_yellow_x
-		green = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_downward_green_arrow
+		green = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_green_arrow
 		two   = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_white_two_way_left_turn_arrow
 		one   = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_white_one_way_left_turn_arrow
 	)

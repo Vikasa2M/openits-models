@@ -35,7 +35,7 @@ module openits-reversible-lane-types {
 
   revision 2026-10-22 {
     description
-      "Align lcs-indication with MUTCD Chapter 4T: rename green-arrow to downward-green-arrow, add the white two-way and one-way left-turn arrows, mark flashing-yellow-x as legacy. Add the rl-lcs-indication-change-event-kind sub-base and the rl-lcs-indication-changed kind for the new lcs-indication-changed event. Add the rl-lane-state-change-event-kind, rl-transition-timeout-event-kind and rl-lcs-conflict-event-kind sub-bases and re-base rl-lane-state-changed, rl-transition-timeout and rl-lcs-conflict-detected on them (identity names unchanged). Breaking: green-arrow is now downward-green-arrow.";
+      "Align lcs-indication with MUTCD Chapter 4T: keep green-arrow (described as the downward green arrow), add the white two-way and one-way left-turn arrows, mark flashing-yellow-x as legacy. Add the rl-lcs-indication-change-event-kind sub-base and the rl-lcs-indication-changed kind for the new lcs-indication-changed event. Add the rl-lane-state-change-event-kind, rl-transition-timeout-event-kind and rl-lcs-conflict-event-kind sub-bases and re-base rl-lane-state-changed, rl-transition-timeout and rl-lcs-conflict-detected on them (identity names unchanged).";
     reference "MUTCD 11th Edition (2023) Sections 4T.02, 4T.04.";
   }
   revision 2026-10-16 {
@@ -166,7 +166,7 @@ module openits-reversible-lane-types {
            MUTCD indication. Kept so a field head that still shows it can
            report it; it may not be commanded.";
       }
-      enum downward-green-arrow { value 5; description "Lane open to travel in this direction (MUTCD 4T.02 A)."; }
+      enum green-arrow { value 5; description "The downward green arrow: lane open to travel in this direction (MUTCD 4T.02 A)."; }
       enum white-two-way-left-turn-arrow { value 6; description "Open to left turns from either direction, not through travel (MUTCD 4T.02 D)."; }
       enum white-one-way-left-turn-arrow { value 7; description "Open to left turns in this direction only, not through travel (MUTCD 4T.02 E)."; }
     }
@@ -323,7 +323,7 @@ module openits-reversible-lane-types {
   identity reversible-lane-fault-conflict {
     base reversible-lane-fault-event-kind;
     description
-      "Conflicting indications detected (e.g., downward-green-arrow both
+      "Conflicting indications detected (e.g., green-arrow both
        ways).";
   }
   identity reversible-lane-fault-gate {

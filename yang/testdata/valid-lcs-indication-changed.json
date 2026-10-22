@@ -8,7 +8,7 @@
     "segment-id": "seg-1",
     "lane-id": "lane-1",
     "face": "openits-types:direction-northbound",
-    "previous-indication": "downward-green-arrow",
+    "previous-indication": "green-arrow",
     "indication": "yellow-x",
     "source": {
       "decoder": "modbus",

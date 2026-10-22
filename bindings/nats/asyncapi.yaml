@@ -4121,8 +4121,8 @@ components:
                         lcs-direction-a:
                             enum:
                                 - dark
-                                - downward-green-arrow
                                 - flashing-yellow-x
+                                - green-arrow
                                 - red-x
                                 - unknown
                                 - white-one-way-left-turn-arrow
@@ -4132,8 +4132,8 @@ components:
                         lcs-direction-b:
                             enum:
                                 - dark
-                                - downward-green-arrow
                                 - flashing-yellow-x
+                                - green-arrow
                                 - red-x
                                 - unknown
                                 - white-one-way-left-turn-arrow
@@ -4241,8 +4241,8 @@ components:
                         indication:
                             enum:
                                 - dark
-                                - downward-green-arrow
                                 - flashing-yellow-x
+                                - green-arrow
                                 - red-x
                                 - unknown
                                 - white-one-way-left-turn-arrow
@@ -4266,8 +4266,8 @@ components:
                         previous-indication:
                             enum:
                                 - dark
-                                - downward-green-arrow
                                 - flashing-yellow-x
+                                - green-arrow
                                 - red-x
                                 - unknown
                                 - white-one-way-left-turn-arrow

@@ -31,7 +31,7 @@ module openits-reversible-lane-events {
 
   revision 2026-10-22 {
     description
-      "Add lcs-indication-changed, one lane-use signal head changing indication, so a consumer can audit a changeover against MUTCD 4T.04. Widen lcs-conflict-detected to any 4T.04 prohibited read-back pair, or a downward green arrow without an opposing red X, and name downward-green-arrow in it. Rename lane-state-changed new-state and new-direction to state and direction. Constrain kind on lane-state-changed, lcs-conflict-detected and transition-timeout to a sub-base per notification (concrete kind identities unchanged). Breaking: lane-state-changed new-state/new-direction are now state/direction.";
+      "Add lcs-indication-changed, one lane-use signal head changing indication, so a consumer can audit a changeover against MUTCD 4T.04. Widen lcs-conflict-detected to any 4T.04 prohibited read-back pair, or a downward green arrow without an opposing red X, and name green-arrow (the downward green arrow) in it. Rename lane-state-changed new-state and new-direction to state and direction. Constrain kind on lane-state-changed, lcs-conflict-detected and transition-timeout to a sub-base per notification (concrete kind identities unchanged). Breaking: lane-state-changed new-state/new-direction are now state/direction.";
     reference "MUTCD 11th Edition (2023) Section 4T.04.";
   }
   revision 2026-10-15 {

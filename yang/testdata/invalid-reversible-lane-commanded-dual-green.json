@@ -17,8 +17,8 @@
               "lane-id": "lane-1",
               "config": {
                 "lane-id": "lane-1",
-                "lcs-direction-a": "downward-green-arrow",
-                "lcs-direction-b": "downward-green-arrow"
+                "lcs-direction-a": "green-arrow",
+                "lcs-direction-b": "green-arrow"
               }
             }
           ]

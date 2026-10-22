@@ -49,8 +49,8 @@
     "indication": {
       "enum": [
         "dark",
-        "downward-green-arrow",
         "flashing-yellow-x",
+        "green-arrow",
         "red-x",
         "unknown",
         "white-one-way-left-turn-arrow",
@@ -81,8 +81,8 @@
     "previous-indication": {
       "enum": [
         "dark",
-        "downward-green-arrow",
         "flashing-yellow-x",
+        "green-arrow",
         "red-x",
         "unknown",
         "white-one-way-left-turn-arrow",

@@ -69,8 +69,8 @@
                 "lane-id": "lane-6"
               },
               "state": {
-                "lcs-direction-a": "downward-green-arrow",
-                "lcs-direction-b": "downward-green-arrow"
+                "lcs-direction-a": "green-arrow",
+                "lcs-direction-b": "green-arrow"
               }
             }
           ]

@@ -422,7 +422,7 @@ func TestReversibleLaneEvent_FaultRaisedShape(t *T, obs *Observation) {
 }
 
 // direction-open-permitted gates the lcs-reverse step of a changeover: while
-// it is false, no lane may show a proceed indication (downward-green-arrow,
+// it is false, no lane may show a proceed indication (green-arrow,
 // either white left-turn arrow, or the legacy flashing-yellow-x a field head
 // may still report) toward the
 // direction the facility is changing over to. At rest the flag is routinely
@@ -449,7 +449,7 @@ func TestRL_DirectionOpenGateBlocksReverse(t *T, obs *Observation) {
 		return
 	}
 	proceed := func(i yangpkg.E_OpenitsReversibleLaneTypes_LcsIndication) bool {
-		return i == yangpkg.OpenitsReversibleLaneTypes_LcsIndication_downward_green_arrow ||
+		return i == yangpkg.OpenitsReversibleLaneTypes_LcsIndication_green_arrow ||
 			i == yangpkg.OpenitsReversibleLaneTypes_LcsIndication_white_two_way_left_turn_arrow ||
 			i == yangpkg.OpenitsReversibleLaneTypes_LcsIndication_white_one_way_left_turn_arrow ||
 			i == yangpkg.OpenitsReversibleLaneTypes_LcsIndication_flashing_yellow_x
@@ -483,7 +483,7 @@ func TestRL_DirectionOpenGateBlocksReverse(t *T, obs *Observation) {
 // Every other transition is unconstrained by this check.
 func lcsTransitionLegal(prev, cur reversiblelanev1.LcsIndication, oppositeRed bool) bool {
 	switch prev {
-	case reversiblelanev1.LcsIndication_LCS_INDICATION_DOWNWARD_GREEN_ARROW:
+	case reversiblelanev1.LcsIndication_LCS_INDICATION_GREEN_ARROW:
 		if cur == reversiblelanev1.LcsIndication_LCS_INDICATION_WHITE_TWO_WAY_LEFT_TURN_ARROW {
 			return oppositeRed
 		}
@@ -580,7 +580,7 @@ func TestReversibleLane_IndicationSequence(t *T, obs *Observation) {
 // never commanded.
 func lcsProhibitedPair(a, b yangpkg.E_OpenitsReversibleLaneTypes_LcsIndication) string {
 	const (
-		green = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_downward_green_arrow
+		green = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_green_arrow
 		red   = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_red_x
 		yel   = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_yellow_x
 		fl    = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_flashing_yellow_x

@@ -67,7 +67,7 @@ module openits-reversible-lane {
          (`segments/segment/lane/config`).
      The config-false readback (`state`, `control/state`,
      `segments/segment/lane/state`) carries no `must`: it reports
-     anomalies — including a lane reading back downward-green-arrow to both
+     anomalies — including a lane reading back green-arrow to both
      directions — as data plus a fault/alarm, not as illegal data;
      a misbehaving facility's telemetry must stay representable so
      it can be reported (see lcs-conflict-detected).
@@ -78,7 +78,7 @@ module openits-reversible-lane {
 
   revision 2026-10-22 {
     description
-      "Commanded lane-use signals follow MUTCD Chapter 4T. Replace the green-arrow/flashing-yellow-X musts on lane/config with the 4T.04 prohibitions (downward green arrow needs the opposing red X; no yellow X, white one-way arrow, white two-way with one-way, or white one-way with yellow X over one lane to both directions) and refuse commanding the legacy flashing-yellow-x. Readback in state stays unconstrained. Refuse commanding the readback-only unknown indication. Replace control/state/last-command-source (a free-form string) with a last-command container that uses the shared openits-types:command-provenance grouping: actor-id, actor-class (an identityref based on openits-types:control-source), schedule-id and commanded-at. Breaking: lcs-indication green-arrow is now downward-green-arrow; consumers read last-command/actor-class (authority) and last-command/actor-id (issuing actor) instead of last-command-source.";
+      "Commanded lane-use signals follow MUTCD Chapter 4T. Replace the green-arrow/flashing-yellow-X musts on lane/config with the 4T.04 prohibitions (downward green arrow needs the opposing red X; no yellow X, white one-way arrow, white two-way with one-way, or white one-way with yellow X over one lane to both directions) and refuse commanding the legacy flashing-yellow-x. Readback in state stays unconstrained. Refuse commanding the readback-only unknown indication. Replace control/state/last-command-source (a free-form string) with a last-command container that uses the shared openits-types:command-provenance grouping: actor-id, actor-class (an identityref based on openits-types:control-source), schedule-id and commanded-at. Breaking: consumers read last-command/actor-class (authority) and last-command/actor-id (issuing actor) instead of last-command-source.";
     reference "MUTCD 11th Edition (2023) Sections 4T.02, 4T.04.";
   }
   revision 2026-10-16 {
@@ -543,10 +543,10 @@ module openits-reversible-lane {
                steady red X to the other direction), and the legacy
                flashing-yellow-x and the readback-only unknown, are rejected.  Readback in state is
                unconstrained.";
-            must "not(lcs-direction-a = 'downward-green-arrow') or lcs-direction-b = 'red-x'" {
+            must "not(lcs-direction-a = 'green-arrow') or lcs-direction-b = 'red-x'" {
               error-message "A downward green arrow toward direction-a requires a steady red X toward direction-b (MUTCD 4T.04).";
             }
-            must "not(lcs-direction-b = 'downward-green-arrow') or lcs-direction-a = 'red-x'" {
+            must "not(lcs-direction-b = 'green-arrow') or lcs-direction-a = 'red-x'" {
               error-message "A downward green arrow toward direction-b requires a steady red X toward direction-a (MUTCD 4T.04).";
             }
             must "not(lcs-direction-a = 'unknown' or lcs-direction-b = 'unknown')" {
@@ -587,7 +587,7 @@ module openits-reversible-lane {
             config false;
             description
               "Actual LCS readback for this lane.  Constraint-free: a
-               lane reading downward-green-arrow to both directions is the
+               lane reading green-arrow to both directions is the
                exact conflict lcs-conflict-detected exists to report
                and MUST be representable.";
 

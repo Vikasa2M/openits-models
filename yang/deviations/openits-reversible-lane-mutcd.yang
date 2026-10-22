@@ -34,7 +34,7 @@ module openits-reversible-lane-mutcd {
         enum dark { value 1; }
         enum red-x { value 2; }
         enum yellow-x { value 3; }
-        enum downward-green-arrow { value 5; }
+        enum green-arrow { value 5; }
         enum white-two-way-left-turn-arrow { value 6; }
         enum white-one-way-left-turn-arrow { value 7; }
       }
@@ -48,7 +48,7 @@ module openits-reversible-lane-mutcd {
         enum dark { value 1; }
         enum red-x { value 2; }
         enum yellow-x { value 3; }
-        enum downward-green-arrow { value 5; }
+        enum green-arrow { value 5; }
         enum white-two-way-left-turn-arrow { value 6; }
         enum white-one-way-left-turn-arrow { value 7; }
       }
