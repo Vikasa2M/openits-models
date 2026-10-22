@@ -112,3 +112,4 @@ invalid-sc-monitor-fault-type-without-fault.json	monitor fault-type is present o
 invalid-sc-operation-flash-cause-not-flashing.json	flash-cause is present only when cabinet-output is flash
 invalid-sc-pedestrian-detector-unknown-phase.json	Invalid leafref value "6" - no target instance "../../../../phases/phase/phase-number" with the same value. (Data location "/openits-signal-control:signal-controller/pedestrian-detectors/pedestrian-detector[pedestrian-detector-id='1']/config/call-phase"
 invalid-cabinet-output-changed-missing-output.json	MISSING cabinet-output
+invalid-lcs-indication-changed-missing-indication.json	MISSING indication

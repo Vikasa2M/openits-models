@@ -1632,6 +1632,20 @@ messages:
         sequence_epoch: 10
         source: 100
         source_device_id: 8
+    openits.reversible_lane.v1.LcsIndicationChanged:
+        face: 3
+        indication: 5
+        kind: 99
+        lane_id: 2
+        observed_by: 6
+        occurred_at: 7
+        owner: 8
+        previous_indication: 4
+        segment_id: 1
+        sequence: 9
+        sequence_epoch: 10
+        source: 100
+        source_device_id: 11
     openits.reversible_lane.v1.ReversibleLane:
         config: 1
         control: 3

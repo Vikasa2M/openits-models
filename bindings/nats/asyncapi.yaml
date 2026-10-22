@@ -210,6 +210,12 @@ channels:
             openits.reversible-lane.lcs-conflict-detected.v1:
                 $ref: '#/components/messages/openits.reversible-lane.lcs-conflict-detected.v1'
         title: reversible-lane — lcs-conflict-detected
+    openits.reversible-lane.lcs-indication-changed.v1:
+        address: openits.reversible-lane.lcs-indication-changed.v1
+        messages:
+            openits.reversible-lane.lcs-indication-changed.v1:
+                $ref: '#/components/messages/openits.reversible-lane.lcs-indication-changed.v1'
+        title: reversible-lane — lcs-indication-changed
     openits.reversible-lane.transition-timeout.v1:
         address: openits.reversible-lane.transition-timeout.v1
         messages:
@@ -4169,6 +4175,134 @@ components:
                 schemaFormat: application/schema+json;version=draft-2020-12
             summary: reversible-lane.lcs-conflict-detected
             title: openits.reversible-lane.lcs-conflict-detected.v1
+        openits.reversible-lane.lcs-indication-changed.v1:
+            contentType: application/protobuf
+            headers:
+                properties:
+                    ce-datacontenttype:
+                        const: application/protobuf
+                        type: string
+                    ce-id:
+                        description: Event identifier, unique within the source.
+                        type: string
+                    ce-source:
+                        description: CloudEvents source URI identifying the emitting device or service instance.
+                        type: string
+                    ce-specversion:
+                        const: "1.0"
+                        type: string
+                    ce-time:
+                        format: date-time
+                        type: string
+                    ce-type:
+                        const: openits.reversible-lane.lcs-indication-changed.v1
+                        type: string
+                    traceparent:
+                        description: W3C Trace Context. Optional; recommended.
+                        type: string
+                type: object
+            name: openits.reversible-lane.lcs-indication-changed.v1
+            payload:
+                schema:
+                    $defs:
+                        WireSource:
+                            additionalProperties: false
+                            properties:
+                                decoder:
+                                    type: string
+                                indiana-code:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                indiana-param:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                message-id:
+                                    maximum: 65535
+                                    minimum: 0
+                                    type: integer
+                                oid:
+                                    type: string
+                                oid-value:
+                                    type: string
+                                register:
+                                    type: string
+                                register-value:
+                                    type: string
+                            required:
+                                - decoder
+                            type: object
+                    $schema: https://json-schema.org/draft/2020-12/schema
+                    additionalProperties: false
+                    properties:
+                        face:
+                            type: string
+                        indication:
+                            enum:
+                                - dark
+                                - downward-green-arrow
+                                - flashing-yellow-x
+                                - red-x
+                                - unknown
+                                - white-one-way-left-turn-arrow
+                                - white-two-way-left-turn-arrow
+                                - yellow-x
+                            type: string
+                        kind:
+                            type: string
+                        lane-id:
+                            type: string
+                        observed-by:
+                            maxLength: 64
+                            minLength: 1
+                            pattern: ^([a-zA-Z0-9_-]+)$
+                            type: string
+                        occurred-at:
+                            format: date-time
+                            type: string
+                        owner:
+                            type: string
+                        previous-indication:
+                            enum:
+                                - dark
+                                - downward-green-arrow
+                                - flashing-yellow-x
+                                - red-x
+                                - unknown
+                                - white-one-way-left-turn-arrow
+                                - white-two-way-left-turn-arrow
+                                - yellow-x
+                            type: string
+                        segment-id:
+                            type: string
+                        sequence:
+                            type: string
+                        sequence-epoch:
+                            maxLength: 64
+                            minLength: 1
+                            type: string
+                        source:
+                            $ref: '#/$defs/WireSource'
+                        source-device-id:
+                            maxLength: 64
+                            minLength: 1
+                            pattern: ^([a-zA-Z0-9_-]+)$
+                            type: string
+                    required:
+                        - face
+                        - indication
+                        - kind
+                        - lane-id
+                        - occurred-at
+                        - segment-id
+                        - sequence
+                        - sequence-epoch
+                        - source-device-id
+                    type: object
+                schemaFormat: application/schema+json;version=draft-2020-12
+            summary: reversible-lane.lcs-indication-changed
+            title: openits.reversible-lane.lcs-indication-changed.v1
         openits.reversible-lane.transition-timeout.v1:
             contentType: application/protobuf
             headers:
@@ -9206,6 +9340,13 @@ operations:
         messages:
             - $ref: '#/channels/openits.reversible-lane.lcs-conflict-detected.v1/messages/openits.reversible-lane.lcs-conflict-detected.v1'
         summary: Consume openits.reversible-lane.lcs-conflict-detected.v1
+    consume_openits.reversible-lane.lcs-indication-changed.v1:
+        action: receive
+        channel:
+            $ref: '#/channels/openits.reversible-lane.lcs-indication-changed.v1'
+        messages:
+            - $ref: '#/channels/openits.reversible-lane.lcs-indication-changed.v1/messages/openits.reversible-lane.lcs-indication-changed.v1'
+        summary: Consume openits.reversible-lane.lcs-indication-changed.v1
     consume_openits.reversible-lane.transition-timeout.v1:
         action: receive
         channel:
@@ -9759,6 +9900,13 @@ operations:
         messages:
             - $ref: '#/channels/openits.reversible-lane.lcs-conflict-detected.v1/messages/openits.reversible-lane.lcs-conflict-detected.v1'
         summary: Publish openits.reversible-lane.lcs-conflict-detected.v1
+    publish_openits.reversible-lane.lcs-indication-changed.v1:
+        action: send
+        channel:
+            $ref: '#/channels/openits.reversible-lane.lcs-indication-changed.v1'
+        messages:
+            - $ref: '#/channels/openits.reversible-lane.lcs-indication-changed.v1/messages/openits.reversible-lane.lcs-indication-changed.v1'
+        summary: Publish openits.reversible-lane.lcs-indication-changed.v1
     publish_openits.reversible-lane.transition-timeout.v1:
         action: send
         channel:

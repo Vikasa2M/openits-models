@@ -617,6 +617,7 @@
         "openits.reversible-lane.gate-status-changed.v1",
         "openits.reversible-lane.lane-state-changed.v1",
         "openits.reversible-lane.lcs-conflict-detected.v1",
+        "openits.reversible-lane.lcs-indication-changed.v1",
         "openits.reversible-lane.transition-timeout.v1"
       ],
       "refStd": [

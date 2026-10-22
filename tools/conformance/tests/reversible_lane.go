@@ -502,3 +502,102 @@ func TestRL_DirectionOpenGateBlocksReverse(t *T, obs *Observation) {
 		}
 	}
 }
+
+// ----- lane-use signal sequencing (MUTCD 4T.04) -----
+
+// lcsTransitionLegal reports whether a head may change from prev to cur.
+// MUTCD 4T.04 paragraph 03: a downward green arrow ends with a yellow X or a
+// red X, and a yellow X ends with a red X. Every other transition is
+// unconstrained by this check.
+func lcsTransitionLegal(prev, cur reversiblelanev1.LcsIndication) bool {
+	switch prev {
+	case reversiblelanev1.LcsIndication_LCS_INDICATION_DOWNWARD_GREEN_ARROW:
+		return cur == reversiblelanev1.LcsIndication_LCS_INDICATION_YELLOW_X ||
+			cur == reversiblelanev1.LcsIndication_LCS_INDICATION_RED_X
+	case reversiblelanev1.LcsIndication_LCS_INDICATION_YELLOW_X:
+		return cur == reversiblelanev1.LcsIndication_LCS_INDICATION_RED_X
+	}
+	return true
+}
+
+// TestReversibleLane_IndicationSequence walks lcs-indication-changed events in
+// observed order and refuses a head that leaves a downward green arrow or a
+// yellow X for anything other than the closing sequence MUTCD 4T.04 requires.
+// Each (segment, lane, face) is one head; an event with no previous-indication
+// carries nothing to compare and is skipped.
+func TestReversibleLane_IndicationSequence(t *T, obs *Observation) {
+	seen := 0
+	for _, e := range obs.Events {
+		ev, ok := e.Data.(*reversiblelanev1.LcsIndicationChanged)
+		if !ok {
+			continue
+		}
+		seen++
+		if ev.PreviousIndication == nil {
+			continue
+		}
+		prev, cur := ev.GetPreviousIndication(), ev.GetIndication()
+		if !lcsTransitionLegal(prev, cur) {
+			t.Errorf("segment %q lane %q face %q: %v -> %v violates the MUTCD 4T.04 closing sequence (green arrow -> yellow X or red X; yellow X -> red X)",
+				ev.GetSegmentId(), ev.GetLaneId(), ev.GetFace(), prev, cur)
+		}
+	}
+	if seen == 0 {
+		t.Errorf("no lcs-indication-changed event observed during %s window", obs.Window)
+	}
+}
+
+// lcsProhibitedPair names the MUTCD 4T.04 paragraph 02 prohibition a commanded
+// pair breaks, or "" when the pair is allowed. It also refuses the legacy
+// flashing-yellow-x, which may be reported but never commanded.
+func lcsProhibitedPair(a, b yangpkg.E_OpenitsReversibleLaneTypes_LcsIndication) string {
+	const (
+		green = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_downward_green_arrow
+		red   = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_red_x
+		yel   = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_yellow_x
+		fl    = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_flashing_yellow_x
+		two   = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_white_two_way_left_turn_arrow
+		one   = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_white_one_way_left_turn_arrow
+	)
+	switch {
+	case a == fl || b == fl:
+		return "legacy flashing-yellow-x commanded"
+	case (a == green && b != red) || (b == green && a != red):
+		return "downward green arrow without a steady red X to the opposite direction"
+	case a == yel && b == yel:
+		return "yellow X to both directions (4T.04 B)"
+	case a == one && b == one:
+		return "white one-way left-turn arrow to both directions (4T.04 C)"
+	case (a == two && b == one) || (a == one && b == two):
+		return "white two-way with white one-way left-turn arrow (4T.04 F)"
+	case (a == one && b == yel) || (a == yel && b == one):
+		return "white one-way left-turn arrow against yellow X (4T.04 G)"
+	}
+	return ""
+}
+
+// TestReversibleLane_NoProhibitedCommand checks every lane's commanded
+// lcs-direction-a/b pair against the MUTCD 4T.04 paragraph 02 prohibitions.
+func TestReversibleLane_NoProhibitedCommand(t *T, obs *Observation) {
+	segs := obs.Device.GetReversibleLane().GetSegments()
+	if segs == nil || len(segs.Segment) == 0 {
+		t.Errorf("no segments populated")
+		return
+	}
+	checked := false
+	for segID, seg := range segs.Segment {
+		for laneID, lane := range seg.Lane {
+			cfg := lane.GetConfig()
+			if cfg == nil {
+				continue
+			}
+			checked = true
+			if why := lcsProhibitedPair(cfg.LcsDirectionA, cfg.LcsDirectionB); why != "" {
+				t.Errorf("segment %q lane %q commands (%v, %v): %s", segID, laneID, cfg.LcsDirectionA, cfg.LcsDirectionB, why)
+			}
+		}
+	}
+	if !checked {
+		t.Errorf("no lane config populated to check")
+	}
+}

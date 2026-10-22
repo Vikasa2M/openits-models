@@ -59,6 +59,22 @@ message LcsConflictDetected {
   string source_device_id = 8;
 }
 
+message LcsIndicationChanged {
+  string kind = 99;
+  string segment_id = 1;
+  string lane_id = 2;
+  string face = 3;
+  optional LcsIndication previous_indication = 4;
+  LcsIndication indication = 5;
+  optional string observed_by = 6;
+  google.protobuf.Timestamp occurred_at = 7;
+  optional string owner = 8;
+  uint64 sequence = 9;
+  string sequence_epoch = 10;
+  openits.types.v1.WireSource source = 100;
+  string source_device_id = 11;
+}
+
 message TransitionTimeout {
   string kind = 99;
   optional string from_direction = 1;

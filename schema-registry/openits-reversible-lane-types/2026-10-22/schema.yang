@@ -35,7 +35,7 @@ module openits-reversible-lane-types {
 
   revision 2026-10-22 {
     description
-      "Align lcs-indication with MUTCD Chapter 4T: rename green-arrow to downward-green-arrow, add the white two-way and one-way left-turn arrows, mark flashing-yellow-x as legacy. Breaking: green-arrow is now downward-green-arrow.";
+      "Align lcs-indication with MUTCD Chapter 4T: rename green-arrow to downward-green-arrow, add the white two-way and one-way left-turn arrows, mark flashing-yellow-x as legacy. Add the rl-lcs-indication-change-event-kind sub-base and the rl-lcs-indication-changed kind for the new lcs-indication-changed event. Breaking: green-arrow is now downward-green-arrow.";
     reference "MUTCD 11th Edition (2023) Sections 4T.02, 4T.04.";
   }
   revision 2026-10-16 {
@@ -455,6 +455,18 @@ module openits-reversible-lane-types {
   identity rl-lcs-conflict-detected {
     base reversible-lane-event-kind;
     description "Conflicting LCS indications detected.";
+  }
+  identity rl-lcs-indication-change-event-kind {
+    base reversible-lane-event-kind;
+    description
+      "Sub-base for lcs-indication-changed. One lane-use control signal
+       head changed indication. The notification constrains kind to this
+       base.";
+  }
+  identity rl-lcs-indication-changed {
+    base rl-lcs-indication-change-event-kind;
+    description
+      "One lane-use control signal head changed indication.";
   }
   identity rl-gate-status-change-event-kind {
     base reversible-lane-event-kind;
