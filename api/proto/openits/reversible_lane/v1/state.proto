@@ -87,17 +87,22 @@ message ControlConfig {
 }
 
 message ControlState {
-  reserved 15;
-  reserved "last_command_source";
+  reserved 2, 3, 15, 16;
+  reserved "control_source", "last_command_by", "last_command_source", "last_command_at";
   optional LaneFlowState current_state = 13;
   optional string open_direction = 14;
-  optional string control_source = 2;
-  google.protobuf.Timestamp last_command_at = 16;
-  optional string last_command_by = 3;
+  LastCommand last_command = 4;
   optional bool changeover_permitted = 19;
   optional bool direction_open_permitted = 1;
   repeated string blocking_interlocks = 20;
   Transition transition = 17;
+}
+
+message LastCommand {
+  optional string actor_class = 1;
+  optional string actor_id = 2;
+  google.protobuf.Timestamp commanded_at = 3;
+  optional string schedule_id = 4;
 }
 
 message Transition {

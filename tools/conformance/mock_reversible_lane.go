@@ -59,8 +59,9 @@ func collectReversibleLane() (*yangpkg.Device, error) {
 	ctrlSt := control.GetOrCreateState()
 	ctrlSt.CurrentState = yangpkg.OpenitsReversibleLaneTypes_LaneFlowState_open
 	ctrlSt.OpenDirection = yangpkg.OpenitsTypes_CarriagewayDirection_direction_northbound
-	ctrlSt.ControlSource = yangpkg.OpenitsTypes_ControlSource_control_central
-	ctrlSt.LastCommandBy = strPtr("operator-12")
+	lastCmd := ctrlSt.GetOrCreateLastCommand()
+	lastCmd.ActorId = strPtr("operator-12")
+	lastCmd.ActorClass = yangpkg.OpenitsTypes_ControlSource_control_central
 	ctrlSt.ChangeoverPermitted = boolPtr(true)
 	// blocking-interlocks intentionally left empty: consistent with
 	// changeover-permitted=true.

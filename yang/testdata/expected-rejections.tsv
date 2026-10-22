@@ -57,6 +57,7 @@ invalid-reversible-direction-a-unknown.json	Invalid identityref "openits-types:d
 invalid-reversible-lane-commanded-dual-green.json	A downward green arrow toward direction-a requires a steady red X
 invalid-reversible-lane-commanded-green-a-without-red.json	A downward green arrow toward direction-a requires a steady red X
 invalid-reversible-lane-commanded-green-b-without-red.json	A downward green arrow toward direction-b requires a steady red X
+invalid-reversible-lane-commanded-unknown.json	unknown is a readback value and may not be commanded.
 invalid-reversible-lane-commanded-flashing-yellow-x.json	flashing-yellow-x is a legacy indication and may not be commanded.
 invalid-reversible-lane-commanded-yellow-yellow.json	A yellow X may not be shown to both directions over the same lane
 invalid-reversible-lane-commanded-white-one-way-both.json	A white one-way left-turn arrow may not be shown to both directions

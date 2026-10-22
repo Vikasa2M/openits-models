@@ -8,8 +8,10 @@
     "control": {
       "state": {
         "current-state": "open",
-        "control-source": "openits-types:control-central",
-        "last-command-by": "operator-12"
+        "last-command": {
+          "actor-id": "operator-12",
+          "actor-class": "openits-types:control-central"
+        }
       }
     }
   }

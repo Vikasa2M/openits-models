@@ -316,7 +316,6 @@ func All(kind string) []TestCase {
 			TestCase{"TestReversibleLaneControl_BlockingConsistent", TestReversibleLaneControl_BlockingConsistent},
 
 			// segments / lanes
-			TestCase{"TestReversibleLaneLane_GreenImpliesOpposingRedX", TestReversibleLaneLane_GreenImpliesOpposingRedX},
 			TestCase{"TestReversibleLaneLane_GateStatePresent", TestReversibleLaneLane_GateStatePresent},
 			TestCase{"TestRL_DirectionOpenGateBlocksReverse", TestRL_DirectionOpenGateBlocksReverse},
 			TestCase{"TestReversibleLane_NoProhibitedCommand", TestReversibleLane_NoProhibitedCommand},

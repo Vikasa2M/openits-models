@@ -1526,6 +1526,7 @@ messages:
         control_source: 2
         current_state: 13
         direction_open_permitted: 1
+        last_command: 4
         last_command_at: 16
         last_command_by: 3
         last_command_source: 15
@@ -1623,6 +1624,11 @@ messages:
         source: 100
         source_device_id: 11
         state: 12
+    openits.reversible_lane.v1.LastCommand:
+        actor_class: 1
+        actor_id: 2
+        commanded_at: 3
+        schedule_id: 4
     openits.reversible_lane.v1.LcsConflictDetected:
         kind: 99
         lane_id: 9

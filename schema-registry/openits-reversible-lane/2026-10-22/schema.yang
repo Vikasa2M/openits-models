@@ -78,7 +78,7 @@ module openits-reversible-lane {
 
   revision 2026-10-22 {
     description
-      "Commanded lane-use signals follow MUTCD Chapter 4T. Replace the green-arrow/flashing-yellow-X musts on lane/config with the 4T.04 prohibitions (downward green arrow needs the opposing red X; no yellow X, white one-way arrow, white two-way with one-way, or white one-way with yellow X over one lane to both directions) and refuse commanding the legacy flashing-yellow-x. Readback in state stays unconstrained. Rename control/state/last-command-source to control-source and retype it from a free-form string to an identityref based on openits-types:control-source. Breaking: lcs-indication green-arrow is now downward-green-arrow; consumers read control-source (authority) and last-command-by (issuing actor) instead of last-command-source.";
+      "Commanded lane-use signals follow MUTCD Chapter 4T. Replace the green-arrow/flashing-yellow-X musts on lane/config with the 4T.04 prohibitions (downward green arrow needs the opposing red X; no yellow X, white one-way arrow, white two-way with one-way, or white one-way with yellow X over one lane to both directions) and refuse commanding the legacy flashing-yellow-x. Readback in state stays unconstrained. Refuse commanding the readback-only unknown indication. Replace control/state/last-command-source (a free-form string) with a last-command container that uses the shared openits-types:command-provenance grouping: actor-id, actor-class (an identityref based on openits-types:control-source), schedule-id and commanded-at. Breaking: lcs-indication green-arrow is now downward-green-arrow; consumers read last-command/actor-class (authority) and last-command/actor-id (issuing actor) instead of last-command-source.";
     reference "MUTCD 11th Edition (2023) Sections 4T.02, 4T.04.";
   }
   revision 2026-10-16 {
@@ -418,24 +418,9 @@ module openits-reversible-lane {
             "Direction currently open to traffic.  Present iff
              current-state is `open`.";
         }
-        leaf control-source {
-          type identityref { base openits-types:control-source; }
-          description
-            "Authority class that issued the most recent state command
-             (central, local backup, manual, schedule, ...). Replaces
-             last-command-source, a free-form actor id; the issuing
-             actor's identifier is carried by last-command-by.";
-        }
-        leaf last-command-at {
-          type yang:date-and-time;
-          description "Wall-clock time of the most recent state command.";
-        }
-        leaf last-command-by {
-          type string;
-          description
-            "Operator or system that issued the most recent command
-             (free-form id, as reported by the device). Pairs with
-             control-source, which names the authority.";
+        container last-command {
+          description "Who issued the most recent command, under which authority, and when.";
+          uses openits-types:command-provenance;
         }
         leaf changeover-permitted {
           type boolean;
@@ -451,7 +436,8 @@ module openits-reversible-lane {
             "OPEN gate: true when every REQUIRED interlock (both
              changeover-start and direction-open) is satisfied. A conforming
              controller MUST NOT enter transition phase lcs-reverse — MUST NOT
-             drive any lane to downward-green-arrow toward the new
+             show any lane an indication that admits traffic (a downward
+             green arrow or either white left-turn arrow) toward the new
              direction — while this is false. Supersets changeover-permitted.";
         }
         leaf-list blocking-interlocks {
@@ -555,13 +541,16 @@ module openits-reversible-lane {
                pair that the manual prohibits over the same lane to both
                directions (including a downward green arrow without a
                steady red X to the other direction), and the legacy
-               flashing-yellow-x, are rejected.  Readback in state is
+               flashing-yellow-x and the readback-only unknown, are rejected.  Readback in state is
                unconstrained.";
             must "not(lcs-direction-a = 'downward-green-arrow') or lcs-direction-b = 'red-x'" {
               error-message "A downward green arrow toward direction-a requires a steady red X toward direction-b (MUTCD 4T.04).";
             }
             must "not(lcs-direction-b = 'downward-green-arrow') or lcs-direction-a = 'red-x'" {
               error-message "A downward green arrow toward direction-b requires a steady red X toward direction-a (MUTCD 4T.04).";
+            }
+            must "not(lcs-direction-a = 'unknown' or lcs-direction-b = 'unknown')" {
+              error-message "unknown is a readback value and may not be commanded.";
             }
             must "not(lcs-direction-a = 'flashing-yellow-x' or lcs-direction-b = 'flashing-yellow-x')" {
               error-message "flashing-yellow-x is a legacy indication and may not be commanded.";

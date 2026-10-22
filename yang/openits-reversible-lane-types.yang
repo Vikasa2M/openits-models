@@ -172,7 +172,10 @@ module openits-reversible-lane-types {
     }
     description
       "Lane-use control signal indication (MUTCD 11th edition,
-       Chapter 4T). All current indications are steady.";
+       Chapter 4T). All current indications are steady. The federal
+       profile (yang/deviations/openits-reversible-lane-mutcd.yang)
+       repeats this enumeration minus flashing-yellow-x and must be
+       updated with it.";
     reference "MUTCD 11th Edition (2023) Sections 4T.02, 4T.04.";
   }
 
@@ -447,8 +450,8 @@ module openits-reversible-lane-types {
   identity rl-lane-state-change-event-kind {
     base reversible-lane-event-kind;
     description
-      "Sub-base for lane-state-changed. The facility state machine moved. The notification constrains kind to this
-       base.";
+      "Sub-base for lane-state-changed. The facility state machine
+       moved. The notification constrains kind to this base.";
   }
   identity rl-lane-state-changed {
     base rl-lane-state-change-event-kind;
@@ -457,8 +460,8 @@ module openits-reversible-lane-types {
   identity rl-transition-timeout-event-kind {
     base reversible-lane-event-kind;
     description
-      "Sub-base for transition-timeout. A changeover exceeded its timeout. The notification constrains kind to this
-       base.";
+      "Sub-base for transition-timeout. A changeover exceeded its
+       timeout. The notification constrains kind to this base.";
   }
   identity rl-transition-timeout {
     base rl-transition-timeout-event-kind;
@@ -467,8 +470,8 @@ module openits-reversible-lane-types {
   identity rl-lcs-conflict-event-kind {
     base reversible-lane-event-kind;
     description
-      "Sub-base for lcs-conflict-detected. Conflicting indications were read back. The notification constrains kind to this
-       base.";
+      "Sub-base for lcs-conflict-detected. Conflicting indications
+       were read back. The notification constrains kind to this base.";
   }
   identity rl-lcs-conflict-detected {
     base rl-lcs-conflict-event-kind;
