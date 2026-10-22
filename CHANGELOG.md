@@ -7,6 +7,19 @@ for the Go module. See [`docs/versioning.md`](docs/versioning.md) for how the
 Go module version, per-module YANG revision dates, and protobuf wire
 compatibility relate.
 
+## [0.9.0](https://github.com/Vikasa2M/openits-models/compare/v0.8.0...v0.9.0) (2026-10-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* In lcs-indication, white-two-way-left-turn-arrow (6) and white-one-way-left-turn-arrow (7) are added; flashing-yellow-x is legacy and may be reported but not commanded. Commanded lane config now refuses unknown, a green arrow without a steady red X to the opposite direction, and the MUTCD 4T.04 pairs yellow X/yellow X, white one-way/white one-way, white two-way/white one-way and white one-way/yellow X. control/state last-command-source and last-command-at are replaced by the last-command container (openits-types:command-provenance: actor-id, actor-class, schedule-id, commanded-at); proto ControlState reserves 15 and 16 and adds last_command 4. In lane-state-changed, new-state and new-direction are renamed state and direction (proto fields 3 and 4 reserved; now 12 and 13). Each reversible-lane notification's kind is constrained to its own sub-base; concrete kind identities are unchanged. Stored or in-flight protobuf carries removed fields as unknown and must be re-encoded. See docs/migration/v0.9.0.md.
+* Pedestrian detectors move out of detectors/detector into pedestrian-detectors/pedestrian-detector (key pedestrian-detector-id 1..255, one mandatory call-phase, diagnostic-thresholds; state holds only active, last-activation, actuation-count and fault); the vehicle detector-type identities detector-ped-pushbutton and detector-ped-passive are removed in favour of pedestrian-pushbutton and pedestrian-passive under the new pedestrian-detector-type base. The vehicle detector config/diagnostics container is renamed diagnostic-thresholds. detector-transition channel becomes detector-id (proto DetectorTransition 2 to 11) and pedestrian-event detector-channel becomes pedestrian-detector-id, a pedestrian detector number (proto PedestrianEvent 3 to 9). The shared NEMA phase-timing leaves (min-green, max-green, passage, yellow-change, red-clear, walk, ped-clear) and 37 signal-control leaves are renamed with -s, -min or -pct suffixes, across phases, overlaps, detectors, coordination, preemption, priority, startup and the cabinet on-battery policy, ramp-metering plan timing, and the detector-report, tsam-recommendation-applied and tsp-event events; the MUTCD deviation modules target the new paths. In protobuf every renamed field moves to a new field number and the old number and name are reserved (openits.signal_control.v1, openits.ramp_metering.v1.PhaseTiming, openits.types.v1.ScOnBatteryPolicy), so v0.9.0 decoders treat old fields in stored or in-flight bytes as unknown; re-encode or translate stored data. See docs/migration/v0.9.0.md.
+
+### Features
+
+* align reversible-lane lane-use signals with MUTCD Chapter 4T and report each signal head change ([00f0d27](https://github.com/Vikasa2M/openits-models/commit/00f0d27303b30f0a9b9b8666173fb90b14a67363))
+* give pedestrian detectors their own table and name every signal-control timing leaf with its unit ([172983d](https://github.com/Vikasa2M/openits-models/commit/172983d8877f7f5f506c6cde93630967a2ec39fc))
+
 ## [0.8.0](https://github.com/Vikasa2M/openits-models/compare/v0.7.0...v0.8.0) (2026-10-20)
 
 
