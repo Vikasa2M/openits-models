@@ -1,0 +1,13 @@
+{
+  "openits-common-fault-events:fault-raised": {
+    "kind": "openits-reversible-lane-types:reversible-lane-fault-plc-configuration",
+    "source-device-id": "rl-controller-1",
+    "sequence-epoch": "boot-2026-10-23a",
+    "sequence": "14",
+    "fault-id": "f-plc-configuration",
+    "severity": "major",
+    "description": "PLC program checksum differs from the expected value.",
+    "first-observed": "2026-10-23T12:03:00Z",
+    "occurred-at": "2026-10-23T12:03:01Z"
+  }
+}

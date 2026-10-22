@@ -609,7 +609,8 @@
         "2026-10-14",
         "2026-10-15",
         "2026-10-16",
-        "2026-10-22"
+        "2026-10-22",
+        "2026-10-23"
       ],
       "events": [
         "openits.reversible-lane.fault-cleared.v1",
@@ -633,7 +634,8 @@
         "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
         "RFC 7950 §11",
         "RFC 7950 §7.12",
-        "RFC 7950 §7.19"
+        "RFC 7950 §7.19",
+        "openits-cabinet-power:cabinet-power-door-open"
       ],
       "modules": [
         {
@@ -704,7 +706,8 @@
             "2026-09-08",
             "2026-10-15",
             "2026-10-16",
-            "2026-10-22"
+            "2026-10-22",
+            "2026-10-23"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TM16 (Reversible Lane Management)",
@@ -714,7 +717,8 @@
             "MUTCD 11th ed. Chapter 4M",
             "RFC 7950 section 11",
             "RFC 7950 §11",
-            "RFC 7950 §7.19"
+            "RFC 7950 §7.19",
+            "openits-cabinet-power:cabinet-power-door-open"
           ]
         }
       ]
@@ -2492,6 +2496,11 @@
         "openits-reversible-lane-types/2026-10-22/MANIFEST.json",
         "openits-reversible-lane-types/2026-10-22/README.md",
         "openits-reversible-lane-types/2026-10-22/schema.yang"
+      ],
+      "2026-10-23": [
+        "openits-reversible-lane-types/2026-10-23/MANIFEST.json",
+        "openits-reversible-lane-types/2026-10-23/README.md",
+        "openits-reversible-lane-types/2026-10-23/schema.yang"
       ]
     },
     "openits-rsu": {
