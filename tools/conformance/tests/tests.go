@@ -316,12 +316,13 @@ func All(kind string) []TestCase {
 			TestCase{"TestReversibleLaneControl_BlockingConsistent", TestReversibleLaneControl_BlockingConsistent},
 
 			// segments / lanes
-			TestCase{"TestReversibleLaneLane_GreenImpliesOpposingRedX", TestReversibleLaneLane_GreenImpliesOpposingRedX},
 			TestCase{"TestReversibleLaneLane_GateStatePresent", TestReversibleLaneLane_GateStatePresent},
 			TestCase{"TestRL_DirectionOpenGateBlocksReverse", TestRL_DirectionOpenGateBlocksReverse},
+			TestCase{"TestReversibleLane_NoProhibitedCommand", TestReversibleLane_NoProhibitedCommand},
 
 			// events
 			TestCase{"TestReversibleLaneEvent_LcsConflictShape", TestReversibleLaneEvent_LcsConflictShape},
+			TestCase{"TestReversibleLane_IndicationSequence", TestReversibleLane_IndicationSequence},
 			TestCase{"TestReversibleLaneEvent_FaultRaisedShape", TestReversibleLaneEvent_FaultRaisedShape},
 			TestCase{"TestReversibleLaneGate_HasIdentity", TestReversibleLaneGate_HasIdentity},
 			TestCase{"TestReversibleLaneFault_FeedbackLossPositionUnknown", TestReversibleLaneFault_FeedbackLossPositionUnknown},

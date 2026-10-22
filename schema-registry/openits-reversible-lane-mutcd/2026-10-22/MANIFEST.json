@@ -1,0 +1,6 @@
+{
+  "module": "openits-reversible-lane-mutcd",
+  "revision": "2026-10-22",
+  "kind": "deviation",
+  "files": ["schema.yang"]
+}

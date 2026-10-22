@@ -1,0 +1,57 @@
+module openits-reversible-lane-mutcd {
+  yang-version 1.1;
+  namespace "urn:openits:yang:reversible-lane-mutcd";
+  prefix openits-reversible-lane-mutcd;
+
+  import openits-reversible-lane { prefix openits-rl; }
+
+  organization "OpenITS Working Group (proposal)";
+  contact "OpenITS Working Group (proposal)";
+  description
+    "Federal MUTCD 11th edition profile: commanded indications limited to
+     the current Chapter 4T set. A state whose manual restricts further
+     (for example, no white left-turn arrows) publishes its own profile
+     in the same form.
+
+     The vendor-neutral core already refuses commanding the legacy
+     flashing-yellow-x, so this profile adds no rule beyond the core
+     today. It ships as the template for state profiles and as the
+     named declaration that a deployment follows the federal indication
+     set. Only commanded config is narrowed; state readback keeps the
+     full lcs-indication set so a device can report what it shows.";
+
+  revision 2026-10-22 {
+    description
+      "Initial revision. Limit commanded lcs-direction-a and
+       lcs-direction-b to the current MUTCD Chapter 4T indications.";
+    reference "MUTCD 11th Edition (2023) Sections 4T.02, 4T.04; RFC 7950 section 7.20.3.";
+  }
+
+  deviation "/openits-rl:reversible-lane/openits-rl:segments/openits-rl:segment/openits-rl:lane/openits-rl:config/openits-rl:lcs-direction-a" {
+    deviate replace {
+      type enumeration {
+        enum unknown { value 0; }
+        enum dark { value 1; }
+        enum red-x { value 2; }
+        enum yellow-x { value 3; }
+        enum green-arrow { value 5; }
+        enum white-two-way-left-turn-arrow { value 6; }
+        enum white-one-way-left-turn-arrow { value 7; }
+      }
+    }
+  }
+
+  deviation "/openits-rl:reversible-lane/openits-rl:segments/openits-rl:segment/openits-rl:lane/openits-rl:config/openits-rl:lcs-direction-b" {
+    deviate replace {
+      type enumeration {
+        enum unknown { value 0; }
+        enum dark { value 1; }
+        enum red-x { value 2; }
+        enum yellow-x { value 3; }
+        enum green-arrow { value 5; }
+        enum white-two-way-left-turn-arrow { value 6; }
+        enum white-one-way-left-turn-arrow { value 7; }
+      }
+    }
+  }
+}

@@ -33,8 +33,11 @@
       "state": {
         "current-state": "open",
         "open-direction": "openits-types:direction-northbound",
-        "last-command-source": "tmc-ops",
-        "last-command-at": "2026-07-07T06:30:00Z",
+        "last-command": {
+          "actor-id": "operator-12",
+          "actor-class": "openits-types:control-central",
+          "commanded-at": "2026-07-07T06:30:00Z"
+        },
         "changeover-permitted": true,
         "direction-open-permitted": true
       }

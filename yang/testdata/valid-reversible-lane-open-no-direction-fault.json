@@ -8,7 +8,10 @@
     "control": {
       "state": {
         "current-state": "open",
-        "last-command-source": "tmc-ops"
+        "last-command": {
+          "actor-id": "operator-12",
+          "actor-class": "openits-types:control-central"
+        }
       }
     }
   }

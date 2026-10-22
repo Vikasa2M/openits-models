@@ -29,6 +29,11 @@ module openits-reversible-lane-events {
 
   openits-types:openits-version "0.7.0";
 
+  revision 2026-10-22 {
+    description
+      "Add lcs-indication-changed, one lane-use signal head changing indication, so a consumer can audit a changeover against MUTCD 4T.04. Widen lcs-conflict-detected to any 4T.04 prohibited read-back pair, or a downward green arrow without an opposing red X, and name green-arrow (the downward green arrow) in it. Rename lane-state-changed new-state and new-direction to state and direction. Constrain kind on lane-state-changed, lcs-conflict-detected and transition-timeout to a sub-base per notification (concrete kind identities unchanged). Breaking: lane-state-changed new-state/new-direction are now state/direction.";
+    reference "MUTCD 11th Edition (2023) Section 4T.04.";
+  }
   revision 2026-10-15 {
     description
       "Add gate-status-changed. One gate per event. kind is
@@ -147,7 +152,7 @@ module openits-reversible-lane-events {
 
     leaf kind {
       type identityref {
-        base openits-reversible-lane-types:reversible-lane-event-kind;
+        base openits-reversible-lane-types:rl-lane-state-change-event-kind;
       }
       mandatory true;
       description
@@ -164,13 +169,13 @@ module openits-reversible-lane-events {
       type identityref { base openits-types:carriageway-direction; }
       description "Open direction before the change, when previous-state was open.";
     }
-    leaf new-state {
+    leaf state {
       type openits-reversible-lane-types:lane-flow-state;
       description "State after the change.";
     }
-    leaf new-direction {
+    leaf direction {
       type identityref { base openits-types:carriageway-direction; }
-      description "Open direction after the change, when new-state is open.";
+      description "Open direction after the change, when state is open.";
     }
     leaf initiated-by {
       type string;
@@ -194,7 +199,7 @@ module openits-reversible-lane-events {
 
     leaf kind {
       type identityref {
-        base openits-reversible-lane-types:reversible-lane-event-kind;
+        base openits-reversible-lane-types:rl-transition-timeout-event-kind;
       }
       mandatory true;
       description
@@ -230,15 +235,18 @@ module openits-reversible-lane-events {
     openits-types:arc-it-flow
       "ITS Roadway Equipment -> TMC : lane management status";
     description
-      "A segment read back conflicting indications — the
-       must-constraint case (green-arrow both directions) or any
-       vendor-detected conflicting display.  Safety-critical: the
+      "A segment read back conflicting indications: any pair MUTCD 4T.04
+       prohibits over one lane (a yellow X to both directions, a white
+       one-way left-turn arrow to both directions or against a yellow X
+       or a white two-way arrow), a downward green arrow without a
+       steady red X to the opposite direction, or any vendor-detected
+       conflicting display.  Safety-critical: the
        controller is expected to drop the facility to closed / all
        red-x and raise a critical fault-conflict fault.";
 
     leaf kind {
       type identityref {
-        base openits-reversible-lane-types:reversible-lane-event-kind;
+        base openits-reversible-lane-types:rl-lcs-conflict-event-kind;
       }
       mandatory true;
       description
@@ -266,6 +274,55 @@ module openits-reversible-lane-events {
     leaf lcs-direction-b {
       type openits-reversible-lane-types:lcs-indication;
       description "Indication read back facing direction-b.";
+    }
+
+    uses openits-types:wire-source;
+  }
+
+  notification lcs-indication-changed {
+    openits-types:arc-it-flow
+      "ITS Roadway Equipment -> TMC : lane management status";
+    description
+      "One lane-use control signal head changed indication. Emitted on
+       transitions only; lets a consumer audit a changeover against
+       MUTCD 4T.04 (a moving condition ends with a red X, directly or
+       through a yellow X). kind is constrained to
+       rl-lcs-indication-change-event-kind.";
+
+    leaf kind {
+      type identityref {
+        base openits-reversible-lane-types:rl-lcs-indication-change-event-kind;
+      }
+      mandatory true;
+      description
+        "Event classifier; openits-reversible-lane-types:rl-lcs-indication-changed
+         for this notification.";
+    }
+    uses openits-types:event-header;
+
+    leaf segment-id {
+      type string;
+      mandatory true;
+      description "Segment of the lane.";
+    }
+    leaf lane-id {
+      type string;
+      mandatory true;
+      description "Segment-local lane identifier.";
+    }
+    leaf face {
+      type identityref { base openits-types:carriageway-direction; }
+      mandatory true;
+      description "Direction of travel the head faces.";
+    }
+    leaf previous-indication {
+      type openits-reversible-lane-types:lcs-indication;
+      description "Indication before the change.";
+    }
+    leaf indication {
+      type openits-reversible-lane-types:lcs-indication;
+      mandatory true;
+      description "Indication now displayed.";
     }
 
     uses openits-types:wire-source;

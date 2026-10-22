@@ -38,22 +38,6 @@ exceptions:
       path: /openits-ramp-metering-events/release-rate-changed/previous-rate-vph
       cut: ramp-metering
     - rule: before-after
-      module: openits-reversible-lane-events
-      path: /openits-reversible-lane-events/lane-state-changed/new-direction
-      cut: reversible-lane
-    - rule: before-after
-      module: openits-reversible-lane-events
-      path: /openits-reversible-lane-events/lane-state-changed/new-state
-      cut: reversible-lane
-    - rule: before-after
-      module: openits-reversible-lane-events
-      path: /openits-reversible-lane-events/lane-state-changed/previous-direction
-      cut: reversible-lane
-    - rule: before-after
-      module: openits-reversible-lane-events
-      path: /openits-reversible-lane-events/lane-state-changed/previous-state
-      cut: reversible-lane
-    - rule: before-after
       module: openits-rsu-events
       path: /openits-rsu-events/rsu-gps-status-change/new-status
       cut: rsu
@@ -193,18 +177,6 @@ exceptions:
       module: openits-ramp-metering-events
       path: /openits-ramp-metering-events/release-rate-changed/kind
       cut: ramp-metering
-    - rule: kind-base
-      module: openits-reversible-lane-events
-      path: /openits-reversible-lane-events/lane-state-changed/kind
-      cut: reversible-lane
-    - rule: kind-base
-      module: openits-reversible-lane-events
-      path: /openits-reversible-lane-events/lcs-conflict-detected/kind
-      cut: reversible-lane
-    - rule: kind-base
-      module: openits-reversible-lane-events
-      path: /openits-reversible-lane-events/transition-timeout/kind
-      cut: reversible-lane
     - rule: kind-base
       module: openits-rsu-events
       path: /openits-rsu-events/rsu-broadcast-sample/kind

@@ -1,0 +1,13 @@
+{
+  "openits-reversible-lane-events:lcs-indication-changed": {
+    "kind": "openits-reversible-lane-types:rl-lcs-indication-changed",
+    "source-device-id": "rl-controller-1",
+    "sequence-epoch": "boot-2026-10-13a",
+    "occurred-at": "2026-10-22T16:00:00Z",
+    "sequence": "2",
+    "segment-id": "seg-1",
+    "lane-id": "lane-1",
+    "face": "openits-types:direction-northbound",
+    "previous-indication": "yellow-x"
+  }
+}

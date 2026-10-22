@@ -59,6 +59,9 @@ func collectReversibleLane() (*yangpkg.Device, error) {
 	ctrlSt := control.GetOrCreateState()
 	ctrlSt.CurrentState = yangpkg.OpenitsReversibleLaneTypes_LaneFlowState_open
 	ctrlSt.OpenDirection = yangpkg.OpenitsTypes_CarriagewayDirection_direction_northbound
+	lastCmd := ctrlSt.GetOrCreateLastCommand()
+	lastCmd.ActorId = strPtr("operator-12")
+	lastCmd.ActorClass = yangpkg.OpenitsTypes_ControlSource_control_central
 	ctrlSt.ChangeoverPermitted = boolPtr(true)
 	// blocking-interlocks intentionally left empty: consistent with
 	// changeover-permitted=true.
@@ -83,7 +86,7 @@ func collectReversibleLane() (*yangpkg.Device, error) {
 	laneCfg := lane.GetOrCreateConfig()
 	laneCfg.LaneId = strPtr("lane-1")
 	// Commanded green-arrow toward direction-a requires a steady red-X
-	// toward direction-b (MUTCD 4M) — the green-implies-opposing-red-X
+	// toward direction-b (MUTCD 4T.04) — the green-implies-opposing-red-X
 	// invariant enforced by the lane config's module musts.
 	laneCfg.LcsDirectionA = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_green_arrow
 	laneCfg.LcsDirectionB = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_red_x
@@ -195,8 +198,8 @@ func subscribeReversibleLane(ctx context.Context, out chan<- tests.EventEnvelope
 			Data: &reversiblelanev1.LaneStateChanged{
 				Kind:          "openits-reversible-lane-types:rl-lane-state-changed",
 				PreviousState: reversiblelanev1.LaneFlowState_LANE_FLOW_STATE_CLOSED.Enum(),
-				NewState:      reversiblelanev1.LaneFlowState_LANE_FLOW_STATE_OPEN.Enum(),
-				NewDirection:  proto.String("openits-types:direction-northbound"),
+				State:         reversiblelanev1.LaneFlowState_LANE_FLOW_STATE_OPEN.Enum(),
+				Direction:     proto.String("openits-types:direction-northbound"),
 				InitiatedBy:   proto.String("tmc-ops"),
 			},
 		},
@@ -225,6 +228,56 @@ func subscribeReversibleLane(ctx context.Context, out chan<- tests.EventEnvelope
 				SegmentId:     proto.String("seg-1"),
 				LcsDirectionA: reversiblelanev1.LcsIndication_LCS_INDICATION_GREEN_ARROW.Enum(),
 				LcsDirectionB: reversiblelanev1.LcsIndication_LCS_INDICATION_GREEN_ARROW.Enum(),
+			},
+		},
+		// A coherent changeover on lane-1: the closing direction steps green ->
+		// yellow X -> red X (MUTCD 4T.04), then the opening direction goes red -> green.
+		{
+			Subject:  base + ".lcs-indication-changed",
+			CEType:   "openits.reversible-lane.lcs-indication-changed.v1",
+			CESource: src,
+			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VFH",
+			CETime:   time.Now().UTC(),
+			Data: &reversiblelanev1.LcsIndicationChanged{
+				Kind:               "openits-reversible-lane-types:rl-lcs-indication-changed",
+				SegmentId:          "seg-1",
+				LaneId:             "lane-1",
+				Face:               "openits-types:direction-southbound",
+				PreviousIndication: reversiblelanev1.LcsIndication_LCS_INDICATION_GREEN_ARROW.Enum(),
+				Indication:         reversiblelanev1.LcsIndication_LCS_INDICATION_YELLOW_X,
+				OccurredAt:         timestamppb.New(time.Now().UTC()),
+			},
+		},
+		{
+			Subject:  base + ".lcs-indication-changed",
+			CEType:   "openits.reversible-lane.lcs-indication-changed.v1",
+			CESource: src,
+			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VFJ",
+			CETime:   time.Now().UTC(),
+			Data: &reversiblelanev1.LcsIndicationChanged{
+				Kind:               "openits-reversible-lane-types:rl-lcs-indication-changed",
+				SegmentId:          "seg-1",
+				LaneId:             "lane-1",
+				Face:               "openits-types:direction-southbound",
+				PreviousIndication: reversiblelanev1.LcsIndication_LCS_INDICATION_YELLOW_X.Enum(),
+				Indication:         reversiblelanev1.LcsIndication_LCS_INDICATION_RED_X,
+				OccurredAt:         timestamppb.New(time.Now().UTC()),
+			},
+		},
+		{
+			Subject:  base + ".lcs-indication-changed",
+			CEType:   "openits.reversible-lane.lcs-indication-changed.v1",
+			CESource: src,
+			CEID:     "01HXYR3K9T8M2NAEQF5P4R6VFK",
+			CETime:   time.Now().UTC(),
+			Data: &reversiblelanev1.LcsIndicationChanged{
+				Kind:               "openits-reversible-lane-types:rl-lcs-indication-changed",
+				SegmentId:          "seg-1",
+				LaneId:             "lane-1",
+				Face:               "openits-types:direction-northbound",
+				PreviousIndication: reversiblelanev1.LcsIndication_LCS_INDICATION_RED_X.Enum(),
+				Indication:         reversiblelanev1.LcsIndication_LCS_INDICATION_GREEN_ARROW,
+				OccurredAt:         timestamppb.New(time.Now().UTC()),
 			},
 		},
 		{

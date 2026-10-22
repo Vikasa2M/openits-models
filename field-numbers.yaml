@@ -1523,9 +1523,12 @@ messages:
     openits.reversible_lane.v1.ControlState:
         blocking_interlocks: 20
         changeover_permitted: 19
+        control_source: 2
         current_state: 13
         direction_open_permitted: 1
+        last_command: 4
         last_command_at: 16
+        last_command_by: 3
         last_command_source: 15
         open_direction: 14
         transition: 17
@@ -1606,6 +1609,7 @@ messages:
         lcs_direction_a: 5
         lcs_direction_b: 6
     openits.reversible_lane.v1.LaneStateChanged:
+        direction: 13
         initiated_by: 5
         kind: 99
         new_direction: 4
@@ -1619,6 +1623,12 @@ messages:
         sequence_epoch: 6
         source: 100
         source_device_id: 11
+        state: 12
+    openits.reversible_lane.v1.LastCommand:
+        actor_class: 1
+        actor_id: 2
+        commanded_at: 3
+        schedule_id: 4
     openits.reversible_lane.v1.LcsConflictDetected:
         kind: 99
         lane_id: 9
@@ -1632,6 +1642,20 @@ messages:
         sequence_epoch: 10
         source: 100
         source_device_id: 8
+    openits.reversible_lane.v1.LcsIndicationChanged:
+        face: 3
+        indication: 5
+        kind: 99
+        lane_id: 2
+        observed_by: 6
+        occurred_at: 7
+        owner: 8
+        previous_indication: 4
+        segment_id: 1
+        sequence: 9
+        sequence_epoch: 10
+        source: 100
+        source_device_id: 11
     openits.reversible_lane.v1.ReversibleLane:
         config: 1
         control: 3

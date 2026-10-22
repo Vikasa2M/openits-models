@@ -1,0 +1,85 @@
+{
+  "openits-reversible-lane:reversible-lane": {
+    "config": {
+      "id": "us75-contraflow",
+      "direction-a": "openits-types:direction-northbound",
+      "direction-b": "openits-types:direction-southbound"
+    },
+    "segments": {
+      "segment": [
+        {
+          "segment-id": "seg-1",
+          "config": {
+            "segment-id": "seg-1"
+          },
+          "lane": [
+            {
+              "lane-id": "lane-1",
+              "config": {
+                "lane-id": "lane-1",
+                "lcs-direction-a": "green-arrow",
+                "lcs-direction-b": "red-x"
+              }
+            },
+            {
+              "lane-id": "lane-2",
+              "config": {
+                "lane-id": "lane-2",
+                "lcs-direction-a": "yellow-x",
+                "lcs-direction-b": "red-x"
+              }
+            },
+            {
+              "lane-id": "lane-3",
+              "config": {
+                "lane-id": "lane-3",
+                "lcs-direction-a": "red-x",
+                "lcs-direction-b": "red-x"
+              }
+            },
+            {
+              "lane-id": "lane-4",
+              "config": {
+                "lane-id": "lane-4",
+                "lcs-direction-a": "red-x",
+                "lcs-direction-b": "green-arrow"
+              }
+            },
+            {
+              "lane-id": "lane-5",
+              "config": {
+                "lane-id": "lane-5",
+                "lcs-direction-a": "white-two-way-left-turn-arrow",
+                "lcs-direction-b": "white-two-way-left-turn-arrow"
+              }
+            },
+            {
+              "lane-id": "lane-6",
+              "config": {
+                "lane-id": "lane-6",
+                "lcs-direction-a": "dark",
+                "lcs-direction-b": "dark"
+              }
+            },
+            {
+              "lane-id": "lane-7",
+              "config": {
+                "lane-id": "lane-7",
+                "lcs-direction-a": "white-one-way-left-turn-arrow",
+                "lcs-direction-b": "red-x"
+              }
+            },
+            {
+              "lane-id": "lane-8",
+              "config": {
+                "lane-id": "lane-8",
+                "lcs-direction-a": "red-x",
+                "lcs-direction-b": "white-one-way-left-turn-arrow"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -592,7 +592,7 @@
     {
       "slug": "reversible-lane",
       "namespace": "urn:openits:yang:reversible-lane",
-      "description": "YANG data model for reversible-lane facilities — corridors,\nbridges, and tunnels whose lanes carry traffic in either of two\nopposing directions under operator control.\n\nAligned with ARC-IT 9.1 service package TM16 (Reversible Lane\nManagement).  Facilities of this class are typically driven by\na PLC exposing lane state through a register map; the model is\ntransport-independent, so SRTP, Modbus, DNP3, or NTCIP adapters\nmap onto it identically.  Wire provenance for register-decoded\nevents rides in the openits-types wire-source 'plc-register'\ncase.  Vendor-specific capabilities ride in vendor augment\nmodules per docs/06-extension-model.md, never in this module.\n\nThe facility is a four-state machine.  With direction-a =\nnorthbound and direction-b = southbound, the operator-visible\nstates map to: Open NB (open + northbound), Open SB (open +\nsouthbound), Closed, and In-Transition.  Directions are\nconfigured per facility so east-west corridors use the same\nmodel.\n\nStructured per the config/state idiom: every commanded surface\n(facility `config` directions, `control/config`, and each lane's\n`segments/segment/lane/config`) is config true and every\nreadback (`state`, `control/state`, and each lane's\n`segments/segment/lane/state`) is config false, one per lane per\nMUTCD Chapter 4M (a lane-use control signal governs a single\nlane, not a whole segment).\n\nThis is a safety-critical control model.  `must` constraints on\nevery commanded, config-true surface forbid unsafe or\ninconsistent writes and conforming controllers MUST refuse\nwrites that violate them:\n  - the facility's two travel directions must be concrete and\n    cardinal opposites (`config/direction-a` /\n    `config/direction-b`);\n  - an open target-state must name a target-direction that is\n    one of the facility's configured directions\n    (`control/config`);\n  - per lane, a commanded green-arrow or flashing-yellow-X\n    toward one direction requires a commanded steady red-X\n    toward the other (`segments/segment/lane/config`) — the\n    green-implies-opposing-red-X invariant.\nThe config-false readback (`state`, `control/state`,\n`segments/segment/lane/state`) carries no `must`: it reports\nanomalies — including a lane reading back green-arrow to both\ndirections — as data plus a fault/alarm, not as illegal data;\na misbehaving facility's telemetry must stay representable so\nit can be reported (see lcs-conflict-detected).\n\nCopyright (c) 2026.  Distributed under Apache 2.0.",
+      "description": "YANG data model for reversible-lane facilities — corridors,\nbridges, and tunnels whose lanes carry traffic in either of two\nopposing directions under operator control.\n\nAligned with ARC-IT 9.1 service package TM16 (Reversible Lane\nManagement).  Facilities of this class are typically driven by\na PLC exposing lane state through a register map; the model is\ntransport-independent, so SRTP, Modbus, DNP3, or NTCIP adapters\nmap onto it identically.  Wire provenance for register-decoded\nevents rides in the openits-types wire-source 'plc-register'\ncase.  Vendor-specific capabilities ride in vendor augment\nmodules per docs/06-extension-model.md, never in this module.\n\nThe facility is a four-state machine.  With direction-a =\nnorthbound and direction-b = southbound, the operator-visible\nstates map to: Open NB (open + northbound), Open SB (open +\nsouthbound), Closed, and In-Transition.  Directions are\nconfigured per facility so east-west corridors use the same\nmodel.\n\nStructured per the config/state idiom: every commanded surface\n(facility `config` directions, `control/config`, and each lane's\n`segments/segment/lane/config`) is config true and every\nreadback (`state`, `control/state`, and each lane's\n`segments/segment/lane/state`) is config false, one per lane per\nMUTCD Chapter 4T (a lane-use control signal governs a single\nlane, not a whole segment).\n\nThis is a safety-critical control model.  `must` constraints on\nevery commanded, config-true surface forbid unsafe or\ninconsistent writes and conforming controllers MUST refuse\nwrites that violate them:\n  - the facility's two travel directions must be concrete and\n    cardinal opposites (`config/direction-a` /\n    `config/direction-b`);\n  - an open target-state must name a target-direction that is\n    one of the facility's configured directions\n    (`control/config`);\n  - per lane, a commanded downward green arrow toward one\n    direction requires a commanded steady red X toward the other,\n    the other pairs MUTCD 4T.04 prohibits are refused, and the\n    legacy flashing-yellow-x may not be commanded\n    (`segments/segment/lane/config`).\nThe config-false readback (`state`, `control/state`,\n`segments/segment/lane/state`) carries no `must`: it reports\nanomalies — including a lane reading back green-arrow to both\ndirections — as data plus a fault/alarm, not as illegal data;\na misbehaving facility's telemetry must stay representable so\nit can be reported (see lcs-conflict-detected).\n\nCopyright (c) 2026.  Distributed under Apache 2.0.",
       "revisions": [
         "2026-07-07",
         "2026-07-10",
@@ -608,7 +608,8 @@
         "2026-10-13",
         "2026-10-14",
         "2026-10-15",
-        "2026-10-16"
+        "2026-10-16",
+        "2026-10-22"
       ],
       "events": [
         "openits.reversible-lane.fault-cleared.v1",
@@ -616,12 +617,15 @@
         "openits.reversible-lane.gate-status-changed.v1",
         "openits.reversible-lane.lane-state-changed.v1",
         "openits.reversible-lane.lcs-conflict-detected.v1",
+        "openits.reversible-lane.lcs-indication-changed.v1",
         "openits.reversible-lane.transition-timeout.v1"
       ],
       "refStd": [
         "ARC-IT 9.1 Service Package TM16 (Reversible Lane Management)",
         "ARC-IT 9.1 TM16",
         "MUTCD 11th Ed. Chapter 4M (Lane-Use Control Signals)",
+        "MUTCD 11th Edition (2023) Section 4T.04",
+        "MUTCD 11th Edition (2023) Sections 4T.02, 4T.04",
         "MUTCD 11th ed. Chapter 4M",
         "RFC 7950 9.6.4.2",
         "RFC 7950 section 11",
@@ -647,12 +651,14 @@
             "2026-09-08",
             "2026-10-14",
             "2026-10-15",
-            "2026-10-16"
+            "2026-10-16",
+            "2026-10-22"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TM16 (Reversible Lane Management)",
             "ARC-IT 9.1 TM16",
             "MUTCD 11th Ed. Chapter 4M (Lane-Use Control Signals)",
+            "MUTCD 11th Edition (2023) Sections 4T.02, 4T.04",
             "MUTCD 11th ed. Chapter 4M",
             "RFC 7950 9.6.4.2",
             "RFC 7950 section 11 (additive YANG evolution)",
@@ -675,9 +681,11 @@
             "2026-07-23",
             "2026-09-08",
             "2026-10-13",
-            "2026-10-15"
+            "2026-10-15",
+            "2026-10-22"
           ],
           "refStd": [
+            "MUTCD 11th Edition (2023) Section 4T.04",
             "MUTCD 11th ed. Chapter 4M",
             "RFC 7950 section 11",
             "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
@@ -695,12 +703,14 @@
             "2026-07-21",
             "2026-09-08",
             "2026-10-15",
-            "2026-10-16"
+            "2026-10-16",
+            "2026-10-22"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TM16 (Reversible Lane Management)",
             "ARC-IT 9.1 TM16",
             "MUTCD 11th Ed. Chapter 4M (Lane-Use Control Signals)",
+            "MUTCD 11th Edition (2023) Sections 4T.02, 4T.04",
             "MUTCD 11th ed. Chapter 4M",
             "RFC 7950 section 11",
             "RFC 7950 §11",
@@ -2387,6 +2397,11 @@
         "openits-reversible-lane/2026-10-16/MANIFEST.json",
         "openits-reversible-lane/2026-10-16/README.md",
         "openits-reversible-lane/2026-10-16/schema.yang"
+      ],
+      "2026-10-22": [
+        "openits-reversible-lane/2026-10-22/MANIFEST.json",
+        "openits-reversible-lane/2026-10-22/README.md",
+        "openits-reversible-lane/2026-10-22/schema.yang"
       ]
     },
     "openits-reversible-lane-events": {
@@ -2431,6 +2446,20 @@
         "openits-reversible-lane-events/2026-10-15/schema.json",
         "openits-reversible-lane-events/2026-10-15/schema.proto",
         "openits-reversible-lane-events/2026-10-15/schema.yang"
+      ],
+      "2026-10-22": [
+        "openits-reversible-lane-events/2026-10-22/MANIFEST.json",
+        "openits-reversible-lane-events/2026-10-22/README.md",
+        "openits-reversible-lane-events/2026-10-22/schema.json",
+        "openits-reversible-lane-events/2026-10-22/schema.proto",
+        "openits-reversible-lane-events/2026-10-22/schema.yang"
+      ]
+    },
+    "openits-reversible-lane-mutcd": {
+      "2026-10-22": [
+        "openits-reversible-lane-mutcd/2026-10-22/MANIFEST.json",
+        "openits-reversible-lane-mutcd/2026-10-22/README.md",
+        "openits-reversible-lane-mutcd/2026-10-22/schema.yang"
       ]
     },
     "openits-reversible-lane-types": {
@@ -2458,6 +2487,11 @@
         "openits-reversible-lane-types/2026-10-16/MANIFEST.json",
         "openits-reversible-lane-types/2026-10-16/README.md",
         "openits-reversible-lane-types/2026-10-16/schema.yang"
+      ],
+      "2026-10-22": [
+        "openits-reversible-lane-types/2026-10-22/MANIFEST.json",
+        "openits-reversible-lane-types/2026-10-22/README.md",
+        "openits-reversible-lane-types/2026-10-22/schema.yang"
       ]
     },
     "openits-rsu": {
