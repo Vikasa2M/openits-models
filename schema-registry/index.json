@@ -473,7 +473,8 @@
         "2026-08-05",
         "2026-10-13",
         "2026-10-14",
-        "2026-10-16"
+        "2026-10-16",
+        "2026-10-20"
       ],
       "events": [
         "openits.ramp-metering.fault-cleared.v1",
@@ -518,7 +519,8 @@
             "2026-07-21",
             "2026-08-05",
             "2026-10-14",
-            "2026-10-16"
+            "2026-10-16",
+            "2026-10-20"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TI03 (Traffic Metering)",
@@ -890,7 +892,8 @@
         "2026-10-13",
         "2026-10-14",
         "2026-10-16",
-        "2026-10-17"
+        "2026-10-17",
+        "2026-10-20"
       ],
       "events": [
         "openits.signal-control.cabinet-output-changed.v1",
@@ -994,7 +997,8 @@
             "2026-09-08",
             "2026-10-14",
             "2026-10-16",
-            "2026-10-17"
+            "2026-10-17",
+            "2026-10-20"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TI01",
@@ -1045,7 +1049,8 @@
             "2026-09-07",
             "2026-09-08",
             "2026-10-13",
-            "2026-10-17"
+            "2026-10-17",
+            "2026-10-20"
           ],
           "refStd": [
             "ATSPM Indiana enumeration",
@@ -1075,7 +1080,8 @@
             "2026-10-12",
             "2026-10-14",
             "2026-10-16",
-            "2026-10-17"
+            "2026-10-17",
+            "2026-10-20"
           ],
           "refStd": [
             "ATC Cabinet Standard",
@@ -1443,7 +1449,8 @@
         "2026-04-19",
         "2026-07-10",
         "2026-07-13",
-        "2026-07-21"
+        "2026-07-21",
+        "2026-10-20"
       ],
       "refStd": [
         "(de-lock-in: MUTCD constraints advisory-in-core)",
@@ -2123,6 +2130,11 @@
         "openits-nema-common/2026-07-21/MANIFEST.json",
         "openits-nema-common/2026-07-21/README.md",
         "openits-nema-common/2026-07-21/schema.yang"
+      ],
+      "2026-10-20": [
+        "openits-nema-common/2026-10-20/MANIFEST.json",
+        "openits-nema-common/2026-10-20/README.md",
+        "openits-nema-common/2026-10-20/schema.yang"
       ]
     },
     "openits-perception": {
@@ -2271,6 +2283,11 @@
         "openits-ramp-metering/2026-10-16/MANIFEST.json",
         "openits-ramp-metering/2026-10-16/README.md",
         "openits-ramp-metering/2026-10-16/schema.yang"
+      ],
+      "2026-10-20": [
+        "openits-ramp-metering/2026-10-20/MANIFEST.json",
+        "openits-ramp-metering/2026-10-20/README.md",
+        "openits-ramp-metering/2026-10-20/schema.yang"
       ]
     },
     "openits-ramp-metering-events": {
@@ -2628,6 +2645,11 @@
         "openits-signal-control/2026-10-17/MANIFEST.json",
         "openits-signal-control/2026-10-17/README.md",
         "openits-signal-control/2026-10-17/schema.yang"
+      ],
+      "2026-10-20": [
+        "openits-signal-control/2026-10-20/MANIFEST.json",
+        "openits-signal-control/2026-10-20/README.md",
+        "openits-signal-control/2026-10-20/schema.yang"
       ]
     },
     "openits-signal-control-coordination-events": {
@@ -2697,6 +2719,13 @@
         "openits-signal-control-events/2026-10-17/schema.json",
         "openits-signal-control-events/2026-10-17/schema.proto",
         "openits-signal-control-events/2026-10-17/schema.yang"
+      ],
+      "2026-10-20": [
+        "openits-signal-control-events/2026-10-20/MANIFEST.json",
+        "openits-signal-control-events/2026-10-20/README.md",
+        "openits-signal-control-events/2026-10-20/schema.json",
+        "openits-signal-control-events/2026-10-20/schema.proto",
+        "openits-signal-control-events/2026-10-20/schema.yang"
       ]
     },
     "openits-signal-control-fault-events": {
@@ -2723,6 +2752,11 @@
         "openits-signal-control-mutcd/2026-08-05/MANIFEST.json",
         "openits-signal-control-mutcd/2026-08-05/README.md",
         "openits-signal-control-mutcd/2026-08-05/schema.yang"
+      ],
+      "2026-10-20": [
+        "openits-signal-control-mutcd/2026-10-20/MANIFEST.json",
+        "openits-signal-control-mutcd/2026-10-20/README.md",
+        "openits-signal-control-mutcd/2026-10-20/schema.yang"
       ]
     },
     "openits-signal-control-mutcd-strict": {
@@ -2735,6 +2769,11 @@
         "openits-signal-control-mutcd-strict/2026-07-23/MANIFEST.json",
         "openits-signal-control-mutcd-strict/2026-07-23/README.md",
         "openits-signal-control-mutcd-strict/2026-07-23/schema.yang"
+      ],
+      "2026-10-20": [
+        "openits-signal-control-mutcd-strict/2026-10-20/MANIFEST.json",
+        "openits-signal-control-mutcd-strict/2026-10-20/README.md",
+        "openits-signal-control-mutcd-strict/2026-10-20/schema.yang"
       ]
     },
     "openits-signal-control-overlap-events": {
@@ -2859,6 +2898,11 @@
         "openits-signal-control-types/2026-10-17/MANIFEST.json",
         "openits-signal-control-types/2026-10-17/README.md",
         "openits-signal-control-types/2026-10-17/schema.yang"
+      ],
+      "2026-10-20": [
+        "openits-signal-control-types/2026-10-20/MANIFEST.json",
+        "openits-signal-control-types/2026-10-20/README.md",
+        "openits-signal-control-types/2026-10-20/schema.yang"
       ]
     },
     "openits-traffic-sensor": {

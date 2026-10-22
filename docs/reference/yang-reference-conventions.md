@@ -461,10 +461,10 @@ the `must` on the **parent container**, referencing the child by name:
 
 ```yang
 container timing {
-  must "yellow-change" {
-    error-message "Every signalized phase requires a yellow-change interval.";
+  must "yellow-change-s" {
+    error-message "Every signalized phase requires a yellow-change-s interval.";
   }
-  leaf yellow-change { type decimal64 { fraction-digits 1; } }
+  leaf yellow-change-s { type decimal64 { fraction-digits 1; } }
 }
 ```
 

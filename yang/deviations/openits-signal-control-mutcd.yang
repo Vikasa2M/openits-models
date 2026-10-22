@@ -14,15 +14,22 @@ module openits-signal-control-mutcd {
      US-jurisdiction controller declaring this deviation validates
      against the national standard:
 
-       - yellow-change 3.0-6.0 s   (MUTCD 4F.17 para 13)
-       - red-clear     present and > 0, <= 6.0 s (MUTCD 4F.17 para 6)
-       - walk          0 or >= 4 s (MUTCD 2009 4E.06 / 11th ed. 4I.06)
+       - yellow-change-s 3.0-6.0 s   (MUTCD 4F.17 para 13)
+       - red-clear-s   present and > 0, <= 6.0 s (MUTCD 4F.17 para 6)
+       - walk-s        0 or >= 4 s (MUTCD 2009 4E.06 / 11th ed. 4I.06)
 
      Deviations only tighten: each `deviate add must` adds a constraint
      on top of core's permissive engineering-sanity bounds. A stricter
      variant (yellow >= 4.0 s) lives in
      openits-signal-control-mutcd-strict.yang.";
 
+  revision 2026-10-20 {
+    description
+      "Target the renamed openits-signal-control phase-timing leaves
+       (yellow-change-s, red-clear-s, walk-s, ped-clear-s) and
+       overlap and leading-pedestrian-interval leaves (trailing-yellow-s,
+       trailing-red-clear-s, leading-ped-interval-s).";
+  }
   revision 2026-08-05 {
     description
       "Model-review remediation (2026-08): add the leading-pedestrian-
@@ -77,7 +84,7 @@ module openits-signal-control-mutcd {
             + "7.20.3.";
   }
 
-  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:yellow-change" {
+  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:yellow-change-s" {
     deviate add {
       must ". >= 3.0 and . <= 6.0" {
         error-message
@@ -87,7 +94,7 @@ module openits-signal-control-mutcd {
     }
   }
 
-  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:red-clear" {
+  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:red-clear-s" {
     deviate add {
       must ". <= 6.0" {
         error-message
@@ -97,7 +104,7 @@ module openits-signal-control-mutcd {
     }
   }
 
-  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:walk" {
+  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:walk-s" {
     deviate add {
       must ". = 0 or . >= 4" {
         error-message
@@ -110,8 +117,8 @@ module openits-signal-control-mutcd {
 
   deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config" {
     deviate add {
-      must "not(openits-sc:crossing-distance-m) or not(openits-sc:timing/openits-sc:ped-clear) "
-         + "or openits-sc:timing/openits-sc:ped-clear >= openits-sc:crossing-distance-m div 1.07" {
+      must "not(openits-sc:crossing-distance-m) or not(openits-sc:timing/openits-sc:ped-clear-s) "
+         + "or openits-sc:timing/openits-sc:ped-clear-s >= openits-sc:crossing-distance-m div 1.07" {
         error-message
           "Pedestrian clearance must be at least crossing-distance / 1.07 m/s "
         + "(3.5 ft/s) per MUTCD 4I.06 when a crossing distance is provided.";
@@ -119,7 +126,7 @@ module openits-signal-control-mutcd {
     }
   }
 
-  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:leading-ped-interval-seconds" {
+  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:leading-ped-interval-s" {
     deviate add {
       must ". = 0.0 or . >= 3.0" {
         error-message
@@ -129,7 +136,7 @@ module openits-signal-control-mutcd {
     }
   }
 
-  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:ped-clear" {
+  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:ped-clear-s" {
     deviate add {
       must ". >= 3" {
         error-message
@@ -139,7 +146,7 @@ module openits-signal-control-mutcd {
     }
   }
 
-  deviation "/openits-sc:signal-controller/openits-sc:overlaps/openits-sc:overlap/openits-sc:config/openits-sc:trailing-yellow" {
+  deviation "/openits-sc:signal-controller/openits-sc:overlaps/openits-sc:overlap/openits-sc:config/openits-sc:trailing-yellow-s" {
     deviate add {
       must ". >= 3.0 and . <= 6.0" {
         error-message
@@ -149,7 +156,7 @@ module openits-signal-control-mutcd {
     }
   }
 
-  deviation "/openits-sc:signal-controller/openits-sc:overlaps/openits-sc:overlap/openits-sc:config/openits-sc:trailing-red-clear" {
+  deviation "/openits-sc:signal-controller/openits-sc:overlaps/openits-sc:overlap/openits-sc:config/openits-sc:trailing-red-clear-s" {
     deviate add {
       must ". <= 6.0" {
         error-message

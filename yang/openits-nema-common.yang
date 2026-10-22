@@ -28,6 +28,12 @@ module openits-nema-common {
 
   openits-types:openits-version "0.2.0";
 
+  revision 2026-10-20 {
+    description
+      "Name every phase-timing leaf with its unit: min-green-s,
+       max-green-s, passage-s, yellow-change-s, red-clear-s, walk-s,
+       ped-clear-s. Breaking: the leaves are renamed.";
+  }
   revision 2026-07-21 {
     description
       "BREAKING: convert min-green and max-green in the shared
@@ -121,7 +127,7 @@ module openits-nema-common {
        and traffic-metered ramps. Pedestrian intervals live in the
        phase-timing grouping, which adds them on top of this one.";
 
-    leaf min-green {
+    leaf min-green-s {
       type decimal64 { fraction-digits 1; }
       units "seconds";
       must ". >= 1.0" {
@@ -135,20 +141,20 @@ module openits-nema-common {
          Core enforces a universal 1 s floor; any larger jurisdiction floor is
          applied by deviation.";
     }
-    leaf max-green {
+    leaf max-green-s {
       type decimal64 { fraction-digits 1; }
       units "seconds";
-      must ". > 0.0 and (not(../min-green) or . >= ../min-green)" {
+      must ". > 0.0 and (not(../min-green-s) or . >= ../min-green-s)" {
         error-message
-          "Maximum green must be non-zero and, when min-green is present, "
-        + ">= min-green, so the phase has a usable service interval.";
+          "Maximum green must be non-zero and, when min-green-s is present, "
+        + ">= min-green-s, so the phase has a usable service interval.";
       }
       description
-        "Maximum green time (tenths).  Must be non-zero and, when min-green is
-         present, >= min-green so the phase has a usable service
+        "Maximum green time (tenths).  Must be non-zero and, when min-green-s is
+         present, >= min-green-s so the phase has a usable service
          interval.";
     }
-    leaf yellow-change {
+    leaf yellow-change-s {
       type decimal64 { fraction-digits 1; }
       units "seconds";
       must ". > 0.0" {
@@ -165,7 +171,7 @@ module openits-nema-common {
          red+amber phase and different clearance ranges) apply their
          own deviation instead.";
     }
-    leaf red-clear {
+    leaf red-clear-s {
       type decimal64 { fraction-digits 1; }
       units "seconds";
       must ". >= 0.0" {
@@ -179,7 +185,7 @@ module openits-nema-common {
          yang/deviations/openits-signal-control-mutcd.yang, not by the
          vendor-neutral core.";
     }
-    leaf passage {
+    leaf passage-s {
       type decimal64 { fraction-digits 1; }
       units "seconds";
       description "Vehicle passage / gap-out time.";
@@ -193,28 +199,28 @@ module openits-nema-common {
 
     uses vehicle-phase-timing;
 
-    leaf walk {
+    leaf walk-s {
       type uint16;
       units "seconds";
       description
         "Walk interval for the associated pedestrian phase.  Absent or
          zero both mean no pedestrian phase is served; a served phase
-         has walk > 0.  Core places no lower bound on a served walk
+         has walk-s > 0.  Core places no lower bound on a served walk
          interval; the US MUTCD 2009 4E.06 / 11th ed. 4I.06 minimum
          (>=4 s when served) is applied by
          yang/deviations/openits-signal-control-mutcd.yang.";
     }
-    leaf ped-clear {
+    leaf ped-clear-s {
       type uint16;
       units "seconds";
       description
         "Pedestrian clearance (flashing don't walk).  Required
-         whenever walk > 0; calculated from crossing distance at
+         whenever walk-s > 0; calculated from crossing distance at
          3.5 ft/s per MUTCD 2009 4E.06 / 11th ed. 4I.06.  Presence
          (and the >=1 s floor) is enforced by the parent `timing`
          container's `must`, not here — a leaf-level `must` does not
          evaluate when the leaf itself is absent (RFC 7950 §7.5.3), so
-         the check has to live where both walk and ped-clear are
+         the check has to live where both walk-s and ped-clear-s are
          visible.";
     }
   }

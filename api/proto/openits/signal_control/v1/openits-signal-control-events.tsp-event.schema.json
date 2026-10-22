@@ -43,7 +43,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
-    "adjustment-seconds": {
+    "adjustment-s": {
       "type": "string"
     },
     "denial-reason": {

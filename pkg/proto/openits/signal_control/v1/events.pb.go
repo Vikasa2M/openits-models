@@ -596,7 +596,7 @@ type DetectorReportDetector struct {
 	DetectorId    *uint32                `protobuf:"varint,1,opt,name=detector_id,json=detectorId,proto3,oneof" json:"detector_id,omitempty"`
 	PhaseServed   *uint32                `protobuf:"varint,2,opt,name=phase_served,json=phaseServed,proto3,oneof" json:"phase_served,omitempty"`
 	Volume        *uint32                `protobuf:"varint,3,opt,name=volume,proto3,oneof" json:"volume,omitempty"`
-	Occupancy     *string                `protobuf:"bytes,4,opt,name=occupancy,proto3,oneof" json:"occupancy,omitempty"`
+	OccupancyPct  *string                `protobuf:"bytes,5,opt,name=occupancy_pct,json=occupancyPct,proto3,oneof" json:"occupancy_pct,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -652,9 +652,9 @@ func (x *DetectorReportDetector) GetVolume() uint32 {
 	return 0
 }
 
-func (x *DetectorReportDetector) GetOccupancy() string {
-	if x != nil && x.Occupancy != nil {
-		return *x.Occupancy
+func (x *DetectorReportDetector) GetOccupancyPct() string {
+	if x != nil && x.OccupancyPct != nil {
+		return *x.OccupancyPct
 	}
 	return ""
 }
@@ -662,7 +662,7 @@ func (x *DetectorReportDetector) GetOccupancy() string {
 type DetectorTransition struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	Channel        uint32                 `protobuf:"varint,2,opt,name=channel,proto3" json:"channel,omitempty"`
+	DetectorId     uint32                 `protobuf:"varint,11,opt,name=detector_id,json=detectorId,proto3" json:"detector_id,omitempty"`
 	PhaseServed    *uint32                `protobuf:"varint,6,opt,name=phase_served,json=phaseServed,proto3,oneof" json:"phase_served,omitempty"`
 	ObservedBy     *string                `protobuf:"bytes,8,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
@@ -712,9 +712,9 @@ func (x *DetectorTransition) GetKind() string {
 	return ""
 }
 
-func (x *DetectorTransition) GetChannel() uint32 {
+func (x *DetectorTransition) GetDetectorId() uint32 {
 	if x != nil {
-		return x.Channel
+		return x.DetectorId
 	}
 	return 0
 }
@@ -1080,19 +1080,19 @@ func (x *OverlapChange) GetSourceDeviceId() string {
 }
 
 type PedestrianEvent struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	Kind            string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	PhaseNumber     *uint32                `protobuf:"varint,2,opt,name=phase_number,json=phaseNumber,proto3,oneof" json:"phase_number,omitempty"`
-	DetectorChannel *uint32                `protobuf:"varint,3,opt,name=detector_channel,json=detectorChannel,proto3,oneof" json:"detector_channel,omitempty"`
-	ObservedBy      *string                `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
-	OccurredAt      *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner           *string                `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
-	Sequence        uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
-	SequenceEpoch   string                 `protobuf:"bytes,4,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
-	Source          *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
-	SourceDeviceId  string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Kind                 string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
+	PhaseNumber          *uint32                `protobuf:"varint,2,opt,name=phase_number,json=phaseNumber,proto3,oneof" json:"phase_number,omitempty"`
+	PedestrianDetectorId *uint32                `protobuf:"varint,9,opt,name=pedestrian_detector_id,json=pedestrianDetectorId,proto3,oneof" json:"pedestrian_detector_id,omitempty"`
+	ObservedBy           *string                `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
+	OccurredAt           *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
+	Owner                *string                `protobuf:"bytes,7,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	Sequence             uint64                 `protobuf:"varint,8,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch        string                 `protobuf:"bytes,4,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
+	Source               *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
+	SourceDeviceId       string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *PedestrianEvent) Reset() {
@@ -1139,9 +1139,9 @@ func (x *PedestrianEvent) GetPhaseNumber() uint32 {
 	return 0
 }
 
-func (x *PedestrianEvent) GetDetectorChannel() uint32 {
-	if x != nil && x.DetectorChannel != nil {
-		return *x.DetectorChannel
+func (x *PedestrianEvent) GetPedestrianDetectorId() uint32 {
+	if x != nil && x.PedestrianDetectorId != nil {
+		return *x.PedestrianDetectorId
 	}
 	return 0
 }
@@ -1936,7 +1936,7 @@ type TsamRecommendationApplied struct {
 	Kind             string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	RecommendationId *string                `protobuf:"bytes,2,opt,name=recommendation_id,json=recommendationId,proto3,oneof" json:"recommendation_id,omitempty"`
 	AdjustmentType   AdjustmentType         `protobuf:"varint,3,opt,name=adjustment_type,json=adjustmentType,proto3,enum=openits.signal_control.v1.AdjustmentType" json:"adjustment_type,omitempty"`
-	MagnitudeSeconds *string                `protobuf:"bytes,4,opt,name=magnitude_seconds,json=magnitudeSeconds,proto3,oneof" json:"magnitude_seconds,omitempty"`
+	MagnitudeS       *string                `protobuf:"bytes,12,opt,name=magnitude_s,json=magnitudeS,proto3,oneof" json:"magnitude_s,omitempty"`
 	PhaseNumber      *uint32                `protobuf:"varint,5,opt,name=phase_number,json=phaseNumber,proto3,oneof" json:"phase_number,omitempty"`
 	Rationale        *string                `protobuf:"bytes,6,opt,name=rationale,proto3,oneof" json:"rationale,omitempty"`
 	ObservedBy       *string                `protobuf:"bytes,9,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
@@ -2000,9 +2000,9 @@ func (x *TsamRecommendationApplied) GetAdjustmentType() AdjustmentType {
 	return AdjustmentType_ADJUSTMENT_TYPE_UNSPECIFIED
 }
 
-func (x *TsamRecommendationApplied) GetMagnitudeSeconds() string {
-	if x != nil && x.MagnitudeSeconds != nil {
-		return *x.MagnitudeSeconds
+func (x *TsamRecommendationApplied) GetMagnitudeS() string {
+	if x != nil && x.MagnitudeS != nil {
+		return *x.MagnitudeS
 	}
 	return ""
 }
@@ -2064,22 +2064,22 @@ func (x *TsamRecommendationApplied) GetSourceDeviceId() string {
 }
 
 type TspEvent struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	Kind              string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
-	TspNumber         uint32                 `protobuf:"varint,10,opt,name=tsp_number,json=tspNumber,proto3" json:"tsp_number,omitempty"`
-	VehicleId         *string                `protobuf:"bytes,3,opt,name=vehicle_id,json=vehicleId,proto3,oneof" json:"vehicle_id,omitempty"`
-	PriorityClass     *uint32                `protobuf:"varint,4,opt,name=priority_class,json=priorityClass,proto3,oneof" json:"priority_class,omitempty"`
-	AdjustmentSeconds *string                `protobuf:"bytes,5,opt,name=adjustment_seconds,json=adjustmentSeconds,proto3,oneof" json:"adjustment_seconds,omitempty"`
-	DenialReason      *DenialReason          `protobuf:"varint,11,opt,name=denial_reason,json=denialReason,proto3,enum=openits.signal_control.v1.DenialReason,oneof" json:"denial_reason,omitempty"`
-	ObservedBy        *string                `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
-	OccurredAt        *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
-	Owner             *string                `protobuf:"bytes,8,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
-	Sequence          uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
-	SequenceEpoch     string                 `protobuf:"bytes,2,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
-	Source            *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
-	SourceDeviceId    string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
+	TspNumber      uint32                 `protobuf:"varint,10,opt,name=tsp_number,json=tspNumber,proto3" json:"tsp_number,omitempty"`
+	VehicleId      *string                `protobuf:"bytes,3,opt,name=vehicle_id,json=vehicleId,proto3,oneof" json:"vehicle_id,omitempty"`
+	PriorityClass  *uint32                `protobuf:"varint,4,opt,name=priority_class,json=priorityClass,proto3,oneof" json:"priority_class,omitempty"`
+	AdjustmentS    *string                `protobuf:"bytes,12,opt,name=adjustment_s,json=adjustmentS,proto3,oneof" json:"adjustment_s,omitempty"`
+	DenialReason   *DenialReason          `protobuf:"varint,11,opt,name=denial_reason,json=denialReason,proto3,enum=openits.signal_control.v1.DenialReason,oneof" json:"denial_reason,omitempty"`
+	ObservedBy     *string                `protobuf:"bytes,7,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
+	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
+	Owner          *string                `protobuf:"bytes,8,opt,name=owner,proto3,oneof" json:"owner,omitempty"`
+	Sequence       uint64                 `protobuf:"varint,9,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	SequenceEpoch  string                 `protobuf:"bytes,2,opt,name=sequence_epoch,json=sequenceEpoch,proto3" json:"sequence_epoch,omitempty"`
+	Source         *v1.WireSource         `protobuf:"bytes,100,opt,name=source,proto3" json:"source,omitempty"`
+	SourceDeviceId string                 `protobuf:"bytes,1,opt,name=source_device_id,json=sourceDeviceId,proto3" json:"source_device_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *TspEvent) Reset() {
@@ -2140,9 +2140,9 @@ func (x *TspEvent) GetPriorityClass() uint32 {
 	return 0
 }
 
-func (x *TspEvent) GetAdjustmentSeconds() string {
-	if x != nil && x.AdjustmentSeconds != nil {
-		return *x.AdjustmentSeconds
+func (x *TspEvent) GetAdjustmentS() string {
+	if x != nil && x.AdjustmentS != nil {
+		return *x.AdjustmentS
 	}
 	return ""
 }
@@ -2404,21 +2404,21 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x16\n" +
 	"\x14_interval_duration_sB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xe0\x01\n" +
+	"\x06_owner\"\xfc\x01\n" +
 	"\x16DetectorReportDetector\x12$\n" +
 	"\vdetector_id\x18\x01 \x01(\rH\x00R\n" +
 	"detectorId\x88\x01\x01\x12&\n" +
 	"\fphase_served\x18\x02 \x01(\rH\x01R\vphaseServed\x88\x01\x01\x12\x1b\n" +
-	"\x06volume\x18\x03 \x01(\rH\x02R\x06volume\x88\x01\x01\x12!\n" +
-	"\toccupancy\x18\x04 \x01(\tH\x03R\toccupancy\x88\x01\x01B\x0e\n" +
+	"\x06volume\x18\x03 \x01(\rH\x02R\x06volume\x88\x01\x01\x12(\n" +
+	"\roccupancy_pct\x18\x05 \x01(\tH\x03R\foccupancyPct\x88\x01\x01B\x0e\n" +
 	"\f_detector_idB\x0f\n" +
 	"\r_phase_servedB\t\n" +
-	"\a_volumeB\f\n" +
-	"\n" +
-	"_occupancy\"\xd2\x03\n" +
+	"\a_volumeB\x10\n" +
+	"\x0e_occupancy_pctJ\x04\b\x04\x10\x05R\toccupancy\"\xe8\x03\n" +
 	"\x12DetectorTransition\x12\x12\n" +
-	"\x04kind\x18c \x01(\tR\x04kind\x12\x18\n" +
-	"\achannel\x18\x02 \x01(\rR\achannel\x12&\n" +
+	"\x04kind\x18c \x01(\tR\x04kind\x12\x1f\n" +
+	"\vdetector_id\x18\v \x01(\rR\n" +
+	"detectorId\x12&\n" +
 	"\fphase_served\x18\x06 \x01(\rH\x00R\vphaseServed\x88\x01\x01\x12$\n" +
 	"\vobserved_by\x18\b \x01(\tH\x01R\n" +
 	"observedBy\x88\x01\x01\x12;\n" +
@@ -2432,7 +2432,7 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x0f\n" +
 	"\r_phase_servedB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_ownerJ\x04\b\x04\x10\x05J\x04\b\x05\x10\x06R\x04laneR\bapproach\"\xf8\t\n" +
+	"\x06_ownerJ\x04\b\x02\x10\x03J\x04\b\x04\x10\x05J\x04\b\x05\x10\x06R\achannelR\x04laneR\bapproach\"\xf8\t\n" +
 	"\x17OperationalStatusReport\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12T\n" +
 	"\x0ecabinet_output\x18\f \x01(\x0e2(.openits.signal_control.v1.CabinetOutputH\x00R\rcabinetOutput\x88\x01\x01\x12L\n" +
@@ -2487,11 +2487,11 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xde\x03\n" +
+	"\x06_owner\"\x87\x04\n" +
 	"\x0fPedestrianEvent\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12&\n" +
-	"\fphase_number\x18\x02 \x01(\rH\x00R\vphaseNumber\x88\x01\x01\x12.\n" +
-	"\x10detector_channel\x18\x03 \x01(\rH\x01R\x0fdetectorChannel\x88\x01\x01\x12$\n" +
+	"\fphase_number\x18\x02 \x01(\rH\x00R\vphaseNumber\x88\x01\x01\x129\n" +
+	"\x16pedestrian_detector_id\x18\t \x01(\rH\x01R\x14pedestrianDetectorId\x88\x01\x01\x12$\n" +
 	"\vobserved_by\x18\x06 \x01(\tH\x02R\n" +
 	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
@@ -2501,10 +2501,10 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"\x0esequence_epoch\x18\x04 \x01(\tR\rsequenceEpoch\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x0f\n" +
-	"\r_phase_numberB\x13\n" +
-	"\x11_detector_channelB\x0e\n" +
+	"\r_phase_numberB\x19\n" +
+	"\x17_pedestrian_detector_idB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xfc\x03\n" +
+	"\x06_ownerJ\x04\b\x03\x10\x04R\x10detector_channel\"\xfc\x03\n" +
 	"\x10PhaseStateChange\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12!\n" +
 	"\fphase_number\x18\x02 \x01(\rR\vphaseNumber\x12$\n" +
@@ -2622,12 +2622,13 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"\x0e_previous_modeB\t\n" +
 	"\a_reasonB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_ownerJ\x04\b\x02\x10\x03J\x04\b\x03\x10\x04J\x04\bd\x10eR\x05priorR\acurrentR\x06source\"\x90\x05\n" +
+	"\x06_ownerJ\x04\b\x02\x10\x03J\x04\b\x03\x10\x04J\x04\bd\x10eR\x05priorR\acurrentR\x06source\"\x97\x05\n" +
 	"\x19TsamRecommendationApplied\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x120\n" +
 	"\x11recommendation_id\x18\x02 \x01(\tH\x00R\x10recommendationId\x88\x01\x01\x12R\n" +
-	"\x0fadjustment_type\x18\x03 \x01(\x0e2).openits.signal_control.v1.AdjustmentTypeR\x0eadjustmentType\x120\n" +
-	"\x11magnitude_seconds\x18\x04 \x01(\tH\x01R\x10magnitudeSeconds\x88\x01\x01\x12&\n" +
+	"\x0fadjustment_type\x18\x03 \x01(\x0e2).openits.signal_control.v1.AdjustmentTypeR\x0eadjustmentType\x12$\n" +
+	"\vmagnitude_s\x18\f \x01(\tH\x01R\n" +
+	"magnitudeS\x88\x01\x01\x12&\n" +
 	"\fphase_number\x18\x05 \x01(\rH\x02R\vphaseNumber\x88\x01\x01\x12!\n" +
 	"\trationale\x18\x06 \x01(\tH\x03R\trationale\x88\x01\x01\x12$\n" +
 	"\vobserved_by\x18\t \x01(\tH\x04R\n" +
@@ -2639,13 +2640,13 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"\bsequence\x18\v \x01(\x04R\bsequence\x12%\n" +
 	"\x0esequence_epoch\x18\a \x01(\tR\rsequenceEpoch\x12(\n" +
 	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x14\n" +
-	"\x12_recommendation_idB\x14\n" +
-	"\x12_magnitude_secondsB\x0f\n" +
+	"\x12_recommendation_idB\x0e\n" +
+	"\f_magnitude_sB\x0f\n" +
 	"\r_phase_numberB\f\n" +
 	"\n" +
 	"_rationaleB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_ownerJ\x04\bd\x10eR\x06source\"\x9a\x05\n" +
+	"\x06_ownerJ\x04\b\x04\x10\x05J\x04\bd\x10eR\x11magnitude_secondsR\x06source\"\xa2\x05\n" +
 	"\bTspEvent\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12\x1d\n" +
 	"\n" +
@@ -2653,8 +2654,8 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	" \x01(\rR\ttspNumber\x12\"\n" +
 	"\n" +
 	"vehicle_id\x18\x03 \x01(\tH\x00R\tvehicleId\x88\x01\x01\x12*\n" +
-	"\x0epriority_class\x18\x04 \x01(\rH\x01R\rpriorityClass\x88\x01\x01\x122\n" +
-	"\x12adjustment_seconds\x18\x05 \x01(\tH\x02R\x11adjustmentSeconds\x88\x01\x01\x12Q\n" +
+	"\x0epriority_class\x18\x04 \x01(\rH\x01R\rpriorityClass\x88\x01\x01\x12&\n" +
+	"\fadjustment_s\x18\f \x01(\tH\x02R\vadjustmentS\x88\x01\x01\x12Q\n" +
 	"\rdenial_reason\x18\v \x01(\x0e2'.openits.signal_control.v1.DenialReasonH\x03R\fdenialReason\x88\x01\x01\x12$\n" +
 	"\vobserved_by\x18\a \x01(\tH\x04R\n" +
 	"observedBy\x88\x01\x01\x12;\n" +
@@ -2666,11 +2667,11 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\r\n" +
 	"\v_vehicle_idB\x11\n" +
-	"\x0f_priority_classB\x15\n" +
-	"\x13_adjustment_secondsB\x10\n" +
+	"\x0f_priority_classB\x0f\n" +
+	"\r_adjustment_sB\x10\n" +
 	"\x0e_denial_reasonB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xde\x02\n" +
+	"\x06_ownerJ\x04\b\x05\x10\x06R\x12adjustment_seconds\"\xde\x02\n" +
 	"\rUnmappedEvent\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12$\n" +
 	"\vobserved_by\x18\x03 \x01(\tH\x00R\n" +

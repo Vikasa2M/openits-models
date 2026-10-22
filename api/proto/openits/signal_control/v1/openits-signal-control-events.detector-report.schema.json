@@ -11,7 +11,7 @@
             "minimum": 1,
             "type": "integer"
           },
-          "occupancy": {
+          "occupancy-pct": {
             "type": "string"
           },
           "phase-served": {

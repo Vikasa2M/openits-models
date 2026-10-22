@@ -3,16 +3,16 @@
     "config": { "id": "c1", "name": "c1" },
     "phases": { "phase": [
       { "phase-number": 2, "config": { "phase-number": 2, "ring": 1, "barrier": 1,
-        "timing": { "min-green": "5.0", "max-green": "40.0", "yellow-change": "3.5", "red-clear": "1.5" } } }
+        "timing": { "min-green-s": "5.0", "max-green-s": "40.0", "yellow-change-s": "3.5", "red-clear-s": "1.5" } } }
     ] },
     "preemption": { "preemptor": [
       { "preemptor-id": 1, "config": {
           "preemptor-id": 1, "type": "openits-signal-control-types:preempt-railroad", "priority-order": 1,
-          "track-clearance": { "phases": [2], "green-seconds": 8 },
-          "exit-phases": [2], "max-presence-seconds": 600 } },
+          "track-clearance": { "phases": [2], "green-s": 8 },
+          "exit-phases": [2], "max-presence-s": 600 } },
       { "preemptor-id": 2, "config": {
           "preemptor-id": 2, "type": "openits-signal-control-types:preempt-emergency-vehicle", "priority-order": 2,
-          "dwell-phases": [2], "max-presence-seconds": 180 } }
+          "dwell-phases": [2], "max-presence-s": 180 } }
     ] }
   }
 }

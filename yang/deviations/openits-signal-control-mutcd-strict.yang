@@ -17,6 +17,12 @@ module openits-signal-control-mutcd-strict {
      repeats the 6.0 s ceilings so a standalone load remains
      conformant.";
 
+  revision 2026-10-20 {
+    description
+      "Target the renamed openits-signal-control phase-timing leaves
+       (yellow-change-s, red-clear-s) and
+       overlap leaves (trailing-yellow-s, trailing-red-clear-s).";
+  }
   revision 2026-07-23 {
     description
       "Collapse the duplicate same-date 2026-07-13 revision statements
@@ -59,7 +65,7 @@ module openits-signal-control-mutcd-strict {
     reference "MUTCD 11th ed. 4F.17; RFC 7950 section 7.20.3 (deviations).";
   }
 
-  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:yellow-change" {
+  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:yellow-change-s" {
     deviate add {
       must ". >= 4.0" {
         error-message
@@ -76,7 +82,7 @@ module openits-signal-control-mutcd-strict {
     }
   }
 
-  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:red-clear" {
+  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:red-clear-s" {
     deviate add {
       must ". <= 6.0" {
         error-message
@@ -90,7 +96,7 @@ module openits-signal-control-mutcd-strict {
 
   deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config" {
     deviate add {
-      must "openits-sc:timing/openits-sc:red-clear > 0" {
+      must "openits-sc:timing/openits-sc:red-clear-s > 0" {
         error-message
           "This jurisdiction requires a positive all-red clearance on every "
         + "phase (stricter than MUTCD 4F.17, which permits zero all-red). "
@@ -99,7 +105,7 @@ module openits-signal-control-mutcd-strict {
     }
   }
 
-  deviation "/openits-sc:signal-controller/openits-sc:overlaps/openits-sc:overlap/openits-sc:config/openits-sc:trailing-yellow" {
+  deviation "/openits-sc:signal-controller/openits-sc:overlaps/openits-sc:overlap/openits-sc:config/openits-sc:trailing-yellow-s" {
     deviate add {
       must ". >= 4.0 and . <= 6.0" {
         error-message
@@ -109,7 +115,7 @@ module openits-signal-control-mutcd-strict {
     }
   }
 
-  deviation "/openits-sc:signal-controller/openits-sc:overlaps/openits-sc:overlap/openits-sc:config/openits-sc:trailing-red-clear" {
+  deviation "/openits-sc:signal-controller/openits-sc:overlaps/openits-sc:overlap/openits-sc:config/openits-sc:trailing-red-clear-s" {
     deviate add {
       must ". <= 6.0" {
         error-message

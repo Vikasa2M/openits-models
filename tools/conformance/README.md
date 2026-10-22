@@ -68,6 +68,11 @@ Signal control (`asc`):
 - `sequences.go`, `overlaps.go`, `channels.go`, `detectors.go`,
   `timebase.go` — ring membership, overlap / channel / detector
   references resolve, time-base references resolve
+- `pedestrian_detectors.go` — each pedestrian detector's configured
+  call-phase resolves to a configured phase
+- `detector_events.go` — detector-transition and detector-side
+  pedestrian-event notifications name a configured vehicle / pedestrian
+  detector
 - `conflict_monitor.go`, `monitor.go` — permissive table and monitor
   read status
 - `operation.go`, `cabinet_output.go`, `health.go` — the `operation`

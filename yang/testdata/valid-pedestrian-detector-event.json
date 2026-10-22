@@ -1,0 +1,11 @@
+{
+  "openits-signal-control-events:pedestrian-event": {
+    "kind": "openits-signal-control-types:ped-detector-on",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence-epoch": "boot-2026-10-13a",
+    "sequence": "2",
+    "phase-number": 2,
+    "pedestrian-detector-id": 1,
+    "occurred-at": "2026-07-11T14:05:01Z"
+  }
+}

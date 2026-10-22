@@ -108,11 +108,11 @@ func TestRMPlans_ActivePlanTimingSane(t *T, obs *Observation) {
 	if pt == nil {
 		return
 	}
-	if pt.YellowChange != nil && *pt.YellowChange < 0.5 {
-		t.Errorf("active plan yellow-change %.1fs is too short to be perceptible", *pt.YellowChange)
+	if pt.YellowChangeS != nil && *pt.YellowChangeS < 0.5 {
+		t.Errorf("active plan yellow-change %.1fs is too short to be perceptible", *pt.YellowChangeS)
 	}
-	if pt.RedClear != nil && *pt.RedClear < 0.0 {
-		t.Errorf("active plan red-clear %.1fs is negative", *pt.RedClear)
+	if pt.RedClearS != nil && *pt.RedClearS < 0.0 {
+		t.Errorf("active plan red-clear %.1fs is negative", *pt.RedClearS)
 	}
 }
 
@@ -152,7 +152,7 @@ func TestRMPlans_HeadwayFitsTiming(t *T, obs *Observation) {
 	alt := rmAlternateRelease(rm)
 	for id, plan := range plans.Plan {
 		pt := plan.GetPhaseTiming()
-		if pt == nil || plan.HeadwayS == nil || pt.MinGreen == nil || pt.YellowChange == nil || pt.RedClear == nil {
+		if pt == nil || plan.HeadwayS == nil || pt.MinGreenS == nil || pt.YellowChangeS == nil || pt.RedClearS == nil {
 			continue
 		}
 		// Minimum feasible cycle includes min-green, not just clearance:
@@ -160,7 +160,7 @@ func TestRMPlans_HeadwayFitsTiming(t *T, obs *Observation) {
 		// cycle that cannot physically complete. For alternate release each
 		// lane's cycle spans all served lanes, so the feasible cycle is
 		// headway * served-lanes; for simultaneous release it is the headway.
-		cycle := float64(*pt.MinGreen) + *pt.YellowChange + *pt.RedClear
+		cycle := float64(*pt.MinGreenS) + *pt.YellowChangeS + *pt.RedClearS
 		feasible := *plan.HeadwayS
 		if alt && served > 0 {
 			feasible = *plan.HeadwayS * float64(served)

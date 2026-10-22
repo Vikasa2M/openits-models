@@ -1361,11 +1361,11 @@ func (x *Plan) GetPhaseTiming() *PhaseTiming {
 
 type PhaseTiming struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	MaxGreen      *string                `protobuf:"bytes,1,opt,name=max_green,json=maxGreen,proto3,oneof" json:"max_green,omitempty"`
-	MinGreen      *string                `protobuf:"bytes,2,opt,name=min_green,json=minGreen,proto3,oneof" json:"min_green,omitempty"`
-	Passage       *string                `protobuf:"bytes,3,opt,name=passage,proto3,oneof" json:"passage,omitempty"`
-	RedClear      *string                `protobuf:"bytes,4,opt,name=red_clear,json=redClear,proto3,oneof" json:"red_clear,omitempty"`
-	YellowChange  *string                `protobuf:"bytes,5,opt,name=yellow_change,json=yellowChange,proto3,oneof" json:"yellow_change,omitempty"`
+	MaxGreenS     *string                `protobuf:"bytes,6,opt,name=max_green_s,json=maxGreenS,proto3,oneof" json:"max_green_s,omitempty"`
+	MinGreenS     *string                `protobuf:"bytes,7,opt,name=min_green_s,json=minGreenS,proto3,oneof" json:"min_green_s,omitempty"`
+	PassageS      *string                `protobuf:"bytes,8,opt,name=passage_s,json=passageS,proto3,oneof" json:"passage_s,omitempty"`
+	RedClearS     *string                `protobuf:"bytes,9,opt,name=red_clear_s,json=redClearS,proto3,oneof" json:"red_clear_s,omitempty"`
+	YellowChangeS *string                `protobuf:"bytes,10,opt,name=yellow_change_s,json=yellowChangeS,proto3,oneof" json:"yellow_change_s,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1400,37 +1400,37 @@ func (*PhaseTiming) Descriptor() ([]byte, []int) {
 	return file_openits_ramp_metering_v1_state_proto_rawDescGZIP(), []int{16}
 }
 
-func (x *PhaseTiming) GetMaxGreen() string {
-	if x != nil && x.MaxGreen != nil {
-		return *x.MaxGreen
+func (x *PhaseTiming) GetMaxGreenS() string {
+	if x != nil && x.MaxGreenS != nil {
+		return *x.MaxGreenS
 	}
 	return ""
 }
 
-func (x *PhaseTiming) GetMinGreen() string {
-	if x != nil && x.MinGreen != nil {
-		return *x.MinGreen
+func (x *PhaseTiming) GetMinGreenS() string {
+	if x != nil && x.MinGreenS != nil {
+		return *x.MinGreenS
 	}
 	return ""
 }
 
-func (x *PhaseTiming) GetPassage() string {
-	if x != nil && x.Passage != nil {
-		return *x.Passage
+func (x *PhaseTiming) GetPassageS() string {
+	if x != nil && x.PassageS != nil {
+		return *x.PassageS
 	}
 	return ""
 }
 
-func (x *PhaseTiming) GetRedClear() string {
-	if x != nil && x.RedClear != nil {
-		return *x.RedClear
+func (x *PhaseTiming) GetRedClearS() string {
+	if x != nil && x.RedClearS != nil {
+		return *x.RedClearS
 	}
 	return ""
 }
 
-func (x *PhaseTiming) GetYellowChange() string {
-	if x != nil && x.YellowChange != nil {
-		return *x.YellowChange
+func (x *PhaseTiming) GetYellowChangeS() string {
+	if x != nil && x.YellowChangeS != nil {
+		return *x.YellowChangeS
 	}
 	return ""
 }
@@ -3237,22 +3237,20 @@ const file_openits_ramp_metering_v1_state_proto_rawDesc = "" +
 	"\x18_queue_override_rate_vphB)\n" +
 	"'_queue_override_occupancy_threshold_pctB/\n" +
 	"-_queue_override_occupancy_clear_threshold_pctB\x1f\n" +
-	"\x1d_queue_override_persistence_s\"\x84\x02\n" +
-	"\vPhaseTiming\x12 \n" +
-	"\tmax_green\x18\x01 \x01(\tH\x00R\bmaxGreen\x88\x01\x01\x12 \n" +
-	"\tmin_green\x18\x02 \x01(\tH\x01R\bminGreen\x88\x01\x01\x12\x1d\n" +
-	"\apassage\x18\x03 \x01(\tH\x02R\apassage\x88\x01\x01\x12 \n" +
-	"\tred_clear\x18\x04 \x01(\tH\x03R\bredClear\x88\x01\x01\x12(\n" +
-	"\ryellow_change\x18\x05 \x01(\tH\x04R\fyellowChange\x88\x01\x01B\f\n" +
+	"\x1d_queue_override_persistence_s\"\xf4\x02\n" +
+	"\vPhaseTiming\x12#\n" +
+	"\vmax_green_s\x18\x06 \x01(\tH\x00R\tmaxGreenS\x88\x01\x01\x12#\n" +
+	"\vmin_green_s\x18\a \x01(\tH\x01R\tminGreenS\x88\x01\x01\x12 \n" +
+	"\tpassage_s\x18\b \x01(\tH\x02R\bpassageS\x88\x01\x01\x12#\n" +
+	"\vred_clear_s\x18\t \x01(\tH\x03R\tredClearS\x88\x01\x01\x12+\n" +
+	"\x0fyellow_change_s\x18\n" +
+	" \x01(\tH\x04R\ryellowChangeS\x88\x01\x01B\x0e\n" +
+	"\f_max_green_sB\x0e\n" +
+	"\f_min_green_sB\f\n" +
 	"\n" +
-	"_max_greenB\f\n" +
-	"\n" +
-	"_min_greenB\n" +
-	"\n" +
-	"\b_passageB\f\n" +
-	"\n" +
-	"_red_clearB\x10\n" +
-	"\x0e_yellow_change\"\xd7\x01\n" +
+	"_passage_sB\x0e\n" +
+	"\f_red_clear_sB\x12\n" +
+	"\x10_yellow_change_sJ\x04\b\x01\x10\x02J\x04\b\x02\x10\x03J\x04\b\x03\x10\x04J\x04\b\x04\x10\x05J\x04\b\x05\x10\x06R\tmax_greenR\tmin_greenR\apassageR\tred_clearR\ryellow_change\"\xd7\x01\n" +
 	"\bSchedule\x12<\n" +
 	"\bday_plan\x18\x01 \x03(\v2!.openits.ramp_metering.v1.DayPlanR\adayPlan\x12N\n" +
 	"\x0eschedule_entry\x18\x02 \x03(\v2'.openits.ramp_metering.v1.ScheduleEntryR\rscheduleEntry\x12=\n" +

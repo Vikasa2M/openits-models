@@ -26,6 +26,17 @@ module openits-signal-control-events {
 
   openits-types:openits-version "0.4.0";
 
+  revision 2026-10-20 {
+    description
+      "Name every remaining timing and percentage leaf with its unit:
+       detector-report occupancy-pct, tsam-recommendation-applied
+       magnitude-s, tsp-event adjustment-s (which also gains a seconds
+       units statement). Name the detector in detector events by its own
+       table: pedestrian-event detector-channel becomes
+       pedestrian-detector-id (a pedestrian-detectors key) and
+       detector-transition channel becomes detector-id (a detectors key).
+       Breaking: the leaves are renamed.";
+  }
   revision 2026-10-17 {
     description
       "Add cabinet-output-changed; rebuild operational-status-report on the shared device-status-summary with the split operating state; add cabinet-output-since to operational-status-report; rename tsam-mode-changed prior/current to previous-mode/mode. Breaking: operational-status-report drops flash-active, last-mode-change and uptime-seconds (now uptime-s), and tsam-mode-changed's leaves are renamed.";
@@ -190,7 +201,12 @@ module openits-signal-control-events {
     uses openits-types:event-header;
 
     leaf phase-number     { type openits-nema:phase-number; description "Pedestrian phase the event belongs to."; }
-    leaf detector-channel { type openits-sc-types:detector-channel; description "Ped-detector channel, when the event is detector-side."; }
+    leaf pedestrian-detector-id {
+      type openits-sc-types:pedestrian-detector-number;
+      description
+        "Pedestrian detector (pedestrian-detectors table) for detector-side
+         kinds: ped-detector-on, -off, -failed, -restored.";
+    }
     uses openits-types:wire-source;
   }
 
@@ -211,7 +227,11 @@ module openits-signal-control-events {
     }
     uses openits-types:event-header;
 
-    leaf channel { type openits-sc-types:detector-channel; mandatory true; description "Detector channel number on the controller."; }
+    leaf detector-id {
+      type openits-sc-types:detector-channel;
+      mandatory true;
+      description "Vehicle detector (detectors table) this transition is for.";
+    }
     leaf phase-served { type openits-nema:phase-number; description "Phase this detector calls; omitted when the detector calls no phase."; }
     uses openits-types:wire-source;
   }
@@ -260,12 +280,12 @@ module openits-signal-control-events {
         units "vehicles";
         description "Vehicle count over the interval.";
       }
-      leaf occupancy {
+      leaf occupancy-pct {
         type openits-types:percentage-precise;
         description
           "Detector occupancy over the interval (0.0-100.0%). Uses
            percentage-precise to align with the core
-           detectors/detector/state/measurement/occupancy type.";
+           detectors/detector/state/measurement/occupancy-pct type.";
       }
     }
   }
@@ -328,7 +348,7 @@ module openits-signal-control-events {
     leaf offset-s          { type uint16; units "seconds"; description "New offset. Populated for coord-offset-change (Indiana 133)."; }
     leaf previous-offset-s { type uint16; units "seconds"; description "Offset before the change, when the controller reports it."; }
 
-    leaf split-s          { type uint16; units "seconds"; description "New split time for phase-number. Populated for coord-programmed-split-change (Indiana 134-149). Seconds, matching the core's split-seconds leaf."; }
+    leaf split-s          { type uint16; units "seconds"; description "New split time for phase-number. Populated for coord-programmed-split-change (Indiana 134-149). Seconds, matching the core's split-s leaf."; }
     leaf previous-split-s { type uint16; units "seconds"; description "Split time before the change, when the controller reports it."; }
 
     leaf cycle-state          { type identityref { base openits-sc-types:coordination-cycle-state; } description "New coordination cycle state. Populated for coord-cycle-state-change (Indiana 150)."; }
@@ -539,8 +559,9 @@ module openits-signal-control-events {
       type uint8 { range "0..7"; }
       description "Requested/granted priority class, 0..7 per NTCIP 1211.";
     }
-    leaf adjustment-seconds {
+    leaf adjustment-s {
       type decimal64 { fraction-digits 1; }
+      units "seconds";
       description "Signed timing adjustment for adjustment-* events.";
     }
     leaf denial-reason {
@@ -622,7 +643,7 @@ module openits-signal-control-events {
          split / offset adjustment, phase-extension or phase-truncation,
          plan-change, or other.";
     }
-    leaf magnitude-seconds {
+    leaf magnitude-s {
       type decimal64 { fraction-digits 1; }
       units "seconds";
       description

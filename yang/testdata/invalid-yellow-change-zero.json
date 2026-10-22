@@ -13,10 +13,10 @@
             "ring": 1,
             "barrier": 1,
             "timing": {
-              "min-green": "5.0",
-              "max-green": "40.0",
-              "yellow-change": "0.0",
-              "red-clear": "1.5"
+              "min-green-s": "5.0",
+              "max-green-s": "40.0",
+              "yellow-change-s": "0.0",
+              "red-clear-s": "1.5"
             }
           }
         }

@@ -3,11 +3,11 @@
     "config": { "id": "c1", "name": "c1" },
     "phases": { "phase": [
       { "phase-number": 2, "config": { "phase-number": 2, "ring": 1, "barrier": 1,
-        "timing": { "min-green": "5.0", "max-green": "45.0", "yellow-change": "3.5", "red-clear": "1.5" } } }
+        "timing": { "min-green-s": "5.0", "max-green-s": "45.0", "yellow-change-s": "3.5", "red-clear-s": "1.5" } } }
     ] },
     "coordination": { "timing-plan": [
-      { "plan-id": 1, "cycle-length": 60, "offset": 60,
-        "split": [ { "phase-number": 2, "split-seconds": 30 } ] }
+      { "plan-id": 1, "cycle-length-s": 60, "offset-s": 60,
+        "split": [ { "phase-number": 2, "split-s": 30 } ] }
     ] }
   }
 }

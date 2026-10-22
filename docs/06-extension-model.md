@@ -162,11 +162,11 @@ change the schema; they change validation).
 Deviations in the tree today:
 
 - `openits-signal-control-mutcd.yang` — re-applies the US MUTCD
-  phase-timing bounds (yellow-change 3.0–6.0s and the rest) that the
+  phase-timing bounds (yellow-change-s 3.0–6.0s and the rest) that the
   vendor-neutral core deliberately does not impose.
 - `openits-signal-control-mutcd-strict.yang` — enforces yellow ≥
   4.0s instead of the MUTCD baseline's 3.0s, and adds overlap
-  change-interval bounds (`trailing-yellow`, `trailing-red-clear`).
+  change-interval bounds (`trailing-yellow-s`, `trailing-red-clear-s`).
 - `openits-dms-mutcd.yang` — the US MUTCD page-display legibility
   floor for dynamic message signs.
 - `openits-rsu-us-band-plan.yang` — restricts DSRC channel numbers

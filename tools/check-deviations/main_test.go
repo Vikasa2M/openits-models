@@ -88,7 +88,7 @@ func TestValidateDeviations_syntheticDeviateDeleteMust_isLoosening(t *testing.T)
     description "Test fixture.";
   }
 
-  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:yellow-change" {
+  deviation "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:config/openits-sc:timing/openits-sc:yellow-change-s" {
     deviate delete {
       must ". >= 3.0 and . <= 6.0";
     }
@@ -179,7 +179,7 @@ func TestValidateDeviations_unresolvableTarget_isErrorFinding(t *testing.T) {
 // classification rule itself has fast, isolated coverage.
 func TestClassifyDeviation_matrix(t *testing.T) {
 	dev := &yang.Deviation{
-		Name: "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:timing/openits-sc:yellow-change",
+		Name: "/openits-sc:signal-controller/openits-sc:phases/openits-sc:phase/openits-sc:timing/openits-sc:yellow-change-s",
 		Deviate: []*yang.Deviate{
 			{Name: "add"},
 			{Name: "replace"},

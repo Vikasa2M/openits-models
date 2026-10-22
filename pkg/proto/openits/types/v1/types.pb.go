@@ -245,12 +245,12 @@ func (x *ComponentRef) GetComponentId() string {
 }
 
 type ScOnBatteryPolicy struct {
-	state                      protoimpl.MessageState `protogen:"open.v1"`
-	Mode                       *OnBatteryMode         `protobuf:"varint,1,opt,name=mode,proto3,enum=openits.types.v1.OnBatteryMode,oneof" json:"mode,omitempty"`
-	TransitionAtSocPct         *uint32                `protobuf:"varint,2,opt,name=transition_at_soc_pct,json=transitionAtSocPct,proto3,oneof" json:"transition_at_soc_pct,omitempty"`
-	TransitionAtRuntimeMinutes *uint32                `protobuf:"varint,3,opt,name=transition_at_runtime_minutes,json=transitionAtRuntimeMinutes,proto3,oneof" json:"transition_at_runtime_minutes,omitempty"`
-	unknownFields              protoimpl.UnknownFields
-	sizeCache                  protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"open.v1"`
+	Mode                   *OnBatteryMode         `protobuf:"varint,1,opt,name=mode,proto3,enum=openits.types.v1.OnBatteryMode,oneof" json:"mode,omitempty"`
+	TransitionAtSocPct     *uint32                `protobuf:"varint,2,opt,name=transition_at_soc_pct,json=transitionAtSocPct,proto3,oneof" json:"transition_at_soc_pct,omitempty"`
+	TransitionAtRuntimeMin *uint32                `protobuf:"varint,4,opt,name=transition_at_runtime_min,json=transitionAtRuntimeMin,proto3,oneof" json:"transition_at_runtime_min,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *ScOnBatteryPolicy) Reset() {
@@ -297,9 +297,9 @@ func (x *ScOnBatteryPolicy) GetTransitionAtSocPct() uint32 {
 	return 0
 }
 
-func (x *ScOnBatteryPolicy) GetTransitionAtRuntimeMinutes() uint32 {
-	if x != nil && x.TransitionAtRuntimeMinutes != nil {
-		return *x.TransitionAtRuntimeMinutes
+func (x *ScOnBatteryPolicy) GetTransitionAtRuntimeMin() uint32 {
+	if x != nil && x.TransitionAtRuntimeMin != nil {
+		return *x.TransitionAtRuntimeMin
 	}
 	return 0
 }
@@ -492,14 +492,14 @@ const file_openits_types_v1_types_proto_rawDesc = "" +
 	"\x03tag\"Z\n" +
 	"\fComponentRef\x12'\n" +
 	"\x0fcomponent_class\x18\x01 \x01(\tR\x0ecomponentClass\x12!\n" +
-	"\fcomponent_id\x18\x02 \x01(\tR\vcomponentId\"\x92\x02\n" +
+	"\fcomponent_id\x18\x02 \x01(\tR\vcomponentId\"\xab\x02\n" +
 	"\x11ScOnBatteryPolicy\x128\n" +
 	"\x04mode\x18\x01 \x01(\x0e2\x1f.openits.types.v1.OnBatteryModeH\x00R\x04mode\x88\x01\x01\x126\n" +
-	"\x15transition_at_soc_pct\x18\x02 \x01(\rH\x01R\x12transitionAtSocPct\x88\x01\x01\x12F\n" +
-	"\x1dtransition_at_runtime_minutes\x18\x03 \x01(\rH\x02R\x1atransitionAtRuntimeMinutes\x88\x01\x01B\a\n" +
+	"\x15transition_at_soc_pct\x18\x02 \x01(\rH\x01R\x12transitionAtSocPct\x88\x01\x01\x12>\n" +
+	"\x19transition_at_runtime_min\x18\x04 \x01(\rH\x02R\x16transitionAtRuntimeMin\x88\x01\x01B\a\n" +
 	"\x05_modeB\x18\n" +
-	"\x16_transition_at_soc_pctB \n" +
-	"\x1e_transition_at_runtime_minutes*o\n" +
+	"\x16_transition_at_soc_pctB\x1c\n" +
+	"\x1a_transition_at_runtime_minJ\x04\b\x03\x10\x04R\x1dtransition_at_runtime_minutes*o\n" +
 	"\rOnBatteryMode\x12\x1f\n" +
 	"\x1bON_BATTERY_MODE_UNSPECIFIED\x10\x00\x12\"\n" +
 	"\x1eON_BATTERY_MODE_FULL_OPERATION\x10\x01\x12\x19\n" +

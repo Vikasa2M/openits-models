@@ -409,6 +409,8 @@ func All(kind string) []TestCase {
 			TestCase{"TestDetectors_AtLeastOne", TestDetectors_AtLeastOne},
 			TestCase{"TestDetectors_AssignedToPhase", TestDetectors_AssignedToPhase},
 			TestCase{"TestDetectors_MeasurementReported", TestDetectors_MeasurementReported},
+			TestCase{"TestPedestrianDetectors_CallPhaseResolves", TestPedestrianDetectors_CallPhaseResolves},
+			TestCase{"TestDetectorEvents_ReferenceConfiguredDetectors", TestDetectorEvents_ReferenceConfiguredDetectors},
 
 			// overlaps (incl. FYA)
 			TestCase{"TestOverlaps_AtLeastOne", TestOverlaps_AtLeastOne},

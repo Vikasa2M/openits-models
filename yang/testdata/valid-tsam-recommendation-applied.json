@@ -6,7 +6,7 @@
     "sequence": "1",
     "recommendation-id": "tsam-rec-00542",
     "adjustment-type": "split-adjustment",
-    "magnitude-seconds": "2.5",
+    "magnitude-s": "2.5",
     "phase-number": 2,
     "occurred-at": "2026-07-11T14:05:00Z"
   }

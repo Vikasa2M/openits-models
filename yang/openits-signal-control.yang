@@ -48,6 +48,41 @@ module openits-signal-control {
 
   openits-types:openits-version "0.20.0";
 
+  revision 2026-10-20 {
+    description
+      "Follow the nema-common phase-timing rename (min-green-s,
+       max-green-s, passage-s, yellow-change-s, red-clear-s, walk-s,
+       ped-clear-s) through the timing musts, split-minimum musts and
+       descriptions. Name every remaining timing, duration and
+       percentage leaf with its unit: coordination/timing-plan
+       cycle-length-s, offset-s, split/split-s; detectors detector
+       config delay-s, extend-s, diagnostic-thresholds no-activity-min and
+       max-presence-min, state measurement collection-period-s and
+       occupancy-pct; overlap trailing-green-s, trailing-yellow-s,
+       trailing-red-clear-s; phase leading-ped-interval-s,
+       max-green-2-s, red-revert-s and volume-density added-initial-s,
+       max-initial-s, min-gap-s, time-before-reduction-s,
+       time-to-reduce-s; preemptor delay-s, flash-dwell-s,
+       max-presence-s, min-dwell-s, min-green-before-entry-s,
+       min-walk-before-entry-s, min-ped-clear-before-entry-s,
+       track-clearance green-s; priority strategy max-early-green-s,
+       max-green-extension-s, reservice-interval-s; startup
+       all-red-duration-s, flash-duration-s; on-battery policy
+       transition-at-runtime-min. Breaking: timing leaves and the
+       leaves above are renamed.
+
+       Add the pedestrian-detectors table (NTCIP pedestrianDetectorTable),
+       numbered independently of vehicle detectors, each calling exactly
+       one phase. The vehicle detector diagnostics container is renamed
+       diagnostic-thresholds and, like the pedestrian one, uses the
+       shared detector-diagnostics grouping; pedestrian detector state
+       carries only the observed activity, with no config mirror.
+       Both detector tables carry the ARC-IT Vehicle/Pedestrian detection
+       flow; the detectors description is now vehicle (and bicycle) detection
+       only.
+       Breaking: pedestrian detection is no longer a vehicle detector
+       type.";
+  }
   revision 2026-10-17 {
     description
       "Report the cabinet monitor's read status, kind and read time;
@@ -567,7 +602,7 @@ module openits-signal-control {
         type openits-types:percentage;
         description "Battery state-of-charge at/below which the transition-to-flash occurs (when mode=flash).";
       }
-      leaf transition-at-runtime-minutes {
+      leaf transition-at-runtime-min {
         type uint16;
         units "minutes";
         description "Battery runtime remaining at/below which the transition-to-flash occurs (when mode=flash).";
@@ -691,6 +726,40 @@ module openits-signal-control {
   // record.  Callers should `uses openits-nema:phase-timing` where
   // they previously used a local phase-timing grouping.
 
+  grouping sc-pedestrian-detector-config {
+    description "Pedestrian detector configuration.";
+    leaf pedestrian-detector-id {
+      type openits-sc-types:pedestrian-detector-number;
+      description "Pedestrian detector number.";
+    }
+    leaf name {
+      type string;
+      description "Operator label, e.g. 'NE corner button'.";
+    }
+    leaf enabled {
+      type boolean;
+      description "Whether this pedestrian detector is in service.";
+    }
+    leaf type {
+      type identityref { base openits-sc-types:pedestrian-detector-type; }
+      description "Kind of pedestrian detector.";
+    }
+    leaf call-phase {
+      type leafref {
+        path "../../../../phases/phase/phase-number";
+        require-instance true;
+      }
+      mandatory true;
+      description "The one phase this detector calls (NTCIP pedestrianDetectorCallPhase).";
+    }
+    container diagnostic-thresholds {
+      description
+        "Thresholds the controller uses to diagnose this pedestrian
+         detector as failed.";
+      uses openits-sc-types:detector-diagnostics;
+    }
+  }
+
   grouping phase-runtime-state {
     description "Runtime state of a single phase (vehicle + pedestrian displays reported separately).";
 
@@ -755,7 +824,7 @@ module openits-signal-control {
          cabinet flashes at power-up and which phases remain flashing before
          normal service begins.";
       reference "NTCIP 1202:2019 §5 (unitStartUpFlash).";
-      leaf flash-duration-seconds {
+      leaf flash-duration-s {
         type uint16;
         units "seconds";
         description "Duration of the start-up flash interval at power-up.";
@@ -764,7 +833,7 @@ module openits-signal-control {
         type leafref { path "../../phases/phase/phase-number"; require-instance true; }
         description "Phases that remain in flash during start-up (empty = all).";
       }
-      leaf all-red-duration-seconds {
+      leaf all-red-duration-s {
         type uint16;
         units "seconds";
         description "All-red interval served after start-up flash before the first green.";
@@ -790,17 +859,17 @@ module openits-signal-control {
         container config {
           description "Intended phase configuration.";
 
-          must "timing/yellow-change" {
+          must "timing/yellow-change-s" {
             error-message
-              "Every signalized phase requires a yellow-change interval "
+              "Every signalized phase requires a yellow-change-s interval "
             + "(MUTCD 11th ed. 4F.17: a yellow change shall follow every "
             + "green). Enforced on config, not the optional timing "
             + "container, so a phase that omits timing entirely still fails "
             + "(RFC 7950 section 7.5.1).";
           }
-          must "not(timing/walk > 0) or (timing/ped-clear and timing/ped-clear >= 1)" {
+          must "not(timing/walk-s > 0) or (timing/ped-clear-s and timing/ped-clear-s >= 1)" {
             error-message
-              "A phase serving a pedestrian walk (walk > 0) requires a "
+              "A phase serving a pedestrian walk (walk-s > 0) requires a "
             + "pedestrian clearance interval of at least 1 second "
             + "(MUTCD 2009 4E.06 / 11th ed. 4I.06).";
           }
@@ -833,7 +902,7 @@ module openits-signal-control {
             description "Phase timing parameters per NEMA-common phase-timing grouping.";
             uses openits-nema:phase-timing;
           }
-          leaf max-green-2 {
+          leaf max-green-2-s {
             type decimal64 { fraction-digits 1; }
             units "seconds";
             description
@@ -842,7 +911,7 @@ module openits-signal-control {
                shared openits-nema-common phase-timing grouping.";
             reference "NTCIP 1202:2019 §5 (maxGreen2).";
           }
-          leaf red-revert {
+          leaf red-revert-s {
             type decimal64 { fraction-digits 1; }
             units "seconds";
             description
@@ -858,11 +927,11 @@ module openits-signal-control {
             description
               "Pedestrian crossing distance for this phase's walk movement, used "
             + "to check ped-clearance sufficiency (a jurisdiction deviation may "
-            + "require ped-clear >= crossing-distance-m / walk-speed). Optional; "
+            + "require ped-clear-s >= crossing-distance-m / walk-speed). Optional; "
             + "absent when not surveyed.";
             reference "MUTCD 11th ed. 4I.06 (pedestrian clearance time).";
           }
-          leaf leading-ped-interval-seconds {
+          leaf leading-ped-interval-s {
             type decimal64 { fraction-digits 1; }
             units "seconds";
             description
@@ -892,35 +961,35 @@ module openits-signal-control {
                parameters. Present iff V/D is enabled on the phase.";
             reference "NTCIP 1202:2019 §5 (volume-density).";
 
-            must "not(min-gap) or not(../timing/passage) or min-gap <= ../timing/passage" {
+            must "not(min-gap-s) or not(../timing/passage-s) or min-gap-s <= ../timing/passage-s" {
               error-message
-                "The reducing gap floor (min-gap) must not exceed the passage "
+                "The reducing gap floor (min-gap-s) must not exceed the passage-s "
               + "time it decays from.";
             }
 
-            leaf added-initial {
+            leaf added-initial-s {
               type decimal64 { fraction-digits 1; }
               units "seconds";
               description "Initial-green seconds added per vehicle actuation logged during the phase's red.";
             }
-            leaf max-initial   { type uint16; units "seconds"; description "Upper bound on the computed variable-initial interval."; }
-            leaf time-before-reduction { type uint16; units "seconds"; description "Time after the phase turns green before gap reduction begins."; }
-            leaf time-to-reduce { type uint16; units "seconds"; description "Time over which the gap reduces from passage to min-gap."; }
-            leaf min-gap { type decimal64 { fraction-digits 1; } units "seconds"; description "Floor the reducing gap decays to."; }
+            leaf max-initial-s   { type uint16; units "seconds"; description "Upper bound on the computed variable-initial interval."; }
+            leaf time-before-reduction-s { type uint16; units "seconds"; description "Time after the phase turns green before gap reduction begins."; }
+            leaf time-to-reduce-s { type uint16; units "seconds"; description "Time over which the gap reduces from passage-s to min-gap-s."; }
+            leaf min-gap-s { type decimal64 { fraction-digits 1; } units "seconds"; description "Floor the reducing gap decays to."; }
           }
 
-          must "not(max-green-2) or timing/max-green" {
+          must "not(max-green-2-s) or timing/max-green-s" {
             error-message
-              "max-green-2 (dynamic / second maximum green) is meaningful only "
-            + "when a primary max-green is also configured. It is NOT required "
-            + "to be >= max-green: MAX-2 is an independent alternate maximum and "
+              "max-green-2-s (dynamic / second maximum green) is meaningful only "
+            + "when a primary max-green-s is also configured. It is NOT required "
+            + "to be >= max-green-s: MAX-2 is an independent alternate maximum and "
             + "is routinely lower than MAX-1 for off-peak operation.";
           }
           must "not(options/ped-recall = 'true' or options/rest-in-walk = 'true') "
-             + "or timing/walk > 0" {
+             + "or timing/walk-s > 0" {
             error-message
               "A phase with pedestrian recall or rest-in-walk must serve a pedestrian "
-            + "movement (walk > 0).";
+            + "movement (walk-s > 0).";
           }
         }
         container state {
@@ -936,8 +1005,9 @@ module openits-signal-control {
       openits-types:arc-it-flow
         "Vehicle/Pedestrian -> Roadway Signal Controller : vehicle detection";
       description
-        "Detector configuration + runtime state. Implements the inbound
-         detection flow from vehicles and pedestrians.";
+        "Vehicle (and bicycle) detector configuration + runtime state.
+         Implements the inbound vehicle detection flow. Pedestrian
+         detection is the sibling pedestrian-detectors table.";
 
       list detector {
         key "detector-id";
@@ -958,7 +1028,7 @@ module openits-signal-control {
             mandatory true;
             description
               "Detector technology (inductive-loop, video, radar,
-               ped-pushbutton, etc.). An identity so a vendor can derive a
+               magnetometer, etc.). An identity so a vendor can derive a
                newer technology without a core change.";
             reference "NTCIP 1202:2019 §5 (vehicleDetectorTable).";
           }
@@ -986,7 +1056,7 @@ module openits-signal-control {
                inventory on the highest-rate event in the system and
                re-sent it on every actuation.";
           }
-          leaf delay {
+          leaf delay-s {
             type decimal64 {
               fraction-digits 1;
               range "0.0 .. 255.0";
@@ -998,10 +1068,10 @@ module openits-signal-control {
                resolution, matching the NTCIP object: a 1.5 s delay on a
                right-turn presence loop is ordinary practice and a
                whole-second leaf could not carry it. Same resolution as
-               the sibling extend leaf.";
+               the sibling extend-s leaf.";
             reference "NTCIP 1202:2019 §5.3.2.5 (vehicleDetectorDelay, tenth seconds 0-255.0).";
           }
-          leaf extend {
+          leaf extend-s {
             type decimal64 { fraction-digits 1; }
             units "seconds";
             description "Time the call is carried after the actuation ends (carryover / stretch).";
@@ -1022,28 +1092,14 @@ module openits-signal-control {
             type detector-fail-action;
             description "Recall action applied to the assigned phases when this detector is diagnosed failed.";
           }
-          container diagnostics {
+          container diagnostic-thresholds {
             presence "Automatic detector fault diagnosis is enabled for this channel.";
             description
               "Thresholds the controller uses to DIAGNOSE this detector as "
             + "failed (the fail-action is then applied). Present iff automatic "
             + "diagnosis is enabled.";
             reference "NTCIP 1202:2019 §5 (vehicleDetectorTable diagnostics).";
-            leaf no-activity-minutes {
-              type uint16;
-              units "minutes";
-              description "Diagnose 'no-activity' if no actuation for this long.";
-            }
-            leaf max-presence-minutes {
-              type uint16;
-              units "minutes";
-              description "Diagnose 'stuck-on' if presence held continuously for this long.";
-            }
-            leaf erratic-counts-per-minute {
-              type uint16;
-              units "counts/minute";
-              description "Diagnose 'erratic' above this actuation rate.";
-            }
+            uses openits-sc-types:detector-diagnostics;
           }
         }
         container state {
@@ -1074,13 +1130,13 @@ module openits-signal-control {
               description
                 "Vehicles counted in the current collection period. A
                  gauge, not a counter: it resets every
-                 collection-period-seconds, so counter64's
+                 collection-period-s, so counter64's
                  monotonically-increasing wrap semantics would tell a
                  consumer computing a rate exactly the wrong thing. The
                  sibling actuation-count, which does accumulate since
                  reset, remains a counter64.";
             }
-            leaf occupancy {
+            leaf occupancy-pct {
               type openits-types:percentage-precise;
               description "Detector occupancy over the collection period.";
             }
@@ -1088,7 +1144,7 @@ module openits-signal-control {
               type openits-types:speed-kmh;
               description "Mean speed over the collection period.";
             }
-            leaf collection-period-seconds {
+            leaf collection-period-s {
               type uint16 { range "1..3600"; }
               units "seconds";
               description "Length of the collection period the V/O/S values cover.";
@@ -1097,6 +1153,49 @@ module openits-signal-control {
               type yang:date-and-time;
               description "The time of this reading: wall-clock time this measurement was collected.";
             }
+          }
+        }
+      }
+    }
+
+    container pedestrian-detectors {
+      openits-types:arc-it-flow
+        "Vehicle/Pedestrian -> Roadway Signal Controller : vehicle detection";
+      description
+        "Pedestrian detectors, numbered independently of vehicle
+         detectors (NTCIP 1202 pedestrianDetectorTable). A pedestrian
+         detector calls exactly one phase and carries no vehicle
+         measurement.";
+      reference "NTCIP 1202:2019 §5 (pedestrianDetectorTable).";
+      list pedestrian-detector {
+        key "pedestrian-detector-id";
+        description "One entry per pedestrian detector input.";
+        leaf pedestrian-detector-id {
+          type leafref { path "../config/pedestrian-detector-id"; }
+          description "Pedestrian detector number (key).";
+        }
+        container config {
+          description "Intended pedestrian detector configuration.";
+          uses sc-pedestrian-detector-config;
+        }
+        container state {
+          config false;
+          description "Observed activity of this pedestrian detector.";
+          leaf active {
+            type boolean;
+            description "The detector is currently calling.";
+          }
+          leaf last-activation {
+            type yang:date-and-time;
+            description "When the detector last turned on.";
+          }
+          leaf actuation-count {
+            type yang:counter64;
+            description "Activations since the controller started.";
+          }
+          leaf fault {
+            type boolean;
+            description "The controller reports a fault on this detector.";
           }
         }
       }
@@ -1118,15 +1217,15 @@ module openits-signal-control {
         container config {
           description "Intended overlap configuration.";
 
-          must "not(trailing-yellow) or trailing-yellow > 0.0" {
+          must "not(trailing-yellow-s) or trailing-yellow-s > 0.0" {
             error-message
-              "An overlap that specifies a trailing-yellow interval must make "
+              "An overlap that specifies a trailing-yellow-s interval must make "
             + "it positive; an overlap drives a real signal head and follows "
             + "the same change-interval logic as a phase.";
           }
-          must "not(trailing-red-clear) or trailing-red-clear >= 0.0" {
+          must "not(trailing-red-clear-s) or trailing-red-clear-s >= 0.0" {
             error-message
-              "Overlap trailing-red-clear must be non-negative when specified.";
+              "Overlap trailing-red-clear-s must be non-negative when specified.";
           }
 
           leaf overlap-number { type openits-sc-types:overlap-number; description "Overlap number (key), NTCIP overlapTable index. Operator-facing label is in 'name'."; }
@@ -1148,9 +1247,9 @@ module openits-signal-control {
             + "minusGreenYellow overlaps). Empty for non-minus-green overlaps.";
             reference "NTCIP 1202:2019 §5 (overlapTable modifier phases).";
           }
-          leaf trailing-green    { type decimal64 { fraction-digits 1; } units "seconds"; description "Overlap green extension after the last included phase terminates."; }
-          leaf trailing-yellow   { type decimal64 { fraction-digits 1; } units "seconds"; description "Overlap yellow-change interval."; }
-          leaf trailing-red-clear { type decimal64 { fraction-digits 1; } units "seconds"; description "Overlap red-clearance interval."; }
+          leaf trailing-green-s    { type decimal64 { fraction-digits 1; } units "seconds"; description "Overlap green extension after the last included phase terminates."; }
+          leaf trailing-yellow-s   { type decimal64 { fraction-digits 1; } units "seconds"; description "Overlap yellow-change interval."; }
+          leaf trailing-red-clear-s { type decimal64 { fraction-digits 1; } units "seconds"; description "Overlap red-clearance interval."; }
 
           container fya {
             presence "This overlap operates as a flashing-yellow-arrow (FYA) left turn.";
@@ -1310,31 +1409,31 @@ module openits-signal-control {
         key "plan-id";
         description "One entry per timing plan available to the controller (config-only library).";
 
-        must "sum(split[deref(phase-number)/../config/ring = 1]/split-seconds) <= cycle-length "
-           + "and sum(split[deref(phase-number)/../config/ring = 2]/split-seconds) <= cycle-length "
-           + "and sum(split[deref(phase-number)/../config/ring = 3]/split-seconds) <= cycle-length "
-           + "and sum(split[deref(phase-number)/../config/ring = 4]/split-seconds) <= cycle-length" {
+        must "sum(split[deref(phase-number)/../config/ring = 1]/split-s) <= cycle-length-s "
+           + "and sum(split[deref(phase-number)/../config/ring = 2]/split-s) <= cycle-length-s "
+           + "and sum(split[deref(phase-number)/../config/ring = 3]/split-s) <= cycle-length-s "
+           + "and sum(split[deref(phase-number)/../config/ring = 4]/split-s) <= cycle-length-s" {
           error-message
             "In each ring, the sum of phase splits must not exceed the cycle length; "
           + "an over-allocated ring guarantees a split failure.";
         }
-        must "not(offset) or offset < cycle-length" {
+        must "not(offset-s) or offset-s < cycle-length-s" {
           error-message
             "The coordination offset must be less than the cycle length "
-          + "(offset is a point within the cycle, 0 <= offset < cycle-length).";
+          + "(offset-s is a point within the cycle, 0 <= offset-s < cycle-length-s).";
         }
 
         leaf plan-id {
           type openits-sc-types:plan-id;
           description "Timing-plan identifier; used as key and by state/active-plan.";
         }
-        leaf cycle-length {
+        leaf cycle-length-s {
           type uint16 { range "1..65535"; }
           units "seconds";
           mandatory true;
           description "Total cycle length for the plan, in seconds. A coordination plan always has a positive cycle.";
         }
-        leaf offset {
+        leaf offset-s {
           type uint16;
           units "seconds";
           description "Offset from system master time reference.";
@@ -1378,25 +1477,25 @@ module openits-signal-control {
           key "phase-number";
           description "One entry per phase in this plan, naming its split time.";
 
-          must "split-seconds >= "
-             + "sum(deref(phase-number)/../config/timing/min-green) "
-             + "+ sum(deref(phase-number)/../config/timing/yellow-change) "
-             + "+ sum(deref(phase-number)/../config/timing/red-clear)" {
+          must "split-s >= "
+             + "sum(deref(phase-number)/../config/timing/min-green-s) "
+             + "+ sum(deref(phase-number)/../config/timing/yellow-change-s) "
+             + "+ sum(deref(phase-number)/../config/timing/red-clear-s)" {
             error-message
-              "A phase split must be at least min-green + yellow-change + "
-            + "red-clear (its vehicle minimum service time); a shorter split "
+              "A phase split must be at least min-green-s + yellow-change-s + "
+            + "red-clear-s (its vehicle minimum service time); a shorter split "
             + "forces a split failure.";
           }
           must "not(deref(phase-number)/../config/options"
              + "        [ped-recall = 'true' or rest-in-walk = 'true']) "
-             + "or split-seconds >= "
-             + "     sum(deref(phase-number)/../config/timing/walk) "
-             + "   + sum(deref(phase-number)/../config/timing/ped-clear) "
-             + "   + sum(deref(phase-number)/../config/timing/yellow-change) "
-             + "   + sum(deref(phase-number)/../config/timing/red-clear)" {
+             + "or split-s >= "
+             + "     sum(deref(phase-number)/../config/timing/walk-s) "
+             + "   + sum(deref(phase-number)/../config/timing/ped-clear-s) "
+             + "   + sum(deref(phase-number)/../config/timing/yellow-change-s) "
+             + "   + sum(deref(phase-number)/../config/timing/red-clear-s)" {
             error-message
               "A phase that runs a pedestrian recall or rests in walk must have "
-            + "a split of at least walk + ped-clear + yellow-change + red-clear "
+            + "a split of at least walk-s + ped-clear-s + yellow-change-s + red-clear-s "
             + "(its pedestrian minimum service time). Walk/FDW time concurrently "
             + "with green, so this is a separate max() operand, NOT added on top "
             + "of the vehicle minimum.";
@@ -1409,7 +1508,7 @@ module openits-signal-control {
             }
             description "Phase the split applies to.";
           }
-          leaf split-seconds {
+          leaf split-s {
             type uint16;
             units "seconds";
             description "Allocated time for this phase within the cycle, in seconds.";
@@ -1660,10 +1759,10 @@ module openits-signal-control {
             description "Preemptor class (railroad / emergency-vehicle / other).";
           }
           leaf priority-order { type uint8; description "Servicing priority; lower is higher priority (rail typically 1)."; }
-          leaf delay-seconds { type uint16; units "seconds"; description "Delay after the call before the preemption sequence begins."; }
-          leaf min-green-before-entry { type uint16; units "seconds"; description "Minimum green served on active phases before entry."; }
-          leaf min-walk-before-entry  { type uint16; units "seconds"; description "Minimum walk served before entry when a ped phase is active."; }
-          leaf min-ped-clear-before-entry {
+          leaf delay-s { type uint16; units "seconds"; description "Delay after the call before the preemption sequence begins."; }
+          leaf min-green-before-entry-s { type uint16; units "seconds"; description "Minimum green served on active phases before entry."; }
+          leaf min-walk-before-entry-s  { type uint16; units "seconds"; description "Minimum walk served before entry when a ped phase is active."; }
+          leaf min-ped-clear-before-entry-s {
             type uint16;
             units "seconds";
             description
@@ -1681,7 +1780,7 @@ module openits-signal-control {
               type leafref { path "../../../../../phases/phase/phase-number"; require-instance true; }
               description "Phases served to clear the track before conflicting movements.";
             }
-            leaf green-seconds {
+            leaf green-s {
               type uint16 { range "1..65535"; }
               units "seconds";
               mandatory true;
@@ -1692,8 +1791,8 @@ module openits-signal-control {
             type leafref { path "../../../../phases/phase/phase-number"; require-instance true; }
             description "Dwell / limited-service phases held during preemption.";
           }
-          leaf min-dwell-seconds { type uint16; units "seconds"; description "Minimum dwell time before exit."; }
-          leaf flash-dwell-seconds {
+          leaf min-dwell-s { type uint16; units "seconds"; description "Minimum dwell time before exit."; }
+          leaf flash-dwell-s {
             type uint16;
             units "seconds";
             description "Flash-dwell interval served during preemption dwell, when the preemptor dwells in flash rather than a fixed indication.";
@@ -1702,7 +1801,7 @@ module openits-signal-control {
             type leafref { path "../../../../phases/phase/phase-number"; require-instance true; }
             description "Phases served on exit from preemption.";
           }
-          leaf max-presence-seconds { type uint16; units "seconds"; description "Maximum time the preemption call is honored before timeout."; }
+          leaf max-presence-s { type uint16; units "seconds"; description "Maximum time the preemption call is honored before timeout."; }
         }
         container state {
           config false;
@@ -1740,9 +1839,9 @@ module openits-signal-control {
             type identityref { base openits-sc-types:priority-type; }
             description "Priority class this strategy serves (transit / freight / other).";
           }
-          leaf max-early-green-seconds { type uint16; units "seconds"; description "Maximum coordinated-phase early-green (green advance)."; }
-          leaf max-green-extension-seconds { type uint16; units "seconds"; description "Maximum green extension granted to hold a phase for the vehicle."; }
-          leaf reservice-interval-seconds { type uint16; units "seconds"; description "Minimum time before this strategy may be granted again (reservice lock)."; }
+          leaf max-early-green-s { type uint16; units "seconds"; description "Maximum coordinated-phase early-green (green advance)."; }
+          leaf max-green-extension-s { type uint16; units "seconds"; description "Maximum green extension granted to hold a phase for the vehicle."; }
+          leaf reservice-interval-s { type uint16; units "seconds"; description "Minimum time before this strategy may be granted again (reservice lock)."; }
           leaf-list served-phases {
             type leafref { path "../../../../phases/phase/phase-number"; require-instance true; }
             description "Phases this strategy may advance or extend.";

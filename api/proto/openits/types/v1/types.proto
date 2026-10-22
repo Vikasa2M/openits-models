@@ -34,9 +34,11 @@ message ComponentRef {
 }
 
 message ScOnBatteryPolicy {
+  reserved 3;
+  reserved "transition_at_runtime_minutes";
   optional OnBatteryMode mode = 1;
   optional uint32 transition_at_soc_pct = 2;
-  optional uint32 transition_at_runtime_minutes = 3;
+  optional uint32 transition_at_runtime_min = 4;
 }
 
 enum OnBatteryMode {

@@ -3,16 +3,16 @@
     "config": { "id": "c1", "name": "c1" },
     "phases": { "phase": [
       { "phase-number": 2, "config": { "phase-number": 2, "ring": 1, "barrier": 1,
-        "timing": { "min-green": "5.0", "max-green": "45.0", "yellow-change": "3.5", "red-clear": "1.5" } } }
+        "timing": { "min-green-s": "5.0", "max-green-s": "45.0", "yellow-change-s": "3.5", "red-clear-s": "1.5" } } }
     ] },
     "priority": {
       "strategy": [
         { "strategy-id": 1, "config": {
           "strategy-id": 1,
           "priority-class": "openits-signal-control-types:priority-transit",
-          "max-early-green-seconds": 10,
-          "max-green-extension-seconds": 15,
-          "reservice-interval-seconds": 120,
+          "max-early-green-s": 10,
+          "max-green-extension-s": 15,
+          "reservice-interval-s": 120,
           "served-phases": [2] } }
       ],
       "state": {
