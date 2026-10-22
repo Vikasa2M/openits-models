@@ -1,0 +1,17 @@
+{
+  "openits-common-fault-events:fault-raised": {
+    "kind": "openits-reversible-lane-types:reversible-lane-fault-gate-invalid-inputs",
+    "source-device-id": "rl-controller-1",
+    "sequence-epoch": "boot-2026-10-23a",
+    "sequence": "13",
+    "fault-id": "f-wg-1-invalid-inputs",
+    "severity": "major",
+    "description": "Gate WG-1 reports invalid inputs.",
+    "first-observed": "2026-10-23T12:02:00Z",
+    "occurred-at": "2026-10-23T12:02:01Z",
+    "component": {
+      "component-class": "openits-reversible-lane-types:rl-component-gate",
+      "component-id": "WG-1"
+    }
+  }
+}

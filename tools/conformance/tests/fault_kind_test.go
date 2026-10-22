@@ -97,3 +97,30 @@ func TestFaultKind_UnknownServiceSkipped(t *testing.T) {
 		t.Fatalf("unknown service not skipped: %s", r.Message)
 	}
 }
+
+func TestFaultKind_ReversibleLaneLeafPasses(t *testing.T) {
+	for _, kind := range []string{
+		"openits-reversible-lane-types:reversible-lane-fault-plc-fault",
+		"openits-reversible-lane-types:reversible-lane-fault-plc-configuration",
+		"openits-reversible-lane-types:reversible-lane-fault-cabinet-door-open",
+		"openits-reversible-lane-types:reversible-lane-fault-gate-invalid-inputs",
+	} {
+		if r := runKind(faultEv("reversible-lane", kind)); !r.Pass {
+			t.Fatalf("reversible-lane leaf %s failed: %s", kind, r.Message)
+		}
+	}
+}
+
+func TestFaultKind_ReversibleLaneBareCabinetPowerFails(t *testing.T) {
+	r := runKind(faultEv("reversible-lane", "openits-cabinet-power:cabinet-power-door-open"))
+	if r.Pass {
+		t.Fatalf("bare cabinet-power identity accepted under reversible-lane")
+	}
+}
+
+func TestFaultKind_ReversibleLaneBareServiceBaseFails(t *testing.T) {
+	r := runKind(faultEv("reversible-lane", "openits-reversible-lane-types:reversible-lane-fault-event-kind"))
+	if r.Pass {
+		t.Fatalf("bare reversible-lane-fault-event-kind accepted under reversible-lane")
+	}
+}
