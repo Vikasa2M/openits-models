@@ -169,6 +169,9 @@ Deviations in the tree today:
   change-interval bounds (`trailing-yellow-s`, `trailing-red-clear-s`).
 - `openits-dms-mutcd.yang` — the US MUTCD page-display legibility
   floor for dynamic message signs.
+- `openits-reversible-lane-mutcd.yang` — the federal MUTCD 11th edition
+  Chapter 4T indication set for commanded lane-use signals; the template
+  for state profiles that restrict further.
 - `openits-rsu-us-band-plan.yang` — restricts DSRC channel numbers
   to the upper 30 MHz retained for ITS after FCC 20-164.
 

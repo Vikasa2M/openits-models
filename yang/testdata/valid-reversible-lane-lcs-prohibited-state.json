@@ -1,0 +1,81 @@
+{
+  "openits-reversible-lane:reversible-lane": {
+    "config": {
+      "id": "us75-contraflow",
+      "direction-a": "openits-types:direction-northbound",
+      "direction-b": "openits-types:direction-southbound"
+    },
+    "segments": {
+      "segment": [
+        {
+          "segment-id": "seg-1",
+          "config": {
+            "segment-id": "seg-1"
+          },
+          "lane": [
+            {
+              "lane-id": "lane-1",
+              "config": {
+                "lane-id": "lane-1"
+              },
+              "state": {
+                "lcs-direction-a": "yellow-x",
+                "lcs-direction-b": "yellow-x"
+              }
+            },
+            {
+              "lane-id": "lane-2",
+              "config": {
+                "lane-id": "lane-2"
+              },
+              "state": {
+                "lcs-direction-a": "white-one-way-left-turn-arrow",
+                "lcs-direction-b": "white-one-way-left-turn-arrow"
+              }
+            },
+            {
+              "lane-id": "lane-3",
+              "config": {
+                "lane-id": "lane-3"
+              },
+              "state": {
+                "lcs-direction-a": "white-two-way-left-turn-arrow",
+                "lcs-direction-b": "white-one-way-left-turn-arrow"
+              }
+            },
+            {
+              "lane-id": "lane-4",
+              "config": {
+                "lane-id": "lane-4"
+              },
+              "state": {
+                "lcs-direction-a": "white-one-way-left-turn-arrow",
+                "lcs-direction-b": "yellow-x"
+              }
+            },
+            {
+              "lane-id": "lane-5",
+              "config": {
+                "lane-id": "lane-5"
+              },
+              "state": {
+                "lcs-direction-a": "flashing-yellow-x",
+                "lcs-direction-b": "red-x"
+              }
+            },
+            {
+              "lane-id": "lane-6",
+              "config": {
+                "lane-id": "lane-6"
+              },
+              "state": {
+                "lcs-direction-a": "downward-green-arrow",
+                "lcs-direction-b": "downward-green-arrow"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

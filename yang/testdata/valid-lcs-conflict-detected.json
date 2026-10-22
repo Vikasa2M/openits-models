@@ -6,7 +6,7 @@
     "occurred-at": "2026-07-13T12:00:00Z",
     "sequence": "1",
     "segment-id": "seg-04",
-    "lcs-direction-a": "green-arrow",
-    "lcs-direction-b": "green-arrow"
+    "lcs-direction-a": "downward-green-arrow",
+    "lcs-direction-b": "downward-green-arrow"
   }
 }

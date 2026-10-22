@@ -134,12 +134,14 @@ func (LaneFlowState) EnumDescriptor() ([]byte, []int) {
 type LcsIndication int32
 
 const (
-	LcsIndication_LCS_INDICATION_UNKNOWN           LcsIndication = 0
-	LcsIndication_LCS_INDICATION_DARK              LcsIndication = 1
-	LcsIndication_LCS_INDICATION_RED_X             LcsIndication = 2
-	LcsIndication_LCS_INDICATION_YELLOW_X          LcsIndication = 3
-	LcsIndication_LCS_INDICATION_FLASHING_YELLOW_X LcsIndication = 4
-	LcsIndication_LCS_INDICATION_GREEN_ARROW       LcsIndication = 5
+	LcsIndication_LCS_INDICATION_UNKNOWN                       LcsIndication = 0
+	LcsIndication_LCS_INDICATION_DARK                          LcsIndication = 1
+	LcsIndication_LCS_INDICATION_RED_X                         LcsIndication = 2
+	LcsIndication_LCS_INDICATION_YELLOW_X                      LcsIndication = 3
+	LcsIndication_LCS_INDICATION_FLASHING_YELLOW_X             LcsIndication = 4
+	LcsIndication_LCS_INDICATION_DOWNWARD_GREEN_ARROW          LcsIndication = 5
+	LcsIndication_LCS_INDICATION_WHITE_TWO_WAY_LEFT_TURN_ARROW LcsIndication = 6
+	LcsIndication_LCS_INDICATION_WHITE_ONE_WAY_LEFT_TURN_ARROW LcsIndication = 7
 )
 
 // Enum value maps for LcsIndication.
@@ -150,15 +152,19 @@ var (
 		2: "LCS_INDICATION_RED_X",
 		3: "LCS_INDICATION_YELLOW_X",
 		4: "LCS_INDICATION_FLASHING_YELLOW_X",
-		5: "LCS_INDICATION_GREEN_ARROW",
+		5: "LCS_INDICATION_DOWNWARD_GREEN_ARROW",
+		6: "LCS_INDICATION_WHITE_TWO_WAY_LEFT_TURN_ARROW",
+		7: "LCS_INDICATION_WHITE_ONE_WAY_LEFT_TURN_ARROW",
 	}
 	LcsIndication_value = map[string]int32{
-		"LCS_INDICATION_UNKNOWN":           0,
-		"LCS_INDICATION_DARK":              1,
-		"LCS_INDICATION_RED_X":             2,
-		"LCS_INDICATION_YELLOW_X":          3,
-		"LCS_INDICATION_FLASHING_YELLOW_X": 4,
-		"LCS_INDICATION_GREEN_ARROW":       5,
+		"LCS_INDICATION_UNKNOWN":                       0,
+		"LCS_INDICATION_DARK":                          1,
+		"LCS_INDICATION_RED_X":                         2,
+		"LCS_INDICATION_YELLOW_X":                      3,
+		"LCS_INDICATION_FLASHING_YELLOW_X":             4,
+		"LCS_INDICATION_DOWNWARD_GREEN_ARROW":          5,
+		"LCS_INDICATION_WHITE_TWO_WAY_LEFT_TURN_ARROW": 6,
+		"LCS_INDICATION_WHITE_ONE_WAY_LEFT_TURN_ARROW": 7,
 	}
 )
 
@@ -529,14 +535,16 @@ const file_openits_reversible_lane_v1_types_proto_rawDesc = "" +
 	"\x17LANE_FLOW_STATE_UNKNOWN\x10\x00\x12\x1a\n" +
 	"\x16LANE_FLOW_STATE_CLOSED\x10\x01\x12\x18\n" +
 	"\x14LANE_FLOW_STATE_OPEN\x10\x02\x12!\n" +
-	"\x1dLANE_FLOW_STATE_IN_TRANSITION\x10\x03*\xc1\x01\n" +
+	"\x1dLANE_FLOW_STATE_IN_TRANSITION\x10\x03*\xae\x02\n" +
 	"\rLcsIndication\x12\x1a\n" +
 	"\x16LCS_INDICATION_UNKNOWN\x10\x00\x12\x17\n" +
 	"\x13LCS_INDICATION_DARK\x10\x01\x12\x18\n" +
 	"\x14LCS_INDICATION_RED_X\x10\x02\x12\x1b\n" +
 	"\x17LCS_INDICATION_YELLOW_X\x10\x03\x12$\n" +
-	" LCS_INDICATION_FLASHING_YELLOW_X\x10\x04\x12\x1e\n" +
-	"\x1aLCS_INDICATION_GREEN_ARROW\x10\x05*\x88\x01\n" +
+	" LCS_INDICATION_FLASHING_YELLOW_X\x10\x04\x12'\n" +
+	"#LCS_INDICATION_DOWNWARD_GREEN_ARROW\x10\x05\x120\n" +
+	",LCS_INDICATION_WHITE_TWO_WAY_LEFT_TURN_ARROW\x10\x06\x120\n" +
+	",LCS_INDICATION_WHITE_ONE_WAY_LEFT_TURN_ARROW\x10\a*\x88\x01\n" +
 	"\n" +
 	"OperStatus\x12\x17\n" +
 	"\x13OPER_STATUS_UNKNOWN\x10\x00\x12\x12\n" +

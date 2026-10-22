@@ -82,14 +82,14 @@ func collectReversibleLane() (*yangpkg.Device, error) {
 	}
 	laneCfg := lane.GetOrCreateConfig()
 	laneCfg.LaneId = strPtr("lane-1")
-	// Commanded green-arrow toward direction-a requires a steady red-X
-	// toward direction-b (MUTCD 4M) — the green-implies-opposing-red-X
+	// Commanded downward-green-arrow toward direction-a requires a steady red-X
+	// toward direction-b (MUTCD 4T.04) — the green-implies-opposing-red-X
 	// invariant enforced by the lane config's module musts.
-	laneCfg.LcsDirectionA = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_green_arrow
+	laneCfg.LcsDirectionA = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_downward_green_arrow
 	laneCfg.LcsDirectionB = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_red_x
 
 	laneSt := lane.GetOrCreateState()
-	laneSt.LcsDirectionA = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_green_arrow
+	laneSt.LcsDirectionA = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_downward_green_arrow
 	laneSt.LcsDirectionB = yangpkg.OpenitsReversibleLaneTypes_LcsIndication_red_x
 	laneSt.GateState = yangpkg.OpenitsReversibleLane_GateState_open
 
@@ -223,8 +223,8 @@ func subscribeReversibleLane(ctx context.Context, out chan<- tests.EventEnvelope
 			Data: &reversiblelanev1.LcsConflictDetected{
 				Kind:          "openits-reversible-lane-types:rl-lcs-conflict-detected",
 				SegmentId:     proto.String("seg-1"),
-				LcsDirectionA: reversiblelanev1.LcsIndication_LCS_INDICATION_GREEN_ARROW.Enum(),
-				LcsDirectionB: reversiblelanev1.LcsIndication_LCS_INDICATION_GREEN_ARROW.Enum(),
+				LcsDirectionA: reversiblelanev1.LcsIndication_LCS_INDICATION_DOWNWARD_GREEN_ARROW.Enum(),
+				LcsDirectionB: reversiblelanev1.LcsIndication_LCS_INDICATION_DOWNWARD_GREEN_ARROW.Enum(),
 			},
 		},
 		{

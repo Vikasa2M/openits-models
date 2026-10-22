@@ -4115,19 +4115,23 @@ components:
                         lcs-direction-a:
                             enum:
                                 - dark
+                                - downward-green-arrow
                                 - flashing-yellow-x
-                                - green-arrow
                                 - red-x
                                 - unknown
+                                - white-one-way-left-turn-arrow
+                                - white-two-way-left-turn-arrow
                                 - yellow-x
                             type: string
                         lcs-direction-b:
                             enum:
                                 - dark
+                                - downward-green-arrow
                                 - flashing-yellow-x
-                                - green-arrow
                                 - red-x
                                 - unknown
+                                - white-one-way-left-turn-arrow
+                                - white-two-way-left-turn-arrow
                                 - yellow-x
                             type: string
                         observed-by:

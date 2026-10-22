@@ -33,6 +33,11 @@ module openits-reversible-lane-types {
 
   openits-types:openits-version "0.6.1";
 
+  revision 2026-10-22 {
+    description
+      "Align lcs-indication with MUTCD Chapter 4T: rename green-arrow to downward-green-arrow, add the white two-way and one-way left-turn arrows, mark flashing-yellow-x as legacy. Breaking: green-arrow is now downward-green-arrow.";
+    reference "MUTCD 11th Edition (2023) Sections 4T.02, 4T.04.";
+  }
   revision 2026-10-16 {
     description
       "Description only: name the state timestamp observed-at, renamed from measured-at in the service core. Wire-neutral.";
@@ -149,17 +154,26 @@ module openits-reversible-lane-types {
 
   typedef lcs-indication {
     type enumeration {
-      enum unknown           { value 0; }
-      enum dark              { value 1; }
-      enum red-x             { value 2; }
-      enum yellow-x          { value 3; }
-      enum flashing-yellow-x { value 4; }
-      enum green-arrow       { value 5; }
+      enum unknown           { value 0; description "The indication cannot be determined."; }
+      enum dark              { value 1; description "The head is not displaying (MUTCD 4T.04 non-operation)."; }
+      enum red-x             { value 2; description "Lane closed to traffic in this direction (MUTCD 4T.02 C)."; }
+      enum yellow-x          { value 3; description "Lane about to close in this direction; followed by red-x (MUTCD 4T.02 B)."; }
+      enum flashing-yellow-x {
+        value 4;
+        description
+          "Legacy: a left-turn-use indication in MUTCD editions before
+           2009, replaced by the white left-turn arrows. Not a current
+           MUTCD indication. Kept so a field head that still shows it can
+           report it; it may not be commanded.";
+      }
+      enum downward-green-arrow { value 5; description "Lane open to travel in this direction (MUTCD 4T.02 A)."; }
+      enum white-two-way-left-turn-arrow { value 6; description "Open to left turns from either direction, not through travel (MUTCD 4T.02 D)."; }
+      enum white-one-way-left-turn-arrow { value 7; description "Open to left turns in this direction only, not through travel (MUTCD 4T.02 E)."; }
     }
     description
-      "Lane-use control signal indication per MUTCD Chapter 4M.
-       yellow-x / flashing-yellow-x are the clearance indications
-       shown while a direction is being closed.";
+      "Lane-use control signal indication (MUTCD 11th edition,
+       Chapter 4T). All current indications are steady.";
+    reference "MUTCD 11th Edition (2023) Sections 4T.02, 4T.04.";
   }
 
   typedef gate-id {
@@ -306,7 +320,7 @@ module openits-reversible-lane-types {
   identity reversible-lane-fault-conflict {
     base reversible-lane-fault-event-kind;
     description
-      "Conflicting indications detected (e.g., green-arrow both
+      "Conflicting indications detected (e.g., downward-green-arrow both
        ways).";
   }
   identity reversible-lane-fault-gate {

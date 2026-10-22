@@ -24,7 +24,7 @@ roadside infrastructure.
 | `rsu`            | NTCIP 1218, NTCIP 1211 | Functional, with SAE J2735 message types as broadcast payloads; signal request / priority handling follows NTCIP 1211. |
 | `traffic-sensor` | NTCIP 1209 | Functional. |
 | `perception`     | — | No NTCIP object set for video incident detection; the model is OpenITS-native, annotated against ARC-IT. |
-| `reversible-lane` | — | No NTCIP object set; modeled on MUTCD Chapter 4M lane-use control signals and ARC-IT TM16. |
+| `reversible-lane` | — | No NTCIP object set; modeled on MUTCD Chapter 4T lane-use control signals and ARC-IT TM16. |
 
 The relationship is **functional, not wire-compatible**. Devices
 still speak NTCIP MIBs over SNMP; the OpenITS poller handles

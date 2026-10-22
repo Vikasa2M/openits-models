@@ -90,14 +90,14 @@ func TestReversibleLaneControl_BlockingConsistent(t *T, obs *Observation) {
 
 // ----- segments / lanes -----
 //
-// Per MUTCD Chapter 4M, a commanded green-arrow or flashing-yellow-X
-// toward one direction requires a steady red-X toward the other — the
+// Per MUTCD 4T.04, a commanded downward green arrow
+// toward one direction requires a steady red X toward the other — the
 // module's config-true must on segments/segment/lane/config. gate-state
 // is the barrier-gate readback for the lane, expected present whenever
 // the lane reports live state.
 
 func isGreenOrFlashingYellowX(v yangpkg.E_OpenitsReversibleLaneTypes_LcsIndication) bool {
-	return v == yangpkg.OpenitsReversibleLaneTypes_LcsIndication_green_arrow ||
+	return v == yangpkg.OpenitsReversibleLaneTypes_LcsIndication_downward_green_arrow ||
 		v == yangpkg.OpenitsReversibleLaneTypes_LcsIndication_flashing_yellow_x
 }
 
@@ -456,8 +456,8 @@ func TestReversibleLaneEvent_FaultRaisedShape(t *T, obs *Observation) {
 }
 
 // direction-open-permitted gates the lcs-reverse step of a changeover: while
-// it is false, no lane may show a proceed indication (green-arrow or
-// flashing-yellow-X, as the core lane musts define proceed) toward the
+// it is false, no lane may show a proceed indication (downward-green-arrow, or
+// the legacy flashing-yellow-x a field head may still report) toward the
 // direction the facility is changing over to. At rest the flag is routinely
 // false (the sweep interlock is not satisfied while traffic is flowing), so
 // the check applies only while a changeover is running, and only to the
@@ -482,7 +482,7 @@ func TestRL_DirectionOpenGateBlocksReverse(t *T, obs *Observation) {
 		return
 	}
 	proceed := func(i yangpkg.E_OpenitsReversibleLaneTypes_LcsIndication) bool {
-		return i == yangpkg.OpenitsReversibleLaneTypes_LcsIndication_green_arrow ||
+		return i == yangpkg.OpenitsReversibleLaneTypes_LcsIndication_downward_green_arrow ||
 			i == yangpkg.OpenitsReversibleLaneTypes_LcsIndication_flashing_yellow_x
 	}
 	for segID, seg := range segs.Segment {
