@@ -1,0 +1,13 @@
+{
+  "openits-common-fault-events:fault-raised": {
+    "kind": "openits-reversible-lane-types:reversible-lane-fault-plc-fault",
+    "source-device-id": "rl-controller-1",
+    "sequence-epoch": "boot-2026-10-23a",
+    "sequence": "11",
+    "fault-id": "f-plc-fault",
+    "severity": "major",
+    "description": "Facility PLC fault status active.",
+    "first-observed": "2026-10-23T12:00:00Z",
+    "occurred-at": "2026-10-23T12:00:01Z"
+  }
+}
