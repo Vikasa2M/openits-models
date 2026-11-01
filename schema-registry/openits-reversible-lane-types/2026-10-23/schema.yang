@@ -38,14 +38,17 @@ module openits-reversible-lane-types {
 
   revision 2026-10-23 {
     description
-      "Add reversible-lane forms of facility PLC, PLC-configuration,
-       cabinet-door-open and gate-invalid-inputs faults. Import
+      "Add three reversible-lane fault leaves:
+       reversible-lane-fault-controller (the facility controller
+       reports an internal fault of its own),
+       reversible-lane-fault-controller-configuration (the facility
+       controller does not match what the supervising system expects
+       for the site) and reversible-lane-fault-cabinet-door-open. Import
        openits-cabinet-power so the cabinet-door-open identity
-       dual-bases on cabinet-power-door-open like the signal-control
-       and DMS forms. Additive; inserting identities shifts generated
-       Go identity ordinals.";
+       dual-bases on cabinet-power-door-open, like the signal-control
+       and DMS forms. Additive.";
     reference
-      "openits-cabinet-power:cabinet-power-door-open.";
+      "RFC 7950 §7.18.";
   }
   revision 2026-10-22 {
     description
@@ -329,20 +332,25 @@ module openits-reversible-lane-types {
     description
       "Communication fault between gateway and the facility PLC.";
   }
-  identity reversible-lane-fault-plc-fault {
+  identity reversible-lane-fault-controller {
     base reversible-lane-fault-event-kind;
     description
-      "The facility PLC reports a fault of its own. Distinct from
-       reversible-lane-fault-plc-communication, which is the gateway
-       failing to reach or hear the PLC. No component.";
+      "The facility controller (commonly a PLC) reports an internal
+       fault of its own: CPU, memory, watchdog or program fault.
+       Distinct from reversible-lane-fault-plc-communication, which is
+       the supervising system failing to reach or hear the controller,
+       and from reversible-lane-fault-controller-configuration, which is
+       a controller that runs but does not match what the site expects.
+       No component.";
   }
-  identity reversible-lane-fault-plc-configuration {
+  identity reversible-lane-fault-controller-configuration {
     base reversible-lane-fault-event-kind;
     description
-      "The PLC no longer matches what the gateway expects: its cabinet
-       identity differs from the expected identity, the PLC reports that
-       its identity input changed, or its program or configuration
-       checksum differs from the expected value. No component.";
+      "The facility controller does not match what the supervising
+       system expects for this site: its reported identity, program or
+       configuration differs from the expected value. How the
+       controller detects the mismatch (identity input, checksum,
+       version) is implementation detail. No component.";
   }
   identity reversible-lane-fault-interlock {
     base reversible-lane-fault-event-kind;
@@ -422,17 +430,6 @@ module openits-reversible-lane-types {
        consumer MUST NOT treat any other reported position as
        trustworthy. Distinct from a failure to read the device at
        all, which is reversible-lane-fault-plc-communication.";
-  }
-  identity reversible-lane-fault-gate-invalid-inputs {
-    base reversible-lane-fault-gate;
-    description
-      "The gate's controller reports one or more of its input signals
-       as invalid or not usable; the specific cause is defined by the
-       controller's configuration. Where the problem is specifically
-       absent or implausible position feedback,
-       reversible-lane-fault-gate-feedback-loss applies instead. A
-       gate-scope fault: names its gate through component-class
-       rl-component-gate and component-id the gate's gate-id.";
   }
   identity reversible-lane-fault-cabinet-door-open {
     base reversible-lane-fault-event-kind;

@@ -1,6 +1,6 @@
 {
   "openits-common-fault-events:fault-raised": {
-    "kind": "openits-reversible-lane-types:reversible-lane-fault-gate-invalid-inputs",
+    "kind": "openits-vendor-cameleon-reversible-lane-types:cameleon-gate-invalid-inputs",
     "source-device-id": "rl-controller-1",
     "sequence-epoch": "boot-2026-10-23a",
     "sequence": "13",

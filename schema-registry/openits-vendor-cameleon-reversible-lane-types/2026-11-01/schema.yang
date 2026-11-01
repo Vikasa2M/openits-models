@@ -1,0 +1,69 @@
+module openits-vendor-cameleon-reversible-lane-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:vendor-cameleon-reversible-lane-types";
+  prefix openits-vendor-cameleon-rl-types;
+
+  import openits-reversible-lane-types {
+    prefix openits-rl-types;
+  }
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (vendor-pattern example)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Vendor identity module for Cameleon reversible-lane access-control
+     (gate) controllers. Declares specialized identities derived from
+     open slots in openits-reversible-lane-types, for alarms whose
+     meaning is specific to this controller family or is set per
+     project, and so does not belong in the core catalog. A consumer
+     that does not load this module still sees the core base identity
+     each one derives from.
+
+     Cameleon has not ratified this file; openits maintains it under
+     the conformance-reference NoI as an example of the vendor
+     identity pattern until a Cameleon-aligned organization adopts it.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.1.0";
+
+  revision 2026-11-01 {
+    description
+      "Initial revision. Declares cameleon-gate-invalid-inputs, derived
+       from openits-reversible-lane-types:reversible-lane-fault-gate.";
+    reference
+      "Cameleon PLC Interface Programming Guide v1.4, gate alarm word
+       (invalid-inputs alarm).";
+  }
+
+  /* --------------------------------------------------------------
+   * Cameleon gate alarm identities
+   *
+   * Each identity below derives from a core gate-scope fault class,
+   * so a consumer selecting every gate fault with
+   * derived-from-or-self(kind, 'reversible-lane-fault-gate') still
+   * matches it.
+   * -------------------------------------------------------------- */
+
+  identity cameleon-gate-invalid-inputs {
+    base openits-rl-types:reversible-lane-fault-gate;
+    description
+      "The Cameleon controller's invalid-inputs alarm for one gate is
+       active: one or more of the gate's inputs is reported invalid or
+       unusable. Which inputs the alarm covers, and what makes one
+       invalid, is set per project in the controller's configuration,
+       so this identity says only that the alarm fired; the project's
+       configuration says what to inspect. Where the problem is known
+       to be absent or implausible position feedback, a producer emits
+       openits-rl-types:reversible-lane-fault-gate-feedback-loss
+       instead. A gate-scope fault: names its gate through
+       component-class openits-rl-types:rl-component-gate and
+       component-id the gate's gate-id.";
+  }
+}

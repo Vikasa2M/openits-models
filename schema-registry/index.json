@@ -634,8 +634,8 @@
         "RFC 7950 section 11 (breaking YANG evolution: identity rename)",
         "RFC 7950 §11",
         "RFC 7950 §7.12",
-        "RFC 7950 §7.19",
-        "openits-cabinet-power:cabinet-power-door-open"
+        "RFC 7950 §7.18",
+        "RFC 7950 §7.19"
       ],
       "modules": [
         {
@@ -717,8 +717,8 @@
             "MUTCD 11th ed. Chapter 4M",
             "RFC 7950 section 11",
             "RFC 7950 §11",
-            "RFC 7950 §7.19",
-            "openits-cabinet-power:cabinet-power-door-open"
+            "RFC 7950 §7.18",
+            "RFC 7950 §7.19"
           ]
         }
       ]
@@ -1634,6 +1634,16 @@
         "RFC 7950 9.6.4.2",
         "RFC 7950 §7.6",
         "SAE J2735 / J2945"
+      ]
+    },
+    {
+      "name": "openits-vendor-cameleon-reversible-lane-types",
+      "namespace": "urn:openits:yang:vendor-cameleon-reversible-lane-types",
+      "revisions": [
+        "2026-11-01"
+      ],
+      "refStd": [
+        "Cameleon PLC Interface Programming Guide v1.4, gate alarm word (invalid-inputs alarm)"
       ]
     },
     {
@@ -3150,6 +3160,13 @@
         "openits-vehicle-detection/2026-10-16/MANIFEST.json",
         "openits-vehicle-detection/2026-10-16/README.md",
         "openits-vehicle-detection/2026-10-16/schema.yang"
+      ]
+    },
+    "openits-vendor-cameleon-reversible-lane-types": {
+      "2026-11-01": [
+        "openits-vendor-cameleon-reversible-lane-types/2026-11-01/MANIFEST.json",
+        "openits-vendor-cameleon-reversible-lane-types/2026-11-01/README.md",
+        "openits-vendor-cameleon-reversible-lane-types/2026-11-01/schema.yang"
       ]
     },
     "openits-vendor-econolite-signal-control-types": {

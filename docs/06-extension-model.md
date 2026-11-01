@@ -133,7 +133,7 @@ Filename + namespace conventions match Tier 2:
 | Path | `yang/openits-vendor-<vendor>-<service>-types.yang` |
 | Namespace | `urn:<vendor>:yang:<service>-types`; a project-maintained example the vendor has not ratified uses `urn:openits:yang:vendor-<vendor>-<service>-types` |
 | Prefix | Vendor's choice, conventionally `openits-vendor-<vendor>-<service>-types` |
-| Organization / contact | The vendor; a project-maintained example (the Econolite and TrafficVision modules in this tree) names the OpenITS Working Group, since the vendor has not ratified it |
+| Organization / contact | The vendor; a project-maintained example (the Econolite, TrafficVision and Cameleon modules in this tree) names the OpenITS Working Group, since the vendor has not ratified it |
 
 Identity-only extension does not require its own NoI graduation
 flow distinct from augments; the same three-implementer rule

@@ -114,6 +114,7 @@ MODULES=(
     openits-vendor-econolite-signal-control-types
     openits-vendor-trafficvision-traffic-sensor-types
     openits-vendor-trafficvision-perception-types
+    openits-vendor-cameleon-reversible-lane-types
 )
 
 # Augment modules contributed by vendors / agencies. Snapshotted alongside
