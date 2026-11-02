@@ -38,8 +38,7 @@ module openits-vendor-cameleon-reversible-lane-types {
       "Initial revision. Declares cameleon-gate-invalid-inputs, derived
        from openits-reversible-lane-types:reversible-lane-fault-gate.";
     reference
-      "Cameleon PLC Interface Programming Guide v1.4, gate alarm word
-       (invalid-inputs alarm).";
+      "Cameleon controller gate alarm word (invalid-inputs alarm).";
   }
 
   /* --------------------------------------------------------------
