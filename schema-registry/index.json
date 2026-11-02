@@ -1643,7 +1643,7 @@
         "2026-11-01"
       ],
       "refStd": [
-        "Cameleon controller gate alarm word (invalid-inputs alarm)"
+        "Cameleon ITS PLC interface, gate alarm word (invalid-inputs alarm)"
       ]
     },
     {
