@@ -907,7 +907,8 @@
         "2026-10-14",
         "2026-10-16",
         "2026-10-17",
-        "2026-10-20"
+        "2026-10-20",
+        "2026-11-09"
       ],
       "events": [
         "openits.signal-control.cabinet-output-changed.v1",
@@ -943,6 +944,7 @@
         "IEC 62040 (UPS)",
         "Indiana 173 (fault-unit-flash-status)",
         "Indiana coord-cycle-state",
+        "Li, H., A.M. Hainen, J.R. Sturdevant, et al. Indiana Traffic Signal Hi Resolution Data Logger Enumerations. Purdue TPF-5(377), Aug 2020 (doi: 10.5703/1288284316998)",
         "Li, H., A.M. Hainen, J.R. Sturdevant, et al. Indiana Traffic Signal Hi Resolution Data Logger Enumerations. Purdue TPF-5(377), Aug 2020 (doi: 10.5703/1288284316998), supersedes the Nov 2012 original (doi: 10.4231/K4RN35SH)",
         "MUTCD 11th ed. 4F.17",
         "MUTCD 11th ed. 4F.17/4I.06/Ch.8C",
@@ -1064,11 +1066,13 @@
             "2026-09-08",
             "2026-10-13",
             "2026-10-17",
-            "2026-10-20"
+            "2026-10-20",
+            "2026-11-09"
           ],
           "refStd": [
             "ATSPM Indiana enumeration",
             "ATSPM Indiana enumeration codes 50-54, 131-133, 134-149, 150",
+            "Li, H., A.M. Hainen, J.R. Sturdevant, et al. Indiana Traffic Signal Hi Resolution Data Logger Enumerations. Purdue TPF-5(377), Aug 2020 (doi: 10.5703/1288284316998)",
             "NEMA TS-2 §3.5",
             "NTCIP 1202 (signal-control events)",
             "NTCIP 1202:2019 §5",
@@ -1095,13 +1099,15 @@
             "2026-10-14",
             "2026-10-16",
             "2026-10-17",
-            "2026-10-20"
+            "2026-10-20",
+            "2026-11-09"
           ],
           "refStd": [
             "ATC Cabinet Standard",
             "ATC Cabinet Standard (CMU)",
             "ATSPM Indiana enumeration (HR event-code vocabulary)",
             "Indiana 173 (fault-unit-flash-status)",
+            "Li, H., A.M. Hainen, J.R. Sturdevant, et al. Indiana Traffic Signal Hi Resolution Data Logger Enumerations. Purdue TPF-5(377), Aug 2020 (doi: 10.5703/1288284316998)",
             "Li, H., A.M. Hainen, J.R. Sturdevant, et al. Indiana Traffic Signal Hi Resolution Data Logger Enumerations. Purdue TPF-5(377), Aug 2020 (doi: 10.5703/1288284316998), supersedes the Nov 2012 original (doi: 10.4231/K4RN35SH)",
             "MUTCD 11th ed. Ch. 8C",
             "NEMA TS-2 §4",
@@ -1527,7 +1533,8 @@
         "2026-10-12",
         "2026-10-13",
         "2026-10-14",
-        "2026-10-16"
+        "2026-10-16",
+        "2026-11-09"
       ],
       "refStd": [
         "ATSPM Indiana enumeration",
@@ -2779,6 +2786,13 @@
         "openits-signal-control-events/2026-10-20/schema.json",
         "openits-signal-control-events/2026-10-20/schema.proto",
         "openits-signal-control-events/2026-10-20/schema.yang"
+      ],
+      "2026-11-09": [
+        "openits-signal-control-events/2026-11-09/MANIFEST.json",
+        "openits-signal-control-events/2026-11-09/README.md",
+        "openits-signal-control-events/2026-11-09/schema.json",
+        "openits-signal-control-events/2026-11-09/schema.proto",
+        "openits-signal-control-events/2026-11-09/schema.yang"
       ]
     },
     "openits-signal-control-fault-events": {
@@ -2956,6 +2970,11 @@
         "openits-signal-control-types/2026-10-20/MANIFEST.json",
         "openits-signal-control-types/2026-10-20/README.md",
         "openits-signal-control-types/2026-10-20/schema.yang"
+      ],
+      "2026-11-09": [
+        "openits-signal-control-types/2026-11-09/MANIFEST.json",
+        "openits-signal-control-types/2026-11-09/README.md",
+        "openits-signal-control-types/2026-11-09/schema.yang"
       ]
     },
     "openits-traffic-sensor": {
@@ -3085,6 +3104,11 @@
         "openits-types/2026-10-16/MANIFEST.json",
         "openits-types/2026-10-16/README.md",
         "openits-types/2026-10-16/schema.yang"
+      ],
+      "2026-11-09": [
+        "openits-types/2026-11-09/MANIFEST.json",
+        "openits-types/2026-11-09/README.md",
+        "openits-types/2026-11-09/schema.yang"
       ]
     },
     "openits-v2x-messaging": {

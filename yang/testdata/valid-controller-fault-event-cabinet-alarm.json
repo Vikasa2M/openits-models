@@ -1,0 +1,17 @@
+{
+  "openits-signal-control-events:controller-fault-event": {
+    "kind": "openits-signal-control-types:fault-cabinet-alarm",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence-epoch": "boot-2026-10-13a",
+    "sequence": "5",
+    "fault-id": "sc01-hrfault-0200-002",
+    "severity": "minor",
+    "occurred-at": "2026-07-11T14:06:10.200Z",
+    "raised": true,
+    "source": {
+      "decoder": "indiana",
+      "indiana-code": 200,
+      "indiana-param": 2
+    }
+  }
+}

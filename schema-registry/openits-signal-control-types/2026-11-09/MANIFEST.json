@@ -1,0 +1,7 @@
+{
+  "module": "openits-signal-control-types",
+  "revision": "2026-11-09",
+  "files": [
+    "schema.yang"
+  ]
+}

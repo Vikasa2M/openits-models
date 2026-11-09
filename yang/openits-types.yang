@@ -18,8 +18,13 @@ module openits-types {
      for the openits YANG module family. Service-neutral content only;
      service-specific typedefs live in their respective modules.";
 
-  openits-types:openits-version "0.14.0";
+  openits-types:openits-version "0.15.0";
 
+  revision 2026-11-09 {
+    description
+      "Add the device-log case to wire-source, for events decoded from a
+       device's own text event log. Additive.";
+  }
   revision 2026-10-16 {
     description
       "Add the oper-status typedef, the device-health and
@@ -1339,6 +1344,7 @@ module openits-types {
            'ntcip-1204' (NTCIP 1204 ESS MIB),
            'j2735' (SAE J2735 V2X messages),
            'srtp' / 'modbus' / 'dnp3' (PLC register maps),
+           'device-text-log' (a device's own text event log),
            'gnmi-subscribe' (future), 'snmp-trap' (future).";
       }
 
@@ -1416,6 +1422,33 @@ module openits-types {
             type string;
             description
               "Stringified raw value the register held at read time.";
+          }
+        }
+
+        case device-log {
+          description
+            "An entry from a device's own text event log: the log a
+             controller, sign or sensor keeps for its operators, as
+             opposed to a coded HR log. The decoder leaf names the log
+             reader; the event header's occurred-at is the time the
+             device gave the entry.";
+          leaf log-name {
+            type string {
+              length "1..64";
+            }
+            description
+              "Which of the device's logs the entry came from, in the
+               device's own naming, when it keeps more than one.";
+          }
+          leaf log-text {
+            type string {
+              length "1..1024";
+            }
+            description
+              "The entry's text exactly as the device recorded it,
+               including any time or date text the device put in the
+               line, decoded from transport encoding (for example URL
+               percent-encoding) but otherwise unchanged.";
           }
         }
       }

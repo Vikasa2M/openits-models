@@ -24,8 +24,22 @@ module openits-signal-control-events {
      containing notification statements; collapsed from 11 per-domain modules
      into this one, since they versioned in lockstep.";
 
-  openits-types:openits-version "0.4.0";
+  openits-types:openits-version "0.5.0";
 
+  revision 2026-11-09 {
+    description
+      "Add phase-number to preemption-event for preempt-force-off-phase
+       (Indiana 20), whose param is a phase. Extend coordination-change
+       to split 17-32 (Indiana 203-218) and to cycles over 255 seconds
+       (Indiana 156). List the new cabinet fault kinds on
+       controller-fault-event (Indiana 175, 200-201). Let unmapped-event
+       carry a row of the controller's own text log through the new
+       wire-source device-log case. Additive.";
+    reference
+      "Li, H., A.M. Hainen, J.R. Sturdevant, et al. Indiana Traffic
+       Signal Hi Resolution Data Logger Enumerations. Purdue TPF-5(377),
+       Aug 2020 (doi: 10.5703/1288284316998).";
+  }
   revision 2026-10-20 {
     description
       "Name every remaining timing and percentage leaf with its unit:
@@ -317,10 +331,11 @@ module openits-signal-control-events {
       "Roadway Signal Controller -> ATSPM / TMC : coordination change";
     description
       "Coordination plan / cycle / offset / split changed. Collapses
-       ATSPM codes 134-149 (the 16 SplitNChange codes become one
-       notification with split-number as a field) plus 50-54
-       (MAX-in-effect transitions) and 131-133 (pattern / cycle /
-       offset). The 'kind' identityref names the specific change.";
+       ATSPM codes 134-149 and 203-218 (the 32 SplitNChange codes become
+       one notification with phase-number as a field) plus 50-54
+       (MAX-in-effect transitions), 131-133 and 156 (pattern / cycle /
+       offset), 150 (cycle state) and 151-152 (coordinated phase yield
+       and begin). The 'kind' identityref names the specific change.";
 
     leaf kind {
       type identityref { base openits-sc-types:sc-coordination-event-kind; }
@@ -334,21 +349,23 @@ module openits-signal-control-events {
       description
         "The phase the change applies to. Populated for the
          MAX-in-effect transitions (Indiana 50-54), whose wire param IS
-         a phase, and for coord-programmed-split-change (Indiana
-         134-149), where it names the changed split's phase. Absent for
-         unit-level changes (pattern, cycle length, offset).";
+         a phase, for coord-programmed-split-change (Indiana 134-149
+         and 203-218), where it names the changed split's phase, and for
+         coord-yield-point and coord-coordinated-phase-begin (Indiana
+         151-152). Absent for unit-level changes (pattern, cycle length,
+         offset).";
     }
 
     leaf pattern          { type openits-sc-types:plan-id; description "New coordination pattern / timing-plan number. Populated for coord-pattern-change (Indiana 131)."; }
     leaf previous-pattern { type openits-sc-types:plan-id; description "Pattern in effect before the change, when the controller reports it."; }
 
-    leaf cycle-length-s          { type uint16; units "seconds"; description "New cycle length. Populated for coord-cycle-length-change (Indiana 132)."; }
+    leaf cycle-length-s          { type uint16; units "seconds"; description "New cycle length. Populated for coord-cycle-length-change (Indiana 132). When the controller also logs Indiana 156 for a cycle over 255 seconds, this is 255 plus the 156 param."; }
     leaf previous-cycle-length-s { type uint16; units "seconds"; description "Cycle length before the change, when the controller reports it."; }
 
     leaf offset-s          { type uint16; units "seconds"; description "New offset. Populated for coord-offset-change (Indiana 133)."; }
     leaf previous-offset-s { type uint16; units "seconds"; description "Offset before the change, when the controller reports it."; }
 
-    leaf split-s          { type uint16; units "seconds"; description "New split time for phase-number. Populated for coord-programmed-split-change (Indiana 134-149). Seconds, matching the core's split-s leaf."; }
+    leaf split-s          { type uint16; units "seconds"; description "New split time for phase-number. Populated for coord-programmed-split-change (Indiana 134-149 and 203-218). Seconds, matching the core's split-s leaf."; }
     leaf previous-split-s { type uint16; units "seconds"; description "Split time before the change, when the controller reports it."; }
 
     leaf cycle-state          { type identityref { base openits-sc-types:coordination-cycle-state; } description "New coordination cycle state. Populated for coord-cycle-state-change (Indiana 150)."; }
@@ -511,9 +528,9 @@ module openits-signal-control-events {
       "Roadway Signal Controller -> ATSPM / TMC : preemption activity";
     description
       "High-resolution preemption stage transition from the controller's
-       HR log. Collapses ATSPM codes 101-111 + 116 into one notification
-       keyed on the preempt-number + stage; 'kind' identityref names the
-       specific stage.";
+       HR log. Collapses ATSPM codes 20, 101-111 and 116 into one
+       notification keyed on the preempt-number + stage; 'kind'
+       identityref names the specific stage.";
 
     leaf kind {
       type identityref { base openits-sc-types:sc-preemption-event-kind; }
@@ -523,6 +540,14 @@ module openits-signal-control-events {
     uses openits-types:event-header;
 
     leaf preempt-number { type openits-sc-types:preempt-slot; description "Preempt slot number on the controller (1-based)."; }
+    leaf phase-number {
+      type openits-nema:phase-number;
+      description
+        "The phase the preemption acted on. Populated for
+         preempt-force-off-phase (Indiana 20), whose wire param is the
+         phase rather than the preempt; that row does not say which
+         preempt caused it, so preempt-number may be absent.";
+    }
     leaf source-id { type string; description "Free-form preempt source id (EVP unit id, etc.)."; }
     uses openits-types:wire-source;
   }
@@ -668,7 +693,8 @@ module openits-signal-control-events {
       "Roadway Signal Controller -> Maintenance : log-derived fault";
     description
       "High-resolution controller fault transition from the controller's
-       HR event log (Indiana codes 173-185). Distinct from fault-raised
+       HR event log (Indiana codes 173-175, 182, 184-185 and 200-201).
+       Distinct from fault-raised
        which sources from NTCIP shortAlarmStatus polling; this one
        carries millisecond-precision fault transitions.";
 
@@ -677,8 +703,9 @@ module openits-signal-control-events {
       mandatory true;
       description
         "Specific HR-fault class: fault-unit-flash-status,
-         fault-unit-alarm-group-1, fault-power-failure, or a vendor
-         slot derived from fault-vendor-alarm.
+         fault-unit-alarm-group-1, fault-alarm-group-state,
+         fault-power-failure, fault-cabinet-alarm, or a vendor slot
+         derived from fault-vendor-alarm.
 
          Constrained to controller-fault-event-kind, not to the whole
          sc-fault-event-kind tree, so the state tree's fault categories
@@ -801,7 +828,10 @@ module openits-signal-control-events {
     description
       "Emitted when the decoder cannot type a wire row. The wire-source
        grouping preserves the original identifier so downstream consumers
-       can interpret it offline if/when a typed mapping is added.";
+       can interpret it offline if/when a typed mapping is added. The row
+       is either an HR-log row (the indiana case) or an entry from the
+       controller's own text event log that maps to no typed event (the
+       device-log case, which carries the entry's text).";
 
     leaf kind {
       type identityref {
@@ -810,8 +840,8 @@ module openits-signal-control-events {
       mandatory true;
       description
         "Always openits-signal-control-types:sc-unmapped-event: a raw
-         controller HR-log row with no mapped openits event identity
-         yet.";
+         controller HR-log row or text event-log entry with no mapped
+         openits event identity yet.";
     }
     uses openits-types:event-header;
 

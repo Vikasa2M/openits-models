@@ -29,8 +29,28 @@ module openits-signal-control-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.17.0";
+  openits-types:openits-version "0.18.0";
 
+  revision 2026-11-09 {
+    description
+      "Give the remaining Indiana hi-res codes that fit an existing
+       notification an event-kind identity: phase 13, 15-18 and 55-56,
+       overlap 71-72, coordination 152, and cabinet 175 and 200-201.
+       Cite codes 203-218 (split 17-32) on coord-programmed-split-change
+       and code 156 on coord-cycle-length-change, which already carry
+       them. Correct fault-unit-alarm-group-1, which is code 174 (unit
+       alarm status 1), and list the codes controller-fault-event-kind
+       actually holds.
+
+       Breaking: preempt-force-off-phase now means Indiana 20, whose
+       param is the phase, matching tsp-early-force-off-phase (19). Its
+       former code, 116, whose param is the preempt, moves to the new
+       preempt-force-off-cycle, matching tsp-early-force-off-cycle (117).";
+    reference
+      "Li, H., A.M. Hainen, J.R. Sturdevant, et al. Indiana Traffic
+       Signal Hi Resolution Data Logger Enumerations. Purdue TPF-5(377),
+       Aug 2020 (doi: 10.5703/1288284316998).";
+  }
   revision 2026-10-20 {
     description
       "Follow the signal-control no-activity-min rename in the
@@ -587,12 +607,12 @@ module openits-signal-control-types {
       "Signal-control external-I/O events (external calls, test
        inputs, special-function outputs). Indiana codes 178
        (ext-io-manual-control-enable) and 180 (ext-io-stop-time-input)
-       are represented below; codes 171-172, 176-177, 179, 701-710
-       remain a placeholder for a future revision.";
+       are represented below; codes 171-172, 176-177, 179, 202 and
+       701-710 remain a placeholder for a future revision.";
   }
 
   /* --------------------------------------------------------------
-   * Phase events (Indiana codes 0-12, 14, 41-44, 46-47)
+   * Phase events (Indiana codes 0-18, 41-44, 46-47, 55-56)
    * -------------------------------------------------------------- */
 
   identity phase-on {
@@ -672,6 +692,42 @@ module openits-signal-control-types {
     base sc-phase-event-kind;
     description "Indiana 14: phase skipped in the sequence.";
   }
+  identity phase-extension-gap-out {
+    base sc-phase-event-kind;
+    description
+      "Indiana 13: the phase's extension timer gapped out. The param is
+       the phase.";
+    reference "ATSPM Indiana enumeration code 13 (extension timer gap out).";
+  }
+  identity phase-extension-reduction-start {
+    base sc-phase-event-kind;
+    description
+      "Indiana 15: the phase's extension timer began to reduce, at the
+       end of the time before reduction. The param is the phase.";
+    reference "ATSPM Indiana enumeration code 15 (extension timer reduction start).";
+  }
+  identity phase-extension-minimum-reached {
+    base sc-phase-event-kind;
+    description
+      "Indiana 16: the phase's extension timer reached its minimum,
+       after the time to reduce. The param is the phase.";
+    reference "ATSPM Indiana enumeration code 16 (extension timer minimum achieved).";
+  }
+  identity phase-added-initial-complete {
+    base sc-phase-event-kind;
+    description
+      "Indiana 17: the phase's added-initial timer expired. The param is
+       the phase.";
+    reference "ATSPM Indiana enumeration code 17 (added initial complete).";
+  }
+  identity phase-next-decision {
+    base sc-phase-event-kind;
+    description
+      "Indiana 18: the controller decided this phase will be the next to
+       begin green after the active phases end red clearance. The param
+       is the phase.";
+    reference "ATSPM Indiana enumeration code 18 (next phase decision).";
+  }
   identity phase-hold-active {
     base sc-phase-event-kind;
     description "Indiana 41: hold activated on phase.";
@@ -703,7 +759,21 @@ module openits-signal-control-types {
       "Indiana 47: phase omit off — set when a previously applied
        phase omit is released. Not set when the phase is added to the
        active sequence or another configuration-level change occurs.";
+  }  identity phase-advance-warning-on {
+    base sc-phase-event-kind;
+    description
+      "Indiana 55: the phase's advance warning sign turned on. The param
+       is the phase.";
+    reference "ATSPM Indiana enumeration code 55 (advance warning sign on, phase).";
   }
+  identity phase-advance-warning-off {
+    base sc-phase-event-kind;
+    description
+      "Indiana 56: the phase's advance warning sign turned off. The
+       param is the phase.";
+    reference "ATSPM Indiana enumeration code 56 (advance warning sign off, phase).";
+  }
+
 
   /* --------------------------------------------------------------
    * Pedestrian events (Indiana codes 21-26, 45, 48-49, 67-70, 89-92)
@@ -851,10 +921,24 @@ module openits-signal-control-types {
   identity overlap-dark {
     base sc-overlap-event-kind;
     description "Indiana 66: overlap dark.";
+  }  identity overlap-advance-warning-on {
+    base sc-overlap-event-kind;
+    description
+      "Indiana 71: the overlap's advance warning sign turned on. The
+       param is the overlap (A=1, B=2, and so on).";
+    reference "ATSPM Indiana enumeration code 71 (advance warning sign on, overlap).";
+  }
+  identity overlap-advance-warning-off {
+    base sc-overlap-event-kind;
+    description
+      "Indiana 72: the overlap's advance warning sign turned off. The
+       param is the overlap (A=1, B=2, and so on).";
+    reference "ATSPM Indiana enumeration code 72 (advance warning sign off, overlap).";
   }
 
+
   /* --------------------------------------------------------------
-   * Preemption events (Indiana codes 101-111, 116)
+   * Preemption events (Indiana codes 20, 101-111, 116)
    * -------------------------------------------------------------- */
 
   identity preempt-advance-warning {
@@ -903,7 +987,20 @@ module openits-signal-control-types {
   }
   identity preempt-force-off-phase {
     base sc-preemption-event-kind;
-    description "Indiana 116: preempt force-off applied to phase.";
+    description
+      "Indiana 20: preemption force-off applied to the active phase. The
+       param is the phase, carried in preemption-event phase-number. The
+       phase-scoped twin of preempt-force-off-cycle, as
+       tsp-early-force-off-phase (19) is of tsp-early-force-off-cycle
+       (117). Until the 2026-11-09 revision this identity cited code 116.";
+    reference "ATSPM Indiana enumeration code 20 (preemption force off, phase).";
+  }
+  identity preempt-force-off-cycle {
+    base sc-preemption-event-kind;
+    description
+      "Indiana 116: preemption force-off applied to the active cycle. The
+       param is the preempt, carried in preemption-event preempt-number.";
+    reference "ATSPM Indiana enumeration code 116 (preemption force off, preempt).";
   }
 
   /* --------------------------------------------------------------
@@ -998,7 +1095,15 @@ module openits-signal-control-types {
   }
   identity coord-cycle-length-change {
     base sc-coordination-event-kind;
-    description "Indiana 132: cycle-length changed.";
+    description
+      "Indiana 132: cycle-length changed. A cycle over 255 seconds is
+       logged as 132 with param 255 plus Indiana 156 (additional cycle
+       length) holding the seconds above 255; the producer reports the
+       sum in coordination-change cycle-length-s, so 156 has no identity
+       of its own.";
+    reference
+      "ATSPM Indiana enumeration codes 132 and 156 (cycle length change,
+       additional cycle length change).";
   }
   identity coord-offset-change {
     base sc-coordination-event-kind;
@@ -1007,9 +1112,13 @@ module openits-signal-control-types {
   identity coord-programmed-split-change {
     base sc-coordination-event-kind;
     description
-      "Indiana 134-149: programmed split for phase 1..16 changed.
-       The specific phase is carried in the notification's payload
-       (split-number leaf), not in the identityref.";
+      "Indiana 134-149 and 203-218: programmed split for phase 1..16
+       and 17..32 changed. The specific phase is carried in the
+       notification's payload (phase-number leaf), not in the
+       identityref.";
+    reference
+      "ATSPM Indiana enumeration codes 134-149 and 203-218 (split 1-32
+       change).";
   }
   identity coord-cycle-state-change {
     base sc-coordination-event-kind;
@@ -1058,10 +1167,18 @@ module openits-signal-control-types {
       "Indiana 151: coordinated-phase yield point — set once per
        cycle for each coordinated phase, when the controller suspends
        the coordinated phase.";
+  }  identity coord-coordinated-phase-begin {
+    base sc-coordination-event-kind;
+    description
+      "Indiana 152: a coordinated phase began. The param is the phase,
+       carried in coordination-change phase-number. The begin-side pair
+       of coord-yield-point (151).";
+    reference "ATSPM Indiana enumeration code 152 (coordinated phase begin).";
   }
 
+
   /* --------------------------------------------------------------
-   * Fault events (Indiana codes 173-185, currently mapped)
+   * Fault events (Indiana codes 173-175, 182, 184-185, 200-201)
    * -------------------------------------------------------------- */
 
   identity fault-unit-flash-status {
@@ -1070,12 +1187,36 @@ module openits-signal-control-types {
   }
   identity fault-unit-alarm-group-1 {
     base controller-fault-event-kind;
-    description "Indiana 174: unit alarm group 1 state change.";
+    description
+      "Indiana 174: unit alarm status 1 changed. The param is the NTCIP
+       unitAlarmStatus1 bitmap. The identity name predates this wording
+       and is kept because a rename would break the wire.";
+    reference
+      "ATSPM Indiana enumeration code 174 (unit alarm status 1 change);
+       NTCIP 1202 2.4.8 (unitAlarmStatus1), as the enumeration cites it.";
   }
   identity fault-power-failure {
     base controller-fault-event-kind;
     description "Indiana 182/184: power failure / power restored.";
+  }  identity fault-alarm-group-state {
+    base controller-fault-event-kind;
+    description
+      "Indiana 175: an alarm group's state changed. The param is the
+       NTCIP alarmGroupState value.";
+    reference
+      "ATSPM Indiana enumeration code 175 (alarm group state change);
+       NTCIP 1202 2.4.12.2 (alarmGroupState), as the enumeration cites it.";
   }
+  identity fault-cabinet-alarm {
+    base controller-fault-event-kind;
+    description
+      "Indiana 200/201: a cabinet or system alarm input was activated
+       (200, raised true) or released (201, raised false). The param is
+       the alarm number (A=1, B=2, and so on). Each alarm number takes its
+       own fault-id, so two alarms active at once are two faults.";
+    reference "ATSPM Indiana enumeration codes 200-201 (alarm on, alarm off).";
+  }
+
   identity fault-vendor-alarm {
     base controller-fault-event-kind;
     description
@@ -1088,7 +1229,9 @@ module openits-signal-control-types {
     base sc-fault-event-kind;
     description
       "High-resolution controller fault event from Indiana
-       enumeration codes 173-185. Used by the controller-fault-event notification
+       enumeration codes 173-175, 182, 184-185 and 200-201 (the
+       codes in 176-181 are external-I/O, comm-health and clock
+       events, under their own bases). Used by the controller-fault-event notification
        (openits-signal-control-events) to discriminate this HR
        fault class from cabinet-level faults emitted via fault-raised.";
   }
