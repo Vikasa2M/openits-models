@@ -1,0 +1,13 @@
+{
+  "openits-common-fault-events:fault-raised": {
+    "kind": "openits-reversible-lane-types:reversible-lane-fault-cabinet-door-open",
+    "source-device-id": "rl-controller-1",
+    "sequence-epoch": "boot-2026-10-23a",
+    "sequence": "12",
+    "fault-id": "f-cabinet-door-open",
+    "severity": "warning",
+    "description": "Facility cabinet door open.",
+    "first-observed": "2026-10-23T12:01:00Z",
+    "occurred-at": "2026-10-23T12:01:01Z"
+  }
+}

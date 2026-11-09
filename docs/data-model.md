@@ -36,7 +36,7 @@ OpenConfig converged on ~30 focused modules (`openconfig-bgp`,
 | Non-device domain | `openits-work-zone-types`, `openits-work-zone-events` | Work zones: an external fact about the roadway, reported as events, with no device state tree. |
 | Event modules | `openits-<service>-events` (for example `openits-signal-control-events`, `openits-dms-events`, `openits-zone-occupancy-events`) | One companion events module per service; behavioral concerns (phase, detector, overlap, preemption, TSP, …) are sections within it. |
 | Cross-service events | `openits-common-{fault,mode,comm-health}-events` | Generic notifications (fault-raised / fault-cleared / mode-changed / …) that every service emits with a service-derived `kind` identity. The generation-1 per-service fault/mode shims (for example `sign-fault-raised`, `ramp-meter-mode-changed`) have been removed in favor of these. |
-| Vendor identity modules | `openits-vendor-econolite-signal-control-types`, `openits-vendor-trafficvision-{perception,traffic-sensor}-types` | Vendor-derived identities filling open extension slots. See [Extension model](06-extension-model.md). |
+| Vendor identity modules | `openits-vendor-econolite-signal-control-types`, `openits-vendor-trafficvision-{perception,traffic-sensor}-types`, `openits-vendor-cameleon-reversible-lane-types` | Vendor-derived identities filling open extension slots. See [Extension model](06-extension-model.md). |
 | Augments | `yang/augments/*` (for example `ledstar-dms-travel-time`, `trafficvision-traffic-sensor-camera`) | Net-new nodes in contributor namespaces. |
 | Deviations | `yang/deviations/*` (for example `openits-signal-control-mutcd`, `openits-rsu-us-band-plan`) | Jurisdiction profiles that tighten bounds on existing nodes. |
 

@@ -1,0 +1,7 @@
+{
+  "module": "openits-vendor-cameleon-reversible-lane-types",
+  "revision": "2026-11-01",
+  "files": [
+    "schema.yang"
+  ]
+}

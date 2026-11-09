@@ -97,3 +97,38 @@ func TestFaultKind_UnknownServiceSkipped(t *testing.T) {
 		t.Fatalf("unknown service not skipped: %s", r.Message)
 	}
 }
+
+func TestFaultKind_ReversibleLaneLeafPasses(t *testing.T) {
+	for _, kind := range []string{
+		"openits-reversible-lane-types:reversible-lane-fault-controller",
+		"openits-reversible-lane-types:reversible-lane-fault-controller-configuration",
+		"openits-reversible-lane-types:reversible-lane-fault-cabinet-door-open",
+	} {
+		if r := runKind(faultEv("reversible-lane", kind)); !r.Pass {
+			t.Fatalf("reversible-lane leaf %s failed: %s", kind, r.Message)
+		}
+	}
+}
+
+// A project-configured gate alarm is published under a vendor identity
+// derived from reversible-lane-fault-gate, not a core leaf; the check
+// skips vendor modules, so the producer need not drop it.
+func TestFaultKind_ReversibleLaneVendorDerivedPasses(t *testing.T) {
+	if r := runKind(faultEv("reversible-lane", "openits-vendor-cameleon-reversible-lane-types:cameleon-gate-invalid-inputs")); !r.Pass {
+		t.Fatalf("vendor identity derived from the reversible-lane gate class failed: %s", r.Message)
+	}
+}
+
+func TestFaultKind_ReversibleLaneBareCabinetPowerFails(t *testing.T) {
+	r := runKind(faultEv("reversible-lane", "openits-cabinet-power:cabinet-power-door-open"))
+	if r.Pass {
+		t.Fatalf("bare cabinet-power identity accepted under reversible-lane")
+	}
+}
+
+func TestFaultKind_ReversibleLaneBareServiceBaseFails(t *testing.T) {
+	r := runKind(faultEv("reversible-lane", "openits-reversible-lane-types:reversible-lane-fault-event-kind"))
+	if r.Pass {
+		t.Fatalf("bare reversible-lane-fault-event-kind accepted under reversible-lane")
+	}
+}
