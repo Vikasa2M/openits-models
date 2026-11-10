@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	commonv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/common/v1"
+	typesv1 "github.com/Vikasa2M/openits-models/pkg/proto/openits/types/v1"
 )
 
 func faultEv(service, kind string) EventEnvelope {
@@ -117,6 +118,58 @@ func TestFaultKind_ReversibleLaneVendorDerivedPasses(t *testing.T) {
 	if r := runKind(faultEv("reversible-lane", "openits-vendor-cameleon-reversible-lane-types:cameleon-gate-invalid-inputs")); !r.Pass {
 		t.Fatalf("vendor identity derived from the reversible-lane gate class failed: %s", r.Message)
 	}
+}
+
+// Both Cameleon gate alarms are gate-scoped. The component check must
+// actually classify the kind; a skipped identity would pass vacuously.
+func TestCameleonGateFaults_NameGate(t *testing.T) {
+	const gateClass = "openits-reversible-lane-types:rl-component-gate"
+	kinds := []string{
+		"openits-vendor-cameleon-reversible-lane-types:cameleon-gate-invalid-inputs",
+		"openits-vendor-cameleon-reversible-lane-types:cameleon-gate-command-refused",
+	}
+	for _, kind := range kinds {
+		t.Run(kind, func(t *testing.T) {
+			if !reversibleLaneGateFaultKind(kind) {
+				t.Fatal("kind is not classified as a gate fault, so the component check would skip it")
+			}
+			pass := gateFaultEvent(kind, &typesv1.ComponentRef{ComponentClass: gateClass, ComponentId: "gate-1"})
+			if r := runKind(pass); !r.Pass {
+				t.Fatalf("vendor kind rejected: %s", r.Message)
+			}
+			if r := runGateComponent(pass); !r.Pass {
+				t.Fatalf("valid gate component rejected: %s", r.Message)
+			}
+			for _, tc := range []struct {
+				name string
+				comp *typesv1.ComponentRef
+			}{
+				{"absent", nil},
+				{"wrong class", &typesv1.ComponentRef{ComponentClass: "openits-cabinet-power:component-battery", ComponentId: "gate-1"}},
+				{"empty id", &typesv1.ComponentRef{ComponentClass: gateClass, ComponentId: ""}},
+			} {
+				if r := runGateComponent(gateFaultEvent(kind, tc.comp)); r.Pass {
+					t.Errorf("%s component was accepted", tc.name)
+				}
+			}
+		})
+	}
+	if !reversibleLaneGateFaultKind("openits-reversible-lane-types:reversible-lane-fault-gate-failed-to-close") {
+		t.Fatal("core gate-fault identity is no longer classified")
+	}
+	if reversibleLaneGateFaultKind("openits-reversible-lane-types:reversible-lane-fault-controller") {
+		t.Fatal("controller fault classified as a gate fault")
+	}
+}
+
+func gateFaultEvent(kind string, comp *typesv1.ComponentRef) EventEnvelope {
+	ev := faultEv("reversible-lane", kind)
+	ev.Data = &commonv1.FaultRaised{Kind: kind, FaultId: "f-gate-1", Component: comp}
+	return ev
+}
+
+func runGateComponent(ev EventEnvelope) Result {
+	return Run("reversible-lane", TestReversibleLaneEvent_GateFaultRaisedNamesGate, &Observation{Events: []EventEnvelope{ev}})
 }
 
 func TestFaultKind_ReversibleLaneBareCabinetPowerFails(t *testing.T) {

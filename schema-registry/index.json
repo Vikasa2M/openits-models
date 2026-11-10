@@ -1640,9 +1640,11 @@
       "name": "openits-vendor-cameleon-reversible-lane-types",
       "namespace": "urn:openits:yang:vendor-cameleon-reversible-lane-types",
       "revisions": [
-        "2026-11-01"
+        "2026-11-01",
+        "2026-11-10"
       ],
       "refStd": [
+        "Cameleon ITS PLC interface, gate alarm word (command-refused alarm)",
         "Cameleon ITS PLC interface, gate alarm word (invalid-inputs alarm)"
       ]
     },
@@ -3167,6 +3169,11 @@
         "openits-vendor-cameleon-reversible-lane-types/2026-11-01/MANIFEST.json",
         "openits-vendor-cameleon-reversible-lane-types/2026-11-01/README.md",
         "openits-vendor-cameleon-reversible-lane-types/2026-11-01/schema.yang"
+      ],
+      "2026-11-10": [
+        "openits-vendor-cameleon-reversible-lane-types/2026-11-10/MANIFEST.json",
+        "openits-vendor-cameleon-reversible-lane-types/2026-11-10/README.md",
+        "openits-vendor-cameleon-reversible-lane-types/2026-11-10/schema.yang"
       ]
     },
     "openits-vendor-econolite-signal-control-types": {
