@@ -1,0 +1,102 @@
+module openits-vendor-cameleon-reversible-lane-types {
+  yang-version 1.1;
+  namespace "urn:openits:yang:vendor-cameleon-reversible-lane-types";
+  prefix openits-vendor-cameleon-rl-types;
+
+  import openits-reversible-lane-types {
+    prefix openits-rl-types;
+  }
+  import openits-types {
+    prefix openits-types;
+  }
+
+  organization
+    "OpenITS Working Group (vendor-pattern example)";
+
+  contact
+    "OpenITS Working Group (proposal)";
+
+  description
+    "Vendor identity module for the Cameleon ITS PLC interface: the
+     register map a reversible-lane facility PLC exposes so the
+     Cameleon ITS central system can supervise its gates. Cameleon ITS
+     is a central management product, not the field controller; the
+     PLC is a separate make running a program written to this
+     interface, and the alarm meanings below come from the interface,
+     not from the PLC hardware. The module is named for the interface
+     because that is what defines the alarms.
+
+     Declares specialized identities derived from open slots in
+     openits-reversible-lane-types, for alarms whose meaning is
+     specific to this interface or is set per project, and so does not
+     belong in the core catalog. A consumer that does not load this
+     module still sees the core base identity each one derives from.
+
+     The vendor of Cameleon ITS has not ratified this file; openits
+     maintains it under the conformance-reference NoI as an example of
+     the vendor identity pattern until that vendor adopts it. Cameleon
+     is a trademark of its owner, used here only to identify the
+     interface; no endorsement is implied.
+
+     Copyright (c) 2026. Distributed under Apache 2.0.";
+
+  openits-types:openits-version "0.2.0";
+
+  revision 2026-11-10 {
+    description
+      "Add cameleon-gate-command-refused, derived from
+       openits-reversible-lane-types:reversible-lane-fault-gate.
+       Bump openits-version to 0.2.0.";
+    reference
+      "Cameleon ITS PLC interface, gate alarm word (command-refused
+       alarm).";
+  }
+
+  revision 2026-11-01 {
+    description
+      "Initial revision. Declares cameleon-gate-invalid-inputs, derived
+       from openits-reversible-lane-types:reversible-lane-fault-gate.";
+    reference
+      "Cameleon ITS PLC interface, gate alarm word (invalid-inputs
+       alarm).";
+  }
+
+  /* --------------------------------------------------------------
+   * Cameleon ITS PLC interface gate alarm identities
+   *
+   * Each identity below derives from a core gate-scope fault class,
+   * so a consumer selecting every gate fault with
+   * derived-from-or-self(kind, 'reversible-lane-fault-gate') still
+   * matches it.
+   * -------------------------------------------------------------- */
+
+  identity cameleon-gate-invalid-inputs {
+    base openits-rl-types:reversible-lane-fault-gate;
+    description
+      "The invalid-inputs alarm in one gate's alarm word, as the
+       Cameleon ITS PLC interface defines it, is active: one or more of
+       the gate's inputs is reported invalid or unusable. Which inputs
+       the alarm covers, and what makes one invalid, is set per project
+       in the facility PLC's program and configuration, so this
+       identity says only that the alarm fired; the project's
+       configuration says what to inspect. Where the problem is known
+       to be absent or implausible position feedback, a producer emits
+       openits-rl-types:reversible-lane-fault-gate-feedback-loss
+       instead. A gate-scope fault: names its gate through
+       component-class openits-rl-types:rl-component-gate and
+       component-id the gate's gate-id.";
+  }
+
+  identity cameleon-gate-command-refused {
+    base openits-rl-types:reversible-lane-fault-gate;
+    description
+      "The command-refused alarm in one gate's alarm word, as the
+       Cameleon ITS PLC interface defines it, is active. The alarm
+       alone does not distinguish an interlock, an offline device, or
+       an invalid cabinet-ID condition. The alarm does not identify
+       the command issuer or correlate the refusal with a particular
+       command. A gate-scope fault: names its gate through
+       component-class openits-rl-types:rl-component-gate and
+       component-id the gate's gate-id.";
+  }
+}
