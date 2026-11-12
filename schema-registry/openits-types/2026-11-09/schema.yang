@@ -1447,8 +1447,8 @@ module openits-types {
             description
               "The entry's text exactly as the device recorded it,
                including any time or date text the device put in the
-               line, decoded from transport encoding (for example URL
-               percent-encoding) but otherwise unchanged.";
+               line. A producer undoes any encoding the transport added
+               to carry the text, and changes nothing else.";
           }
         }
       }

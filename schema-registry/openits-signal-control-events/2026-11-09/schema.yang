@@ -34,11 +34,17 @@ module openits-signal-control-events {
        (Indiana 156). List the new cabinet fault kinds on
        controller-fault-event (Indiana 175, 200-201). Let unmapped-event
        carry a row of the controller's own text log through the new
-       wire-source device-log case. Additive.";
+       wire-source device-log case.
+
+       Breaking: a preemption-event of kind preempt-force-off-phase must
+       carry phase-number (openits-types:mandatory-for-kind), so an event
+       emitted under the identity's old meaning (Indiana 116, preempt
+       only) is rejected rather than read as code 20.";
     reference
       "Li, H., A.M. Hainen, J.R. Sturdevant, et al. Indiana Traffic
        Signal Hi Resolution Data Logger Enumerations. Purdue TPF-5(377),
-       Aug 2020 (doi: 10.5703/1288284316998).";
+       Aug 2020 (doi: 10.5703/1288284316998), supersedes the Nov 2012
+       original (doi: 10.4231/K4RN35SH).";
   }
   revision 2026-10-20 {
     description
@@ -543,11 +549,14 @@ module openits-signal-control-events {
     leaf phase-number {
       type openits-nema:phase-number;
       description
-        "The phase the preemption acted on. Populated for
+        "The phase the preemption acted on. Mandatory when kind is
          preempt-force-off-phase (Indiana 20), whose wire param is the
          phase rather than the preempt; that row does not say which
          preempt caused it, so preempt-number may be absent.";
     }
+
+    openits-types:mandatory-for-kind "phase-number openits-sc-types:preempt-force-off-phase";
+
     leaf source-id { type string; description "Free-form preempt source id (EVP unit id, etc.)."; }
     uses openits-types:wire-source;
   }
@@ -703,7 +712,7 @@ module openits-signal-control-events {
       mandatory true;
       description
         "Specific HR-fault class: fault-unit-flash-status,
-         fault-unit-alarm-group-1, fault-alarm-group-state,
+         fault-unit-alarm-status-1, fault-alarm-group-state,
          fault-power-failure, fault-cabinet-alarm, or a vendor slot
          derived from fault-vendor-alarm.
 

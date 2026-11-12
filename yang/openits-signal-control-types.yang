@@ -38,18 +38,24 @@ module openits-signal-control-types {
        overlap 71-72, coordination 152, and cabinet 175 and 200-201.
        Cite codes 203-218 (split 17-32) on coord-programmed-split-change
        and code 156 on coord-cycle-length-change, which already carry
-       them. Correct fault-unit-alarm-group-1, which is code 174 (unit
-       alarm status 1), and list the codes controller-fault-event-kind
-       actually holds.
+       them. List the codes controller-fault-event-kind actually holds.
 
        Breaking: preempt-force-off-phase now means Indiana 20, whose
-       param is the phase, matching tsp-early-force-off-phase (19). Its
-       former code, 116, whose param is the preempt, moves to the new
-       preempt-force-off-cycle, matching tsp-early-force-off-cycle (117).";
+       param is the phase. Its former code, 116, whose param is the
+       preempt, moves to the new preempt-force-off-cycle. The enumeration
+       describes both as force-off applied to the active cycle; pairing
+       them like tsp-early-force-off-phase (19) and
+       tsp-early-force-off-cycle (117) is this model's reading of the
+       parameter difference.
+
+       Breaking: rename fault-unit-alarm-group-1 to
+       fault-unit-alarm-status-1. It is Indiana 174, unit alarm status 1,
+       not an alarm group (that is 175, fault-alarm-group-state).";
     reference
       "Li, H., A.M. Hainen, J.R. Sturdevant, et al. Indiana Traffic
        Signal Hi Resolution Data Logger Enumerations. Purdue TPF-5(377),
-       Aug 2020 (doi: 10.5703/1288284316998).";
+       Aug 2020 (doi: 10.5703/1288284316998), supersedes the Nov 2012
+       original (doi: 10.4231/K4RN35SH).";
   }
   revision 2026-10-20 {
     description
@@ -759,7 +765,8 @@ module openits-signal-control-types {
       "Indiana 47: phase omit off — set when a previously applied
        phase omit is released. Not set when the phase is added to the
        active sequence or another configuration-level change occurs.";
-  }  identity phase-advance-warning-on {
+  }
+  identity phase-advance-warning-on {
     base sc-phase-event-kind;
     description
       "Indiana 55: the phase's advance warning sign turned on. The param
@@ -773,7 +780,6 @@ module openits-signal-control-types {
        param is the phase.";
     reference "ATSPM Indiana enumeration code 56 (advance warning sign off, phase).";
   }
-
 
   /* --------------------------------------------------------------
    * Pedestrian events (Indiana codes 21-26, 45, 48-49, 67-70, 89-92)
@@ -921,7 +927,8 @@ module openits-signal-control-types {
   identity overlap-dark {
     base sc-overlap-event-kind;
     description "Indiana 66: overlap dark.";
-  }  identity overlap-advance-warning-on {
+  }
+  identity overlap-advance-warning-on {
     base sc-overlap-event-kind;
     description
       "Indiana 71: the overlap's advance warning sign turned on. The
@@ -935,7 +942,6 @@ module openits-signal-control-types {
        param is the overlap (A=1, B=2, and so on).";
     reference "ATSPM Indiana enumeration code 72 (advance warning sign off, overlap).";
   }
-
 
   /* --------------------------------------------------------------
    * Preemption events (Indiana codes 20, 101-111, 116)
@@ -988,11 +994,15 @@ module openits-signal-control-types {
   identity preempt-force-off-phase {
     base sc-preemption-event-kind;
     description
-      "Indiana 20: preemption force-off applied to the active phase. The
-       param is the phase, carried in preemption-event phase-number. The
-       phase-scoped twin of preempt-force-off-cycle, as
-       tsp-early-force-off-phase (19) is of tsp-early-force-off-cycle
-       (117). Until the 2026-11-09 revision this identity cited code 116.";
+      "Indiana 20: the controller applied preemption force-off. The
+       enumeration describes both 20 and 116 as force-off applied to the
+       active cycle; they differ in the parameter, which is the phase
+       for 20 (carried in preemption-event phase-number) and the preempt
+       for 116 (preempt-force-off-cycle). Reading 20 as the phase-scoped
+       twin of 116, as tsp-early-force-off-phase (19) is of
+       tsp-early-force-off-cycle (117), is this model's interpretation
+       of that parameter difference, not wording from the enumeration.
+       Until the 2026-11-09 revision this identity cited code 116.";
     reference "ATSPM Indiana enumeration code 20 (preemption force off, phase).";
   }
   identity preempt-force-off-cycle {
@@ -1167,7 +1177,8 @@ module openits-signal-control-types {
       "Indiana 151: coordinated-phase yield point — set once per
        cycle for each coordinated phase, when the controller suspends
        the coordinated phase.";
-  }  identity coord-coordinated-phase-begin {
+  }
+  identity coord-coordinated-phase-begin {
     base sc-coordination-event-kind;
     description
       "Indiana 152: a coordinated phase began. The param is the phase,
@@ -1175,7 +1186,6 @@ module openits-signal-control-types {
        of coord-yield-point (151).";
     reference "ATSPM Indiana enumeration code 152 (coordinated phase begin).";
   }
-
 
   /* --------------------------------------------------------------
    * Fault events (Indiana codes 173-175, 182, 184-185, 200-201)
@@ -1185,12 +1195,12 @@ module openits-signal-control-types {
     base controller-fault-event-kind;
     description "Indiana 173: unit flash-status change.";
   }
-  identity fault-unit-alarm-group-1 {
+  identity fault-unit-alarm-status-1 {
     base controller-fault-event-kind;
     description
       "Indiana 174: unit alarm status 1 changed. The param is the NTCIP
-       unitAlarmStatus1 bitmap. The identity name predates this wording
-       and is kept because a rename would break the wire.";
+       unitAlarmStatus1 bitmap. Named fault-unit-alarm-group-1 before the
+       2026-11-09 revision.";
     reference
       "ATSPM Indiana enumeration code 174 (unit alarm status 1 change);
        NTCIP 1202 2.4.8 (unitAlarmStatus1), as the enumeration cites it.";
@@ -1198,7 +1208,8 @@ module openits-signal-control-types {
   identity fault-power-failure {
     base controller-fault-event-kind;
     description "Indiana 182/184: power failure / power restored.";
-  }  identity fault-alarm-group-state {
+  }
+  identity fault-alarm-group-state {
     base controller-fault-event-kind;
     description
       "Indiana 175: an alarm group's state changed. The param is the

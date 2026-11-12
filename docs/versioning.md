@@ -86,7 +86,8 @@ each such release owes consumers one document that collects them.
 - [v0.8.0](migration/v0.8.0.md) — one fault shape, device health and
   `observed-at`, mode/value binding, signal-control operation split.
 - [v0.9.0](migration/v0.9.0.md) — signal-control pedestrian detector table,
-  detector event field renames, unit-suffixed duration and percentage names.
+  detector event field renames, unit-suffixed duration and percentage names,
+  preemption force-off split, unit alarm status 1 rename.
 
 ## Cutting a release
 
