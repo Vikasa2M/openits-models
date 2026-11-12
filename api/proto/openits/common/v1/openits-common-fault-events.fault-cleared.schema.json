@@ -34,6 +34,16 @@
           "minimum": 0,
           "type": "integer"
         },
+        "log-name": {
+          "maxLength": 64,
+          "minLength": 1,
+          "type": "string"
+        },
+        "log-text": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "type": "string"
+        },
         "message-id": {
           "maximum": 65535,
           "minimum": 0,
