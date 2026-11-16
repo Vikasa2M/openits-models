@@ -44,6 +44,7 @@ invalid-phase-state-change-bad-kind.json	Invalid identityref "openits-signal-con
 invalid-phase-state-change-missing-phase-number.json	MISSING phase-number
 invalid-preempt-missing-priority-order.json	When more than one preemptor is configured, every preemptor must
 invalid-preempt-rail-not-supreme.json	Every railroad preemptor must outrank (lower priority-order than)
+invalid-preemption-event-force-off-phase-no-phase.json	MISSING phase-number
 invalid-queue-override-threshold-zero.json	queue-override-threshold-vehicles must be positive.
 invalid-railroad-preempt-no-track-clearance.json	A railroad preemptor must define track-clearance phases and green
 invalid-ramp-day-plan-no-action.json	A day-plan must contain at least one action.

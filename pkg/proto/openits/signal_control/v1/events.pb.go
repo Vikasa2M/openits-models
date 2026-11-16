@@ -1703,6 +1703,7 @@ type PreemptionEvent struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Kind           string                 `protobuf:"bytes,99,opt,name=kind,proto3" json:"kind,omitempty"`
 	PreemptNumber  *uint32                `protobuf:"varint,2,opt,name=preempt_number,json=preemptNumber,proto3,oneof" json:"preempt_number,omitempty"`
+	PhaseNumber    *uint32                `protobuf:"varint,9,opt,name=phase_number,json=phaseNumber,proto3,oneof" json:"phase_number,omitempty"`
 	SourceId       *string                `protobuf:"bytes,4,opt,name=source_id,json=sourceId,proto3,oneof" json:"source_id,omitempty"`
 	ObservedBy     *string                `protobuf:"bytes,6,opt,name=observed_by,json=observedBy,proto3,oneof" json:"observed_by,omitempty"`
 	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
@@ -1755,6 +1756,13 @@ func (x *PreemptionEvent) GetKind() string {
 func (x *PreemptionEvent) GetPreemptNumber() uint32 {
 	if x != nil && x.PreemptNumber != nil {
 		return *x.PreemptNumber
+	}
+	return 0
+}
+
+func (x *PreemptionEvent) GetPhaseNumber() uint32 {
+	if x != nil && x.PhaseNumber != nil {
+		return *x.PhaseNumber
 	}
 	return 0
 }
@@ -2586,21 +2594,23 @@ const file_openits_signal_control_v1_events_proto_rawDesc = "" +
 	"\n" +
 	"_source_idB\x0e\n" +
 	"\f_observed_byB\b\n" +
-	"\x06_owner\"\xcf\x03\n" +
+	"\x06_owner\"\x88\x04\n" +
 	"\x0fPreemptionEvent\x12\x12\n" +
 	"\x04kind\x18c \x01(\tR\x04kind\x12*\n" +
-	"\x0epreempt_number\x18\x02 \x01(\rH\x00R\rpreemptNumber\x88\x01\x01\x12 \n" +
-	"\tsource_id\x18\x04 \x01(\tH\x01R\bsourceId\x88\x01\x01\x12$\n" +
-	"\vobserved_by\x18\x06 \x01(\tH\x02R\n" +
+	"\x0epreempt_number\x18\x02 \x01(\rH\x00R\rpreemptNumber\x88\x01\x01\x12&\n" +
+	"\fphase_number\x18\t \x01(\rH\x01R\vphaseNumber\x88\x01\x01\x12 \n" +
+	"\tsource_id\x18\x04 \x01(\tH\x02R\bsourceId\x88\x01\x01\x12$\n" +
+	"\vobserved_by\x18\x06 \x01(\tH\x03R\n" +
 	"observedBy\x88\x01\x01\x12;\n" +
 	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"occurredAt\x12\x19\n" +
-	"\x05owner\x18\a \x01(\tH\x03R\x05owner\x88\x01\x01\x12\x1a\n" +
+	"\x05owner\x18\a \x01(\tH\x04R\x05owner\x88\x01\x01\x12\x1a\n" +
 	"\bsequence\x18\b \x01(\x04R\bsequence\x12%\n" +
 	"\x0esequence_epoch\x18\x03 \x01(\tR\rsequenceEpoch\x124\n" +
 	"\x06source\x18d \x01(\v2\x1c.openits.types.v1.WireSourceR\x06source\x12(\n" +
 	"\x10source_device_id\x18\x01 \x01(\tR\x0esourceDeviceIdB\x11\n" +
-	"\x0f_preempt_numberB\f\n" +
+	"\x0f_preempt_numberB\x0f\n" +
+	"\r_phase_numberB\f\n" +
 	"\n" +
 	"_source_idB\x0e\n" +
 	"\f_observed_byB\b\n" +

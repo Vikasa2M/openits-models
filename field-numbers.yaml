@@ -2927,6 +2927,7 @@ messages:
         observed_by: 6
         occurred_at: 5
         owner: 7
+        phase_number: 9
         preempt_number: 2
         sequence: 8
         sequence_epoch: 3
@@ -3404,6 +3405,9 @@ messages:
     openits.types.v1.ComponentRef:
         component_class: 1
         component_id: 2
+    openits.types.v1.DeviceLog:
+        log_name: 1
+        log_text: 2
     openits.types.v1.Indiana:
         indiana_code: 1
         indiana_param: 2
@@ -3420,6 +3424,7 @@ messages:
         transition_at_soc_pct: 2
     openits.types.v1.WireSource:
         decoder: 1
+        device_log: 6
         indiana: 2
         message_id: 4
         ntcip_oid: 3

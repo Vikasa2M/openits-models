@@ -1,0 +1,15 @@
+{
+  "openits-signal-control-events:preemption-event": {
+    "kind": "openits-signal-control-types:preempt-force-off-phase",
+    "source-device-id": "i35-mm214-nb-sc-01",
+    "sequence-epoch": "boot-2026-10-13a",
+    "sequence": "3",
+    "occurred-at": "2026-07-11T14:05:44.100Z",
+    "preempt-number": 1,
+    "source": {
+      "decoder": "indiana",
+      "indiana-code": 116,
+      "indiana-param": 1
+    }
+  }
+}

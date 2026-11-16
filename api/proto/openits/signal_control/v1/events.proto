@@ -213,6 +213,7 @@ message PreemptionCleared {
 message PreemptionEvent {
   string kind = 99;
   optional uint32 preempt_number = 2;
+  optional uint32 phase_number = 9;
   optional string source_id = 4;
   optional string observed_by = 6;
   google.protobuf.Timestamp occurred_at = 5;
