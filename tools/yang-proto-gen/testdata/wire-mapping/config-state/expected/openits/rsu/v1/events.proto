@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package openits.rsu.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/rsu/v1;rsuv1";
+
+message RadioRestarted {
+  optional uint32 radio_id = 1;
+}
+

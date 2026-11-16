@@ -1,0 +1,3 @@
+messages:
+    openits.cctv.v1.CameraMoved:
+        preset: 1

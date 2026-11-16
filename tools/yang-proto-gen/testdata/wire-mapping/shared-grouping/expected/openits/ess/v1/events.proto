@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package openits.ess.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/ess/v1;essv1";
+
+import "openits/types/v1/types.proto";
+
+message SensorFault {
+  optional uint32 channel = 1;
+  SensorFaultConfig config = 2;
+  optional string latitude = 3;
+  openits.types.v1.LocationBox location = 4;
+  optional string longitude = 5;
+  Note note = 6;
+  openits.types.v1.WireSource source = 100;
+}
+
+message SensorFaultConfig {
+  optional bool enabled = 1;
+}
+
+message Note {
+  optional string text = 1;
+}
+

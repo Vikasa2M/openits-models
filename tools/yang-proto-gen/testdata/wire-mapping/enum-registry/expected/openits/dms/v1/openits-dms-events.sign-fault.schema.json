@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "severity": {
+      "enum": [
+        "critical",
+        "major",
+        "minor"
+      ],
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "active",
+        "cleared"
+      ],
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,30 @@
+module openits-dms-events {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:enum-registry-events";
+  prefix ere;
+
+  import openits-dms-types {
+    prefix ert;
+  }
+
+  description
+    "Events side of the enum-registry vector. The events pass is emitted
+     before the config/state pass, so this module's inline status enum
+     keeps the bare name.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  notification sign-fault {
+    leaf severity {
+      type ert:fault-severity;
+    }
+    leaf status {
+      type enumeration {
+        enum active { value 0; }
+        enum cleared { value 1; }
+      }
+    }
+  }
+}

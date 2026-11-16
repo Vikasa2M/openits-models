@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package openits.ess.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/ess/v1;essv1";
+
+import "openits/ess/v1/types.proto";
+
+message StationStatus {
+  optional Status status = 1;
+}
+

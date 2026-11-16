@@ -37,7 +37,11 @@ Missing any of these is the classic new-service failure mode:
 2. **Schema list** — `SCHEMAS` array in `scripts/validate-yang.sh`.
 3. **Generation lists** — module list and `-exclude_modules` in
    `scripts/yang-gen.sh`.
-4. **Registry list** — `MODULES` in `scripts/update-schema-registry.sh`.
+4. **Registry list** — `MODULES` in `scripts/update-schema-registry.sh`,
+   and, for a new events route, the matching entry in
+   `PROTO_ROUTE_PREFIXES`/`PROTO_ROUTE_FILES` in `scripts/registry-lib.sh`
+   (it mirrors `serviceRoutes` in `pkgmap.go` and locates the module's
+   JSON Schema files).
 5. **Conformance kind** — register the kind + per-kind checks under
    `tools/conformance/` (follow an existing `tests/<service>.go`), give
    the mock driver device data for it.

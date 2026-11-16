@@ -88,14 +88,35 @@ a new mode kind with no family base goes on the gate's allowlist only with
 a reason naming the cut that removes it. Fixtures in
 `yang/testdata/mode-kinds/` are schema-valid but must FAIL this check.
 
-**check-revision-history fails.** A revision statement that already exists
-on main was edited or removed. The output names each module and revision
-date. Restore that revision block verbatim (`git show origin/main:<file>`)
-and describe the new change in a new revision instead. The usual cause is a
-description sweep that also rewrote old revision text.
+**check-revision-history fails.** `CHANGED` lines: a revision statement
+that already exists on main was edited or removed. The output names each
+module and revision date. Restore that revision block verbatim (`git show
+origin/main:<file>`) and describe the new change in a new revision instead.
+The usual cause is a description sweep that also rewrote old revision text.
+`REGISTRY` lines: a snapshot under `schema-registry/<module>/<revision>/`
+that exists on main was edited, lost a file, or gained one (only
+`schema.shape` may be backfilled into a released snapshot), or a snapshot is
+missing a file its module calls for (`schema.yang`, `MANIFEST.json`,
+`README.md`, plus `schema.proto` and `schema.json` when the module declares
+a live notification). Restore released files from main; a missing file in a
+NEW snapshot means `scripts/update-schema-registry.sh` was skipped or the
+module's route is missing.
 
-**check-revisions fails.** Duplicate same-date revision statements or a
-module changed without a new revision. One revision per change set.
+**check-revisions fails.** Duplicate same-date revision statements, or a
+module whose current revision no longer matches its snapshot. Each `DRIFT`
+line says which file moved: the YANG, the wire shape (`diff` the two
+`.shape` files it names), or the JSON Schema. A wire-shape drift with
+untouched YANG means a generator change or a shared type the module
+imports moved the wire; it still needs a new revision (and a raised
+`openits-version`) for that module. "snapshot predates schema.shape" means
+the snapshot needs `scripts/backfill-shapes.sh`, which only writes a shape
+it can prove the revision always had. One revision per change set.
+
+**check-revision-history `VERSION` lines.** A module whose revision moved
+did not raise `openits-version`, raised it by less than its wire shape diff
+calls for (breaking: MINOR in 0.x, MAJOR from 1.0; additive: MINOR), or its
+MAJOR no longer matches its events' `ce-type` major. The line names the
+minimum acceptable version.
 
 **check-enum-values fails.** An enumeration member in first-party YANG
 (anything under `yang/` except the vendored `yang/ietf/`) lacks an

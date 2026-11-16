@@ -1,0 +1,25 @@
+module vector-types {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:vector-types";
+  prefix vt;
+
+  description
+    "A module that matches no service route and declares no live
+     notification is not mapped and is not an error. Its deprecated
+     notification does not make it one.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  typedef percent {
+    type uint8 {
+      range "0..100";
+    }
+  }
+
+  notification legacy-alert {
+    status deprecated;
+    leaf text { type string; }
+  }
+}

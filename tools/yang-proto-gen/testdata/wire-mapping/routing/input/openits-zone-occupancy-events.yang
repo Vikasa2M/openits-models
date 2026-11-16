@@ -1,0 +1,17 @@
+module openits-zone-occupancy-events {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:routing-events";
+  prefix re;
+
+  description
+    "Wire-mapping vector: module-name prefix routing to proto package,
+     file and go_package.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  notification zone-entered {
+    leaf zone-id { type string; }
+  }
+}

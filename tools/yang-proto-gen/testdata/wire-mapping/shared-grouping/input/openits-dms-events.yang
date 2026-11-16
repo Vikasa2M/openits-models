@@ -1,0 +1,24 @@
+module openits-dms-events {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:shared-dms";
+  prefix sd;
+
+  import openits-types {
+    prefix st;
+  }
+
+  description
+    "First use site of each shared grouping.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  notification sign-fault {
+    leaf code { type uint16; }
+    uses st:wire-source;
+    uses st:location-box;
+    uses st:geo-point;
+    uses st:settings;
+  }
+}

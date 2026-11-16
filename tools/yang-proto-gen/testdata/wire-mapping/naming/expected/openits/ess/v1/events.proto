@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package openits.ess.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/ess/v1;essv1";
+
+message PavementReading {
+  optional int32 air_temp_c = 1;
+  optional uint32 rawADC = 2;
+  WindSpeedSensor wind_speed_sensor = 3;
+  Pavement pavement = 4;
+  Diagnostics diagnostics = 5;
+  Probe probe = 6;
+}
+
+message WindSpeedSensor {
+  optional uint32 mps = 1;
+}
+
+message Pavement {
+  repeated PavementSensor sensor = 1;
+}
+
+message PavementSensor {
+  optional uint32 id = 1;
+  optional int32 surface_temp_c = 2;
+}
+
+message Diagnostics {
+  repeated DiagnosticsSensor sensor = 1;
+}
+
+message DiagnosticsSensor {
+  optional uint32 id = 1;
+  optional bool healthy = 2;
+}
+
+message Probe {
+  optional uint32 depth_mm = 1;
+}
+

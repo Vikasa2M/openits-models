@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package openits.cctv.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/cctv/v1;cctvv1";
+
+enum Level {
+  LEVEL_LOW = 0;
+  LEVEL_MID = 1;
+  LEVEL_HIGH = 2;
+}
+
+enum Mode {
+  MODE_UNSPECIFIED = 0;
+  MODE_AUTOMATIC = 1;
+  MODE_MANUAL = 2;
+}
+
+enum State {
+  STATE_UNSPECIFIED = 0;
+  STATE_FAULT = -1;
+  STATE_IN_SERVICE = 1;
+  STATE_OUT_OF_SERVICE = 3;
+}
+
+enum OpenitsCctvEventsMode {
+  OPENITS_CCTV_EVENTS_MODE_OFF = 0;
+  OPENITS_CCTV_EVENTS_MODE_ON = 1;
+}
+

@@ -1,0 +1,18 @@
+module openits-cctv {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:duplicate-message";
+  prefix dm;
+
+  description
+    "Wire-mapping vector: a config/state root and a notification that
+     map to the same message name in one go_package are a generation
+     error. Root messages are not collision-qualified.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  container camera {
+    leaf name { type string; }
+  }
+}

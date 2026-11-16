@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package openits.signal_control.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/signal_control/v1;signalcontrolv1";
+
+message DetectorChanged {
+  optional string kind = 1;
+  optional uint32 detector = 2;
+}
+
+message ModeChanged {
+  string kind = 99;
+  optional string mode = 1;
+  optional string previous_mode = 3;
+}
+
+message PhaseChanged {
+  reserved 1;
+  reserved "legacy_phase_name";
+  string kind = 99;
+  optional uint32 phase = 3;
+  optional string new_a = 2;
+  optional string new_b = 4;
+  optional string source = 5;
+}
+

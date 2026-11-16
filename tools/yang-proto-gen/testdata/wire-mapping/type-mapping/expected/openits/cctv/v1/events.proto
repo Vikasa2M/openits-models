@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package openits.cctv.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/cctv/v1;cctvv1";
+
+import "google/protobuf/timestamp.proto";
+import "openits/cctv/v1/types.proto";
+
+message TypesObserved {
+  optional int32 i8 = 1;
+  optional int32 i16 = 2;
+  optional int32 i32 = 3;
+  optional int64 i64 = 4;
+  optional uint32 u8 = 5;
+  optional uint32 u16 = 6;
+  optional uint32 u32 = 7;
+  optional uint64 u64 = 8;
+  optional int32 ranged = 9;
+  optional uint32 typedef_ranged = 10;
+  optional string ratio = 11;
+  optional bool flag = 12;
+  optional string label = 13;
+  optional string code = 14;
+  optional string two_patterns = 15;
+  optional string blob = 16;
+  optional string options = 17;
+  optional string marker = 18;
+  optional string what = 19;
+  optional string either = 20;
+  optional string where = 21;
+  google.protobuf.Timestamp at = 22;
+  optional string at_alias = 23;
+  optional uint64 counter = 24;
+  optional string host = 25;
+  optional LensState lens_state = 26;
+  optional uint32 u32_ref = 27;
+  optional LensState lens_state_ref = 28;
+  optional string dangling_ref = 29;
+  repeated string tags = 30;
+  repeated google.protobuf.Timestamp moments = 31;
+}
+

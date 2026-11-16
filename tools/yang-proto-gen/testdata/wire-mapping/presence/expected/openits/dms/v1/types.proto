@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package openits.dms.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/dms/v1;dmsv1";
+
+enum Beacon {
+  BEACON_OFF = 0;
+  BEACON_ON = 1;
+}
+

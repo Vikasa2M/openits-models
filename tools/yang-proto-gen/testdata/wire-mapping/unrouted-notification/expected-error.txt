@@ -1,0 +1,1 @@
+module "openits-widget-events" declares notification(s) but has no service package mapping

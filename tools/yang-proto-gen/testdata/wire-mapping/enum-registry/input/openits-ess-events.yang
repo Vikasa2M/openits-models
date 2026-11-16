@@ -1,0 +1,22 @@
+module openits-ess-events {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:enum-registry-ess";
+  prefix eress;
+
+  description
+    "A different proto package: its status enum has its own registry, so
+     it keeps the bare name although openits.dms.v1 also has a Status.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  notification station-status {
+    leaf status {
+      type enumeration {
+        enum online { value 0; }
+        enum offline { value 1; }
+      }
+    }
+  }
+}

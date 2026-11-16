@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package openits.dms.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/dms/v1;dmsv1";
+
+import "google/protobuf/timestamp.proto";
+import "openits/dms/v1/types.proto";
+
+message MessagePosted {
+  uint32 slot = 1;
+  optional uint32 brightness = 2;
+  optional Beacon beacon = 3;
+  optional uint32 duration_s = 4;
+  google.protobuf.Timestamp posted_at = 5;
+  google.protobuf.Timestamp expires_at = 6;
+  optional uint32 slot_copy = 7;
+  google.protobuf.Timestamp when_copy = 8;
+  repeated string lines = 9;
+  Font font = 10;
+  Override override = 11;
+  repeated Page page = 12;
+  string observed_by = 13;
+  repeated Point point = 14;
+  uint64 sequence = 15;
+  optional string station = 16;
+}
+
+message Font {
+  optional string name = 1;
+}
+
+message Override {
+  optional string operator = 1;
+}
+
+message Page {
+  optional uint32 number = 1;
+  string text = 2;
+}
+
+message Point {
+  optional uint32 seq = 1;
+}
+

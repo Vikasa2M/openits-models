@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package openits.cctv.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/cctv/v1;cctvv1";
+
+import "openits/cctv/v1/types.proto";
+
+message FirstEvent {
+  optional Level level = 1;
+  optional Mode mode = 2;
+  optional State state = 3;
+  repeated Level recent_levels = 4;
+}
+
+message SecondEvent {
+  optional Level previous_level = 1;
+  optional OpenitsCctvEventsMode mode = 2;
+}
+

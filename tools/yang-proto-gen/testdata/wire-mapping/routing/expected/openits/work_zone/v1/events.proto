@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+package openits.work_zone.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/work_zone/v1;workzonev1";
+

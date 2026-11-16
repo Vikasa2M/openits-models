@@ -1,0 +1,11 @@
+messages:
+    openits.dms.v1.Sign:
+        state: 1
+    openits.dms.v1.SignFault:
+        severity: 1
+        status: 2
+    openits.dms.v1.SignState:
+        status: 2
+        worst_severity: 1
+    openits.ess.v1.StationStatus:
+        status: 1

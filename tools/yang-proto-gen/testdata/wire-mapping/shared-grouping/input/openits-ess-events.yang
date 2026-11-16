@@ -1,0 +1,25 @@
+module openits-ess-events {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:shared-ess";
+  prefix se;
+
+  import openits-types {
+    prefix st;
+  }
+
+  description
+    "Second use site of each shared grouping, in a different service.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  notification sensor-fault {
+    leaf channel { type uint8; }
+    uses st:wire-source;
+    uses st:location-box;
+    uses st:geo-point;
+    uses st:vendor-note;
+    uses st:settings;
+  }
+}

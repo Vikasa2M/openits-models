@@ -7,7 +7,13 @@ import (
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
 
-// stampHeaders fills the event-header stream fields on each event payload
+// mockRegistry is the schema registry the mock reads its ce-dataschema
+// values from, as a producer built from this release would: each event names
+// the current revision of the module that defines its ce-type.
+var mockRegistry *tests.Registry
+
+// stampHeaders sets each event's ce-dataschema from mockRegistry, and fills
+// the event-header stream fields on each event payload
 // the way a conforming producer would: one epoch for the whole mock run,
 // and sequence numbered 1, 2, 3... per source device in emission order.
 // The source device is the payload's own source-device-id when set,
@@ -16,6 +22,13 @@ import (
 // Payloads without a header (nil Data, or no sequence field) are left
 // alone.
 func stampHeaders(events []tests.EventEnvelope, epoch string) {
+	if mockRegistry != nil {
+		for i := range events {
+			if url, ok := mockRegistry.CurrentDataSchema(events[i].CEType); ok {
+				events[i].CEDataSchema = url
+			}
+		}
+	}
 	next := map[string]uint64{}
 	for _, e := range events {
 		if e.Data == nil {

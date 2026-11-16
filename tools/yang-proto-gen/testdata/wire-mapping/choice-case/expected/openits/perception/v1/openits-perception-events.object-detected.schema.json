@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "confidence": {
+      "maximum": 255,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "epsg-code": {
+      "maximum": 65535,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "latitude": {
+      "type": "string"
+    },
+    "longitude": {
+      "type": "string"
+    },
+    "object-id": {
+      "type": "string"
+    },
+    "pixel-index": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "track-points": {
+      "items": {
+        "maximum": 4294967295,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "type": "array"
+    },
+    "track-ref": {
+      "type": "string"
+    },
+    "wgs84": {
+      "type": "string"
+    },
+    "zone-name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "object-id"
+  ],
+  "type": "object"
+}

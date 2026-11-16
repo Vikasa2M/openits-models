@@ -8,7 +8,7 @@ and `docs/04-design-decisions.md`.
 
 ## Golden rules
 
-1. **Never hand-edit generated files** (`api/proto/`, `pkg/`,
+1. **Never hand-edit generated files** (`api/proto/`, `api/shapes/`, `pkg/`,
    `bindings/nats/asyncapi.yaml`, `schema-registry/`, `field-numbers.yaml`).
    Change the YANG (or the generator) and run `make gen`.
 2. **Model change = YANG edit + new `revision` statement + regen + fixtures,

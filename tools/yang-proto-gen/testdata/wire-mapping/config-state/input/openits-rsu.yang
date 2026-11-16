@@ -1,0 +1,81 @@
+module openits-rsu {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:config-state";
+  prefix cs;
+
+  description
+    "Wire-mapping vector: a module on the config/state allowlist. Its
+     top-level containers and lists become root messages in
+     state.proto; actions become request/response message pairs.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  leaf firmware-version {
+    description "A top-level leaf is not a config/state root.";
+    type string;
+  }
+
+  rpc factory-reset {
+    description "Top-level rpc statements are never mapped.";
+  }
+
+  container legacy-settings {
+    status deprecated;
+    description "A deprecated root is not mapped.";
+    leaf mode { type string; }
+  }
+
+  container roadside-unit {
+    container config {
+      leaf name { type string; }
+    }
+    container state {
+      config false;
+      leaf uptime-s { type uint32; }
+    }
+    container radios {
+      list radio {
+        key "id";
+        leaf id {
+          description
+            "A list key, labeled optional like any non-mandatory leaf; see
+             Open issues in the specification.";
+          type leafref {
+            path "../config/id";
+          }
+        }
+        container config {
+          leaf id { type uint8; }
+          leaf channel { type uint8; }
+        }
+        container state {
+          config false;
+          leaf tx-packets { type uint64; }
+        }
+        action reset-radio {
+          input {
+            leaf cold { type boolean; }
+          }
+          output {
+            leaf accepted { type boolean; }
+          }
+        }
+      }
+    }
+    action ping {
+      description
+        "No input and no output. Mapped as a nested empty message and a
+         field of roadside-unit, not as a request/response pair; see Open
+         issues in the specification.";
+    }
+  }
+
+  list antenna {
+    key "name";
+    description "A top-level list is a root message too.";
+    leaf name { type string; }
+    leaf gain-dbi { type int8; }
+  }
+}

@@ -1,0 +1,16 @@
+module openits-cctv-events {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:duplicate-message-events";
+  prefix dme;
+
+  description
+    "The notification half of the duplicate-message vector.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  notification camera {
+    leaf moved { type boolean; }
+  }
+}

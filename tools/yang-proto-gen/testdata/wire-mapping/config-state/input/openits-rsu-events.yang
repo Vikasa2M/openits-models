@@ -1,0 +1,18 @@
+module openits-rsu-events {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:config-state-events";
+  prefix cse;
+
+  description
+    "The events companion of the config/state vector: its messages go to
+     events.proto in the same proto package and go_package as
+     state.proto.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  notification radio-restarted {
+    leaf radio-id { type uint8; }
+  }
+}

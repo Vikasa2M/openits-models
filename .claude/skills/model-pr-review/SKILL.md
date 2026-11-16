@@ -82,8 +82,14 @@ exemplar each rule names, not the nearest module.
 ## 4. Mechanical discipline
 
 - `make check-revision-history` (CI runs it on every PR) proves no
-  revision already on main was edited or removed. A description sweep that
-  rewords old revision text is the usual way this fails.
+  revision or registry snapshot already on main was edited or removed, and
+  that every module whose revision moved raised `openits-version` by
+  enough for its wire shape diff. A description sweep that rewords old
+  revision text is the usual way this fails.
+- Read the `api/shapes/*.shape` diff: it is the wire change in one place,
+  shared types included. Every module whose shape changed must carry a new
+  revision whose description says what moved; a shape that changed with no
+  YANG edit (a generator or shared-type change) is the case reviewers miss.
 - Exactly one new `revision` per changed module, dated, descriptive; no
   duplicate same-date revisions. Watch for the sneaky variant: AMENDING an
   already-released revision's description (and thereby rewriting its

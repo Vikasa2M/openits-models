@@ -1,0 +1,17 @@
+module openits-zone-occupancy-extra-events {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:routing-extra-events";
+  prefix rx;
+
+  description
+    "A second module matching the same route prefix: its notifications
+     are collected into the same events.proto.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  notification zone-exited {
+    leaf zone-id { type string; }
+  }
+}

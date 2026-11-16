@@ -1,0 +1,10 @@
+messages:
+    openits.signal_control.v1.PhaseChanged:
+        kind: 99
+        legacy_phase_name: 1
+        phase: 3
+    openits.signal_control.v1.ModeChanged:
+        kind: 2
+        mode: 1
+    openits.signal_control.v1.RetiredEvent:
+        value: 1

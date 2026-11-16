@@ -14,34 +14,29 @@
 #   - never aborts the whole batch just because one module already has
 #     its current revision snapshotted.
 #
-# "Immutable" applies to schema.yang (the revision's actual content
-# contract) and schema.proto (derived 1:1 from it). A snapshot that
-# predates a newly-added companion artifact type — e.g. schema.json,
-# introduced after that snapshot was taken — is backfilled with just that artifact in
-# place, rather than requiring the revision to be deleted and
-# recreated: the backfill never touches schema.yang/schema.proto/
-# README.md, so the revision's actual pinned contract is unchanged.
+# Every file of a snapshot is immutable once it is on main:
+# check-revision-history fails any edit or removal, and any addition other
+# than an artifact type introduced after the snapshot was taken (today only
+# schema.shape; see scripts/backfill-shapes.sh, which verifies a backfill
+# against history before writing it). A snapshot is therefore written
+# complete or not at all.
 #
-# Completing a snapshot that was left partial (schema.yang only — the
-# result of a module's proto route being missing from the table below
-# at the time it was snapshotted): do NOT copy the current tree's proto
-# into it, because the current proto may declare messages that revision
-# never had. Add the missing route first. Then check out the commit that
-# carried that revision in a worktree, delete the partial directory
-# there, run this script in that worktree, and copy the resulting
-# directory back. Its schema.yang must come back byte-identical, which
-# check-revisions confirms.
+# Every snapshot always carries schema.yang. A module that puts messages on
+# the wire — a live `notification`, or a config/state tree on
+# tools/yang-proto-gen's configStateRoutes allowlist — also carries:
 #
-# Every snapshot always carries schema.yang. A module that declares at
-# least one live `notification` statement also carries schema.proto —
-# a copy of the generated proto file its notifications land in under
-# api/proto/openits/<service>/v1/ (tools/yang-proto-gen packs notifications by
-# service, e.g. every openits-common-* module's events land in
-# common_events.proto; see tools/yang-proto-gen/pkgmap.go's
-# serviceRoutes, mirrored below). Modules with no notification
-# statements of their own (service-core state/config modules, *-types
-# modules, shared-typedef modules) carry schema.yang only — there is
-# no generated proto for their content post-refactor.
+#   schema.proto  the messages the module itself declares, as a compilable
+#                 file (api/shapes/<module>.proto). Messages sibling modules
+#                 declare in the same generated file are left out.
+#   schema.shape  the canonical wire shape of everything its root messages
+#                 reach, shared types included (api/shapes/<module>.shape).
+#                 check-revisions compares the live shape against this file,
+#                 so a revision's wire cannot move without a new revision.
+#
+# Both come from scripts/wire-shapes.sh (part of `make gen`), which renders
+# them from the compiled protos. Snapshots taken before schema.shape existed
+# carry, as schema.proto, a copy of the whole service events file instead,
+# sibling modules' messages included; they are immutable and stay that way.
 #
 # A notification-bearing module also carries schema.json — built from
 # the per-notification files tools/yang-proto-gen emits at
@@ -129,67 +124,8 @@ AUGMENT_GLOB="${ROOT_DIR}/yang/augments/*.yang"
 # so new deviation modules are picked up automatically.
 DEVIATION_GLOB="${ROOT_DIR}/yang/deviations/*.yang"
 
-# PROTO_ROUTE_PREFIXES/PROTO_ROUTE_FILES mirror tools/yang-proto-gen's
-# pkgmap.go serviceRoutes table: a YANG module-name prefix maps to the
-# generated proto file (under api/proto/openits/v1/) that module's
-# notifications are packed into. Keep in sync with pkgmap.go if a
-# service is added there. No two prefixes match the same module name,
-# so match order does not matter.
-PROTO_ROUTE_PREFIXES=(
-    "openits-common-"
-    "openits-signal-control"
-    "openits-dms"
-    "openits-ess"
-    "openits-rsu"
-    "openits-ramp-metering"
-    "openits-perception"
-    "openits-traffic-sensor"
-    "openits-reversible-lane"
-    "openits-cctv"
-    "openits-zone-occupancy"
-    "openits-work-zone"
-)
-# Paths are relative to api/proto/openits/. The generator emits nested
-# per-service dirs (api/proto/openits/<service>/v1/events.proto), so each
-# route is "<service>/v1/events.proto"; the module's per-notification
-# schema.json files sit alongside in the same <service>/v1 directory.
-PROTO_ROUTE_FILES=(
-    "common/v1/events.proto"
-    "signal_control/v1/events.proto"
-    "dms/v1/events.proto"
-    "ess/v1/events.proto"
-    "rsu/v1/events.proto"
-    "ramp_metering/v1/events.proto"
-    "perception/v1/events.proto"
-    "traffic_sensor/v1/events.proto"
-    "reversible_lane/v1/events.proto"
-    "cctv/v1/events.proto"
-    "zone_occupancy/v1/events.proto"
-    "work_zone/v1/events.proto"
-)
-
-# declares_notification returns success if the given YANG file declares
-# at least one top-level `notification` statement (as opposed to merely
-# mentioning the word "notification" in prose, e.g. a description).
-declares_notification() {
-    grep -qE '^[[:space:]]*notification[[:space:]]+[A-Za-z0-9_-]+[[:space:]]*\{' "$1"
-}
-
-# proto_file_for_module prints the api/proto/openits/v1/*.proto basename
-# that moduleName's notifications are generated into, per
-# PROTO_ROUTE_PREFIXES/PROTO_ROUTE_FILES. Returns failure (and prints
-# nothing) if no route matches.
-proto_file_for_module() {
-    local m="$1"
-    local i
-    for i in "${!PROTO_ROUTE_PREFIXES[@]}"; do
-        if [[ "${m}" == "${PROTO_ROUTE_PREFIXES[$i]}"* ]]; then
-            echo "${PROTO_ROUTE_FILES[$i]}"
-            return 0
-        fi
-    done
-    return 1
-}
+# shellcheck source=registry-lib.sh
+source "${SCRIPT_DIR}/registry-lib.sh"
 
 # read_revision prints the most-recent YANG revision date declared in
 # the given module file.  YANG `revision` statements are convention-
@@ -208,57 +144,9 @@ read_revision() {
     ' "$file"
 }
 
-# write_schema_json builds dest/schema.json for module m from its live
-# (non-deprecated/non-obsolete) per-notification files under
-# api/proto/openits/v1/<m>.<notification>.schema.json. One live
-# notification -> a straight copy, named schema.json. More than one
-# (e.g. openits-common-fault-events: fault-raised, fault-cleared,
-# controller-fault-event) -> schema.json becomes a single JSON object
-# keyed by notification name, each value that notification's full
-# generated schema verbatim — the JSON-Schema analogue of schema.proto
-# packing multiple notification messages into one file. Zero live
-# notifications (all deprecated/obsolete) writes nothing — that is
-# expected, not an error. Files are processed in sorted order so a
-# multi-notification schema.json's key order (and bytes) is
-# deterministic.
-write_schema_json() {
-    local m="$1" dest="$2"
-    local proto_file json_dir
-    proto_file="$(proto_file_for_module "${m}")" || return 0
-    json_dir="${ROOT_DIR}/api/proto/openits/$(dirname "${proto_file}")"
-    local json_files=()
-    local line
-    while IFS= read -r line; do
-        json_files+=("${line}")
-    done < <(find "${json_dir}" -maxdepth 1 \
-        -name "${m}.*.schema.json" 2>/dev/null | sort)
-    if [[ ${#json_files[@]} -eq 1 ]]; then
-        cp "${json_files[0]}" "${dest}/schema.json"
-    elif [[ ${#json_files[@]} -gt 1 ]]; then
-        {
-            echo "{"
-            local first=1 jf notif
-            for jf in "${json_files[@]}"; do
-                notif="$(basename "${jf}" .schema.json)"
-                notif="${notif#"${m}".}"
-                if [[ "${first}" -eq 0 ]]; then
-                    echo ","
-                fi
-                first=0
-                printf '  "%s": ' "${notif}"
-                cat "${jf}"
-            done
-            echo
-            echo "}"
-        } > "${dest}/schema.json"
-    fi
-}
-
-# write_manifest (re)writes dest/MANIFEST.json for module m at revision
-# rev, listing whichever of schema.yang/schema.proto/schema.json are
-# actually present in dest. Used both for a brand-new snapshot and to
-# refresh the files list after a same-revision backfill (e.g. schema.json
-# added to a snapshot that predates it).
+# write_manifest writes dest/MANIFEST.json for a new snapshot of module m
+# at revision rev, listing whichever of schema.yang/schema.proto/
+# schema.shape/schema.json are present in dest.
 write_manifest() {
     local m="$1" rev="$2" dest="$3"
     cat > "${dest}/MANIFEST.json" <<EOF
@@ -267,7 +155,8 @@ write_manifest() {
   "revision": "${rev}",
   "files": [
     "schema.yang"$([[ -f "${dest}/schema.proto" ]] && echo ",
-    \"schema.proto\"")$([[ -f "${dest}/schema.json" ]] && echo ",
+    \"schema.proto\"")$([[ -f "${dest}/schema.shape" ]] && echo ",
+    \"schema.shape\"")$([[ -f "${dest}/schema.json" ]] && echo ",
     \"schema.json\"")
   ]
 }
@@ -291,57 +180,41 @@ for m in "${MODULES[@]}"; do
 
     dest="${REGISTRY}/${m}/${rev}"
     if [[ -d "${dest}" ]]; then
-        # Existing, revision-immutable snapshot. schema.yang/schema.proto
-        # are already correct for this revision and are never rewritten
-        # here. The one thing worth backfilling in place is a missing
-        # schema.json — additive, derived, and never part of what
-        # check-revisions.sh (or the ce-dataschema contract) pins.
-        if declares_notification "${src_yang}" && [[ ! -f "${dest}/schema.json" ]]; then
-            write_schema_json "${m}" "${dest}"
-            if [[ -f "${dest}/schema.json" ]]; then
-                write_manifest "${m}" "${rev}" "${dest}"
-                echo "Backfilled schema.json into ${dest}"
-                wrote_any=1
-                continue
-            fi
-        fi
         echo "Skip  ${m}@${rev} (already present; revisions are immutable)"
         continue
     fi
-    # Resolve the .proto companion BEFORE creating anything on disk. A
-    # notification-bearing module whose route is missing from
-    # PROTO_ROUTE_PREFIXES must fail here, not after schema.yang has been
-    # written: a schema.yang-only directory passes check-revisions (which
-    # diffs schema.yang alone) and is then treated as an existing,
-    # immutable snapshot by the branch above, so it would never be
-    # completed. That is exactly how openits-zone-occupancy-events'
-    # 2026-08-15 snapshot was left partial.
-    #
-    # The generated proto lives under api/proto/openits/<service>/v1/,
-    # packed per service (see PROTO_ROUTE_PREFIXES/PROTO_ROUTE_FILES
-    # above), not per module — this is the successor to the deleted
-    # api/proto/yang/** tree, which had no 1:1 per-module mapping to the
-    # new generator's output.
-    src_proto=""
+    # Resolve every companion BEFORE creating anything on disk. A module
+    # whose shape or JSON Schema is missing must fail here, not after
+    # schema.yang has been written: a partial directory would be treated as
+    # an existing, immutable snapshot by the branch above and never be
+    # completed. That is how openits-zone-occupancy-events' 2026-08-15
+    # snapshot was left with schema.yang alone for two releases.
+    src_shape="${ROOT_DIR}/api/shapes/${m}.shape"
+    src_own="${ROOT_DIR}/api/shapes/${m}.proto"
+    if declares_notification "${src_yang}" && [[ ! -f "${src_shape}" ]]; then
+        echo "Error: ${m} declares notifications but ${src_shape} is missing; run 'make gen' first" >&2
+        exit 1
+    fi
+    if [[ -f "${src_shape}" && ! -f "${src_own}" ]]; then
+        echo "Error: ${src_shape} has no companion ${src_own}; run 'make gen'" >&2
+        exit 1
+    fi
     if declares_notification "${src_yang}"; then
-        proto_file="$(proto_file_for_module "${m}")" || {
+        proto_file_for_module "${m}" >/dev/null || {
             echo "Error: ${m} declares notifications but matches no proto route in PROTO_ROUTE_PREFIXES (see tools/yang-proto-gen/pkgmap.go)" >&2
             exit 1
         }
-        src_proto="${ROOT_DIR}/api/proto/openits/${proto_file}"
-        if [[ ! -f "${src_proto}" ]]; then
-            echo "Error: ${m} declares notifications but ${src_proto} is missing; run 'make yang-proto-gen' first" >&2
-            exit 1
-        fi
     fi
 
     mkdir -p "${dest}"
 
     cp "${src_yang}" "${dest}/schema.yang"
 
-    if [[ -n "${src_proto}" ]]; then
-        cp "${src_proto}" "${dest}/schema.proto"
-
+    if [[ -f "${src_shape}" ]]; then
+        cp "${src_own}" "${dest}/schema.proto"
+        cp "${src_shape}" "${dest}/schema.shape"
+    fi
+    if declares_notification "${src_yang}"; then
         write_schema_json "${m}" "${dest}"
     fi
 

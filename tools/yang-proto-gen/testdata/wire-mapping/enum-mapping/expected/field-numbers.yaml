@@ -1,0 +1,9 @@
+messages:
+    openits.cctv.v1.FirstEvent:
+        level: 1
+        mode: 2
+        recent_levels: 4
+        state: 3
+    openits.cctv.v1.SecondEvent:
+        mode: 2
+        previous_level: 1

@@ -1,0 +1,33 @@
+messages:
+    openits.cctv.v1.TypesObserved:
+        at: 22
+        at_alias: 23
+        blob: 16
+        code: 14
+        counter: 24
+        dangling_ref: 29
+        either: 20
+        flag: 12
+        host: 25
+        i8: 1
+        i16: 2
+        i32: 3
+        i64: 4
+        label: 13
+        lens_state: 26
+        lens_state_ref: 28
+        marker: 18
+        moments: 31
+        options: 17
+        ranged: 9
+        ratio: 11
+        tags: 30
+        two_patterns: 15
+        typedef_ranged: 10
+        u8: 5
+        u16: 6
+        u32: 7
+        u32_ref: 27
+        u64: 8
+        what: 19
+        where: 21

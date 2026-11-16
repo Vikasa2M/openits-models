@@ -30,8 +30,17 @@ module openits-common-comm-health-events {
      event class. Service-specific or vendor-specific kinds derive
      from openits-types:comm-health-event-kind in their own modules.";
 
-  openits-types:openits-version "0.4.0";
+  openits-types:openits-version "0.5.0";
 
+  revision 2026-11-16 {
+    description
+      "Record that this module's events carry the device-log case
+       openits-types 2026-11-09 added to the shared wire-source
+       grouping (log-name, log-text): the generated WireSource message
+       gains a device_log oneof member and the JSON Schema the two
+       leaves. Additive. Raise openits-version to 0.5.0. No change to
+       this module's own statements.";
+  }
   revision 2026-10-16 {
     description
       "Make comm-lost carry last-contact and its observer, and define

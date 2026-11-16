@@ -1,0 +1,78 @@
+{
+  "$defs": {
+    "LocationBox": {
+      "additionalProperties": false,
+      "properties": {
+        "lat": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Settings": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "WireSource": {
+      "additionalProperties": false,
+      "properties": {
+        "decoder": {
+          "type": "string"
+        },
+        "indiana-code": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "indiana-param": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "oid": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "channel": {
+      "maximum": 255,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "config": {
+      "$ref": "#/$defs/Settings"
+    },
+    "latitude": {
+      "type": "string"
+    },
+    "location": {
+      "$ref": "#/$defs/LocationBox"
+    },
+    "longitude": {
+      "type": "string"
+    },
+    "note": {
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "source": {
+      "$ref": "#/$defs/WireSource"
+    }
+  },
+  "type": "object"
+}

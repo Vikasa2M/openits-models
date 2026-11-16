@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "at-alias": {
+      "pattern": "^(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2}))$",
+      "type": "string"
+    },
+    "blob": {
+      "type": "string"
+    },
+    "code": {
+      "maxLength": 8,
+      "minLength": 2,
+      "pattern": "^([A-Z]+)$",
+      "type": "string"
+    },
+    "counter": {
+      "type": "string"
+    },
+    "dangling-ref": {
+      "type": "string"
+    },
+    "either": {
+      "type": "string"
+    },
+    "flag": {
+      "type": "boolean"
+    },
+    "host": {
+      "type": "string"
+    },
+    "i16": {
+      "maximum": 32767,
+      "minimum": -32768,
+      "type": "integer"
+    },
+    "i32": {
+      "maximum": 2147483647,
+      "minimum": -2147483648,
+      "type": "integer"
+    },
+    "i64": {
+      "type": "string"
+    },
+    "i8": {
+      "maximum": 127,
+      "minimum": -128,
+      "type": "integer"
+    },
+    "label": {
+      "type": "string"
+    },
+    "lens-state": {
+      "enum": [
+        "moving",
+        "parked"
+      ],
+      "type": "string"
+    },
+    "lens-state-ref": {
+      "type": "string"
+    },
+    "marker": {
+      "type": "string"
+    },
+    "moments": {
+      "items": {
+        "format": "date-time",
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "options": {
+      "type": "string"
+    },
+    "ranged": {
+      "maximum": 10,
+      "minimum": -10,
+      "type": "integer"
+    },
+    "ratio": {
+      "type": "string"
+    },
+    "tags": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "two-patterns": {
+      "allOf": [
+        {
+          "pattern": "^([a-z0-9]+)$"
+        },
+        {
+          "pattern": "^(x.*)$"
+        }
+      ],
+      "type": "string"
+    },
+    "typedef-ranged": {
+      "maximum": 500,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "u16": {
+      "maximum": 65535,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "u32": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "u32-ref": {
+      "type": "string"
+    },
+    "u64": {
+      "type": "string"
+    },
+    "u8": {
+      "maximum": 255,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "what": {
+      "type": "string"
+    },
+    "where": {
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

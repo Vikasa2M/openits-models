@@ -1,0 +1,5 @@
+messages:
+    openits.zone_occupancy.v1.ZoneEntered:
+        zone_id: 1
+    openits.zone_occupancy.v1.ZoneExited:
+        zone_id: 1

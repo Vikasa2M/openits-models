@@ -23,7 +23,15 @@ func main() {
 	community := flag.String("community", "public", "SNMP community")
 	kind := flag.String("kind", "asc", "device kind (asc, rsu, dms, ess, ramp-metering, traffic-sensor, reversible-lane, perception, cctv)")
 	window := flag.Duration("window", 5*time.Second, "subscription observation window")
+	registryDir := flag.String("registry", "schema-registry", "schema registry (directory holding index.json) that ce-dataschema resolves against")
 	flag.Parse()
+
+	registry, err := tests.LoadRegistry(*registryDir)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "registry: %v\n", err)
+		os.Exit(2)
+	}
+	mockRegistry = registry
 
 	d, err := newDriver(*driver, *host, *community, *kind, *window)
 	if err != nil {
@@ -74,6 +82,7 @@ func main() {
 		DeviceAfter: after,
 		Events:      events,
 		Window:      *window,
+		Registry:    registry,
 	}
 
 	pass, fail := 0, 0

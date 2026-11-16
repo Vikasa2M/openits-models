@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package openits.rsu.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/rsu/v1;rsuv1";
+
+message RoadsideUnit {
+  RoadsideUnitConfig config = 1;
+  RoadsideUnitState state = 2;
+  Radios radios = 3;
+  Ping ping = 4;
+}
+
+message RoadsideUnitConfig {
+  optional string name = 1;
+}
+
+message RoadsideUnitState {
+  optional uint32 uptime_s = 1;
+}
+
+message Radios {
+  repeated Radio radio = 1;
+}
+
+message Radio {
+  optional uint32 id = 1;
+  RadioConfig config = 2;
+  RadioState state = 3;
+}
+
+message RadioConfig {
+  optional uint32 id = 1;
+  optional uint32 channel = 2;
+}
+
+message RadioState {
+  optional uint64 tx_packets = 1;
+}
+
+message ResetRadioRequest {
+  optional bool cold = 1;
+}
+
+message ResetRadioResponse {
+  optional bool accepted = 1;
+}
+
+message Ping {
+}
+
+message Antenna {
+  optional string name = 1;
+  optional int32 gain_dbi = 2;
+}
+

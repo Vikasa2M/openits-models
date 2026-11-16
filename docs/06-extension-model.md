@@ -353,7 +353,7 @@ The repository ships tools that make the extension model real:
 | `make yang` | Regenerate Go + Protobuf from YANG modules. |
 | `make validate-yang` | Validate `must`-constraints with libyang. |
 | `make check-revisions` | Catch content-changed-without-revision-bump (covers `yang/`, `yang/augments/`, and `yang/deviations/`). |
-| `./scripts/update-schema-registry.sh` | Snapshot YANG and proto into `schema-registry/<module>/<revision>/`. |
+| `./scripts/update-schema-registry.sh` | Snapshot a new revision into `schema-registry/<module>/<revision>/`: the YANG, the module's own proto, its wire shape and its JSON Schema (see [Versioning](versioning.md#what-a-revision-pins)). |
 | `make validate-noi` | Validate every NoI YAML against the schema. |
 | `make check-graduation` | Report per-augment NoI counts, operator presence, eligibility. |
 | `make check-augment-collisions` | Warn on YANG path collisions between augments. |

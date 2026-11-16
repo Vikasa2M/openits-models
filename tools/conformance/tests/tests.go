@@ -20,7 +20,10 @@ type EventEnvelope struct {
 	CESource string
 	CEID     string
 	CETime   time.Time
-	Data     proto.Message
+	// CEDataSchema is the ce-dataschema attribute: the URL of the schema
+	// registry snapshot (module and revision) the payload conforms to.
+	CEDataSchema string
+	Data         proto.Message
 }
 
 // Observation is the shared state every test function reads.
@@ -34,6 +37,8 @@ type Observation struct {
 	DeviceAfter *yangpkg.Device
 	Events      []EventEnvelope
 	Window      time.Duration
+	// Registry is the schema registry ce-dataschema is resolved against.
+	Registry *Registry
 }
 
 // Result records the outcome of one check.
@@ -108,6 +113,8 @@ func All(kind string) []TestCase {
 		{"TestCEType_OpenitsFormat", TestCEType_OpenitsFormat},
 		{"TestCESource_URN", TestCESource_URN},
 		{"TestCEID_Present", TestCEID_Present},
+		{"TestCEDataSchema_ResolvesToSnapshot", TestCEDataSchema_ResolvesToSnapshot},
+		{"TestCEDataSchema_PayloadMatchesSnapshot", TestCEDataSchema_PayloadMatchesSnapshot},
 		{"TestEvent_SequenceContiguousWithinEpoch", TestEvent_SequenceContiguousWithinEpoch},
 		{"TestFault_KindMatchesService", TestFault_KindMatchesService},
 		{"TestMode_ValueMatchesKind", TestMode_ValueMatchesKind},

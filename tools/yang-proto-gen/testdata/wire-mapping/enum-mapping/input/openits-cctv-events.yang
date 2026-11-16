@@ -1,0 +1,61 @@
+module openits-cctv-events {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:enum-mapping";
+  prefix em;
+
+  description
+    "Wire-mapping vector: enumeration to proto enum and JSON string.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  typedef level {
+    type enumeration {
+      enum low { value 0; }
+      enum mid { value 1; }
+      enum high { value 2; }
+    }
+  }
+
+  notification first-event {
+    leaf level {
+      type level;
+    }
+    leaf mode {
+      description "No member at value 0: a sentinel is synthesized.";
+      type enumeration {
+        enum automatic { value 1; }
+        enum manual { value 2; }
+      }
+    }
+    leaf state {
+      description "Declared out of value order, with a negative value.";
+      type enumeration {
+        enum out-of-service { value 3; }
+        enum unspecified { value 0; }
+        enum in-service { value 1; }
+        enum fault { value -1; }
+      }
+    }
+    leaf-list recent-levels {
+      type level;
+    }
+  }
+
+  notification second-event {
+    leaf previous-level {
+      description "Same typedef as first-event/level: one declaration.";
+      type level;
+    }
+    leaf mode {
+      description
+        "Same leaf name as first-event/mode, different value set: the
+         second enum is qualified by its module name.";
+      type enumeration {
+        enum off { value 0; }
+        enum on { value 1; }
+      }
+    }
+  }
+}

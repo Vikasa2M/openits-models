@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package openits.cctv.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/cctv/v1;cctvv1";
+
+enum LensState {
+  LENS_STATE_PARKED = 0;
+  LENS_STATE_MOVING = 1;
+}
+

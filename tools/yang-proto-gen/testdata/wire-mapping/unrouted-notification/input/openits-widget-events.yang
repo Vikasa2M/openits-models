@@ -1,0 +1,17 @@
+module openits-widget-events {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:unrouted";
+  prefix uw;
+
+  description
+    "Wire-mapping vector: a live notification in a module no service
+     route matches is a generation error, never a silent drop.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  notification widget-spun {
+    leaf rpm { type uint16; }
+  }
+}

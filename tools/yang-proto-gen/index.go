@@ -1,8 +1,12 @@
 package main
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"sort"
@@ -62,6 +66,32 @@ type Index struct {
 	// legitimately includes modules (e.g. signal-control's former per-domain
 	// event modules) that have since been folded away in yang/.
 	Registry map[string]map[string][]string `json:"registry"`
+	// Snapshots map: module name -> revision date -> the facts a consumer
+	// otherwise recomputes from the snapshot files (which revision this
+	// release's producers compile, which ce-types carry it, and its wire
+	// shape digests). Same keys as Registry.
+	Snapshots map[string]map[string]SnapshotIndex `json:"snapshots"`
+}
+
+// SnapshotIndex describes one module revision's snapshot.
+type SnapshotIndex struct {
+	// Current is true for exactly the revision yang/ declares for the module
+	// in this release: the one its producers compile and its ce-dataschema
+	// names. A module that has left yang/ has no current revision.
+	Current bool `json:"current"`
+	// CeTypes are the ce-type strings whose payload this module defines,
+	// sorted. Listed for the current revision only: the catalog is derived
+	// from the live YANG, and an older revision's ce-types are whatever the
+	// release that shipped it said.
+	CeTypes []string `json:"ceTypes,omitempty"`
+	// ShapeDigest is "sha256:<hex>" of the snapshot's schema.shape, absent
+	// for a snapshot without one (taken before schema.shape existed, or of
+	// a module with no root messages).
+	ShapeDigest string `json:"shapeDigest,omitempty"`
+	// Messages maps each root message's full proto name to the digest of
+	// its own closure, from schema.shape's "// root" lines. A consumer can
+	// compare one message without the rest of the module.
+	Messages map[string]string `json:"messages,omitempty"`
 }
 
 // ServiceIndex is one service/domain's public descriptor: identity + a
@@ -211,6 +241,10 @@ func BuildIndex(mods []*yang.Entry, cat []CeType, registryDir string) (*Index, e
 	if err != nil {
 		return nil, err
 	}
+	snapshots, err := snapshotIndex(registryDir, registry, mods, cat)
+	if err != nil {
+		return nil, err
+	}
 
 	return &Index{
 		Standard:     indexStandard,
@@ -218,7 +252,67 @@ func BuildIndex(mods []*yang.Entry, cat []CeType, registryDir string) (*Index, e
 		Services:     services,
 		Foundation:   fdn,
 		Registry:     registry,
+		Snapshots:    snapshots,
 	}, nil
+}
+
+// snapshotIndex builds Index.Snapshots for every revision in registry.
+func snapshotIndex(registryDir string, registry map[string]map[string][]string, mods []*yang.Entry, cat []CeType) (map[string]map[string]SnapshotIndex, error) {
+	current := map[string]string{}
+	for _, m := range mods {
+		if revs := moduleRevisions(m); len(revs) > 0 {
+			current[m.Name] = revs[len(revs)-1]
+		}
+	}
+	ceTypes := map[string][]string{}
+	for _, c := range cat {
+		ceTypes[c.SchemaModule] = append(ceTypes[c.SchemaModule], c.Type)
+	}
+	out := map[string]map[string]SnapshotIndex{}
+	for module, revs := range registry {
+		out[module] = map[string]SnapshotIndex{}
+		for rev := range revs {
+			si := SnapshotIndex{Current: current[module] == rev}
+			if si.Current {
+				types := append([]string(nil), ceTypes[module]...)
+				sort.Strings(types)
+				si.CeTypes = types
+			}
+			shape, err := os.ReadFile(filepath.Join(registryDir, module, rev, "schema.shape"))
+			switch {
+			case err == nil:
+				sum := sha256.Sum256(shape)
+				si.ShapeDigest = "sha256:" + hex.EncodeToString(sum[:])
+				si.Messages = shapeRoots(shape)
+			case !errors.Is(err, fs.ErrNotExist):
+				return nil, fmt.Errorf("build index: %w", err)
+			}
+			out[module][rev] = si
+		}
+	}
+	return out, nil
+}
+
+// shapeRoots reads the "// root <full name> <digest>" header lines of a
+// schema.shape file (see ShapeFile).
+func shapeRoots(shape []byte) map[string]string {
+	roots := map[string]string{}
+	for line := range strings.SplitSeq(string(shape), "\n") {
+		if !strings.HasPrefix(line, "//") {
+			if strings.TrimSpace(line) == "" {
+				continue
+			}
+			break
+		}
+		f := strings.Fields(strings.TrimPrefix(line, "//"))
+		if len(f) == 3 && f[0] == "root" {
+			roots[f[1]] = f[2]
+		}
+	}
+	if len(roots) == 0 {
+		return nil
+	}
+	return roots
 }
 
 // moduleServiceSlug assigns an OpenITS module name to the service that owns it,

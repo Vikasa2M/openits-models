@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "beacon": {
+      "enum": [
+        "off",
+        "on"
+      ],
+      "type": "string"
+    },
+    "brightness": {
+      "maximum": 255,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "duration-s": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "expires-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "font": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "lines": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "observed-by": {
+      "type": "string"
+    },
+    "override": {
+      "additionalProperties": false,
+      "properties": {
+        "operator": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "page": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "number": {
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "point": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "seq": {
+            "maximum": 65535,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "posted-at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "slot": {
+      "maximum": 255,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "slot-copy": {
+      "type": "string"
+    },
+    "station": {
+      "type": "string"
+    },
+    "when-copy": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "observed-by",
+    "posted-at",
+    "sequence",
+    "slot"
+  ],
+  "type": "object"
+}

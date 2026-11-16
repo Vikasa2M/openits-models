@@ -1,0 +1,35 @@
+messages:
+    openits.ess.v1.Diagnostics:
+        sensor: 1
+    openits.ess.v1.DiagnosticsSensor:
+        healthy: 2
+        id: 1
+    openits.ess.v1.Gate:
+        position: 1
+        state: 2
+    openits.ess.v1.GateGateState:
+        moving: 1
+    openits.ess.v1.Pavement:
+        sensor: 1
+    openits.ess.v1.PavementReading:
+        air_temp_c: 1
+        diagnostics: 5
+        pavement: 4
+        probe: 6
+        rawADC: 2
+        wind_speed_sensor: 3
+    openits.ess.v1.PavementSensor:
+        id: 1
+        surface_temp_c: 2
+    openits.ess.v1.Probe:
+        depth_mm: 1
+    openits.ess.v1.WeatherStation:
+        config: 1
+        gate: 3
+        sensor: 2
+    openits.ess.v1.WeatherStationConfig:
+        site_name: 1
+    openits.ess.v1.WeatherStationSensor:
+        id: 1
+    openits.ess.v1.WindSpeedSensor:
+        mps: 1

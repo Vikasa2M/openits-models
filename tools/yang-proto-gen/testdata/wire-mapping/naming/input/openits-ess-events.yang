@@ -1,0 +1,47 @@
+module openits-ess-events {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:naming-events";
+  prefix ne;
+
+  description
+    "Wire-mapping vector: message and field naming, and collision
+     qualification across every root in one go_package.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  notification pavement-reading {
+    leaf air_temp-c {
+      description "Hyphens become underscores; underscores stay.";
+      type int16;
+    }
+    leaf rawADC {
+      description "Case is preserved in field names.";
+      type uint16;
+    }
+    container wind_speed-sensor {
+      description "Hyphens and underscores both split message names.";
+      leaf mps { type uint16; }
+    }
+    container pavement {
+      list sensor {
+        key "id";
+        leaf id { type uint8; }
+        leaf surface-temp-c { type int16; }
+      }
+    }
+    container diagnostics {
+      list sensor {
+        key "id";
+        leaf id { type uint8; }
+        leaf healthy { type boolean; }
+      }
+    }
+    container probe {
+      description
+        "Not repeated anywhere in the go_package: keeps its bare name.";
+      leaf depth-mm { type uint16; }
+    }
+  }
+}
