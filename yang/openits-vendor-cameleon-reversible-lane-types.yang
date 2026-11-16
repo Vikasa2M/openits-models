@@ -40,7 +40,17 @@ module openits-vendor-cameleon-reversible-lane-types {
 
      Copyright (c) 2026. Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.1.0";
+  openits-types:openits-version "0.2.0";
+
+  revision 2026-11-10 {
+    description
+      "Add cameleon-gate-command-refused, derived from
+       openits-reversible-lane-types:reversible-lane-fault-gate.
+       Bump openits-version to 0.2.0.";
+    reference
+      "Cameleon ITS PLC interface, gate alarm word (command-refused
+       alarm).";
+  }
 
   revision 2026-11-01 {
     description
@@ -73,6 +83,19 @@ module openits-vendor-cameleon-reversible-lane-types {
        to be absent or implausible position feedback, a producer emits
        openits-rl-types:reversible-lane-fault-gate-feedback-loss
        instead. A gate-scope fault: names its gate through
+       component-class openits-rl-types:rl-component-gate and
+       component-id the gate's gate-id.";
+  }
+
+  identity cameleon-gate-command-refused {
+    base openits-rl-types:reversible-lane-fault-gate;
+    description
+      "The command-refused alarm in one gate's alarm word, as the
+       Cameleon ITS PLC interface defines it, is active. The alarm
+       alone does not distinguish an interlock, an offline device, or
+       an invalid cabinet-ID condition. The alarm does not identify
+       the command issuer or correlate the refusal with a particular
+       command. A gate-scope fault: names its gate through
        component-class openits-rl-types:rl-component-gate and
        component-id the gate's gate-id.";
   }

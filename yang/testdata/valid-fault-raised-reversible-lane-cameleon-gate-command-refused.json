@@ -1,0 +1,17 @@
+{
+  "openits-common-fault-events:fault-raised": {
+    "kind": "openits-vendor-cameleon-reversible-lane-types:cameleon-gate-command-refused",
+    "source-device-id": "rl-controller-1",
+    "sequence-epoch": "boot-2026-11-10a",
+    "sequence": "14",
+    "fault-id": "f-gate-1-command-refused",
+    "severity": "warning",
+    "description": "Gate gate-1 reports command refused.",
+    "first-observed": "2026-11-10T15:00:00Z",
+    "occurred-at": "2026-11-10T15:00:01Z",
+    "component": {
+      "component-class": "openits-reversible-lane-types:rl-component-gate",
+      "component-id": "gate-1"
+    }
+  }
+}

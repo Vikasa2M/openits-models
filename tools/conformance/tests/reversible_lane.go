@@ -252,13 +252,26 @@ func TestReversibleLaneFault_GateFaultNamesExistingGate(t *T, obs *Observation) 
 	}
 }
 
-// TestReversibleLaneEvent_GateFaultRaisedNamesGate: a fault-raised whose
-// kind is a reversible-lane gate fault names its gate through component.
+// reversibleLaneGateFaultKind reports a fault-raised kind that must name
+// its gate. Core gate leaves share the reversible-lane-fault-gate name
+// prefix. Vendor modules are not generator inputs: classifyIdentity skips
+// openits-vendor-*, and the generated enums do not record identity bases,
+// so these two Cameleon gate alarms are named explicitly. A later vendor
+// gate identity is not covered until it is added here.
+func reversibleLaneGateFaultKind(kind string) bool {
+	switch kind {
+	case "openits-vendor-cameleon-reversible-lane-types:cameleon-gate-invalid-inputs",
+		"openits-vendor-cameleon-reversible-lane-types:cameleon-gate-command-refused":
+		return true
+	default:
+		return strings.HasPrefix(kind, "openits-reversible-lane-types:reversible-lane-fault-gate")
+	}
+}
+
 func TestReversibleLaneEvent_GateFaultRaisedNamesGate(t *T, obs *Observation) {
-	const prefix = "openits-reversible-lane-types:reversible-lane-fault-gate"
 	for _, e := range obs.Events {
 		fr, ok := e.Data.(*commonv1.FaultRaised)
-		if !ok || !strings.HasPrefix(fr.GetKind(), prefix) {
+		if !ok || !reversibleLaneGateFaultKind(fr.GetKind()) {
 			continue
 		}
 		c := fr.GetComponent()
