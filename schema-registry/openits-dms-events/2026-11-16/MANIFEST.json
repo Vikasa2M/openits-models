@@ -1,0 +1,10 @@
+{
+  "module": "openits-dms-events",
+  "revision": "2026-11-16",
+  "files": [
+    "schema.yang",
+    "schema.proto",
+    "schema.shape",
+    "schema.json"
+  ]
+}
