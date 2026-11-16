@@ -1,0 +1,31 @@
+messages:
+    openits.dms.v1.SignFault:
+        code: 1
+        config: 2
+        latitude: 3
+        location: 4
+        longitude: 5
+        source: 100
+    openits.dms.v1.SignFaultConfig:
+        enabled: 1
+    openits.ess.v1.Note:
+        text: 1
+    openits.ess.v1.SensorFault:
+        channel: 1
+        config: 2
+        latitude: 3
+        location: 4
+        longitude: 5
+        note: 6
+        source: 100
+    openits.ess.v1.SensorFaultConfig:
+        enabled: 1
+    openits.types.v1.Indiana:
+        indiana_code: 1
+        indiana_param: 2
+    openits.types.v1.LocationBox:
+        lat: 1
+    openits.types.v1.WireSource:
+        decoder: 1
+        indiana: 2
+        oid: 3

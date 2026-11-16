@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "air_temp-c": {
+      "maximum": 32767,
+      "minimum": -32768,
+      "type": "integer"
+    },
+    "diagnostics": {
+      "additionalProperties": false,
+      "properties": {
+        "sensor": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "healthy": {
+                "type": "boolean"
+              },
+              "id": {
+                "maximum": 255,
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "pavement": {
+      "additionalProperties": false,
+      "properties": {
+        "sensor": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "maximum": 255,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "surface-temp-c": {
+                "maximum": 32767,
+                "minimum": -32768,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "probe": {
+      "additionalProperties": false,
+      "properties": {
+        "depth-mm": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "rawADC": {
+      "maximum": 65535,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "wind_speed-sensor": {
+      "additionalProperties": false,
+      "properties": {
+        "mps": {
+          "maximum": 65535,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

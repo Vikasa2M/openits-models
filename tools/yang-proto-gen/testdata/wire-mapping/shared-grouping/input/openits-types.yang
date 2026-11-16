@@ -1,0 +1,71 @@
+module openits-types {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:shared-types";
+  prefix st;
+
+  description
+    "Wire-mapping vector: groupings and how their uses sites map. This
+     module matches no route and declares no notification, so it maps to
+     nothing on its own.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  grouping wire-source {
+    description
+      "Container-shaped and used at two sites: one shared message. Its
+       container is named source, so the reference field takes tag 100.";
+    container source {
+      leaf decoder { type string; }
+      choice detail {
+        case indiana {
+          leaf indiana-code { type uint16; }
+          leaf indiana-param { type uint16; }
+        }
+        leaf oid { type string; }
+      }
+    }
+  }
+
+  grouping location-box {
+    description
+      "Container-shaped and used at two sites: one shared message, named
+       after the grouping, not the container. Ordinary tag.";
+    container location {
+      leaf lat {
+        type decimal64 { fraction-digits 6; }
+      }
+    }
+  }
+
+  grouping geo-point {
+    description
+      "Flat (bare leaves): inlined at every use site however many there
+       are.";
+    leaf latitude {
+      type decimal64 { fraction-digits 6; }
+    }
+    leaf longitude {
+      type decimal64 { fraction-digits 6; }
+    }
+  }
+
+  grouping vendor-note {
+    description
+      "Container-shaped but used at one site only: an ordinary nested
+       message.";
+    container note {
+      leaf text { type string; }
+    }
+  }
+
+  grouping settings {
+    description
+      "Container-shaped and used at two sites, but its container is
+       config: always a per-parent message, never shared.";
+    container config {
+      leaf enabled { type boolean; }
+    }
+  }
+}

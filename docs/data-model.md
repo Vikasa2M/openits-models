@@ -520,6 +520,8 @@ its conventions:
 
 - [Conformance](07-conformance.md) — the subject hierarchy and
   envelope a conforming emitter must produce.
+- [YANG-to-wire mapping](wire-mapping-spec.md) — the normative, versioned
+  rules by which the YANG becomes Protobuf and JSON Schema.
 - [Design decisions](04-design-decisions.md) — why these choices.
 - [Standards alignment](05-standards-alignment.md) — NTCIP / J2735 / ARC-IT mapping.
 - [Extension model](06-extension-model.md) — augments, deviations, graduation.

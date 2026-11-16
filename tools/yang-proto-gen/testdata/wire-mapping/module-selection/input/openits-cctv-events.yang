@@ -1,0 +1,43 @@
+module openits-cctv-events {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:module-selection";
+  prefix ms;
+
+  description
+    "Wire-mapping vector: which statements of a routed module produce
+     messages. Only the live notification does.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  container not-on-allowlist {
+    description
+      "A top-level container in a module that is not in the config/state
+       allowlist produces nothing.";
+    leaf ignored { type string; }
+  }
+
+  rpc reboot {
+    description "Top-level rpc statements are never mapped.";
+    input {
+      leaf reason { type string; }
+    }
+  }
+
+  notification camera-moved {
+    leaf preset { type uint8; }
+  }
+
+  notification camera-tilted {
+    status deprecated;
+    description "Deprecated notifications are not mapped.";
+    leaf angle { type int16; }
+  }
+
+  notification camera-zoomed {
+    status obsolete;
+    description "Obsolete notifications are not mapped.";
+    leaf factor { type uint8; }
+  }
+}

@@ -1,0 +1,35 @@
+module openits-dms {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:enum-registry";
+  prefix er;
+
+  import openits-dms-types {
+    prefix ert;
+  }
+
+  description
+    "Config/state side of the enum-registry vector.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  container sign {
+    container state {
+      config false;
+      leaf worst-severity {
+        description "Same typedef as the events side: the same enum.";
+        type ert:fault-severity;
+      }
+      leaf status {
+        description
+          "Same leaf name as the events side's inline enum, different
+           value set: qualified by this module's name.";
+        type enumeration {
+          enum blank { value 0; }
+          enum displaying { value 1; }
+        }
+      }
+    }
+  }
+}

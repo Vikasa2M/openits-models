@@ -1,0 +1,69 @@
+module openits-perception-events {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:choice-case";
+  prefix cc;
+
+  description
+    "Wire-mapping vector: choice and case to proto oneof, and to spliced
+     JSON properties.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  notification object-detected {
+    leaf object-id {
+      type string;
+      mandatory true;
+    }
+    choice position {
+      mandatory true;
+      description
+        "Shorthand cases (a bare leaf in a choice) and explicit
+         one-member cases both become a oneof member named after that
+         member. A case with several members becomes a message nested in
+         the enclosing message, named after the case.";
+      leaf zone-name {
+        type string;
+      }
+      case pixel {
+        leaf pixel-index {
+          type uint32;
+          mandatory true;
+        }
+      }
+      case geo {
+        leaf latitude {
+          type decimal64 {
+            fraction-digits 7;
+          }
+          mandatory true;
+        }
+        leaf longitude {
+          type decimal64 {
+            fraction-digits 7;
+          }
+          mandatory true;
+        }
+        choice datum {
+          leaf wgs84 { type empty; }
+          leaf epsg-code { type uint16; }
+        }
+      }
+    }
+    leaf confidence {
+      type uint8;
+    }
+    choice track {
+      description
+        "A one-member case holding a leaf-list. The oneof member is not
+         repeated; see Open issues.";
+      leaf-list track-points {
+        type uint32;
+      }
+      leaf track-ref {
+        type string;
+      }
+    }
+  }
+}

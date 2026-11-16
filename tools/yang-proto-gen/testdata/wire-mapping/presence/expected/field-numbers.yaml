@@ -1,0 +1,27 @@
+messages:
+    openits.dms.v1.Font:
+        name: 1
+    openits.dms.v1.MessagePosted:
+        beacon: 3
+        brightness: 2
+        duration_s: 4
+        expires_at: 6
+        font: 10
+        lines: 9
+        observed_by: 13
+        override: 11
+        page: 12
+        point: 14
+        posted_at: 5
+        sequence: 15
+        slot: 1
+        slot_copy: 7
+        station: 16
+        when_copy: 8
+    openits.dms.v1.Override:
+        operator: 1
+    openits.dms.v1.Page:
+        number: 1
+        text: 2
+    openits.dms.v1.Point:
+        seq: 1

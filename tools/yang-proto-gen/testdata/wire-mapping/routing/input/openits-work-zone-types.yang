@@ -1,0 +1,16 @@
+module openits-work-zone-types {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:routing-types";
+  prefix rt;
+
+  description
+    "A module that matches a route but declares no notification: the
+     route's events.proto is still written, with an empty body. See
+     Open issues in the specification.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  identity work-zone-kind;
+}

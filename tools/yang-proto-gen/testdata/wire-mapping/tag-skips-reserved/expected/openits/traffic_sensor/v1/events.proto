@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package openits.traffic_sensor.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/traffic_sensor/v1;trafficsensorv1";
+
+message CountReported {
+  reserved 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98;
+  reserved "retired_01", "retired_02", "retired_03", "retired_04", "retired_05", "retired_06", "retired_07", "retired_08", "retired_09", "retired_10", "retired_11", "retired_12", "retired_13", "retired_14", "retired_15", "retired_16", "retired_17", "retired_18", "retired_19", "retired_20", "retired_21", "retired_22", "retired_23", "retired_24", "retired_25", "retired_26", "retired_27", "retired_28", "retired_29", "retired_30", "retired_31", "retired_32", "retired_33", "retired_34", "retired_35", "retired_36", "retired_37", "retired_38", "retired_39", "retired_40", "retired_41", "retired_42", "retired_43", "retired_44", "retired_45", "retired_46", "retired_47", "retired_48", "retired_49", "retired_50", "retired_51", "retired_52", "retired_53", "retired_54", "retired_55", "retired_56", "retired_57", "retired_58", "retired_59", "retired_60", "retired_61", "retired_62", "retired_63", "retired_64", "retired_65", "retired_66", "retired_67", "retired_68", "retired_69", "retired_70", "retired_71", "retired_72", "retired_73", "retired_74", "retired_75", "retired_76", "retired_77", "retired_78", "retired_79", "retired_80", "retired_81", "retired_82", "retired_83", "retired_84", "retired_85", "retired_86", "retired_87", "retired_88", "retired_89", "retired_90", "retired_91", "retired_92", "retired_93", "retired_94", "retired_95", "retired_96", "retired_97", "retired_98";
+  optional uint32 vehicles = 101;
+}
+

@@ -1,0 +1,73 @@
+module openits-signal-control-events {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:field-number-lock";
+  prefix fl;
+
+  description
+    "Wire-mapping vector: field numbers come from the lock, are
+     append-only, and tombstone retired fields. Read with
+     input/field-numbers.yaml, the lock before generation.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  identity event-kind;
+  identity phase-event {
+    base event-kind;
+  }
+
+  notification phase-changed {
+    leaf kind {
+      type identityref {
+        base event-kind;
+      }
+      mandatory true;
+    }
+    leaf phase {
+      type uint8;
+    }
+    leaf new-a {
+      description "New field: takes the lowest free tag (a hole).";
+      type string;
+    }
+    leaf new-b {
+      description "New field: the next free tag after that.";
+      type string;
+    }
+    leaf source {
+      description
+        "Named source but not the wire-source container: an ordinary
+         sequential tag.";
+      type string;
+    }
+  }
+
+  notification detector-changed {
+    leaf kind {
+      description "Named kind but not an identityref: a sequential tag.";
+      type string;
+    }
+    leaf detector {
+      type uint8;
+    }
+  }
+
+  notification mode-changed {
+    leaf kind {
+      description
+        "Locked at 2 before it became an identityref; now forced to 99.
+         See Open issues.";
+      type identityref {
+        base event-kind;
+      }
+      mandatory true;
+    }
+    leaf mode {
+      type string;
+    }
+    leaf previous-mode {
+      type string;
+    }
+  }
+}

@@ -1,0 +1,110 @@
+module openits-dms-events {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:presence";
+  prefix pe;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  description
+    "Wire-mapping vector: proto3 presence labels and JSON Schema
+     required/minItems.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  grouping header {
+    leaf sequence {
+      type uint64;
+      mandatory true;
+    }
+    leaf observed-by {
+      type string;
+    }
+    leaf station {
+      type string;
+      mandatory true;
+    }
+  }
+
+  grouping path {
+    list point {
+      key "seq";
+      leaf seq { type uint16; }
+    }
+  }
+
+  notification message-posted {
+    uses header {
+      refine observed-by {
+        mandatory true;
+      }
+      refine station {
+        mandatory false;
+      }
+    }
+    uses path {
+      refine point {
+        min-elements 1;
+      }
+    }
+    leaf slot {
+      type uint8;
+      mandatory true;
+    }
+    leaf brightness {
+      type uint8;
+    }
+    leaf beacon {
+      type enumeration {
+        enum off { value 0; }
+        enum on { value 1; }
+      }
+    }
+    leaf duration-s {
+      type uint32;
+      default "60";
+    }
+    leaf posted-at {
+      type yang:date-and-time;
+      mandatory true;
+    }
+    leaf expires-at {
+      type yang:date-and-time;
+    }
+    leaf slot-copy {
+      description
+        "Proto takes the target's type; JSON Schema does not. See Open
+         issues in the specification.";
+      type leafref {
+        path "../slot";
+      }
+    }
+    leaf when-copy {
+      type leafref {
+        path "../posted-at";
+      }
+    }
+    leaf-list lines {
+      type string;
+    }
+    container font {
+      leaf name { type string; }
+    }
+    container override {
+      presence "An operator override is in effect.";
+      leaf operator { type string; }
+    }
+    list page {
+      key "number";
+      min-elements 2;
+      description
+        "min-elements on the list itself does not reach JSON Schema, and
+         the key is optional; see Open issues in the specification.";
+      leaf number { type uint8; }
+      leaf text { type string; mandatory true; }
+    }
+  }
+}

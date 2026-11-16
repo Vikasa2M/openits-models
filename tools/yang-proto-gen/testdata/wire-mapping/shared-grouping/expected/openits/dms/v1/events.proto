@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package openits.dms.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/dms/v1;dmsv1";
+
+import "openits/types/v1/types.proto";
+
+message SignFault {
+  optional uint32 code = 1;
+  SignFaultConfig config = 2;
+  optional string latitude = 3;
+  openits.types.v1.LocationBox location = 4;
+  optional string longitude = 5;
+  openits.types.v1.WireSource source = 100;
+}
+
+message SignFaultConfig {
+  optional bool enabled = 1;
+}
+

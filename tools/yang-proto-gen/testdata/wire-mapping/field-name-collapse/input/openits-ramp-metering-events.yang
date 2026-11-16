@@ -1,0 +1,18 @@
+module openits-ramp-metering-events {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:field-name-collapse";
+  prefix fc;
+
+  description
+    "Wire-mapping vector: two YANG identifiers that map to one proto
+     field name are a generation error.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  notification rate-changed {
+    leaf rate-vph { type uint16; }
+    leaf rate_vph { type uint16; }
+  }
+}

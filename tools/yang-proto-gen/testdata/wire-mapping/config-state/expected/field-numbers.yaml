@@ -1,0 +1,31 @@
+messages:
+    openits.rsu.v1.Antenna:
+        gain_dbi: 2
+        name: 1
+    openits.rsu.v1.Ping: {}
+    openits.rsu.v1.Radio:
+        config: 2
+        id: 1
+        state: 3
+    openits.rsu.v1.RadioConfig:
+        channel: 2
+        id: 1
+    openits.rsu.v1.RadioRestarted:
+        radio_id: 1
+    openits.rsu.v1.RadioState:
+        tx_packets: 1
+    openits.rsu.v1.Radios:
+        radio: 1
+    openits.rsu.v1.ResetRadioRequest:
+        cold: 1
+    openits.rsu.v1.ResetRadioResponse:
+        accepted: 1
+    openits.rsu.v1.RoadsideUnit:
+        config: 1
+        ping: 4
+        radios: 3
+        state: 2
+    openits.rsu.v1.RoadsideUnitConfig:
+        name: 1
+    openits.rsu.v1.RoadsideUnitState:
+        uptime_s: 1

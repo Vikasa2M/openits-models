@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "level": {
+      "enum": [
+        "high",
+        "low",
+        "mid"
+      ],
+      "type": "string"
+    },
+    "mode": {
+      "enum": [
+        "automatic",
+        "manual"
+      ],
+      "type": "string"
+    },
+    "recent-levels": {
+      "items": {
+        "enum": [
+          "high",
+          "low",
+          "mid"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "state": {
+      "enum": [
+        "fault",
+        "in-service",
+        "out-of-service",
+        "unspecified"
+      ],
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

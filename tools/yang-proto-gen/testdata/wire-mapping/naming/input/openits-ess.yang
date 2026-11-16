@@ -1,0 +1,41 @@
+module openits-ess {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:naming";
+  prefix nm;
+
+  description
+    "The config/state side of the naming vector. Its sensor list shares
+     a go_package with the two in openits-ess-events, so all three are
+     parent-qualified.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  typedef gate-state {
+    type enumeration {
+      enum closed { value 0; }
+      enum open { value 1; }
+    }
+  }
+
+  container weather-station {
+    container config {
+      leaf site-name { type string; }
+    }
+    list sensor {
+      key "id";
+      leaf id { type uint8; }
+    }
+    container gate {
+      leaf position { type gate-state; }
+      container state {
+        config false;
+        description
+          "Would be named GateState, which the enum already uses: the
+           message is parent-qualified again.";
+        leaf moving { type boolean; }
+      }
+    }
+  }
+}

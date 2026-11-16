@@ -1,0 +1,101 @@
+module openits-cctv-events {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:type-mapping";
+  prefix tm;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  description
+    "Wire-mapping vector: one leaf per YANG built-in type, plus the
+     derived types the generator special-cases.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  identity thing-kind;
+  identity widget {
+    base thing-kind;
+  }
+
+  typedef timestamp-alias {
+    type yang:date-and-time;
+  }
+  typedef bounded-count {
+    type uint16 {
+      range "1..500";
+    }
+  }
+
+  notification types-observed {
+    leaf i8 { type int8; }
+    leaf i16 { type int16; }
+    leaf i32 { type int32; }
+    leaf i64 { type int64; }
+    leaf u8 { type uint8; }
+    leaf u16 { type uint16; }
+    leaf u32 { type uint32; }
+    leaf u64 { type uint64; }
+    leaf ranged { type int32 { range "-10..-1 | 1..10"; } }
+    leaf typedef-ranged { type bounded-count; }
+    leaf ratio {
+      type decimal64 {
+        fraction-digits 2;
+        range "0..1";
+      }
+    }
+    leaf flag { type boolean; }
+    leaf label { type string; }
+    leaf code {
+      type string {
+        length "2..8";
+        pattern "[A-Z]+";
+      }
+    }
+    leaf two-patterns {
+      type string {
+        pattern "[a-z0-9]+";
+        pattern "x.*";
+      }
+    }
+    leaf blob { type binary; }
+    leaf options {
+      type bits {
+        bit alpha { position 0; }
+        bit beta { position 1; }
+      }
+    }
+    leaf marker {
+      description "empty has no defined value; see Open issues.";
+      type empty;
+    }
+    leaf what { type identityref { base thing-kind; } }
+    leaf either { type union { type uint32; type string; } }
+    leaf where { type instance-identifier; }
+    leaf at { type yang:date-and-time; }
+    leaf at-alias {
+      description
+        "A typedef of date-and-time is not a timestamp; see Open issues
+         in the specification.";
+      type timestamp-alias;
+    }
+    leaf counter { type yang:counter64; }
+    leaf host { type inet:host; }
+    leaf lens-state {
+      type enumeration {
+        enum parked { value 0; }
+        enum moving { value 1; }
+      }
+    }
+    leaf u32-ref { type leafref { path "../u32"; } }
+    leaf lens-state-ref { type leafref { path "../lens-state"; } }
+    leaf dangling-ref { type leafref { path "../no-such-leaf"; } }
+    leaf-list tags { type string; }
+    leaf-list moments { type yang:date-and-time; }
+  }
+}

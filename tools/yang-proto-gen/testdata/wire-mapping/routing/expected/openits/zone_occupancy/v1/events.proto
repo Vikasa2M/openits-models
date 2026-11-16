@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package openits.zone_occupancy.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/zone_occupancy/v1;zoneoccupancyv1";
+
+message ZoneEntered {
+  optional string zone_id = 1;
+}
+
+message ZoneExited {
+  optional string zone_id = 1;
+}
+

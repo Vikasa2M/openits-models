@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package openits.types.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/types/v1;typesv1";
+
+message LocationBox {
+  optional string lat = 1;
+}
+
+message WireSource {
+  optional string decoder = 1;
+  oneof detail {
+    Indiana indiana = 2;
+    string oid = 3;
+  }
+  message Indiana {
+    optional uint32 indiana_code = 1;
+    optional uint32 indiana_param = 2;
+  }
+}
+

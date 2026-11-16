@@ -1,0 +1,21 @@
+module openits-dms-types {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:enum-registry-types";
+  prefix ert;
+
+  description
+    "Wire-mapping vector: a typedef enumeration used from two files of
+     one proto package is declared once, in that package's types.proto.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  typedef fault-severity {
+    type enumeration {
+      enum minor { value 0; }
+      enum major { value 1; }
+      enum critical { value 2; }
+    }
+  }
+}

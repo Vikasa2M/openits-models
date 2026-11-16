@@ -1,0 +1,1 @@
+message name(s) declared in more than one file sharing a go_package (Go go_package flatten + field-number-lock conflation): Camera (in openits/cctv/v1/events.proto, openits/cctv/v1/state.proto)

@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package openits.dms.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/dms/v1;dmsv1";
+
+enum FaultSeverity {
+  FAULT_SEVERITY_MINOR = 0;
+  FAULT_SEVERITY_MAJOR = 1;
+  FAULT_SEVERITY_CRITICAL = 2;
+}
+
+enum Status {
+  STATUS_ACTIVE = 0;
+  STATUS_CLEARED = 1;
+}
+
+enum OpenitsDmsStatus {
+  OPENITS_DMS_STATUS_BLANK = 0;
+  OPENITS_DMS_STATUS_DISPLAYING = 1;
+}
+

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package openits.dms.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/dms/v1;dmsv1";
+
+import "openits/dms/v1/types.proto";
+
+message Sign {
+  SignState state = 1;
+}
+
+message SignState {
+  optional FaultSeverity worst_severity = 1;
+  optional OpenitsDmsStatus status = 2;
+}
+

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "mode": {
+      "enum": [
+        "off",
+        "on"
+      ],
+      "type": "string"
+    },
+    "previous-level": {
+      "enum": [
+        "high",
+        "low",
+        "mid"
+      ],
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

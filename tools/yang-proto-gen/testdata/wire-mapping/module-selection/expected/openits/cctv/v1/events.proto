@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package openits.cctv.v1;
+
+option go_package = "github.com/Vikasa2M/openits-models/pkg/proto/openits/cctv/v1;cctvv1";
+
+message CameraMoved {
+  optional uint32 preset = 1;
+}
+

@@ -1,0 +1,20 @@
+module openits-traffic-sensor-events {
+  yang-version 1.1;
+  namespace "urn:openits:test:wire-mapping:tag-skips-reserved";
+  prefix ts;
+
+  description
+    "Wire-mapping vector: tags 99 and 100 are never handed out
+     sequentially. input/field-numbers.yaml has tags 1-98 retired, so
+     the first new field takes 101.";
+
+  revision 2026-11-14 {
+    description "Test vector.";
+  }
+
+  notification count-reported {
+    leaf vehicles {
+      type uint32;
+    }
+  }
+}
