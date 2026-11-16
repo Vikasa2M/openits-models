@@ -46,8 +46,13 @@ module openits-signal-control {
 
      Copyright (c) 2026.  Distributed under Apache 2.0.";
 
-  openits-types:openits-version "0.20.0";
+  openits-types:openits-version "0.21.0";
 
+  revision 2026-11-14 {
+    description
+      "Raise openits-version to 0.21.0. The breaking 2026-10-20 revision
+       left it at 0.20.0. No schema change.";
+  }
   revision 2026-10-20 {
     description
       "Follow the nema-common phase-timing rename (min-green-s,

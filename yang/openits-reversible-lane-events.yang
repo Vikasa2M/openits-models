@@ -27,8 +27,18 @@ module openits-reversible-lane-events {
      from the base module (ygot's proto generator fails on modules
      containing notification statements).";
 
-  openits-types:openits-version "0.7.0";
+  openits-types:openits-version "0.8.0";
 
+  revision 2026-11-14 {
+    description
+      "Raise openits-version to 0.8.0. The breaking 2026-10-22 revision
+       left it at 0.7.0.
+
+       Also record that this module's events carry the device-log case
+       openits-types 2026-11-09 added to the shared wire-source
+       grouping (log-name, log-text). Additive; no change to this
+       module's own statements.";
+  }
   revision 2026-10-22 {
     description
       "Add lcs-indication-changed, one lane-use signal head changing indication, so a consumer can audit a changeover against MUTCD 4T.04. Widen lcs-conflict-detected to any 4T.04 prohibited read-back pair, or a downward green arrow without an opposing red X, and name green-arrow (the downward green arrow) in it. Rename lane-state-changed new-state and new-direction to state and direction. Constrain kind on lane-state-changed, lcs-conflict-detected and transition-timeout to a sub-base per notification (concrete kind identities unchanged). Breaking: lane-state-changed new-state/new-direction are now state/direction.";

@@ -474,7 +474,8 @@
         "2026-10-13",
         "2026-10-14",
         "2026-10-16",
-        "2026-10-20"
+        "2026-10-20",
+        "2026-11-14"
       ],
       "events": [
         "openits.ramp-metering.fault-cleared.v1",
@@ -520,7 +521,8 @@
             "2026-08-05",
             "2026-10-14",
             "2026-10-16",
-            "2026-10-20"
+            "2026-10-20",
+            "2026-11-14"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TI03 (Traffic Metering)",
@@ -610,7 +612,8 @@
         "2026-10-15",
         "2026-10-16",
         "2026-10-22",
-        "2026-10-23"
+        "2026-10-23",
+        "2026-11-14"
       ],
       "events": [
         "openits.reversible-lane.fault-cleared.v1",
@@ -654,7 +657,8 @@
             "2026-10-14",
             "2026-10-15",
             "2026-10-16",
-            "2026-10-22"
+            "2026-10-22",
+            "2026-11-14"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TM16 (Reversible Lane Management)",
@@ -684,7 +688,8 @@
             "2026-09-08",
             "2026-10-13",
             "2026-10-15",
-            "2026-10-22"
+            "2026-10-22",
+            "2026-11-14"
           ],
           "refStd": [
             "MUTCD 11th Edition (2023) Section 4T.04",
@@ -908,7 +913,8 @@
         "2026-10-16",
         "2026-10-17",
         "2026-10-20",
-        "2026-11-09"
+        "2026-11-09",
+        "2026-11-14"
       ],
       "events": [
         "openits.signal-control.cabinet-output-changed.v1",
@@ -1013,7 +1019,8 @@
             "2026-10-14",
             "2026-10-16",
             "2026-10-17",
-            "2026-10-20"
+            "2026-10-20",
+            "2026-11-14"
           ],
           "refStd": [
             "ARC-IT 9.1 Service Package TI01",
@@ -1468,7 +1475,8 @@
         "2026-07-10",
         "2026-07-13",
         "2026-07-21",
-        "2026-10-20"
+        "2026-10-20",
+        "2026-11-14"
       ],
       "refStd": [
         "(de-lock-in: MUTCD constraints advisory-in-core)",
@@ -2175,6 +2183,11 @@
         "openits-nema-common/2026-10-20/MANIFEST.json",
         "openits-nema-common/2026-10-20/README.md",
         "openits-nema-common/2026-10-20/schema.yang"
+      ],
+      "2026-11-14": [
+        "openits-nema-common/2026-11-14/MANIFEST.json",
+        "openits-nema-common/2026-11-14/README.md",
+        "openits-nema-common/2026-11-14/schema.yang"
       ]
     },
     "openits-perception": {
@@ -2331,6 +2344,13 @@
         "openits-ramp-metering/2026-10-20/README.md",
         "openits-ramp-metering/2026-10-20/schema.shape",
         "openits-ramp-metering/2026-10-20/schema.yang"
+      ],
+      "2026-11-14": [
+        "openits-ramp-metering/2026-11-14/MANIFEST.json",
+        "openits-ramp-metering/2026-11-14/README.md",
+        "openits-ramp-metering/2026-11-14/schema.proto",
+        "openits-ramp-metering/2026-11-14/schema.shape",
+        "openits-ramp-metering/2026-11-14/schema.yang"
       ]
     },
     "openits-ramp-metering-events": {
@@ -2437,6 +2457,13 @@
         "openits-reversible-lane/2026-10-22/README.md",
         "openits-reversible-lane/2026-10-22/schema.shape",
         "openits-reversible-lane/2026-10-22/schema.yang"
+      ],
+      "2026-11-14": [
+        "openits-reversible-lane/2026-11-14/MANIFEST.json",
+        "openits-reversible-lane/2026-11-14/README.md",
+        "openits-reversible-lane/2026-11-14/schema.proto",
+        "openits-reversible-lane/2026-11-14/schema.shape",
+        "openits-reversible-lane/2026-11-14/schema.yang"
       ]
     },
     "openits-reversible-lane-events": {
@@ -2489,6 +2516,14 @@
         "openits-reversible-lane-events/2026-10-22/schema.proto",
         "openits-reversible-lane-events/2026-10-22/schema.shape",
         "openits-reversible-lane-events/2026-10-22/schema.yang"
+      ],
+      "2026-11-14": [
+        "openits-reversible-lane-events/2026-11-14/MANIFEST.json",
+        "openits-reversible-lane-events/2026-11-14/README.md",
+        "openits-reversible-lane-events/2026-11-14/schema.json",
+        "openits-reversible-lane-events/2026-11-14/schema.proto",
+        "openits-reversible-lane-events/2026-11-14/schema.shape",
+        "openits-reversible-lane-events/2026-11-14/schema.yang"
       ]
     },
     "openits-reversible-lane-mutcd": {
@@ -2728,6 +2763,13 @@
         "openits-signal-control/2026-10-20/README.md",
         "openits-signal-control/2026-10-20/schema.shape",
         "openits-signal-control/2026-10-20/schema.yang"
+      ],
+      "2026-11-14": [
+        "openits-signal-control/2026-11-14/MANIFEST.json",
+        "openits-signal-control/2026-11-14/README.md",
+        "openits-signal-control/2026-11-14/schema.proto",
+        "openits-signal-control/2026-11-14/schema.shape",
+        "openits-signal-control/2026-11-14/schema.yang"
       ]
     },
     "openits-signal-control-coordination-events": {
@@ -3799,6 +3841,9 @@
         "current": false
       },
       "2026-10-20": {
+        "current": false
+      },
+      "2026-11-14": {
         "current": true
       }
     },
@@ -3905,6 +3950,13 @@
         "current": false
       },
       "2026-10-20": {
+        "current": false,
+        "shapeDigest": "sha256:1899c9bb667aa1c18f33a88e4b2c4e73ca24553cdead45353ed4e3eff653376f",
+        "messages": {
+          "openits.ramp_metering.v1.RampMeter": "sha256:83a9819407ac46793c6c9ff527fbec637cfb7e63163e5103723234f18f48f21d"
+        }
+      },
+      "2026-11-14": {
         "current": true,
         "shapeDigest": "sha256:1899c9bb667aa1c18f33a88e4b2c4e73ca24553cdead45353ed4e3eff653376f",
         "messages": {
@@ -3980,6 +4032,13 @@
         "current": false
       },
       "2026-10-22": {
+        "current": false,
+        "shapeDigest": "sha256:fad5d84de11e56443c7b59d79eb6087b687cb72f73adfca0a71faa856f631a2e",
+        "messages": {
+          "openits.reversible_lane.v1.ReversibleLane": "sha256:13b15ac15af5c94e4d063493d6d5eeb6e34cb5960121f0cc353b9785522b3564"
+        }
+      },
+      "2026-11-14": {
         "current": true,
         "shapeDigest": "sha256:fad5d84de11e56443c7b59d79eb6087b687cb72f73adfca0a71faa856f631a2e",
         "messages": {
@@ -4007,6 +4066,17 @@
         "current": false
       },
       "2026-10-22": {
+        "current": false,
+        "shapeDigest": "sha256:1a36f33ab6b4e0c19b1d2f7ff500447d8145a86dc330d5f0224f96b64f3696cb",
+        "messages": {
+          "openits.reversible_lane.v1.GateStatusChanged": "sha256:6fb0a96b3f3585e1ad990a621d834b0aa647990683893bf406858c05b54541fc",
+          "openits.reversible_lane.v1.LaneStateChanged": "sha256:34c8bd3aca7df8607e2cc6c76c56bf8d173086e10d083e2f3f330f2879dbd6ab",
+          "openits.reversible_lane.v1.LcsConflictDetected": "sha256:e48bc7bd5410935bf89e0207b8b18b5ab4e5ac800acdc52c1dd2edc5f84900af",
+          "openits.reversible_lane.v1.LcsIndicationChanged": "sha256:bcf207b99c5f4dcdc7bb039700f7d81c74d786693b6af6afbb1fbaec1f283bc0",
+          "openits.reversible_lane.v1.TransitionTimeout": "sha256:41ce4eb210d08e1550b7ea7348d30e8892bb3205b9239b7b3962ab67de612490"
+        }
+      },
+      "2026-11-14": {
         "current": true,
         "ceTypes": [
           "openits.reversible-lane.gate-status-changed.v1",
@@ -4015,12 +4085,12 @@
           "openits.reversible-lane.lcs-indication-changed.v1",
           "openits.reversible-lane.transition-timeout.v1"
         ],
-        "shapeDigest": "sha256:1a36f33ab6b4e0c19b1d2f7ff500447d8145a86dc330d5f0224f96b64f3696cb",
+        "shapeDigest": "sha256:92a5cbe19f317862906d5c24766a7e02b066ad26611b8ccf572ad69362e3ccac",
         "messages": {
-          "openits.reversible_lane.v1.GateStatusChanged": "sha256:6fb0a96b3f3585e1ad990a621d834b0aa647990683893bf406858c05b54541fc",
-          "openits.reversible_lane.v1.LaneStateChanged": "sha256:34c8bd3aca7df8607e2cc6c76c56bf8d173086e10d083e2f3f330f2879dbd6ab",
-          "openits.reversible_lane.v1.LcsConflictDetected": "sha256:e48bc7bd5410935bf89e0207b8b18b5ab4e5ac800acdc52c1dd2edc5f84900af",
-          "openits.reversible_lane.v1.LcsIndicationChanged": "sha256:bcf207b99c5f4dcdc7bb039700f7d81c74d786693b6af6afbb1fbaec1f283bc0",
+          "openits.reversible_lane.v1.GateStatusChanged": "sha256:6b49de34dc6c42bea49966b4565d7494ad90628f9159ca579514c13dd03ec3ef",
+          "openits.reversible_lane.v1.LaneStateChanged": "sha256:7a3ae5cb81245de1c63bc2f5b626d0f42fd70d66e368ccd05baf9a4689a7f998",
+          "openits.reversible_lane.v1.LcsConflictDetected": "sha256:4ae1bc5e32c0c9510bfc0e22af1aa9108d458bc8cecf53c333ac4a5c24a50aa9",
+          "openits.reversible_lane.v1.LcsIndicationChanged": "sha256:9abebf894deb6f1f9975beb13b9c88d5322db57d3bbefe9addb0bd8faaf96c60",
           "openits.reversible_lane.v1.TransitionTimeout": "sha256:41ce4eb210d08e1550b7ea7348d30e8892bb3205b9239b7b3962ab67de612490"
         }
       }
@@ -4197,6 +4267,13 @@
         "current": false
       },
       "2026-10-20": {
+        "current": false,
+        "shapeDigest": "sha256:6f04a9ce0e4cd0007bd1f8c6b0a12718c475dce37b3330520c81f95e3e7ffa69",
+        "messages": {
+          "openits.signal_control.v1.SignalController": "sha256:34b8e8b635ca0a75dfebaf04a86a0df4db9afc4e87dcc4ee6200002bf87259fe"
+        }
+      },
+      "2026-11-14": {
         "current": true,
         "shapeDigest": "sha256:6f04a9ce0e4cd0007bd1f8c6b0a12718c475dce37b3330520c81f95e3e7ffa69",
         "messages": {

@@ -1,0 +1,7 @@
+{
+  "module": "openits-nema-common",
+  "revision": "2026-11-14",
+  "files": [
+    "schema.yang"
+  ]
+}
