@@ -160,13 +160,7 @@ func Generate(yangDir, outDir, lockPath string) error {
 			of = &outFile{pkg: pkg, pf: &ProtoFile{Types: typesTarget, ClaimedEnums: enumRegistryFor(pkg), SelfImportPath: relFile, LockPrefix: pkg}, origins: map[string][]string{}}
 			files[relFile] = of
 		}
-		for _, c := range sortedChildren(mod) {
-			if c.Kind != yang.NotificationEntry {
-				continue
-			}
-			if st := entryStatus(c); st == "deprecated" || st == "obsolete" {
-				continue
-			}
+		for _, c := range eventRootEntries(mod) {
 			pending = append(pending, pendingRoot{of: of, entry: c, msgName: ProtoName(c.Name), origin: mod.Name + ":" + c.Name})
 		}
 	}
@@ -184,19 +178,7 @@ func Generate(yangDir, outDir, lockPath string) error {
 			of = &outFile{pkg: route.pkg, pf: &ProtoFile{Types: typesTarget, ClaimedEnums: enumRegistryFor(route.pkg), SelfImportPath: route.file, LockPrefix: route.pkg}, origins: map[string][]string{}}
 			files[route.file] = of
 		}
-		for _, c := range sortedChildren(mod) {
-			if c.Kind == yang.NotificationEntry {
-				continue
-			}
-			if c.RPC != nil {
-				continue // top-level rpc statements aren't config/state trees
-			}
-			if st := entryStatus(c); st == "deprecated" || st == "obsolete" {
-				continue
-			}
-			if !c.IsContainer() && !c.IsList() {
-				continue
-			}
+		for _, c := range configStateRootEntries(mod) {
 			pending = append(pending, pendingRoot{of: of, entry: c, msgName: ProtoName(c.Name), origin: mod.Name + ":config-state"})
 		}
 	}
@@ -714,7 +696,17 @@ func main() {
 	lockPath := flag.String("lock", "tools/yang-proto-gen/field-numbers.yaml", "path to the field-number lock file")
 	asyncAPI := flag.Bool("asyncapi", false, "emit asyncapi.yaml from the derived ce-type catalog + JSON Schemas into -out, instead of generating proto")
 	catalog := flag.Bool("catalog", false, "emit index.json (the neutral machine-readable self-index) into -out, scanning -out for the registry snapshot map, instead of generating proto")
+	shapes := flag.Bool("shapes", false, "emit each module's wire shape (<module>.shape) and own messages (<module>.proto) into -out, from the compiled -descriptors set, instead of generating proto")
+	descriptors := flag.String("descriptors", "", "with -shapes: a FileDescriptorSet (protoc --include_imports --descriptor_set_out) of every generated .proto")
 	flag.Parse()
+
+	if *shapes {
+		if err := GenerateShapes(*yangDir, *descriptors, *outDir); err != nil {
+			fmt.Fprintln(os.Stderr, "yang-proto-gen:", err)
+			os.Exit(1)
+		}
+		return
+	}
 
 	if *asyncAPI {
 		if err := GenerateAsyncAPI(*yangDir, filepath.Join(*outDir, "asyncapi.yaml")); err != nil {

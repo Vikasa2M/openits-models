@@ -12,6 +12,7 @@
         "docs",
         "scripts",
         "tools",
+        "internal",
         "README.md",
         "CONTRIBUTING.md",
         "CODE_OF_CONDUCT.md",

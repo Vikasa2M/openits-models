@@ -1773,6 +1773,7 @@
       "2026-10-16": [
         "openits-cctv/2026-10-16/MANIFEST.json",
         "openits-cctv/2026-10-16/README.md",
+        "openits-cctv/2026-10-16/schema.shape",
         "openits-cctv/2026-10-16/schema.yang"
       ]
     },
@@ -1796,6 +1797,7 @@
         "openits-cctv-events/2026-10-13/README.md",
         "openits-cctv-events/2026-10-13/schema.json",
         "openits-cctv-events/2026-10-13/schema.proto",
+        "openits-cctv-events/2026-10-13/schema.shape",
         "openits-cctv-events/2026-10-13/schema.yang"
       ]
     },
@@ -1850,6 +1852,7 @@
         "openits-common-comm-health-events/2026-10-16/README.md",
         "openits-common-comm-health-events/2026-10-16/schema.json",
         "openits-common-comm-health-events/2026-10-16/schema.proto",
+        "openits-common-comm-health-events/2026-10-16/schema.shape",
         "openits-common-comm-health-events/2026-10-16/schema.yang"
       ]
     },
@@ -1887,6 +1890,7 @@
         "openits-common-fault-events/2026-10-14/README.md",
         "openits-common-fault-events/2026-10-14/schema.json",
         "openits-common-fault-events/2026-10-14/schema.proto",
+        "openits-common-fault-events/2026-10-14/schema.shape",
         "openits-common-fault-events/2026-10-14/schema.yang"
       ]
     },
@@ -1917,6 +1921,7 @@
         "openits-common-mode-events/2026-10-17/README.md",
         "openits-common-mode-events/2026-10-17/schema.json",
         "openits-common-mode-events/2026-10-17/schema.proto",
+        "openits-common-mode-events/2026-10-17/schema.shape",
         "openits-common-mode-events/2026-10-17/schema.yang"
       ]
     },
@@ -1971,6 +1976,7 @@
       "2026-10-16": [
         "openits-dms/2026-10-16/MANIFEST.json",
         "openits-dms/2026-10-16/README.md",
+        "openits-dms/2026-10-16/schema.shape",
         "openits-dms/2026-10-16/schema.yang"
       ]
     },
@@ -2022,6 +2028,7 @@
         "openits-dms-events/2026-10-13/README.md",
         "openits-dms-events/2026-10-13/schema.json",
         "openits-dms-events/2026-10-13/schema.proto",
+        "openits-dms-events/2026-10-13/schema.shape",
         "openits-dms-events/2026-10-13/schema.yang"
       ]
     },
@@ -2113,6 +2120,7 @@
       "2026-10-16": [
         "openits-ess/2026-10-16/MANIFEST.json",
         "openits-ess/2026-10-16/README.md",
+        "openits-ess/2026-10-16/schema.shape",
         "openits-ess/2026-10-16/schema.yang"
       ]
     },
@@ -2136,6 +2144,7 @@
         "openits-ess-events/2026-10-13/README.md",
         "openits-ess-events/2026-10-13/schema.json",
         "openits-ess-events/2026-10-13/schema.proto",
+        "openits-ess-events/2026-10-13/schema.shape",
         "openits-ess-events/2026-10-13/schema.yang"
       ]
     },
@@ -2212,6 +2221,7 @@
       "2026-10-16": [
         "openits-perception/2026-10-16/MANIFEST.json",
         "openits-perception/2026-10-16/README.md",
+        "openits-perception/2026-10-16/schema.shape",
         "openits-perception/2026-10-16/schema.yang"
       ]
     },
@@ -2249,6 +2259,7 @@
         "openits-perception-events/2026-10-13/README.md",
         "openits-perception-events/2026-10-13/schema.json",
         "openits-perception-events/2026-10-13/schema.proto",
+        "openits-perception-events/2026-10-13/schema.shape",
         "openits-perception-events/2026-10-13/schema.yang"
       ]
     },
@@ -2318,6 +2329,7 @@
       "2026-10-20": [
         "openits-ramp-metering/2026-10-20/MANIFEST.json",
         "openits-ramp-metering/2026-10-20/README.md",
+        "openits-ramp-metering/2026-10-20/schema.shape",
         "openits-ramp-metering/2026-10-20/schema.yang"
       ]
     },
@@ -2348,6 +2360,7 @@
         "openits-ramp-metering-events/2026-10-13/README.md",
         "openits-ramp-metering-events/2026-10-13/schema.json",
         "openits-ramp-metering-events/2026-10-13/schema.proto",
+        "openits-ramp-metering-events/2026-10-13/schema.shape",
         "openits-ramp-metering-events/2026-10-13/schema.yang"
       ]
     },
@@ -2422,6 +2435,7 @@
       "2026-10-22": [
         "openits-reversible-lane/2026-10-22/MANIFEST.json",
         "openits-reversible-lane/2026-10-22/README.md",
+        "openits-reversible-lane/2026-10-22/schema.shape",
         "openits-reversible-lane/2026-10-22/schema.yang"
       ]
     },
@@ -2473,6 +2487,7 @@
         "openits-reversible-lane-events/2026-10-22/README.md",
         "openits-reversible-lane-events/2026-10-22/schema.json",
         "openits-reversible-lane-events/2026-10-22/schema.proto",
+        "openits-reversible-lane-events/2026-10-22/schema.shape",
         "openits-reversible-lane-events/2026-10-22/schema.yang"
       ]
     },
@@ -2554,6 +2569,7 @@
       "2026-10-16": [
         "openits-rsu/2026-10-16/MANIFEST.json",
         "openits-rsu/2026-10-16/README.md",
+        "openits-rsu/2026-10-16/schema.shape",
         "openits-rsu/2026-10-16/schema.yang"
       ]
     },
@@ -2589,6 +2605,7 @@
         "openits-rsu-events/2026-10-13/README.md",
         "openits-rsu-events/2026-10-13/schema.json",
         "openits-rsu-events/2026-10-13/schema.proto",
+        "openits-rsu-events/2026-10-13/schema.shape",
         "openits-rsu-events/2026-10-13/schema.yang"
       ]
     },
@@ -2709,6 +2726,7 @@
       "2026-10-20": [
         "openits-signal-control/2026-10-20/MANIFEST.json",
         "openits-signal-control/2026-10-20/README.md",
+        "openits-signal-control/2026-10-20/schema.shape",
         "openits-signal-control/2026-10-20/schema.yang"
       ]
     },
@@ -2785,6 +2803,7 @@
         "openits-signal-control-events/2026-10-20/README.md",
         "openits-signal-control-events/2026-10-20/schema.json",
         "openits-signal-control-events/2026-10-20/schema.proto",
+        "openits-signal-control-events/2026-10-20/schema.shape",
         "openits-signal-control-events/2026-10-20/schema.yang"
       ],
       "2026-11-09": [
@@ -3006,6 +3025,7 @@
       "2026-10-16": [
         "openits-traffic-sensor/2026-10-16/MANIFEST.json",
         "openits-traffic-sensor/2026-10-16/README.md",
+        "openits-traffic-sensor/2026-10-16/schema.shape",
         "openits-traffic-sensor/2026-10-16/schema.yang"
       ]
     },
@@ -3029,6 +3049,7 @@
         "openits-traffic-sensor-events/2026-10-13/README.md",
         "openits-traffic-sensor-events/2026-10-13/schema.json",
         "openits-traffic-sensor-events/2026-10-13/schema.proto",
+        "openits-traffic-sensor-events/2026-10-13/schema.shape",
         "openits-traffic-sensor-events/2026-10-13/schema.yang"
       ]
     },
@@ -3286,6 +3307,7 @@
         "openits-work-zone-events/2026-10-13/README.md",
         "openits-work-zone-events/2026-10-13/schema.json",
         "openits-work-zone-events/2026-10-13/schema.proto",
+        "openits-work-zone-events/2026-10-13/schema.shape",
         "openits-work-zone-events/2026-10-13/schema.yang"
       ]
     },
@@ -3355,6 +3377,7 @@
         "openits-zone-occupancy-events/2026-10-16/README.md",
         "openits-zone-occupancy-events/2026-10-16/schema.json",
         "openits-zone-occupancy-events/2026-10-16/schema.proto",
+        "openits-zone-occupancy-events/2026-10-16/schema.shape",
         "openits-zone-occupancy-events/2026-10-16/schema.yang"
       ]
     },
@@ -3423,6 +3446,1251 @@
         "trafficvision-traffic-sensor-camera/2026-10-12/README.md",
         "trafficvision-traffic-sensor-camera/2026-10-12/schema.yang"
       ]
+    }
+  },
+  "snapshots": {
+    "example-signal-control-vehicle-counts": {
+      "2026-04-27": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      }
+    },
+    "ledstar-dms-travel-time": {
+      "2026-07-07": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-10-12": {
+        "current": false
+      }
+    },
+    "openits-cabinet-power": {
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-08-23": {
+        "current": false
+      },
+      "2026-10-14": {
+        "current": true
+      }
+    },
+    "openits-cctv": {
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-10-14": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": true,
+        "shapeDigest": "sha256:06206868d42a9e9a656a515851f32b15d5ac8cf126d963b331fc3575a523be43",
+        "messages": {
+          "openits.cctv.v1.Camera": "sha256:c8b8ef02f692a7a07a65822105fb17973f43c762a0b12c94c64cf93aa347df7b"
+        }
+      }
+    },
+    "openits-cctv-events": {
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-10-13": {
+        "current": true,
+        "ceTypes": [
+          "openits.cctv.lockout-denied.v1",
+          "openits.cctv.ptz-move-commanded.v1",
+          "openits.cctv.ptz-preset-recalled.v1",
+          "openits.cctv.tour-state-changed.v1"
+        ],
+        "shapeDigest": "sha256:e2bbc7b9656832a0a186c37c0569e39ebbfc805cc3943abd219b6951f0db0096",
+        "messages": {
+          "openits.cctv.v1.LockoutDenied": "sha256:20d09df1ce789bcbb73f76e49391f0177fd50baf4395bfd9368ab44cb9208bdc",
+          "openits.cctv.v1.PtzMoveCommanded": "sha256:c5cfa685ca3e7298fc891d7e32b2ff8377d2edc3b2a9d7c7634baa03337249e9",
+          "openits.cctv.v1.PtzPresetRecalled": "sha256:b4c467e7b715922b8a9c3cd41e44590250466610485203da5111cf65535683e5",
+          "openits.cctv.v1.TourStateChanged": "sha256:270cf2460957a29715ea7af25137c659161fdbb34e2b367b80b59e888868e1c1"
+        }
+      }
+    },
+    "openits-cctv-types": {
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-10-14": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": true
+      }
+    },
+    "openits-common-comm-health-events": {
+      "2026-05-17": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-09-02": {
+        "current": false
+      },
+      "2026-10-13": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": true,
+        "ceTypes": [
+          "openits.signal-control.comm-health-event.v1",
+          "openits.work-zone.comm-health-event.v1"
+        ],
+        "shapeDigest": "sha256:f392cd453dfc417e103b6870e39f95eef6e68051b867a7e48657a33a46e1347d",
+        "messages": {
+          "openits.common.v1.CommHealthEvent": "sha256:0a4ab7814cfe111c8e22c13165bc0657941a8861d7fdf3e86dbd6edcdb874fd9"
+        }
+      }
+    },
+    "openits-common-fault-events": {
+      "2026-07-10": {
+        "current": false
+      },
+      "2026-07-12": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-10-13": {
+        "current": false
+      },
+      "2026-10-14": {
+        "current": true,
+        "ceTypes": [
+          "openits.cctv.fault-cleared.v1",
+          "openits.cctv.fault-raised.v1",
+          "openits.dms.fault-cleared.v1",
+          "openits.dms.fault-raised.v1",
+          "openits.ess.fault-cleared.v1",
+          "openits.ess.fault-raised.v1",
+          "openits.perception.fault-cleared.v1",
+          "openits.perception.fault-raised.v1",
+          "openits.ramp-metering.fault-cleared.v1",
+          "openits.ramp-metering.fault-raised.v1",
+          "openits.reversible-lane.fault-cleared.v1",
+          "openits.reversible-lane.fault-raised.v1",
+          "openits.rsu.fault-cleared.v1",
+          "openits.rsu.fault-raised.v1",
+          "openits.signal-control.fault-cleared.v1",
+          "openits.signal-control.fault-raised.v1",
+          "openits.traffic-sensor.fault-cleared.v1",
+          "openits.traffic-sensor.fault-raised.v1"
+        ],
+        "shapeDigest": "sha256:67329e69ebd094bb75282570eef37066b2601675fe5b0871445bdbc74f3f63ca",
+        "messages": {
+          "openits.common.v1.FaultCleared": "sha256:f64ac8d707cfe75f17fbcbf29242946d4c38b75f03831b677fdf69352825b8b0",
+          "openits.common.v1.FaultRaised": "sha256:9aff87dd55cdd1ed893d57de11713139d40ca28525a932c47edfe9df4604321d"
+        }
+      }
+    },
+    "openits-common-mode-events": {
+      "2026-05-23": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-10-13": {
+        "current": false
+      },
+      "2026-10-17": {
+        "current": true,
+        "ceTypes": [
+          "openits.cctv.mode-changed.v1",
+          "openits.dms.mode-changed.v1",
+          "openits.ramp-metering.mode-changed.v1",
+          "openits.rsu.mode-changed.v1",
+          "openits.signal-control.mode-changed.v1"
+        ],
+        "shapeDigest": "sha256:92a88e596f15589482726f7f829109d7584f50280a295c5f7ce027d83733f1d3",
+        "messages": {
+          "openits.common.v1.ModeChanged": "sha256:c79ce4bf2f6afc188bf8c0e41d817d9d26ae74ddc1a264372f3008a772295163"
+        }
+      }
+    },
+    "openits-device-diagnostics": {
+      "2026-07-21": {
+        "current": true
+      }
+    },
+    "openits-dms": {
+      "2026-07-10": {
+        "current": false
+      },
+      "2026-07-12": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-08-23": {
+        "current": false
+      },
+      "2026-09-08": {
+        "current": false
+      },
+      "2026-10-12": {
+        "current": false
+      },
+      "2026-10-14": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": true,
+        "shapeDigest": "sha256:674ae10925e518097eb8b56e8d87f855a65410e2ccac00ababc0143f0733e4da",
+        "messages": {
+          "openits.dms.v1.Sign": "sha256:92e9c4fbad252b67d5e1db454abb133c9ffff5972c19ccfab83a73391a301fa7"
+        }
+      }
+    },
+    "openits-dms-events": {
+      "2026-07-12": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-07-23": {
+        "current": false
+      },
+      "2026-08-23": {
+        "current": false
+      },
+      "2026-08-27": {
+        "current": false
+      },
+      "2026-09-07": {
+        "current": false
+      },
+      "2026-10-13": {
+        "current": true,
+        "ceTypes": [
+          "openits.dms.message-activation-failed.v1",
+          "openits.dms.message-changed.v1",
+          "openits.dms.sign-status-report.v1"
+        ],
+        "shapeDigest": "sha256:fbd17bd8baee45c925bb28fad99403c098141f55ca0da7d6d70df6dfda5687b4",
+        "messages": {
+          "openits.dms.v1.MessageActivationFailed": "sha256:310766c188ea6f957d33ee9e8a1c1b46977ef8f0521fc5eae769f980d5545da3",
+          "openits.dms.v1.MessageChanged": "sha256:a1a754b6612d34eec32ea66b0334909cd8cc1da39a00e4b7ce124b36a692ddfd",
+          "openits.dms.v1.SignStatusReport": "sha256:084755aefc726e3daf6ee048e62dfb0dd3202bd46b7a8968435eed58d53718b6"
+        }
+      }
+    },
+    "openits-dms-mutcd": {
+      "2026-07-21": {
+        "current": false
+      }
+    },
+    "openits-dms-types": {
+      "2026-06-11": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-08-23": {
+        "current": false
+      },
+      "2026-08-27": {
+        "current": false
+      },
+      "2026-09-07": {
+        "current": false
+      },
+      "2026-09-08": {
+        "current": false
+      },
+      "2026-10-13": {
+        "current": false
+      },
+      "2026-10-14": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": true
+      }
+    },
+    "openits-ess": {
+      "2026-07-10": {
+        "current": false
+      },
+      "2026-07-12": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-10-14": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": true,
+        "shapeDigest": "sha256:3b8f33ddc2ba0072a9100136eafd77b1f9a57623d5223762cd39818a522b8dc0",
+        "messages": {
+          "openits.ess.v1.Station": "sha256:8bc2cae63a7274a6ba502362af3486690192e77b1f18d34bdb865ed0b22ea5ca"
+        }
+      }
+    },
+    "openits-ess-events": {
+      "2026-07-12": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-10-13": {
+        "current": true,
+        "ceTypes": [
+          "openits.ess.sensor-recalibrated.v1",
+          "openits.ess.weather-alert.v1"
+        ],
+        "shapeDigest": "sha256:0658ffb20b863696b73175c13cb617c274c11c987ff4b9c03874b0e716450882",
+        "messages": {
+          "openits.ess.v1.SensorRecalibrated": "sha256:179c33c704c7085efd6c10ab6a3a07042c9c73e80821d40b1a21d689b585cfda",
+          "openits.ess.v1.WeatherAlert": "sha256:4d1b2cab08df7b5dec834b30e05c559a03c3c7d59ccc53c358185b0ecdfd6c46"
+        }
+      }
+    },
+    "openits-ess-types": {
+      "2026-06-11": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": true
+      }
+    },
+    "openits-nema-common": {
+      "2026-07-10": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-10-20": {
+        "current": true
+      }
+    },
+    "openits-perception": {
+      "2026-07-10": {
+        "current": false
+      },
+      "2026-07-11": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-08-15": {
+        "current": false
+      },
+      "2026-09-07": {
+        "current": false
+      },
+      "2026-09-08": {
+        "current": false
+      },
+      "2026-10-14": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": true,
+        "shapeDigest": "sha256:e9b30db65a0bb4519a964d956c106548586d0d3f3bef28a1f51d0917cd4a3de0",
+        "messages": {
+          "openits.perception.v1.PerceptionSensor": "sha256:f11cef9c6a2c05bcc7070126b911bf6c39345311db91574d74013d769e8ae031"
+        }
+      }
+    },
+    "openits-perception-events": {
+      "2026-07-12": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-15": {
+        "current": false
+      },
+      "2026-09-07": {
+        "current": false
+      },
+      "2026-10-13": {
+        "current": true,
+        "ceTypes": [
+          "openits.perception.zone-incident-cleared.v1",
+          "openits.perception.zone-incident-detected.v1",
+          "openits.perception.zone-incident-updated.v1",
+          "openits.perception.zone-interval-report.v1"
+        ],
+        "shapeDigest": "sha256:2feafc90c9463f0976593b56d535a1a2d8ea637efaf3ba1c66fb5f883371a22e",
+        "messages": {
+          "openits.perception.v1.ZoneIncidentCleared": "sha256:a3e784711f836035c9abef00a8edde3dec15ba75b8a33e13d3f987ad47105b75",
+          "openits.perception.v1.ZoneIncidentDetected": "sha256:b645c9755fda88b2f0d4338a166eaed31c603af66a800bb80918b5b58e2d3066",
+          "openits.perception.v1.ZoneIncidentUpdated": "sha256:1c211de1eedf65c48f3d5a1bd880bffd3999ae27c528b7a209ff559284853099",
+          "openits.perception.v1.ZoneIntervalReport": "sha256:a3cc5cf06617b97fc25e3925c4dd53398d1247bde2f38fe89d03cbf3e2246052"
+        }
+      }
+    },
+    "openits-perception-types": {
+      "2026-07-11": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-08-15": {
+        "current": false
+      },
+      "2026-09-07": {
+        "current": false
+      },
+      "2026-09-08": {
+        "current": true
+      }
+    },
+    "openits-ramp-metering": {
+      "2026-07-10": {
+        "current": false
+      },
+      "2026-07-12": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-10-14": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": false
+      },
+      "2026-10-20": {
+        "current": true,
+        "shapeDigest": "sha256:1899c9bb667aa1c18f33a88e4b2c4e73ca24553cdead45353ed4e3eff653376f",
+        "messages": {
+          "openits.ramp_metering.v1.RampMeter": "sha256:83a9819407ac46793c6c9ff527fbec637cfb7e63163e5103723234f18f48f21d"
+        }
+      }
+    },
+    "openits-ramp-metering-events": {
+      "2026-07-12": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-10-13": {
+        "current": true,
+        "ceTypes": [
+          "openits.ramp-metering.queue-override-activated.v1",
+          "openits.ramp-metering.queue-override-cleared.v1",
+          "openits.ramp-metering.release-rate-changed.v1"
+        ],
+        "shapeDigest": "sha256:9342d123fe7fafb246e35ebfd01b255d3f358e238db6f248a731fd54ee4818bc",
+        "messages": {
+          "openits.ramp_metering.v1.QueueOverrideActivated": "sha256:b9eb96385fa5e6b981db6be3ca113baab31aee056c0a4dbab2f18ccc7469d4ad",
+          "openits.ramp_metering.v1.QueueOverrideCleared": "sha256:e6fa80421e31db15908ef42b757accec02c79d8b9e2c95db0ae8094c8c1c83a2",
+          "openits.ramp_metering.v1.ReleaseRateChanged": "sha256:cbee23a417dca580fd5ee29a467f883b5f8bc6f043f98a83ae3e18fc32b77295"
+        }
+      }
+    },
+    "openits-ramp-metering-types": {
+      "2026-06-11": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-10-13": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": true
+      }
+    },
+    "openits-reversible-lane": {
+      "2026-07-10": {
+        "current": false
+      },
+      "2026-07-11": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-09-08": {
+        "current": false
+      },
+      "2026-10-14": {
+        "current": false
+      },
+      "2026-10-15": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": false
+      },
+      "2026-10-22": {
+        "current": true,
+        "shapeDigest": "sha256:fad5d84de11e56443c7b59d79eb6087b687cb72f73adfca0a71faa856f631a2e",
+        "messages": {
+          "openits.reversible_lane.v1.ReversibleLane": "sha256:13b15ac15af5c94e4d063493d6d5eeb6e34cb5960121f0cc353b9785522b3564"
+        }
+      }
+    },
+    "openits-reversible-lane-events": {
+      "2026-07-12": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-07-23": {
+        "current": false
+      },
+      "2026-09-08": {
+        "current": false
+      },
+      "2026-10-13": {
+        "current": false
+      },
+      "2026-10-15": {
+        "current": false
+      },
+      "2026-10-22": {
+        "current": true,
+        "ceTypes": [
+          "openits.reversible-lane.gate-status-changed.v1",
+          "openits.reversible-lane.lane-state-changed.v1",
+          "openits.reversible-lane.lcs-conflict-detected.v1",
+          "openits.reversible-lane.lcs-indication-changed.v1",
+          "openits.reversible-lane.transition-timeout.v1"
+        ],
+        "shapeDigest": "sha256:1a36f33ab6b4e0c19b1d2f7ff500447d8145a86dc330d5f0224f96b64f3696cb",
+        "messages": {
+          "openits.reversible_lane.v1.GateStatusChanged": "sha256:6fb0a96b3f3585e1ad990a621d834b0aa647990683893bf406858c05b54541fc",
+          "openits.reversible_lane.v1.LaneStateChanged": "sha256:34c8bd3aca7df8607e2cc6c76c56bf8d173086e10d083e2f3f330f2879dbd6ab",
+          "openits.reversible_lane.v1.LcsConflictDetected": "sha256:e48bc7bd5410935bf89e0207b8b18b5ab4e5ac800acdc52c1dd2edc5f84900af",
+          "openits.reversible_lane.v1.LcsIndicationChanged": "sha256:bcf207b99c5f4dcdc7bb039700f7d81c74d786693b6af6afbb1fbaec1f283bc0",
+          "openits.reversible_lane.v1.TransitionTimeout": "sha256:41ce4eb210d08e1550b7ea7348d30e8892bb3205b9239b7b3962ab67de612490"
+        }
+      }
+    },
+    "openits-reversible-lane-mutcd": {
+      "2026-10-22": {
+        "current": false
+      }
+    },
+    "openits-reversible-lane-types": {
+      "2026-07-11": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-09-08": {
+        "current": false
+      },
+      "2026-10-15": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": false
+      },
+      "2026-10-22": {
+        "current": false
+      },
+      "2026-10-23": {
+        "current": true
+      }
+    },
+    "openits-rsu": {
+      "2026-07-10": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-09-08": {
+        "current": false
+      },
+      "2026-10-12": {
+        "current": false
+      },
+      "2026-10-14": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": true,
+        "shapeDigest": "sha256:98d795f3b4dc926f3d397702e56153053957770e56bd9525e1ac03e795a85ed8",
+        "messages": {
+          "openits.rsu.v1.Rsu": "sha256:53d2c86737d88ae84d5719f59c3f5bacb1186c80ec5fdd835e2a8c5feb2e9b7e"
+        }
+      }
+    },
+    "openits-rsu-events": {
+      "2026-07-12": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-07-23": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-10-13": {
+        "current": true,
+        "ceTypes": [
+          "openits.rsu.rsu-broadcast-sample.v1",
+          "openits.rsu.rsu-certificate-expiring.v1",
+          "openits.rsu.rsu-channel-fault.v1",
+          "openits.rsu.rsu-gps-status-change.v1",
+          "openits.rsu.rsu-security-event.v1",
+          "openits.rsu.rsu-srm-received.v1",
+          "openits.rsu.rsu-srm-status-change.v1",
+          "openits.rsu.rsu-tim-broadcast-state-changed.v1",
+          "openits.rsu.rsu-tim-broadcast.v1",
+          "openits.rsu.rsu-tim-cleared.v1",
+          "openits.rsu.rsu-tim-loaded.v1"
+        ],
+        "shapeDigest": "sha256:96268c65cc0fa457eee916a6be143e60eb5b30832f256318057f841341d2f7f8",
+        "messages": {
+          "openits.rsu.v1.RsuBroadcastSample": "sha256:817d0836296cd1a09b02c41ddcd6369032076426c0ffa90b7bead1753a1124de",
+          "openits.rsu.v1.RsuCertificateExpiring": "sha256:bc785f34d8c7934dbb30a19a4b603e01e1b46a7890053cb62c33b7b0fbd2bc2a",
+          "openits.rsu.v1.RsuChannelFault": "sha256:be71dc22cd3253deabe6811437acf99b1e10267a99e8f7924b68c3bc96ebd962",
+          "openits.rsu.v1.RsuGpsStatusChange": "sha256:9d11f488d5930fa170edeefed87d494f9d0220bb180fb38c109dc8ed2dbb9243",
+          "openits.rsu.v1.RsuSecurityEvent": "sha256:caae0bb98c756cbcf7acd2e5572e885ce95228c230717ecf2e84ab5903655f9f",
+          "openits.rsu.v1.RsuSrmReceived": "sha256:d3afa6a98c7c530baa4297cda3afc207d7b0458768a09e7ccd47cdeb6b9be4e6",
+          "openits.rsu.v1.RsuSrmStatusChange": "sha256:632f8a297157067c9ac1256d2b398f09c4e992bb4bd18826b6db3f53b3a980fe",
+          "openits.rsu.v1.RsuTimBroadcast": "sha256:8e61d11408e4d0c10f435a0b8c380e152e4d1ac3606632bd9b7f2b9ebd537dc0",
+          "openits.rsu.v1.RsuTimBroadcastStateChanged": "sha256:8ab2d83a8183a3384efcf6013447c23b621b1c0a98d5bd74e14c6d80b2459cc9",
+          "openits.rsu.v1.RsuTimCleared": "sha256:9bff7b869d5233de0ca26cba29a2e13d83e92c1783b4a54e0fed277fca88a9a7",
+          "openits.rsu.v1.RsuTimLoaded": "sha256:175c739ffceea1de330ad12922b6cf4460200354c48d5cd3980942dc04813232"
+        }
+      }
+    },
+    "openits-rsu-types": {
+      "2026-06-11": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-09-08": {
+        "current": false
+      },
+      "2026-10-13": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": true
+      }
+    },
+    "openits-rsu-us-band-plan": {
+      "2026-07-21": {
+        "current": false
+      }
+    },
+    "openits-schedule": {
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-08-23": {
+        "current": true
+      }
+    },
+    "openits-scms": {
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-08-23": {
+        "current": true
+      }
+    },
+    "openits-signal-control": {
+      "2026-07-10": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-08-23": {
+        "current": false
+      },
+      "2026-09-07": {
+        "current": false
+      },
+      "2026-09-08": {
+        "current": false
+      },
+      "2026-10-14": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": false
+      },
+      "2026-10-17": {
+        "current": false
+      },
+      "2026-10-20": {
+        "current": true,
+        "shapeDigest": "sha256:6f04a9ce0e4cd0007bd1f8c6b0a12718c475dce37b3330520c81f95e3e7ffa69",
+        "messages": {
+          "openits.signal_control.v1.SignalController": "sha256:34b8e8b635ca0a75dfebaf04a86a0df4db9afc4e87dcc4ee6200002bf87259fe"
+        }
+      }
+    },
+    "openits-signal-control-coordination-events": {
+      "2026-05-17": {
+        "current": false
+      },
+      "2026-07-12": {
+        "current": false
+      }
+    },
+    "openits-signal-control-detector-events": {
+      "2026-05-17": {
+        "current": false
+      },
+      "2026-07-12": {
+        "current": false
+      }
+    },
+    "openits-signal-control-events": {
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-09-07": {
+        "current": false
+      },
+      "2026-09-08": {
+        "current": false
+      },
+      "2026-10-13": {
+        "current": false
+      },
+      "2026-10-17": {
+        "current": false
+      },
+      "2026-10-20": {
+        "current": false,
+        "shapeDigest": "sha256:6cd1e960731942895d168623a599f82294d94d333dfe27409a06736574aa8df7",
+        "messages": {
+          "openits.signal_control.v1.CabinetOutputChanged": "sha256:fab7672c0f64a85e436ef6770b742e520a92b4fdf289dabe50a0c47bade013f4",
+          "openits.signal_control.v1.ControllerFaultEvent": "sha256:2f447e22dab2259d457609fe4da0960f1145e4b5d03bb907909e09b6a55f612a",
+          "openits.signal_control.v1.CoordinationChange": "sha256:8ef4901e601a97f9318b5ac8d5dde1dd50d0a12470a085a36e255b24707e029b",
+          "openits.signal_control.v1.DetectorReport": "sha256:26d4a3d800b7d75a1b5daf54a4af7c0ed5c7872a358697c746c9e72ce8897485",
+          "openits.signal_control.v1.DetectorTransition": "sha256:8e67bf0c3d3c882a2e90ca29807477335c2f13cd18083c80c3a3e5e4946a393a",
+          "openits.signal_control.v1.OperationalStatusReport": "sha256:f9c5b1efb9537ea6a811047703cdbe5caa62f273f1a3dc6cee252cbe9ed68261",
+          "openits.signal_control.v1.OverlapChange": "sha256:d0f67b8d896e06bba971a81ea91c0eb260ada8eb5e401fc32e089a1bd69616a1",
+          "openits.signal_control.v1.PedestrianEvent": "sha256:d964947bd212d9c90711b40b31efa541736fdb810cb07bd192aa3e2b65b4f6c7",
+          "openits.signal_control.v1.PhaseStateChange": "sha256:868323e824093d1970fd177e1744bbe33c497974f27b453545955ae7930d93ce",
+          "openits.signal_control.v1.PlanApplied": "sha256:261a5286a165f7639569a0cebb93eafc893ce5a1b7d9b902944c9849242f5fbc",
+          "openits.signal_control.v1.PreemptionActivated": "sha256:1753511706983393ac9dc43f20c9a054706420418407eaa0879006edfd17148b",
+          "openits.signal_control.v1.PreemptionCleared": "sha256:386ee66753f076244ba605e7243c64974c89c8be6c3cc21d6da5c9c701887f9e",
+          "openits.signal_control.v1.PreemptionEvent": "sha256:d635123278ce3eab96b3945d5f90de0775bda99504883ea1bda629cacc43d949",
+          "openits.signal_control.v1.TsamModeChanged": "sha256:9a6276b12f83274cdf828c9f848cf0d0ab70a2d1fca953183f0caf275cdf41a3",
+          "openits.signal_control.v1.TsamRecommendationApplied": "sha256:7ec48f667c3dc7281f124a85584fd73ef0657648432c4dd876535c5b1f1c4b1f",
+          "openits.signal_control.v1.TspEvent": "sha256:9d280865270d5196b078becd0d3fdfb9e3e0c7db0298cc4d2bd0dd47f5cec2db",
+          "openits.signal_control.v1.UnmappedEvent": "sha256:44012b86406c8bb38384c7bb432a849c2d08199b9a5c7c1b9998a2535d8eb193"
+        }
+      },
+      "2026-11-09": {
+        "current": true,
+        "ceTypes": [
+          "openits.signal-control.cabinet-output-changed.v1",
+          "openits.signal-control.controller-fault-event.v1",
+          "openits.signal-control.coordination-change.v1",
+          "openits.signal-control.detector-report.v1",
+          "openits.signal-control.detector-transition.v1",
+          "openits.signal-control.operational-status-report.v1",
+          "openits.signal-control.overlap-change.v1",
+          "openits.signal-control.pedestrian-event.v1",
+          "openits.signal-control.phase-state-change.v1",
+          "openits.signal-control.plan-applied.v1",
+          "openits.signal-control.preemption-activated.v1",
+          "openits.signal-control.preemption-cleared.v1",
+          "openits.signal-control.preemption-event.v1",
+          "openits.signal-control.tsam-mode-changed.v1",
+          "openits.signal-control.tsam-recommendation-applied.v1",
+          "openits.signal-control.tsp-event.v1",
+          "openits.signal-control.unmapped-event.v1"
+        ]
+      }
+    },
+    "openits-signal-control-fault-events": {
+      "2026-07-12": {
+        "current": false
+      }
+    },
+    "openits-signal-control-mutcd": {
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-07-23": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-10-20": {
+        "current": false
+      }
+    },
+    "openits-signal-control-mutcd-strict": {
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-07-23": {
+        "current": false
+      },
+      "2026-10-20": {
+        "current": false
+      }
+    },
+    "openits-signal-control-overlap-events": {
+      "2026-05-17": {
+        "current": false
+      }
+    },
+    "openits-signal-control-pedestrian-events": {
+      "2026-05-17": {
+        "current": false
+      }
+    },
+    "openits-signal-control-phase-events": {
+      "2026-05-17": {
+        "current": false
+      }
+    },
+    "openits-signal-control-preemption-events": {
+      "2026-05-23": {
+        "current": false
+      }
+    },
+    "openits-signal-control-raw-events": {
+      "2026-05-17": {
+        "current": false
+      }
+    },
+    "openits-signal-control-status-events": {
+      "2026-07-12": {
+        "current": false
+      }
+    },
+    "openits-signal-control-tsam-events": {
+      "2026-05-23": {
+        "current": false
+      }
+    },
+    "openits-signal-control-tsp-events": {
+      "2026-05-17": {
+        "current": false
+      }
+    },
+    "openits-signal-control-types": {
+      "2026-05-23": {
+        "current": false
+      },
+      "2026-07-12": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-09-07": {
+        "current": false
+      },
+      "2026-09-08": {
+        "current": false
+      },
+      "2026-10-12": {
+        "current": false
+      },
+      "2026-10-14": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": false
+      },
+      "2026-10-17": {
+        "current": false
+      },
+      "2026-10-20": {
+        "current": false
+      },
+      "2026-11-09": {
+        "current": true
+      }
+    },
+    "openits-traffic-sensor": {
+      "2026-07-10": {
+        "current": false
+      },
+      "2026-07-11": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-10-14": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": true,
+        "shapeDigest": "sha256:4db3a99263cc773f1fbcbd7bce9386da2589188ed7c13752bdcb8f34beee4ed7",
+        "messages": {
+          "openits.traffic_sensor.v1.TrafficSensor": "sha256:31d3c2bc5dd575e83d5bf7cba405d867ab9e1c4a87064db2892d137fecdc78f8"
+        }
+      }
+    },
+    "openits-traffic-sensor-events": {
+      "2026-07-12": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-10-13": {
+        "current": true,
+        "ceTypes": [
+          "openits.traffic-sensor.queue-state-changed.v1",
+          "openits.traffic-sensor.traffic-interval-report.v1",
+          "openits.traffic-sensor.traffic-sensor-status-report.v1"
+        ],
+        "shapeDigest": "sha256:ddcf4a68ce9150993bace22ed46cafabc418b25d791fc0fc78ea5c60354af256",
+        "messages": {
+          "openits.traffic_sensor.v1.QueueStateChanged": "sha256:c86a680a51c4022f9c9c1734c80fe0022cab28c3717a0be5e81139f1de106cb3",
+          "openits.traffic_sensor.v1.TrafficIntervalReport": "sha256:619b810e95439329818a79979e91d620a0565e27eeb7adc43b77f85dfbbb2099",
+          "openits.traffic_sensor.v1.TrafficSensorStatusReport": "sha256:2b3bf50c57276f3f956854c70d1a282f69c765e7231023078284fdd88e6a3dc2"
+        }
+      }
+    },
+    "openits-traffic-sensor-types": {
+      "2026-07-11": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-23": {
+        "current": true
+      }
+    },
+    "openits-types": {
+      "2026-07-10": {
+        "current": false
+      },
+      "2026-07-12": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-08-15": {
+        "current": false
+      },
+      "2026-09-02": {
+        "current": false
+      },
+      "2026-09-08": {
+        "current": false
+      },
+      "2026-10-12": {
+        "current": false
+      },
+      "2026-10-13": {
+        "current": false
+      },
+      "2026-10-14": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": false
+      },
+      "2026-11-09": {
+        "current": true
+      }
+    },
+    "openits-v2x-messaging": {
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-08-23": {
+        "current": true
+      }
+    },
+    "openits-v2x-messaging-types": {
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": true
+      }
+    },
+    "openits-v2x-radio": {
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-08-23": {
+        "current": true
+      }
+    },
+    "openits-v2x-radio-types": {
+      "2026-07-21": {
+        "current": true
+      }
+    },
+    "openits-vehicle-detection": {
+      "2026-07-15": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-08-23": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": true
+      }
+    },
+    "openits-vendor-cameleon-reversible-lane-types": {
+      "2026-11-01": {
+        "current": false
+      },
+      "2026-11-10": {
+        "current": true
+      }
+    },
+    "openits-vendor-econolite-signal-control-types": {
+      "2026-05-17": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-10-12": {
+        "current": true
+      }
+    },
+    "openits-vendor-trafficvision-perception-types": {
+      "2026-07-07": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-10-12": {
+        "current": true
+      }
+    },
+    "openits-vendor-trafficvision-traffic-sensor-types": {
+      "2026-07-07": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-10-12": {
+        "current": true
+      }
+    },
+    "openits-work-zone-events": {
+      "2026-09-02": {
+        "current": false
+      },
+      "2026-09-07": {
+        "current": false
+      },
+      "2026-09-08": {
+        "current": false
+      },
+      "2026-10-13": {
+        "current": true,
+        "ceTypes": [
+          "openits.work-zone.zone-state-changed.v1"
+        ],
+        "shapeDigest": "sha256:4b64e5eba72e2cdef62c0d27c5e2d6d41d6651af8468e011e0dc561fe3863128",
+        "messages": {
+          "openits.work_zone.v1.ZoneStateChanged": "sha256:3c5d713288e1bcfb7f1d163ae3c2ac8b3b11c78e2117f86451405fe0c636225f"
+        }
+      }
+    },
+    "openits-work-zone-types": {
+      "2026-09-02": {
+        "current": false
+      },
+      "2026-09-07": {
+        "current": false
+      },
+      "2026-09-08": {
+        "current": true
+      }
+    },
+    "openits-zone-occupancy": {
+      "2026-08-15": {
+        "current": false
+      },
+      "2026-08-23": {
+        "current": false
+      },
+      "2026-09-05": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": true
+      }
+    },
+    "openits-zone-occupancy-events": {
+      "2026-08-15": {
+        "current": false
+      },
+      "2026-09-05": {
+        "current": false
+      },
+      "2026-10-13": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": true,
+        "ceTypes": [
+          "openits.zone-occupancy.zone-occupancy-changed.v1",
+          "openits.zone-occupancy.zone-occupancy-interval-report.v1"
+        ],
+        "shapeDigest": "sha256:3190f6c741cc43ce6e34872a2498b20cc04cd019d0b73b55851d5451fe5fb7c8",
+        "messages": {
+          "openits.zone_occupancy.v1.ZoneOccupancyChanged": "sha256:3c5af7a3d8bd7853f41c65105eb3ddf6f090a1e09435767deb0ee72887759a72",
+          "openits.zone_occupancy.v1.ZoneOccupancyIntervalReport": "sha256:bb8be5601fc338becfd29a419a3643d3f866703b98bcf55581c4c32d6b26ab68"
+        }
+      }
+    },
+    "openits-zone-occupancy-types": {
+      "2026-08-15": {
+        "current": false
+      },
+      "2026-09-05": {
+        "current": false
+      },
+      "2026-10-16": {
+        "current": true
+      }
+    },
+    "trafficvision-perception-incident-media": {
+      "2026-07-07": {
+        "current": false
+      },
+      "2026-07-12": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-10-12": {
+        "current": false
+      }
+    },
+    "trafficvision-traffic-sensor-camera": {
+      "2026-07-07": {
+        "current": false
+      },
+      "2026-07-12": {
+        "current": false
+      },
+      "2026-07-21": {
+        "current": false
+      },
+      "2026-08-05": {
+        "current": false
+      },
+      "2026-10-12": {
+        "current": false
+      }
     }
   }
 }

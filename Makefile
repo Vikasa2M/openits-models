@@ -12,7 +12,7 @@ FIELD_LOCK      := field-numbers.yaml
 # YANG output directories
 YANG_GO_OUT := pkg/yang
 
-.PHONY: all ci gen check-gen yang-proto-gen proto yang yang-go validate-yang \
+.PHONY: all ci gen check-gen yang-proto-gen proto shapes yang yang-go validate-yang \
 	check-revisions check-naming check-enum-values check-inline-enums validate-noi check-graduation \
 	check-augment-collisions check-deviations check-events-layering check-conventions check-mode-kinds check-revision-history proto-lint proto-breaking yang-lint \
 	vet test test-scripts conformance fmt tidy build-tools \
@@ -24,7 +24,7 @@ YANG_GO_OUT := pkg/yang
 # NOTE: `all` regenerates and gates nothing. For the full local gate, use
 # `make ci`.
 all: gen
-gen: yang-proto-gen proto yang-go asyncapi catalog
+gen: yang-proto-gen proto shapes yang-go asyncapi catalog
 
 # The full local gate: every check CI runs, in one command.
 #
@@ -90,6 +90,13 @@ yang-proto-gen:
 # proto -> Go (protoc + protoc-gen-go, pinned — see scripts/proto-gen.sh).
 proto:
 	./scripts/proto-gen.sh
+
+# Compiled proto -> per-module wire shapes (api/shapes/<module>.shape) and
+# own-message files (api/shapes/<module>.proto), which the registry snapshots
+# and check-revisions compares. Runs after `proto` because it renders what
+# protoc compiles. See scripts/wire-shapes.sh.
+shapes:
+	./scripts/wire-shapes.sh
 
 # YANG -> Go (ygot fakeroot structs). Requires the pinned ygot generator.
 yang: yang-go
@@ -179,7 +186,10 @@ check-mode-kinds:
 	$(GOCMD) run ./tools/check-mode-kinds -yang yang -fixtures yang/testdata -invalid yang/testdata/mode-kinds
 
 # Fail if a revision statement that exists on the base branch was edited or
-# removed (revisions and their registry snapshots are immutable once shipped).
+# removed, or a schema-registry snapshot on the base branch was edited,
+# shrunk, or grew a file other than a backfillable artifact; and fail if any
+# snapshot lacks a file its module calls for (revisions and their registry
+# snapshots are immutable once shipped).
 REVISION_BASE ?= origin/main
 check-revision-history:
 	$(GOCMD) run ./tools/check-revision-history -base $(REVISION_BASE)
