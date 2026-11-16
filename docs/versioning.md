@@ -37,12 +37,130 @@ We follow [Semantic Versioning](https://semver.org/):
 ## YANG revisions vs. the module version
 
 A module's `revision` date is *not* the release version. It records when that
-module's schema last changed and is enforced by `make check-revisions`: if a
-module's content differs from its last snapshot under
-`schema-registry/<module>/<revision>/`, CI fails until the revision is bumped
-(or the change is deliberately re-snapshotted). So a single `v0.8.0` release
-may contain modules at many different revision dates — that is expected. The
-tag versions *the collection*; the revision versions *each module*.
+module's contract last changed. So a single `v0.8.0` release may contain
+modules at many different revision dates — that is expected. The tag versions
+*the collection*; the revision versions *each module*.
+
+This is the same split OpenConfig uses: one repository-wide release for the
+set of models that work together, with each module carrying its own version
+inside it. Modules are not released separately. Shared types and the common
+events reach every service, so separate releases would still move together,
+and a consumer would then need a published table of which module versions work
+with which. A break in one service after 1.0 is carried by a new proto package
+and `ce-type` major for that service (see
+[Extension model](06-extension-model.md)), not by a new major for the whole
+repository.
+
+## What a revision pins
+
+Every event names its schema in `ce-dataschema` as `<module>/<revision>`, so a
+revision has to determine the bytes on the wire, not only the YANG. The
+snapshot under `schema-registry/<module>/<revision>/` pins all of it:
+
+| File | Pins | Present for |
+|------|------|-------------|
+| `schema.yang` | the module source | every module |
+| `schema.proto` | the messages the module itself declares, as a compilable file; messages sibling modules declare in the same generated file are left out | modules with root messages (live notifications, or a config/state tree) |
+| `schema.shape` | the canonical wire shape of everything those messages reach, shared types included: types by full name, fields in number order, comments and declaration order dropped | the same modules |
+| `schema.json` | the JSON Schema of each live notification, shared definitions inlined | modules with live notifications |
+
+`schema.shape` and `schema.proto` are rendered from what `protoc` compiles
+(`scripts/wire-shapes.sh`, part of `make gen`, writing `api/shapes/`), not from
+the YANG. So the shape moves whenever the wire moves, whatever caused it:
+
+- a YANG edit;
+- a change to the YANG-to-proto mapping in `tools/yang-proto-gen`;
+- a change to a shared message or enum the module reaches through an import,
+  such as `openits/types/v1/types.proto` or the service's `types.proto`.
+
+`make check-revisions` compares the live module against the snapshot of its
+current revision: `schema.yang`, `schema.shape` and the rebuilt `schema.json`
+must all be identical. A change that moves any of them needs a new revision,
+**including a change that leaves the module's YANG untouched**. Its revision
+statement says what moved on the wire and why. A generator change that alters
+the output for many modules therefore bumps all of them; the revision log is
+where a consumer reads that the meaning of their payload changed.
+
+The mapping itself is a versioned contract: the
+[YANG-to-wire mapping specification](wire-mapping-spec.md), pinned by test
+vectors the generator must reproduce byte for byte. A change to the mapping
+is a change to that specification, made in the same change set as the
+revisions of every module whose output it alters.
+
+Released snapshots are immutable. `make check-revision-history` fails a PR
+that edits or removes any file of a snapshot on `main`. It also fails one that
+adds a file to such a snapshot, unless the file is an artifact type introduced
+after the snapshot was taken. Today that is only `schema.shape`, which
+`scripts/backfill-shapes.sh` adds only after rendering the module's shape at
+the commit that took the snapshot and at every release since, and finding one
+shape throughout. Every snapshot must also be complete (`schema.yang`,
+`MANIFEST.json`, `README.md`, plus `schema.proto` and `schema.json` for a
+module with live notifications), so a snapshot is written whole or not at all.
+
+`schema-registry/index.json` carries these facts per snapshot under
+`snapshots.<module>.<revision>`:
+
+- `current`: whether this is the revision this release's producers compile;
+- `ceTypes`: listed for the current revision;
+- `shapeDigest`: the sha256 of `schema.shape`;
+- `messages`: each root message's own closure digest.
+
+A consumer reads these instead of recomputing them. The conformance kit uses
+them to check that each event's `ce-dataschema` names a published snapshot,
+and that the payload message the producer compiled has the shape that snapshot
+pins.
+
+### Revisions that shipped more than one wire shape
+
+Before `schema.shape`, nothing tied a revision to the generated proto, and
+these module revisions were carried by releases whose producers compiled
+different wire shapes. Their snapshots are immutable and cannot be corrected.
+A consumer that keys behavior on one of them must also know the release it
+came from.
+
+| Module revision | Shapes, by release |
+|---|---|
+| `openits-common-fault-events` 2026-07-21 | v0.2.1–v0.5.0 \| v0.6.0 |
+| `openits-common-mode-events` 2026-07-21 | v0.2.1–v0.5.0 \| v0.6.0 |
+| `openits-common-comm-health-events` 2026-09-02 | v0.5.0 \| v0.6.0 |
+| `openits-ess-events` 2026-07-21 | v0.2.1–v0.5.0 \| v0.6.0 |
+| `openits-traffic-sensor-events` 2026-07-21 | v0.2.1–v0.5.0 \| v0.6.0 |
+| `openits-cctv-events` 2026-08-05 | v0.3.0–v0.5.0 \| v0.6.0 |
+| `openits-ramp-metering-events` 2026-08-05 | v0.3.0–v0.5.0 \| v0.6.0 |
+| `openits-rsu-events` 2026-08-05 | v0.3.0–v0.5.0 \| v0.6.0 |
+| `openits-zone-occupancy-events` 2026-09-05 | v0.5.0 \| v0.6.0 |
+| `openits-cctv` 2026-08-05 | v0.3.0–v0.5.0 \| v0.6.0–v0.7.0 |
+| `openits-ess` 2026-08-05 | v0.3.0–v0.5.0 \| v0.6.0–v0.7.0 |
+| `openits-traffic-sensor` 2026-08-05 | v0.3.0–v0.5.0 \| v0.6.0–v0.7.0 |
+| `openits-ramp-metering` 2026-08-05 | v0.3.0 \| v0.4.0–v0.5.0 \| v0.6.0–v0.7.0 |
+| `openits-perception` 2026-08-15 | v0.3.0 \| v0.4.0–v0.5.0 |
+| `openits-rsu` 2026-08-05 | v0.3.0 \| v0.4.0–v0.5.0 |
+
+The v0.6.0 split is the field-presence change in the
+[v0.6.0 migration note](migration/v0.6.0.md#1-field-presence-scalars-became-optional):
+the YANG did not change, so no revision moved, but scalar leaves gained proto3
+`optional`. The bytes of a set, non-zero field are the same, but absent and
+zero became distinguishable and the generated Go fields became pointers. The
+earlier splits in the service config/state modules are generated enum and
+message changes on the state side, which no snapshot pinned at the time.
+Every revision current today has had one shape since it was snapshotted.
+
+### `openits-version`
+
+Every first-party module carries an `openits-types:openits-version` semver
+stamp, the counterpart of `openconfig-version`. `make check-revision-history`
+enforces it against the base branch, as OpenConfig's CI enforces
+`openconfig-version`:
+
+- A module whose newest revision changed must raise `openits-version`.
+- The raise is sized by the module's wire shape diff: a removed or altered
+  field or enum value is breaking (MAJOR from 1.0 on; MINOR before it, since
+  a 0.x version may break on MINOR); a new field, message or enum value needs
+  at least MINOR; no wire change allows PATCH. A YANG-only change that alters
+  meaning without altering the wire (a tighter range or `must`) is sized in
+  review.
+- MAJOR matches the `ce-type` major of every event the module defines: a 0.x
+  or 1.x module emits `.v1`, a 2.x module `.v2`.
 
 ## Wire compatibility
 

@@ -272,8 +272,19 @@ include:
   `openits.<service>.<event>.v<major>` form
   (`TestCEType_OpenitsFormat`); `ce-source` is a well-formed
   `urn:openits:` URN (`TestCESource_URN`), both in
-  `tools/conformance/tests/cetype.go`. A `ce-dataschema` check is
-  planned.
+  `tools/conformance/tests/cetype.go`.
+- **Schema identity.** `ce-dataschema` names a published snapshot,
+  `https://schemas.open-its.org/<module>/<revision>/`, of the module
+  that defines the event's ce-type
+  (`TestCEDataSchema_ResolvesToSnapshot`), and the payload message the
+  producer compiled has exactly the wire shape that snapshot pins in
+  `schema.shape` (`TestCEDataSchema_PayloadMatchesSnapshot`), both in
+  `tools/conformance/tests/dataschema.go`. The second check renders the
+  payload's own descriptor with the same canonicalizer
+  (`internal/wireshape`) that writes `schema.shape`, so a producer built
+  from protos that drifted from the snapshot fails it whatever its YANG
+  says. The kit resolves snapshots through `schema-registry/index.json`
+  (`-registry` flag).
 
 The Tier 1 shape checks select events by the subject's last token — the
 model-level event name — so they hold under any binding. The Tier 2
@@ -288,8 +299,9 @@ A few things on the deferred list, captured for transparency:
 
 - **A live-device driver.** Planned; today only the in-process
   `mock` driver runs.
-- **Event bodies against the schema-registry snapshot** and a
-  **`ce-dataschema` check.** Planned.
+- **Event field values against the snapshot's JSON Schema.** Planned.
+  The payload's wire shape is checked (see Schema identity above); the
+  values it carries are not yet validated against `schema.json`.
 - **Wire-level idempotency of retries.** Planned. Currently
   validated by inspection of the deterministic-`ce-id` policy.
 - **`ce-id` determinism across cold-restart.** Planned.

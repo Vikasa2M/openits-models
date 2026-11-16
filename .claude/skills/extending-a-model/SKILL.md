@@ -73,6 +73,20 @@ change set. Never add a second revision with the same date as an existing
 one, and never rewrite a published revision's description.
 `make check-revisions` gates this.
 
+A revision pins the wire as well as the YANG: `make check-revisions` also
+compares the module's wire shape (`api/shapes/<module>.shape`) and JSON
+Schema against its snapshot. So a module needs a new revision when its wire
+moved even though you never touched its YANG — a generator change, or an
+edit to a shared `-types`/`openits-types` grouping or enum it reaches. Run
+`make gen`, then `make check-revisions`, and give every module it lists a
+revision that says what moved on the wire.
+
+With each new revision, raise `openits-types:openits-version`. Size the
+raise from the module's shape diff (`git diff api/shapes/<module>.shape`): a
+removed or altered field or enum value is breaking (MINOR while the module
+is 0.x, MAJOR from 1.0), an added one is MINOR, no wire change is PATCH.
+`make check-revision-history` enforces this against main.
+
 Edge case — the module already has a revision dated today: if that
 revision exists only on your branch (it is not on main yet), fold your change
 into it and rebuild its snapshot: delete that revision's
