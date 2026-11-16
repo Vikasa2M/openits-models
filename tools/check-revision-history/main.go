@@ -1,5 +1,7 @@
 // check-revision-history fails when a change edits or deletes a YANG
-// revision statement that already exists on the base branch.
+// revision statement that already exists on the base branch, or edits,
+// deletes or adds to a schema-registry snapshot that already exists there
+// (see registry.go).
 //
 // A revision describes what was true when it shipped, and its
 // schema-registry snapshot is immutable, so every revision present on the
@@ -22,6 +24,7 @@ import (
 	"io/fs"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"regexp"
 	"sort"
 	"strings"
@@ -30,14 +33,16 @@ import (
 func main() {
 	base := flag.String("base", "origin/main", "git ref whose revisions must be preserved")
 	dir := flag.String("yang", "yang", "directory of YANG modules (searched recursively)")
+	registry := flag.String("registry", "schema-registry", "schema-registry root whose released snapshots must be preserved")
+	shapes := flag.String("shapes", "api/shapes", "directory of generated wire shapes, diffed against base to size openits-version bumps")
 	flag.Parse()
-	if err := run(*base, *dir); err != nil {
+	if err := run(*base, *dir, *registry, *shapes); err != nil {
 		fmt.Fprintln(os.Stderr, "check-revision-history:", err)
 		os.Exit(1)
 	}
 }
 
-func run(base, dir string) error {
+func run(base, dir, registry, shapes string) error {
 	out, err := exec.Command("git", "ls-tree", "-r", "--name-only", base, "--", dir).Output()
 	if err != nil {
 		return fmt.Errorf("listing %s at %s: %w", dir, base, err)
@@ -67,10 +72,24 @@ func run(base, dir string) error {
 	for _, p := range problems {
 		fmt.Println("CHANGED  " + p)
 	}
-	if len(problems) > 0 {
-		return fmt.Errorf("%d revision(s) that exist on %s were edited or removed; restore them verbatim and record new changes in a new revision", len(problems), base)
+	regProblems, snapshotFiles, err := checkRegistry(base, registry)
+	if err != nil {
+		return err
 	}
-	fmt.Printf("check-revision-history: OK (%d modules, no revision on %s changed)\n", checked, base)
+	for _, p := range regProblems {
+		fmt.Println("REGISTRY " + p)
+	}
+	verProblems, err := checkVersions(base, dir, shapes, filepath.Join(registry, "index.json"))
+	if err != nil {
+		return err
+	}
+	for _, p := range verProblems {
+		fmt.Println("VERSION  " + p)
+	}
+	if n := len(problems) + len(regProblems) + len(verProblems); n > 0 {
+		return fmt.Errorf("%d problem(s) against %s (%d revision, %d registry, %d openits-version); restore shipped revisions and snapshots verbatim, record new changes in a new revision with a raised openits-version, and complete any new snapshot", n, base, len(problems), len(regProblems), len(verProblems))
+	}
+	fmt.Printf("check-revision-history: OK (%d modules and %d released snapshot files unchanged on %s; openits-version raised wherever a revision moved)\n", checked, snapshotFiles, base)
 	return nil
 }
 
